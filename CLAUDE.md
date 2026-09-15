@@ -22,8 +22,7 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 - Είσοδος: `docs/architecture-draft/spine-vocab.md` (IDs: 114 REQ, 76 CMP, 32 ICD, 40 INV, 24 KT, 27 EXP, 33 ADR)· `docs/architecture-draft/GRAIL_WORLD_OS_MASTER_ARCHITECTURE_v1.0.md` (§0–§9)· `docs/architecture-draft/_unmerged-parts/`.
 - Το υπόλοιπο `docs/architecture-draft/` (formal/, contracts/, adrs/, model/, από εργασίες που διακόπηκαν) είναι **ανεπαλήθευτο πρόχειρο**.
 
-## Επόμενο βήμα
-Χτίσιμο του model στο SysON σε δόσεις. Μετά από κάθε δόση, παύση για έλεγχο από τον δημιουργό.
-1. Πακέτα + Telos + απαιτήσεις.
-2. Components + interfaces.
-3. Invariants (constraints) + tests (verification) + σχέσεις satisfy/verify.
+## Επόμενο βήμα — Φάση ανεύρεσης (ΔΕΝ σχεδιάζουμε ακόμα)
+Πριν από οποιοδήποτε model στο SysON: βρες το **ανώτερο που υπάρχει σήμερα** (έρευνα, υπαρκτά συστήματα, μέθοδοι) για κάθε στρώμα του GRAIL — World OS, γνωσιακός πυρήνας, μόνιμη οντότητα με πολλά σώματα, μνήμη/ταυτότητα, συλλογική συνείδηση, αντιπαλικός θεσμός, εξέλιξη, forge γλωσσών, LAWMAX. Σύγκρινέ το με το πρόχειρο στο `docs/architecture-draft/` και δείξε πού υπάρχει αυστηρά ανώτερη σύλληψη.
+- Παραδοτέο: `docs/discovery/`, με πηγές.
+- Το χτίσιμο του model ξεκινά **μόνο** με «εγκρίνω» του δημιουργού. Σειρά μετά την έγκριση: (1) πακέτα + Telos + απαιτήσεις, (2) components + interfaces, (3) invariants + tests + satisfy/verify.
