@@ -1,0 +1,7 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+# Local hardening over the reviewed mcp-syson v0.8.7 compose (MIT, Casys AI):
+# only the SysON UI's own origins may call SysON from a browser.
+services:
+  app:
+    environment:
+      SIRIUS_COMPONENTS_CORS_ALLOWEDORIGINPATTERNS: "http://localhost:8180,http://127.0.0.1:8180"

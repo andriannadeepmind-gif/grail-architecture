@@ -1,0 +1,79 @@
+# SysON + PostgreSQL for @casys/mcp-syson
+#
+# Brings up a local SysON instance this MCP server can talk to:
+#   docker compose up -d
+#   export SYSON_URL=http://localhost:8180
+#   deno task serve
+#
+# SysON UI: http://localhost:8180
+# GraphQL endpoint (what the MCP server calls): http://localhost:8180/api/graphql
+#
+# Differences from the upstream eclipse-syson compose file:
+#   - Port mapped to 8180 to avoid colliding with the many services that
+#     default to 8080, and bound to loopback rather than every interface.
+#   - Named volume for the database. Upstream has none, so every
+#     `docker compose down` silently discards all models.
+#   - Healthcheck on the database so `depends_on` actually waits for a
+#     database that accepts connections instead of one that merely started.
+#   - Elasticsearch is an experimental, opt-in SysON integration. It is not
+#     part of this topology, so its auto-configured health indicator is
+#     explicitly disabled instead of making the application report DOWN.
+
+services:
+  database:
+    # Keep local PostgreSQL native on Apple Silicon while remaining immutable.
+    # The qualification overlay instead pins the reviewed linux/amd64 manifest.
+    image: "postgres@sha256:9b1d34adbce1dd07ee6e94b4a2cf698884b89bd44a6c9c12f5da8f3acbfe4957"
+    environment:
+      POSTGRES_DB: syson
+      POSTGRES_USER: syson
+      POSTGRES_PASSWORD: syson
+    volumes:
+      - syson-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U syson -d syson"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - syson
+
+  app:
+    image: "${SYSON_IMAGE:-eclipsesyson/syson@sha256:c1f457ed236757f717ea1c9f79f0c950be8d79db89f3f265a81a7310200bb690}"
+    # SysON does not publish an arm64 image; Docker Desktop/Colima emulates it
+    # on Apple Silicon instead of failing image resolution.
+    platform: linux/amd64
+    ports:
+      - "127.0.0.1:8180:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database/syson
+      SPRING_DATASOURCE_USERNAME: syson
+      SPRING_DATASOURCE_PASSWORD: syson
+      SIRIUS_COMPONENTS_CORS_ALLOWEDORIGINPATTERNS: "*"
+      SERVER_PORT: 8080
+      MANAGEMENT_HEALTH_ELASTICSEARCH_ENABLED: "false"
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: [
+        "CMD",
+        "wget",
+        "-q",
+        "--spider",
+        "http://localhost:8080/actuator/health",
+      ]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      # SysON loads its standard libraries at boot; under amd64 emulation this
+      # took 217 seconds in the integration check.
+      start_period: 240s
+    networks:
+      - syson
+
+networks:
+  syson:
+
+volumes:
+  syson-db-data:

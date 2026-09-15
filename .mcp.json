@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "syson": {
+      "type": "stdio",
+      "command": "C:\\Users\\David Spiridon\\AppData\\Local\\Microsoft\\WinGet\\Links\\deno.exe",
+      "args": [
+        "run",
+        "--config",
+        "C:/Users/David Spiridon/grail-architecture/platform/deno.json",
+        "--allow-net=localhost:8180,127.0.0.1:8180",
+        "--allow-env",
+        "--allow-read",
+        "jsr:@casys/mcp-syson@0.8.7/server",
+        "--stdio"
+      ],
+      "env": {
+        "SYSON_URL": "http://localhost:8180"
+      }
+    }
+  }
+}
