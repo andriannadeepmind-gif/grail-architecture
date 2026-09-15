@@ -1,0 +1,367 @@
+{
+ "contradictions": [
+  {
+   "layers": [
+    "SEC",
+    "AEO",
+    "CCP",
+    "ORCH"
+   ],
+   "description": "KT-18 και INV-I04: τρία ασύμβατα κριτήρια (ρίζα διαδρομών: C:/Users/David Spiridon/grail-architecture/). Στο πρόχειρο: «post-revocation signatures rejected» (docs/architecture-draft/spine-vocab.md:106), και το INV-I04 «body signs only under live lease; revocation effective» (:66). Το SEC δίνει REQ-SEC-005, KT-18 → ισχύει (docs/discovery/GAP-ANALYSIS.md:392, :805). Το AEO δίνει INV-I04/KT-18 → ανώτερο: εγκυρότητα ⇔ fencing epoch ∧ witnessed first-seen receipt ή TSA πριν από την ανάκληση. Τα offline γεγονότα που δεν μαρτυρήθηκαν πηγαίνουν σε quarantine (GAP-ANALYSIS.md:185· gap/AEO.md:191). Το CCP (DEC-CCP-01) κάνει «σήμανση αντί απόρριψης»: τα σύγχρονα updates γίνονται δεκτά με taint (decisions/CCP.md:7· gap/CCP.md:56). Ο ενορχηστρωτής υιοθετεί και το verifier ordering (Α-4, DECISIONS-FOR-CREATOR.md:132) και το BEC (Α-7, :135), χωρίς να κρίνει ποιο κριτήριο ισχύει. Το ευρετήριο όμως γράφει KT-18 = ισχύει (GAP-ANALYSIS.md:805), και ο κανόνας Δ-6 «ισχύει → περνά αυτούσια» (DECISIONS-FOR-CREATOR.md:80) θα περάσει στο model το «rejected», αντίθετο και με τις δύο αρχές. Συγκεκριμένα: σώμα με κλεμμένο κλειδί υπογράφει update κατά τη διάρκεια partition. Το SEC το απορρίπτει, το AEO το βάζει σε καραντίνα, το CCP το δέχεται με taint.",
+   "resolution_proposal": "Ο κανόνας εγκυρότητας αποκτά μία έδρα, στο ICD-03 (key state): valid(u) ⇔ key state στο causal past του u ∧ (witness receipt ή TSA του u πριν από το witnessed checkpoint της ανάκλησης). Στα μονότονα επίπεδα (BEC) το u εισέρχεται πάντα, ώστε να μην υπάρξει απόκλιση (I-confluence). Παίρνει όμως μία κοινή κατάσταση QUARANTINED, όπου taint και quarantine γίνονται ένας όρος, και δεν φτάνει σε VERIFIED+ χωρίς Court. Νέο κριτήριο KT-18: (α) 0 υπογραφές μεταγενέστερες της ανάκλησης σε VERIFIED+· (β) κάθε σύγχρονη υπογραφή σε QUARANTINED εντός ορίου δεμένου στο TTL των body credentials· (γ) 0 απόκλιση replicas. Στο ευρετήριο το KT-18 γίνεται «ανώτερο»."
+  },
+  {
+   "layers": [
+    "ADV",
+    "CCP",
+    "KSUB",
+    "ORCH",
+    "DRAFT"
+   ],
+   "description": "INV-K06 («BFT Verdict Safety (n ≥ 3f+1)», spine-vocab.md:68): δύο διαφορετικές αναδιατυπώσεις. Το ADV το περιορίζει σε συμφωνία replicas κατά το ADR-0031 και το αναβαθμίζει σε accountable safety με HotStuff-family που έχει forensic support (decisions/ADV.md:43). Το CCP προτείνει single-writer Court log με lease fencing και quorum witness cosignatures, μετονομάζει το INV-K06 σε «Verdict Non-Equivocation» και δέχεται BFT μόνο με ≥4 failure domains (decisions/CCP.md:19). Κρίνει επίσης το ADR-0031 ως ανώτερο (GAP-ANALYSIS.md:228). Το ADR-0031 του προχείρου λέει «BFT (HotStuff-family) only for cross-site verdict ordering» (spine-vocab.md:118): το ADV το κρατά ως μηχανισμό, το CCP το αναβάλλει. Η Α-7 (DECISIONS-FOR-CREATOR.md:135) συρράπτει και τα δύο: «Court log με έναν συγγραφέα» ΚΑΙ «το INV-K06 γίνεται accountable safety». Όμως το accountable safety είναι ιδιότητα quorum-based BFT, όχι single-writer log. Επιπλέον, το DEC-KSUB-04 προτείνει για το ledger CFT (Raft/VSR) με «≥3 replicas σε ≥2 sites» στο DP-3 (decisions/KSUB.md:44), ενώ το πρόχειρο ορίζει DP-3 «≥3 sites» (gap/CCP.md:64). Με 3 replicas σε 2 sites, η απώλεια του site που φιλοξενεί τα 2 χάνει το quorum. Είναι υποβιβασμός χωρίς αιτιολόγηση. Μένουν τρία fault models (CFT ledger, single-writer+witness, BFT accountable) χωρίς δηλωμένα όρια μεταξύ τους.",
+   "resolution_proposal": "Τρία ονομασμένα invariants στη θέση του ενός: (1) Ledger Durability (CFT, RPO 0), με quorum replication σε ≥3 sites στο DP-3 (επαναφορά του προχείρου), ώστε να αντέχει απώλεια site. (2) Verdict Non-Equivocation with Accountability, με single-writer Court log σήμερα. Safety: δύο αντιφατικά verdicts δεν παίρνουν ποτέ και τα δύο witness quorum, με δηλωμένο όριο ανέντιμων witnesses. Accountability: κάθε παραβίαση αφήνει transferable proof για ≥1 ένοχο (δύο υπογεγραμμένα αντιφατικά checkpoints του writer ή αντιφατικές cosignatures). (3) Extension point με συμβόλαιο και πείραμα για μετάβαση σε HotStuff-2-class με forensic support, όταν υπάρχουν ≥4 ανεξάρτητα failure domains. Η ανεξαρτησία των panels γίνεται χωριστό μετρήσιμο invariant, όπου ADV και CCP ήδη συμφωνούν. Η Α-7 ξαναγράφεται ώστε να μην αποδίδει accountable safety σε single-writer log."
+  },
+  {
+   "layers": [
+    "COG",
+    "AEO",
+    "ORCH"
+   ],
+   "description": "Το KT-01 (spine-vocab.md:89: «differential agreement ≥ threshold… Behavioral Battery d ≤ ε») κρίνεται «ισχύει» από το COG (GAP-ANALYSIS.md:137, :588). Το DEC-AEO-02 όμως ορίζει ότι «το κριτήριο του KT-01 αναθεωρείται ώστε να δέχεται» τον κλάδο αναθεώρησης χαρακτήρα. Αλλιώς κάθε αλλαγή παρόχου αποτυγχάνει έως ότου επικυρωθεί το EXP-03 (decisions/AEO.md:20, :22· gap/AEO.md:57). Επιπλέον το DEC-AEO-05 αντικαθιστά το «differential agreement ≥ threshold» με noise-calibrated MMD (DECISIONS-FOR-CREATOR.md:176). Με τη Δ-6 το KT-01 περνά αυτούσιο και η εμπλοκή GAP-AEO-03 μπαίνει στο model.",
+   "resolution_proposal": "Το KT-01 γίνεται «ανώτερο» και η έδρα του κριτηρίου πηγαίνει στο AEO (Battery/ORP). Νέο κριτήριο: conformance battery pass ∧ noise-calibrated differential (MMD, με α και ισχύ προκαταχωρισμένα) ∧ [Battery d ≤ ε, ή, όσο Battery=Unknown, υπογεγραμμένη πράξη αναθεώρησης χαρακτήρα με Court review] ∧ 0 αλλαγές ταυτότητας/ledger ∧ ND. Ποτέ σιωπηλό pass."
+  },
+  {
+   "layers": [
+    "EVO",
+    "KGOV",
+    "ORCH"
+   ],
+   "description": "Το INV-C01 Non-Diminution (spine-vocab.md:65· ADR-0011 «capability ratchet generalized to capability lattice», :118) διαβάζεται με τρεις ασύμβατους τρόπους. Το EVO το κρίνει «ισχύει» (GAP-ANALYSIS.md:282, :705), ενώ το ίδιο DEC-EVO-03 αλλάζει τη σημασιολογία του Caps() σε στατιστικό non-inferiority ανά ικανότητα, με διάσταση ασφάλειας (decisions/EVO.md:32· gap/EVO.md:54). Το KGOV, στο GAP-KGOV-08, διαβάζει τα Caps ως tokens των οποίων η λήξη TTL μειώνει το Caps (gap/KGOV.md:110). Και το DEC-KGOV-08 ορίζει «Capability = εξουσία (token)», δίνοντας άλλο όνομα στην επαληθευμένη ικανότητα (DECISIONS-FOR-CREATOR.md:164). Με την ορολογία του KGOV-08 λοιπόν το INV-C01 αφορά tokens, ενώ με την Α-6 (:134) αφορά μετρημένη ικανότητα. Αν το «ισχύει» περάσει κατά Δ-6, η Α-6 δεν φτάνει ποτέ στο κείμενο του INV-C01.",
+   "resolution_proposal": "Το INV-C01 ορίζεται ρητά πάνω στο Competence lattice: μετρημένη ικανότητα με non-inferiority margin, negative-flip budget και υποχρεωτική διάσταση ασφάλειας κατά Α-6. Ετυμηγορία «ανώτερο», όχι «ισχύει». Η λήξη TTL των Authority tokens ανήκει στο INV-S02/ICD-04 και όχι στο Non-Diminution, οπότε το GAP-KGOV-08 επαναπροσδιορίζεται ως ρητό γεγονός authority που δεν ενεργοποιεί το ND."
+  },
+  {
+   "layers": [
+    "KSUB",
+    "COG",
+    "ORCH",
+    "DRAFT"
+   ],
+   "description": "Έδρα σχημάτων δεδομένων. Το §15.1 λέει: «JSON Schemas του contracts/schemas/ (η μία έδρα σχημάτων)» (docs/architecture-draft/_unmerged-parts/15.md:12). Το KSUB κρίνει το ADR-0025 «ισχύει» (GAP-ANALYSIS.md:79, :510), και το DEC-KSUB-05 γράφει «Η JSON Schema είναι ήδη η μία έδρα» και παράγει από JSON Schema 2020-12 τα OpenAPI, AsyncAPI, Protobuf και WIT (decisions/KSUB.md:54-56). Το COG (DEC-COG-03) προτείνει μία πηγή LinkML· «τα contracts/schemas γίνονται παράγωγα», επηρεάζοντας ρητά το ADR-0025 (decisions/COG.md:30, :38). Η Α-10 αφήνει «LinkML ή JSON Schema» ανοιχτό (DECISIONS-FOR-CREATOR.md:140), ενώ το ADR-0025 μένει «ισχύει» και με τη Δ-6 περνά αυτούσιο.",
+   "resolution_proposal": "Αλυσίδα με μία έδρα που κρατά και τις δύο προτάσεις: LinkML ως μόνη έδρα → παραγόμενη JSON Schema 2020-12 (pinned, παράγωγη) → η αλυσίδα bindings του DEC-KSUB-05. Από το LinkML παράγονται επίσης SHACL, OWL και JSON-LD. Το §15.1 και το ADR-0025 αναθεωρούνται (ετυμηγορία «ανώτερο»). Πριν από τη Δόση 2 γίνεται πείραμα round-trip LinkML → JSON Schema με τους περιορισμούς του §15.1 και του JCS. Αν αποτύχει, έδρα γίνεται η JSON Schema και τα LinkML/SHACL/OWL παράγονται από αυτή. Σε κάθε στιγμή υπάρχει μία έδρα, δηλωμένη στο model με trace."
+  },
+  {
+   "layers": [
+    "FRG",
+    "LAW",
+    "KGOV",
+    "ORCH"
+   ],
+   "description": "Σημασιολογία της LexDSL: τρεις ασύμβατες θέσεις. Το FRG-01 κάνει τη Lean 4 κανονιστική έδρα και για τη LexDSL και απορρίπτει ρητά τις «δύο αναφορές» ως αντίθετες στη «μία έδρα» (decisions/FRG.md:7, :12). Το FRG-02 προτείνει ως προεπιλογή τη LexDSL ως προφίλ ή επέκταση του Catala, του οποίου η formal semantics και τα core βήματα αποδεικνύονται σε F* (decisions/FRG.md:20, :23). Το LAW-02 χρησιμοποιεί τον Catala με το dates-calc ως «ανεξάρτητη αναφορά για differential και N-version» (decisions/LAW.md:19, :23). Αν η LexDSL είναι προφίλ του Catala, ο Catala δεν είναι ανεξάρτητος (common-mode). Αν η Lean είναι κανονιστική, η σημασιολογία Catala/F* γίνεται δεύτερη κανονιστική. Η Α-2 (DECISIONS-FOR-CREATOR.md:130) γράφει μόνο «Lean και για τις γλώσσες του Forge», χωρίς αναφορά στον Catala. Η Α-11 επικαλείται το DEC-LAW-02 (:138) χωρίς το περιεχόμενό του. Η απόφαση LAW-02 έμεινε ξεχασμένη στη σύνθεση.",
+   "resolution_proposal": "Μία έδρα: εκτελέσιμη σημασιολογία σε Lean 4 για τη LexDSL, με default calculus και date arithmetic με ρητά rounding modes. Ο Catala έχει μόνο δύο ρόλους: (α) baseline του EXP-08· (β) differential oracle, και μόνο όσο η LexDSL δεν μεταγλωττίζεται με τον compiler του Catala. Αν το EXP-08 επιλέξει «προφίλ του Catala», ο compiler του Catala γίνεται όργανο που ελέγχεται με DRT έναντι της Lean. Η δεύτερη ανεξάρτητη μέθοδος του REQ-LAW-011 τότε πρέπει να είναι άλλη, π.χ. Lean evaluator, με μετρημένη ανεξαρτησία. Η Α-2 ενσωματώνει ρητά τον κανόνα."
+  },
+  {
+   "layers": [
+    "KSUB",
+    "FRG",
+    "COG",
+    "KGOV",
+    "ORCH"
+   ],
+   "description": "Κατάλοιπα του Lisp reference, αντίθετα στην Α-2. Η Α-2 καταργεί τον «Lisp reference interpreter (ADR-0012, ADR-0024)» (DECISIONS-FOR-CREATOR.md:130). Όμως: (α) το ADR-0012 («Common Lisp… reference interpreters», spine-vocab.md:118) μένει «ισχύει» από το KSUB (GAP-ANALYSIS.md:75, :505). (β) Το KT-02 (spine-vocab.md:90: N-version dual-run Lisp→Rust, 0 διαφωνίες) μένει «ισχύει» από το FRG (GAP-ANALYSIS.md:316, :740). Την ίδια ώρα το DEC-COG-02 κάνει το N-version ντετερμινιστικών προγραμμάτων ασθενέστερη κλάση, δεκτή μόνο με μετρημένη ποικιλομορφία (decisions/COG.md:19), και το KGOV-03 κρίνει ότι Lean+DRT κυριαρχεί σε N-version χωρίς reference. (γ) Το KT-10 (spine-vocab.md:98: «differential vs Lisp reference 0 mismatches») χαρακτηρίζεται «ανώτερο» με τη διατύπωση «κρατά όλα τα υπάρχοντα κριτήρια» (GAP-ANALYSIS.md:315). Κρατά δηλαδή την αναφορά σε Lisp reference που η Α-2 καταργεί.",
+   "resolution_proposal": "Το ADR-0012 γίνεται «ανώτερο» στο σκέλος reference interpreters· το Lisp μένει γλώσσα οργάνων. Νέο KT-02: DRT κάθε οργάνου (Lisp, Rust) έναντι του Lean spec, 0 διαφωνίες σε full replay, byte-identical roots. Το dual-run μεταξύ οργάνων μένει ως πρόσθετο σήμα με μετρημένη ποικιλομορφία, όχι ως υποκατάστατο του spec. Στο KT-10 το «vs Lisp reference» γίνεται «vs κανονιστική σημασιολογία Lean». Κανένα κριτήριο δεν αφαιρείται· αλλάζει μόνο η αναφορά."
+  },
+  {
+   "layers": [
+    "KSUB",
+    "AEO",
+    "SEC",
+    "COG",
+    "ORCH"
+   ],
+   "description": "Τι μένει στο ledger μετά τη διαγραφή: τέσσερις διατυπώσεις. KSUB-03: keyed hash (κλειδί ανά υποκείμενο) ή perfectly hiding commitment, και «ποτέ ciphertext ή unkeyed hash» (decisions/KSUB.md:32). AEO-06: «salted/keyed ή hash τυχαιοποιημένου ciphertext» (decisions/AEO.md:67). Αυτό είναι unkeyed hash προσωπικού δεδομένου, αφού το ciphertext παραμένει προσωπικό δεδομένο (EDPB 02/2025 v2 §51), και μένει linkable όσο σώζεται οποιοδήποτε αντίγραφο του ciphertext. SEC-05: «Perfectly hiding commitments», κλειδιά σε HSM, και για τα διαγραμμένα dual-hash ή «erased, non-renewable» (decisions/SEC.md:56). COG-07: κρυπτογράφηση ανά confidentiality domain (decisions/COG.md:75). Αυτό είναι ασύμβατο με DEK ανά υποκείμενο: για να διαγραφεί ένα υποκείμενο θα έπρεπε να γίνει shred ολόκληρου του domain (KT-16, spine-vocab.md:104). Η Α-5 (DECISIONS-FOR-CREATOR.md:133) γράφει «hiding/keyed», δηλαδή κρατά την ασθενέστερη ένωση. Όμως το EDPB v2 (έκδοση 07/07/2026· άνοιξα το https://www.edpb.europa.eu/system/files/2026-07/edpb_guidelines_202502_blockchain_v2_en.pdf) λέει στο §52 ότι και το keyed hash «will also be considered personal data», και η μη linkability προϋποθέτει ότι το κλειδί δεν διέρρευσε. Μόνο για το perfectly hiding commitment (§53) ισχύει «neither possible to recover nor to recognise». Η Α-5 υποβιβάζει λοιπόν το SEC-05 χωρίς λόγο. Ξεχάστηκε επίσης το GAP-SEC-04 (hash-tree renewal κατά RFC 4998 έναντι shredding, gap/SEC.md:72-76): το KSUB-01 ορίζει «νέο log origin με επαναγκύρωση» (decisions/KSUB.md:7), που για διαγραμμένα φύλλα είναι αδύνατο, και οι Α-5 και Α-8 δεν το αναφέρουν.",
+   "resolution_proposal": "Μία έδρα: η αρχιτεκτονική του DEC-SEC-05, ως διάδοχος του ADR-0018. (1) Στο ledger και σε κάθε αναπαραγόμενη δομή μπαίνουν μόνο perfectly hiding commitments. Το keyed hash επιτρέπεται μόνο ως ρητή, κατώτερη εξαίρεση με αιτιολόγηση και DPIA. (2) Ιεραρχία κλειδιών: DEK ανά υποκείμενο, τυλιγμένο με KEK ανά confidentiality domain, ώστε να ικανοποιούνται μαζί το INV-L03 και το KT-16. (3) CID πάνω στο ciphertext, και μόνο μέσα στο CAS. (4) Στο INV-X02, dual-hash commitments από την εγγραφή ή ρητή κατάσταση «erased, non-renewable». (5) Δεν ξέρω ποιο σχήμα εννοεί το SEC. Αν είναι Pedersen-class, το binding στηρίζεται σε discrete log και δεν είναι PQ (γενικά γνωστό, δεν το επαλήθευσα με πηγή σε αυτόν τον έλεγχο). Χρειάζεται επιλογή hiding σχήματος με binding που αντέχει PQ, συμβατού με το SEC-04, με πείραμα και συμβόλαιο. Η νομική επικύρωση (EXP-19) γίνεται έναντι του v2."
+  },
+  {
+   "layers": [
+    "CCP",
+    "KSUB",
+    "SEC",
+    "AEO",
+    "ORCH"
+   ],
+   "description": "Η Α-5 υπόσχεται ότι η διαγραφή «καταστρέφει το κλειδί και αφαιρεί φυσικά το ciphertext, και διαδίδεται στα παράγωγα» (DECISIONS-FOR-CREATOR.md:133). Η Α-7 κάνει τα μονότονα επίπεδα BEC/BFT-CRDT, που συγκλίνουν «με οσουσδήποτε Byzantine κόμβους» (:135· decisions/CCP.md:7), πάνω σε ledgers και CAS που αναπαράγονται γεωγραφικά (gap/CCP.md:182). Ένας Byzantine replica δεν μπορεί να εξαναγκαστεί να σβήσει το αντίγραφό του. Και σε hash-DAG δεν αφαιρείται update χωρίς να σπάσουν οι απόγονοί του. Το CCP δεν εξετάζει καθόλου τη διαγραφή: το GAP-CCP-14 μιλά μόνο για εμπιστευτικότητα (gap/CCP.md:178-186), και η αναζήτηση για erasure/GDPR στο gap/CCP.md δεν βρήκε σχετικό σημείο. Το EDPB v2 §63 απαιτεί αποτελεσματική διαγραφή, «including the deletion of any copies held by nodes or other parties». Όπως έχουν γραφτεί, οι Α-5 και Α-7 είναι ασύμβατες.",
+   "resolution_proposal": "Κανόνας ροής μεταξύ Α-5 και Α-7. Στο BEC hash-DAG, και σε κάθε δομή που φτάνει σε failure domain εκτός ελέγχου του δημιουργού, ταξιδεύουν μόνο hiding commitments και opaque αναφορές. Ποτέ ciphertext προσωπικών δεδομένων ούτε το CID του. Το ciphertext ζει μόνο σε CAS υπό έλεγχο του controller, με υπογεγραμμένα deletion receipts από κάθε honest replica. Νέο ρητό invariant «Erasure under Byzantine replication» στο Constitution. Το KT-16′ ελέγχει και replica που αρνείται να διαγράψει. Το EXP-19 κρίνει την επάρκεια έναντι του §63 του v2."
+  },
+  {
+   "layers": [
+    "KGOV",
+    "SEC",
+    "ORCH"
+   ],
+   "description": "Το DEC-KGOV-06 δίνει για τα k-of-n κλειδιά του δημιουργού «TUF-style διπλό threshold σε rotation, ή FROST» (decisions/KGOV.md:65). Το SEC απορρίπτει ρητά το FROST: «Όχι PQ (discrete log)… αντίθετο με το PQ plan» (decisions/SEC.md:34), και προτείνει k-of-n ανεξάρτητες PQ υπογραφές (DECISIONS-FOR-CREATOR.md:209). Η Α-4 γράφει «k-of-n υπογραφές PQ» και επικαλείται ως προέλευση και το DEC-KGOV-06 (:132). Στο Μέρος Γ όμως το «ή FROST» μένει όπως ήταν (:162), και μια κοινή έγκριση θα ήταν αντιφατική.",
+   "resolution_proposal": "Αφαιρείται το «ή FROST» από το DEC-KGOV-06. Έδρα της κατασκευής root γίνεται το DEC-SEC-03: k-of-n ανεξάρτητες PQ υπογραφές σε συσκευές του δημιουργού, TUF-style διπλό threshold, pre-rotation. Τα PQ threshold σχήματα (NIST MPTS) μπαίνουν στο EP-04, με πείραμα όταν τυποποιηθούν."
+  },
+  {
+   "layers": [
+    "KSUB",
+    "CCP",
+    "SEC",
+    "ORCH"
+   ],
+   "description": "Η Α-7 στηρίζει τη μοναδικότητα των verdicts σε quorum witness cosignatures κατά C2SP (decisions/CCP.md:19), και η Α-8 υιοθετεί το προφίλ C2SP για το ledger (DECISIONS-FOR-CREATOR.md:136). Το tlog-cosignature v1.0.1 υποστηρίζει μόνο Ed25519· το ML-DSA-44 υπάρχει μόνο στο rc (gap/KSUB.md:112· decisions/KSUB.md:10). Το SEC-04 επιλέγει composite ML-DSA για ζεύγη PQ/traditional και απορρίπτει τις ανεξάρτητες διπλές υπογραφές λόγω stripping (decisions/SEC.md:43, :46). Άρα σήμερα το μονοπάτι witnesses, για verdicts και ledger, είναι είτε μόνο Ed25519 (όχι PQ) είτε ανεξάρτητες διπλές cosignatures, δηλαδή ακριβώς η λύση που απέρριψε το SEC. Ούτε η Α-7 ούτε η Α-8 το λύνει. Το KSUB παραπέμπει τον αλγόριθμο στο EP-04 χωρίς κανόνα (gap/KSUB.md:116).",
+   "resolution_proposal": "Στο EP-04/INV-X01′ (έδρα SEC) μπαίνει ρητός κανόνας για τα witness notes. Κάθε checkpoint παίρνει δύο cosignatures: Ed25519, και ML-DSA-44 όταν κλειδώσει το v1.1.0. Δένονται με domain separation στο ίδιο checkpoint body, και το quorum απαιτείται χωριστά σε κάθε αλγόριθμο, ώστε να αποκλείεται το stripping. Όσο δεν υπάρχει σταθερή PQ cosignature, το ρίσκο δηλώνεται ρητά και αντισταθμίζεται με TSA ή PQ υπογραφή του log. Μέτρηση στο EXP-11."
+  },
+  {
+   "layers": [
+    "COG",
+    "VER",
+    "ORCH"
+   ],
+   "description": "Αποδοχή Lean proofs. Το DEC-COG-01 ζητά για κάθε proof «επανέλεγχο σε ανεξάρτητο kernel» (decisions/COG.md:7). Το DEC-VER-04 ζητά «leanchecker και περιοδικά εξωτερικό checker (lean4lean ή nanoda_lib)» και δέχεται το lean-smt (beta) ως εναλλακτική του Carcara (decisions/VER.md:45, :48). Το leanchecker ξανατρέχει τον ίδιο kernel, άρα δεν είναι ανεξάρτητο. Η Α-1 (DECISIONS-FOR-CREATOR.md:129) γράφει «ανεξάρτητος kernel για Lean» και επικαλείται και τα δύο DEC, ενώ το Μέρος Γ κρατά αυτούσια την ασθενέστερη διατύπωση του VER (:216).",
+   "resolution_proposal": "Έδρα το ICD-30/CMP-COG-04, με την αυστηρή διατύπωση: για COMMITTED και Tier-0, κάθε Lean proof ελέγχεται σε ανεξάρτητο kernel πριν από το commit, όχι περιοδικά. Το lean-smt γίνεται δεκτό μόνο με 0 holes και με το replay του ελεγμένο από ανεξάρτητο kernel· μέχρι να βγει από beta δηλώνεται ρητά ως TCB. Το DEC-VER-04 αναθεωρείται αναλόγως."
+  },
+  {
+   "layers": [
+    "KSUB",
+    "SEC",
+    "AEO",
+    "ORCH"
+   ],
+   "description": "Εκδοχή της πηγής EDPB. Τα KSUB και SEC στηρίχτηκαν στο v1.1 της διαβούλευσης: «η σελίδα [της τελικής] δεν ανοίχτηκε (404)» (gap/KSUB.md:58, :179· gap/SEC.md:210). Το AEO παραθέτει «final v2.0» (gap/AEO.md:123). Η Α-5 επικαλείται «EDPB 02/2025» χωρίς έκδοση (DECISIONS-FOR-CREATOR.md:133). Άνοιξα το https://www.edpb.europa.eu/documents/guideline/guidelines-022025-on-processing-of-personal-data-through-blockchain_en, όπου εμφανίζεται «Guidelines 02/2025 v2», 07 July 2026, «Final version». Στο κείμενο του v2 (§§51-54, §63) οι θέσεις που χρησιμοποιήθηκαν διατηρούνται. Δεν διάβασα το track-changes, οπότε δεν ξέρω αν άλλαξαν άλλα σημεία (π.χ. για permissioned ledgers ή για renewal).",
+   "resolution_proposal": "Όλες οι παραπομπές (KSUB, SEC, Α-5) ενοποιούνται στο v2 της 07/07/2026, με αριθμούς παραγράφων (§51-54, §63, §102). Πριν από το EXP-19 διαβάζεται το track-changes DOCX για αλλαγές που αφορούν permissioned ledgers και διαγραφή αντιγράφων σε nodes."
+  },
+  {
+   "layers": [
+    "PLT",
+    "ORCH",
+    "CLAUDE.md"
+   ],
+   "description": "Έδρα του model. Η Δ-1 κάνει μόνη αλήθεια το κείμενο SysML v2 στο git και το SysON απλό «φακό, όχι έδρα» (DECISIONS-FOR-CREATOR.md:23, :47)· τα αρχεία γράφονται απευθείας και το export γίνεται περιττό (DESIGN-START-PLAN.md:196). Αντίθετα, το DEC-PLT-01 (git + byte-exact SysON JSON, ροή SysON → export → πύλη) μένει στο Μέρος Γ χωρίς ένδειξη ότι αντικαθίσταται (:221). Τα DEC-PLT-04 (fidelity SysON↔git, επαναφορά από JSON) και DEC-PLT-05 (pin SysON v2026.7.0) προϋποθέτουν το SysON ως έδρα εργασίας (:224-225). Το Δ-2 ορίζει ελεγκτές Spec42 και Syside Solo ή OMG Pilot (:41-42), ενώ το DEC-PLT-03 έχει άλλο σύνολο: OMG pilot, MontiCore, sysml-v2-lsp, Syside Modeler CLI (:223). Το CLAUDE.md ορίζει «ζωντανό SysML v2 model στο SysON, όχι ως κείμενο». Επιπλέον, τα πακέτα ExtensionPoints (variant) και Verification (verification def) χάνονται στην όψη κειμένου του SysON (DESIGN-START-PLAN.md:110-111, :152).",
+   "resolution_proposal": "Αν εγκριθεί η Δ-1, τα DEC-PLT-01/04 σημειώνονται ρητά ως απορριφθείσα εναλλακτική (υβριδικό) και το DEC-PLT-05 περιορίζεται σε «SysON μόνο ως προβολή». Οι ελεγκτές της Δ-2 και του DEC-PLT-03 ενοποιούνται σε ένα σύνολο, με ένα fidelity corpus. Η πύλη Δ-5(3) δηλώνει ότι το SysON δεν προβάλλει πιστά τα πακέτα Verification και ExtensionPoints. Η αλλαγή του CLAUDE.md γίνεται μόνο μετά από «εγκρίνω»."
+  },
+  {
+   "layers": [
+    "ORCH",
+    "KSUB",
+    "KGOV",
+    "AEO",
+    "FRG",
+    "SEC",
+    "EVO",
+    "COG",
+    "PLT"
+   ],
+   "description": "Συστημικό πρόβλημα της σύνθεσης. Η Δ-6 περνά αυτούσιο κάθε ID με ετυμηγορία «ισχύει» (DECISIONS-FOR-CREATOR.md:80). Όμως τα IDs κρίθηκαν ανά στρώμα, και αρκετά «ισχύει» ανατρέπονται από αποφάσεις άλλου στρώματος ή του ίδιου. ADR-0009 («revision of SYSTEM-CONSTITUTION…» στο άλλο repo, spine-vocab.md:118): «ισχύει» (GAP-ANALYSIS.md:113), ενώ τα DEC-KGOV-01 και Δ-4 μεταφέρουν το σύνταγμα σε πακέτο του GRAIL χωρίς εγγραφές στο LAWMAX-Ω. ADR-0021 («under KEY-LIFECYCLE/TRUST-BOOTSTRAP»): «ισχύει» (:186, :645), ενώ το DEC-AEO-01 το επηρεάζει ρητά (decisions/AEO.md:16) και η Α-4 το αντικαθιστά με KERI. Ακόμη: ADR-0012, ADR-0025, INV-C01, KT-01, KT-02, KT-18 (βλ. ανωτέρω). Το ADR-0028 κρίθηκε «κενό» μόνο για τα P1 και P5 (:469), ενώ τα υπόλοιπα σκέλη του τα υιοθετούν οι Α-2/Α-9. Το COMPLETENESS ελέγχει μόνο ότι υπάρχει ετυμηγορία (COMPLETENESS.md:21), όχι ότι οι ετυμηγορίες συμφωνούν. Και δηλώνει «Κριτής συνέπειας | PASS | δεν έχει ολοκληρωθεί ακόμη (δεν ελέγχθηκε)» (:23) και «ΟΛΑ PASS» (:27): PASS για έλεγχο που δεν έγινε, αντίθετα στο «0 λάθος» και στην τίμια άγνοια.",
+   "resolution_proposal": "(1) Νέος μηχανικός έλεγχος: για κάθε ID ενώνονται οι ετυμηγορίες και τα πεδία «Επηρεάζει» όλων των DEC όλων των στρωμάτων. Όποιο «ισχύει» επηρεάζεται από κάποιο DEC γίνεται «αλλάζει με DEC-x» και δεν περνά αυτούσιο. Λίστα τουλάχιστον: ADR-0009, ADR-0012, ADR-0021, ADR-0025, ADR-0028, INV-C01, KT-01, KT-02, KT-18. (2) Ο κανόνας της Δ-6 γίνεται «ισχύει ∧ κανένα DEC δεν το επηρεάζει → περνά αυτούσιο». (3) Στο COMPLETENESS η γραμμή του κριτή γίνεται ΕΚΚΡΕΜΕΙ μέχρι να ολοκληρωθεί ο έλεγχος, και το συνολικό αποτέλεσμα αλλάζει αναλόγως."
+  },
+  {
+   "layers": [
+    "SEC",
+    "KGOV",
+    "COG",
+    "ORCH",
+    "DRAFT"
+   ],
+   "description": "Σημείο επιβολής της IFC. Το SEC-01 βάζει την πολιτική στο KRN-11, για κάθε ροή που καταλήγει σε εξωτερική επίδραση (decisions/SEC.md:7). Η Α-3 λέει «επιβολή στο gateway» (DECISIONS-FOR-CREATOR.md:131), και το ICD-08 ορίζεται ως «Το μόνο μονοπάτι επιδράσεων» (_unmerged-parts/15.md:33). Το GAP-KGOV-09 δείχνει ότι το «μόνο στο KRN-11» είναι ήδη ψευδές: το ICD-05 έχει καταναλωτές τα KRN-06/08 και COG-01, το TB-4 επιβάλλει residency στο Inference Gateway, το INV-L03 επιβάλλεται και στα KRN-08/COG-01, και υπάρχει EraseByControl στο ICD-29 (gap/KGOV.md:122-126). Το COG-05 τοποθετεί τον μηχανισμό στο workspace και στον action executor (decisions/COG.md:51). Αν η IFC επιβάλλεται μόνο στις επιδράσεις του KRN-11, το εμπιστευτικό context που φεύγει προς εξωτερικό πάροχο μοντέλου μέσω του Inference Gateway (confidentiality sink) μένει εκτός πολιτικής.",
+   "resolution_proposal": "Ένα PDP (Cedar + πολιτική IFC) με κλειστό, απαριθμημένο σύνολο PEPs: KRN-11 (effects), COG-01 (inference egress/residency), KRN-08 (memory/erase), ICD-29. Επικοινωνία με τυποποιημένο PEP↔PDP (AuthZEN). Το INV-C02 γίνεται «επιβολή μόνο μέσω του PDP, σε δηλωμένα PEPs». Το KT-17′ μετρά ρητά και exfiltration προς τον πάροχο μοντέλου."
+  },
+  {
+   "layers": [
+    "LAW",
+    "VER"
+   ],
+   "description": "Συγκριτής του KT-15. Το DEC-LAW-06 ορίζει στόχο το 95ο εκατοστημόριο «κατά τη μετρική του GreekBarBench» (decisions/LAW.md:66, :72), που είναι δημόσιο benchmark. Το DEC-VER-06 απαιτεί για το ratchet του KT-15 παγωμένο κρυφό σύνολο με budget πρόσβασης και νέα σύνολα με διτεμπορικό cutoff (DECISIONS-FOR-CREATOR.md:218· gap/VER.md:139). Αν το κατώφλι κρίνεται σε δημόσια items, παραβιάζεται η πολιτική του VER. Αν από το GreekBarBench παίρνεται μόνο η rubric και η δεξαμενή ειδικών, αυτό δεν δηλώνεται. Δεν ξέρω αν τα items του GreekBarBench έχουν μπει σε training corpora.",
+   "resolution_proposal": "Διάκριση ρόλων. Το GreekBarBench μένει δημόσιο εξωτερικό anchor συγκρισιμότητας (GAP-LAW-07), με έλεγχο contamination. Το pass του KT-15 υπολογίζεται μόνο σε σφραγισμένα ή φρέσκα σύνολα κατά DEC-VER-06, με την ίδια rubric και την ίδια κλίμακα εκατοστημορίων. Και τα δύο προκαταχωρίζονται."
+  }
+ ],
+ "duplicate_seats": [
+  {
+   "concept": "Σχήματα δεδομένων",
+   "layers": [
+    "KSUB",
+    "COG",
+    "DRAFT",
+    "ORCH"
+   ],
+   "proposal": "Μία έδρα: LinkML. Από αυτό παράγονται η JSON Schema 2020-12 (που τροφοδοτεί την αλυσίδα bindings του DEC-KSUB-05), τα SHACL/OWL/JSON-LD κ.λπ. Αναθεωρούνται το §15.1 (_unmerged-parts/15.md:12) και το ADR-0025. Αν αποτύχει το πείραμα round-trip πριν από τη Δόση 2, έδρα γίνεται η JSON Schema· σε κάθε περίπτωση δεν συνυπάρχουν δύο έδρες."
+  },
+  {
+   "concept": "Reference semantics εκτελέσιμων evaluators (Constitution Gate, LexDSL, αριθμητική ημερομηνιών)",
+   "layers": [
+    "KGOV",
+    "FRG",
+    "LAW",
+    "VER",
+    "KSUB",
+    "ORCH"
+   ],
+   "proposal": "Μία έδρα: εκτελέσιμο spec σε Lean 4 (Α-2). Lisp, Rust, Wasm και ο compiler του Catala είναι όργανα που ελέγχονται με DRT. Ο Catala είναι baseline και διαφορικός oracle μόνο όσο είναι ανεξάρτητος. Διορθώνονται αντίστοιχα τα ADR-0012, ADR-0024, KT-02, KT-10 και DEC-LAW-02 (decisions/FRG.md:7, :20· decisions/LAW.md:19)."
+  },
+  {
+   "concept": "Formal προδιαγραφή του ίδιου component του πυρήνα (ledger/merkle)",
+   "layers": [
+    "VER",
+    "ORCH"
+   ],
+   "proposal": "Το ledger εμφανίζεται ως TLA+ στη Δ-7 (DECISIONS-FOR-CREATOR.md:91, Α-9), ενώ το DEC-VER-03 έχει Lean model και Aeneas για canonicalization/merkle (decisions/VER.md:31-41). Έδρα του πρωτοκόλλου είναι το TLA+. Έδρα των καθαρών συναρτήσεων (canonicalization, merkle hashing) είναι το Lean. Τα TLA+ operators δηλώνονται αφηρημένα και δένονται με refinement mapping στους ορισμούς Lean. Κάθε component έχει μία δηλωμένη formal έδρα ανά έννοια, και το Alloy μένει μόνο φακός ανάλυσης."
+  },
+  {
+   "concept": "Proof objects και κλίμακα βαθμού τεκμηρίωσης (και N-version ως τεκμήριο)",
+   "layers": [
+    "COG",
+    "VER",
+    "FRG",
+    "ADV",
+    "LAW",
+    "ORCH"
+   ],
+   "proposal": "Μία έδρα: ICD-30/CMP-COG-04, με ένα EvidenceGrade lattice στο πακέτο Verification: proof με ανεξάρτητο kernel > ελεγμένο certificate > solver-TV > N-version με μετρημένη ποικιλομορφία > differential, και κανόνας Tier-0 «δηλωμένος βαθμός ≥ ελάχιστο της κλάσης». Τα DEC-COG-01/02 (decisions/COG.md:7, :19), DEC-VER-04 (decisions/VER.md:45), DEC-FRG-04, DEC-ADV-02 και ο διπλός υπολογισμός του LAW-10 γίνονται παραπομπές σε αυτή τη μία έδρα."
+  },
+  {
+   "concept": "Μέτρηση ανεξαρτησίας και συσχέτισης σφαλμάτων (N-version, N-model, panels, collective, διπλές μέθοδοι)",
+   "layers": [
+    "COG",
+    "ADV",
+    "CCP",
+    "FRG",
+    "LAW",
+    "AEO",
+    "VER"
+   ],
+   "proposal": "Μία έδρα στο VER: ένα verification def IndependenceEvidence, με προϋπολογισμό συσχέτισης σφαλμάτων, μέτρο ποικιλομορφίας, noise-calibrated two-sample test και προκαταχώριση. Αναφέρονται σε αυτό τα gap/COG.md:61, gap/ADV.md:66 (DEC-ADV-05), gap/CCP.md:84 (DEC-CCP-05), gap/FRG.md:96, το REQ-LAW-011 και το DEC-AEO-05."
+  },
+  {
+   "concept": "Ταυτότητα, key events, root του δημιουργού, delegation σωμάτων",
+   "layers": [
+    "SEC",
+    "AEO",
+    "KGOV",
+    "ORCH"
+   ],
+   "proposal": "Μία έδρα: ICD-03, με σημασιολογία KERI-class που ορίζει το SEC (DEC-SEC-02/03). Περιλαμβάνει root k-of-n PQ και pre-rotation. Το AEO κρατά μόνο το προφίλ body delegation και την εξωτερική προβολή VC 2.0. Το DEC-KGOV-06 παραπέμπει εκεί, χωρίς το FROST. Το ADR-0021 αναθεωρείται, και το KEY-LIFECYCLE/TRUST-BOOTSTRAP του LAWMAX-Ω μένει μόνο ως read-only crosswalk (Δ-4)."
+  },
+  {
+   "concept": "Witnessing και transparency logs",
+   "layers": [
+    "KSUB",
+    "CCP",
+    "AEO",
+    "SEC",
+    "COG"
+   ],
+   "proposal": "Μία έδρα: CMP-KRN-01/ICD-01, με ένα witness protocol (C2SP tlog-witness/cosignature), ένα σύνολο witnesses και μία πολιτική quorum. Τα log origins χωρίζονται ανά σκοπό: ledger, KEL, Court log (DEC-CCP-02), builds (CMP-OPS-01). Τα KERI witness receipts (DEC-AEO-01/SEC-02) υλοποιούνται ως inclusion + cosigned checkpoint, και το SCITT (DEC-COG-06) είναι μόνο εξωτερική προβολή. Όχι τρίτη αλυσίδα (decisions/KSUB.md:7)."
+  },
+  {
+   "concept": "Χρόνος: άξονες (valid, known, HLC, witnessed) και αυθεντικοποιημένος ή νομικά τεκμαιρόμενος χρόνος",
+   "layers": [
+    "KSUB",
+    "AEO",
+    "SEC",
+    "LAW",
+    "VER",
+    "COG"
+   ],
+   "proposal": "Μία έδρα: CMP-KRN-07/ICD-07, ως διάδοχος του ADR-0017. Ορίζει τους άξονες (gap/KSUB.md:164), τις πηγές (NTS, Roughtime, k-of-n RFC 3161 με ≥1 qualified TSA κατά eIDAS Art. 41, μέτρηση ε τύπου ClockBound, fail-stop: gap/KSUB.md:104) και τον κανόνα verifier-side ordering. Σε αυτή την έδρα παραπέμπουν τα INV-I04, KT-18, KT-23, INV-L04, ICD-17 AsOf(valid_at, known_at) (_unmerged-parts/15.md:47) και το cutoff του DEC-VER-06."
+  },
+  {
+   "concept": "PQ υπογραφές και αλγοριθμική πολιτική (root, σώματα, witnesses, verdicts)",
+   "layers": [
+    "SEC",
+    "KSUB",
+    "KGOV",
+    "CCP",
+    "AEO"
+   ],
+   "proposal": "Μία έδρα: EP-04 Crypto Suite Registry με INV-X01′ (SEC): ο αλγόριθμος είναι ιδιότητα του kid, με allowlist ανά epoch. Εκεί ορίζονται και το composite ML-DSA (decisions/SEC.md:43) και ο κανόνας διπλών cosignatures των witnesses (gap/KSUB.md:112-116). Κανένα άλλο στρώμα δεν ορίζει αλγόριθμο· το «ή FROST» αφαιρείται (decisions/KGOV.md:65)."
+  },
+  {
+   "concept": "Διαγραφή προσωπικών δεδομένων (μορφή στο ledger, κλειδιά, CAS, διάδοση σε παράγωγα και replicas)",
+   "layers": [
+    "KSUB",
+    "AEO",
+    "SEC",
+    "COG",
+    "LAW",
+    "CCP",
+    "ORCH"
+   ],
+   "proposal": "Μία έδρα: DEC-SEC-05, ως διάδοχος του ADR-0018 (decisions/SEC.md:56), μαζί με το μοντέλο κλάσεων δεδομένων του ICD-02. Περιέχει perfectly hiding commitments, DEK ανά υποκείμενο κάτω από KEK ανά domain, CID μόνο μέσα στο CAS, «erased, non-renewable» στο INV-X02, κανόνα για Byzantine replicas και EDPB v2. Τα DEC-KSUB-03, DEC-AEO-06, DEC-COG-07, KT-16 και ICD-29 EraseByControl παραπέμπουν σε αυτή."
+  },
+  {
+   "concept": "Content address, canonicalization και signing payloads",
+   "layers": [
+    "KSUB",
+    "SEC",
+    "COG",
+    "CCP",
+    "ORCH"
+   ],
+   "proposal": "Μία έδρα: CMP-KRN-02/ICD-02, ως διάδοχος του ADR-0016. Ορίζει τη διεύθυνση CIDv1 (raw, json-jcs: decisions/KSUB.md:20), το JCS ως μόνη canonicalization (DRISL μόνο μετά από πείραμα), το domain separation των payloads υπογραφής (ICD-03 Sign(typed_payload, domain_tag)) και την εμβέλεια: CID σε plaintext μόνο για κλάσεις πιστοποιημένες ως μη προσωπικές, με προεπιλογή fail-closed «προσωπικό». Το JCS→COSE (DEC-COG-06) και τα hash IDs του BEC είναι παράγωγα."
+  },
+  {
+   "concept": "IFC labels και PDP/PEP (INV-S01, INV-C02)",
+   "layers": [
+    "KGOV",
+    "COG",
+    "SEC",
+    "ORCH"
+   ],
+   "proposal": "Μία έδρα: το INV-S01 στο Constitution. Το σχήμα labels ορίζεται μόνο στο ICD-08, ως επέκταση των provenance tags. Υπάρχει ένα PDP στο KRN-11, με απαριθμημένα PEPs (gap/KGOV.md:126). Τα DEC-KGOV-04, DEC-COG-05 και DEC-SEC-01 (με το Rule of Two στο INV-C07) γίνονται υλοποιήσεις της ίδιας έδρας."
+  },
+  {
+   "concept": "Control evaluations, adaptive red team, sandbagging, αξιοπιστία μαρτυρίας ικανοτήτων",
+   "layers": [
+    "KGOV",
+    "ADV",
+    "EVO",
+    "VER",
+    "SEC"
+   ],
+   "proposal": "Μία έδρα: VER (ICD-27, harness σε Inspect), με ένα πρωτόκολλο control evaluation: adaptive attack policies, probes συμπαιγνίας και sandbagging, budget επίθεσης δηλωμένο εκ των προτέρων. Είναι instances της ίδιας έδρας τα KT-17′, KT-19 (όπου σήμερα το VER-05 γράφει «adaptive red team» και το ADV «control evaluation»), KT-20 και η μαρτυρία Competence του INV-C01 (gap/KGOV.md:70, :82· gap/ADV.md:90· gap/EVO.md:74)."
+  },
+  {
+   "concept": "Ταξινόμηση των KT κατά χώρο εκτέλεσης (REQ-VAL-003)",
+   "layers": [
+    "KGOV",
+    "VER",
+    "ORCH"
+   ],
+   "proposal": "Μία έδρα: DEC-VER-05 (decisions/VER.md:56), που καλύπτει και τα 24 KT (DST, formal, eval harness, adaptive red team, νομική επιθεώρηση). Το DEC-KGOV-07 (decisions/KGOV.md:75, μόνο KT-14/15) παραπέμπει σε αυτή· σήμερα παραλείπει τα KT-16, KT-17, KT-19 και KT-24."
+  },
+  {
+   "concept": "Βάρος απόδειξης και standards of proof",
+   "layers": [
+    "ADV",
+    "CCP",
+    "LAW"
+   ],
+   "proposal": "Μία έδρα: η σημασιολογία του Court στο ICD-14 (DEC-ADV-03: ASPIC+ ή ABA με burdens και proof standards, gap/ADV.md:126). Ο claim graph και το AIF του CCP (gap/CCP.md:120), καθώς και η σύγκριση σεναρίων του CMP-LAW-03 (gap/LAW.md:137), τη χρησιμοποιούν χωρίς δικό τους ορισμό."
+  },
+  {
+   "concept": "Νομική αιτιότητα (actual causation)",
+   "layers": [
+    "COG",
+    "LAW"
+   ],
+   "proposal": "Μία έδρα: νέα απαίτηση REQ-LAW, με το ID να δίνεται μόνο με έγκριση (gap/LAW.md:161). Ο αιτιακός μηχανισμός του COG (gap/COG.md:97) είναι το component που την ικανοποιεί (satisfy), και το EXP-22 η επαλήθευση (verify)."
+  },
+  {
+   "concept": "Συναίνεση (δόθηκε/ανακλήθηκε) και μάθηση μεταξύ confidentiality domains",
+   "layers": [
+    "LAW",
+    "AEO"
+   ],
+   "proposal": "Μία έδρα: ένας τύπος γεγονότος ConsentRecord στο σχήμα του ledger (ICD-02/ICD-29), με δομή ISO/IEC TS 27560 (gap/AEO.md:121). Τα Control Records του DEC-LAW-07 (DECISIONS-FOR-CREATOR.md:205) παραπέμπουν σε αυτό: η πολιτική ξεχωρίζει από το γεγονός."
+  },
+  {
+   "concept": "«Capability»: εξουσία και μετρημένη ικανότητα",
+   "layers": [
+    "KGOV",
+    "EVO",
+    "ADV",
+    "VER"
+   ],
+   "proposal": "Μία έδρα: το glossary του Constitution κατά DEC-KGOV-08. Authority σημαίνει ocap token, Competence μετρημένη ικανότητα, και ο γυμνός όρος απαγορεύεται. Το INV-C01/ADR-0011 και το Caps() του DEC-EVO-03 ορίζονται πάνω στο Competence. Το TTL των tokens ανήκει στο INV-S02."
+  }
+ ]
+}

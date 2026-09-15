@@ -30,14 +30,18 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 **Πίνακας εγκάρσιων θεμάτων.** Στο L4 κάθε component απαντά ρητά σε όλα τα θέματα: ταυτότητα και κλειδιά · ασφάλεια και prompt injection · χρόνος · provenance · αστοχία και ανάκαμψη · Byzantine συμπεριφορά · εξέλιξη και αντικατάσταση · παρατηρησιμότητα · κόστος και πόροι · νομικά και απόρρητο · «Unknown». Ένα κενό κελί σημαίνει ανοιχτό component.
 
-**Πώς κλείνει κάθε επίπεδο:** με την πύλη της Δ-5, με έναν ανεξάρτητο ελεγκτή που προσπαθεί να σπάσει τη δόση, και με «εγκρίνω» του δημιουργού.
+**Πώς κλείνει κάθε επίπεδο:** με την πύλη της Δ-5: δύο ανεξάρτητοι ελεγκτές, κανόνες πληρότητας ανά είδος στοιχείου, πρόβα με έλεγχο vacuity, αντιπαλική επιθεώρηση με τουλάχιστον δύο ανεξάρτητους άξονες και έναν μη-LLM μηχανικό oracle, και «εγκρίνω» του δημιουργού με δική του υπογραφή (Δ-10).
+
+**Δύο κατευθύνσεις ελέγχου.** Η εργασία πάει προς τα κάτω, αλλά στα L4–L5 ξανατρέχει το επιχείρημα non-foreclosure του §0.2 του προχείρου: για κάθε T, ποια ιδιότητα του πυρήνα, αν έλειπε, θα το απέκλειε για πάντα; Ό,τι μπαίνει στον πυρήνα χωρίς ωριμότητα [T] σημειώνεται [X] με σταθερό συμβόλαιο.
+
+**Όταν ένα πείραμα αποτύχει,** ο στόχος δεν αφαιρείται: ακολουθεί επανασχεδιασμός και συμβόλαιο επέκτασης (EP) με δικό του πείραμα.
 
 **Αντιστοίχιση με τις δόσεις του CLAUDE.md:**
 
 | Δόση | Επίπεδα |
 |---|---|
-| 1 | L0–L2 |
-| 2 | L3–L5 |
+| 1 | L0–L2, με τις σκηνές σε δικό τους πακέτο |
+| 2 | L3–L5, μαζί με τα invariants των μηχανισμών που μπαίνουν στην πρόβα |
 | 3 | L6–L7 |
 | μετά | L8 |
 
@@ -118,7 +122,7 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 1. **Άκυρη είσοδος = σιωπηλή αποκοπή.** Άρα κάθε εγγραφή στο SysON χρειάζεται (α) έλεγχο σύνταξης με ανεξάρτητο parser πριν, και (β) ανάγνωση και σύγκριση ονομάτων μετά. Η πύλη εξαγωγής δεν μπορεί να δει τέτοια απώλεια: ό,τι δεν εισήχθη δεν υπάρχει στο model.
 2. **Η όψη κειμένου δεν είναι πλήρης** ακριβώς σε κατασκευές που χρειάζεται το GRAIL: verification cases (οικογένειες VT), σώματα invariants ως `constraint def`, `dependency`, `variant`, `interface`, `frame`. Το JSON του `model/.syson/` είναι πλήρες.
-3. **Invariants:** μοντελοποιούνται με `require constraint {…}` σε requirement ή `assert constraint {…}` σε usage, που δουλεύουν· όχι με σώμα σε `constraint def`.
+3. **Invariants:** στο SysON δουλεύουν τα `require constraint {…}` και `assert constraint {…}`, όχι το σώμα ενός `constraint def`. Επειδή όμως η έδρα είναι το κείμενο (Δ-1), αυτό δεν περιορίζει τη γλώσσα: βλ. σύμβαση 3 (§2.2).
 
 Αυτά τροφοδοτούν την απόφαση για την έδρα του model (`DECISIONS-FOR-CREATOR.md`) και τις συμβάσεις μοντελοποίησης (§2).
 
@@ -133,7 +137,7 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 ---
 
-## 2. Δομή του model — πρόταση, ισχύει μετά από «εγκρίνω» Δ-1…Δ-7
+## 2. Δομή του model — πρόταση, ισχύει μετά από «εγκρίνω» Δ-0…Δ-11
 
 ### 2.1 Πακέτα και αρχεία
 
@@ -144,13 +148,18 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | `Telos` | `model/telos.sysml` | T0–T9 | `requirement def <'T1'>` + `doc` |
 | `Stakeholders` | `model/stakeholders.sysml` | SH-01…SH-14 και οι concerns τους | `part def`, `concern def` + `stakeholder` |
 | `Requirements` | `model/requirements/<περιοχή>.sysml` | REQ-* ανά περιοχή (KRN, COG, …) | `requirement def`/usage, `subject`, `require constraint`, `#derivation` από Telos |
-| `Functions` | `model/functions.sysml` | F-1…F-20 και τα σενάρια OS-01…OS-16 ως ροές | `action def` με `in`/`out`, εμφωλευμένα actions, `flow` |
+| `OperationalContext` | `model/context.sysml` | εμβέλεια και ρητά εκτός εμβέλειας (§2.2 του προχείρου, αλλάζουν μόνο με συνταγματική αναθεώρηση), system context, trust boundaries TB-1…TB-6, κανονιστικά όρια | `part def`, connections, `requirement def` |
+| `Scenarios` | `model/scenarios.sysml` | οι σκηνές OS-01…OS-16, και όσες λείπουν: κλοπή root κλειδιού (KT-23), safe-halt, διαδοχή δημιουργού, ανάκαμψη μετά από καταστροφή (KT-22), απόσυρση/fork/merge | `use case def`, `concern`, ροές |
+| `Functions` | `model/functions.sysml` | F-1…F-20, που υλοποιούν τις σκηνές | `action def` με `in`/`out`, εμφωλευμένα actions, `flow` |
 | `LogicalArchitecture` | `model/logical/<στρώμα>.sysml` | CMP-* ανά στρώμα | `part def`, `port def`, parts, `satisfy`, `allocate` |
 | `Interfaces` | `model/interfaces.sysml` | ICD-* | `interface def` με `end`, `port def` με items |
-| `Constitution` | `model/constitution.sysml` | INV-* και tiers | `requirement def` + `require constraint` (σύμβαση 3), metadata Tier |
+| `Constitution` | `model/constitution.sysml` | INV-* και tiers | ένα `constraint def` ανά invariant, που το αναφέρουν `require constraint`/`assert constraint` (σύμβαση 3)· metadata Tier |
 | `Verification` | `model/verification.sysml` | VT-*, KT-*, EXP-* | `verification def` + `objective { verify … }` |
 | `ExtensionPoints` | `model/extension-points.sysml` | EP-* | `abstract part def`, `variation`/`variant` |
-| (βιβλιοθήκη) | `model/library/grail-kernel.sysml` | ο semantic kernel του GRAIL και τα metadata (Status [T]/[X]/[E], Tier) | `metadata def`, βασικοί ορισμοί (Δ-3) |
+| `Deployment` | `model/deployment.sysml` | planes, deployment profiles, ζώνες, RPO/RTO, fault model ανά στρώμα και profile, απογραφή TCB | `part`, `allocate`, `requirement def` |
+| `Hazards` | `model/hazards.sysml` | ανάλυση κινδύνων STPA: losses, hazards, control structure, unsafe control actions | `part def`, connections, `requirement def` |
+| `Rationale` | `model/rationale.sysml` | αποφάσεις (DEC, ADR), κενά (GAP), change records, ανοιχτά ερωτήματα, με κατάσταση και συνθήκη επανεξέτασης | `metadata def`, `dependency` |
+| (βιβλιοθήκη) | `model/library/grail-kernel.sysml` | ο semantic kernel του GRAIL, τα metadata (Status [T]/[X]/[E], Tier), το μητρώο εδρών (κάθε έννοια μία έδρα· TLA+, Lean, Cedar και σχήματα δεδομένων αναφέρονται με URI και hash ή παράγονται) και η μία κλίμακα βαθμών τεκμηρίωσης | `metadata def`, βασικοί ορισμοί (Δ-3) |
 
 ### 2.2 Συμβάσεις μοντελοποίησης
 
@@ -158,13 +167,14 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 1. **Τα IDs του προχείρου γίνονται short names:** `requirement def <'REQ-KRN-001'> LedgerRecordsEveryTransition`.
 2. **Κανένα όνομα δεν είναι δεσμευμένη λέξη** της SysML v2 (π.χ. `transition`, `after`, `verify`, `state`, `flow`)· αν χρειαστεί, μπαίνει σε εισαγωγικά. Το ελέγχουν οι ελεγκτές (Δ-5, βήμα 1).
-3. **Invariants:** γράφονται με `require constraint {…}` μέσα σε requirement ή με `assert constraint {…}` μέσα σε usage, **όχι** ως σώμα `constraint def`, που μετρήθηκε ότι δεν επιλύεται.
+3. **Invariants:** κάθε invariant γράφεται **μία φορά** ως `constraint def` στο πακέτο `Constitution`, και το αναφέρουν όσα requirements και usages το χρειάζονται (`require constraint x : Def;`, `assert constraint x : Def;`). Η έδρα είναι το κείμενο (Δ-1), οπότε η γλώσσα δεν περιορίζεται από εργαλείο που δεν είναι έδρα· η απώλεια του SysON στα σώματα των `constraint def` (§1.4) καταγράφεται ως δηλωμένη απώλεια προβολής. Η προηγούμενη σύμβαση υποβίβαζε τη γλώσσα εξαιτίας του SysON (διόρθωση κατά DEC-X-01).
 4. **Κατάσταση και Tier** δηλώνονται ως metadata, όχι ως ελεύθερο κείμενο.
 5. **Ιχνηλασιμότητα μόνο με πρότυπες σχέσεις:**
    - `#derivation`: Telos → REQ·
    - `satisfy`: REQ → CMP·
    - `verify`: VT/KT → REQ·
-   - `allocate`: F → CMP.
+   - `allocate`: F → CMP·
+   - τυποποιημένες σχέσεις (metadata ή `dependency` με δηλωμένο είδος) για REQ ↔ INV, CMP ↔ ICD (provider/consumer) και INV → σημείο επιβολής.
 
    Καμία ιχνηλασιμότητα μέσα σε σχόλια.
 6. **Ονόματα στοιχείων στα αγγλικά, `doc` στα ελληνικά** με αγγλικούς τεχνικούς όρους, για να διαβάζεις εσύ το σχέδιο. Εναλλακτικά όλα στα αγγλικά, όπως ήθελε ο κανόνας του προχείρου για τα machine artifacts. Είναι επιλογή σου.
@@ -172,7 +182,7 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 ### 2.3 Όψεις για τον δημιουργό, για να βλέπεις και να αποφασίζεις
 
-- **Ροές:** τα σενάρια OS-01…OS-16 παράγονται από το πακέτο `Functions` ως διαγράμματα Mermaid στο `docs/views/`, και τα βλέπεις στο GitHub, ακόμη και από κινητό.
+- **Ροές:** οι σκηνές παράγονται από τα πακέτα `Scenarios` και `Functions` ως διαγράμματα Mermaid στο `docs/views/`, και τις βλέπεις στο GitHub, ακόμη και από κινητό.
 - **Ιχνηλασιμότητα:** ο πίνακας REQ → CMP → ICD → INV → Test **παράγεται** από το model (`docs/views/traceability.md`), δεν γράφεται με το χέρι.
 - **Πρόβα (Δ-7):**
   - εκτελέσιμες προδιαγραφές TLA+ για τους κρίσιμους μηχανισμούς, που τις ελέγχει εξαντλητικά ο model checker·
@@ -186,10 +196,10 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 | Δόση | Περιεχόμενο | Είσοδος | Πύλη (Δ-5) |
 |---|---|---|---|
-| **0 — τεχνική** | επιλογή δεύτερου ελεγκτή με το `platform/fidelity/GrailFidelityTest.sysml`· script ελέγχου με δύο ελεγκτές και κανόνες πληρότητας, και ως GitHub Action· σκελετός της πρόβας (Δ-7): TLA+ toolchain (TLC/Apalache) σε container και προσομοιωτής σεναρίων που διαβάζει το model· ενημέρωση CLAUDE.md/README κατά Δ-1 | Δ-1…Δ-7 | ο έλεγχος τρέχει και πέφτει κόκκινος στα γνωστά λάθη· η πρόβα βρίσκει ένα εσκεμμένα φυτεμένο λάθος σχεδίου |
-| **1 — Telos, Stakeholders, Requirements** | πακέτα `Telos`, `Stakeholders`, `Requirements`· `#derivation` για κάθε REQ | T0–T9, SH, οι 114 REQ με την ετυμηγορία τους (Δ-6), όσα GAP-* εγκριθούν ως νέες απαιτήσεις | ελεγκτές· καμία REQ χωρίς Telos· «εγκρίνω» |
-| **2 — Functions, LogicalArchitecture, Interfaces** | F-*, τα 75 CMP ανά στρώμα, τα 32 ICD με ports/items, `satisfy`, `allocate`, σενάρια ροής· πρόβα των κρίσιμων μηχανισμών και των σεναρίων | οι αρχές Α-1…Α-12 και οι αποφάσεις ανά στρώμα | ελεγκτές· κάθε REQ έχει CMP και ICD· **πρόβα χωρίς αντιπαράδειγμα**· «εγκρίνω» |
-| **3 — Constitution, Verification, ExtensionPoints** | INV-* (σύμβαση 3), VT/KT/EXP με `verify`, EP-*· τα invariants μπαίνουν στην πρόβα | τα εγκεκριμένα DEC για επαλήθευση (Α-9) | πλήρης: κάθε REQ ↔ test· **κανένα invariant δεν σπάει στην πρόβα**· «εγκρίνω» |
+| **0 — τεχνική** | επιλογή του ζεύγους ελεγκτών ανάμεσα σε Spec42, Syside, OMG Pilot, MontiCore, sysml-v2-lsp, με το `platform/fidelity/GrailFidelityTest.sysml` και τα κριτήρια της Δ-2· script ελέγχου με δύο ελεγκτές και κανόνες πληρότητας, **ίδιος κώδικας** τοπικά και στο GitHub Action (όχι χωριστός runner)· σκελετός της πρόβας (Δ-7): TLA+ toolchain (TLC/Apalache) σε container και προσομοιωτής σκηνών που διαβάζει το model· EXP-18 (απόδοση και εκφραστικότητα της σημασιολογίας σε Lean, από το οποίο εξαρτάται η Α-2)· κλειδί έγκρισης σε δική σου συσκευή και προστασία main/tags (Δ-10)· ενημέρωση CLAUDE.md/README κατά Δ-1 και Δ-9 | Δ-0…Δ-11 | ο έλεγχος τρέχει και πέφτει κόκκινος στα γνωστά λάθη· η πρόβα βρίσκει ένα εσκεμμένα φυτεμένο λάθος σχεδίου |
+| **1 — Telos, Context, Stakeholders, Scenarios, Requirements** | πακέτα `Telos` (με μετρήσιμο κριτήριο για κάθε T, Δ-0), `OperationalContext`, `Stakeholders` (και όσοι λείπουν: υποκείμενα δεδομένων, φορέας, provider/deployer κατά AI Act, ασφαλιστής/πιστοποιητής), `Scenarios`, `Requirements`· `#derivation` για κάθε REQ | T0–T9, SH, OS, οι 114 REQ με την ετυμηγορία τους και τον κανόνα της Δ-6, όσα GAP-* εγκριθούν ως νέες απαιτήσεις· **εγκεκριμένα τα Μέρη Α και Β**, και οι αποφάσεις του Μέρους Γ που αλλάζουν στοιχεία της Δόσης 1 (DEC-X-03) | ελεγκτές· καμία REQ χωρίς Telos ή σκηνή· αντιπαλική επιθεώρηση· «εγκρίνω» |
+| **2 — Functions, LogicalArchitecture, Interfaces, Deployment, Hazards** | F-*, τα CMP ανά στρώμα (75, και όσα εγκριθούν μέσω ID-REQUEST), τα 32 ICD με ports/items, `satisfy`, `allocate`, fault model και TCB· ανάλυση κινδύνων STPA· πρόβα των κρίσιμων μηχανισμών μαζί με τα invariants τους, και των σκηνών | πριν από τη δόση κρίνεται η EXP-19 (νομική ανάλυση: AI Act, GDPR, Κώδικας Δικηγόρων)· οι αποφάσεις ανά στρώμα που χρειάζεται η δόση | ελεγκτές· κάθε REQ έχει CMP και ICD· κάθε CMP έχει λειτουργία· σωστή κατεύθυνση εξαρτήσεων· **πρόβα χωρίς αντιπαράδειγμα και με έλεγχο vacuity**· «εγκρίνω» |
+| **3 — Constitution, Verification, ExtensionPoints** | τα υπόλοιπα INV-* (σύμβαση 3), VT/KT/EXP με `verify` και στατιστικό σχέδιο, EP-* με το πρότυπο συμβολαίου (ID, stub interface, πύλη ενεργοποίησης, πείραμα, invariants, περιοδικό drill)· assurance case | τα εγκεκριμένα DEC για επαλήθευση (Α-9) | πλήρης: κάθε REQ ↔ μέθοδος επαλήθευσης· **κανένα invariant δεν σπάει στην πρόβα**· «εγκρίνω» |
 
 Μετά από κάθε δόση γίνονται commit, υπογεγραμμένο tag και push, και ακολουθεί **παύση για έλεγχο από τον δημιουργό** (CLAUDE.md).
 
