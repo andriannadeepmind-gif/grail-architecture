@@ -1,0 +1,1850 @@
+{
+ "layer_key": "KGOV",
+ "summary": "Η κατεύθυνση του προχείρου για το εκτελέσιμο σύνταγμα ισχύει γενικά και ευθυγραμμίζεται με ό,τι τρέχει σήμερα: controls ως εξωτερικά όρια που δεν χορηγούν ποτέ δικαιώματα (AWS SCPs), ντετερμινιστικό PEP έξω από τον κώδικα του agent (Policy in AgentCore με Cedar), υπογεγραμμένα verdicts και fail-closed admission (SLSA VSA, K8s VAP, Sigstore), tiers με περίοδο ψύξης (Tezos, Polkadot OpenGov). Σε δύο σημεία υπάρχει αυστηρά ανώτερο, με ρητό trade-off. (1) Constitution Gate: εκτελέσιμο spec σε Lean με αποδείξεις και DRT έναντι Rust (verification-guided development του Cedar) κυριαρχεί σε N-version χωρίς αποδεδειγμένο reference. (2) Capability Gateway: IFC σε επίπεδο τιμής (CaMeL, FIDES) κυριαρχεί σε έλεγχο μόνο token/domain, με κόστος χρησιμότητας και διεύρυνση του TCB. Κρίσιμα κενά: το skip-on-error του Cedar (ένα forbid που σφάλλει παραλείπεται, δηλαδή fail-open)· ανώριμα χρονικά controls· καμία control evaluation απέναντι σε όργανα που συνεργάζονται· μαρτυρία ικανοτήτων ευάλωτη σε sandbagging· καμία σημασιολογία attenuation/delegation/revocation/PoP στο token· κανένα safe-halt (AI Act Art.14(4)(e)). Εσωτερικές ασυνέπειες: το «μόνο στο KRN-11» αντιφάσκει με ICD-05/TB-4/ICD-29· ο γυμνός όρος «capability» χρησιμοποιείται αδιάκριτα, παρότι το glossary χωρίζει Capability από Capability token· δεν ορίζεται η λήξη TTL έναντι του INV-C01· δεν δηλώνεται αν αυθεντικό reference είναι το Lisp (KRN-06) ή το Lean (ADR-0028)· [T] ή [X] για τη γλώσσα πολιτικής· το DST replay «όλων των KT» περιλαμβάνει τα KT-14 και KT-15, που δεν εκτελούνται σε DST. Η έδρα του συντάγματος (αναθεώρηση στο άλλο repo, ADR-0001/ADR-0009) συγκρούεται με τον σημερινό διαχωρισμό των έργων — απόφαση του δημιουργού.",
+ "sota": [
+  {
+   "id": "SOTA-KGOV-01",
+   "name": "Cedar + verification-guided development",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Γλώσσα εξουσιοδότησης σε Rust. Αποδεδειγμένα σε Lean: ικανοποιημένο forbid ⇒ deny· allow μόνο με explicit permit· αλλιώς default deny· ανεξαρτησία από σειρά και διπλότυπα· sound type checking (validation)· sound slicing· sound και complete symbolic compilation. VGD: εκτελέσιμο μοντέλο σε Lean και DRT/PBT έναντι της Rust υλοποίησης. Οι αποδείξεις βρήκαν 4 bugs στον validator και το DRT/PBT άλλα 21 σε διάφορα μέρη του Cedar. Σε παραγωγή στο Amazon Verified Permissions (Cedar 4.7). CNCF Sandbox από 2025-10-08.",
+   "relevance": "Είναι το ίδιο το «Cedar-class» του ADR-0010 και πρότυπο μεθοδολογίας για το reference του KRN-06: αποδεδειγμένο spec με DRT έναντι της υλοποίησης.",
+   "sources": [
+    {
+     "title": "How We Built Cedar: A Verification-Guided Approach",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    },
+    {
+     "title": "Cedar: A New Language for Expressive, Fast, Safe, and Analyzable Authorization",
+     "url": "https://arxiv.org/abs/2403.04651",
+     "year": "2024"
+    },
+    {
+     "title": "cedar-spec / cedar-lean (proven properties)",
+     "url": "https://github.com/cedar-policy/cedar-spec/tree/main/cedar-lean",
+     "year": "2026"
+    },
+    {
+     "title": "What is Amazon Verified Permissions",
+     "url": "https://docs.aws.amazon.com/verifiedpermissions/latest/userguide/what-is-avp.html",
+     "year": "2026"
+    },
+    {
+     "title": "CNCF project: Cedar",
+     "url": "https://www.cncf.io/projects/cedar/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-02",
+   "name": "Cedar Analysis (SymCC) και Zelkova",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Cedar Analysis (2025-06-16): Cedar Symbolic Compiler γραμμένος σε Lean, με soundness και completeness, πάνω σε SMT solvers (π.χ. CVC5). Το CLI ελέγχει ισοδυναμία, σχέση permissiveness, shadowed permits, αδύνατες συνθήκες, forbid overrides και complete denials. Προηγούμενο σε παραγωγή: Zelkova (FMCAD 2018), SMT κωδικοποίηση των πολιτικών AWS· κατά το paper καλείται εκατομμύρια φορές ημερησίως.",
+   "relevance": "Κάνει μηχανικά ελέγξιμο ότι μια αναθεώρηση ή ένα νέο control μόνο στενεύει τα δικαιώματα. Βάση για τα VT-203 και VT-302 πέρα από το Alloy.",
+   "sources": [
+    {
+     "title": "Introducing Cedar Analysis",
+     "url": "https://aws.amazon.com/blogs/opensource/introducing-cedar-analysis-open-source-tools-for-verifying-authorization-policies/",
+     "year": "2025"
+    },
+    {
+     "title": "Semantic-based automated reasoning for AWS access policies using SMT",
+     "url": "https://www.amazon.science/publications/semantic-based-automated-reasoning-for-aws-access-policies-using-smt",
+     "year": "2018"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-03",
+   "name": "Policy in Amazon Bedrock AgentCore + Dogwood",
+   "kind": "system",
+   "maturity": "pilot",
+   "what": "Αναχαιτίζει όλη την κίνηση των agents μέσω των AgentCore Gateways και αξιολογεί κάθε αίτημα με ντετερμινιστικές πολιτικές Cedar πριν την πρόσβαση στο tool, έξω από τον κώδικα του agent. NL authoring→Cedar, με automated reasoning που εντοπίζει υπερβολικά επιτρεπτικές, υπερβολικά περιοριστικές ή ανέφικτες πολιτικές. Modes LOG_ONLY/ENFORCE· decision logs σε CloudWatch. Τα temporal policies γράφονται σε Dogwood (Cedar-compatible: formerly within, since within, count, sum). Το ιστορικό τους περιορίζεται σε session, με session ID που δίνει ο καλών· παράθυρο ≤24h, ≤25 temporal policies ανά engine. Προσθήκη ή αλλαγή temporal policy ακυρώνει τα ενεργά sessions. Ο ανοικτός reference interpreter του Dogwood δηλώνει ρητά ότι δεν προορίζεται για παραγωγή. Η managed υλοποίηση του AgentCore είναι άλλο πράγμα, με ανεπιβεβαίωτο καθεστώς GA.",
+   "relevance": "Η πλησιέστερη υπαρκτή υλοποίηση του KRN-11 + KRN-05 για agents. Δείχνει και τα όρια: η τεκμηρίωση λέει ρητά ότι ένα count-based rate limit ισχύει ανά session και μηδενίζεται με νέο session.",
+   "sources": [
+    {
+     "title": "Policy in Amazon Bedrock AgentCore",
+     "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html",
+     "year": "2026"
+    },
+    {
+     "title": "Temporal policies (AgentCore)",
+     "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-temporal.html",
+     "year": "2026"
+    },
+    {
+     "title": "dogwood-policy/dogwood",
+     "url": "https://github.com/dogwood-policy/dogwood",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-04",
+   "name": "AWS Service Control Policies ως guardrails",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Τα SCPs δεν χορηγούν ποτέ δικαιώματα· ορίζουν το μέγιστο διαθέσιμο σύνολο. Τα effective permissions είναι η τομή τους (και των RCPs) με τις identity- και resource-based policies, και ένα explicit deny σε οποιοδήποτε επίπεδο αποκλείει την ενέργεια. Τα μηνύματα AccessDenied δηλώνουν τον τύπο της πολιτικής που αρνήθηκε και μόνο σε ορισμένες περιπτώσεις το ARN της· όταν αρνούνται πολλοί τύποι, αναφέρεται μόνο ένας.",
+   "relevance": "Προηγούμενο σε κλίμακα για το INV-C02: το control είναι εξωτερικό όριο, όχι αλλαγή ικανότητας. Και προηγούμενο κλιμακωτής ορατότητας της άρνησης.",
+   "sources": [
+    {
+     "title": "Service control policies (SCPs)",
+     "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
+     "year": "2026"
+    },
+    {
+     "title": "Troubleshoot access denied error messages",
+     "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_access-denied.html",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-05",
+   "name": "OPA/Rego, ReBAC (Zanzibar/OpenFGA), AuthZEN, ABAC",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "OPA: CNCF Graduated (2021-01-29), τελευταία έκδοση v1.20.2 (2026-09-03). Τα decision logs έχουν decision_id, bundle revision και masking· η τεκμηρίωση δεν αναφέρει υπογραφή ή integrity protection. Zanzibar (USENIX ATC 2019): relation tuples, zookies (opaque timestamp για freshness), external consistency απέναντι στο new-enemy problem. OpenFGA: CNCF Incubating (2025-10-28). OpenID AuthZEN Authorization API 1.0: Final (Ιαν. 2026), για διαλειτουργικότητα PEP↔PDP. NIST SP 800-162 (2014, αναθ. 2019): ABAC.",
+   "relevance": "Εναλλακτικές για το KRN-05. Το AuthZEN είναι ο φυσικός εξωτερικός binding του Decide (ICD-05). Τα zookies δείχνουν πώς δένεται το Decide σε cut.",
+   "sources": [
+    {
+     "title": "CNCF: Open Policy Agent",
+     "url": "https://www.cncf.io/projects/open-policy-agent-opa/",
+     "year": "2021"
+    },
+    {
+     "title": "OPA releases",
+     "url": "https://github.com/open-policy-agent/opa/releases",
+     "year": "2026"
+    },
+    {
+     "title": "OPA decision logs",
+     "url": "https://www.openpolicyagent.org/docs/management-decision-logs",
+     "year": "2026"
+    },
+    {
+     "title": "Zanzibar: Google's Consistent, Global Authorization System",
+     "url": "https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/",
+     "year": "2019"
+    },
+    {
+     "title": "Zanzibar paper, annotated copy (AuthZed)",
+     "url": "https://zanzibar.tech/",
+     "year": "2019"
+    },
+    {
+     "title": "CNCF: OpenFGA",
+     "url": "https://www.cncf.io/projects/openfga/",
+     "year": "2025"
+    },
+    {
+     "title": "OpenID AuthZEN WG",
+     "url": "https://openid.net/wg/authzen/",
+     "year": "2026"
+    },
+    {
+     "title": "NIST SP 800-162",
+     "url": "https://csrc.nist.gov/pubs/sp/800/162/upd2/final",
+     "year": "2019"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-06",
+   "name": "Object-capability security (seL4, WASI, Miller)",
+   "kind": "research",
+   "maturity": "production",
+   "what": "seL4: capability = unforgeable token που συνιστά δικαίωμα πρόσβασης σε αντικείμενο. Το Mint αντιγράφει capability ορίζοντας access rights και badge· το Revoke διαγράφει όλες τις child capabilities· ο πυρήνας έχει εκτενή τυπική επαλήθευση. WASI: ένα Wasm module/component ξεκινά χωρίς ambient authority και κάνει μόνο ό,τι του χορηγεί ρητά ο host. WASI 0.2.0 κυκλοφόρησε 2024-01-25· το WASI 0.3 έχει κυκλοφορήσει, με native async στο Component Model. Robust Composition (Miller, PhD JHU 2006): σύνθεση ανεξάρτητα γραμμένων, δυνητικά εχθρικών components (E, CapDesk).",
+   "relevance": "Θεμέλιο του ισχυρισμού του KRN-11 ότι η παράκαμψη δεν αναπαρίσταται. Υλοποιήσιμο σήμερα με Wasmtime/WASI.",
+   "sources": [
+    {
+     "title": "seL4 capabilities tutorial",
+     "url": "https://docs.sel4.systems/Tutorials/capabilities.html",
+     "year": "2026"
+    },
+    {
+     "title": "seL4 API reference (CNode Mint/Revoke)",
+     "url": "https://docs.sel4.systems/projects/sel4/api-doc.html",
+     "year": "2026"
+    },
+    {
+     "title": "About seL4",
+     "url": "https://sel4.systems/About/",
+     "year": "2026"
+    },
+    {
+     "title": "WASI",
+     "url": "https://wasi.dev/",
+     "year": "2026"
+    },
+    {
+     "title": "Component Model",
+     "url": "https://component-model.bytecodealliance.org/",
+     "year": "2024"
+    },
+    {
+     "title": "Robust Composition (abstract)",
+     "url": "https://papers.agoric.com/papers/robust-composition/abstract/",
+     "year": "2006"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-07",
+   "name": "Attenuable και sender-constrained capability tokens",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Biscuit (Eclipse, spec έως v3.3): bearer token με offline attenuation, επαλήθευση μόνο με το root public key, γλώσσα εξουσιοδότησης Datalog, third-party blocks. Macaroons (NDSS 2014): nested, chained HMACs με caveats. UCAN 1.0.0: delegation και invocation REQUIRED, revocation RECOMMENDED· κάθε delegation MUST είτε επαναλαμβάνει είτε στενεύει (attenuate) τις capabilities. SPIFFE: workload identity, CNCF Graduated 2022-08-23. DPoP (RFC 9449, 2023, Standards Track): sender-constraining με PoP. OAuth Transaction Tokens (draft-11, 2026-07-30): διάδοση user/workload identity και authorization context σε call chain εντός trust domain. MCP authorization (τρέχουσα έκδοση 2026-07-28): OAuth 2.1· RFC 8707 resource indicators και audience validation· ο server δεν δέχεται ούτε διαμετακομίζει άλλα tokens.",
+   "relevance": "Ορίζουν τη σημασιολογία που λείπει από το capability token του ICD-08: attenuation, delegation chain, revocation, PoP και διάδοση ανάμεσα σε όργανα.",
+   "sources": [
+    {
+     "title": "Biscuit docs",
+     "url": "https://doc.biscuitsec.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Biscuit SPECIFICATIONS.md",
+     "url": "https://github.com/eclipse-biscuit/biscuit/blob/main/SPECIFICATIONS.md",
+     "year": "2026"
+    },
+    {
+     "title": "Macaroons",
+     "url": "https://research.google/pubs/macaroons-cookies-with-contextual-caveats-for-decentralized-authorization-in-the-cloud/",
+     "year": "2014"
+    },
+    {
+     "title": "UCAN spec",
+     "url": "https://github.com/ucan-wg/spec",
+     "year": "2026"
+    },
+    {
+     "title": "CNCF: SPIFFE",
+     "url": "https://www.cncf.io/projects/spiffe/",
+     "year": "2022"
+    },
+    {
+     "title": "RFC 9449 DPoP",
+     "url": "https://www.rfc-editor.org/rfc/rfc9449.html",
+     "year": "2023"
+    },
+    {
+     "title": "OAuth Transaction Tokens draft",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-oauth-transaction-tokens/",
+     "year": "2026"
+    },
+    {
+     "title": "MCP Authorization 2026-07-28",
+     "url": "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-08",
+   "name": "CaMeL",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Εξάγει ρητά τη ροή ελέγχου και δεδομένων από το έμπιστο αίτημα και την εκτελεί σε custom interpreter περιορισμένης Python. Οι capabilities είναι tags πάνω σε κάθε τιμή (provenance, επιτρεπόμενοι αναγνώστες), και οι security policies ελέγχονται σε κάθε tool call· τα untrusted δεδομένα δεν αλλάζουν τη ροή του προγράμματος. AgentDojo: 77% των εργασιών με provable security, έναντι 84% χωρίς άμυνα.",
+   "relevance": "Δείχνει ότι δεν αρκεί να εξουσιοδοτείται η κλήση· πρέπει να ελέγχεται και η προέλευση των ορισμάτων της επίδρασης.",
+   "sources": [
+    {
+     "title": "Defeating Prompt Injections by Design",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "Defeating Prompt Injections by Design (HTML)",
+     "url": "https://arxiv.org/html/2503.18813",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-09",
+   "name": "FIDES (information-flow control για agents)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Planner που παρακολουθεί confidentiality και integrity labels, επιβάλλει ντετερμινιστικά IFC policies και υποστηρίζει selective hiding. Τυπικό μοντέλο: με τις policies εφαρμοσμένες σε κάθε tool, εγγυάται non-interference για την integrity των tool calls και explicit secrecy για την confidentiality (δέχεται περιορισμένη implicit διαρροή). Αξιολόγηση σε AgentDojo· όλοι οι συγγραφείς από τη Microsoft (2025).",
+   "relevance": "Φυσικό ταίρι για το TB-3/INV-L03: τα confidentiality domains γίνονται labels που ρέουν μέχρι το gateway.",
+   "sources": [
+    {
+     "title": "Securing AI Agents with Information-Flow Control",
+     "url": "https://arxiv.org/abs/2505.23643",
+     "year": "2025"
+    },
+    {
+     "title": "Securing AI Agents with Information-Flow Control (HTML)",
+     "url": "https://arxiv.org/html/2505.23643",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-10",
+   "name": "Privilege control και runtime enforcement για agents",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Progent (2025): τα δικαιώματα είναι symbolic rules πάνω σε tool names/args, με ντετερμινιστικό έλεγχο. Ένας SMT solver εφαρμόζει αυτόματα τις στενώσεις, ενώ οι διευρύνσεις θέλουν έγκριση (monotonic confinement). AgentSpec (ICSE 2026): DSL με triggers/predicates/enforcement και overhead της τάξης ms. Design Patterns (2025): action-selector, plan-then-execute, LLM map-reduce, dual LLM, code-then-execute, context-minimization. VIGIL (2026): policy language για temporal dependencies, argument constraints και value-flow, σε SMT πάνω σε πεπερασμένα traces· >95% recall, FPR <10%· χωρίς τυπική επαλήθευση του enforcement. Invariant Guardrails: Python-inspired matching rules για τη συμπεριφορά agents, ως proxy μεταξύ εφαρμογής και MCP/LLM. LlamaFirewall (2025): PromptGuard 2, Agent Alignment Checks, CodeShield.",
+   "relevance": "Το monotonic confinement είναι η μορφή κυριαρχίας του εντολέα πάνω στα δικαιώματα. Τα patterns δίνουν προφίλ οργάνων για το gateway. Το VIGIL είναι υποψήφιο για ακολουθιακά controls, αλλά χωρίς εγγύηση fail-closed.",
+   "sources": [
+    {
+     "title": "Progent",
+     "url": "https://arxiv.org/abs/2504.11703",
+     "year": "2025"
+    },
+    {
+     "title": "AgentSpec",
+     "url": "https://arxiv.org/abs/2503.18666",
+     "year": "2025"
+    },
+    {
+     "title": "Design Patterns for Securing LLM Agents against Prompt Injections (HTML)",
+     "url": "https://arxiv.org/html/2506.08837",
+     "year": "2025"
+    },
+    {
+     "title": "VIGIL: Runtime Enforcement of Behavioral Specifications in AI Agent Skills",
+     "url": "https://arxiv.org/abs/2606.26524",
+     "year": "2026"
+    },
+    {
+     "title": "Invariant Guardrails",
+     "url": "https://github.com/invariantlabs-ai/invariant",
+     "year": "2026"
+    },
+    {
+     "title": "LlamaFirewall",
+     "url": "https://arxiv.org/abs/2505.03574",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-11",
+   "name": "AI Control: protocols και control evaluations",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "Greenblatt κ.ά. (ICML 2024): trusted editing, untrusted monitoring με anti-collusion, defer-to-trusted, αξιολογημένα απέναντι σε σκόπιμη υπονόμευση. Ctrl-Z (2025): resample protocols στο BashBench· το attack success πέφτει από 58% σε 7%, με 5% κόστος στην απόδοση μη κακόβουλου agent. ControlArena (UK AI Security Institute + Redwood Research): βιβλιοθήκη με 18 settings.",
+   "relevance": "Λείπει μεθοδολογία που να ελέγχει adversarially τα gate/gateway/registry απέναντι σε όργανα που συνεργάζονται.",
+   "sources": [
+    {
+     "title": "AI Control: Improving Safety Despite Intentional Subversion",
+     "url": "https://arxiv.org/abs/2312.06942",
+     "year": "2024"
+    },
+    {
+     "title": "Ctrl-Z: Controlling AI Agents via Resampling",
+     "url": "https://arxiv.org/abs/2504.10374",
+     "year": "2025"
+    },
+    {
+     "title": "ControlArena",
+     "url": "https://github.com/UKGovernmentBEIS/control-arena",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-12",
+   "name": "Συντάγματα μοντέλων (CAI, CCAI, Constitutional Classifiers, Model Spec)",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Constitutional AI (2022): οι αρχές χρησιμοποιούνται ως training signal (SL + RLAIF). Collective CAI (FAccT 2024): αρχές από δημόσια συμμετοχή. Constitutional Classifiers (2025): runtime classifiers παραγόμενοι από constitution· >3.000 ώρες red teaming, +0,38% απόλυτη αύξηση refusals σε production traffic, 23,7% inference overhead. OpenAI Model Spec (2026-08-18): chain of command root > system > developer > user > guideline.",
+   "relevance": "Είναι πιθανοτικά «συντάγματα» συμπεριφοράς των γεννητριών, όχι εκτελέσιμα κατηγορήματα μεταβάσεων. Στο trusted path το GOV-01 είναι αυστηρότερο· οι classifiers συμπληρώνουν το TB-4.",
+   "sources": [
+    {
+     "title": "Constitutional AI",
+     "url": "https://arxiv.org/abs/2212.08073",
+     "year": "2022"
+    },
+    {
+     "title": "Collective Constitutional AI",
+     "url": "https://arxiv.org/abs/2406.07814",
+     "year": "2024"
+    },
+    {
+     "title": "Constitutional Classifiers",
+     "url": "https://arxiv.org/abs/2501.18837",
+     "year": "2025"
+    },
+    {
+     "title": "OpenAI Model Spec",
+     "url": "https://model-spec.openai.com/2026-08-18.html",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-13",
+   "name": "Γλώσσες κανόνων (Catala, LegalRuleML, ODRL, IG 2.0)",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Catala (ICFP 2021): γλώσσα για τη μετάφραση νόμων σε κώδικα (default logic), με τα βασικά βήματα του compiler αποδεδειγμένα σε F*· το repo του Inria το χαρακτηρίζει ερευνητικό έργο με ακόμη ασταθή compiler. LegalRuleML Core 1.0 (OASIS Standard, 2021-08-30): obligation/permission/prohibition, strict/defeasible/defeater, χρονικές διαστάσεις (entry, efficacy, applicability). ODRL 2.2 (W3C Rec, 2018-02-15): permission/prohibition/duty, conflict perm/prohibit/invalid (προεπιλογή invalid). IG 2.0 codebook (v5, 2024): regulative και constitutive statements.",
+   "relevance": "Ώριμες επιλογές για τη deontic και defeasible σημασιολογία των άρθρων, που λείπει από το GOV-01.",
+   "sources": [
+    {
+     "title": "Catala: A Programming Language for the Law",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    },
+    {
+     "title": "CatalaLang/catala",
+     "url": "https://github.com/CatalaLang/catala",
+     "year": "2026"
+    },
+    {
+     "title": "LegalRuleML Core 1.0",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    },
+    {
+     "title": "ODRL Information Model 2.2",
+     "url": "https://www.w3.org/TR/odrl-model/",
+     "year": "2018"
+    },
+    {
+     "title": "Institutional Grammar 2.0 Codebook",
+     "url": "https://arxiv.org/abs/2008.08937",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-14",
+   "name": "Automated Reasoning checks (Bedrock Guardrails)",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Εξάγει formal rules και σχήμα μεταβλητών από έγγραφο πολιτικής και παράγει fidelity report (coverage, accuracy, grounding). Επικυρώνει την έξοδο LLM (VALID/INVALID/TRANSLATION_AMBIGUOUS/TOO_COMPLEX κ.ά.) μόνο σε detect mode. Το VALID εγγυάται μόνο για ό,τι αποτυπώνεται σε μεταβλητές της πολιτικής· δεν προστατεύει από prompt injection· η μετάφραση NL→logic γίνεται με foundation models. Γενικά διαθέσιμο σε 6 regions (US/EU).",
+   "relevance": "Δείχνει το ρεαλιστικό όριο του «εκτελέσιμου συντάγματος» από φυσική γλώσσα και του REQ-GOV-005.",
+   "sources": [
+    {
+     "title": "Automated Reasoning checks in Amazon Bedrock Guardrails",
+     "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-automated-reasoning-checks.html",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-15",
+   "name": "Επαληθευμένοι MFOTL runtime monitors",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Schneider και Traytel (AFP, 2019-07-04): monitor για metric first-order temporal logic, επαληθευμένος σε Isabelle, ως απλοποιημένη παραλλαγή του MonPoly. Η σύγκριση με τυχαίες εισόδους αποκάλυψε σφάλματα στα βελτιστοποιημένα αλλά ανεπαλήθευτα εργαλεία.",
+   "relevance": "Κατάλληλο για controls με χρονικές ή ακολουθιακές συνθήκες πάνω στο ledger ως event stream, εκεί όπου το Cedar είναι stateless.",
+   "sources": [
+    {
+     "title": "Formalization of a Monitoring Algorithm for MFOTL",
+     "url": "https://www.isa-afp.org/entries/MFOTL_Monitor.html",
+     "year": "2019"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-16",
+   "name": "Υπογεγραμμένα verdicts και fail-closed admission",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "SLSA v1.2 (Approved· Build και Source tracks). VSA: in-toto predicate με verifier, policy (URI+digest), resourceUri, verificationResult PASSED/FAILED και verifiedLevels· ο καταναλωτής επαληθεύει πρώτα την υπογραφή του envelope. in-toto Attestation Framework: spec v1, κατά το repo ακόμη υπό ανάπτυξη. Sigstore policy-controller: Kubernetes admission controller με opt-in ανά namespace· ως προεπιλογή απορρίπτει images που δεν ταιριάζουν σε policy, ρυθμίσιμο σε warn/allow. Rekor (v2): transparency log. K8s ValidatingAdmissionPolicy (GA από v1.30): CEL, failurePolicy Fail (προεπιλογή)/Ignore, actions Deny/Warn/Audit.",
+   "relevance": "Υπαρκτό πρότυπο για το σχήμα του Gate Verdict (ICD-06) και για το AdmitArtifact (ICD-04).",
+   "sources": [
+    {
+     "title": "SLSA v1.2",
+     "url": "https://slsa.dev/spec/v1.2/",
+     "year": "2026"
+    },
+    {
+     "title": "SLSA Verification Summary Attestation",
+     "url": "https://slsa.dev/spec/v1.2/verification_summary",
+     "year": "2026"
+    },
+    {
+     "title": "in-toto Attestation Framework",
+     "url": "https://github.com/in-toto/attestation",
+     "year": "2026"
+    },
+    {
+     "title": "Sigstore policy-controller",
+     "url": "https://docs.sigstore.dev/policy-controller/overview/",
+     "year": "2026"
+    },
+    {
+     "title": "Rekor",
+     "url": "https://docs.sigstore.dev/logging/overview/",
+     "year": "2026"
+    },
+    {
+     "title": "Kubernetes ValidatingAdmissionPolicy",
+     "url": "https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-17",
+   "name": "Root of trust: TUF και FROST",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "TUF spec v1.0.36 (τελ. ενημέρωση 2026-08-05): root role με threshold υπογραφών και offline κλειδιά. Κάθε νέο root (N+1) πρέπει να υπογράφεται από threshold κλειδιών του N και από threshold του N+1· expiration απέναντι σε indefinite freeze attacks· delegations. FROST (RFC 9591, Ιούν. 2024): threshold Schnorr signatures δύο γύρων· Informational (CFRG), όχι Standards Track.",
+   "relevance": "k-of-n κλειδιά του ίδιου δημιουργού μειώνουν το single-key risk χωρίς να παραβιάζουν το KL-7, όπως ήδη προβλέπει το EP-04 του προχείρου.",
+   "sources": [
+    {
+     "title": "The Update Framework Specification",
+     "url": "https://theupdateframework.github.io/specification/latest/",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 9591 FROST",
+     "url": "https://www.rfc-editor.org/rfc/rfc9591.html",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-18",
+   "name": "Διαδικασίες αναθεώρησης σε παραγωγή (Tezos, Polkadot OpenGov)",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Tezos: proposal → exploration (quorum και supermajority >80%) → cooldown για δοκιμές σε test networks → promotion (ίδια κατώφλια) → adoption με αυτόματη ενεργοποίηση στο Mainnet· περίπου 14 ημέρες ανά περίοδο. Polkadot OpenGov: 15 origins/tracks με δικές τους παραμέτρους· lead-in, decision, confirmation και enactment periods· conviction voting με delegation ανά track· Technical Fellowship whitelist για επισπευσμένη διαδρομή· Referendum Canceller και Killer.",
+   "relevance": "Επιβεβαιώνουν tiers και ψύξη. Δείχνουν επισπευσμένη διαδρομή και ακύρωση, που λείπουν από το πρόχειρο.",
+   "sources": [
+    {
+     "title": "Tezos governance",
+     "url": "https://docs.tezos.com/architecture/governance",
+     "year": "2026"
+    },
+    {
+     "title": "Polkadot OpenGov",
+     "url": "https://wiki.polkadot.com/learn/learn-polkadot-opengov/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-19",
+   "name": "Ρυθμιστικό πλαίσιο: AI Act Art.14/12 και NIST AI RMF",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Art.14(4)(d): απόφαση να μη χρησιμοποιηθεί το σύστημα ή override/reverse της εξόδου. Art.14(4)(e): παρέμβαση ή διακοπή μέσω «stop» button ή ανάλογης διαδικασίας, ώστε το σύστημα να σταματά σε ασφαλή κατάσταση. Art.12(1): αυτόματη καταγραφή γεγονότων σε όλη τη διάρκεια ζωής. Υποχρεώσεις high-risk από 2027-12-02 (Annex III) και 2028-08-02 (Annex I)· το AI Omnibus (πρόταση 2025-11-19) σε ισχύ από 2026-07-27. NIST AI RMF 1.0 (2023-01-26, υπό αναθεώρηση στο πλαίσιο του White House AI Action Plan) και NIST AI 600-1 (2024-07-26).",
+   "relevance": "Το ledger καλύπτει το Art.12· το Art.14(4)(e) απαιτεί safe-halt, που το πρόχειρο δεν ορίζει.",
+   "sources": [
+    {
+     "title": "AI Act Article 14",
+     "url": "https://artificialintelligenceact.eu/article/14/",
+     "year": "2026"
+    },
+    {
+     "title": "AI Act Article 12",
+     "url": "https://artificialintelligenceact.eu/article/12/",
+     "year": "2026"
+    },
+    {
+     "title": "AI Act implementation timeline",
+     "url": "https://artificialintelligenceact.eu/implementation-timeline/",
+     "year": "2026"
+    },
+    {
+     "title": "Digital Omnibus on AI",
+     "url": "https://digital-strategy.ec.europa.eu/en/library/digital-omnibus-ai-regulation-proposal",
+     "year": "2026"
+    },
+    {
+     "title": "NIST AI RMF",
+     "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+     "year": "2026"
+    },
+    {
+     "title": "NIST AI 600-1",
+     "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-20",
+   "name": "Αξιοπιστία capability evaluations",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "AI Sandbagging (2024, αναθ. 2025): τα μοντέλα μπορούν να υποαποδίδουν επιλεκτικά σε dangerous-capability evals ή να κρύβουν ικανότητες πίσω από password. Noise Injection (2024, NeurIPS 2025): με θόρυβο στα βάρη, τα sandbagging μοντέλα εμφανίζουν ανώμαλη βελτίωση ενώ τα κανονικά υποβαθμίζονται — κατά τους συγγραφείς, model-agnostic σήμα ανίχνευσης. Adding Error Bars to Evals (2024): super-population, paired comparisons, power analysis.",
+   "relevance": "Το KRN-04 δέχεται ικανότητες μόνο από evidence. Χωρίς προστασία από sandbagging και χωρίς στατιστικό κριτήριο, το ND ratchet παραπλανάται.",
+   "sources": [
+    {
+     "title": "AI Sandbagging",
+     "url": "https://arxiv.org/abs/2406.07358",
+     "year": "2024"
+    },
+    {
+     "title": "Noise Injection Reveals Hidden Capabilities of Sandbagging Language Models",
+     "url": "https://arxiv.org/abs/2412.01784",
+     "year": "2024"
+    },
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KGOV-21",
+   "name": "Delegation tokens για αλυσίδες agents (AIP/IBCT) και authorization propagation",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "AIP (2026): Invocation-Bound Capability Tokens σε δύο μορφές — compact mode (υπογεγραμμένο JWT, single-hop) και chained mode (Biscuit με Datalog, multi-hop delegation) — με attenuation και provenance, για γεφύρωση MCP και A2A. Reference implementations σε Python και Rust· οι ίδιοι οι συγγραφείς αναφέρουν 100% απόρριψη σε 600 επιθέσεις. Authorization Propagation in Multi-Agent AI Systems (2026): η διατήρηση permission invariants σε delegation είναι ιδιότητα επιπέδου workflow· προτείνει task-scoped authorization envelopes και execution-count revocation.",
+   "relevance": "Προφίλ του Biscuit για αλυσίδες οργάνων, υποψήφιο για multi-hop χρήση του ICD-08. Ερευνητικό, χωρίς ανεξάρτητη αξιολόγηση.",
+   "sources": [
+    {
+     "title": "AIP: Agent Identity Protocol for Verifiable Delegation",
+     "url": "https://arxiv.org/abs/2603.24775",
+     "year": "2026"
+    },
+    {
+     "title": "Authorization Propagation in Multi-Agent AI Systems",
+     "url": "https://arxiv.org/abs/2605.05440",
+     "year": "2026"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-KRN-06",
+    "ICD-06"
+   ],
+   "draft_ref": "master §6.3 γρ.474· 15.md ICD-06· 19.md §19.1",
+   "draft_position": "Stateless αξιολογητής κάθε δομικής μετάβασης (organ swap, migration, amendment, lifecycle, promotion) έναντι κατηγορημάτων Tier 0/1/2. Επιστρέφει GateVerdict{allow/deny/unknown, predicates[], proof_ref, sig}. Fail-closed (UNKNOWN ή σφάλμα κατηγορήματος ⇒ άρνηση)· N-version Rust + Common Lisp reference· σε διαφωνία, άρνηση και Court case.",
+   "verdict": "superior-exists",
+   "reasoning": "Το fail-closed και το υπογεγραμμένο verdict συμφωνούν με την SOTA (VAP failurePolicy Fail, VSA υπογεγραμμένο in-toto με policy digest). Το N-version όμως χωρίς αποδεδειγμένο reference είναι ασθενέστερο από το VGD του Cedar: εκτελέσιμο μοντέλο σε Lean με αποδείξεις και DRT/PBT έναντι της Rust υλοποίησης, όπου οι αποδείξεις βρήκαν 4 bugs στον validator και το DRT/PBT άλλα 21. Δύο ανεπαλήθευτες υλοποιήσεις μπορούν να συμφωνούν στο ίδιο λάθος αν παρανοούν με τον ίδιο τρόπο την προδιαγραφή. Ασάφεια του ίδιου του προχείρου: το ADR-0028 υιοθετεί Lean 4 εκτελέσιμη reference semantics (VGD) για την πλατφόρμα σχεδίασης, ενώ τα KRN-06/ICD-06 ορίζουν Lisp reference· δεν δηλώνεται ποιο είναι το αυθεντικό spec του gate. Ούτε το proof_ref ορίζεται: δεν διακρίνει formal proof από εμπειρική μαρτυρία.",
+   "superior": "Εκτελέσιμο spec του evaluator σε Lean 4, με αποδείξεις για fail-closed, determinism, υπεροχή Tier 0>1>2 και order independence, και DRT/PBT έναντι της Rust· το Lisp ως τρίτη υλοποίηση. Verdict envelope τύπου VSA/in-toto: verifier, policy URI+digest (δηλαδή constitution hash), result, evidence class. Διατηρεί το fail-closed και το N-version και προσθέτει αποδείξεις. Trade-off: κόστος συγγραφής και συντήρησης αποδείξεων· αβέβαιο αν τα συνταγματικά κατηγορήματα (π.χ. ND πάνω σε εμπειρική μαρτυρία) χωρούν σε αποφασίσιμο fragment όπως αυτό του Cedar — γι' αυτό experiment.",
+   "sota_refs": [
+    "SOTA-KGOV-01",
+    "SOTA-KGOV-02",
+    "SOTA-KGOV-16"
+   ],
+   "sources": [
+    {
+     "title": "How We Built Cedar",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    },
+    {
+     "title": "cedar-lean",
+     "url": "https://github.com/cedar-policy/cedar-spec/tree/main/cedar-lean",
+     "year": "2026"
+    },
+    {
+     "title": "SLSA VSA",
+     "url": "https://slsa.dev/spec/v1.2/verification_summary",
+     "year": "2026"
+    },
+    {
+     "title": "K8s VAP",
+     "url": "https://kubernetes.io/docs/reference/access-authn-authz/validating-admission-policy/",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KRN-05",
+    "ADR-0010"
+   ],
+   "draft_ref": "master §6.3 γρ.473· 22.md ADR-0010· 6.4.md",
+   "draft_position": "Control Records create/list/explain/revoke με απόδοση, εμβέλεια και λήξη, που μεταγλωττίζονται σε πολιτική για το gateway· άγνωστο policy hash ⇒ άρνηση. Γλώσσα Cedar-class: [T] στο §6.3, [X] στο ADR-0010. Έδρα κατά το 6.4: approval-policy.lisp (CPEI L12) + overridden-p.",
+   "verdict": "holds",
+   "reasoning": "Η κατεύθυνση ταυτίζεται με την παραγωγή: Cedar με αποδείξεις σε Lean και SMT ανάλυση, σε Verified Permissions και AgentCore. Κατά την κρίση μας η γλώσσα είναι [T] και [X] μόνο η απεικόνιση των controls σε αυτήν. Δύο κρυφά όρια: (α) skip-on-error — ένα forbid που σφάλλει παραλείπεται, άρα ένα control μπορεί να αποτύχει ανοιχτό· μετά το validation παραμένουν δυνατά overflow και missing entity (τα σφάλματα extension constructors τα αποκλείει το strict mode, που είναι προεπιλογή)· (β) το Cedar είναι stateless· τα temporal controls υπάρχουν μόνο ως managed λειτουργία του AgentCore (session-scoped, ≤24h), και ο ανοικτός interpreter του Dogwood δεν είναι για παραγωγή. Υπάρχει και σύγκρουση μίας έδρας: approval-policy.lisp ή Cedar. Οι αναζητήσεις δεν βρήκαν αυστηρά ανώτερη γλώσσα πολιτικής.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-01",
+    "SOTA-KGOV-02",
+    "SOTA-KGOV-03",
+    "SOTA-KGOV-15"
+   ],
+   "sources": [
+    {
+     "title": "Cedar authorization",
+     "url": "https://docs.cedarpolicy.com/auth/authorization.html",
+     "year": "2026"
+    },
+    {
+     "title": "Cedar validation",
+     "url": "https://docs.cedarpolicy.com/policies/validation.html",
+     "year": "2026"
+    },
+    {
+     "title": "AgentCore temporal policies",
+     "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-temporal.html",
+     "year": "2026"
+    },
+    {
+     "title": "Dogwood",
+     "url": "https://github.com/dogwood-policy/dogwood",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ICD-05"
+   ],
+   "draft_ref": "15.md ICD-05",
+   "draft_position": "KRN-05 → KRN-06/08/11, COG-01, HUM-01/02 (συντάκτες LAW-09 και ο δημιουργός)· gRPC + OpenAPI. Create(ControlRecord), List(scope), Explain(effect)→controls, Revoke(id, reason), Decide(effect_request)→allow/deny+controls. Κάθε control υπογεγραμμένο, με scope, λόγο και λήξη, ορατό σε κάθε επηρεαζόμενο (CONTROL_RESTRICTED), χωρίς ποτέ αλλαγή του capability set.",
+   "verdict": "holds",
+   "reasoning": "Ο διαχωρισμός διαχείρισης (Create/Revoke), απόφασης (Decide) και επιβολής αντιστοιχεί στο PDP↔PEP μοντέλο που τυποποιεί το AuthZEN 1.0 (Final, 2026). Το Explain αντιστοιχεί στα Cedar diagnostics (policy IDs, και όσα σφάλλουν). Τα υπογεγραμμένα records στο ledger υπερβαίνουν τα decision logs του OPA, για τα οποία η τεκμηρίωση δεν αναφέρει υπογραφή. Λείπουν: consistency token (τύπου zookie) που να δένει το Decide σε cut του ledger, ώστε revoke και decide να μην αναδιατάσσονται· και ρητός κανόνας ότι σφάλμα του PDP ή μη κενά diagnostics.errors σημαίνουν deny.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-05",
+    "SOTA-KGOV-01"
+   ],
+   "sources": [
+    {
+     "title": "OpenID AuthZEN",
+     "url": "https://openid.net/wg/authzen/",
+     "year": "2026"
+    },
+    {
+     "title": "Zanzibar",
+     "url": "https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/",
+     "year": "2019"
+    },
+    {
+     "title": "Zanzibar paper, annotated copy (AuthZed)",
+     "url": "https://zanzibar.tech/",
+     "year": "2019"
+    },
+    {
+     "title": "OPA decision logs",
+     "url": "https://www.openpolicyagent.org/docs/management-decision-logs",
+     "year": "2026"
+    },
+    {
+     "title": "Cedar authorization",
+     "url": "https://docs.cedarpolicy.com/auth/authorization.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-C02"
+   ],
+   "draft_ref": "19.md §19.4 INV-C02· master §0 και §0.1· master §3 glossary (Capability Gateway)",
+   "draft_position": "Κάθε control είναι υπογεγραμμένο ControlRecord στο ledger, ανακλητό, επιβάλλεται μόνο στο KRN-11 και δεν αλλάζει το Caps· κάθε άρνηση εμφανίζεται ως Unknown(CONTROL_RESTRICTED, control_id). Tier 0· επιβολή KRN-05/KRN-11· VT-203, VT-302.",
+   "verdict": "holds",
+   "reasoning": "Η αρχή έχει ισχυρό προηγούμενο: τα SCPs δεν χορηγούν ποτέ δικαιώματα, απλώς ορίζουν το μέγιστο σύνολο· το AgentCore επιβάλλει έξω από τον κώδικα του agent. Ελαττώματα: (α) το «μόνο στο KRN-11» (και το glossary: «το μόνο σημείο επιβολής controls») αντιφάσκει με το ICD-05, που έχει καταναλωτές τα KRN-06, KRN-08 και COG-01, με το TB-4 (Inference Gateway: redaction, residency), με το INV-L03 (επιβολή σε KRN-11, KRN-08, COG-01) και με το ICD-29 EraseByControl· (β) η υποχρεωτική αποκάλυψη του control_id μπορεί να συγκρουστεί με το INV-L03, ενώ η AWS αποκαλύπτει τον τύπο της πολιτικής και μόνο σε ορισμένες περιπτώσεις το ARN· (γ) τα VT-203 και VT-302 δεν επαληθεύτηκαν από εδώ.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-04",
+    "SOTA-KGOV-03"
+   ],
+   "sources": [
+    {
+     "title": "AWS SCPs",
+     "url": "https://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_policies_scps.html",
+     "year": "2026"
+    },
+    {
+     "title": "IAM access denied messages",
+     "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_access-denied.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KRN-11",
+    "ICD-08"
+   ],
+   "draft_ref": "master §6.3 γρ.479· 15.md ICD-08· master §3 glossary· 19.md INV-S01/INV-S02",
+   "draft_position": "Μοναδικό μονοπάτι επιδράσεων: έλεγχος capability tokens, controls, confidentiality domains, budgets· Effect Receipts. Όργανα σε sandbox χωρίς ambient authority (Wasmtime host functions, egress proxy). InvokeEffect(capability_token, effect, domain)→EffectReceipt | Unknown(CONTROL_RESTRICTED). Κατά το glossary, token = unforgeable, scoped, χρονικά φραγμένη εξουσιοδότηση (ocap).",
+   "verdict": "superior-exists",
+   "reasoning": "Το ocap χωρίς ambient authority ισχύει και υλοποιείται σήμερα (WASI, seL4). Σε prompt injection όμως η κλήση είναι εξουσιοδοτημένη, ενώ τα ορίσματά της προέρχονται από untrusted δεδομένα. Το πρόχειρο προβλέπει provenance-tagged κανάλια (§0.1, INV-S01), αλλά σε επίπεδο καναλιού και χωρίς formal artifact· το InvokeEffect του ICD-08 δεν φέρει labels ορισμάτων. CaMeL και FIDES ελέγχουν την προέλευση κάθε τιμής στο σημείο της επίδρασης, και το FIDES με τυπική εγγύηση non-interference για την integrity. Επιπλέον το token δεν έχει σημασιολογία attenuation, delegation, revocation ή PoP.",
+   "superior": "Gateway με value-level provenance/IFC labels (κλάση FIDES/CaMeL) και attenuable, sender-constrained tokens. Κυριαρχεί στα INV-S01 και INV-L03 και διατηρεί το ocap, τα controls και τα receipts. Trade-off: (α) χρησιμότητα — CaMeL 77% έναντι 84% στο AgentDojo· (β) ο planner/interpreter που παρακολουθεί labels μπαίνει στο TCB· (γ) τα όργανα πρέπει να διαδίδουν labels ή να εκτελούνται μέσα από τον interpreter.",
+   "sota_refs": [
+    "SOTA-KGOV-08",
+    "SOTA-KGOV-09",
+    "SOTA-KGOV-06",
+    "SOTA-KGOV-07"
+   ],
+   "sources": [
+    {
+     "title": "CaMeL",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "FIDES (HTML)",
+     "url": "https://arxiv.org/html/2505.23643",
+     "year": "2025"
+    },
+    {
+     "title": "WASI",
+     "url": "https://wasi.dev/",
+     "year": "2026"
+    },
+    {
+     "title": "Biscuit SPECIFICATIONS.md",
+     "url": "https://github.com/eclipse-biscuit/biscuit/blob/main/SPECIFICATIONS.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KRN-04",
+    "ICD-04",
+    "REQ-GOV-002"
+   ],
+   "draft_ref": "master §6.3 γρ.472· master §3 glossary γρ.265–266· 15.md ICD-04· 29.md REQ-GOV-002",
+   "draft_position": "Organ contracts (WIT/proto), conformance vectors, μονότονο capability lattice με benchmark evidence, admission υπογεγραμμένων artifacts (SLSA provenance) fail-closed, ND ledger· ικανότητες μόνο από evidence του harness· TTL και επαναπιστοποίηση. REQ-GOV-002: καμία χρήσιμη ικανότητα δεν αφαιρείται σιωπηρά (VT-203, VT-301, KT-24).",
+   "verdict": "holds",
+   "reasoning": "Το admission ευθυγραμμίζεται με SLSA 1.2, VSA, in-toto, Sigstore και WIT/WASI (σημερινό). Η μαρτυρία όμως απειλείται από sandbagging και στατιστικό θόρυβο: χρειάζονται error bars, power analysis και ανίχνευση sandbagging, π.χ. noise injection (πειραματικό). Ασυνέπειες: (α) το πρόχειρο δεν ορίζει τι σημαίνει η λήξη TTL· αν μειώνει το Caps χωρίς ND ή Control, συγκρούεται με το INV-C01· (β) το glossary χωρίζει ρητά Capability (ικανότητα, όχι permission) από Capability token (εξουσία ocap), αλλά ο γυμνός όρος χρησιμοποιείται αδιάκριτα (§0 και §28.1 «capabilities» ως ουσία του πυρήνα, ICD-10 Invoke(capability, args), «Capability Gateway» που ελέγχει tokens)· (γ) το Resolve(capability)→organ αναμειγνύει μητρώο και δρομολόγηση. Admission = today· κατώφλια της ND μαρτυρίας = experiment.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-16",
+    "SOTA-KGOV-20",
+    "SOTA-KGOV-06"
+   ],
+   "sources": [
+    {
+     "title": "SLSA v1.2",
+     "url": "https://slsa.dev/spec/v1.2/",
+     "year": "2026"
+    },
+    {
+     "title": "Sigstore policy-controller",
+     "url": "https://docs.sigstore.dev/policy-controller/overview/",
+     "year": "2026"
+    },
+    {
+     "title": "AI Sandbagging",
+     "url": "https://arxiv.org/abs/2406.07358",
+     "year": "2024"
+    },
+    {
+     "title": "Noise Injection Reveals Hidden Capabilities of Sandbagging Language Models",
+     "url": "https://arxiv.org/abs/2412.01784",
+     "year": "2024"
+    },
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-GOV-01"
+   ],
+   "draft_ref": "master §6.3 γρ.571· 6.4.md",
+   "draft_position": "Corpus άρθρων Tier 0/1/2 με κατηγορήματα, σημεία επιβολής και συνδέσμους formal artifacts· αμφίσημο άρθρο ⇒ είτε εκτελέσιμο κατηγόρημα είτε δηλωμένη μη εκτελέσιμη αρχή με test. S-expressions (υπάρχουσες έδρες) + Lean· [T]. Έδρα: SYSTEM- και ARCHITECTURE-CONSTITUTION + στόχος CPEI L10.",
+   "verdict": "holds",
+   "reasoning": "Η διάκριση εκτελέσιμου κατηγορήματος και αρχής με test είναι ακριβώς ό,τι δείχνει η SOTA: τα AR checks εγγυώνται VALID μόνο για τις μεταβλητές της πολιτικής και χρειάζονται fidelity report· τα συντάγματα μοντέλων είναι πιθανοτικά. Κενό: δεν ορίζεται η λογική των άρθρων — deontic τελεστές (LegalRuleML), εξαιρέσεις (default logic του Catala), επίλυση σύγκρουσης κανόνων (ODRL conflict). Το «S-expr + Lean» είναι σύνταξη, όχι σημασιολογία.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-13",
+    "SOTA-KGOV-14",
+    "SOTA-KGOV-12"
+   ],
+   "sources": [
+    {
+     "title": "Bedrock AR checks",
+     "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-automated-reasoning-checks.html",
+     "year": "2026"
+    },
+    {
+     "title": "Catala",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    },
+    {
+     "title": "LegalRuleML Core 1.0",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    },
+    {
+     "title": "ODRL Information Model 2.2",
+     "url": "https://www.w3.org/TR/odrl-model/",
+     "year": "2018"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-GOV-001",
+    "ADR-0009"
+   ],
+   "draft_ref": "19.md §19.2–§19.3· 22.md ADR-0009· 29.md REQ-GOV-001· 24.md KT-14/KT-15",
+   "draft_position": "Tiers με entrenchment. Tier 0: μόνο ο δημιουργός, με T_cool και επανεκτέλεση όλων των KT σε DST πριν το EFFECTIVE. Αλυσίδα PROPOSED→COURT_REVIEW→CREATOR_SIGNATURE→COMPILE_ROUNDTRIP→COOLING→DST_REPLAY→EFFECTIVE. Αναθεώρηση των SYSTEM- και ARCHITECTURE-CONSTITUTION, όχι τρίτο σύνταγμα· compiler = CPEI L10/Ω+1. REQ-GOV-001: VT-904, VT-301.",
+   "verdict": "holds",
+   "reasoning": "Tiers, ψύξη και δοκιμή πριν την ενεργοποίηση υπάρχουν σε παραγωγή (cooldown του Tezos σε test networks, tracks και enactment του OpenGov). Το roundtrip του compiler έχει προηγούμενο (Catala σε F*, Cedar DRT). Ελαττώματα: (α) τα «όλα τα KT σε DST» περιλαμβάνουν τα KT-14 (null baseline με προκαταχωρισμένη σύγκριση) και KT-15 (τυφλή σύγκριση με frontier LLM, commercial legal AI system (Harvey-class) και ανθρώπινη ομάδα), που δεν εκτελούνται σε ντετερμινιστική προσομοίωση· (β) δεν υπάρχει επισπευσμένη διαδρομή ούτε ακύρωση· (γ) το «όλα τα ενεργά Control Records επαναξιολογούνται» δεν ορίζει τι γίνεται με όσα αποτύχουν· (δ) το VT-301 (Lean nd_preserved_by_composition, INV-C01) δεν ελέγχει τη διαδικασία αναθεώρησης. Η έδρα στο άλλο repo είναι ανεπαλήθευτη. Αναζήτηση για μηχανικά ελέγξιμες διαδικασίες αναθεώρησης AI δεν βρήκε ανώτερο.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-18",
+    "SOTA-KGOV-13",
+    "SOTA-KGOV-01"
+   ],
+   "sources": [
+    {
+     "title": "Tezos governance",
+     "url": "https://docs.tezos.com/architecture/governance",
+     "year": "2026"
+    },
+    {
+     "title": "Polkadot OpenGov",
+     "url": "https://wiki.polkadot.com/learn/learn-polkadot-opengov/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-GOV-004"
+   ],
+   "draft_ref": "29.md REQ-GOV-004· master §0.3· 6.4.md· 22.md ADR-0001",
+   "draft_position": "Το GRAIL δεν προσθέτει νέο primitive και μόνο επεκτείνει υπάρχουσες έδρες (MDL-01, GOV-01· ICD-32· C05· VT-901· μέθοδος I).",
+   "verdict": "unknown",
+   "reasoning": "Τα 13 primitives και οι έδρες ζουν στο STAVROPOULOSLAWCORPUS, άλλο έργο, και δεν ελέγχονται από εδώ. Η προϋπόθεση της απαίτησης (ADR-0001: πακέτο στο deployment/grail/ του άλλου repo) συγκρούεται με τη σημερινή διάταξη: χωριστό repo και model στο SysON. Το VT-901 (traceability) δεν αποδεικνύει ότι δεν προστέθηκε primitive. Δεν υπάρχει εξωτερική SOTA για αυτή την εσωτερική αρχή.",
+   "superior": "",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "INV-C05",
+    "REQ-GOV-003"
+   ],
+   "draft_ref": "19.md §19.4 INV-C05· 29.md REQ-GOV-003· 28.md EP-04",
+   "draft_position": "Αναθεώρηση Tier 0/1, άνοιγμα φάσης, merge και R-C αλλαγή οργάνου ισχύουν μόνο με υπογραφή του δημιουργού (Owner-Root delegation) και Court record στο ledger· IdentityContinuity.tla (VT-102)· KT-23, VT-904.",
+   "verdict": "holds",
+   "reasoning": "Η αρχή συμφωνεί με το AI Act Art.14 (ανθρώπινο override). Επειδή είναι κρυπτογραφική, είναι ισχυρότερη από κειμενικές ιεραρχίες όπως το chain of command του Model Spec. Το Progent δείχνει το συμπλήρωμα για τα δικαιώματα: στένωση αυτόματα, διεύρυνση μόνο με έγκριση. Ανοιχτά: (α) ένα κλειδί είναι single point of failure· TUF (διπλό threshold σε root rotation) και FROST επιτρέπουν k-of-n κλειδιά του ίδιου δημιουργού, και το EP-04 του προχείρου ήδη επιτρέπει threshold σχήματα μόνο μεταξύ συσκευών του κυρίαρχου (KL-7)· (β) δεν ορίζεται διαδοχή σε ανικανότητα· (γ) δεν ορίζεται safe-halt. Τα KEY-LIFECYCLE και KL-7 δεν επαληθεύονται από εδώ.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-17",
+    "SOTA-KGOV-19",
+    "SOTA-KGOV-12",
+    "SOTA-KGOV-10"
+   ],
+   "sources": [
+    {
+     "title": "AI Act Article 14",
+     "url": "https://artificialintelligenceact.eu/article/14/",
+     "year": "2026"
+    },
+    {
+     "title": "TUF spec",
+     "url": "https://theupdateframework.github.io/specification/latest/",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 9591",
+     "url": "https://www.rfc-editor.org/rfc/rfc9591.html",
+     "year": "2024"
+    },
+    {
+     "title": "Progent",
+     "url": "https://arxiv.org/abs/2504.11703",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EP-12"
+   ],
+   "draft_ref": "28.md EP-12· 15.md ICD-15",
+   "draft_position": "Governance Mechanism: συμβόλαια ICD-14 και ICD-15· νέοι μηχανισμοί διαβούλευσης και συναίνεσης· προστασία: υπεροχή του Tier-0, INV-C05.",
+   "verdict": "holds",
+   "reasoning": "Σωστό ως [E]· υπάρχουν ώριμοι μηχανισμοί (CCAI, Tezos, OpenGov με conviction και delegation ανά track, IG 2.0). Το συμβόλαιο όμως δεν απαιτεί: (α) Sybil resistance — το ICD-15 έχει Fork(policy) και Birth, άρα μηχανισμός με μία ψήφο ανά οντότητα μπορεί να πολλαπλασιάσει ψήφους· (β) δηλωμένα quorum, supermajority, διαδικασία ακύρωσης και δικαίωμα πρότασης· (γ) κωδικοποίηση των κανόνων (Govern(procedure)) σε μορφή ελέγξιμη από το gate.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-18",
+    "SOTA-KGOV-12",
+    "SOTA-KGOV-13"
+   ],
+   "sources": [
+    {
+     "title": "Collective Constitutional AI",
+     "url": "https://arxiv.org/abs/2406.07814",
+     "year": "2024"
+    },
+    {
+     "title": "Polkadot OpenGov",
+     "url": "https://wiki.polkadot.com/learn/learn-polkadot-opengov/",
+     "year": "2026"
+    },
+    {
+     "title": "IG 2.0 Codebook",
+     "url": "https://arxiv.org/abs/2008.08937",
+     "year": "2024"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-GOV-005"
+   ],
+   "draft_ref": "29.md REQ-GOV-005· 19.md INV-C07",
+   "draft_position": "Κάθε επίδραση μένει εντός του δηλωμένου νόμιμου πεδίου ικανοτήτων· token εκτός πεδίου δεν εκδίδεται (KRN-11, KRN-05, LAW-09· ICD-08· VT-008).",
+   "verdict": "holds",
+   "reasoning": "Ο μηχανισμός υλοποιείται σήμερα (ντετερμινιστική Cedar στο όριο, AgentCore). Η νομιμότητα όμως δεν αποφασίζεται πλήρως κατά την έκδοση του token: τα AR checks εγγυώνται μόνο για το τυποποιημένο υποσύνολο, και η μετάφραση NL→policy χρειάζεται fidelity. Άρα το πεδίο πρέπει να οριστεί ως τυποποιημένο υποσύνολο + Unknown⇒άρνηση + INV-L02 για το υπόλοιπο, μαζί με έλεγχο προέλευσης των ορισμάτων.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KGOV-03",
+    "SOTA-KGOV-14",
+    "SOTA-KGOV-08"
+   ],
+   "sources": [
+    {
+     "title": "Policy in AgentCore",
+     "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html",
+     "year": "2026"
+    },
+    {
+     "title": "Bedrock AR checks",
+     "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails-automated-reasoning-checks.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-KGOV-01",
+   "title": "Έλεγχος προέλευσης ορισμάτων (IFC) στο gateway",
+   "description": "Το ICD-08 ελέγχει token, controls και domain, όχι όμως από πού προέρχεται κάθε όρισμα της επίδρασης. Το provenance tagging του §0.1/INV-S01 είναι σε επίπεδο καναλιού και δεν φτάνει στο InvokeEffect.",
+   "why_it_matters": "Χωρίς αυτό, τα INV-S01 και INV-L03 μπορούν να παραβιαστούν μέσα από εξουσιοδοτημένες κλήσεις.",
+   "sota_answer": "Capabilities/tags πάνω σε τιμές (CaMeL) και labels confidentiality/integrity με ντετερμινιστική επιβολή και τυπικές εγγυήσεις non-interference και explicit secrecy (FIDES).",
+   "sota_refs": [
+    "SOTA-KGOV-08",
+    "SOTA-KGOV-09"
+   ],
+   "sources": [
+    {
+     "title": "CaMeL",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "FIDES (HTML)",
+     "url": "https://arxiv.org/html/2505.23643",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-KGOV-02",
+   "title": "Σημασιολογία capability token",
+   "description": "Το glossary ορίζει το token ως unforgeable, scoped και χρονικά φραγμένο, αλλά δεν ορίζονται μορφή, attenuation, delegation chain, revocation, proof-of-possession ούτε διάδοση σε αλυσίδα οργάνων.",
+   "why_it_matters": "Χωρίς αυτά δεν τεκμηριώνονται το INV-S02, το KT-18 ούτε η προστασία από confused deputy.",
+   "sota_answer": "Biscuit (Datalog, offline attenuation, third-party blocks), UCAN 1.0 ή macaroons για attenuation· DPoP για PoP· Transaction Tokens για call chains· audience binding και απαγόρευση token passthrough όπως στο MCP 2026-07-28. Ερευνητικό προφίλ για αλυσίδες agents: AIP/IBCT (JWT single-hop, Biscuit multi-hop).",
+   "sota_refs": [
+    "SOTA-KGOV-07",
+    "SOTA-KGOV-21"
+   ],
+   "sources": [
+    {
+     "title": "UCAN spec",
+     "url": "https://github.com/ucan-wg/spec",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 9449",
+     "url": "https://www.rfc-editor.org/rfc/rfc9449.html",
+     "year": "2023"
+    },
+    {
+     "title": "Biscuit SPECIFICATIONS.md",
+     "url": "https://github.com/eclipse-biscuit/biscuit/blob/main/SPECIFICATIONS.md",
+     "year": "2026"
+    },
+    {
+     "title": "AIP: Agent Identity Protocol for Verifiable Delegation",
+     "url": "https://arxiv.org/abs/2603.24775",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-03",
+   "title": "Fail-open μέσω του skip-on-error του Cedar",
+   "description": "Στο Cedar, μια πολιτική (permit ή forbid) που σφάλλει παραλείπεται, και τα IDs της μπαίνουν στα diagnostics. Μετά το validation παραμένουν δυνατά overflow και missing entity· τα σφάλματα extension constructors τα αποκλείει το strict mode (προεπιλογή).",
+   "why_it_matters": "Αν ένα Control Record γίνει forbid και σφάλλει, το control δεν επιβάλλεται — το ίδιο CG-FAILOPEN, σε νέα θέση.",
+   "sota_answer": "Η τεκμηρίωση του Cedar αφήνει ρητά την εφαρμογή να αποφασίσει με βάση τα diagnostics: το PEP να θεωρεί deny κάθε απόφαση με μη κενά errors· strict validation (ήδη προεπιλογή)· πλήρη entities και schema χωρίς κίνδυνο overflow.",
+   "sota_refs": [
+    "SOTA-KGOV-01"
+   ],
+   "sources": [
+    {
+     "title": "Cedar authorization",
+     "url": "https://docs.cedarpolicy.com/auth/authorization.html",
+     "year": "2026"
+    },
+    {
+     "title": "Cedar validation",
+     "url": "https://docs.cedarpolicy.com/policies/validation.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-04",
+   "title": "Χρονικά και ακολουθιακά controls",
+   "description": "Τα Control Records έχουν λήξη, όχι όμως χρονική λογική: έγκριση πριν από επίδραση, budgets σε παράθυρο, απαγόρευση μετά από ανάκληση.",
+   "why_it_matters": "Τέτοιες συνθήκες απαιτούν τα INV-L02, INV-I04 και το KRN-08.",
+   "sota_answer": "Dogwood στο AgentCore (managed· ιστορικό ανά session, ≤24h, ≤25 policies ανά engine· ο ανοικτός reference interpreter όχι για παραγωγή)· επαληθευμένοι MFOTL monitors (Isabelle) πάνω στο ledger ως event stream· VIGIL (SMT πάνω σε traces, >95% recall, FPR <10%, χωρίς τυπική επαλήθευση).",
+   "sota_refs": [
+    "SOTA-KGOV-03",
+    "SOTA-KGOV-15",
+    "SOTA-KGOV-10"
+   ],
+   "sources": [
+    {
+     "title": "AgentCore temporal policies",
+     "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy-temporal.html",
+     "year": "2026"
+    },
+    {
+     "title": "Dogwood",
+     "url": "https://github.com/dogwood-policy/dogwood",
+     "year": "2026"
+    },
+    {
+     "title": "MFOTL Monitor",
+     "url": "https://www.isa-afp.org/entries/MFOTL_Monitor.html",
+     "year": "2019"
+    },
+    {
+     "title": "VIGIL",
+     "url": "https://arxiv.org/abs/2606.26524",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-KGOV-05",
+   "title": "Control evaluations απέναντι σε όργανα που συνεργάζονται",
+   "description": "Δεν υπάρχει adversarial αξιολόγηση των gate/gateway/registry με την υπόθεση ότι generators και verifiers συνεργάζονται.",
+   "why_it_matters": "Το PVC υποθέτει μη έμπιστα όργανα, αλλά η αντοχή του στην υπονόμευση δεν μετράται.",
+   "sota_answer": "Trusted editing, untrusted monitoring με anti-collusion, defer-to-trusted, resampling (Ctrl-Z) και control evaluations σε ControlArena.",
+   "sota_refs": [
+    "SOTA-KGOV-11"
+   ],
+   "sources": [
+    {
+     "title": "AI Control",
+     "url": "https://arxiv.org/abs/2312.06942",
+     "year": "2024"
+    },
+    {
+     "title": "Ctrl-Z",
+     "url": "https://arxiv.org/abs/2504.10374",
+     "year": "2025"
+    },
+    {
+     "title": "ControlArena",
+     "url": "https://github.com/UKGovernmentBEIS/control-arena",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-KGOV-06",
+   "title": "Αξιοπιστία της μαρτυρίας ικανοτήτων",
+   "description": "Το KRN-04 δεν προστατεύεται από sandbagging και δεν ορίζει στατιστικό κριτήριο για το τι μετρά ως υποβάθμιση.",
+   "why_it_matters": "Το ND ratchet και το KT-24 κινδυνεύουν από ψευδή θετικά και ψευδή αρνητικά.",
+   "sota_answer": "Error bars, paired comparisons και power analysis· ανίχνευση sandbagging με noise injection στα βάρη (ερευνητικό, NeurIPS 2025).",
+   "sota_refs": [
+    "SOTA-KGOV-20"
+   ],
+   "sources": [
+    {
+     "title": "AI Sandbagging",
+     "url": "https://arxiv.org/abs/2406.07358",
+     "year": "2024"
+    },
+    {
+     "title": "Noise Injection Reveals Hidden Capabilities of Sandbagging Language Models",
+     "url": "https://arxiv.org/abs/2412.01784",
+     "year": "2024"
+    },
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-KGOV-07",
+   "title": "Αδιάκριτη χρήση του γυμνού όρου capability",
+   "description": "Το glossary (§3, γρ.265–266) χωρίζει ρητά Capability (επαληθευμένη ικανότητα, «όχι permission») από Capability token (εξουσιοδότηση ocap). Ο γυμνός όρος όμως χρησιμοποιείται χωρίς προσδιορισμό: «capabilities» ως ουσία του πυρήνα (§0, §28.1), ICD-10 Invoke(capability, args), «Capability Gateway» που ελέγχει tokens, όχι ικανότητες.",
+   "why_it_matters": "Κίνδυνος σύγχυσης ανάμεσα στα INV-C01 (ικανότητα) και INV-C02/INV-S02 (εξουσία), και σύγκρουση με την καθιερωμένη ορολογία ασφάλειας.",
+   "sota_answer": "Στην ocap παράδοση, capability είναι unforgeable token που συνιστά δικαίωμα πρόσβασης (seL4).",
+   "sota_refs": [
+    "SOTA-KGOV-06"
+   ],
+   "sources": [
+    {
+     "title": "seL4 capabilities tutorial",
+     "url": "https://docs.sel4.systems/Tutorials/capabilities.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-08",
+   "title": "TTL έναντι μονοτονίας των Caps",
+   "description": "Το πρόχειρο δεν ορίζει τι σημαίνει η λήξη TTL μιας ικανότητας. Αν μειώνει το Caps χωρίς ND evidence ή Control, συγκρούεται με το INV-C01, που επιτρέπει μείωση μόνο με αυτές τις δύο μορφές.",
+   "why_it_matters": "Κίνδυνος σιωπηρής υποβάθμισης ακριβώς εκεί που το πρόχειρο την απαγορεύει.",
+   "sota_answer": "Η λήξη να καταγράφεται ως ρητή κατάσταση (stale-evidence) ή ως ρητό Control Record. Αναλογία: το TUF έχει ρητό expiration στα metadata, με ντετερμινιστική αντίδραση του client.",
+   "sota_refs": [
+    "SOTA-KGOV-17"
+   ],
+   "sources": [
+    {
+     "title": "TUF spec",
+     "url": "https://theupdateframework.github.io/specification/latest/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-09",
+   "title": "«Επιβολή μόνο στο KRN-11» έναντι πολλαπλών σημείων επιβολής",
+   "description": "Το INV-C02 και το glossary λένε ότι τα controls επιβάλλονται μόνο στο KRN-11. Όμως το ICD-05 έχει καταναλωτές τα KRN-06/08 και COG-01, το TB-4 επιβάλλει residency στο Inference Gateway, το INV-L03 επιβάλλεται και στα KRN-08/COG-01, και το ICD-29 έχει EraseByControl.",
+   "why_it_matters": "Είτε το invariant είναι ψευδές, είτε όλα αυτά πρέπει να περνούν από το gateway.",
+   "sota_answer": "Ένας PDP με πολλά, ρητά καταγεγραμμένα PEPs που μιλούν τυποποιημένο πρωτόκολλο PEP↔PDP (AuthZEN 1.0).",
+   "sota_refs": [
+    "SOTA-KGOV-05"
+   ],
+   "sources": [
+    {
+     "title": "OpenID AuthZEN WG",
+     "url": "https://openid.net/wg/authzen/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-10",
+   "title": "Ορατότητα των controls έναντι εμπιστευτικότητας",
+   "description": "Το INV-C02 επιβάλλει να εμφανίζεται το control_id σε κάθε άρνηση προς κάθε επηρεαζόμενο.",
+   "why_it_matters": "Αυτό μπορεί να παραβιάσει το INV-L03 (π.χ. control σύγκρουσης συμφερόντων που αφορά άλλον πελάτη).",
+   "sota_answer": "Η AWS αποκαλύπτει τον τύπο της πολιτικής και μόνο σε ορισμένες περιπτώσεις το ARN της.",
+   "sota_refs": [
+    "SOTA-KGOV-04"
+   ],
+   "sources": [
+    {
+     "title": "IAM access denied messages",
+     "url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/troubleshoot_access-denied.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-11",
+   "title": "Το σχήμα του Gate Verdict και του proof_ref",
+   "description": "Το πρόχειρο δεν ορίζει τι είναι το proof_ref ούτε διακρίνει formal proof, εμπειρική μαρτυρία (π.χ. ND από benchmarks) και απλή υπογραφή.",
+   "why_it_matters": "Το COMMITTED θα φαίνεται να σημαίνει «αποδεδειγμένο» ακόμη κι όταν στηρίζεται μόνο σε μέτρηση.",
+   "sota_answer": "VSA/in-toto: verifier, policy URI+digest, resource, result, υπογεγραμμένο envelope. Αντικείμενα απόδειξης ανά απόφαση δεν βρέθηκαν σε κανένα PDP παραγωγής.",
+   "sota_refs": [
+    "SOTA-KGOV-16"
+   ],
+   "sources": [
+    {
+     "title": "SLSA VSA",
+     "url": "https://slsa.dev/spec/v1.2/verification_summary",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-KGOV-12",
+   "title": "Ελαττώματα της διαδικασίας αναθεώρησης",
+   "description": "Η επανεκτέλεση όλων των KT σε DST είναι ανέφικτη για τα KT-14 και KT-15, που απαιτούν προκαταχωρισμένες συγκρίσεις με εξωτερικούς συγκριτές και ανθρώπινη ομάδα. Δεν υπάρχει επισπευσμένη διαδρομή ούτε ακύρωση, και δεν ορίζεται τι γίνεται με τα Control Records που αποτυγχάνουν στην επαναξιολόγηση.",
+   "why_it_matters": "Χωρίς αυτά, το Tier 0 είτε δεν ενεργοποιείται ποτέ είτε μένει ανυπεράσπιστο σε κρίση ασφάλειας.",
+   "sota_answer": "OpenGov: Fellowship whitelist για επισπευσμένη διαδρομή και Referendum Canceller/Killer· Tezos: cooldown με δοκιμές σε test networks.",
+   "sota_refs": [
+    "SOTA-KGOV-18"
+   ],
+   "sources": [
+    {
+     "title": "Polkadot OpenGov",
+     "url": "https://wiki.polkadot.com/learn/learn-polkadot-opengov/",
+     "year": "2026"
+    },
+    {
+     "title": "Tezos governance",
+     "url": "https://docs.tezos.com/architecture/governance",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-13",
+   "title": "Safe-halt (stop)",
+   "description": "Δεν ορίζεται control που σταματά το σύστημα σε ασφαλή κατάσταση, ούτε η σημασιολογία αυτής της κατάστασης.",
+   "why_it_matters": "Για high-risk χρήσεις, το AI Act Art.14(4)(e) απαιτεί «stop» button ή ανάλογη διαδικασία που σταματά το σύστημα σε ασφαλή κατάσταση· ο δημιουργός χρειάζεται ανώτατο φρένο.",
+   "sota_answer": "Art.14(4)(d)–(e): μη χρήση, override/reverse της εξόδου, διακοπή σε ασφαλή κατάσταση.",
+   "sota_refs": [
+    "SOTA-KGOV-19"
+   ],
+   "sources": [
+    {
+     "title": "AI Act Article 14",
+     "url": "https://artificialintelligenceact.eu/article/14/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-14",
+   "title": "Ασυνέπειες σήμανσης και ανεπαλήθευτα artifacts",
+   "description": "Το KRN-06/ICD-06 ορίζει Lisp reference, ενώ το ADR-0028 υιοθετεί Lean 4 reference semantics για την πλατφόρμα σχεδίασης· δεν δηλώνεται ποιο είναι το αυθεντικό spec. Η γλώσσα πολιτικής είναι [T] στο KRN-05 και [X] στο ADR-0010. Το §19 δεν έχει ενσωματωθεί. Οι §20–§21, §23 και §25 δεν γράφτηκαν. Το vocab δηλώνει 76 CMP αλλά απαριθμεί 75. Τα VT-203, VT-302 και VT-904 δεν επαληθεύτηκαν από εδώ. Οι έδρες CG-FAILOPEN, approval-policy και Δ3 δεν επαληθεύονται από εδώ.",
+   "why_it_matters": "Παραβιάζονται οι νόμοι «0 λάθος» και «μία έδρα ανά έννοια».",
+   "sota_answer": "Δεν αφορά εξωτερική SOTA· είναι διόρθωση του προχείρου.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KGOV-15",
+   "title": "Sybil μέσω fork στους μηχανισμούς διακυβέρνησης",
+   "description": "Το ICD-15 έχει Fork(policy) και Birth(charter), που δημιουργούν νέες οντότητες. Κάθε μηχανισμός με ψήφο ανά οντότητα αποκτά έτσι φθηνές νέες ψήφους.",
+   "why_it_matters": "Μηχανισμός του EP-12 με ψήφο ανά οντότητα μπορεί να καταληφθεί.",
+   "sota_answer": "Βάρος ψήφου δεμένο σε πόρο που δεν πολλαπλασιάζεται: conviction voting με κλείδωμα tokens στο OpenGov, voting power από staking balance στο Tezos.",
+   "sota_refs": [
+    "SOTA-KGOV-18"
+   ],
+   "sources": [
+    {
+     "title": "Polkadot OpenGov",
+     "url": "https://wiki.polkadot.com/learn/learn-polkadot-opengov/",
+     "year": "2026"
+    },
+    {
+     "title": "Tezos governance",
+     "url": "https://docs.tezos.com/architecture/governance",
+     "year": "2026"
+    }
+   ],
+   "classification": "extension"
+  },
+  {
+   "id": "GAP-KGOV-16",
+   "title": "Συνέπεια μεταξύ Decide και ανάκλησης",
+   "description": "Το Decide δεν δένεται σε cut του ledger.",
+   "why_it_matters": "Μπορεί να εκτελεστεί επίδραση μετά την ανάκληση του σχετικού control (new-enemy problem).",
+   "sota_answer": "Zanzibar: zookies (opaque timestamp) και external consistency, ώστε οι αιτιακά διατεταγμένες αλλαγές ACL να γίνονται σεβαστές.",
+   "sota_refs": [
+    "SOTA-KGOV-05"
+   ],
+   "sources": [
+    {
+     "title": "Zanzibar",
+     "url": "https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/",
+     "year": "2019"
+    },
+    {
+     "title": "Zanzibar paper, annotated copy (AuthZed)",
+     "url": "https://zanzibar.tech/",
+     "year": "2019"
+    }
+   ],
+   "classification": "today"
+  }
+ ],
+ "unknowns": [
+  "ISO/IEC 42001:2023: η τρέχουσα κατάσταση και το περιεχόμενο δεν επαληθεύτηκαν (ο ερευνητής αναφέρει 403 από το iso.org).",
+  "Αν το Policy in AgentCore και τα temporal policies είναι GA ή preview: δεν επιβεβαιώθηκε (η policy page, το doc-history και η σελίδα προϊόντος δεν το δηλώνουν).",
+  "Αν κάποιο PDP σε παραγωγή εκδίδει μηχανικά ελέγξιμη απόδειξη ανά απόφαση: δεν βρέθηκε.",
+  "Το περιεχόμενο του NIST SP 800-162 για PEP/PDP/PAP δεν επαληθεύτηκε: η landing page δεν το αναφέρει και το PDF δεν αναγνώστηκε εδώ.",
+  "Αν η διατριβή Robust Composition χρησιμοποιεί ρητά τους όρους object-capability, POLA και ambient authority: δεν επαληθεύτηκε (η abstract page δεν τους περιέχει· το erights.org δεν ήταν προσβάσιμο).",
+  "Η ακριβής ημερομηνία του WASI 0.3.0: η σελίδα releases την έδωσε ως 2025-06-11, αλλά η ακολουθία των releases είναι ασαφής· επιβεβαιώνεται μόνο ότι έχει κυκλοφορήσει.",
+  "Αν το Digital Omnibus μετέθεσε ρητά τις ημερομηνίες Annex III/Annex I: το timeline δίνει 2027-12-02 και 2028-08-02 χωρίς να τις αποδίδει στο Omnibus.",
+  "Το Habermas Machine (Science 2024) και το Knight–Leveson (1986) δεν ήταν προσβάσιμα· δεν χρησιμοποιήθηκαν.",
+  "Τα components του IG 2.0 πέρα από regulative/constitutive statements δεν επαληθεύτηκαν.",
+  "Η τρέχουσα κατάσταση του Symboleo δεν επαληθεύτηκε.",
+  "Η κατάσταση των εδρών constitutional-gate (CG-FAILOPEN), approval-policy.lisp, capability-registry, KEY-LIFECYCLE και KL-7 στο άλλο repo: ανεπαλήθευτη.",
+  "Αν οι χρήσεις του LAWMAX είναι high-risk κατά τον AI Act: εκτός εμβέλειας (EXP-19).",
+  "Η χρησιμότητα του FIDES σε σύγκριση με planner χωρίς άμυνα: το paper αναφέρει καλύτερο task completion από basic planner όταν και οι δύο εφαρμόζουν policy checks· η πλήρης σύγκριση δεν αναπαράχθηκε εδώ.",
+  "Αν ο Dogwood έχει τυπική απόδειξη: δεν βρέθηκε καμία ένδειξη.",
+  "Ο έλεγχος «holds» για αυστηρά ανώτερες εναλλακτικές έγινε με 4 στοχευμένες αναζητήσεις arXiv, επειδή εξαντλήθηκε το budget του WebSearch· δεν καλύπτει βιομηχανικά συστήματα εκτός arXiv."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-KGOV-01",
+   "question": "Πού εδράζεται το σύνταγμα του GRAIL;",
+   "recommendation": "Δικό του πακέτο Constitution στο model GRAIL-World-OS, με crosswalk προς τα συντάγματα του LAWMAX-Ω και χωρίς αλλαγές σε εκείνο το repo.",
+   "alternatives": [
+    {
+     "option": "Αναθεώρηση του SYSTEM-CONSTITUTION στο άλλο repo (ADR-0009, ADR-0001: deployment/grail/)",
+     "pros": "Μία έδρα, συνέχεια με το υπάρχον πρωτότυπο.",
+     "cons": "Συγκρούεται με τη σημερινή εντολή εργασίας· δεν επαληθεύεται από εδώ."
+    },
+    {
+     "option": "Δικό του πακέτο με crosswalk",
+     "pros": "Συμφωνεί με τον διαχωρισμό των έργων και με τη Φάση Β.",
+     "cons": "Χρειάζεται ρητό κανόνα για το ποια έδρα υπερισχύει σε σύγκρουση· ανοίγει κίνδυνο δεύτερης έδρας."
+    }
+   ],
+   "rationale": "Το CLAUDE.md ορίζει το LAWMAX-Ω ως άλλο έργο, ενώ το REQ-GOV-004 και το §0.3(3δ) προϋποθέτουν αλλαγές εκεί.",
+   "affects_ids": [
+    "ADR-0009",
+    "REQ-GOV-004",
+    "CMP-GOV-01",
+    "CMP-KRN-06"
+   ]
+  },
+  {
+   "id": "DEC-KGOV-02",
+   "question": "Σε ποια γλώσσα γράφονται τα Control Records;",
+   "recommendation": "Cedar για τα stateless controls, με PEP που θεωρεί άρνηση κάθε απόφαση με diagnostics.errors· χρονικά controls μέσω επαληθευμένου monitor πάνω στο ledger ([X]).",
+   "alternatives": [
+    {
+     "option": "Cedar + fail-closed PEP",
+     "pros": "Αποδείξεις σε Lean, SMT analysis, παραγωγή (AVP, AgentCore).",
+     "cons": "Skip-on-error που πρέπει να αντισταθμιστεί στο PEP· stateless· δεύτερη έδρα δίπλα στο approval-policy."
+    },
+    {
+     "option": "Επέκταση του approval-policy (s-expr) με δική μας σημασιολογία σε Lean",
+     "pros": "Μία έδρα.",
+     "cons": "Όλη η επαλήθευση και η ανάλυση από την αρχή."
+    },
+    {
+     "option": "OPA/Rego",
+     "pros": "Γενικότητα, CNCF Graduated, ώριμο οικοσύστημα.",
+     "cons": "Δεν βρέθηκε μηχανικά αποδεδειγμένη σημασιολογία ή SMT ανάλυση ισοδύναμη του Cedar (η αναζήτηση δεν ήταν εξαντλητική)."
+    },
+    {
+     "option": "Dogwood",
+     "pros": "Χρονικές συνθήκες, συμβατό με Cedar.",
+     "cons": "Ο ανοικτός reference interpreter δεν είναι για παραγωγή· η μόνη υλοποίηση για παραγωγή είναι η managed υπηρεσία AWS (cloud, session-scoped, ≤24h)."
+    }
+   ],
+   "rationale": "Ο δημιουργός πρέπει να επιλέξει τη σημασιολογία των controls πριν από το πακέτο Constitution.",
+   "affects_ids": [
+    "ADR-0010",
+    "CMP-KRN-05",
+    "ICD-05",
+    "INV-C02"
+   ]
+  },
+  {
+   "id": "DEC-KGOV-03",
+   "question": "Ποιο είναι το reference semantics του Constitution Gate;",
+   "recommendation": "Εκτελέσιμο spec σε Lean 4 με αποδείξεις και DRT έναντι Rust· το Lisp μόνο ως μεταβατική τρίτη υλοποίηση. Ευθυγραμμίζεται με το ADR-0028.",
+   "alternatives": [
+    {
+     "option": "Rust + Lisp N-version (KRN-06/ICD-06)",
+     "pros": "Αξιοποιεί υπάρχοντα κώδικα.",
+     "cons": "Κανένα αποδεδειγμένο reference· ασαφής σχέση με το Lean του ADR-0028."
+    },
+    {
+     "option": "Lean spec + DRT",
+     "pros": "Το υπαρκτό ανώτερο (VGD του Cedar).",
+     "cons": "Κόστος αποδείξεων· χρειάζεται πείραμα εκφραστικότητας για τα συνταγματικά κατηγορήματα."
+    }
+   ],
+   "rationale": "Το ICD-06 και το σχήμα του Gate Verdict εξαρτώνται από αυτή την επιλογή.",
+   "affects_ids": [
+    "CMP-KRN-06",
+    "ICD-06",
+    "CMP-GOV-01"
+   ]
+  },
+  {
+   "id": "DEC-KGOV-04",
+   "question": "Μπαίνει IFC στο Capability Gateway;",
+   "recommendation": "Ναι στο συμβόλαιο από τώρα (πεδία labels ορισμάτων στο ICD-08)· η επιβολή μετά από πείραμα χρησιμότητας και TCB.",
+   "alternatives": [
+    {
+     "option": "Τώρα",
+     "pros": "Κλείνει το injection που περνά μέσα από εξουσιοδοτημένες κλήσεις.",
+     "cons": "Κόστος χρησιμότητας· ο planner/interpreter μπαίνει στο TCB."
+    },
+    {
+     "option": "Ως EP για αργότερα",
+     "pros": "Απλότητα.",
+     "cons": "Αλλαγή kernel contract μετά το freeze, άρα συνταγματική πράξη."
+    },
+    {
+     "option": "Όχι",
+     "pros": "Καμία επιπλέον πολυπλοκότητα.",
+     "cons": "Τα INV-S01 και INV-L03 μένουν εκτεθειμένα."
+    }
+   ],
+   "rationale": "Είναι αλλαγή kernel contract· το πρόχειρο (15.md §15.1) ορίζει ότι τα ICD-01…ICD-12 παγώνουν στην έξοδο του GP-1 και ότι κάθε μεταγενέστερη αλλαγή είναι συνταγματική πράξη (INV-C05).",
+   "affects_ids": [
+    "CMP-KRN-11",
+    "ICD-08",
+    "REQ-GOV-005"
+   ]
+  },
+  {
+   "id": "DEC-KGOV-05",
+   "question": "Πόσο ορατά είναι τα controls;",
+   "recommendation": "Κλιμακωτή ορατότητα: τύπος + opaque αναφορά προς όργανα και πελάτες· πλήρες control στον δημιουργό και στον Principal.",
+   "alternatives": [
+    {
+     "option": "Πλήρες control_id σε όλους (πρόχειρο)",
+     "pros": "Μέγιστη διαφάνεια.",
+     "cons": "Κίνδυνος διαρροής εμπιστευτικών πληροφοριών (INV-L03)."
+    },
+    {
+     "option": "Κλιμακωτή",
+     "pros": "Προηγούμενο AWS· σέβεται το INV-L03.",
+     "cons": "Πιο σύνθετο· χρειάζεται κανόνα για το ποιος βλέπει τι."
+    }
+   ],
+   "rationale": "Σύγκρουση μεταξύ ενός Tier-0 (INV-C02) και ενός Tier-1 (INV-L03) invariant.",
+   "affects_ids": [
+    "INV-C02",
+    "ICD-05",
+    "ICD-08"
+   ]
+  },
+  {
+   "id": "DEC-KGOV-06",
+   "question": "Πώς εξασφαλίζεται η συνέχεια της κυριαρχίας του δημιουργού;",
+   "recommendation": "k-of-n κλειδιά του ίδιου δημιουργού (TUF-style διπλό threshold σε rotation, ή FROST), όπως ήδη επιτρέπει το EP-04 (μόνο μεταξύ συσκευών του κυρίαρχου, KL-7)· η διαδοχή μένει ρητή απόφαση του δημιουργού.",
+   "alternatives": [
+    {
+     "option": "Ένα κλειδί (πρόχειρο)",
+     "pros": "Απλότητα.",
+     "cons": "Single point of failure."
+    },
+    {
+     "option": "k-of-n κλειδιά ενός προσώπου",
+     "pros": "Συμβατό με EP-04/KL-7.",
+     "cons": "Περισσότερη λειτουργική πολυπλοκότητα."
+    },
+    {
+     "option": "Ορισμένος διάδοχος",
+     "pros": "Επιβίωση σε ανικανότητα.",
+     "cons": "Πιθανώς απαιτεί αναθεώρηση Tier 0 (Art.1, KL-7)."
+    }
+   ],
+   "rationale": "Αγγίζει το INV-C05 (Tier 0).",
+   "affects_ids": [
+    "INV-C05",
+    "REQ-GOV-003",
+    "ICD-06"
+   ]
+  },
+  {
+   "id": "DEC-KGOV-07",
+   "question": "Χρειάζονται επισπευσμένη αναθεώρηση και safe-halt;",
+   "recommendation": "Ναι: track ασφάλειας με sunset και υποχρεωτική εκ των υστέρων επικύρωση· safe-halt ως control του δημιουργού· DST μόνο για KT που εκτελούνται σε προσομοίωση, και ξεχωριστή οδός για τα KT-14/KT-15.",
+   "alternatives": [
+    {
+     "option": "Όπως στο πρόχειρο",
+     "pros": "Μέγιστη ακαμψία.",
+     "cons": "Αδύνατη αντίδραση σε κρίση· ανέφικτο DST για τα KT-14/KT-15· κανένα safe-halt."
+    },
+    {
+     "option": "Επισπευσμένο track + safe-halt",
+     "pros": "Προηγούμενο OpenGov (whitelist, Canceller/Killer) για το track· AI Act Art.14(4)(e) για το safe-halt.",
+     "cons": "Νέα επιφάνεια κατάχρησης· αλλάζει Tier-0 διαδικασία."
+    }
+   ],
+   "rationale": "Αλλάζει τη Tier-0 διαδικασία (entrenchment).",
+   "affects_ids": [
+    "REQ-GOV-001",
+    "ADR-0009",
+    "ICD-06"
+   ]
+  },
+  {
+   "id": "DEC-KGOV-08",
+   "question": "Πώς ονομάζονται ικανότητα και εξουσία;",
+   "recommendation": "Capability = εξουσία (token), κατά την ocap ορολογία· η επαληθευμένη ικανότητα παίρνει νέο όνομα (π.χ. competence) και απαγορεύεται ο γυμνός όρος.",
+   "alternatives": [
+    {
+     "option": "Capability = εξουσία, νέο όνομα για την ικανότητα",
+     "pros": "Ocap παράδοση· εξαλείφει την αμφισημία.",
+     "cons": "Μετονομασία στα KRN-04, ICD-04, INV-C01 και στο glossary."
+    },
+    {
+     "option": "Διατήρηση του glossary (Capability vs Capability token) με υποχρεωτικό προσδιορισμό παντού",
+     "pros": "Μικρότερη αλλαγή· το glossary ήδη τα χωρίζει.",
+     "cons": "Ο κίνδυνος σύγχυσης μένει· συγκρούεται με την ορολογία της ασφάλειας."
+    }
+   ],
+   "rationale": "Το λεξιλόγιο είναι δεσμευτικό και το εγκρίνει μόνο ο δημιουργός.",
+   "affects_ids": [
+    "CMP-KRN-04",
+    "ICD-04",
+    "CMP-KRN-11",
+    "ICD-08",
+    "REQ-GOV-002"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 97,
+  "sources_failed": [
+   {
+    "url": "https://research.google/pubs/zanzibar-googles-consistent-global-authorization-system/",
+    "problem": "Η landing page επιβεβαιώνει ATC 2019 και external consistency, όχι όμως zookies, relation tuples ή new-enemy· τα https://www.usenix.org/system/files/atc19-pang.pdf και https://www.usenix.org/conference/atc19/presentation/pang επέστρεψαν 403.",
+    "action": "Προστέθηκε το https://zanzibar.tech/ (annotated αντίγραφο του paper), που επιβεβαιώνει zookies, tuples, new-enemy και external consistency."
+   },
+   {
+    "url": "https://csrc.nist.gov/pubs/sp/800/162/upd2/final",
+    "problem": "Επιβεβαιώνει ABAC και τις ημερομηνίες 2014/2019, όχι όμως PEP/PDP/PAP· το PDF (https://nvlpubs.nist.gov/nistpubs/specialpublications/NIST.SP.800-162.pdf) δεν αναγνώστηκε (δεν υπάρχει τοπικός PDF parser).",
+    "action": "Αφαιρέθηκε ως πηγή για PAP/PDP/PEP στα ICD-05 και GAP-KGOV-09· αντικαταστάθηκε από το AuthZEN (PEP↔PDP). Παραμένει στο SOTA-KGOV-05 μόνο για το ABAC."
+   },
+   {
+    "url": "https://papers.agoric.com/papers/robust-composition/abstract/",
+    "problem": "Η σελίδα δεν περιέχει τους όρους object-capability, POLA ή ambient authority· το http://www.erights.org/talks/thesis/ δεν ήταν προσβάσιμο (ECONNREFUSED)· το https://papers.agoric.com/papers/robust-composition/full-text/ είναι μόνο metadata.",
+    "action": "Ο ισχυρισμός για τον Miller περιορίστηκε σε ό,τι λέει το abstract· το «χωρίς ambient authority» αποδίδεται στο WASI και το «capability = unforgeable token/δικαίωμα» στο seL4. Στο GAP-KGOV-07 η πηγή άλλαξε σε seL4."
+   },
+   {
+    "url": "https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization",
+    "problem": "Περιεχόμενο σωστό, αλλά η τρέχουσα έκδοση του spec είναι η 2026-07-28 (https://modelcontextprotocol.io/specification/latest).",
+    "action": "Αντικαταστάθηκε από το https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization, που διατηρεί RFC 8707/audience validation και την απαγόρευση αποδοχής ή διαμετακόμισης άλλων tokens."
+   },
+   {
+    "url": "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html",
+    "problem": "Δεν δηλώνει GA ή preview· το https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/doc-history.html επέστρεψε κενό και το https://aws.amazon.com/bedrock/agentcore/ δεν αναφέρει καθεστώς.",
+    "action": "Maturity παραμένει pilot· το ερώτημα μένει στα unknowns."
+   },
+   {
+    "url": "https://github.com/dogwood-policy/dogwood",
+    "problem": "Επιβεβαιώνει ότι ο reference interpreter δεν είναι για παραγωγή· ο ερευνητής όμως το επέκτεινε στα temporal policies του AgentCore (GAP-KGOV-04, DEC-KGOV-02).",
+    "action": "Διαχωρίστηκε ο ανοικτός interpreter από τη managed υπηρεσία AWS."
+   },
+   {
+    "url": "https://arxiv.org/abs/2407.01688",
+    "problem": "Η πηγή είναι σωστή, αλλά το draft_point του KRN-06 ανέφερε λανθασμένα «21 στην υλοποίηση, 4 στο μοντέλο».",
+    "action": "Διορθώθηκε: οι αποδείξεις βρήκαν 4 bugs στον validator και το DRT/PBT 21 σε άλλα μέρη."
+   },
+   {
+    "url": "https://docs.sel4.systems/Tutorials/capabilities.html",
+    "problem": "Δεν περιγράφει τη σημασιολογία του Mint ούτε την τυπική επαλήθευση.",
+    "action": "Προστέθηκαν https://docs.sel4.systems/projects/sel4/api-doc.html (Mint: rights+badge· Revoke: όλα τα children) και https://sel4.systems/About/ (formal verification)."
+   },
+   {
+    "url": "https://doc.biscuitsec.org/",
+    "problem": "Η αρχική σελίδα δεν αναφέρει Datalog ούτε third-party blocks.",
+    "action": "Προστέθηκε το https://github.com/eclipse-biscuit/biscuit/blob/main/SPECIFICATIONS.md, που επιβεβαιώνει Datalog, third-party blocks και v3.3."
+   },
+   {
+    "url": "https://arxiv.org/abs/2506.08837",
+    "problem": "Το abstract δεν απαριθμεί τα patterns.",
+    "action": "Επαληθεύτηκαν από το https://arxiv.org/html/2506.08837· η πηγή άλλαξε σε HTML."
+   },
+   {
+    "url": "https://github.com/UKGovernmentBEIS/control-arena",
+    "problem": "Αναφέρει 18 settings, όχι «16+».",
+    "action": "Διορθώθηκε σε 18."
+   },
+   {
+    "url": "https://docs.sigstore.dev/policy-controller/overview/",
+    "problem": "Το «admission fail-closed» ισχύει ως προεπιλογή μόνο σε namespaces με opt-in· υπάρχουν warn mode και no-match-policy allow/warn.",
+    "action": "Προστέθηκε η απόχρωση στο SOTA-KGOV-16."
+   },
+   {
+    "url": "https://github.com/ucan-wg/spec",
+    "problem": "Το revocation είναι RECOMMENDED, όχι REQUIRED.",
+    "action": "Διορθώθηκε στο SOTA-KGOV-07."
+   },
+   {
+    "url": "https://www.rfc-editor.org/rfc/rfc9591.html",
+    "problem": "Το RFC 9591 είναι Informational (CFRG), όχι Standards Track.",
+    "action": "Σημειώθηκε στο SOTA-KGOV-17."
+   },
+   {
+    "url": "https://docs.cedarpolicy.com/policies/validation.html",
+    "problem": "Το strict mode (προεπιλογή) αποκλείει τα σφάλματα extension constructors· ο ερευνητής τα παρουσίασε ως ανοιχτό κίνδυνο.",
+    "action": "Το GAP-KGOV-03 περιορίστηκε σε overflow και missing entity."
+   },
+   {
+    "url": "https://arxiv.org/abs/2505.23643",
+    "problem": "Το abstract δεν επιβεβαιώνει «dynamic taint tracking» ούτε την υπαγωγή στη Microsoft.",
+    "action": "Επαληθεύτηκε από το https://arxiv.org/html/2505.23643 (Microsoft· non-interference για integrity και explicit secrecy)· αναδιατυπώθηκε."
+   },
+   {
+    "url": "https://www.openpolicyagent.org/docs/management-decision-logs",
+    "problem": "Η τεκμηρίωση απλώς δεν αναφέρει υπογραφή· το «δεν υπογράφονται» ήταν ισχυρότερο από την πηγή.",
+    "action": "Αναδιατυπώθηκε σε «η τεκμηρίωση δεν αναφέρει υπογραφή»."
+   },
+   {
+    "url": "https://github.com/invariantlabs-ai/invariant",
+    "problem": "Το README περιγράφει Python-inspired matching rules μέσω proxy, όχι ρητά «rules πάνω σε traces».",
+    "action": "Αναδιατυπώθηκε η περιγραφή."
+   }
+  ],
+  "corrections": [
+   {
+    "target": "draft_points[CMP-KRN-06, ICD-06].reasoning",
+    "change": "«21 στην υλοποίηση, 4 στο μοντέλο» → «οι αποδείξεις βρήκαν 4 bugs στον validator και το DRT/PBT 21 σε άλλα μέρη».",
+    "reason": "Abstract του arXiv 2407.01688."
+   },
+   {
+    "target": "draft_points[CMP-KRN-06, ICD-06] και GAP-KGOV-14",
+    "change": "Η «αντίφαση με το ADR-0028» έγινε «ασάφεια»: το ADR-0028 ορίζει Lean 4 reference semantics για την πλατφόρμα σχεδίασης, ενώ τα KRN-06/ICD-06 ορίζουν Lisp reference χωρίς δηλωμένη ιεραρχία.",
+    "reason": "22.md: το ADR-0028 αφορά την Genesis Design Platform· Lean spec και Lisp interpreter μπορούν να συνυπάρχουν."
+   },
+   {
+    "target": "draft_points[CMP-KRN-06, ICD-06].superior",
+    "change": "Προστέθηκε ρητό trade-off: κόστος αποδείξεων και αβεβαιότητα αν τα συνταγματικά κατηγορήματα χωρούν σε αποφασίσιμο fragment.",
+    "reason": "Κανόνας 3: το «αυστηρά ανώτερο» απαιτεί δηλωμένο trade-off."
+   },
+   {
+    "target": "draft_points[CMP-KRN-11, ICD-08]",
+    "change": "Σημειώθηκε ότι το πρόχειρο ήδη έχει provenance-tagged κανάλια (§0.1, INV-S01) και ορίζει στο glossary το token ως unforgeable/scoped/χρονικά φραγμένο· στο trade-off προστέθηκε η διεύρυνση του TCB (planner/interpreter).",
+    "reason": "Ανάγνωση master §0.1, §3 γρ.266 και 19.md INV-S01· δίκαιη απόδοση του προχείρου."
+   },
+   {
+    "target": "GAP-KGOV-07, DEC-KGOV-08, draft_points[CMP-KRN-04, ICD-04, REQ-GOV-002]",
+    "change": "Το «ο όρος σημαίνει δύο έννοιες» έγινε «το glossary χωρίζει Capability από Capability token, αλλά ο γυμνός όρος χρησιμοποιείται αδιάκριτα»· νέα εναλλακτική στο DEC-KGOV-08.",
+    "reason": "master γρ.265–266: δύο ξεχωριστές εγγραφές glossary."
+   },
+   {
+    "target": "GAP-KGOV-08, draft_points[CMP-KRN-04, ICD-04, REQ-GOV-002]",
+    "change": "Το «παραβιάζει το INV-C01» έγινε «δεν ορίζεται· αν μειώνει το Caps, συγκρούεται».",
+    "reason": "Το INV-C01 ποσοτικοποιεί πάνω σε δομικές μεταβάσεις T· η σημασία της λήξης TTL δεν ορίζεται στο πρόχειρο."
+   },
+   {
+    "target": "SOTA-KGOV-05, draft_points[ICD-05], GAP-KGOV-09",
+    "change": "Αφαιρέθηκε η απόδοση PAP/PDP/PEP στο SP 800-162· χρησιμοποιείται το AuthZEN.",
+    "reason": "Δεν επαληθεύτηκε από προσβάσιμη πηγή."
+   },
+   {
+    "target": "SOTA-KGOV-06",
+    "change": "Οι ισχυρισμοί για τον Miller περιορίστηκαν· προστέθηκαν seL4 API doc και About (Mint/Revoke, formal verification)· το WASI 0.3 χωρίς ημερομηνία.",
+    "reason": "Επαλήθευση πηγών."
+   },
+   {
+    "target": "SOTA-KGOV-07",
+    "change": "MCP στην έκδοση 2026-07-28· UCAN revocation RECOMMENDED· Biscuit v3.3 με Datalog και third-party blocks από το SPECIFICATIONS.md.",
+    "reason": "Τρέχουσα κατάσταση και ακρίβεια."
+   },
+   {
+    "target": "SOTA-KGOV-03, GAP-KGOV-04, DEC-KGOV-02",
+    "change": "Το «όχι production» αφορά μόνο τον ανοικτό interpreter του Dogwood· προστέθηκε ότι το session ID το δίνει ο καλών και ότι την ακύρωση sessions την προκαλεί αλλαγή temporal policy.",
+    "reason": "Τεκμηρίωση AgentCore και README του Dogwood."
+   },
+   {
+    "target": "GAP-KGOV-03",
+    "change": "Ο κίνδυνος περιορίστηκε σε overflow και missing entity· το strict mode είναι προεπιλογή.",
+    "reason": "Cedar validation docs."
+   },
+   {
+    "target": "SOTA-KGOV-09",
+    "change": "Οι τυπικές εγγυήσεις αναδιατυπώθηκαν ως non-interference (integrity) και explicit secrecy (confidentiality)· επιβεβαιώθηκε η υπαγωγή στη Microsoft.",
+    "reason": "arXiv HTML 2505.23643."
+   },
+   {
+    "target": "SOTA-KGOV-10",
+    "change": "Αναδιατυπώθηκε η περιγραφή του Invariant· προστέθηκε το VIGIL (2026).",
+    "reason": "README του Invariant· αναζήτηση holds για χρονικά controls."
+   },
+   {
+    "target": "SOTA-KGOV-11",
+    "change": "ControlArena: 18 settings· προστέθηκε το BashBench στο Ctrl-Z.",
+    "reason": "Repo και abstract."
+   },
+   {
+    "target": "SOTA-KGOV-16, SOTA-KGOV-17",
+    "change": "Απόχρωση για τη ρυθμιζόμενη συμπεριφορά του policy-controller· in-toto υπό ανάπτυξη· TUF v1.0.36 με ρητό διπλό threshold σε root rotation· FROST Informational.",
+    "reason": "Επαλήθευση πηγών."
+   },
+   {
+    "target": "SOTA-KGOV-20, GAP-KGOV-06, draft_points[CMP-KRN-04, ICD-04, REQ-GOV-002]",
+    "change": "Προστέθηκε το Noise Injection (arXiv 2412.01784) ως πηγή για το «elicitation που αντέχει σε sandbagging», που πριν έμενε χωρίς πηγή.",
+    "reason": "Κανόνας 1: πηγή για κάθε ισχυρισμό."
+   },
+   {
+    "target": "SOTA-KGOV-21 (νέο), GAP-KGOV-02",
+    "change": "Προστέθηκαν AIP/IBCT και Authorization Propagation ως ερευνητικά προφίλ delegation για αλυσίδες agents.",
+    "reason": "Αναζήτηση holds για το token· συμπληρωματικά, όχι αυστηρά ανώτερα (χτίζουν πάνω στο Biscuit, χωρίς ανεξάρτητη αξιολόγηση)."
+   },
+   {
+    "target": "DEC-KGOV-04.rationale",
+    "change": "Το freeze το ορίζει το πρόχειρο (15.md §15.1), όχι ο δημιουργός.",
+    "reason": "Ανάγνωση 15.md γρ.20."
+   },
+   {
+    "target": "DEC-KGOV-07",
+    "change": "Το Art.14 στηρίζει μόνο το safe-halt· για το επισπευσμένο track, προηγούμενο είναι το OpenGov.",
+    "reason": "Το κείμενο του Art.14(4)(d)–(e) δεν αφορά διαδικασίες αναθεώρησης."
+   },
+   {
+    "target": "DEC-KGOV-06",
+    "change": "Προστέθηκε ότι το EP-04 ήδη επιτρέπει threshold σχήματα μόνο μεταξύ συσκευών του κυρίαρχου (KL-7)· ο διάδοχος σημειώνεται ως «πιθανώς» αναθεώρηση Tier 0.",
+    "reason": "28.md EP-04· αποφυγή εικασίας."
+   },
+   {
+    "target": "DEC-KGOV-02 (εναλλακτική OPA)",
+    "change": "Ο αρνητικός ισχυρισμός έγινε «δεν βρέθηκε… (όχι εξαντλητική αναζήτηση)».",
+    "reason": "Τίμια άγνοια."
+   },
+   {
+    "target": "draft_points[REQ-GOV-001, ADR-0009], GAP-KGOV-12",
+    "change": "Επαληθεύτηκε η φύση των KT-14 (null baseline) και KT-15 (τυφλή σύγκριση με εξωτερικούς συγκριτές)· η αιτιολόγηση έγινε ρητή.",
+    "reason": "24.md γρ.29–30, spine-vocab γρ.102–103."
+   },
+   {
+    "target": "draft_points[INV-C02], GAP-KGOV-09",
+    "change": "Προστέθηκαν το glossary («το μόνο σημείο επιβολής controls») και το INV-L03 (επιβολή σε KRN-11, KRN-08, COG-01) ως τεκμήρια της αντίφασης.",
+    "reason": "master γρ.268· 19.md INV-L03."
+   },
+   {
+    "target": "draft_points[EP-12], GAP-KGOV-15",
+    "change": "Επαληθεύτηκαν τα Fork(policy), Birth(charter) και Govern(procedure) στο ICD-15· η Sybil διατυπώθηκε υπό όρο (ψήφος ανά οντότητα)· προστέθηκε το Tezos staking.",
+    "reason": "15.md γρ.45."
+   },
+   {
+    "target": "unknowns",
+    "change": "Αφαιρέθηκε το άσχετο «ημερομηνία του Cedar v4.12.0»· προστέθηκαν NIST SP 800-162, Miller, WASI 0.3, Omnibus και τα όρια της αναζήτησης holds· αναθεωρήθηκε το στοιχείο για το FIDES.",
+    "reason": "Τίμια άγνοια για ό,τι δεν επαληθεύτηκε."
+   }
+  ],
+  "missed_superior_found": []
+ }
+}

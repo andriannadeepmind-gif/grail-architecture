@@ -1,0 +1,2059 @@
+{
+ "layer_key": "COG",
+ "summary": "Ο πυρήνας Propose–Verify–Commit (PVC) του προχείρου επιβεβαιώνεται. Με self-critique η απόδοση καταρρέει, ενώ με sound εξωτερικό verifier ανεβαίνει σημαντικά (LLM-Modulo, ICML 2024· Stechly 2024). Σχήμα γεννήτριας με checker έχουν τα AlphaGeometry (25/30), AlphaProof (Nature, 2025), FunSearch (ο evaluator «guards against hallucinations») και AlphaEvolve. Τα commercial legal AI research tools (Harvey-class) κάνουν 17–33% hallucination (Magesh 2024).\n\nΔιορθώσεις στον ερευνητή:\n(α) Το §8.5 δηλώνει ήδη «ντετερμινισμός» και «εκδοχή» στο Model Contract. Το CMP-COG-01 έχει ήδη canary battery σε κάθε νέα έκδοση παρόχου. Το INV-C08 απαιτεί ήδη η έξοδος μοντέλου να εισέρχεται ως καταγεγραμμένο γεγονός.\n(β) Τα INV-S01 και KT-17 υπάρχουν. Το ICD-14 και το REQ-ADV-003 απαιτούν ήδη ≥1 μη-LLM oracle.\n(γ) Οι ισχυρισμοί «proxy-reward gap/echo-chamber» των PRMs και «hallucination του OCR με VLM» δεν στηρίζονται από τις πηγές τους και αφαιρέθηκαν.\n\nΑυστηρά ανώτερο υπάρχει μόνο στα proof objects (CMP-COG-04/ICD-30). Για UNSAT, το «unsat core + έκδοση solver» δεν αποτελεί απόδειξη, ενώ υπάρχουν πιστοποιητικά: το cvc5 παράγει Alethe/LFSC/CPC και το Carcara ελέγχει Alethe. Για τη Lean υπάρχουν ανεξάρτητοι kernels (Lean4Lean, nanoda_lib). Trade-off: το πρόχειρο χρησιμοποιεί Z3, και δεν ξέρω αν οι αποδείξεις του ελέγχονται ανεξάρτητα.\n\nΒαθμονόμηση (COG-08) και attestation (KNW-04) υποβιβάστηκαν από superior-exists σε gap. Το πρόχειρο δεν ορίζει μέθοδο ή μορφή, άρα δεν υπάρχει επιλογή να κυριαρχηθεί. Υπάρχουν όμως έτοιμες λύσεις: conformal risk control, in-toto/DSSE και SCITT (RFC 9943, 06/2026).\n\nΚενά:\n- Provenance του context των LLM κλήσεων: τυφλό σημείο για ισχυρισμούς που στηρίζονται σε ασθενείς κλάσεις.\n- Μηχανισμός επιβολής του INV-S01 (CaMeL/FIDES).\n- Actual causation για νομική αιτιότητα.\n- Σημασιολογία «replay-audit» στο Inference Receipt.\n- Κλάσεις proof στο §8.7 που δεν είναι αποδείξεις (N-version, calibration).\n\nΥπόστρωμα γνώσης: PROV-O (REC 2013) ορθό. RDF 1.2 σε CR (7/4/2026), SPARQL 1.2 σε WD (13/9/2026), SHACL 1.2 σε WD (28/8/2026). Το Oxigraph έχει RDF/SPARQL 1.2 πίσω από feature flags και δεν αναφέρει SHACL. Εσωτερικά: λείπουν model/, contracts/, formal/, adrs/, και το spine-vocab απαριθμεί 75 CMP ενώ δηλώνει 76. Όριο ελέγχου: εξαντλημένο budget αναζητήσεων· οι έλεγχοι «holds» έγιναν μόνο με WebFetch σε γνωστούς υποψηφίους.",
+ "sota": [
+  {
+   "id": "SOTA-COG-01",
+   "name": "CoALA (Cognitive Architectures for Language Agents)",
+   "kind": "research",
+   "maturity": "theoretical",
+   "what": "Εννοιολογικό πλαίσιο: modular memory components, δομημένος χώρος ενεργειών (εσωτερική μνήμη και εξωτερικό περιβάλλον), γενικευμένη διαδικασία απόφασης.",
+   "relevance": "Ταξινομία αναφοράς για COG-02/08/09 και για τη διεπαφή με τη μνήμη AEO. Αν η CoALA ορίζει κάτι ανάλογο με commit υπό proof, δεν επαληθεύτηκε πέρα από το abstract.",
+   "sources": [
+    {
+     "title": "Cognitive Architectures for Language Agents (TMLR camera-ready v3)",
+     "url": "https://arxiv.org/abs/2309.02427",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-02",
+   "name": "LLM-Modulo και όρια αυτο-επαλήθευσης",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Τα autoregressive LLMs δεν σχεδιάζουν και δεν αυτο-επαληθεύονται μόνα τους, αλλά λειτουργούν ως «universal approximate knowledge sources» σε βρόχο με εξωτερικούς model-based verifiers. Με self-critique η απόδοση καταρρέει, με sound εξωτερική επαλήθευση ανεβαίνει σημαντικά.",
+   "relevance": "Άμεση τεκμηρίωση για τον PVC (ADR-0005, INV-C03).",
+   "sources": [
+    {
+     "title": "Position: LLMs Can't Plan, But Can Help Planning in LLM-Modulo Frameworks (ICML)",
+     "url": "https://proceedings.mlr.press/v235/kambhampati24a.html",
+     "year": "2024"
+    },
+    {
+     "title": "On the Self-Verification Limitations of LLMs on Reasoning and Planning Tasks",
+     "url": "https://arxiv.org/abs/2402.08115",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-03",
+   "name": "Neurosymbolic με verifier στον βρόχο (AlphaGeometry, AlphaProof, FunSearch, AlphaEvolve)",
+   "kind": "system",
+   "maturity": "research-prototype",
+   "what": "Γλωσσικό μοντέλο προτείνει, συμβολικός/formal/αυτόματος evaluator κρίνει. AlphaGeometry: 25/30 προβλήματα γεωμετρίας IMO (01/2024). AlphaProof: επίπεδο αργυρού μεταλλίου στην IMO 2024 με RL σε Lean (Nature, online 12/11/2025). FunSearch: ο evaluator «guards against hallucinations». AlphaEvolve: εξελικτικός coding agent με ανάδραση από evaluators.",
+   "relevance": "Η αναζήτηση γειωμένη σε verifiers (COG-03/04) φτάνει σε αποτελέσματα αιχμής. Στο νομικό πεδίο δεν τεκμηριώνεται αντίστοιχος πλήρης checker.",
+   "sources": [
+    {
+     "title": "AlphaGeometry: An Olympiad-level AI system for geometry",
+     "url": "https://deepmind.google/discover/blog/alphageometry-an-olympiad-level-ai-system-for-geometry/",
+     "year": "2024"
+    },
+    {
+     "title": "Olympiad-level formal mathematical reasoning with reinforcement learning (Nature, Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1038/s41586-025-09833-y",
+     "year": "2025"
+    },
+    {
+     "title": "FunSearch: Making new discoveries in mathematical sciences using LLMs",
+     "url": "https://deepmind.google/discover/blog/funsearch-making-new-discoveries-in-mathematical-sciences-using-large-language-models/",
+     "year": "2023"
+    },
+    {
+     "title": "AlphaEvolve: A coding agent for scientific and algorithmic discovery",
+     "url": "https://arxiv.org/abs/2506.13131",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-04",
+   "name": "Test-time compute, PRMs, MCTS",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Η compute-optimal κατανομή ανά prompt βελτιώνει την αποδοτικότητα >4× έναντι best-of-N. rStar-Math: MCTS με SLM-based process reward model και code-augmented CoT· MATH 58.8%→90.0% σε μοντέλο 7B. PRMs: η σύνθεση δεδομένων με Monte Carlo estimation δίνει κατώτερα PRMs και η αξιολόγηση Best-of-N έχει biases. Τα frontier μοντέλα έχουν «remarkably weak out-of-box verification».",
+   "relevance": "COG-03 (budgets, rewards γειωμένα σε verifiers) και COG-08 (κατανομή compute).",
+   "sources": [
+    {
+     "title": "Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters",
+     "url": "https://arxiv.org/abs/2408.03314",
+     "year": "2024"
+    },
+    {
+     "title": "rStar-Math",
+     "url": "https://arxiv.org/abs/2501.04519",
+     "year": "2025"
+    },
+    {
+     "title": "The Lessons of Developing Process Reward Models in Mathematical Reasoning (Findings ACL)",
+     "url": "https://aclanthology.org/2025.findings-acl.547/",
+     "year": "2025"
+    },
+    {
+     "title": "Sample, Scrutinize and Scale",
+     "url": "https://arxiv.org/abs/2502.01839",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-05",
+   "name": "Ανεξάρτητα ελέγξιμα proof certificates (cvc5/Alethe + Carcara· ανεξάρτητοι Lean kernels)",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Το cvc5 εξάγει αποδείξεις σε CPC, Alethe και LFSC. Το Carcara (Rust, Apache-2.0, TACAS 2023) είναι checker και elaborator για Alethe. Για τη Lean 4:\n- Lean4Lean: ελέγχει όλο το mathlib, 20–50% πιο αργό, εντόπισε και διορθώθηκε ένα soundness bug.\n- nanoda_lib: εξωτερικός type checker σε Rust, πρώιμο στάδιο.\n- leanchecker (πρώην lean4checker): χρησιμοποιεί τον ίδιο kernel, άρα δεν είναι ανεξάρτητο.",
+   "relevance": "Κάνει το proof object ελέγξιμο χωρίς εμπιστοσύνη στον solver ή στον kernel (COG-04, ICD-30).",
+   "sources": [
+    {
+     "title": "Carcara (GitHub)",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2026"
+    },
+    {
+     "title": "cvc5 documentation: Proofs",
+     "url": "https://cvc5.github.io/docs/latest/proofs/proofs.html",
+     "year": "2026"
+    },
+    {
+     "title": "Lean4Lean: Verifying a Typechecker for Lean, in Lean",
+     "url": "https://arxiv.org/abs/2403.14064",
+     "year": "2024"
+    },
+    {
+     "title": "nanoda_lib (GitHub)",
+     "url": "https://github.com/ammkrn/nanoda_lib",
+     "year": "2026"
+    },
+    {
+     "title": "lean4checker (archived, merged as leanchecker)",
+     "url": "https://github.com/leanprover/lean4checker",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-06",
+   "name": "Συσχετισμένες αποτυχίες σε N-version και N-model",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Knight & Leveson (IEEE TSE 12(1), 1986): η υπόθεση ανεξαρτησίας των αποτυχιών σε N-version προγράμματα απορρίφθηκε στατιστικά (δευτερογενής πηγή· το κείμενο της εργασίας δεν ανοίχτηκε). Kim et al. (ICML 2025), >350 LLMs: σε ένα leaderboard dataset τα μοντέλα συμφωνούν ~60% όταν και τα δύο σφάλλουν. Τα μεγαλύτερα και ακριβέστερα μοντέλα έχουν ισχυρά συσχετισμένα σφάλματα, ακόμη και με διαφορετικές αρχιτεκτονικές και παρόχους. PoLL: panel μικρότερων μοντέλων από διαφορετικές οικογένειες υπερέχει ενός μεγάλου judge, με λιγότερο intra-model bias και >7× χαμηλότερο κόστος.",
+   "relevance": "Περιορίζει το βάρος του N-version/N-model agreement (§8.3, §8.5, §8.7) και αφορά το EXP-14.",
+   "sources": [
+    {
+     "title": "An experimental evaluation of the assumption of independence in multiversion programming (Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1109/TSE.1986.6312924",
+     "year": "1986"
+    },
+    {
+     "title": "N-version programming (Wikipedia, για το εύρημα Knight & Leveson)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026"
+    },
+    {
+     "title": "Correlated Errors in Large Language Models (ICML)",
+     "url": "https://proceedings.mlr.press/v267/kim25e.html",
+     "year": "2025"
+    },
+    {
+     "title": "Replacing Judges with Juries",
+     "url": "https://arxiv.org/abs/2404.18796",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-07",
+   "name": "Αβεβαιότητα και abstention (semantic entropy, conformal)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Semantic entropy (Nature 2024): εντοπίζει confabulations μετρώντας αβεβαιότητα στον χώρο του νοήματος. Conformal factuality: back-off σε λιγότερο ειδικό ισχυρισμό με εγγύηση ορθότητας 80–90%. Conformal abstention: εγγύηση για το hallucination rate. Conformal risk control: εγγύηση αναμενόμενης απώλειας για κάθε μονότονη loss, υπό exchangeability. Survey abstention (TACL 2025). Το verbalized confidence των LLMs είναι υπερβέβαιο (ICLR 2024).",
+   "relevance": "Μέθοδοι για τα κατώφλια του COG-08 και για το Unknown (INV-C04).",
+   "sources": [
+    {
+     "title": "Detecting hallucinations in LLMs using semantic entropy (OATML, Nature paper)",
+     "url": "https://oatml.cs.ox.ac.uk/blog/2024/06/19/detecting_hallucinations_2024.html",
+     "year": "2024"
+    },
+    {
+     "title": "Language Models with Conformal Factuality Guarantees (ICML)",
+     "url": "https://proceedings.mlr.press/v235/mohri24a.html",
+     "year": "2024"
+    },
+    {
+     "title": "Mitigating LLM Hallucinations via Conformal Abstention",
+     "url": "https://arxiv.org/abs/2405.01563",
+     "year": "2024"
+    },
+    {
+     "title": "Conformal Risk Control",
+     "url": "https://arxiv.org/abs/2208.02814",
+     "year": "2022"
+    },
+    {
+     "title": "Know Your Limits: A Survey of Abstention in LLMs (TACL)",
+     "url": "https://aclanthology.org/2025.tacl-1.26/",
+     "year": "2025"
+    },
+    {
+     "title": "Can LLMs Express Their Uncertainty? (ICLR)",
+     "url": "https://arxiv.org/abs/2306.13063",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-08",
+   "name": "ATMS, provenance semirings, ProvSQL, AGM σε belief bases",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "ATMS (de Kleer, Artificial Intelligence 28(2), 1986): τα μεταδεδομένα επαληθεύτηκαν, το κείμενο δεν ανοίχτηκε (403). Provenance semirings (PODS 2007): τα μεταδεδομένα επαληθεύτηκαν. ProvSQL: επέκταση PostgreSQL με (m-)semiring provenance (Boolean, counting, why-, how-, which-provenance, πιθανότητες, Shapley). MIT. VLDB 2018. SEP (αναθ. 29/7/2026): AGM και ειδική ενότητα για belief bases (contraction, consolidation, revision).",
+   "relevance": "Υλοποιήσιμη τυπική βάση για COG-05, INV-E02, KT-06. Η αντιστοίχιση ATMS labels ↔ why-provenance είναι ερμηνεία, όχι ισχυρισμός πηγής.",
+   "sources": [
+    {
+     "title": "An assumption-based TMS (Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1016/0004-3702(86)90080-9",
+     "year": "1986"
+    },
+    {
+     "title": "Provenance semirings (Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/1265530.1265535",
+     "year": "2007"
+    },
+    {
+     "title": "ProvSQL (GitHub)",
+     "url": "https://github.com/PierreSenellart/provsql",
+     "year": "2026"
+    },
+    {
+     "title": "ProvSQL website (supported semirings)",
+     "url": "https://provsql.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Logic of Belief Revision (SEP)",
+     "url": "https://plato.stanford.edu/entries/logic-belief-revision/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-09",
+   "name": "Αιτιακή συμπερασματολογία: DoWhy, CLadder, Halpern–Pearl, νομική αιτιότητα",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "DoWhy (MIT): identification, estimation, refutation API, και counterfactuals μέσω GCM. CLadder (NeurIPS 2023): η τυπική αιτιακή συλλογιστική είναι «highly challenging» για τα LLMs. Τροποποιημένος ορισμός Halpern–Pearl (IJCAI 2015) για την actual causation. SEP (αναθ. 2/2024): στο δίκαιο κυριαρχεί το but-for, με εναλλακτική το NESS· η overdetermination και η preemption είναι γνωστά προβλήματα.",
+   "relevance": "COG-06: το identification είναι [T]. Η νομική αιτιότητα είναι όμως actual causation.",
+   "sources": [
+    {
+     "title": "DoWhy (GitHub)",
+     "url": "https://github.com/py-why/dowhy",
+     "year": "2026"
+    },
+    {
+     "title": "CLadder",
+     "url": "https://arxiv.org/abs/2312.04350",
+     "year": "2023"
+    },
+    {
+     "title": "A Modification of the Halpern-Pearl Definition of Causality",
+     "url": "https://arxiv.org/abs/1505.00162",
+     "year": "2015"
+    },
+    {
+     "title": "Causation in the Law (SEP)",
+     "url": "https://plato.stanford.edu/entries/causation-law/",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-10",
+   "name": "Learned world models (V-JEPA 2, DreamerV3, Genie 3)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "V-JEPA 2: pretraining σε >1M ώρες βίντεο, <62 ώρες ρομποτικού βίντεο, zero-shot planning σε βραχίονες Franka. DreamerV3 (Nature 2025): >150 tasks με μία ρύθμιση. Genie 3 (5/8/2025): 720p/24fps, περιβάλλοντα «largely consistent for several minutes», limited research preview.",
+   "relevance": "EXP-23, COG-07: η αιχμή αφορά φυσικά και οπτικά περιβάλλοντα.",
+   "sources": [
+    {
+     "title": "V-JEPA 2",
+     "url": "https://arxiv.org/abs/2506.09985",
+     "year": "2025"
+    },
+    {
+     "title": "DreamerV3 project page",
+     "url": "https://danijar.com/project/dreamerv3/",
+     "year": "2025"
+    },
+    {
+     "title": "Genie 3: A new frontier for world models",
+     "url": "https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-11",
+   "name": "Global Workspace και blackboard για AI",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Shared workspace όπου τα modules ανταγωνίζονται για πρόσβαση λόγω περιορισμένου bandwidth (ICLR 2022). Butlin et al. 2023: καμία σημερινή AI δεν είναι συνειδητή, αλλά δεν υπάρχουν προφανή τεχνικά εμπόδια. Φιλοσοφικό επιχείρημα υπέρ language agents υπό GWT (2024). Blackboard LLM MAS (2025): ανταγωνιστικό με λιγότερα tokens.",
+   "relevance": "COG-02, EXP-21: καμία ελεγχόμενη απόδειξη υπεροχής.",
+   "sources": [
+    {
+     "title": "Coordination Among Neural Modules Through a Shared Global Workspace (ICLR)",
+     "url": "https://arxiv.org/abs/2103.01197",
+     "year": "2022"
+    },
+    {
+     "title": "Consciousness in Artificial Intelligence",
+     "url": "https://arxiv.org/abs/2308.08708",
+     "year": "2023"
+    },
+    {
+     "title": "A Case for AI Consciousness: Language Agents and GWT",
+     "url": "https://arxiv.org/abs/2410.11407",
+     "year": "2024"
+    },
+    {
+     "title": "Exploring Advanced LLM Multi-Agent Systems Based on Blackboard Architecture",
+     "url": "https://arxiv.org/abs/2507.01701",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-12",
+   "name": "Όρια ενδοσκόπησης LLM",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Με concept injection, το καλύτερο μοντέλο πετυχαίνει ~20% στις βέλτιστες συνθήκες· κατά τους συγγραφείς οι ικανότητες είναι «highly unreliable; failures of introspection remain the norm». Το self-prediction advantage αποτυγχάνει σε σύνθετα και OOD tasks.",
+   "relevance": "Στηρίζει την επιλογή του COG-08 να μην εμπιστεύεται την αυτο-αναφορά.",
+   "sources": [
+    {
+     "title": "Emergent Introspective Awareness in Large Language Models",
+     "url": "https://transformer-circuits.pub/2025/introspection/index.html",
+     "year": "2025"
+    },
+    {
+     "title": "Looking Inward: Language Models Can Learn About Themselves by Introspection",
+     "url": "https://arxiv.org/abs/2410.13787",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-13",
+   "name": "Prompt injection by design: CaMeL, FIDES",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "CaMeL: εξάγει control και data flow από το έμπιστο ερώτημα και χρησιμοποιεί capabilities κατά της εξαγωγής δεδομένων. Λύνει 77% των tasks του AgentDojo με provable security (84% το σύστημα χωρίς άμυνα). FIDES: planner με labels εμπιστευτικότητας και ακεραιότητας, ντετερμινιστική επιβολή πολιτικών, dynamic taint-tracking.",
+   "relevance": "COG-02/10: μηχανισμός επιβολής για το INV-S01.",
+   "sources": [
+    {
+     "title": "Defeating Prompt Injections by Design",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "Securing AI Agents with Information-Flow Control",
+     "url": "https://arxiv.org/abs/2505.23643",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-14",
+   "name": "Πολυπαροχικά gateways, routing, drift, μη ντετερμινισμός, OTel GenAI",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "LiteLLM: >100 πάροχοι, retry/fallback, cost tracking, spend management· open-source με commercial enterprise άδεια. RouteLLM (ICLR 2025): >2× μείωση κόστους χωρίς απώλεια ποιότητας. Drift: σε εμπορική υπηρεσία LLM, ίδιο task 84%→51% σε 3 μήνες (2023). Μη ντετερμινισμός: τα endpoints είναι μη ντετερμινιστικά επειδή το φορτίο (άρα το batch size) αλλάζει και τα kernels δεν είναι batch-invariant· το κείμενο («Defeating Nondeterminism», 10/9/2025) στοχεύει σε batch-invariant kernels. OTel GenAI semconv: status Development.",
+   "relevance": "COG-01, ICD-22, EP-01, KT-01.",
+   "sources": [
+    {
+     "title": "LiteLLM (GitHub)",
+     "url": "https://github.com/BerriAI/litellm",
+     "year": "2026"
+    },
+    {
+     "title": "RouteLLM (ICLR)",
+     "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/5503a7c69d48a2f86fc00b3dc09de686-Abstract-Conference.html",
+     "year": "2025"
+    },
+    {
+     "title": "Chen, Zaharia, Zou: LLM service behavior drift (arXiv 2307.09009)",
+     "url": "https://arxiv.org/abs/2307.09009",
+     "year": "2023"
+    },
+    {
+     "title": "Defeating Nondeterminism in LLM Inference",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    },
+    {
+     "title": "OTel GenAI semantic conventions README",
+     "url": "https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/README.md",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-15",
+   "name": "Durable execution (Temporal)",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Το event history είναι «the source of truth». Ο κώδικας της ροής ξαναπαίζεται ντετερμινιστικά. Το αποτέλεσμα κάθε activity καταγράφεται και στο replay «is reused, not recomputed».",
+   "relevance": "Υλοποίηση για sagas και INV-C08 (COG-10)· εισάγει δεύτερο ιστορικό.",
+   "sources": [
+    {
+     "title": "Temporal Workflows documentation",
+     "url": "https://docs.temporal.io/workflows",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-16",
+   "name": "Skill libraries και MCP",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Voyager: skill library ως εκτελέσιμος κώδικας, με επαναληπτικό prompting και self-verification. MCP (spec 2026-07-28): resources, prompts, tools, elicitation, και extensions (Tasks· «Skills over MCP» μέσω working group· MCP Apps). Η spec ορίζει ότι οι annotations των εργαλείων θεωρούνται untrusted, εκτός αν προέρχονται από trusted server.",
+   "relevance": "COG-09/10 ως adapters πίσω από ORP και gateway.",
+   "sources": [
+    {
+     "title": "Voyager",
+     "url": "https://arxiv.org/abs/2305.16291",
+     "year": "2023"
+    },
+    {
+     "title": "Model Context Protocol Specification (latest)",
+     "url": "https://modelcontextprotocol.io/specification/latest",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-17",
+   "name": "Document parsing (OmniDocBench, Docling)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "OmniDocBench (CVPR 2025): αξιολογεί pipeline μεθόδους και end-to-end VLMs και αναδεικνύει δυνατά και αδύναμα σημεία ανά τύπο εγγράφου. Docling: MIT, τοπική εκτέλεση, DocLayNet (layout) και TableFormer (πίνακες).",
+   "relevance": "COG-11.",
+   "sources": [
+    {
+     "title": "OmniDocBench",
+     "url": "https://arxiv.org/abs/2412.07626",
+     "year": "2025"
+    },
+    {
+     "title": "Docling Technical Report",
+     "url": "https://arxiv.org/abs/2408.09869",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-18",
+   "name": "Provenance και attestation: PROV-O, SCITT, in-toto, VC 2.0, C2PA",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "PROV-O: W3C REC, 30/4/2013 (Entity, Activity, Agent, used, wasDerivedFrom, wasAttributedTo, qualified terms). RFC 9943 (SCITT architecture): Proposed Standard, 06/2026· γενίκευση του CT (RFC 9162), με COSE_Sign1 signed statements και receipts κατά RFC 9942. Η ωριμότητα των υλοποιήσεων είναι άγνωστη. in-toto attestation v1.2: Envelope (προτεινόμενο DSSE v1.0), Statement με subject DigestSet, Predicate, Bundle. VC 2.0: W3C REC, 15/5/2025. C2PA 2.2 (1/5/2025): hard και soft bindings.",
+   "relevance": "KNW-01/04, ICD-18, INV-E04, INV-C06.",
+   "sources": [
+    {
+     "title": "PROV-O",
+     "url": "https://www.w3.org/TR/prov-o/",
+     "year": "2013"
+    },
+    {
+     "title": "RFC 9943: An Architecture for Trustworthy and Transparent Digital Supply Chains",
+     "url": "https://datatracker.ietf.org/doc/rfc9943/",
+     "year": "2026"
+    },
+    {
+     "title": "in-toto Attestation Framework spec",
+     "url": "https://github.com/in-toto/attestation/blob/main/spec/README.md",
+     "year": "2026"
+    },
+    {
+     "title": "in-toto attestation v1 Envelope (DSSE)",
+     "url": "https://github.com/in-toto/attestation/blob/main/spec/v1/envelope.md",
+     "year": "2026"
+    },
+    {
+     "title": "Verifiable Credentials Data Model v2.0",
+     "url": "https://www.w3.org/TR/vc-data-model-2.0/",
+     "year": "2025"
+    },
+    {
+     "title": "C2PA Technical Specification 2.2",
+     "url": "https://spec.c2pa.org/specifications/specifications/2.2/specs/_attachments/C2PA_Specification.pdf",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-19",
+   "name": "RDF/SPARQL/SHACL (1.1/REC και 1.2/σε εξέλιξη), Oxigraph, Akoma Ntoso/ELI",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Recommendations: RDF 1.1 (25/2/2014), SPARQL 1.1 (21/3/2013), SHACL (20/7/2017). Σε εξέλιξη:\n- RDF 1.2 Concepts: CR Snapshot 07/04/2026, με triple terms και επίπεδα Full/Basic conformance.\n- SPARQL 1.2: WD 13/9/2026.\n- SHACL 1.2 Core: WD 28/8/2026.\nOxigraph: RDF 1.2 και SPARQL 1.2 πίσω από τα features `rdf-12`/`sparql-12`· SHACL δεν αναφέρεται στο CHANGELOG. Akoma Ntoso 1.0: OASIS Standard, 08/2018. Αντιστοίχιση ELI–AKN: ICEGOV 2023.",
+   "relevance": "KNW-02/05, ICD-17, EP-07.",
+   "sources": [
+    {
+     "title": "RDF 1.2 Concepts",
+     "url": "https://www.w3.org/TR/rdf12-concepts/",
+     "year": "2026"
+    },
+    {
+     "title": "SPARQL 1.2 Query Language",
+     "url": "https://www.w3.org/TR/sparql12-query/",
+     "year": "2026"
+    },
+    {
+     "title": "SHACL 1.2 Core",
+     "url": "https://www.w3.org/TR/shacl12-core/",
+     "year": "2026"
+    },
+    {
+     "title": "RDF 1.1 Concepts",
+     "url": "https://www.w3.org/TR/rdf11-concepts/",
+     "year": "2014"
+    },
+    {
+     "title": "SPARQL 1.1 Query Language",
+     "url": "https://www.w3.org/TR/sparql11-query/",
+     "year": "2013"
+    },
+    {
+     "title": "SHACL",
+     "url": "https://www.w3.org/TR/shacl/",
+     "year": "2017"
+    },
+    {
+     "title": "Oxigraph CHANGELOG",
+     "url": "https://raw.githubusercontent.com/oxigraph/oxigraph/master/CHANGELOG.md",
+     "year": "2026"
+    },
+    {
+     "title": "OASIS LegalDocML TC",
+     "url": "https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=legaldocml",
+     "year": "2018"
+    },
+    {
+     "title": "Mapping ELI and AKN Ontologies (Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3614321.3614327",
+     "year": "2023"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-20",
+   "name": "Διτεμπορικά και speculative stores (XTDB v2, Zep/Graphiti, Datomic with)",
+   "kind": "system",
+   "maturity": "production",
+   "what": "XTDB v2: διτεμπορικό (πότε συνέβη / πότε καταγράφηκε), SQL:2011, αμετάβλητα δεδομένα, MPL-2.0. Zep/Graphiti: bi-temporal μοντέλο (T γεγονότων, T′ ingestion) με t_valid/t_invalid στις ακμές. Datomic `with`: speculative database value χωρίς durable commit, συνδυάσιμο με `as-of`.",
+   "relevance": "KNW-02 και ghost worlds πάνω σε cuts (COG-07).",
+   "sources": [
+    {
+     "title": "XTDB",
+     "url": "https://xtdb.com/",
+     "year": "2026"
+    },
+    {
+     "title": "Zep: A Temporal Knowledge Graph Architecture for Agent Memory",
+     "url": "https://arxiv.org/html/2501.13956",
+     "year": "2025"
+    },
+    {
+     "title": "Datomic filters (with / as-of)",
+     "url": "https://docs.datomic.com/reference/filters.html",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-21",
+   "name": "Retrieval: hybrid, GraphRAG, HippoRAG 2, poisoning",
+   "kind": "research",
+   "maturity": "production",
+   "what": "BEIR (NeurIPS 2021): το BM25 είναι «robust baseline»· re-ranking και late interaction δίνουν τα καλύτερα zero-shot αποτελέσματα, με υψηλό κόστος. GraphRAG: LLM χτίζει entity KG και community summaries. HippoRAG 2 (ICML 2025): Personalized PageRank με ενσωμάτωση passages. PoisonedRAG (USENIX Security 2025): 90% επιτυχία επίθεσης με 5 κακόβουλα κείμενα ανά στοχευμένη ερώτηση, σε βάση εκατομμυρίων κειμένων· οι άμυνες που δοκιμάστηκαν ήταν ανεπαρκείς.",
+   "relevance": "KNW-03, ICD-31, INV-E02.",
+   "sources": [
+    {
+     "title": "BEIR",
+     "url": "https://arxiv.org/abs/2104.08663",
+     "year": "2021"
+    },
+    {
+     "title": "From Local to Global: A Graph RAG Approach",
+     "url": "https://arxiv.org/abs/2404.16130",
+     "year": "2024"
+    },
+    {
+     "title": "From RAG to Memory (HippoRAG 2)",
+     "url": "https://arxiv.org/abs/2502.14802",
+     "year": "2025"
+    },
+    {
+     "title": "PoisonedRAG",
+     "url": "https://arxiv.org/abs/2402.07867",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-22",
+   "name": "Incremental συντήρηση παράγωγων (Differential Dataflow)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Ενημερώνει τα αποτελέσματα μόνο όπου αλλάζουν οι είσοδοι, και σε επαναληπτικούς υπολογισμούς (iterate: reachability, k-core). Παράδειγμα του README: degree distribution σε γράφο 10M κόμβων/50M ακμών· αλλαγή μίας ακμής σε ~230µs έναντι ~15s αρχικού υπολογισμού (~10^5×).",
+   "relevance": "INV-E01, EXP-05.",
+   "sources": [
+    {
+     "title": "differential-dataflow (GitHub)",
+     "url": "https://github.com/TimelyDataflow/differential-dataflow",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-COG-23",
+   "name": "LinkML (σχήμα από μία πηγή)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Από YAML σχήμα παράγει >30 μορφές: JSON Schema, OWL, SHACL, ShEx, JSON-LD, SQL DDL, Python/Pydantic/TypeScript/Java/Rust. Apache 2.0.",
+   "relevance": "Ένταση «μίας έδρας» σχημάτων (ADR-0025 έναντι KNW-05 έναντι canonical model).",
+   "sources": [
+    {
+     "title": "LinkML",
+     "url": "https://linkml.io/",
+     "year": "2026"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-COG-01",
+    "REQ-COG-002",
+    "ADR-0019"
+   ],
+   "draft_ref": "§6.3 CMP-COG-01 · §8.5 · §29.2 REQ-COG-002 · §22 ADR-0019",
+   "draft_position": "Provider-agnostic Inference Gateway με:\n- model contracts με δηλωμένες ικανότητες και εκδοχή· ρόλοι δεσμευμένοι μέσω Control Records/configuration.\n- routing: ικανότητα → residency → κόστος → latency· failover.\n- canary battery σε κάθε νέα έκδοση παρόχου.\n- redaction· τοπικά μοντέλα για προνομιακά δεδομένα.\n- receipts· k-of-n agreement.",
+   "verdict": "holds",
+   "reasoning": "Τα gateways σε παραγωγή (LiteLLM: >100 πάροχοι, fallback, cost tracking) και το learned routing (RouteLLM: >2× μείωση κόστους χωρίς απώλεια ποιότητας) δείχνουν ότι το σχήμα είναι [T]. Το τεκμηριωμένο drift (84%→51% σε 3 μήνες) δικαιώνει το canary battery ανά έκδοση, που το πρόχειρο ήδη έχει. Το learned routing είναι βελτιστοποίηση πίσω από το συμβόλαιο. Το k-of-n πρέπει να διαβάζεται υπό DEC-COG-02. Κανένα αυστηρά ανώτερο δεν βρέθηκε μεταξύ των γνωστών υποψηφίων που ελέγχθηκαν με fetch· στοχευμένη αναζήτηση δεν έγινε.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-14"
+   ],
+   "sources": [
+    {
+     "title": "LiteLLM",
+     "url": "https://github.com/BerriAI/litellm",
+     "year": "2026"
+    },
+    {
+     "title": "RouteLLM",
+     "url": "https://proceedings.iclr.cc/paper_files/paper/2025/hash/5503a7c69d48a2f86fc00b3dc09de686-Abstract-Conference.html",
+     "year": "2025"
+    },
+    {
+     "title": "Chen, Zaharia, Zou: LLM service behavior drift",
+     "url": "https://arxiv.org/abs/2307.09009",
+     "year": "2023"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ICD-22"
+   ],
+   "draft_ref": "§15.3 ICD-22 · §8.5 Inference Receipt · §19 INV-C08",
+   "draft_position": "Operations: Generate/Embed/Score/Route(role)/Agree(k_of_n). Receipt: hashes prompt/response, contract id/version, παράμετροι, cut· «επιτρέπει replay-audit». Η έξοδος είναι PROPOSED μέσω της μίας πόρτας. Το INV-C08 απαιτεί ήδη κάθε έξοδο μοντέλου να εισέρχεται ως καταγεγραμμένο γεγονός.",
+   "verdict": "gap",
+   "reasoning": "Ο ερευνητής υπερεκτίμησε: η καταγραφή της εξόδου (INV-C08) και η έκδοση μέσω contract version ήδη προβλέπονται. Μένουν τρία κενά.\n(1) Δεν ορίζεται ότι «replay-audit» σημαίνει επανάληψη από την καταγεγραμμένη έξοδο και όχι νέο generation. Ούτε ότι το receipt δείχνει σε CIDs αίτησης και απάντησης στο CAS. Αυτό είναι ουσιώδες, αφού τα endpoints δεν είναι ντετερμινιστικά (batch variance).\n(2) Τα CIDs του context (retrieved evidence) δεν καταγράφονται ως prov:used. Άρα το INV-E02 δεν βλέπει την επιρροή μέσω context στους ισχυρισμούς που δεν στηρίζονται σε sound proof (GAP-COG-04). Το PoisonedRAG δείχνει ότι αρκούν 5 κείμενα ανά στοχευμένη ερώτηση.\n(3) Το OTel GenAI (Development) χρησιμεύει μόνο ως προβολή, κάτι συνεπές με το ICD-24 («μη αυθεντικό»).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-14",
+    "SOTA-COG-21"
+   ],
+   "sources": [
+    {
+     "title": "Defeating Nondeterminism in LLM Inference",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    },
+    {
+     "title": "PoisonedRAG",
+     "url": "https://arxiv.org/abs/2402.07867",
+     "year": "2025"
+    },
+    {
+     "title": "OTel GenAI README",
+     "url": "https://github.com/open-telemetry/semantic-conventions-genai/blob/main/docs/gen-ai/README.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-01"
+   ],
+   "draft_ref": "§24 KT-01",
+   "draft_position": "Αλλαγή παρόχου LLM χωρίς απώλεια ταυτότητας. Κριτήρια:\n- conformance battery pass·\n- differential ≥ θ σε σφραγισμένο σύνολο·\n- Battery d ≤ ε·\n- 0 αλλαγές σε ledger και ταυτότητα·\n- ND.\nΣυνδέεται με EXP-14 και EXP-15.",
+   "verdict": "holds",
+   "reasoning": "Τα κριτήρια είναι μετρήσιμα. Λόγω μη ντετερμινισμού των endpoints, το θ και το ε πρέπει να ορίζονται πάνω από ένα intra-provider baseline (επαναλήψεις στον ίδιο πάροχο και έκδοση)· αλλιώς ο θόρυβος διαβάζεται ως διαφορά. Η επανάληψη ανά έκδοση παρόχου καλύπτεται ήδη από το canary battery του CMP-COG-01.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-14"
+   ],
+   "sources": [
+    {
+     "title": "Defeating Nondeterminism in LLM Inference",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EP-01"
+   ],
+   "draft_ref": "§28 EP-01 · §8.5 Model Contract",
+   "draft_position": "Model Contract (ICD-22) ως extension point για νέες αρχιτεκτονικές, reasoning-verified, on-device και πολυτροπικά μοντέλα· με KT-01, Battery, receipts, μία πόρτα. Το §8.5 δηλώνει ήδη ικανότητες μαζί με «ντετερμινισμό» και «εκδοχή».",
+   "verdict": "holds",
+   "reasoning": "Το σωστό όριο απορρόφησης. Διόρθωση στον ερευνητή: τα πεδία ντετερμινισμού και έκδοσης υπάρχουν ήδη στο §8.5. Η μόνη λεπτομέρεια: ο ντετερμινισμός εξαρτάται από το serving (batch invariance), άρα δηλώνεται ανά deployment και όχι ανά μοντέλο.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-14"
+   ],
+   "sources": [
+    {
+     "title": "Defeating Nondeterminism in LLM Inference",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "EXP-14"
+   ],
+   "draft_ref": "§26 EXP-14 · §8.5",
+   "draft_position": "Είναι η N-model agreement σήμα αβεβαιότητας; Μέθοδος: βαθμονόμηση. Αν είναι χαμηλή, παύει η χρήση της στη δρομολόγηση. Το §8.5 γράφει ρητά: «όχι ψηφοφορία αλήθειας».",
+   "verdict": "holds",
+   "reasoning": "Σωστά ορίζεται ως πείραμα. Σε ένα leaderboard dataset τα LLMs συμφωνούν ~60% όταν και τα δύο σφάλλουν, και τα μεγαλύτερα έχουν πιο συσχετισμένα σφάλματα ακόμη και μεταξύ παρόχων. Άρα το k-of-n υπερεκτιμά τη βεβαιότητα. Το πείραμα πρέπει να μετρά το error correlation και να προ-καταχωρίζει σύγκριση με semantic entropy και conformal abstention.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-06",
+    "SOTA-COG-07"
+   ],
+   "sources": [
+    {
+     "title": "Correlated Errors in Large Language Models",
+     "url": "https://arxiv.org/abs/2506.07962",
+     "year": "2025"
+    },
+    {
+     "title": "Replacing Judges with Juries",
+     "url": "https://arxiv.org/abs/2404.18796",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "EXP-15"
+   ],
+   "draft_ref": "§26 EXP-15",
+   "draft_position": "Χάσμα ποιότητας τοπικών μοντέλων για εμπιστευτικές υποθέσεις, σε ίσες εργασίες. Αν είναι μεγάλο, οι εμπιστευτικές εργασίες πηγαίνουν σε verifier-heavy ροές.",
+   "verdict": "holds",
+   "reasoning": "Η ερευνήτρια ομάδα δεν βρήκε μέτρηση για ελληνικές νομικές εργασίες (δεν επανελέγχθηκε: εξαντλημένο search budget). Η εναλλακτική συνάδει με το εύρημα ότι τα κέρδη έρχονται από τον sound verifier.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-02"
+   ],
+   "sources": [
+    {
+     "title": "On the Self-Verification Limitations of LLMs",
+     "url": "https://arxiv.org/abs/2402.08115",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-COG-02",
+    "ICD-28",
+    "REQ-COG-004",
+    "EXP-21"
+   ],
+   "draft_ref": "§6.3 CMP-COG-02 · §8.12 · ICD-28 · §26 EXP-21",
+   "draft_position": "Workspace περιορισμένης χωρητικότητας: ανταγωνισμός salience, broadcast, CycleTrace. Κάθε σκέψη καταγράφεται (INV-THOUGHT-VISIBLE). Το όφελος είναι [X] EXP-21· αν δεν αποδειχθεί, η ενορχήστρωση γίνεται επίπεδη και το ICD-28 μένει.",
+   "verdict": "holds",
+   "reasoning": "Η λειτουργική GWT υλοποιείται στη ML (ICLR 2022). Το blackboard LLM MAS είναι ανταγωνιστικό με λιγότερα tokens, όχι κυρίαρχο. Καμία ελεγχόμενη απόδειξη υπεροχής, άρα το [X] είναι σωστό. Ο όρος «συνείδηση» (§8.12) να μη μπει σε απαιτήσεις: οι Butlin et al. καταλήγουν ότι καμία σημερινή AI δεν είναι συνειδητή. Το ICD-28 στηρίζεται σε invariant εκτός των 40 INV (GAP-COG-09).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-11"
+   ],
+   "sources": [
+    {
+     "title": "Shared Global Workspace",
+     "url": "https://arxiv.org/abs/2103.01197",
+     "year": "2022"
+    },
+    {
+     "title": "Consciousness in AI",
+     "url": "https://arxiv.org/abs/2308.08708",
+     "year": "2023"
+    },
+    {
+     "title": "Blackboard LLM MAS",
+     "url": "https://arxiv.org/abs/2507.01701",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-COG-03",
+    "REQ-COG-005"
+   ],
+   "draft_ref": "§6.3 CMP-COG-03 · §8.6 · §29.2",
+   "draft_position": "Αναζήτηση (MCTS, program search, best-first proof search) πάνω σε σχέδια, επιχειρήματα και διαδικαστικές κινήσεις. Anytime budgets από KRN-08. Rewards γειωμένα σε verifiers. Στο πρόχειρο [T]· το REQ-COG-005 ελέγχεται με KT-24.",
+   "verdict": "holds",
+   "reasoning": "Τα AlphaProof, FunSearch, AlphaEvolve και rStar-Math επιβεβαιώνουν την αναζήτηση γειωμένη σε verifiers ή evaluators. Η ρήτρα «rewards από verifiers» συνάδει με τα ευρήματα για τα PRMs (κατώτερα δεδομένα MC, biases BoN). Κατάταξη experiment αντί για [T]: ο μηχανισμός είναι [T], αλλά η αξία του MCTS πάνω σε argument graphs χωρίς formal checker δεν τεκμηριώνεται. Το ίδιο το πρόχειρο το δένει σε KT-24. Λείπει πολιτική compute-optimal (GAP-COG-08).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-03",
+    "SOTA-COG-04"
+   ],
+   "sources": [
+    {
+     "title": "AlphaProof (Nature, Crossref)",
+     "url": "https://api.crossref.org/works/10.1038/s41586-025-09833-y",
+     "year": "2025"
+    },
+    {
+     "title": "AlphaEvolve",
+     "url": "https://arxiv.org/abs/2506.13131",
+     "year": "2025"
+    },
+    {
+     "title": "Lessons of Developing PRMs",
+     "url": "https://aclanthology.org/2025.findings-acl.547/",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-COG-001",
+    "INV-C03",
+    "ADR-0005"
+   ],
+   "draft_ref": "§8.1 · §0.1 · §19 INV-C03 · §22 ADR-0005",
+   "draft_position": "Οι γεννήτριες είναι μη έμπιστες και παράγουν μόνο PROPOSED. Κανόνας: grade ≥ COMMITTED ⇒ ∃ proof της κλάσης και ∃ Gate allow. Η έξοδος μοντέλου έχει τύπο Proposal χωρίς constructor commit. Μία πόρτα εισόδου.",
+   "verdict": "holds",
+   "reasoning": "Το LLM-Modulo και ο Stechly δείχνουν κατάρρευση με self-critique και άνοδο με sound verifier. Το σχήμα γεννήτρια-checker πέτυχε AlphaGeometry (25/30) και AlphaProof. Τα commercial legal AI research tools (Harvey-class) κάνουν 17–33% hallucination, άρα ο φραγμός σε επίπεδο τύπου είναι αναγκαίος. Η ισχύς του INV-C03 όμως φτάνει μόνο όσο η ασθενέστερη κλάση verifier του §8.7 (GAP-COG-02). Το VT-304 δεν υπάρχει.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-02",
+    "SOTA-COG-03"
+   ],
+   "sources": [
+    {
+     "title": "LLM-Modulo (ICML)",
+     "url": "https://arxiv.org/abs/2402.01817",
+     "year": "2024"
+    },
+    {
+     "title": "Self-Verification Limitations",
+     "url": "https://arxiv.org/abs/2402.08115",
+     "year": "2024"
+    },
+    {
+     "title": "Hallucination-Free? Assessing the Reliability of Leading AI Legal Research Tools",
+     "url": "https://arxiv.org/abs/2405.20362",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "EXP-01"
+   ],
+   "draft_ref": "§26 EXP-01",
+   "draft_position": "Μειώνει ο PVC το σφάλμα έναντι ενός γενικού μοντέλου μόνου του; Σφραγισμένο σύνολο, τυφλή βαθμολόγηση, ίσο budget. Αν η μείωση είναι κάτω από το περιθώριο, η Verification Suite απλοποιείται (το INV-C03 μένει).",
+   "verdict": "holds",
+   "reasoning": "Σωστό kill test. Στο baseline να μπει και commercial legal AI system (Harvey-class), με τυπολογία hallucination τύπου Magesh. Το «ίσο budget» πρέπει να σημαίνει και ίσο test-time compute, αφού η compute-optimal κατανομή δίνει >4× αποδοτικότητα έναντι best-of-N.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-04"
+   ],
+   "sources": [
+    {
+     "title": "Hallucination-Free?",
+     "url": "https://arxiv.org/abs/2405.20362",
+     "year": "2024"
+    },
+    {
+     "title": "Scaling LLM Test-Time Compute Optimally",
+     "url": "https://arxiv.org/abs/2408.03314",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-COG-04",
+    "ICD-30"
+   ],
+   "draft_ref": "§6.3 CMP-COG-04 · §8.7 · ICD-30",
+   "draft_position": "Proof objects κατά κλάση (§8.7):\n- SMT: «model ή unsat core + solver version» (Z3).\n- Formal: «hash proof term + checker version» (Lean 4).\n- N-version: «υπογεγραμμένη εγγραφή συμφωνίας».\n- Calibration check: ιστορικό βαθμονόμησης.\nΜετριασμός για bug verifier: N-version και mutation-tested verifiers. Timeout σημαίνει Unknown· το verifier set μένει εκτός χώρου αναζήτησης.",
+   "verdict": "superior-exists",
+   "reasoning": "Για SAT, το model είναι ήδη ελέγξιμο πιστοποιητικό. Για UNSAT, το unsat core με την έκδοση του solver δεν είναι απόδειξη και απαιτεί εμπιστοσύνη στον solver. Υπάρχουν πιστοποιητικά: το cvc5 εξάγει Alethe/LFSC/CPC και το Carcara (Rust) ελέγχει Alethe. Για τη Lean υπάρχουν ανεξάρτητοι kernels (Lean4Lean, ήδη εντόπισε soundness bug· nanoda_lib)· το leanchecker χρησιμοποιεί τον ίδιο kernel. Το N-version δεν αποτελεί απόδειξη, λόγω συσχετισμένων αποτυχιών (Knight & Leveson· Kim 2025). Σωστά στο πρόχειρο: timeout = Unknown και verifier set εκτός αναζήτησης.",
+   "superior": "UNSAT: πιστοποιητικό συν ανεξάρτητος checker (π.χ. cvc5 → Alethe → Carcara). Lean: επανέλεγχος του term σε ανεξάρτητο kernel. N-version: ξεχωριστή, ασθενέστερη κλάση τεκμηρίου. Κυριαρχεί στο «N-version + mutation testing», γιατί μικραίνει την TCB από solver/kernel σε μικρό checker χωρίς να χάνει ιδιότητα του προχείρου. Trade-offs:\n(i) Το πρόχειρο ορίζει Z3· δεν ξέρω αν οι αποδείξεις του ελέγχονται ανεξάρτητα, οπότε ίσως χρειαστεί cvc5 για UNSAT.\n(ii) Κόστος παραγωγής και ελέγχου (Lean4Lean 20–50% πιο αργό).\n(iii) Το nanoda_lib είναι πρώιμο.",
+   "sota_refs": [
+    "SOTA-COG-05",
+    "SOTA-COG-06"
+   ],
+   "sources": [
+    {
+     "title": "Carcara (GitHub)",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2026"
+    },
+    {
+     "title": "cvc5 Proofs",
+     "url": "https://cvc5.github.io/docs/latest/proofs/proofs.html",
+     "year": "2026"
+    },
+    {
+     "title": "Lean4Lean",
+     "url": "https://arxiv.org/abs/2403.14064",
+     "year": "2024"
+    },
+    {
+     "title": "nanoda_lib",
+     "url": "https://github.com/ammkrn/nanoda_lib",
+     "year": "2026"
+    },
+    {
+     "title": "N-version programming (Knight & Leveson finding)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-COG-05",
+    "REQ-COG-006"
+   ],
+   "draft_ref": "§6.3 CMP-COG-05 · §8.8 · §29.2",
+   "draft_position": "ATMS: labels (ελάχιστα περιβάλλοντα), nogoods, ταυτόχρονες εναλλακτικές ερμηνείες. Παράγωγη προβολή· τα nogoods δεσμεύονται. Για την έκρηξη labels: focused ATMS και όρια περιβαλλόντων. Επέκταση των as-built JTMS/WFS (ανεπαλήθευτα από εδώ).",
+   "verdict": "holds",
+   "reasoning": "Το ATMS είναι ο κλασικός μηχανισμός για το ζητούμενο (de Kleer 1986· το κείμενο δεν ανοίχτηκε, 403). Η revision σε belief bases (SEP §5) ταιριάζει με το «υποβιβασμός αντί διαγραφής». Το ProvSQL υλοποιεί why-, how- και which-provenance ως semirings σε PostgreSQL· είναι εναλλακτική υλοποίηση για παράγωγες προβολές εξάρτησης. Η ισοδυναμία ATMS labels ↔ why-provenance είναι ερμηνεία, όχι τεκμηριωμένο αποτέλεσμα. Καμία μέτρηση κλιμάκωσης σε νομικά corpora.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-08"
+   ],
+   "sources": [
+    {
+     "title": "An assumption-based TMS (Crossref)",
+     "url": "https://api.crossref.org/works/10.1016/0004-3702(86)90080-9",
+     "year": "1986"
+    },
+    {
+     "title": "ProvSQL",
+     "url": "https://provsql.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Logic of Belief Revision (SEP)",
+     "url": "https://plato.stanford.edu/entries/logic-belief-revision/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-COG-06",
+    "REQ-COG-007"
+   ],
+   "draft_ref": "§6.3 CMP-COG-06 · §8.9 · §26 EXP-22",
+   "draft_position": "SCMs, do-calculus identification, counterfactuals, μοντέλα νομικής αιτιώδους συνάφειας. Μη ταυτοποιήσιμο αποτέλεσμα ⇒ Unknown με τις απαιτούμενες υποθέσεις. [X] EXP-22 (αξία για νομική αιτιότητα, συμφωνία με ειδικούς).",
+   "verdict": "holds",
+   "reasoning": "Η αρχή «identifiability ή Unknown» είναι σωστή. Το DoWhy δίνει identification, refutation και counterfactuals μέσω GCM. Το CLadder δείχνει ότι τα LLMs δυσκολεύονται. Η νομική αιτιότητα είναι όμως actual causation (but-for, NESS, overdetermination, preemption), με formal εργαλείο τον ορισμό Halpern–Pearl. Το πρόχειρο δεν τη διακρίνει από το population-level do-calculus (GAP-COG-06), αν και το EXP-22 υπάρχει.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-09"
+   ],
+   "sources": [
+    {
+     "title": "DoWhy",
+     "url": "https://github.com/py-why/dowhy",
+     "year": "2026"
+    },
+    {
+     "title": "CLadder",
+     "url": "https://arxiv.org/abs/2312.04350",
+     "year": "2023"
+    },
+    {
+     "title": "Causation in the Law (SEP)",
+     "url": "https://plato.stanford.edu/entries/causation-law/",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-COG-07",
+    "REQ-COG-008"
+   ],
+   "draft_ref": "§6.3 CMP-COG-07 · §8.9 · §29.2",
+   "draft_position": "Ghost worlds: CoW αντίγραφα πάνω σε cuts, επέκταση του νομικού --what-if. Τα handles δεν φέρουν commit capability, άρα η διαρροή στο trusted state είναι μη αναπαραστάσιμη. [T] ghost / [X] learned (EXP-23).",
+   "verdict": "holds",
+   "reasoning": "Η απουσία capability ως τρόπος να γίνει η διαρροή μη αναπαραστάσιμη είναι σωστή σχεδίαση. Άμεσο προηγούμενο σε παραγωγή: το Datomic `with` (speculative database value χωρίς durable commit, συνδυάσιμο με as-of), μαζί με τα as-of ερωτήματα του XTDB v2.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-20"
+   ],
+   "sources": [
+    {
+     "title": "Datomic filters (with / as-of)",
+     "url": "https://docs.datomic.com/reference/filters.html",
+     "year": "2026"
+    },
+    {
+     "title": "XTDB",
+     "url": "https://xtdb.com/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "EXP-23"
+   ],
+   "draft_ref": "§26 EXP-23",
+   "draft_position": "Learned world models για δυναμική δίκης· μέτρο η προβλεπτική αξία (ποτέ «X%» προς πελάτες). Αν είναι χαμηλή, μένουν μόνο συμβολικά ghost worlds.",
+   "verdict": "holds",
+   "reasoning": "Η αιχμή (V-JEPA 2, DreamerV3, Genie 3 που είναι research preview με συνέπεια λίγων λεπτών) αφορά φυσικά και οπτικά περιβάλλοντα. Ο ερευνητής δεν βρήκε δημοσίευση για δυναμική δίκης· δεν επανελέγχθηκε λόγω εξαντλημένου search budget. Το κριτήριο θανάτου είναι σωστό.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-10"
+   ],
+   "sources": [
+    {
+     "title": "V-JEPA 2",
+     "url": "https://arxiv.org/abs/2506.09985",
+     "year": "2025"
+    },
+    {
+     "title": "DreamerV3",
+     "url": "https://danijar.com/project/dreamerv3/",
+     "year": "2025"
+    },
+    {
+     "title": "Genie 3",
+     "url": "https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-COG-08",
+    "REQ-COG-009"
+   ],
+   "draft_ref": "§6.3 CMP-COG-08 · §8.10 · §8.7 (Calibration check)",
+   "draft_position": "Βαθμονόμηση ανά κλάση ισχυρισμού που ρυθμίζει τα κατώφλια commit. Αυτογνωσία ικανοτήτων από το registry (καμία αυτο-δήλωση, ICD-04). Αποφάσεις UNKNOWN. Το «Calibration check» είναι κλάση verifier στο §8.7. Μέθοδος βαθμονόμησης δεν ορίζεται.",
+   "verdict": "gap",
+   "reasoning": "Υποβιβάστηκε από superior-exists: χωρίς δηλωμένη μέθοδο στο πρόχειρο δεν υπάρχει επιλογή που να κυριαρχείται, άρα πρόκειται για κενό. Η απόρριψη της αυτο-αναφοράς επιβεβαιώνεται: introspection ~20% και «highly unreliable»· verbalized confidence υπερβέβαιο. Υπάρχουν μέθοδοι με εγγύηση πεπερασμένου δείγματος υπό exchangeability: conformal risk control, abstention, factuality. Προσοχή: μια στατιστική εγγύηση δεν είναι απόδειξη. Η κλάση «Calibration check» πρέπει να δηλώνει μέγιστο βαθμό (GAP-COG-02).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-07",
+    "SOTA-COG-12"
+   ],
+   "sources": [
+    {
+     "title": "Conformal Risk Control",
+     "url": "https://arxiv.org/abs/2208.02814",
+     "year": "2022"
+    },
+    {
+     "title": "Conformal Abstention",
+     "url": "https://arxiv.org/abs/2405.01563",
+     "year": "2024"
+    },
+    {
+     "title": "Emergent Introspective Awareness",
+     "url": "https://transformer-circuits.pub/2025/introspection/index.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-COG-003",
+    "INV-C04"
+   ],
+   "draft_ref": "§8.4 · §19 INV-C04",
+   "draft_position": "answer: Query → ProofCarryingClaim ⊎ Refuted ⊎ Unknown(reason, missing, would_resolve_by), με reason ∈ {NO_EVIDENCE, CONFLICTING_EVIDENCE, UNDECIDABLE_IN_BUDGET, OUT_OF_SCOPE, CONTROL_RESTRICTED}. Ολική· το Unknown είναι επιτυχής πράξη (exit 0), μέσα στο InstitutionalAct.",
+   "verdict": "holds",
+   "reasoning": "Η abstention ως πρώτης τάξης έξοδος είναι η κατεύθυνση της βιβλιογραφίας (TACL 2025), και το τυποποιημένο Unknown είναι πλουσιότερο από το binary abstain. Το conformal back-off χωρά ως ProofCarryingClaim ασθενέστερης πρότασης μόνο αν η κλάση calibration γίνει δεκτή με δηλωμένο βαθμό (DEC-COG-01). Το VT-306 δεν υπάρχει.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-07"
+   ],
+   "sources": [
+    {
+     "title": "Know Your Limits",
+     "url": "https://aclanthology.org/2025.tacl-1.26/",
+     "year": "2025"
+    },
+    {
+     "title": "Conformal Factuality",
+     "url": "https://proceedings.mlr.press/v235/mohri24a.html",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-COG-09",
+    "REQ-COG-010"
+   ],
+   "draft_ref": "§6.3 CMP-COG-09 · §29.2",
+   "draft_position": "Tools, programs, LexDSL rule-sets, playbooks: versioned, conformance-tested, στο CAS με registry στο ledger. Προαγωγή μόνο μέσω ORP. Wasm/Lisp/Python.",
+   "verdict": "holds",
+   "reasoning": "Το πρότυπο είναι η skill library ως εκτελέσιμος κώδικας (Voyager). Το MCP 2026-07-28 έχει tools και extensions (Tasks· Skills over MCP μέσω working group) και θεωρεί τις annotations untrusted, εκτός αν προέρχονται από trusted server· αυτό συνάδει με ORP και gateway. Το MCP να είναι adapter, όχι έδρα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-16"
+   ],
+   "sources": [
+    {
+     "title": "Voyager",
+     "url": "https://arxiv.org/abs/2305.16291",
+     "year": "2023"
+    },
+    {
+     "title": "MCP Specification",
+     "url": "https://modelcontextprotocol.io/specification/latest",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-COG-10",
+    "REQ-COG-012"
+   ],
+   "draft_ref": "§6.3 CMP-COG-10 · §19 INV-S01",
+   "draft_position": "Effectful σχέδια ως sagas μέσω του gateway, με compensation (Elixir). Χωρίς υπογραφή Principal δεν γίνεται εξωτερική επίδραση (INV-L02). Το INV-S01 (Tier-1, KT-17) απαγορεύει στο περιεχόμενο OBSERVED/PROPOSED να λειτουργεί ως εντολή.",
+   "verdict": "holds",
+   "reasoning": "Οι sagas είναι σωστές. Το Temporal υλοποιεί replay από το event history με επαναχρησιμοποίηση των αποτελεσμάτων, συνεπές με το INV-C08. Εισάγει όμως δεύτερο ιστορικό δίπλα στο ledger, άρα δεν είναι αυστηρά ανώτερο. Το INV-S01 υπάρχει· λείπει ο μηχανισμός επιβολής του για σχέδια που αγγίζουν untrusted δεδομένα (GAP-COG-05).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-15",
+    "SOTA-COG-13"
+   ],
+   "sources": [
+    {
+     "title": "Temporal Workflows",
+     "url": "https://docs.temporal.io/workflows",
+     "year": "2026"
+    },
+    {
+     "title": "CaMeL",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-COG-11",
+    "REQ-COG-011"
+   ],
+   "draft_ref": "§6.3 CMP-COG-11 · §29.2",
+   "draft_position": "OCR ελληνικών (Tesseract), layout, NER, ελληνικό νομικό NLP (as-built έδρες). Τα παράγωγα φέρουν provenance-confidence labels και δεν θεωρούνται ποτέ trusted χωρίς verification.",
+   "verdict": "holds",
+   "reasoning": "Η αρχή είναι σωστή και δεν εξαρτάται από την ποιότητα της μηχανής. Στο OmniDocBench τα δυνατά σημεία pipelines και VLMs διαφέρουν ανά τύπο εγγράφου. Το Docling (MIT, τοπικό, DocLayNet/TableFormer) είναι [T] για το DP-2. Ο ισχυρισμός «το OCR με VLM επινοεί κείμενο» αφαιρέθηκε ως ατεκμηρίωτος. Αλλαγή σε today: το συμβόλαιο είναι [T]· η επιλογή μηχανής (και N-version OCR) απαιτεί benchmark σε ελληνικά νομικά scans (άγνωστο).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-17"
+   ],
+   "sources": [
+    {
+     "title": "OmniDocBench",
+     "url": "https://arxiv.org/abs/2412.07626",
+     "year": "2025"
+    },
+    {
+     "title": "Docling",
+     "url": "https://arxiv.org/abs/2408.09869",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KNW-01",
+    "ICD-18",
+    "REQ-KNW-001",
+    "INV-C06"
+   ],
+   "draft_ref": "§6.3 CMP-KNW-01 · ICD-18 · §19 INV-C06",
+   "draft_position": "Evidence items (CID), παραγωγές W3C PROV, source trust classes, taint. Ingest/Attest/Lineage/Taint/Quarantine. Ελλιπής αλυσίδα ⇒ μη αποδεκτό.",
+   "verdict": "holds",
+   "reasoning": "Το PROV-O (REC 30/4/2013) δίνει Entity, Activity, Agent και qualified terms. Η ολότητα είναι εφικτή όσο η ingestion είναι η μόνη πόρτα. Πρέπει να καλύπτει και την επιρροή μέσω context των LLM (GAP-COG-04). Το VT-202 δεν υπάρχει.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-18"
+   ],
+   "sources": [
+    {
+     "title": "PROV-O",
+     "url": "https://www.w3.org/TR/prov-o/",
+     "year": "2013"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-KNW-04",
+    "REQ-KNW-003",
+    "INV-E04"
+   ],
+   "draft_ref": "§6.3 CMP-KNW-04 · §19 INV-E04 · §3.1 (tlog-1)",
+   "draft_position": "Connectors, attestation λήψης (TSR, υπογραφή ή transcript), transparency log, quarantine, pinned sources και multi-witness. Το INV-E04 ορίζει πεδία (πηγή, τεκμήριο λήψης, digest, χρόνος), όχι μορφή. Έδρα log: tlog-1 (RFC 6962/9162).",
+   "verdict": "gap",
+   "reasoning": "Υποβιβάστηκε από superior-exists. Το πρόχειρο δεν ορίζει μορφή εγγραφής ούτε εξωτερικό interface επαλήθευσης, άρα δεν υπάρχει επιλογή που να κυριαρχείται. Υπάρχουν πρότυπα:\n- in-toto v1.2: DSSE, Statement με subject DigestSet, Predicate.\n- SCITT (RFC 9943, 06/2026): γενίκευση του CT που χρησιμοποιεί ήδη το tlog-1, με COSE receipts.\nΤο SCITT δεν είναι αυστηρά ανώτερο ως έδρα για τρεις λόγους: συγκρούεται με την έδρα JCS (COSE/CBOR), η ωριμότητα των υλοποιήσεων είναι άγνωστη, και έχει θέση μόνο ως εξωτερική προβολή.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-18"
+   ],
+   "sources": [
+    {
+     "title": "RFC 9943",
+     "url": "https://datatracker.ietf.org/doc/rfc9943/",
+     "year": "2026"
+    },
+    {
+     "title": "in-toto Attestation spec",
+     "url": "https://github.com/in-toto/attestation/blob/main/spec/README.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-E02",
+    "REQ-KNW-002",
+    "KT-06"
+   ],
+   "draft_ref": "§19 INV-E02 · §24 KT-06 · §0.1",
+   "draft_position": "taint(e)@t ⇒ κάθε ισχυρισμός με στήριξη που εξαρτάται από e σημαίνεται έως t+Δ, και τα ATMS labels αποκλείουν τα περιβάλλοντα της e. KT-06: 100% εντός Δ, ATMS retraction, ειδοποίηση των drafts.",
+   "verdict": "holds",
+   "reasoning": "Η εξάρτηση ως διάσχιση γράφου έχει τυπική βάση: semiring provenance, υλοποιημένο στο ProvSQL. Για ισχυρισμούς με sound proof πάνω σε evidence, η στήριξη βρίσκεται μέσα στο proof. Τυφλό σημείο μένει στα PROPOSED drafts και στις ασθενείς κλάσεις (N-version, calibration), όπου η επιρροή πέρασε μέσω context. Αρκούν 5 κείμενα ανά στοχευμένη ερώτηση (PoisonedRAG). Το «100% εντός Δ» προϋποθέτει ότι καταγράφονται τα CIDs του context (GAP-COG-04).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-08",
+    "SOTA-COG-21"
+   ],
+   "sources": [
+    {
+     "title": "ProvSQL",
+     "url": "https://provsql.org/",
+     "year": "2026"
+    },
+    {
+     "title": "PoisonedRAG",
+     "url": "https://arxiv.org/abs/2402.07867",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-KNW-02",
+    "ICD-17",
+    "REQ-KNW-004",
+    "INV-E03"
+   ],
+   "draft_ref": "§6.3 CMP-KNW-02 · ICD-17 · §15.4 · §19 INV-E03",
+   "draft_position": "Διτεμπορικό RDF (named graphs ανά έκδοση/cut), SPARQL subset, AsOf, ResolveEli, ValidateShacl· παράγωγο από το ledger. Oxigraph-class store με PostgreSQL· πρώτο όργανο ο as-built Lisp version graph. Το ICD δεν εκθέτει υλοποίηση.",
+   "verdict": "holds",
+   "reasoning": "Εφικτό. Η διτεμπορικότητα πρέπει να μοντελοποιηθεί, δεν είναι εγγενής στο RDF. Κατάσταση: RDF 1.2 σε CR (07/04/2026), SPARQL 1.2 σε WD (13/9/2026), SHACL 1.2 σε WD (28/8/2026). Οι 1.1 και SHACL (2017) είναι RECs. Το Oxigraph έχει RDF/SPARQL 1.2 πίσω από feature flags· SHACL δεν αναφέρεται, άρα ο validator είναι χωριστό όργανο (δεν ξέρω ποιο). XTDB και Zep είναι εγγενώς διτεμπορικά, αλλά χάνουν SPARQL/SHACL/ELI, άρα δεν είναι αυστηρά ανώτερα (DEC-COG-04).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-19",
+    "SOTA-COG-20"
+   ],
+   "sources": [
+    {
+     "title": "RDF 1.2 Concepts",
+     "url": "https://www.w3.org/TR/rdf12-concepts/",
+     "year": "2026"
+    },
+    {
+     "title": "SPARQL 1.2",
+     "url": "https://www.w3.org/TR/sparql12-query/",
+     "year": "2026"
+    },
+    {
+     "title": "SHACL 1.2 Core",
+     "url": "https://www.w3.org/TR/shacl12-core/",
+     "year": "2026"
+    },
+    {
+     "title": "Oxigraph CHANGELOG",
+     "url": "https://raw.githubusercontent.com/oxigraph/oxigraph/master/CHANGELOG.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KNW-03",
+    "ICD-31",
+    "REQ-KNW-005",
+    "INV-E01",
+    "ADR-0030"
+   ],
+   "draft_ref": "§6.3 CMP-KNW-03 · ICD-31 · §19 INV-E01 · §22 ADR-0030",
+   "draft_position": "Υβριδική ανάκτηση (lexical, vectors, graph walks, Graph-RAG, re-ranking) μόνο ως παράγωγο: index = f(ledger, CAS), και η διαγραφή του δεν αλλάζει αλήθεια. PostgreSQL (pgvector, FTS).",
+   "verdict": "holds",
+   "reasoning": "Στο BEIR το BM25 είναι robust baseline και το re-ranking δίνει τα καλύτερα αποτελέσματα, άρα το υβριδικό σχήμα είναι σωστό. Το GraphRAG χτίζει με LLM τον KG και τα summaries: είναι παράγωγα βαθμού PROPOSED και όχι evidence. Το Differential Dataflow δίνει incremental ανανέωση.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-21",
+    "SOTA-COG-22"
+   ],
+   "sources": [
+    {
+     "title": "BEIR",
+     "url": "https://arxiv.org/abs/2104.08663",
+     "year": "2021"
+    },
+    {
+     "title": "GraphRAG",
+     "url": "https://arxiv.org/abs/2404.16130",
+     "year": "2024"
+    },
+    {
+     "title": "HippoRAG 2",
+     "url": "https://arxiv.org/abs/2502.14802",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "EXP-05"
+   ],
+   "draft_ref": "§26 EXP-05",
+   "draft_position": "Χρειάζεται graph database; Φόρτοι γενεαλογίας, taint και argument graph σε journal+μνήμη έναντι RDF store έναντι property graph. Μόνο αν αποτυγχάνει SLO χωρίς αυτή.",
+   "verdict": "holds",
+   "reasoning": "Το ProvSQL (VLDB 2018, semiring provenance σε PostgreSQL) και το Differential Dataflow (incremental επαναληπτικοί υπολογισμοί σε γράφους) δείχνουν ότι οι φόρτοι αυτοί ίσως δεν χρειάζονται graph DB. Το κριτήριο SLO είναι σωστό.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-08",
+    "SOTA-COG-22"
+   ],
+   "sources": [
+    {
+     "title": "ProvSQL (VLDB, Crossref)",
+     "url": "https://api.crossref.org/works/10.14778/3229863.3236253",
+     "year": "2018"
+    },
+    {
+     "title": "differential-dataflow",
+     "url": "https://github.com/TimelyDataflow/differential-dataflow",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KNW-05",
+    "REQ-KNW-006"
+   ],
+   "draft_ref": "§6.3 CMP-KNW-05 · §3 · §15.1 · ADR-0025 · §29",
+   "draft_position": "OWL/SHACL/JSON-LD, αντιστοιχίσεις ELI/AKN/FRBR, versioned λεξιλόγια με SHACL migration tests. Ταυτόχρονα το πρόχειρο δηλώνει ως «μία έδρα»: σχημάτων τα JSON Schema του contracts/schemas (ADR-0025)· όρων το model/grail-world-os.kerml (§3)· canonical model το model/grail-world-os.sysml (§29).",
+   "verdict": "holds",
+   "reasoning": "Τα πρότυπα είναι τα σωστά: Akoma Ntoso (OASIS Standard 08/2018), ELI, και υπάρχουσα αντιστοίχιση ELI–AKN (ICEGOV 2023). Υπάρχει όμως τριπλή ένταση έδρας: JSON Schema, OWL/SHACL και KerML/SysML. Το LinkML παράγει JSON Schema/SHACL/OWL/JSON-LD από μία πηγή, αλλά θα ήταν τέταρτη γλώσσα δίπλα στο SysML v2 του SysON (DEC-COG-03).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-19",
+    "SOTA-COG-23"
+   ],
+   "sources": [
+    {
+     "title": "OASIS LegalDocML",
+     "url": "https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=legaldocml",
+     "year": "2018"
+    },
+    {
+     "title": "ELI–AKN mapping (Crossref)",
+     "url": "https://api.crossref.org/works/10.1145/3614321.3614327",
+     "year": "2023"
+    },
+    {
+     "title": "LinkML",
+     "url": "https://linkml.io/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EP-07"
+   ],
+   "draft_ref": "§28 EP-07",
+   "draft_position": "Knowledge Format Adapter (ICD-17, ICD-18) για διαδόχους ELI/AKN, κανονιστικές γλώσσες κανόνων, επιστημονικά πρότυπα. Με SHACL migrations και INV-E03.",
+   "verdict": "holds",
+   "reasoning": "Σωστό όριο. Πρώτο πραγματικό use case: η μετάβαση από RDF 1.1/SPARQL 1.1/SHACL σε 1.2, όταν γίνουν RECs (σήμερα CR/WD).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-19"
+   ],
+   "sources": [
+    {
+     "title": "RDF 1.2 Concepts",
+     "url": "https://www.w3.org/TR/rdf12-concepts/",
+     "year": "2026"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-KNW-007"
+   ],
+   "draft_ref": "§29.7 REQ-KNW-007 · §3 («Οντολογία του Δικαίου», SRC-ONT-LAW)",
+   "draft_position": "Το βιβλίο του δημιουργού είναι δογματική πηγή με provenance (All Rights Reserved), ποτέ AI υποσύστημα.",
+   "verdict": "holds",
+   "reasoning": "Είναι ζήτημα πολιτικής: πηγή με prov:wasAttributedTo και trust class, στα ίδια κανάλια με κάθε evidence. Το PROV-O το εκφράζει άμεσα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-COG-18"
+   ],
+   "sources": [
+    {
+     "title": "PROV-O",
+     "url": "https://www.w3.org/TR/prov-o/",
+     "year": "2013"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-COG-01",
+   "title": "Ανύπαρκτες έδρες, άγραφες ενότητες, λάθος μέτρηση",
+   "description": "Στο docs/architecture-draft/ υπάρχουν μόνο: το master, το spine-vocab και 9 αρχεία στο _unmerged-parts (επιβεβαιώθηκε με Glob). Το model/ στη ρίζα του repo είναι κενό. Λείπουν:\n- model/grail-world-os.kerml (§3) και .sysml (§29)·\n- contracts/schemas/institutional-act.schema.json (§8.4)·\n- contracts/ (§15.1).\nΤο LedgerEvent παραπέμπει στο §16 και το §10 δεν γράφτηκε. Το CLAUDE.md αναφέρει φακέλους formal/, contracts/, adrs/, model/ που δεν υπάρχουν. Το spine-vocab δηλώνει «COMPONENTS (76)» αλλά απαριθμεί 75 (επιβεβαιώθηκε).",
+   "why_it_matters": "Τα ICD-22/28/30 δεν έχουν σχήματα. VT-202, VT-304, VT-306 δεν υπάρχουν. Η ιχνηλασιμότητα του §29 παραπέμπει σε κενό.",
+   "sota_answer": "Εσωτερική ασυνέπεια. Στη Φάση Β τα σχήματα να παραχθούν από το SysON model.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-COG-02",
+   "title": "Δηλωμένη TCB και μέγιστος βαθμός ανά κλάση proof",
+   "description": "Το §8.7 βάζει στην ίδια λίστα πιστοποιητικά (SAT model, proof terms) μαζί με τεκμήρια που δεν είναι αποδείξεις: unsat core + solver version, N-version agreement, calibration check, διπλό υπολογισμό προθεσμίας. Δεν δηλώνεται ποια TCB εμπιστεύεται κάθε κλάση ούτε ποιον μέγιστο βαθμό επιτρέπει.",
+   "why_it_matters": "Το INV-C03 ισχύει μόνο όσο ισχύει η ασθενέστερη κλάση που οδηγεί σε COMMITTED.",
+   "sota_answer": "Πιστοποιητικά με ανεξάρτητο checker: cvc5 → Alethe → Carcara· Lean → Lean4Lean ή nanoda_lib. Για τις υπόλοιπες κλάσεις: δηλωμένη TCB και πλαφόν βαθμού.",
+   "sota_refs": [
+    "SOTA-COG-05"
+   ],
+   "sources": [
+    {
+     "title": "Carcara (GitHub)",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2026"
+    },
+    {
+     "title": "Lean4Lean",
+     "url": "https://arxiv.org/abs/2403.14064",
+     "year": "2024"
+    },
+    {
+     "title": "cvc5 Proofs",
+     "url": "https://cvc5.github.io/docs/latest/proofs/proofs.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-COG-03",
+   "title": "Ποικιλομορφία στο N-version / N-model",
+   "description": "Το πρόχειρο ήδη απαιτεί ≥1 μη-LLM oracle για ADJUDICATED/ESTABLISHED (ICD-14, REQ-ADV-003) και ορίζει τη N-model agreement ως σήμα, όχι ψηφοφορία (§8.5). Λείπει όμως μέτρο ποικιλομορφίας ή συσχέτισης σφαλμάτων για το N-version agreement του §8.3/§8.7 (FRG-05) και για το Agree(k_of_n) του ICD-22.",
+   "why_it_matters": "Η συμφωνία συσχετισμένων συστημάτων δίνει ψευδή βεβαιότητα.",
+   "sota_answer": "Μέτρηση του error correlation και χωριστή, ασθενέστερη κλάση τεκμηρίου για το agreement.",
+   "sota_refs": [
+    "SOTA-COG-06"
+   ],
+   "sources": [
+    {
+     "title": "Correlated Errors in LLMs",
+     "url": "https://proceedings.mlr.press/v267/kim25e.html",
+     "year": "2025"
+    },
+    {
+     "title": "N-version programming (Knight & Leveson)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-COG-04",
+   "title": "Provenance σε επίπεδο context των LLM",
+   "description": "Το receipt κρατά hash του prompt, αλλά δεν απαριθμεί τα CIDs των evidence που μπήκαν στο context ως prov:used.",
+   "why_it_matters": "Για ισχυρισμούς με sound proof η στήριξη βρίσκεται στο proof. Για PROPOSED drafts και ασθενείς κλάσεις το INV-E02/KT-06 δεν βλέπει την επιρροή μέσω context.",
+   "sota_answer": "Καταγραφή των CIDs του context ως prov:used στο Inference Receipt· η taint διασχίζει και αυτές τις ακμές.",
+   "sota_refs": [
+    "SOTA-COG-21",
+    "SOTA-COG-18"
+   ],
+   "sources": [
+    {
+     "title": "PoisonedRAG",
+     "url": "https://arxiv.org/abs/2402.07867",
+     "year": "2025"
+    },
+    {
+     "title": "PROV-O",
+     "url": "https://www.w3.org/TR/prov-o/",
+     "year": "2013"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-COG-05",
+   "title": "Μηχανισμός επιβολής του INV-S01",
+   "description": "Το INV-S01 (Tier-1, KT-17) και τα provenance-tagged κανάλια (§0.1) υπάρχουν. Δεν ορίζεται όμως μηχανισμός που να εμποδίζει τα untrusted δεδομένα να επηρεάσουν το control flow ή να διαρρεύσουν μέσω ορισμάτων σε σχέδια του COG-10.",
+   "why_it_matters": "Το COG-10 εκτελεί σχέδια που επηρεάζονται από περιεχόμενο πηγών.",
+   "sota_answer": "CaMeL (77% των tasks του AgentDojo με provable security, έναντι 84% χωρίς άμυνα) και FIDES (IFC labels, ντετερμινιστική επιβολή).",
+   "sota_refs": [
+    "SOTA-COG-13"
+   ],
+   "sources": [
+    {
+     "title": "CaMeL",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "FIDES",
+     "url": "https://arxiv.org/abs/2505.23643",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-COG-06",
+   "title": "Actual causation για νομική αιτιότητα",
+   "description": "Το COG-06 ορίζεται μόνο με do-calculus. Το EXP-22 μετρά την αξία για νομική αιτιότητα, αλλά δεν διακρίνει την actual (but-for, NESS, overdetermination, preemption) από την type causation.",
+   "why_it_matters": "Πυρήνας της αστικής και ποινικής αιτιότητας στο LAWMAX.",
+   "sota_answer": "Ο τροποποιημένος ορισμός Halpern–Pearl· η θεωρία νομικής αιτιότητας (SEP).",
+   "sota_refs": [
+    "SOTA-COG-09"
+   ],
+   "sources": [
+    {
+     "title": "HP modified definition",
+     "url": "https://arxiv.org/abs/1505.00162",
+     "year": "2015"
+    },
+    {
+     "title": "Causation in the Law (SEP)",
+     "url": "https://plato.stanford.edu/entries/causation-law/",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-COG-07",
+   "title": "Σημασιολογία replay-audit στο Inference Receipt",
+   "description": "Το INV-C08 και το contract version υπάρχουν. Όμως το receipt («hashes») δεν δείχνει σε CIDs αίτησης και απάντησης στο CAS. Δεν ορίζει ότι «replay-audit» σημαίνει επανάληψη από την καταγραφή και όχι νέο generation. Δεν δεσμεύει τον δηλωμένο ντετερμινισμό του deployment.",
+   "why_it_matters": "INV-C08, KT-01, επαναληψιμότητα audits υπό μη ντετερμινιστικά endpoints.",
+   "sota_answer": "Σώματα στο CAS, κρυπτογραφημένα ανά confidentiality domain και διαγράψιμα με crypto-shredding. Το OTel GenAI (Development) μόνο ως προβολή.",
+   "sota_refs": [
+    "SOTA-COG-14"
+   ],
+   "sources": [
+    {
+     "title": "Defeating Nondeterminism",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-COG-08",
+   "title": "Προσαρμοστική πολιτική test-time compute",
+   "description": "Τα budgets έρχονται από το KRN-08, αλλά κανένα όργανο δεν κατανέμει compute ανά δυσκολία ή stakes.",
+   "why_it_matters": "Η compute-optimal κατανομή είναι >4× αποδοτικότερη από best-of-N. Επηρεάζει τις συγκρίσεις «ίσου budget» (EXP-01).",
+   "sota_answer": "Compute-optimal κατανομή ανά δυσκολία, με εκτίμηση από το COG-08.",
+   "sota_refs": [
+    "SOTA-COG-04"
+   ],
+   "sources": [
+    {
+     "title": "Scaling LLM Test-Time Compute Optimally",
+     "url": "https://arxiv.org/abs/2408.03314",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-COG-09",
+   "title": "Διπλή σημασία της «μίας πόρτας»· invariants εκτός συνόλου",
+   "description": "Το ICD-22 στέλνει την έξοδο μέσω load-proposal-file! στο can-adopt, που το §3.1 δένει με την υιοθέτηση οργάνων (ORP). Ο PVC για ισχυρισμούς είναι άλλη ροή. Το ICD-28 διέπεται από το INV-THOUGHT-VISIBLE, και τα INV-C04/§8.4 επικαλούνται INV-HONEST-IGNORANCE, INV-ONE-ENVELOPE, INV-EXIT-CODES. Κανένα δεν ανήκει στα 40 INV (επιβεβαιώθηκε στο spine-vocab)· είναι as-built έδρες του άλλου repo, ανεπαλήθευτες από εδώ.",
+   "why_it_matters": "Νόμος «μία έδρα ανά έννοια» και ιχνηλασιμότητα.",
+   "sota_answer": "Εσωτερική ασυνέπεια. Χρειάζονται ρητοί ορισμοί στη Φάση Β.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  }
+ ],
+ "unknowns": [
+  "Χάσμα ποιότητας τοπικών μοντέλων σε ελληνικές νομικές εργασίες (EXP-15): δεν βρέθηκε μέτρηση.",
+  "Υπεροχή του Global Workspace έναντι επίπεδης ενορχήστρωσης για language agents: δεν βρέθηκε ελεγχόμενη μελέτη.",
+  "Learned world models για δυναμική δίκης: ο ερευνητής δεν βρήκε δημοσίευση· δεν επανελέγχθηκε (εξαντλημένο search budget).",
+  "Ποιότητα OCR και parsing σε ελληνικά νομικά scans (Tesseract, Docling, VLM): δεν βρέθηκε benchmark.",
+  "Αν οι αποδείξεις της Z3 ελέγχονται από ανεξάρτητο checker: δεν ξέρω. Αν ο veriT παράγει Alethe: δεν επαληθεύτηκε εδώ (μόνο για το cvc5).",
+  "Ωριμότητα των υλοποιήσεων SCITT (RFC 9943) σε παραγωγή: δεν ξέρω.",
+  "Ποιος SHACL validator συνοδεύει ένα Oxigraph-class store: δεν ξέρω (το CHANGELOG του Oxigraph δεν αναφέρει SHACL).",
+  "Ωριμότητα generators από SysML v2/KerML προς JSON Schema/SHACL/OWL: δεν ξέρω.",
+  "Βιβλιοθήκη Halpern–Pearl actual causation σε παραγωγή: δεν ξέρω.",
+  "Κλιμάκωση των ATMS labels σε νομικά corpora: δεν βρέθηκε μέτρηση.",
+  "Κείμενο των de Kleer 1986, Knight & Leveson 1986, Provenance Semirings 2007: δεν ανοίχτηκε (403 ή PDF μη αναγνώσιμο)· επαληθεύτηκαν μόνο τα μεταδεδομένα.",
+  "Χρονοδιάγραμμα για να γίνουν RECs τα RDF/SPARQL/SHACL 1.2 και για σταθεροποίηση των OTel GenAI semconv: δεν ξέρω.",
+  "As-built έδρες του STAVROPOULOSLAWCORPUS (cognition.lisp, JTMS/WFS, version-graph, load-proposal-file!, can-adopt): ανεπαλήθευτες από εδώ.",
+  "Εξαντλημένο budget WebSearch (200/200): δεν έγιναν στοχευμένες αναζητήσεις για ανώτερες εναλλακτικές στα holds· έλεγχοι μόνο με WebFetch σε γνωστούς υποψηφίους."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-COG-01",
+   "question": "Ποια proof objects γίνονται δεκτά για VERIFIED και για COMMITTED, και με ποια TCB;",
+   "recommendation": "Κατά κλάση:\n- UNSAT: πιστοποιητικό με ανεξάρτητο checker (π.χ. cvc5 → Alethe → Carcara).\n- SAT: model ελεγμένο με ανεξάρτητη αποτίμηση.\n- Lean: επανέλεγχος σε ανεξάρτητο kernel.\n- Χωρίς πιστοποιητικό (N-version, calibration, διπλός υπολογισμός): δηλωμένη TCB και πλαφόν βαθμού ανά κλάση.",
+   "alternatives": [
+    {
+     "option": "Όπως το πρόχειρο (§8.7)",
+     "pros": "Απλό· Z3 χωρίς αλλαγή.",
+     "cons": "Το UNSAT απαιτεί εμπιστοσύνη στον solver· οι κλάσεις ανισοβαρείς χωρίς δήλωση."
+    },
+    {
+     "option": "Πιστοποιητικά μόνο πάνω από κατώφλι stakes",
+     "pros": "Χαμηλότερο κόστος.",
+     "cons": "Δύο καθεστώτα εμπιστοσύνης."
+    },
+    {
+     "option": "Πιστοποιητικά όπου υπάρχουν· οι άλλες κλάσεις φτάνουν σε COMMITTED με δηλωμένη TCB, χωρίς πλαφόν",
+     "pros": "Διατηρεί τη λειτουργία του LAW-10 και του FRG-05.",
+     "cons": "Το INV-C03 γίνεται «sound modulo δηλωμένη TCB»."
+    }
+   ],
+   "rationale": "Το INV-C03 ισχύει όσο η ασθενέστερη κλάση. Τα εργαλεία (cvc5, Carcara, Lean4Lean) υπάρχουν. Trade-off: για τη Z3 δεν ξέρω αν οι αποδείξεις ελέγχονται ανεξάρτητα.",
+   "affects_ids": [
+    "CMP-COG-04",
+    "ICD-30",
+    "INV-C03",
+    "CMP-COG-08"
+   ]
+  },
+  {
+   "id": "DEC-COG-02",
+   "question": "Υπό ποιες συνθήκες το N-version agreement (§8.3, §8.7) μετρά ως τεκμήριο, και τι κάνει το Agree(k_of_n);",
+   "recommendation": "Η N-model συμφωνία LLMs μένει μόνο σήμα αβεβαιότητας, όπως ήδη ορίζει το §8.5. Το N-version agreement ντετερμινιστικών προγραμμάτων γίνεται χωριστή, ασθενέστερη κλάση, δεκτή μόνο με μετρημένη ποικιλομορφία. Το ≥1 μη-LLM oracle του ICD-14 μένει.",
+   "alternatives": [
+    {
+     "option": "Όπως το πρόχειρο",
+     "pros": "Ευελιξία· ήδη υπάρχει φραγμός ≥1 μη-LLM oracle και ADV-02.",
+     "cons": "Χωρίς μέτρο συσχέτισης· κίνδυνος ψευδούς βεβαιότητας."
+    },
+    {
+     "option": "Καμία συμφωνία δεν μετρά ως τεκμήριο",
+     "pros": "Μέγιστη αυστηρότητα.",
+     "cons": "Χάνεται το KT-02 και ο διπλός υπολογισμός του LAW-10 ως μέσα τεκμηρίωσης."
+    }
+   ],
+   "rationale": "Knight & Leveson 1986 (απόρριψη της ανεξαρτησίας)· Kim et al. 2025 (~60% συμφωνία στα σφάλματα σε ένα dataset, αυξάνεται με το μέγεθος).",
+   "affects_ids": [
+    "CMP-COG-04",
+    "ICD-30",
+    "ICD-22",
+    "EXP-14"
+   ]
+  },
+  {
+   "id": "DEC-COG-03",
+   "question": "Ποια είναι η μία έδρα των σχημάτων δεδομένων: JSON Schema (ADR-0025), OWL/SHACL (KNW-05), KerML/SysML (§3, §29) ή LinkML;",
+   "recommendation": "Ρητό όριο: SysML v2 ως έδρα αρχιτεκτονικής. Για τα σχήματα δεδομένων (evidence-item, claim, λεξιλόγια), μία πηγή LinkML, δηλωμένη στο model με trace. Από αυτήν παράγονται JSON Schema, SHACL, OWL, JSON-LD· τα contracts/schemas γίνονται παράγωγα.",
+   "alternatives": [
+    {
+     "option": "Όπως το πρόχειρο: πολλαπλές «μοναδικές» έδρες",
+     "pros": "Πλήρης εκφραστικότητα κάθε γλώσσας.",
+     "cons": "Παραβιάζει τη «μία έδρα»· κίνδυνος απόκλισης."
+    },
+    {
+     "option": "SysML v2/KerML ως μοναδική έδρα και για τα σχήματα",
+     "pros": "Μία γλώσσα, συνέπεια με SysON και CLAUDE.md.",
+     "cons": "Ωριμότητα generators προς JSON Schema/SHACL/OWL: δεν ξέρω."
+    },
+    {
+     "option": "OWL/SHACL ως έδρα, JSON Schema παράγωγο",
+     "pros": "Πλούσια σημασιολογία.",
+     "cons": "Ωριμότητα της παραγωγής JSON Schema: δεν επαληθεύτηκε."
+    }
+   ],
+   "rationale": "Το LinkML παράγει όλες τις μορφές από μία πηγή (επαληθεύτηκε). Trade-off: περιορισμένη εκφραστικότητα για προχωρημένα OWL/SHACL, και μια επιπλέον γλώσσα δίπλα στο SysML.",
+   "affects_ids": [
+    "CMP-KNW-05",
+    "REQ-KNW-006",
+    "ICD-17",
+    "EP-07",
+    "ADR-0025"
+   ]
+  },
+  {
+   "id": "DEC-COG-04",
+   "question": "Ποια έκδοση RDF/SPARQL/SHACL δεσμεύει το ICD-17;",
+   "recommendation": "RDF 1.1, SPARQL 1.1 και SHACL (2017), που είναι RECs. Οι εκδόσεις 1.2 έρχονται μέσω του EP-07 όταν γίνουν REC.",
+   "alternatives": [
+    {
+     "option": "Υιοθέτηση των 1.2 τώρα",
+     "pros": "Triple terms, κατάλληλα για ισχυρισμούς πάνω σε ισχυρισμούς.",
+     "cons": "CR/WD· κίνδυνος αλλαγών· στο Oxigraph πίσω από flags."
+    },
+    {
+     "option": "RDF 1.2 Basic conformance (χωρίς triple terms) όταν γίνει REC",
+     "pros": "Μικρό βήμα μετάβασης.",
+     "cons": "Χάνεται το κύριο όφελος της 1.2."
+    }
+   ],
+   "rationale": "RDF 1.2 CR (07/04/2026)· SPARQL 1.2 WD (13/9/2026)· SHACL 1.2 WD (28/8/2026). Recommendations: RDF 1.1 (2014), SPARQL 1.1 (2013), SHACL (2017).",
+   "affects_ids": [
+    "CMP-KNW-02",
+    "ICD-17",
+    "REQ-KNW-004",
+    "INV-E03"
+   ]
+  },
+  {
+   "id": "DEC-COG-05",
+   "question": "Ποιος μηχανισμός επιβάλλει το INV-S01 στο workspace και στον action executor;",
+   "recommendation": "Interpreter σχεδίων τύπου CaMeL, με labels ακεραιότητας και εμπιστευτικότητας (FIDES) πάνω στα provenance tags. Χρειάζεται πείραμα για το κόστος χρησιμότητας σε νομικές εργασίες.",
+   "alternatives": [
+    {
+     "option": "Μόνο provenance tags (πρόχειρο)",
+     "pros": "Απλό.",
+     "cons": "Χωρίς εγγύηση απέναντι σε ροές δεδομένων προς το control ή σε διαρροή μέσω ορισμάτων."
+    },
+    {
+     "option": "Μόνο dual-LLM",
+     "pros": "Ελαφρύ.",
+     "cons": "Χωρίς επιβολή σε επίπεδο capabilities."
+    }
+   ],
+   "rationale": "77% των tasks με provable security έναντι 84% χωρίς άμυνα, στο AgentDojo· σε νομικές εργασίες δεν ξέρω.",
+   "affects_ids": [
+    "CMP-COG-02",
+    "CMP-COG-10",
+    "ICD-28",
+    "REQ-COG-012"
+   ]
+  },
+  {
+   "id": "DEC-COG-06",
+   "question": "Ποια μορφή έχουν τα attestation records και πώς επαληθεύονται εξωτερικά;",
+   "recommendation": "in-toto Statement σε DSSE ως μορφή εγγραφής. Προαιρετική καταχώριση σε SCITT-συμβατό service ως εξωτερική προβολή του tlog-1, με δηλωμένη αντιστοίχιση JCS → COSE.",
+   "alternatives": [
+    {
+     "option": "Δική μας μορφή πάνω στο tlog-1",
+     "pros": "Καμία εξάρτηση· μόνο JCS.",
+     "cons": "Κανένα πρότυπο· φτωχή διαλειτουργικότητα."
+    },
+    {
+     "option": "SCITT ως έδρα",
+     "pros": "Πλήρης συμβατότητα.",
+     "cons": "Δεύτερη canonical serialization (COSE/CBOR)· ωριμότητα υλοποιήσεων άγνωστη."
+    }
+   ],
+   "rationale": "RFC 9943 (Proposed Standard, 06/2026) γενικεύει το CT, όπως και το tlog-1· in-toto v1.2 με DSSE.",
+   "affects_ids": [
+    "CMP-KNW-04",
+    "ICD-18",
+    "INV-E04",
+    "REQ-KNW-003"
+   ]
+  },
+  {
+   "id": "DEC-COG-07",
+   "question": "Το Inference Receipt δείχνει σε ολόκληρα σώματα (και context CIDs) ή μόνο σε hashes;",
+   "recommendation": "CIDs αίτησης, απάντησης και context στο CAS, κρυπτογραφημένα ανά confidentiality domain και διαγράψιμα με crypto-shredding. «replay-audit» σημαίνει επανάληψη από την καταγραφή.",
+   "alternatives": [
+    {
+     "option": "Μόνο hashes",
+     "pros": "Ελάχιστα προνομιακά δεδομένα σε αποθήκευση.",
+     "cons": "Το audit δεν αναπαράγεται· τυφλό σημείο της taint."
+    }
+   ],
+   "rationale": "Μη ντετερμινισμός των endpoints· INV-C08· INV-L03· το ADR-0018 (crypto-shredding) είναι [X].",
+   "affects_ids": [
+    "ICD-22",
+    "CMP-COG-01",
+    "REQ-COG-002",
+    "INV-E02"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 100,
+  "sources_failed": [
+   {
+    "url": "https://www.nature.com/articles/s41586-025-09833-y",
+    "problem": "Redirect σε auth (303)",
+    "action": "Επαληθεύτηκε μέσω Crossref API (Nature, online 12/11/2025)· αντικαταστάθηκε το URL."
+   },
+   {
+    "url": "https://arxiv.org/pdf/2408.03314",
+    "problem": "Μη αναγνώσιμο PDF",
+    "action": "Επαληθεύτηκε από το abs· αντικαταστάθηκε το URL."
+   },
+   {
+    "url": "https://dl.acm.org/doi/abs/10.1007/978-3-031-30823-9_19",
+    "problem": "403",
+    "action": "Αντικαταστάθηκε με το GitHub του Carcara (επιβεβαιώνει TACAS 2023, Rust, Alethe)."
+   },
+   {
+    "url": "https://team.inria.fr/veridis/files/2023/05/carcara.pdf",
+    "problem": "403",
+    "action": "Αντικαταστάθηκε με το GitHub του Carcara."
+   },
+   {
+    "url": "https://dl.acm.org/doi/10.1109/TSE.1986.6312924",
+    "problem": "403· και το ieeexplore χωρίς περιεχόμενο",
+    "action": "Μεταδεδομένα από Crossref, εύρημα από Wikipedia (δευτερογενής)· αφαιρέθηκαν το «27 εκδόσεις» και το «πολύ συχνότερα»."
+   },
+   {
+    "url": "https://www.sciencedirect.com/science/article/abs/pii/0004370286900809",
+    "problem": "403",
+    "action": "Μεταδεδομένα από Crossref· οι ιδιότητες του ATMS σημειώθηκαν ως μη επαληθευμένες από την πηγή."
+   },
+   {
+    "url": "https://web.cs.ucdavis.edu/~green/papers/pods07.pdf",
+    "problem": "PDF μη αναγνώσιμο (και εξαγωγή κειμένου απέτυχε)",
+    "action": "Μεταδεδομένα από Crossref· το why-provenance ως semiring τεκμηριώθηκε μέσω ProvSQL· η αναλογία με τα ATMS labels χαρακτηρίστηκε ερμηνεία."
+   },
+   {
+    "url": "https://www.cell.com/trends/cognitive-sciences/fulltext/S1364-6613(25)00286-4",
+    "problem": "403",
+    "action": "Αφαιρέθηκε η πηγή· ο ισχυρισμός στηρίζεται στο arXiv 2308.08708."
+   },
+   {
+    "url": "https://aclanthology.org/2025.findings-acl.547/",
+    "problem": "Δεν αναφέρει «proxy-reward gap» ούτε «echo-chamber»",
+    "action": "Ο ισχυρισμός αντικαταστάθηκε με όσα λέει η πηγή (κατώτερα δεδομένα MC, biases BoN)."
+   },
+   {
+    "url": "https://arxiv.org/abs/2412.07626",
+    "problem": "Δεν στηρίζει «το OCR με VLM επινοεί κείμενο»",
+    "action": "Ο ισχυρισμός αφαιρέθηκε."
+   },
+   {
+    "url": "https://dl.acm.org/doi/10.1145/3614321.3614327",
+    "problem": "Δεν ανοίχτηκε (το ACM DL επιστρέφει 403)",
+    "action": "Επαληθεύτηκε μέσω Crossref (ICEGOV 2023)· αντικαταστάθηκε το URL."
+   },
+   {
+    "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1145/1265530.1265535",
+    "problem": "404",
+    "action": "Χρησιμοποιήθηκε Crossref."
+   },
+   {
+    "url": "WebSearch",
+    "problem": "Εξαντλημένο session budget (200/200)",
+    "action": "Έλεγχοι holds μόνο με WebFetch σε γνωστούς υποψηφίους (nanoda_lib, lean4checker, Datomic with, conformal risk control)."
+   }
+  ],
+  "corrections": [
+   {
+    "target": "EP-01, KT-01, ICD-22, GAP-COG-07, summary",
+    "change": "Αφαιρέθηκαν οι ισχυρισμοί ότι λείπουν έκδοση και ντετερμινισμός στο Model Contract, και ότι δεν ξανατρέχει battery ανά έκδοση παρόχου.",
+    "reason": "Το §8.5 δηλώνει «ντετερμινισμός» και «εκδοχή». Το CMP-COG-01 έχει canary battery ανά έκδοση. Το INV-C08 απαιτεί καταγραφή εξόδου."
+   },
+   {
+    "target": "ICD-22",
+    "change": "Confidence από high σε medium· το κενό περιορίστηκε σε σημασιολογία replay-audit, CAS CIDs και context CIDs.",
+    "reason": "Υπερεκτίμηση του κενού έναντι του INV-C08."
+   },
+   {
+    "target": "CMP-COG-08 / REQ-COG-009",
+    "change": "Verdict από superior-exists σε gap.",
+    "reason": "Το πρόχειρο δεν ορίζει μέθοδο βαθμονόμησης· δεν υπάρχει επιλογή για να κυριαρχηθεί."
+   },
+   {
+    "target": "CMP-KNW-04 / INV-E04",
+    "change": "Verdict από superior-exists σε gap· DEC-COG-06: in-toto/DSSE ως μορφή, SCITT προαιρετική προβολή.",
+    "reason": "Δεν υπάρχει μορφή στο πρόχειρο· το SCITT συγκρούεται με την έδρα JCS και η ωριμότητα υλοποιήσεων είναι άγνωστη."
+   },
+   {
+    "target": "CMP-COG-04 / ICD-30",
+    "change": "Το superior περιορίστηκε στο UNSAT και στο N-version (το SAT model είναι ήδη πιστοποιητικό). Προστέθηκαν nanoda_lib και το ότι το leanchecker δεν είναι ανεξάρτητο. Δηλώθηκε το trade-off Z3/cvc5. Αφαιρέθηκε ο ισχυρισμός για το veriT.",
+    "reason": "Ακρίβεια και δήλωση trade-off."
+   },
+   {
+    "target": "SOTA-COG-04, CMP-COG-03",
+    "change": "Αντικαταστάθηκε το «proxy-reward gap/echo-chamber».",
+    "reason": "Η πηγή δεν το λέει."
+   },
+   {
+    "target": "SOTA-COG-17, CMP-COG-11",
+    "change": "Αφαιρέθηκε ο ισχυρισμός για hallucination OCR με VLM. Η κατάταξη έγινε today (από experiment).",
+    "reason": "Ατεκμηρίωτο· το συμβόλαιο είναι [T], η επιλογή μηχανής θέλει benchmark."
+   },
+   {
+    "target": "SOTA-COG-06, EXP-14, GAP-COG-03, DEC-COG-02",
+    "change": "Προστέθηκαν οι περιορισμοί «σε ένα leaderboard dataset» και «ακόμη και μεταξύ παρόχων». Διορθώθηκε η περιγραφή του PoLL. Αναγνωρίστηκε ότι το ≥1 μη-LLM oracle (ICD-14, REQ-ADV-003) και το «όχι ψηφοφορία αλήθειας» (§8.5) υπάρχουν ήδη. Maturity από production σε research-prototype.",
+    "reason": "Πιστότητα σε πηγές και πρόχειρο."
+   },
+   {
+    "target": "SOTA-COG-21, INV-E02, GAP-COG-04",
+    "change": "«5 κείμενα ανά στοχευμένη ερώτηση»· το τυφλό σημείο περιορίστηκε σε PROPOSED και ασθενείς κλάσεις.",
+    "reason": "Ακριβής διατύπωση της πηγής· για ισχυρισμούς με sound proof η στήριξη βρίσκεται στο proof."
+   },
+   {
+    "target": "GAP-COG-05, CMP-COG-10",
+    "change": "Αναγνωρίστηκε ότι INV-S01 και KT-17 υπάρχουν· το κενό αφορά τον μηχανισμό επιβολής.",
+    "reason": "Ανάγνωση του 19.md."
+   },
+   {
+    "target": "SOTA-COG-19, CMP-KNW-02",
+    "change": "Το Oxigraph έχει μόνο RDF/SPARQL 1.2 πίσω από flags· δεν αναφέρει SHACL. Προστέθηκαν τα RECs 1.1 και SHACL 2017.",
+    "reason": "CHANGELOG του Oxigraph και σελίδες W3C TR."
+   },
+   {
+    "target": "SOTA-COG-08, CMP-COG-05",
+    "change": "Η αντιστοίχιση ATMS ↔ why-provenance σημειώθηκε ως ερμηνεία· προστέθηκε το provsql.org.",
+    "reason": "Το κείμενο της πηγής δεν ανοίχτηκε."
+   },
+   {
+    "target": "SOTA-COG-16",
+    "change": "Προστέθηκε «εκτός αν από trusted server»· το Skills over MCP σημειώθηκε ως working group.",
+    "reason": "Κείμενο της MCP spec."
+   },
+   {
+    "target": "SOTA-COG-20, CMP-COG-07",
+    "change": "Προστέθηκε το Datomic `with` και επαληθεύτηκε το bi-temporal μοντέλο του Zep.",
+    "reason": "Άμεσο προηγούμενο για ghost worlds."
+   },
+   {
+    "target": "DEC-COG-03",
+    "change": "Προστέθηκε η εναλλακτική SysML v2/KerML· δηλώθηκε η ένταση τριπλής έδρας (ADR-0025, §3, §29).",
+    "reason": "Δίκαιη παρουσίαση, σύμφωνα με CLAUDE.md και πρόχειρο."
+   },
+   {
+    "target": "DEC-COG-01, DEC-COG-04",
+    "change": "Προστέθηκαν εναλλακτικές: COMMITTED με δηλωμένη TCB· RDF 1.2 Basic.",
+    "reason": "Πραγματικές ενδιάμεσες επιλογές."
+   },
+   {
+    "target": "SOTA-COG-01, SOTA-COG-03, SOTA-COG-07",
+    "change": "Maturity σε theoretical, research-prototype και research-prototype αντίστοιχα. Το «what» της CoALA περιορίστηκε στο abstract.",
+    "reason": "Ακρίβεια."
+   },
+   {
+    "target": "EXP-23",
+    "change": "Confidence από low σε medium.",
+    "reason": "Το verdict (σωστά πείραμα με kill criterion) είναι σταθερό."
+   },
+   {
+    "target": "Ονοματολογία",
+    "change": "Αφαιρέθηκαν ονόματα μοντέλων και προϊόντων από τίτλους (π.χ. arXiv 2307.09009) και από την περιγραφή του Magesh.",
+    "reason": "Κανόνας 5."
+   }
+  ],
+  "missed_superior_found": [
+   "Κανένα νέο αυστηρά ανώτερο που να αλλάζει verdict holds· στοχευμένες αναζητήσεις δεν ήταν δυνατές.",
+   "nanoda_lib: δεύτερος ανεξάρτητος Lean 4 kernel σε Rust· ενισχύει το superior του CMP-COG-04/ICD-30.",
+   "Datomic `with`: πιο άμεση τεκμηρίωση για τα ghost worlds του CMP-COG-07· δεν αλλάζει το verdict.",
+   "Conformal risk control: η μέθοδος για το κενό του CMP-COG-08."
+  ]
+ }
+}

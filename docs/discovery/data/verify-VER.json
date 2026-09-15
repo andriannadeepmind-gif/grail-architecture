@@ -1,0 +1,2366 @@
+{
+ "layer_key": "VER",
+ "summary": "Η σκευή επαλήθευσης του προχείρου (TLA+/Alloy/Lean/Z3, trace validation, DST, evaluation-first, kill tests) συμφωνεί στην κατεύθυνση με τη σημερινή πρακτική: verification-guided development (Cedar: Lean model + DRT, 2024), P/PObserve στην AWS, trace validation σε CI (CCF, NSDI 2025), DST (FoundationDB, TigerBeetle VOPR, Antithesis). Μετά τον αντιπαλικό έλεγχο μένουν τρία σημεία με αυστηρά ανώτερη λύση και ρητό trade-off: (1) proof objects SMT (§8.7): το «unsat core + solver version» δεν είναι ελέγξιμη απόδειξη· υπάρχουν πιστοποιητικά cvc5 → Alethe → Carcara ή replay στο Lean (lean-smt, beta)· (2) red team (VT-801): στατικό σώμα επιθέσεων υπερεκτιμά την αντοχή — adaptive attacks παρέκαμψαν 12 άμυνες, τις περισσότερες με >90% (2025)· (3) REQ-VAL-002: assurance case (SACM 2.3, GSN v3, Assurance 2.0 με defeaters) πάνω από την απλή ιχνηλασιμότητα. Δύο «superior-exists» του ερευνητή υποβιβάστηκαν σε «gap»: υπόστρωμα DST (CMP-OPS-02 — καμία επιλογή δεν κυριαρχεί: Antithesis managed και hermetic χωρίς δηλωμένο on-prem, Shadow χωρίς ντετερμινιστικό thread scheduling by default, Hermit σε maintenance mode) και ablation οργάνων (KT-24 — το κενό είναι οι αλληλεπιδράσεις· η λύση Shapley τεκμηριώνεται μόνο αναλογικά). Εσωτερικά ελαττώματα: 31.md §31.4 και 26.md (έξοδος GP-0) δηλώνουν ότι και τα 24 KT τρέχουν σε προσομοίωση, ενώ υπάρχουν μόνο 4 καμπάνιες DST (VT-601, VT-602, VT-603, VT-604) και τα KT-14, KT-15, KT-24 είναι εμπειρικά· το EXP-12 (πιστότητα DST) είναι στο GP-6 ενώ ο DST αποφασίζει από το GP-0· το VT-901 θα ελέγχει «76 CMP» ενώ ο πίνακας §6.3 έχει 75 γραμμές (η γρ. 580 του master αθροίζει «17 εγκάρσια» αντί για 16)· κανένα formal artifact, το tools/archgen, ο φάκελος model/ ή το §23 (V&V matrix) δεν υπάρχουν σε αυτό το repo (Παράρτημα Ω: Ω4, Ω5 ΕΚΚΡΕΜΕΙ). Διορθώσεις γεγονότων: το Apalache ελέγχει inductive invariants μόνο για σταθερές ή φραγμένες παραμέτρους, άρα για «κάθε n» στο VT-104 χρειάζεται TLAPS ή Ivy· trace validation υπάρχει και για Go και Rust (Specula, 2025)· η TLC 1.8.0 είναι pre-release (σταθερή η 1.7.4). Το SysML v2 (formal 9/2025) έχει εγγενώς satisfy, verify, verification def και VerdictKind, οπότε το VT-901 μπορεί να γίνει ερώτημα πάνω στο model. Βρέθηκε το Veil (Lean 4, pre-release) ως εναλλακτική μίας έδρας για πρωτόκολλα, όχι αυστηρά ανώτερη. Περιορισμός: ο προϋπολογισμός WebSearch της συνεδρίας εξαντλήθηκε· οι έλεγχοι «holds» έγιναν με στοχευμένα WebFetch.",
+ "sota": [
+  {
+   "id": "SOTA-VER-01",
+   "name": "TLA+ εργαλεία: TLC, Apalache, TLAPS (TLA+ Foundation)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Σταθερή TLC 1.7.4 (διόρθωσε unsoundness στο liveness checking με πολλούς workers)· η 1.8.0 διανέμεται ως pre-release· το Toolbox δεν συντηρείται πια (σύσταση: VS Code extension ή CLI). Το Apalache (symbolic, SMT) πέρασε στο TLA+ Foundation υπό το Linux Foundation· paper CAV 2026 με case studies σε Byzantine consensus και υιοθέτηση σε AWS, Microsoft, MongoDB, NVIDIA. TLAPS 1.6.0-pre (rolling) με backends Zenon, Isabelle, SMT, LS4.",
+   "relevance": "Έδρα των VT-101, VT-102, VT-103, VT-104, VT-105, VT-106, VT-107, VT-108. Η διόρθωση soundness της 1.7.4 δείχνει ότι η έκδοση του εργαλείου πρέπει να μπαίνει στο evidence.",
+   "sources": [
+    {
+     "title": "tlaplus/tlaplus releases",
+     "url": "https://github.com/tlaplus/tlaplus/releases",
+     "year": "2026"
+    },
+    {
+     "title": "tlaplus v1.7.4 release",
+     "url": "https://github.com/tlaplus/tlaplus/releases/tag/v1.7.4",
+     "year": "2026"
+    },
+    {
+     "title": "apalache-mc/apalache",
+     "url": "https://github.com/apalache-mc/apalache",
+     "year": "2026"
+    },
+    {
+     "title": "The TLA+ Model Checker Apalache (CAV 2026)",
+     "url": "https://link.springer.com/chapter/10.1007/978-3-032-32519-8_8",
+     "year": "2026"
+    },
+    {
+     "title": "tlaplus/tlapm",
+     "url": "https://github.com/tlaplus/tlapm",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-02",
+   "name": "Trace validation υλοποιήσεων έναντι TLA+",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Ο έλεγχος ανάγεται σε constrained model checking με TLC πάνω σε traces που περιέχουν μόνο updates (ή υποσύνολο) μεταβλητών· βρήκε αποκλίσεις spec/υλοποίησης σε όλα τα προγράμματα που δοκιμάστηκαν· API instrumentation για Java. Στο CCF (C++) η smart casual verification μπήκε στο CI και βρήκε 6 bugs πριν την παραγωγή. Το Specula (1ο βραβείο GenAI-accelerated TLA+ Challenge 2025) παράγει TLA+ από κώδικα με LLM και control-flow analysis και ευθυγραμμίζει με trace validation (etcd Raft σε Go, Asterinas SpinLock σε Rust).",
+   "relevance": "Αυτό είναι το VT-109 και η γέφυρα sim/real του CMP-OPS-02. Τεκμηριωμένο instrumentation: Java, C++ (production), Go και Rust (Specula, research prototype)· για Common Lisp και Elixir δεν βρέθηκε.",
+   "sources": [
+    {
+     "title": "Validating Traces of Distributed Programs Against TLA+ Specifications",
+     "url": "https://arxiv.org/abs/2404.16075",
+     "year": "2024"
+    },
+    {
+     "title": "Smart Casual Verification of the Confidential Consortium Framework (NSDI 2025)",
+     "url": "https://arxiv.org/abs/2406.17455",
+     "year": "2024"
+    },
+    {
+     "title": "GenAI-accelerated TLA+ Challenge",
+     "url": "https://foundation.tlapl.us/challenge/index.html",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-03",
+   "name": "P language: PChecker, PObserve, PVerifier (AWS)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Communicating state machines· το PChecker εξερευνά συστηματικά interleavings μηνυμάτων και σφάλματα με αναπαραγώγιμα error traces· το PObserve ελέγχει δομημένα service logs έναντι P specifications· το PVerifier δίνει αποδείξεις με lemmas. Σε χρήση στην AWS από το 2019 (S3, EBS, DynamoDB, MemoryDB, Aurora, EC2, IoT), κατά τη σελίδα case studies που παραπέμπει σε άρθρο CACM 2025. MIT.",
+   "relevance": "Εναλλακτική έδρα προδιαγραφής πρωτοκόλλων με ενσωματωμένο runtime conformance από logs, που λείπει από το πρόχειρο (GAP-VER-08).",
+   "sources": [
+    {
+     "title": "P case studies",
+     "url": "https://p-org.github.io/P/casestudies/",
+     "year": "2025"
+    },
+    {
+     "title": "P framework",
+     "url": "https://p-org.github.io/P/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-04",
+   "name": "Quint και FizzBee (specs φιλικά προς μηχανικούς, με MBT)",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Το Quint (Informal Systems) είναι εναλλακτική σύνταξη για TLA, με simulator, symbolic model checking μέσω Apalache και Quint Connect (MBT σε Rust με replay παραγόμενων traces). Το FizzBee (Apache-2.0) είναι γλώσσα προδιαγραφής με model checker και υποστήριξη MBT μέσω adapters σε Go· η σύνταξή του δεν επαληθεύτηκε εδώ.",
+   "relevance": "Κάνουν το VT-502 (MBT) εκτελέσιμο· δεύτερη γλώσσα προδιαγραφής δίπλα στο TLA+ συγκρούεται με το «μία έδρα» (DEC-VER-02).",
+   "sources": [
+    {
+     "title": "informalsystems/quint",
+     "url": "https://github.com/informalsystems/quint",
+     "year": "2026"
+    },
+    {
+     "title": "fizzbee-io/fizzbee",
+     "url": "https://github.com/fizzbee-io/fizzbee",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-05",
+   "name": "Verification-guided development (Cedar)",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Εκτελέσιμο model σε Lean με αποδείξεις, παραγωγικός κώδικας σε Rust, differential random testing (DRT) model↔Rust με εκατομμύρια εισόδους κάθε νύχτα, και PBT. Οι αποδείξεις βρήκαν 4 bugs, DRT και PBT άλλα 21. Το Lean αποτιμά μία είσοδο DRT σε 5 µs (η Rust σε 7 µs)· έλεγχος όλων των αποδείξεων και compile των models σε 185 s· η απόδειξη soundness του validator κόστισε 18 person-days.",
+   "relevance": "Άμεσο προηγούμενο για το P2 (Lean reference semantics), το VT-505 και το EXP-18.",
+   "sources": [
+    {
+     "title": "How We Built Cedar: A Verification-Guided Approach",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    },
+    {
+     "title": "Lean Into Verified Software Development (AWS)",
+     "url": "https://aws.amazon.com/blogs/opensource/lean-into-verified-software-development/",
+     "year": "2024"
+    },
+    {
+     "title": "cedar-spec",
+     "url": "https://github.com/cedar-policy/cedar-spec",
+     "year": "2026"
+    },
+    {
+     "title": "Cedar: A New Language for Expressive, Fast, Safe, and Analyzable Authorization",
+     "url": "https://arxiv.org/abs/2403.04651",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-06",
+   "name": "Lean 4, Lean FRO και ανεξάρτητοι kernel checkers",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Roadmap Y4-1 (Σεπ. 2026 – Φεβ. 2027): νέο do notation με first-class intrinsic verification, verification-condition generator, grind και bv_decide, βελτιώσεις compiler, και `lake check` ώστε ο εξωτερικός έλεγχος kernel να γίνει ρουτίνα (με εναλλακτικούς checkers, π.χ. nanoda). Το leanchecker διανέμεται με κάθε toolchain από το v4.28.0 (replay δηλώσεων στον kernel). Το lean4lean είναι kernel σε Lean που λειτουργεί ως εξωτερικός checker και έχει βρει kernel bugs, αλλά είναι παράγωγο του C++ kernel· το nanoda_lib είναι εξωτερικός type checker σε Rust.",
+   "relevance": "Αφορά τα VT-301, VT-302, VT-303, VT-304, VT-305, VT-306, VT-307 και το proof object του §8.7: υπάρχουν checkers για ανεξάρτητο επανέλεγχο.",
+   "sources": [
+    {
+     "title": "Lean FRO Roadmap Y4-1",
+     "url": "https://lean-lang.org/fro/roadmap/y4-1/",
+     "year": "2026"
+    },
+    {
+     "title": "lean4checker (deprecated; merged as leanchecker)",
+     "url": "https://github.com/leanprover/lean4checker",
+     "year": "2026"
+    },
+    {
+     "title": "lean4lean",
+     "url": "https://github.com/digama0/lean4lean",
+     "year": "2026"
+    },
+    {
+     "title": "nanoda_lib",
+     "url": "https://github.com/ammkrn/nanoda_lib",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-07",
+   "name": "Επαλήθευση κώδικα Rust: Aeneas, Verus, Kani",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Το Aeneas μεταφράζει safe Rust (μέσω Charon) σε Lean, HOL4, Coq, F* (ωριμότερα Lean και HOL4)· δεν υποστηρίζει ακόμη unsafe ούτε concurrency. Η Microsoft ανακοίνωσε (6/2025) ότι στηρίζεται στο Aeneas για την επαλήθευση της αναγραφής του SymCrypt σε Rust· διαθέσιμο προκαταρκτικό ML-KEM σε preview branch. Το Verus (SMT-based) δηλώνει «under active development». Το Kani (bit-precise model checker) ελέγχει UB, panics, overflows, assertions και function contracts· είναι το κύριο εργαλείο του verify-rust-std (πρόκληση επαλήθευσης της Rust std με υποστήριξη του Rust Foundation).",
+   "relevance": "Κλείνει το κενό «αποδείξαμε το model, όχι τον Rust TCB» (ADR-0012), που σήμερα καλύπτει μόνο το DRT.",
+   "sources": [
+    {
+     "title": "AeneasVerif/aeneas",
+     "url": "https://github.com/AeneasVerif/aeneas",
+     "year": "2026"
+    },
+    {
+     "title": "Rewriting SymCrypt in Rust",
+     "url": "https://www.microsoft.com/en-us/research/blog/rewriting-symcrypt-in-rust-to-modernize-microsofts-cryptographic-library/",
+     "year": "2025"
+    },
+    {
+     "title": "verus-lang/verus",
+     "url": "https://github.com/verus-lang/verus",
+     "year": "2026"
+    },
+    {
+     "title": "model-checking/kani",
+     "url": "https://github.com/model-checking/kani",
+     "year": "2026"
+    },
+    {
+     "title": "verify-rust-std",
+     "url": "https://github.com/model-checking/verify-rust-std",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-08",
+   "name": "SMT με ελέγξιμες αποδείξεις: cvc5 → Alethe/LFSC/CPC, Carcara, lean-smt",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Το cvc5 εξάγει αποδείξεις σε CPC, Alethe και LFSC· το Carcara (TACAS 2023) είναι ανεξάρτητος checker και elaborator αποδείξεων Alethe· το lean-smt στέλνει goals στο cvc5 και ξαναπαίζει την απόδειξη στο Lean (beta· UF, LIA/LRA με quantifiers· bitvectors πειραματικά· οι αποδείξεις του cvc5 μπορεί να έχουν holes που μένουν ως Lean goals). Τρέχων Z3: 5.1.0 (16/8/2026).",
+   "relevance": "Αντικαθιστά το «unsat core + solver version» του §8.7 με πιστοποιητικό που ελέγχεται ανεξάρτητα (INV-C03). Η κάλυψη θεωριών δεν τεκμηριώθηκε.",
+   "sources": [
+    {
+     "title": "cvc5 proofs",
+     "url": "https://cvc5.github.io/docs/latest/proofs/proofs.html",
+     "year": "2026"
+    },
+    {
+     "title": "Carcara",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2026"
+    },
+    {
+     "title": "lean-smt",
+     "url": "https://github.com/ufmg-smite/lean-smt",
+     "year": "2026"
+    },
+    {
+     "title": "Z3 releases",
+     "url": "https://github.com/Z3Prover/z3/releases",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-09",
+   "name": "Alloy 6",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Alloy 6.2.0 (9/1/2025): mutable state και traces, CLI και ενσωματωμένος LSP server.",
+   "relevance": "Έδρα των VT-201, VT-202, VT-203, VT-204, VT-205.",
+   "sources": [
+    {
+     "title": "Alloy releases",
+     "url": "https://github.com/AlloyTools/org.alloytools.alloy/releases",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-10",
+   "name": "Επαλήθευση πρωτοκόλλων για κάθε n: TLAPS, Ivy· όρια του Apalache",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Το Apalache ελέγχει inductive invariants (IndInit/IndNext) «για σταθερές ή φραγμένες παραμέτρους»· το bounded MC χαρακτηρίζεται «incomplete». Για αυθαίρετο n χρειάζεται απόδειξη: TLAPS (ήδη στο πρόχειρο για VT-107, VT-108) ή Ivy, research tool για διαδραστική ανάπτυξη πρωτοκόλλων και αποδείξεων, με inductive invariants, αναγωγή σε decidable logics και παραδείγματα parameterized systems.",
+   "relevance": "Το VT-104 (n ≥ 3f+1) με TLC ή Apalache για σταθερό n δεν αποδεικνύει το INV-K06 για κάθε n.",
+   "sources": [
+    {
+     "title": "Apalache running docs",
+     "url": "https://apalache-mc.org/docs/apalache/running.html",
+     "year": "2026"
+    },
+    {
+     "title": "apalache-mc/apalache",
+     "url": "https://github.com/apalache-mc/apalache",
+     "year": "2026"
+    },
+    {
+     "title": "kenmcmil/ivy",
+     "url": "https://github.com/kenmcmil/ivy",
+     "year": "2026"
+    },
+    {
+     "title": "IVy documentation",
+     "url": "https://microsoft.github.io/ivy/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-11",
+   "name": "In-process DST: FoundationDB, TigerBeetle VOPR, madsim, turmoil, Shuttle",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Το FoundationDB προσομοιώνει ντετερμινιστικά ολόκληρο cluster σε μία single-threaded διεργασία· εκτιμά περίπου ένα τρισεκατομμύριο CPU-hours simulation. Το VOPR κάνει stub σε clock, network και disk, με αναπαραγωγή από seed και Git commit. Το madsim αντικαθιστά το tokio runtime με simulator («όλο το I/O πρέπει να γίνει mock»· παρέχει simulated εκδόσεις για tokio, tonic κ.ά.). Το turmoil τρέχει πολλούς hosts σε ένα thread με simulated δίκτυο και filesystem. Το Shuttle κάνει randomized concurrency testing (PCT)· είναι unsound, αλλά κλιμακώνεται σε πολύ μεγαλύτερα tests από το Loom.",
+   "relevance": "Σημερινή πρακτική για τα όργανα σε Rust του CMP-OPS-02· δεν καλύπτει όργανα σε άλλες γλώσσες.",
+   "sources": [
+    {
+     "title": "FoundationDB simulation testing",
+     "url": "https://apple.github.io/foundationdb/testing.html",
+     "year": "2026"
+    },
+    {
+     "title": "TigerBeetle VOPR",
+     "url": "https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/internals/vopr.md",
+     "year": "2026"
+    },
+    {
+     "title": "madsim",
+     "url": "https://github.com/madsim-rs/madsim",
+     "year": "2026"
+    },
+    {
+     "title": "turmoil",
+     "url": "https://github.com/tokio-rs/turmoil",
+     "year": "2026"
+    },
+    {
+     "title": "awslabs/shuttle",
+     "url": "https://github.com/awslabs/shuttle",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-12",
+   "name": "Ντετερμινισμός ολόκληρου συστήματος: Antithesis, Shadow, Hermit",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Antithesis: πλήρως ντετερμινιστικό περιβάλλον μέσω δικού τους hypervisor (Determinator)· τρέχει containerized λογισμικό (Docker Compose ή Kubernetes) χωρίς αλλαγές κώδικα, με fault injection, RL guidance και SDKs για assertions always, sometimes, reachable, unreachable, alwaysOrUnreachable· hermetic, χωρίς πρόσβαση στο internet· πρόσβαση με credentials και registry· δεν βρέθηκε δηλωμένη on-prem λύση. Shadow: real, unmodified binaries ως διεργασίες Linux πάνω σε ντετερμινιστικό simulated network (open source)· δεν ελέγχει ντετερμινιστικά το thread scheduling by default και δεν υποστηρίζει static binaries (LD_PRELOAD). Hermit: ελέγχει thread scheduling, χρόνο και τυχαιότητα σε unmodified binaries, αλλά είναι σε maintenance mode με περίπου 3–6× overhead.",
+   "relevance": "Οι μόνες τεκμηριωμένες επιλογές για ντετερμινισμό οργάνων σε SBCL, BEAM ή Python χωρίς αναγραφή του I/O· καμία δεν καλύπτει όλα τα κριτήρια (DEC-VER-01). Το hermetic περιβάλλον αποκλείει κλήσεις σε εξωτερικούς παρόχους inference, άρα τα γνωσιακά όργανα θέλουν replay ή stubs σε κάθε περίπτωση.",
+   "sources": [
+    {
+     "title": "How Antithesis works",
+     "url": "https://antithesis.com/docs/introduction/how_antithesis_works/",
+     "year": "2026"
+    },
+    {
+     "title": "Antithesis deterministic hypervisor",
+     "url": "https://antithesis.com/blog/deterministic_hypervisor/",
+     "year": "2024"
+    },
+    {
+     "title": "Antithesis assertions",
+     "url": "https://antithesis.com/docs/properties_assertions/assertions/",
+     "year": "2026"
+    },
+    {
+     "title": "Antithesis getting started",
+     "url": "https://antithesis.com/docs/getting_started/",
+     "year": "2026"
+    },
+    {
+     "title": "Shadow",
+     "url": "https://shadow.github.io/",
+     "year": "2026"
+    },
+    {
+     "title": "Shadow limitations",
+     "url": "https://shadow.github.io/docs/guide/limitations.html",
+     "year": "2026"
+    },
+    {
+     "title": "Hermit",
+     "url": "https://github.com/facebookexperimental/hermit",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-13",
+   "name": "Twins: παραγωγή Byzantine σεναρίων για BFT",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Δίδυμα αντίγραφα κόμβων με ίδια credentials παράγουν leader equivocation, double voting και απώλεια εσωτερικής κατάστασης. Στο DiemBFT έτρεχαν 44M σενάρια ημερησίως και τα σκόπιμα injected bugs εκτέθηκαν μέσα σε λεπτά.",
+   "relevance": "Εφαρμόζεται άμεσα στο VT-601 και στο HotStuff-family BFT του ADR-0031.",
+   "sources": [
+    {
+     "title": "Twins: BFT Systems Made Robust",
+     "url": "https://arxiv.org/abs/2004.10617",
+     "year": "2022"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-14",
+   "name": "Σκευή testing: PBT/MBT, fuzzing, mutation, Jepsen",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Hypothesis stateful (rules, invariants, shrinking)· PropEr (GPL v3, modules για stateful testing)· Concuerror (stateless model checking για Erlang· CI μέχρι Erlang 23.3, copyright ως 2023 — η συμβατότητα με τρέχον OTP δεν επαληθεύτηκε)· OSS-Fuzz (libFuzzer, AFL++, Honggfuzz· C/C++, Rust, Go, Python, Java, JavaScript, Lua· >13.000 ευπάθειες και 50.000 bugs ως 5/2025)· mutation testing σε κλίμακα Google (incremental, στο code review, >24.000 developers)· cargo-mutants («semi-actively-maintained», 8/2026)· Schemathesis (PBT από OpenAPI/GraphQL)· Jepsen (τελευταία ανάλυση 3/2026).",
+   "relevance": "Υλοποιούν τα VT-501, VT-502, VT-503, VT-504 και τη σουίτα conformance VT-001 έως VT-032.",
+   "sources": [
+    {
+     "title": "Hypothesis stateful",
+     "url": "https://hypothesis.readthedocs.io/en/latest/stateful.html",
+     "year": "2026"
+    },
+    {
+     "title": "PropEr",
+     "url": "https://github.com/proper-testing/proper",
+     "year": "2026"
+    },
+    {
+     "title": "Concuerror",
+     "url": "https://github.com/parapluu/Concuerror",
+     "year": "2023"
+    },
+    {
+     "title": "OSS-Fuzz",
+     "url": "https://github.com/google/oss-fuzz",
+     "year": "2025"
+    },
+    {
+     "title": "Practical Mutation Testing at Scale",
+     "url": "https://arxiv.org/abs/2102.11378",
+     "year": "2021"
+    },
+    {
+     "title": "cargo-mutants",
+     "url": "https://github.com/sourcefrog/cargo-mutants",
+     "year": "2026"
+    },
+    {
+     "title": "Schemathesis",
+     "url": "https://github.com/schemathesis/schemathesis",
+     "year": "2026"
+    },
+    {
+     "title": "Jepsen analyses",
+     "url": "https://jepsen.io/analyses",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-15",
+   "name": "Ανίχνευση breaking changes και translation validation",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "buf breaking (κατηγορίες FILE, PACKAGE, WIRE_JSON, WIRE)· oasdiff (OpenAPI 3.0, 3.1, 3.2)· Alive2 (translation validation για LLVM με Z3· δεν υποστηρίζει inter-procedural μετασχηματισμούς).",
+   "relevance": "Υλοποιούν σήμερα τα VT-902 και VT-404.",
+   "sources": [
+    {
+     "title": "buf breaking",
+     "url": "https://buf.build/docs/breaking/",
+     "year": "2026"
+    },
+    {
+     "title": "oasdiff",
+     "url": "https://github.com/oasdiff/oasdiff",
+     "year": "2026"
+    },
+    {
+     "title": "Alive2",
+     "url": "https://github.com/AliveToolkit/alive2",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-16",
+   "name": "AI για formal verification (vericoding)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "DafnyBench: 68% στην παραγωγή hints για Dafny (2024). AutoVerus (OOPSLA 2025): >90% σε 150 εργασίες απόδειξης Verus. VERINA (Lean, 189 εργασίες): code 72.6%, spec soundness/completeness 52.3%, proof 4.9%. Vericoding (12.504 specs): Dafny 82%, Verus/Rust 44%, Lean 27%.",
+   "relevance": "Proofs που προτείνει LLM και ελέγχει μηχανικά checker ταιριάζουν στο Propose–Verify–Commit (ADR-0005). Τα χαμηλά ποσοστά σε specs και Lean σημαίνουν ότι spec από LLM δεν είναι αξιόπιστη χωρίς ανθρώπινο έλεγχο.",
+   "sources": [
+    {
+     "title": "DafnyBench",
+     "url": "https://arxiv.org/abs/2406.08467",
+     "year": "2024"
+    },
+    {
+     "title": "AutoVerus",
+     "url": "https://arxiv.org/abs/2409.13082",
+     "year": "2025"
+    },
+    {
+     "title": "VERINA",
+     "url": "https://arxiv.org/abs/2505.23135",
+     "year": "2025"
+    },
+    {
+     "title": "A benchmark for vericoding",
+     "url": "https://arxiv.org/abs/2509.22908",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-17",
+   "name": "Evaluation harnesses: Inspect, HELM, lm-evaluation-harness",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Inspect (UK AI Security Institute και Meridian Labs, MIT): datasets/solvers/scorers, agents και multi-agent primitives, sandboxing σε Docker, Kubernetes, Modal, Proxmox κ.ά., >200 έτοιμα evals· το Hawk του METR είναι χτισμένο πάνω του. HELM (TMLR 2023): 7 μετρικές, μεταξύ τους calibration και efficiency. lm-evaluation-harness (MIT): >60 ακαδημαϊκά benchmarks.",
+   "relevance": "Έτοιμο υπόστρωμα για το CMP-OPS-03 και το ICD-27.",
+   "sources": [
+    {
+     "title": "Inspect",
+     "url": "https://inspect.aisi.org.uk/",
+     "year": "2026"
+    },
+    {
+     "title": "inspect_ai",
+     "url": "https://github.com/UKGovernmentBEIS/inspect_ai",
+     "year": "2026"
+    },
+    {
+     "title": "METR",
+     "url": "https://metr.org/",
+     "year": "2026"
+    },
+    {
+     "title": "HELM",
+     "url": "https://arxiv.org/abs/2211.09110",
+     "year": "2023"
+    },
+    {
+     "title": "lm-evaluation-harness",
+     "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-18",
+   "name": "Στατιστική αυστηρότητα και adaptive overfitting",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Error bars για evals (Miller 2024): ερωτήσεις ως δείγμα από super-population, clustered SE, paired συγκρίσεις, power analysis. Reusable holdout (Dwork et al. 2015): επανειλημμένη χρήση holdout με αποδεδειγμένη αποφυγή overfitting. Kapoor et al. (2024): η εστίαση μόνο στην ακρίβεια οδηγεί σε άσκοπα σύνθετα agents· κοινή αποτίμηση κόστους-ακρίβειας· πολλά benchmarks χωρίς επαρκή holdouts. LiveBench (ICLR 2025): νέες ερωτήσεις κάθε μήνα, αντικειμενικό ground truth.",
+   "relevance": "Θέτει το μέτρο για τα KT-14, KT-15, KT-24 και το REQ-VAL-001.",
+   "sources": [
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    },
+    {
+     "title": "Generalization in Adaptive Data Analysis and Holdout Reuse",
+     "url": "https://arxiv.org/abs/1506.02629",
+     "year": "2015"
+    },
+    {
+     "title": "AI Agents That Matter",
+     "url": "https://arxiv.org/abs/2407.01502",
+     "year": "2024"
+    },
+    {
+     "title": "LiveBench",
+     "url": "https://arxiv.org/abs/2406.19314",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-19",
+   "name": "Μεθοδολογία αξιολόγησης νομικού AI και έργου ειδικών",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "Preregistered μελέτη: commercial legal AI systems (Harvey-class) για νομική έρευνα κάνουν hallucination στο 17–33%. VLAIR (2/2025): baseline με δικηγόρους, βαθμολόγηση με LLM-as-judge και rubrics. GDPval (2025): εργασίες από επαγγελματίες (μέσος όρος 14 έτη εμπειρίας), blind pairwise σύγκριση από ειδικούς του επαγγέλματος με ατελή τύφλωση (υφολογικές ενδείξεις)· αυτόματος grader 66% συμφωνία έναντι 71% μεταξύ ανθρώπων. Οι LLM judges έχουν position, verbosity και self-enhancement bias.",
+   "relevance": "Αφορά το VT-702 (blind panel), το KT-15 και το REQ-VAL-001.",
+   "sources": [
+    {
+     "title": "Hallucination-Free? Assessing the Reliability of Leading AI Legal Research Tools",
+     "url": "https://arxiv.org/abs/2405.20362",
+     "year": "2024"
+    },
+    {
+     "title": "Vals Legal AI Report",
+     "url": "https://www.vals.ai/vlair",
+     "year": "2025"
+    },
+    {
+     "title": "GDPval",
+     "url": "https://arxiv.org/abs/2510.04374",
+     "year": "2025"
+    },
+    {
+     "title": "GDPval (full text)",
+     "url": "https://arxiv.org/html/2510.04374",
+     "year": "2025"
+    },
+    {
+     "title": "Judging LLM-as-a-Judge",
+     "url": "https://arxiv.org/abs/2306.05685",
+     "year": "2023"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-20",
+   "name": "Adaptive red teaming και άμυνα prompt injection by design",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Adaptive attacks (gradient, RL, random search, human-guided) παρέκαμψαν 12 πρόσφατες άμυνες, τις περισσότερες με επιτυχία >90%, ενώ οι περισσότερες δήλωναν σχεδόν μηδενική. Το CaMeL εξάγει control και data flow από το trusted query και επιβάλλει capabilities: 77% εργασιών AgentDojo με αποδείξιμη ασφάλεια έναντι 84% χωρίς άμυνα.",
+   "relevance": "Τα VT-801 και KT-17 με στατικό σώμα επιθέσεων είναι ανεπαρκή· το INV-S01 συμφωνεί με τον σχεδιασμό του CaMeL.",
+   "sources": [
+    {
+     "title": "The Attacker Moves Second",
+     "url": "https://arxiv.org/abs/2510.09023",
+     "year": "2025"
+    },
+    {
+     "title": "CaMeL: Defeating Prompt Injections by Design",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-21",
+   "name": "Conformal εγγυήσεις: conformal factuality και adaptive conformal inference",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Conformal factuality: εγγυήσεις ορθότητας 80–90% με back-off της εξειδίκευσης, με ρητή υπόθεση exchangeability (Theorem 4.1). Adaptive conformal inference: long-run coverage υπό αυθαίρετη distribution shift, χωρίς exchangeability.",
+   "relevance": "Αφορά το REQ-VAL-004 και το VT-704. Η χρονική μεταβολή του δικαίου σπάει την exchangeability, αλλά το ACI δίνει μακροχρόνια κάλυψη υπό shift· η εφαρμογή σε ordinal επιστημικούς βαθμούς δεν τεκμηριώθηκε.",
+   "sources": [
+    {
+     "title": "Language Models with Conformal Factuality Guarantees",
+     "url": "https://arxiv.org/abs/2402.10978",
+     "year": "2024"
+    },
+    {
+     "title": "Conformal Factuality (full text)",
+     "url": "https://arxiv.org/html/2402.10978",
+     "year": "2024"
+    },
+    {
+     "title": "Adaptive Conformal Inference Under Distribution Shift",
+     "url": "https://arxiv.org/abs/2106.00170",
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-22",
+   "name": "SysML v2: εγγενής ιχνηλασιμότητα και επαλήθευση",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "KerML 1.0, SysML 2.0 και Systems Modeling API 1.0 υιοθετήθηκαν τυπικά από την OMG στις 30/6/2025· η SysML 2.0 εμφανίζεται ως formal 9/2025· editorial ενημέρωση 3/2026 για υποβολή στον ISO. Γλώσσα: `satisfy … by`, `verification def` με subject, objective, `verify` και `out verdict : VerdictKind`. Το Syside (Sensmetry) προσφέρει headless CLI και CI validation στα εμπορικά Modeler/Automator· το Syside Editor είναι δωρεάν.",
+   "relevance": "Το VT-901, το REQ-VAL-002 και οι σχέσεις satisfy/verify του §29 εκφράζονται εγγενώς στο model.",
+   "sources": [
+    {
+     "title": "OMG SysML specifications",
+     "url": "https://www.omg.org/spec/SysML/",
+     "year": "2025"
+    },
+    {
+     "title": "SysML-v2-Release",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-Release",
+     "year": "2026"
+    },
+    {
+     "title": "Verification Case Definition Example",
+     "url": "https://raw.githubusercontent.com/Systems-Modeling/SysML-v2-Release/master/sysml/src/training/34.%20Verification/Verification%20Case%20Definition%20Example.sysml",
+     "year": "2026"
+    },
+    {
+     "title": "Requirement Satisfaction example",
+     "url": "https://raw.githubusercontent.com/Systems-Modeling/SysML-v2-Release/master/sysml/src/training/32.%20Requirements/Requirement%20Satisfaction.sysml",
+     "year": "2026"
+    },
+    {
+     "title": "Syside",
+     "url": "https://sensmetry.com/syside/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-23",
+   "name": "Assurance cases: SACM 2.3, GSN v3, Assurance 2.0",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "SACM 2.3 (OMG, 10/2023): metamodel και γραφική σημειογραφία για claims, arguments, evidence. GSN Community Standard v3 (τρέχουσα έκδοση). Assurance 2.0 (2020): έμφαση στη συλλογιστική και ρητή αναγνώριση defeaters και counterevidence.",
+   "relevance": "Προσθέτει στο REQ-VAL-002 αιτιολόγηση και αντιλόγους· ταιριάζει με το Court και το INV-K03.",
+   "sources": [
+    {
+     "title": "OMG SACM",
+     "url": "https://www.omg.org/spec/SACM/",
+     "year": "2023"
+    },
+    {
+     "title": "GSN Standard",
+     "url": "https://scsc.uk/gsn-standard",
+     "year": "2026"
+    },
+    {
+     "title": "Assurance 2.0: A Manifesto",
+     "url": "https://arxiv.org/abs/2004.10474",
+     "year": "2020"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-24",
+   "name": "Ντετερμινιστικό LLM inference (batch-invariant kernels)",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "Η μη-ντετερμινιστική έξοδος σε temperature 0 οφείλεται κυρίως στη μη-αμεταβλητότητα των kernels ως προς το batch size. Με batch-invariant kernels 1000 από 1000 completions ήταν ταυτόσημα (έναντι 80 διαφορετικών χωρίς), με επιβράδυνση 1.6× (42 s έναντι 26 s) έως 2.1× στη μη βελτιστοποιημένη εκδοχή (9/2025).",
+   "relevance": "Αφορά το INV-C08 και το DST με γνωσιακά όργανα: replay από receipts ή ντετερμινιστικό inference.",
+   "sources": [
+    {
+     "title": "Defeating Nondeterminism in LLM Inference",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-25",
+   "name": "Όριο ανεξαρτησίας στο N-version programming",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Το πείραμα Knight & Leveson (1986) απέρριψε στατιστικά την υπόθεση ανεξαρτησίας αποτυχιών μεταξύ versions. Η πηγή εδώ είναι δευτερογενής.",
+   "relevance": "Το VT-506 δεν τεκμηριώνει ανεξαρτησία· η τεκμηριωμένη χρήση του είναι ως έλεγχος ισοδυναμίας (KT-02).",
+   "sources": [
+    {
+     "title": "N-version programming",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-VER-26",
+   "name": "Veil: επαλήθευση transition systems μέσα στο Lean 4",
+   "kind": "tool",
+   "maturity": "research-prototype",
+   "what": "Framework ενσωματωμένο στο Lean 4 για προδιαγραφή, υλοποίηση, testing και απόδειξη safety ιδιοτήτων transition systems με έμφαση σε κατανεμημένα πρωτόκολλα (liveness «στο μέλλον»): push-button επαλήθευση σε decidable fragments πρώτης τάξης, model checking, interactive proofs. Veil 2.0 σε pre-release.",
+   "relevance": "Εναλλακτική που θα ένωνε προδιαγραφή πρωτοκόλλων και Lean reference semantics (P2) σε μία έδρα· όχι αυστηρά ανώτερο του TLA+ σήμερα (pre-release, χωρίς liveness).",
+   "sources": [
+    {
+     "title": "verse-lab/veil",
+     "url": "https://github.com/verse-lab/veil",
+     "year": "2026"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-OPS-02"
+   ],
+   "draft_ref": "master §6.3 (CMP-OPS-02, γρ. 575)· 31.md §31.3 P4· 19.md §19.4 INV-C08",
+   "draft_position": "Ντετερμινιστική discrete-event προσομοίωση του World OS με fault injection· τρέχει kill tests πριν από τον κώδικα (με contract stubs) και έναντι πραγματικών οργάνων· seeds/traces στο CAS· η απόκλιση sim/real αντιμετωπίζεται με trace validation· τεχνολογία «Rust (DST)», κατάσταση [T]. Ο ντετερμινισμός των οργάνων στηρίζεται στο INV-C08 (επιβολή: «KRN-12 deterministic mode»).",
+   "verdict": "gap",
+   "reasoning": "Η πρακτική DST είναι αποδεδειγμένη (FoundationDB, VOPR) και η σύνδεση sim/real με trace validation σωστή. Κενό: το πρόχειρο δεν ορίζει πώς γίνονται ντετερμινιστικά τα πραγματικά όργανα σε SBCL, BEAM ή Python (ADR-0012) όταν τρέχουν σε microVM ή in-image (EXP-20 ανοιχτό)· το «KRN-12 deterministic mode» αναφέρεται μόνο στο 19.md και δεν περιγράφεται στο §6.3. Τα in-process Rust frameworks απαιτούν mock όλου του I/O (madsim) και δεν καλύπτουν μη-Rust όργανα. Ο ερευνητής είχε «superior-exists» (Antithesis)· υποβιβάζεται, γιατί καμία λύση ντετερμινισμού ολόκληρου συστήματος δεν κυριαρχεί αυστηρά: το Antithesis είναι managed και hermetic χωρίς δηλωμένο on-prem (σύγκρουση με το sovereign profile του ADR-0029 αν μπουν πραγματικά δεδομένα), με άγνωστα throughput, κόστος και δυνατότητα τοπικού replay· το Shadow καλύπτει δίκτυο και χρόνο, όχι ντετερμινιστικό thread scheduling by default· το Hermit είναι σε maintenance mode (3–6×). Το ότι το στάδιο «πριν από κώδικα με stubs» προσθέτει αξία πέρα από τα TLA+ models (VT-101, VT-102, VT-103, VT-104, VT-105, VT-106) ούτε τεκμηριώθηκε ούτε διαψεύστηκε.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-11",
+    "SOTA-VER-12",
+    "SOTA-VER-02",
+    "SOTA-VER-24"
+   ],
+   "sources": [
+    {
+     "title": "madsim",
+     "url": "https://github.com/madsim-rs/madsim",
+     "year": "2026"
+    },
+    {
+     "title": "Antithesis getting started",
+     "url": "https://antithesis.com/docs/getting_started/",
+     "year": "2026"
+    },
+    {
+     "title": "How Antithesis works",
+     "url": "https://antithesis.com/docs/introduction/how_antithesis_works/",
+     "year": "2026"
+    },
+    {
+     "title": "Shadow limitations",
+     "url": "https://shadow.github.io/docs/guide/limitations.html",
+     "year": "2026"
+    },
+    {
+     "title": "Hermit",
+     "url": "https://github.com/facebookexperimental/hermit",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ICD-26"
+   ],
+   "draft_ref": "spine-vocab ICD-26· master §6.3 CMP-COG-07",
+   "draft_position": "Simulation Harness: scenario, seed, fault injection, ghost worlds, campaigns· provider OPS-02 (+ COG-07 ghost worlds, ADV-03 campaigns).",
+   "verdict": "gap",
+   "reasoning": "Στο συμβόλαιο λείπουν όσα κάνουν ένα DST αποτελεσματικό και ελέγξιμο: γλώσσα ιδιοτήτων (always/sometimes/reachable/unreachable, όπου τα sometimes δείχνουν ότι το σενάριο εξερευνήθηκε), μέτρο κάλυψης, αναπαραγωγή από seed και commit (VOPR), ελαχιστοποίηση του failing trace (shrinking, Hypothesis), και πολιτική για τη μη-ντετερμινιστική έξοδο LLM (replay από Inference Receipts ή batch-invariant inference). Σε hermetic υπόστρωμα (Antithesis) οι κλήσεις σε εξωτερικό inference αποκλείονται, άρα η πολιτική replay χρειάζεται σε κάθε επιλογή. Σχεδιαστικό ερώτημα, όχι τεκμηριωμένο σφάλμα: το ίδιο ICD εξυπηρετεί τα runtime ghost worlds του COG-07 (copy-on-write, χωρίς commit capability) και το test harness με fault injection, χωρίς ορισμένο διαχωρισμό δικαιωμάτων μεταξύ τους.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-12",
+    "SOTA-VER-11",
+    "SOTA-VER-14",
+    "SOTA-VER-24"
+   ],
+   "sources": [
+    {
+     "title": "Antithesis assertions",
+     "url": "https://antithesis.com/docs/properties_assertions/assertions/",
+     "year": "2026"
+    },
+    {
+     "title": "TigerBeetle VOPR",
+     "url": "https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/internals/vopr.md",
+     "year": "2026"
+    },
+    {
+     "title": "Hypothesis stateful",
+     "url": "https://hypothesis.readthedocs.io/en/latest/stateful.html",
+     "year": "2026"
+    },
+    {
+     "title": "Defeating Nondeterminism in LLM Inference",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    },
+    {
+     "title": "Antithesis getting started",
+     "url": "https://antithesis.com/docs/getting_started/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-OPS-03",
+    "ICD-27"
+   ],
+   "draft_ref": "master §6.3 (CMP-OPS-03, γρ. 576)· spine-vocab ICD-27",
+   "draft_position": "CMP-OPS-03: benchmarks, τυφλά panels, baselines, ablations, Behavioral Battery, βαθμονόμηση και evidence packaging, σε Python· σφραγισμένα σύνολα, αποτελέσματα στο ledger· contamination → σφραγισμένα ή περιστρεφόμενα σύνολα, canary strings, διτεμπορικά cutoffs. ICD-27: benchmark run, blind panel protocol, battery, ablation, scorecard.",
+   "verdict": "holds",
+   "reasoning": "Η δομή αντιστοιχεί στη σημερινή πρακτική: πολυμετρική αξιολόγηση (HELM), νέα σύνολα ανά περίοδο (LiveBench), preregistration (Magesh et al.). Υπάρχει ώριμο ανοιχτό υπόστρωμα, το Inspect (MIT, sandboxing, agents, βάση του Hawk του METR). Χρειάζονται τρεις προσθήκες: το κόστος ως μετρική πρώτης τάξης (Kapoor et al.), error bars με paired και clustered SE και power analysis (Miller), και πρωτόκολλο που περιορίζει τους LLM judges λόγω τεκμηριωμένων biases. Το ότι τα canary strings αρκούν δεν τεκμηριώθηκε. Αυστηρά ανώτερη εναλλακτική δεν βρέθηκε στις πηγές που ελέγχθηκαν.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-17",
+    "SOTA-VER-18",
+    "SOTA-VER-19"
+   ],
+   "sources": [
+    {
+     "title": "Inspect",
+     "url": "https://inspect.aisi.org.uk/",
+     "year": "2026"
+    },
+    {
+     "title": "HELM",
+     "url": "https://arxiv.org/abs/2211.09110",
+     "year": "2023"
+    },
+    {
+     "title": "AI Agents That Matter",
+     "url": "https://arxiv.org/abs/2407.01502",
+     "year": "2024"
+    },
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    },
+    {
+     "title": "LiveBench",
+     "url": "https://arxiv.org/abs/2406.19314",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "KT-14"
+   ],
+   "draft_ref": "24.md §24.1 KT-14· spine-vocab KT-14",
+   "draft_position": "«Να μη χτιστεί τίποτα»: προκαταχωρισμένη, στατιστικά σημαντική υπεροχή έναντι της μηδενικής εναλλακτικής υπό ίσα δεδομένα και budget· αλλιώς το component ή η αρχιτεκτονική σκοτώνεται ή επανασχεδιάζεται. Πρώτο GP: GP-4.",
+   "verdict": "holds",
+   "reasoning": "Η σύγκριση υπό ίσο budget συμφωνεί με το εύρημα ότι η εστίαση μόνο στην ακρίβεια οδηγεί σε άσκοπα σύνθετα agents και ότι χρειάζεται κοινή αποτίμηση κόστους-ακρίβειας (Kapoor et al.). Το κριτήριο όμως είναι υποπροσδιορισμένο: «στατιστικά σημαντική» χωρίς ελάχιστο ενδιαφέρον μέγεθος επίδρασης, power analysis, paired ή clustered ανάλυση (Miller) και διόρθωση πολλαπλών συγκρίσεων μπορεί να περάσει με ασήμαντη διαφορά σε μεγάλο δείγμα· δεν ορίζεται ποια είναι η «μηδενική εναλλακτική». Κατάταξη «today» (αντί «experiment» του ερευνητή): το statistical analysis plan είναι ώριμη μεθοδολογία που δεσμεύεται σήμερα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-18"
+   ],
+   "sources": [
+    {
+     "title": "AI Agents That Matter",
+     "url": "https://arxiv.org/abs/2407.01502",
+     "year": "2024"
+    },
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-24"
+   ],
+   "draft_ref": "24.md §24.2 KT-24· spine-vocab VT-706",
+   "draft_position": "Κάθε γνωσιακό όργανο δείχνει οριακή αξία πάνω από τον θόρυβο σε προκαταχωρισμένη μετρική, αλλιώς αποσύρεται ως διακοσμητικό· GP-3 και κάθε φάση.",
+   "verdict": "gap",
+   "reasoning": "Η «οριακή αξία» ορίζεται ανά όργανο (VT-706 per-organ ablation) χωρίς πρόβλεψη για αλληλεπιδράσεις: όργανα που αλληλοαντικαθίστανται δείχνουν το καθένα περίπου μηδενική οριακή αξία, και η ανεξάρτητη απόσυρσή τους μπορεί να χάσει ικανότητα, αντίθετα με το INV-C01. Αυτό είναι λογικό επιχείρημα, όχι εμπειρικό εύρημα. Γνωστές λύσεις: απόδοση αξίας με Shapley που λαμβάνει υπόψη αλληλεπιδράσεις (Neuron Shapley: αποτελεσματικότερο από προσεγγίσεις βασισμένες σε activation patterns, εκτίμηση με multi-armed bandit) ή απόσυρση ενός οργάνου τη φορά με επαναμέτρηση. Η πηγή αφορά νευρώνες/φίλτρα, όχι όργανα συστήματος· η μεταφορά είναι αναλογική, γι' αυτό υποβιβάστηκε από «superior-exists» σε «gap».",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-18"
+   ],
+   "sources": [
+    {
+     "title": "Neuron Shapley: Discovering the Responsible Neurons",
+     "url": "https://arxiv.org/abs/2002.09815",
+     "year": "2020"
+    },
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-12"
+   ],
+   "draft_ref": "26.md §26.2 EXP-12 και έξοδος GP-6· 29.md REQ-VAL-003",
+   "draft_position": "Πιάνει ο DST seeded σφάλματα πρωτοκόλλων; Μέθοδος: mutation πρωτοκόλλων. Recall κάτω από το όριο ⇒ εμπλουτισμός του fault model. Προγραμματισμένο στο GP-6 (και στα κριτήρια εξόδου του GP-6).",
+   "verdict": "holds",
+   "reasoning": "Η μέτρηση με mutation analysis είναι καθιερωμένη (mutation testing σε κλίμακα Google), και το Twins έδειξε ότι injected bugs εκτίθενται μέσα σε λεπτά (44M σενάρια ημερησίως στο DiemBFT). Εξωτερική ισχύς: σώμα πραγματικών bugs (αναλύσεις Jepsen) δίπλα στα συνθετικά mutants. Το χρονοδιάγραμμα είναι ασυνεπές: ο DST αποφασίζει από το GP-0 (31.md P4, 24.md κανόνας 2), ενώ η πιστότητά του μετριέται στο GP-6· το πείραμα πρέπει να προηγηθεί (GP-0 ή GP-1). Αυστηρά ανώτερη μέθοδος δεν βρέθηκε· εργαλεία Byzantine fuzzing πέραν του Twins δεν ελέγχθηκαν (εξάντληση WebSearch).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-13",
+    "SOTA-VER-14",
+    "SOTA-VER-12"
+   ],
+   "sources": [
+    {
+     "title": "Practical Mutation Testing at Scale",
+     "url": "https://arxiv.org/abs/2102.11378",
+     "year": "2021"
+    },
+    {
+     "title": "Twins: BFT Systems Made Robust",
+     "url": "https://arxiv.org/abs/2004.10617",
+     "year": "2022"
+    },
+    {
+     "title": "Jepsen analyses",
+     "url": "https://jepsen.io/analyses",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "EXP-18"
+   ],
+   "draft_ref": "26.md §26.2 EXP-18· 31.md §31.3 P2, §31.5· spine ADR-0028",
+   "draft_position": "Εκφραστικότητα και throughput της Lean reference semantics (differential cases/sec, κάλυψη πυρήνα)· αν ανεπαρκής, η εκτελέσιμη προδιαγραφή γράφεται σε Lisp και το Lean μένει μόνο για αποδείξεις· GP-0.",
+   "verdict": "holds",
+   "reasoning": "Το Cedar τεκμηριώνει ότι εκτελέσιμο Lean model μπορεί να είναι ταχύτερο από την παραγωγική υλοποίηση στο DRT (5 µs έναντι 7 µs ανά είσοδο, εκατομμύρια εισόδους κάθε νύχτα) και ότι οι αποδείξεις κοστίζουν λογικά (185 s έλεγχος και compile, 18 person-days για τον validator). Το Cedar όμως είναι γλώσσα πολιτικών (evaluator, validator) χωρίς ταυτοχρονισμό· για πυρήνα με ταυτοχρονισμό, κατανομή και κρυπτογραφία δεν βρέθηκε ανάλογη βιομηχανική απόδειξη, άρα το πείραμα χρειάζεται. Το fallback σε Lisp είναι λογικό· συμπληρωματικό είναι το Aeneas (Rust→Lean) για τον Rust TCB.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-05",
+    "SOTA-VER-06",
+    "SOTA-VER-07"
+   ],
+   "sources": [
+    {
+     "title": "Lean Into Verified Software Development",
+     "url": "https://aws.amazon.com/blogs/opensource/lean-into-verified-software-development/",
+     "year": "2024"
+    },
+    {
+     "title": "How We Built Cedar",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    },
+    {
+     "title": "Lean FRO Roadmap Y4-1",
+     "url": "https://lean-lang.org/fro/roadmap/y4-1/",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-VAL-001"
+   ],
+   "draft_ref": "29.md §29.9 REQ-VAL-001· spine ADR-0027· 24.md §24.3",
+   "draft_position": "Benchmarks, τυφλά σύνολα και batteries παγώνουν πριν από τις φάσεις υλοποίησης και συντάσσονται εκτός συστήματος (OPS-03, ICD-27, tests VT-701, VT-702)· το KT-15 επαναλαμβάνεται σε κάθε φάση ως ratchet, χωρίς re-baseline.",
+   "verdict": "holds",
+   "reasoning": "Το πάγωμα και η σύνταξη εκτός συστήματος είναι σωστή πρακτική (preregistration). Όταν όμως ένα κρυφό σύνολο χρησιμοποιείται επανειλημμένα σε κάθε φάση και απόφαση, η επαναληπτική χρήση προκαλεί overfitting στο ίδιο το holdout· υπάρχει αποδεδειγμένος μηχανισμός (reusable holdout, Dwork et al.), και τα νέα σύνολα ανά περίοδο (LiveBench) είναι συμπληρωματική άμυνα. Το πρόχειρο λέει «παγωμένα» (REQ-VAL-001) και «περιστρεφόμενα» (CMP-OPS-03) χωρίς να ορίζει πώς συνδυάζονται (DEC-VER-06).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-18",
+    "SOTA-VER-19"
+   ],
+   "sources": [
+    {
+     "title": "Generalization in Adaptive Data Analysis and Holdout Reuse",
+     "url": "https://arxiv.org/abs/1506.02629",
+     "year": "2015"
+    },
+    {
+     "title": "LiveBench",
+     "url": "https://arxiv.org/abs/2406.19314",
+     "year": "2025"
+    },
+    {
+     "title": "Hallucination-Free? (preregistered)",
+     "url": "https://arxiv.org/abs/2405.20362",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "REQ-VAL-002"
+   ],
+   "draft_ref": "29.md §29.9 REQ-VAL-002 και κανόνες ορφανών (γρ. 7–10)",
+   "draft_position": "Κάθε ισχυρισμός ικανότητας συνδέει απαίτηση, μηχανισμό, test και evidence (MDL-01, OPS-03· ICD-32, ICD-27· test VT-901).",
+   "verdict": "superior-exists",
+   "reasoning": "Η ιχνηλασιμότητα απαίτηση→μηχανισμός→test→evidence εκφράζεται σήμερα εγγενώς στο SysML v2 (satisfy, verify, VerdictKind). Δεν λέει όμως γιατί το evidence στηρίζει τον ισχυρισμό, ούτε τι θα τον ανέτρεπε.",
+   "superior": "Structured assurance case (SACM 2.3 ή GSN v3, με defeaters και counterevidence κατά Assurance 2.0) πάνω από την ιχνηλασιμότητα: περιέχει όλους τους συνδέσμους του REQ-VAL-002 και προσθέτει ελέγξιμο επιχείρημα και αντιλόγους (ταιριάζει με Court και INV-K03). Trade-off: επιπλέον κόπος σύνταξης· η αντιστοίχιση SACM ↔ SysML v2 δεν τεκμηριώθηκε.",
+   "sota_refs": [
+    "SOTA-VER-22",
+    "SOTA-VER-23"
+   ],
+   "sources": [
+    {
+     "title": "OMG SACM",
+     "url": "https://www.omg.org/spec/SACM/",
+     "year": "2023"
+    },
+    {
+     "title": "GSN Standard",
+     "url": "https://scsc.uk/gsn-standard",
+     "year": "2026"
+    },
+    {
+     "title": "Assurance 2.0: A Manifesto",
+     "url": "https://arxiv.org/abs/2004.10474",
+     "year": "2020"
+    },
+    {
+     "title": "Verification Case Definition Example",
+     "url": "https://raw.githubusercontent.com/Systems-Modeling/SysML-v2-Release/master/sysml/src/training/34.%20Verification/Verification%20Case%20Definition%20Example.sysml",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-VAL-003"
+   ],
+   "draft_ref": "29.md §29.9 REQ-VAL-003· 24.md κανόνας 2· 31.md §31.4· 26.md έξοδος GP-0",
+   "draft_position": "Κάθε kill test εκτελείται πρώτα σε ντετερμινιστική προσομοίωση (OPS-02, ICD-26· tests VT-601, VT-602, VT-603, VT-604, VT-109, EXP-12· μέθοδος S· EV-VT601· [T]). Το §31.4 δηλώνει «Και τα 24 kill tests: σε προσομοίωση».",
+   "verdict": "gap",
+   "reasoning": "Η απαίτηση είναι κακοδιατυπωμένη. Υπάρχουν μόνο 4 καμπάνιες DST (partition/Byzantine, migration, crypto-break, memory merge), που καλύπτουν κυρίως τα KT-04, KT-08, KT-09, KT-05. Τα KT-14, KT-15, KT-24 είναι εμπειρικές συγκρίσεις ποιότητας χωρίς νόημα με contract stubs· το KT-17 θέλει adaptive red team· το KT-16 νομική και κρυπτογραφική επαλήθευση (EXP-19). Ένα EXP (EXP-12) εμφανίζεται στη στήλη των tests. Χρειάζεται ταξινόμηση κάθε KT κατά χώρο πρώτης εκτέλεσης (DEC-VER-05).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-11",
+    "SOTA-VER-17",
+    "SOTA-VER-20"
+   ],
+   "sources": [
+    {
+     "title": "FoundationDB simulation testing",
+     "url": "https://apple.github.io/foundationdb/testing.html",
+     "year": "2026"
+    },
+    {
+     "title": "The Attacker Moves Second",
+     "url": "https://arxiv.org/abs/2510.09023",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "REQ-VAL-004"
+   ],
+   "draft_ref": "29.md §29.9 REQ-VAL-004· spine VT-704",
+   "draft_position": "Οι επιστημικοί βαθμοί βαθμονομούνται ανά κλάση ισχυρισμού (COG-08, OPS-03· ICD-27· test VT-704).",
+   "verdict": "holds",
+   "reasoning": "Η μέτρηση calibration ανά κλάση είναι τυπική πρακτική (το HELM έχει την calibration στις 7 μετρικές του). Το conformal factuality δίνει εγγύηση ορθότητας με ρητή υπόθεση exchangeability, που σπάει όταν το δίκαιο αλλάζει στον χρόνο· το adaptive conformal inference όμως δίνει long-run coverage υπό αυθαίρετη distribution shift, άρα η χρονική ένσταση απαντάται μερικώς. Και τα δύο είναι συμπληρώματα, όχι αυστηρά ανώτερα. Ανοιχτό: πώς βαθμονομούνται ordinal βαθμοί (VERIFIED, ADJUDICATED κ.λπ.) που δεν είναι πιθανότητες.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-17",
+    "SOTA-VER-21"
+   ],
+   "sources": [
+    {
+     "title": "HELM",
+     "url": "https://arxiv.org/abs/2211.09110",
+     "year": "2023"
+    },
+    {
+     "title": "Conformal Factuality (full text)",
+     "url": "https://arxiv.org/html/2402.10978",
+     "year": "2024"
+    },
+    {
+     "title": "Adaptive Conformal Inference Under Distribution Shift",
+     "url": "https://arxiv.org/abs/2106.00170",
+     "year": "2021"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "VT-001",
+    "VT-002",
+    "VT-003",
+    "VT-004",
+    "VT-005",
+    "VT-006",
+    "VT-007",
+    "VT-008",
+    "VT-009",
+    "VT-010",
+    "VT-011",
+    "VT-012",
+    "VT-013",
+    "VT-014",
+    "VT-015",
+    "VT-016",
+    "VT-017",
+    "VT-018",
+    "VT-019",
+    "VT-020",
+    "VT-021",
+    "VT-022",
+    "VT-023",
+    "VT-024",
+    "VT-025",
+    "VT-026",
+    "VT-027",
+    "VT-028",
+    "VT-029",
+    "VT-030",
+    "VT-031",
+    "VT-032"
+   ],
+   "draft_ref": "spine-vocab γρ. 77 (conformance suite ανά ICD)· 29.md REQ-INT-002· 26.md GP-1",
+   "draft_position": "Σουίτα conformance για κάθε ICD, που περνά κάθε υλοποίηση σε οποιαδήποτε γλώσσα· για τα kernel ICD τα vectors προέρχονται από το deployment/verify του prototype.",
+   "verdict": "holds",
+   "reasoning": "Πρότυπη πρακτική. Σήμερα παράγονται αυτόματα: PBT από OpenAPI/GraphQL (Schemathesis), vectors από το Lean reference με DRT (τρόπος Cedar), stateful PBT (Hypothesis, PropEr). Η ύπαρξη των vectors του deployment/verify δεν επαληθεύεται από εδώ.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-14",
+    "SOTA-VER-05"
+   ],
+   "sources": [
+    {
+     "title": "Schemathesis",
+     "url": "https://github.com/schemathesis/schemathesis",
+     "year": "2026"
+    },
+    {
+     "title": "cedar-spec",
+     "url": "https://github.com/cedar-policy/cedar-spec",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "VT-101",
+    "VT-102",
+    "VT-103",
+    "VT-104",
+    "VT-105",
+    "VT-106",
+    "VT-107",
+    "VT-108",
+    "VT-109"
+   ],
+   "draft_ref": "spine-vocab γρ. 78· 31.md §31.3 P3, §31.4",
+   "draft_position": "TLC/Apalache για Ledger, IdentityContinuity, EpistemicCommons, EpistemicCourt (μοναδικότητα verdict υπό f Byzantine), OrganReplacement, CryptoEpoch· TLAPS για το Ledger prefix και το continuity inductive invariant· trace validation υλοποιήσεων έναντι specs.",
+   "verdict": "holds",
+   "reasoning": "TLC, Apalache και TLAPS συντηρούνται ενεργά από το TLA+ Foundation, και το trace validation είναι βιομηχανικά δοκιμασμένο (CCF, 6 bugs, σε CI). Επιφυλάξεις: (α) το VT-104 για n ≥ 3f+1 με TLC ή Apalache ελέγχει σταθερό n· ακόμη και ο inductive έλεγχος του Apalache ισχύει για σταθερές ή φραγμένες παραμέτρους, άρα για κάθε n χρειάζεται TLAPS (όπως ήδη στα VT-107, VT-108) ή Ivy. (β) Για το VT-109 instrumentation υπάρχει για Java, C++, και ως research prototype για Go και Rust (Specula)· για Common Lisp και Elixir πρέπει να γραφτεί. (γ) Το Toolbox δεν συντηρείται· χρήση μέσω CLI ή VS Code, με την έκδοση του εργαλείου στο evidence. Αυστηρά ανώτερη εναλλακτική δεν βρέθηκε· το Veil είναι pre-release χωρίς liveness.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-01",
+    "SOTA-VER-02",
+    "SOTA-VER-10",
+    "SOTA-VER-26"
+   ],
+   "sources": [
+    {
+     "title": "tlaplus releases",
+     "url": "https://github.com/tlaplus/tlaplus/releases",
+     "year": "2026"
+    },
+    {
+     "title": "apalache-mc/apalache",
+     "url": "https://github.com/apalache-mc/apalache",
+     "year": "2026"
+    },
+    {
+     "title": "Smart Casual Verification of CCF",
+     "url": "https://arxiv.org/abs/2406.17455",
+     "year": "2024"
+    },
+    {
+     "title": "GenAI-accelerated TLA+ Challenge",
+     "url": "https://foundation.tlapl.us/challenge/index.html",
+     "year": "2025"
+    },
+    {
+     "title": "tlapm",
+     "url": "https://github.com/tlaplus/tlapm",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "VT-201",
+    "VT-202",
+    "VT-203",
+    "VT-204",
+    "VT-205"
+   ],
+   "draft_ref": "spine-vocab γρ. 79",
+   "draft_position": "Alloy για Lineage, Provenance (taint closure), CapabilityControl (ND + externality), OrganizationCharter, ConfidentialityDomains.",
+   "verdict": "holds",
+   "reasoning": "Το Alloy 6.2.0 (1/2025) έχει mutable state και traces, κατάλληλο για bounded έλεγχο δομικών ιδιοτήτων. Η ανάλυση είναι σε μικρό scope και δεν αποτελεί απόδειξη για κάθε μέγεθος.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-09"
+   ],
+   "sources": [
+    {
+     "title": "Alloy releases",
+     "url": "https://github.com/AlloyTools/org.alloytools.alloy/releases",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "VT-301",
+    "VT-302",
+    "VT-303",
+    "VT-304",
+    "VT-305",
+    "VT-306",
+    "VT-307"
+   ],
+   "draft_ref": "spine-vocab γρ. 80· 31.md §31.3 P2· master §8.7 (γρ. 773)",
+   "draft_position": "Αποδείξεις σε Lean (nd_preserved_by_composition, control_externality, continuity_trans, trusted_commit_sound, grounded_extension_unique, answer_total, deterministic_replay). Proof object: hash του proof term και έκδοση του checker.",
+   "verdict": "holds",
+   "reasoning": "Το Lean 4 είναι σωστό εργαλείο για model-level αποδείξεις με εκτελέσιμη semantics (προηγούμενο το Cedar). Κενά: (α) το «hash + checker version» δεν περιλαμβάνει ανεξάρτητο επανέλεγχο· σήμερα διανέμεται το leanchecker, και υπάρχουν εξωτερικοί checkers lean4lean (παράγωγο του C++ kernel) και nanoda_lib (Rust)· ο roadmap του Lean FRO στοχεύει σε ρουτίνα εξωτερικού ελέγχου (`lake check`). (β) Οι αποδείξεις αφορούν το model· για τον Rust TCB υπάρχει code-level επαλήθευση (Aeneas, Verus, Kani) που το πρόχειρο δεν εξετάζει (DEC-VER-03).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-05",
+    "SOTA-VER-06",
+    "SOTA-VER-07"
+   ],
+   "sources": [
+    {
+     "title": "lean4checker (merged as leanchecker)",
+     "url": "https://github.com/leanprover/lean4checker",
+     "year": "2026"
+    },
+    {
+     "title": "lean4lean",
+     "url": "https://github.com/digama0/lean4lean",
+     "year": "2026"
+    },
+    {
+     "title": "nanoda_lib",
+     "url": "https://github.com/ammkrn/nanoda_lib",
+     "year": "2026"
+    },
+    {
+     "title": "Aeneas",
+     "url": "https://github.com/AeneasVerif/aeneas",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "VT-401",
+    "VT-402",
+    "VT-403",
+    "VT-404"
+   ],
+   "draft_ref": "spine-vocab γρ. 81· master §8.7 (γρ. 769)",
+   "draft_position": "Z3 για συνέπεια κανόνων LexDSL, υπολογισμό προθεσμιών, ικανοποιησιμότητα charters/quotas και translation validation του Forge· proof object SMT: model ή unsat core + solver version.",
+   "verdict": "superior-exists",
+   "reasoning": "Για sat το model ελέγχεται με αποτίμηση. Για unsat, το «unsat core + solver version» σημαίνει εμπιστοσύνη σε ολόκληρο τον solver, αντίθετα με το INV-C03 και την ιδέα του proof object. Για το VT-404 η translation validation με SMT είναι πρακτική παραγωγής (Alive2, χωρίς inter-procedural).",
+   "superior": "Για κάθε unsat που φτάνει σε COMMITTED: cvc5 με εξαγωγή Alethe ή CPC και ανεξάρτητος έλεγχος με Carcara, ή replay στο Lean με lean-smt. Αυστηρά ανώτερο σε εμπιστοσύνη χωρίς απώλεια (ο Z3 μένει για models και ταχύτητα). Trade-off: η κάλυψη θεωριών (strings, datatypes, NIA) δεν τεκμηριώθηκε· το lean-smt είναι beta και οι αποδείξεις του cvc5 μπορεί να έχουν holes· το cvc5 μπορεί να μην αποφασίζει ερωτήματα που αποφασίζει ο Z3.",
+   "sota_refs": [
+    "SOTA-VER-08",
+    "SOTA-VER-15"
+   ],
+   "sources": [
+    {
+     "title": "cvc5 proofs",
+     "url": "https://cvc5.github.io/docs/latest/proofs/proofs.html",
+     "year": "2026"
+    },
+    {
+     "title": "Carcara",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2026"
+    },
+    {
+     "title": "lean-smt",
+     "url": "https://github.com/ufmg-smite/lean-smt",
+     "year": "2026"
+    },
+    {
+     "title": "Alive2",
+     "url": "https://github.com/AliveToolkit/alive2",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "VT-501",
+    "VT-502",
+    "VT-503",
+    "VT-504",
+    "VT-505",
+    "VT-506"
+   ],
+   "draft_ref": "spine-vocab γρ. 82· master §8.7 (N-version agreement)",
+   "draft_position": "PBT στον πυρήνα, MBT από protocol state machines, fuzzing σε parsers και ingestion, mutation testing (anti-tautology), differential έναντι Lean reference semantics, N-version agreement (Lisp↔Rust↔Python).",
+   "verdict": "holds",
+   "reasoning": "Όλα υπάρχουν ώριμα: Hypothesis και PropEr stateful, OSS-Fuzz (Rust, Python, Java), mutation testing κατά Google, Quint Connect (Rust) ή FizzBee (Go) για MBT. Για BEAM το Concuerror υπάρχει, αλλά η συμβατότητα με τρέχον OTP δεν επαληθεύτηκε. Επιφύλαξη για το VT-506: το N-version δεν τεκμηριώνει ανεξαρτησία αποτυχιών (Knight & Leveson 1986, από δευτερογενή πηγή)· έγκυρο ως έλεγχος ισοδυναμίας (KT-02), όχι ως επιχείρημα αξιοπιστίας ή proof object. Το cargo-mutants είναι semi-maintained (8/2026).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-14",
+    "SOTA-VER-04",
+    "SOTA-VER-25"
+   ],
+   "sources": [
+    {
+     "title": "Practical Mutation Testing at Scale",
+     "url": "https://arxiv.org/abs/2102.11378",
+     "year": "2021"
+    },
+    {
+     "title": "OSS-Fuzz",
+     "url": "https://github.com/google/oss-fuzz",
+     "year": "2025"
+    },
+    {
+     "title": "Concuerror",
+     "url": "https://github.com/parapluu/Concuerror",
+     "year": "2023"
+    },
+    {
+     "title": "N-version programming",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "VT-601",
+    "VT-602",
+    "VT-603",
+    "VT-604"
+   ],
+   "draft_ref": "spine-vocab γρ. 83",
+   "draft_position": "Καμπάνιες DST: partition+Byzantine, πλήρες migration drill, crypto-break drill, συγχώνευση αντιφατικών μνημών.",
+   "verdict": "holds",
+   "reasoning": "Οι τέσσερις καμπάνιες είναι ακριβώς ό,τι το DST έχει αποδείξει (FoundationDB, VOPR). Για το VT-601 τα Byzantine σενάρια πρέπει να παράγονται συστηματικά με τρόπο Twins (equivocation, double vote, απώλεια κατάστασης). Το υπόστρωμα για μη-Rust όργανα εκκρεμεί (DEC-VER-01), και για τα VT-602, VT-604 με γνωσιακά όργανα απαιτείται replay του inference.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-11",
+    "SOTA-VER-12",
+    "SOTA-VER-13"
+   ],
+   "sources": [
+    {
+     "title": "Twins",
+     "url": "https://arxiv.org/abs/2004.10617",
+     "year": "2022"
+    },
+    {
+     "title": "TigerBeetle VOPR",
+     "url": "https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/internals/vopr.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "VT-701",
+    "VT-702",
+    "VT-703",
+    "VT-704",
+    "VT-705",
+    "VT-706",
+    "VT-707"
+   ],
+   "draft_ref": "spine-vocab γρ. 84",
+   "draft_position": "LAWMAX benchmark (επαναχρήση Ω+7 / OMEGA §10 / external-benchmark / capability-gate), πρωτόκολλο blind expert panel, Behavioral Identity Battery, calibration επιστημικών βαθμών, leakage-free historical backtest (διτεμπορικό as-of, χωρίς X% προβλέψεις), ablation ανά όργανο, collective έναντι individual.",
+   "verdict": "holds",
+   "reasoning": "Η δομή ταιριάζει με την τρέχουσα μεθοδολογία: preregistered νομική αξιολόγηση, baseline με δικηγόρους (VLAIR), blind pairwise βαθμολόγηση από ειδικούς έναντι ανθρώπινων παραδοτέων (GDPval, με ατελή τύφλωση λόγω ύφους). Για το VT-702 οι LLM judges έχουν τεκμηριωμένα biases· οι βαθμολογητές πρέπει να είναι άνθρωποι, με μέτρο συμφωνίας και έλεγχο αποτύφλωσης. Το VT-701 στηρίζεται σε έδρες του άλλου repo (Ω+7, capability-gate) που δεν επαληθεύονται από εδώ. Για το VT-703 δεν βρέθηκε επικυρωμένο μέτρο χαρακτηρολογικής συνέχειας (EXP-03). Το VT-706 έχει το ζήτημα αλληλεπιδράσεων του KT-24.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-19",
+    "SOTA-VER-18",
+    "SOTA-VER-17"
+   ],
+   "sources": [
+    {
+     "title": "Hallucination-Free?",
+     "url": "https://arxiv.org/abs/2405.20362",
+     "year": "2024"
+    },
+    {
+     "title": "Vals Legal AI Report",
+     "url": "https://www.vals.ai/vlair",
+     "year": "2025"
+    },
+    {
+     "title": "GDPval (full text)",
+     "url": "https://arxiv.org/html/2510.04374",
+     "year": "2025"
+    },
+    {
+     "title": "Judging LLM-as-a-Judge",
+     "url": "https://arxiv.org/abs/2306.05685",
+     "year": "2023"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "VT-801",
+    "VT-802",
+    "VT-803",
+    "VT-804",
+    "VT-805"
+   ],
+   "draft_ref": "spine-vocab γρ. 85· 24.md KT-17",
+   "draft_position": "Red team για prompt injection και evidence poisoning· supply-chain admission (άρνηση unsigned)· drills για compromise κλειδιών· διαρροή εμπιστευτικότητας μεταξύ matters. Το KT-17 ζητά 0 εκτελέσεις εντολών στο σώμα επιθέσεων.",
+   "verdict": "superior-exists",
+   "reasoning": "Το VT-801 (και το KT-17) με σταθερό σώμα επιθέσεων υπερεκτιμά την αντοχή: 12 άμυνες που οι περισσότερες δήλωναν σχεδόν μηδενική επιτυχία επιθέσεων παρακάμφθηκαν, οι περισσότερες με >90%, υπό adaptive attacks. Το αρχιτεκτονικό μέτρο του προχείρου (INV-S01, typed channels) συμφωνεί με το CaMeL (διαχωρισμός control και data flow, capabilities).",
+   "superior": "Πρωτόκολλο adaptive αντιπάλου: optimization (RL, search, gradient όπου εφαρμόζεται, άνθρωπος) ειδικά απέναντι στην άμυνα του GRAIL, με budget επίθεσης δηλωμένο εκ των προτέρων. Αυστηρά ανώτερο στο κριτήριο «ελέγξιμη αντοχή» χωρίς απώλεια, αφού το στατικό σώμα μένει ως regression· trade-off: κόστος red team.",
+   "sota_refs": [
+    "SOTA-VER-20"
+   ],
+   "sources": [
+    {
+     "title": "The Attacker Moves Second",
+     "url": "https://arxiv.org/abs/2510.09023",
+     "year": "2025"
+    },
+    {
+     "title": "CaMeL",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "VT-901",
+    "VT-902",
+    "VT-903",
+    "VT-904",
+    "VT-905"
+   ],
+   "draft_ref": "spine-vocab γρ. 86· 29.md γρ. 3–10 και σύνολα (γρ. 171)· master γρ. 580",
+   "draft_position": "archgen orphan/traceability gate (0 ορφανά, κάλυψη «76 CMP»), contract lint και breaking-change detection, αμεταβλητότητα ADR, επιθεώρηση constitution gate, επιθεώρηση νομικής/κανονιστικής συμμόρφωσης.",
+   "verdict": "holds",
+   "reasoning": "Η πρόθεση ισχύει. Το SysML v2 (formal 9/2025) έχει εγγενώς satisfy, verify και verification def, και υπάρχει headless validation σε CI (Syside, εμπορικά προϊόντα)· το VT-901 μπορεί να είναι ερώτημα πάνω στο model αντί για bespoke εργαλείο· το `tools/archgen` δεν υπάρχει στο repo. Αριθμητική ασυνέπεια: το VT-901 ελέγχει «76 CMP», ενώ ο πίνακας §6.3 έχει 75 γραμμές· η γρ. 580 του master αθροίζει «17 εγκάρσια» ενώ είναι 16 (ADV 3, KNW 5, GOV 1, HUM 2, OPS 4, MDL 1). Το gate ή θα αποτύχει ή θα γίνει vacuous. Για το VT-902 υπάρχουν buf breaking και oasdiff. Η έδρα του V&V matrix (§23) δεν γράφτηκε.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-VER-22",
+    "SOTA-VER-15"
+   ],
+   "sources": [
+    {
+     "title": "SysML-v2-Release",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-Release",
+     "year": "2026"
+    },
+    {
+     "title": "Syside",
+     "url": "https://sensmetry.com/syside/",
+     "year": "2026"
+    },
+    {
+     "title": "buf breaking",
+     "url": "https://buf.build/docs/breaking/",
+     "year": "2026"
+    },
+    {
+     "title": "oasdiff",
+     "url": "https://github.com/oasdiff/oasdiff",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-VER-01",
+   "title": "Υπερβολικός ισχυρισμός: «και τα 24 KT σε προσομοίωση»",
+   "description": "Τα 31.md §31.3 P4, §31.4 και 26.md (έξοδος GP-0) στηρίζονται μόνο στα VT-601, VT-602, VT-603, VT-604. Εμπειρικά ή μη-πρωτοκολλικά KT (KT-14, KT-15, KT-24, KT-17, KT-16) δεν τρέχουν σε DST με stubs. Το REQ-VAL-003 έχει την ίδια υπερβολή.",
+   "why_it_matters": "Η έξοδος του GP-0 γίνεται μη ικανοποιήσιμη ή κενή, και το «σκότωσε πριν χτίσεις» δίνει ψευδή βεβαιότητα.",
+   "sota_answer": "Ταξινόμηση κάθε KT κατά χώρο πρώτης εκτέλεσης: DST (πρωτόκολλα, σφάλματα), formal, eval harness με preregistration και statistical analysis plan, adaptive red team, νομική επιθεώρηση.",
+   "sota_refs": [
+    "SOTA-VER-11",
+    "SOTA-VER-17",
+    "SOTA-VER-20"
+   ],
+   "sources": [
+    {
+     "title": "FoundationDB simulation testing",
+     "url": "https://apple.github.io/foundationdb/testing.html",
+     "year": "2026"
+    },
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-VER-02",
+   "title": "Αναφορές σε artifacts και εργαλεία που δεν υπάρχουν εδώ",
+   "description": "Σε αυτό το repo δεν υπάρχουν: τα *.tla, *.als και Lean αρχεία, το `tools/archgen`, τα `verification/KILL-TESTS.md`, `verification/TRACEABILITY-MATRIX.md`, `verification/VV-MATRIX.md`, το `model/grail-world-os.sysml`, ούτε φάκελος `model/`. Το docs/architecture-draft περιέχει μόνο master, spine και _unmerged-parts· οι φάκελοι formal/, contracts/, adrs/, model/ που αναφέρει το CLAUDE.md δεν υπάρχουν. Το ίδιο το πρόχειρο το δηλώνει: Παράρτημα Ω, Ω5 (machine artifacts) και Ω4 (μεταξύ άλλων §23 V&V matrix, §30 archgen) ΕΚΚΡΕΜΕΙ· ο κανόνας 5 του spine δηλώνει ότι κανένα εργαλείο (TLC, Alloy, Lean, Z3) δεν έτρεξε. Αν υπάρχουν στο STAVROPOULOSLAWCORPUS δεν επαληθεύεται από εδώ.",
+   "why_it_matters": "Κανένα formal test (TLA+, Alloy, Lean, Z3) δεν υπάρχει εδώ ως artifact· κάθε ετυμηγορία «checked» ή «compiled» της εξόδου GP-0 είναι σήμερα αδύνατη.",
+   "sota_answer": "Evidence μόνο από μηχανικό τρέξιμο, με έκδοση εργαλείου και ανεξάρτητο επανέλεγχο (leanchecker, Carcara).",
+   "sota_refs": [
+    "SOTA-VER-06",
+    "SOTA-VER-08"
+   ],
+   "sources": [
+    {
+     "title": "lean4checker (merged as leanchecker)",
+     "url": "https://github.com/leanprover/lean4checker",
+     "year": "2026"
+    },
+    {
+     "title": "Carcara",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-VER-03",
+   "title": "Ασυμφωνία στον αριθμό CMP (76 έναντι 75)",
+   "description": "Το spine δηλώνει «COMPONENTS (76)» και απαριθμεί 75 (KRN 12, COG 11, AEO 6, CCP 7, LAW 12, CIV 6, FRG 5, ADV 3, KNW 5, GOV 1, HUM 2, OPS 4, MDL 1)· ο πίνακας §6.3 έχει 75 γραμμές CMP· η γρ. 580 του master γράφει «76 components (… 17 εγκάρσια)» ενώ τα εγκάρσια είναι 16. Το 29.md αναθέτει στο VT-901 να επαληθεύσει «76 CMP».",
+   "why_it_matters": "Το model gate, το μόνο έγκυρο τεκμήριο «0 ορφανών», ή θα αποτύχει ή θα ελέγχει κάτι που δεν υπάρχει.",
+   "sota_answer": "Καταμέτρηση με ερώτημα πάνω στο SysML v2 model (API ή headless CLI), όχι με δηλωμένο αριθμό.",
+   "sota_refs": [
+    "SOTA-VER-22"
+   ],
+   "sources": [
+    {
+     "title": "Syside",
+     "url": "https://sensmetry.com/syside/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-VER-04",
+   "title": "Η πιστότητα του DST μετριέται αφού έχει ήδη χρησιμοποιηθεί",
+   "description": "Το EXP-12 είναι στο GP-6, ενώ ο DST αποφασίζει για την αρχιτεκτονική από το GP-0 (31.md P4, 24.md κανόνας 2).",
+   "why_it_matters": "Αποφάσεις έξι φάσεων στηρίζονται σε προσομοιωτή που δεν έχει επικυρωθεί.",
+   "sota_answer": "Μέτρηση recall με mutation και Twins-style σενάρια πριν ο προσομοιωτής χρησιμοποιηθεί για αποφάσεις.",
+   "sota_refs": [
+    "SOTA-VER-13",
+    "SOTA-VER-14"
+   ],
+   "sources": [
+    {
+     "title": "Twins",
+     "url": "https://arxiv.org/abs/2004.10617",
+     "year": "2022"
+    },
+    {
+     "title": "Practical Mutation Testing at Scale",
+     "url": "https://arxiv.org/abs/2102.11378",
+     "year": "2021"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-VER-05",
+   "title": "Proof objects χωρίς ανεξάρτητο έλεγχο",
+   "description": "Το §8.7 ορίζει για SMT «model ή unsat core + solver version» και για formal proof «hash proof term + checker version». Ανεξάρτητος επανέλεγχος δεν προβλέπεται.",
+   "why_it_matters": "Το INV-C03 γίνεται εμπιστοσύνη σε έναν solver ή kernel, όχι ελέγξιμη απόδειξη.",
+   "sota_answer": "cvc5 → Alethe με Carcara, ή lean-smt· για Lean: leanchecker και εξωτερικοί checkers (lean4lean, nanoda_lib).",
+   "sota_refs": [
+    "SOTA-VER-08",
+    "SOTA-VER-06"
+   ],
+   "sources": [
+    {
+     "title": "Carcara",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2026"
+    },
+    {
+     "title": "lean4lean",
+     "url": "https://github.com/digama0/lean4lean",
+     "year": "2026"
+    },
+    {
+     "title": "nanoda_lib",
+     "url": "https://github.com/ammkrn/nanoda_lib",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-VER-06",
+   "title": "Καμία επαλήθευση στο επίπεδο κώδικα για τον Rust TCB",
+   "description": "Το πρόχειρο στηρίζεται σε Lean model και differential testing (VT-505). Code-level εργαλεία δεν αναφέρονται: Kani (UB, panics, contracts), Aeneas ή Verus (λειτουργική ορθότητα).",
+   "why_it_matters": "Το DRT δεν είναι απόδειξη· για ledger, merkle και canonicalization (Tier-0) το χάσμα model/κώδικα μένει.",
+   "sota_answer": "Kani σε unsafe κώδικα και panics (κύριο εργαλείο του verify-rust-std)· Aeneas→Lean σε επιλεγμένα safe modules, την προσέγγιση που ανακοίνωσε η Microsoft για το SymCrypt σε Rust (6/2025).",
+   "sota_refs": [
+    "SOTA-VER-07"
+   ],
+   "sources": [
+    {
+     "title": "Kani",
+     "url": "https://github.com/model-checking/kani",
+     "year": "2026"
+    },
+    {
+     "title": "verify-rust-std",
+     "url": "https://github.com/model-checking/verify-rust-std",
+     "year": "2026"
+    },
+    {
+     "title": "Rewriting SymCrypt in Rust",
+     "url": "https://www.microsoft.com/en-us/research/blog/rewriting-symcrypt-in-rust-to-modernize-microsofts-cryptographic-library/",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-VER-07",
+   "title": "Κανένας έλεγχος ότι οι προδιαγραφές δεν είναι κενές ή λάθος",
+   "description": "Δεν υπάρχει μηχανισμός που να δείχνει ότι οι ιδιότητες TLA+, Alloy και Lean δεν ικανοποιούνται τετριμμένα, ούτε ότι οι σημαντικές καταστάσεις όντως επισκέπτονται. Το VT-504 αφορά μόνο tests.",
+   "why_it_matters": "Μια κενή ιδιότητα περνά πάντα. Όταν τη spec τη γράφει LLM, η ορθότητά της είναι χαμηλή (VERINA: 52.3% σε soundness/completeness).",
+   "sota_answer": "Assertions τύπου sometimes/reachable ώστε να αποδεικνύεται ότι το σενάριο εξερευνήθηκε· seeded mutants στις specs· trace validation.",
+   "sota_refs": [
+    "SOTA-VER-12",
+    "SOTA-VER-02",
+    "SOTA-VER-16"
+   ],
+   "sources": [
+    {
+     "title": "Antithesis assertions",
+     "url": "https://antithesis.com/docs/properties_assertions/assertions/",
+     "year": "2026"
+    },
+    {
+     "title": "VERINA",
+     "url": "https://arxiv.org/abs/2505.23135",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-VER-08",
+   "title": "Κανένας συνεχής έλεγχος συμμόρφωσης κατά τη λειτουργία",
+   "description": "Το VT-109 είναι offline έλεγχος traces. Δεν προβλέπεται συνεχής έλεγχος production logs έναντι των specs μέσω OPS-04.",
+   "why_it_matters": "Η απόκλιση υλοποίησης/spec εμφανίζεται στην παραγωγή μετά την αποδοχή.",
+   "sota_answer": "PObserve: δομημένα service logs ελέγχονται έναντι P specifications· το trace validation μπαίνει σε CI, όπως στο CCF.",
+   "sota_refs": [
+    "SOTA-VER-03",
+    "SOTA-VER-02"
+   ],
+   "sources": [
+    {
+     "title": "P framework",
+     "url": "https://p-org.github.io/P/",
+     "year": "2026"
+    },
+    {
+     "title": "Smart Casual Verification of CCF",
+     "url": "https://arxiv.org/abs/2406.17455",
+     "year": "2024"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-VER-09",
+   "title": "Μη-ντετερμινισμός του LLM μέσα στο DST και στο replay",
+   "description": "Το INV-C08 καταγράφει τις εξόδους μοντέλων ως γεγονότα, αλλά το ICD-26 δεν ορίζει πώς αντιμετωπίζονται τα γνωσιακά όργανα στην προσομοίωση: replay από Inference Receipts, stubs ή ντετερμινιστικό inference.",
+   "why_it_matters": "Χωρίς αυτό τα VT-602 και VT-604 με πραγματικά γνωσιακά όργανα δεν αναπαράγονται· σε hermetic υπόστρωμα (Antithesis) εξωτερικό inference δεν είναι καν διαθέσιμο.",
+   "sota_answer": "Record/replay από receipts· batch-invariant kernels για ντετερμινιστικό inference (1.6× έως 2.1× επιβράδυνση).",
+   "sota_refs": [
+    "SOTA-VER-24",
+    "SOTA-VER-12"
+   ],
+   "sources": [
+    {
+     "title": "Defeating Nondeterminism in LLM Inference",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    },
+    {
+     "title": "Antithesis getting started",
+     "url": "https://antithesis.com/docs/getting_started/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-VER-10",
+   "title": "Overfitting από την επαναχρησιμοποίηση σφραγισμένων συνόλων",
+   "description": "Το KT-15 επαναλαμβάνεται σε κάθε φάση ως ratchet πάνω σε σφραγισμένο σύνολο, χωρίς πολιτική για το πόσες φορές μπορεί να χρησιμοποιηθεί.",
+   "why_it_matters": "Η μετρούμενη ανωτερότητα φουσκώνει σταδιακά, αντίθετα με το Prediction Doctrine και την τίμια άγνοια.",
+   "sota_answer": "Reusable holdout με budget ερωτημάτων, και νέα σύνολα ανά περίοδο.",
+   "sota_refs": [
+    "SOTA-VER-18"
+   ],
+   "sources": [
+    {
+     "title": "Generalization in Adaptive Data Analysis and Holdout Reuse",
+     "url": "https://arxiv.org/abs/1506.02629",
+     "year": "2015"
+    },
+    {
+     "title": "LiveBench",
+     "url": "https://arxiv.org/abs/2406.19314",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-VER-11",
+   "title": "Κανένα σχέδιο στατιστικής ανάλυσης για τα KT",
+   "description": "Ο κανόνας 1 του 24.md ζητά προκαταχώριση κατωφλίων, αλλά δεν ορίζει ελάχιστο ενδιαφέρον μέγεθος επίδρασης, power, paired ή clustered ανάλυση, ούτε διόρθωση πολλαπλών συγκρίσεων.",
+   "why_it_matters": "Τα KT-14, KT-15 και KT-24 μπορούν να περάσουν ή να αποτύχουν από θόρυβο.",
+   "sota_answer": "Statistical analysis plan κατά Miller (2024)· σύγκριση με κοινή αποτίμηση κόστους κατά Kapoor et al. (2024).",
+   "sota_refs": [
+    "SOTA-VER-18"
+   ],
+   "sources": [
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    },
+    {
+     "title": "AI Agents That Matter",
+     "url": "https://arxiv.org/abs/2407.01502",
+     "year": "2024"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-VER-12",
+   "title": "Χωρίς ρόλο για AI στη σύνταξη αποδείξεων και προδιαγραφών",
+   "description": "Το πρόχειρο δεν προβλέπει LLM που προτείνουν proofs, invariants και specs με μηχανικό checker ως κριτή, κάτι που ταιριάζει στο ADR-0005.",
+   "why_it_matters": "Το κόστος των Lean αποδείξεων (VT-301, VT-302, VT-303, VT-304, VT-305, VT-306, VT-307) και των TLAPS αποδείξεων (VT-107, VT-108) είναι ο κύριος κίνδυνος για το χρονοδιάγραμμα του GP-0.",
+   "sota_answer": "AutoVerus (>90% σε 150 εργασίες)· vericoding (Dafny 82%, Verus 44%, Lean 27%)· Specula (research prototype: TLA+ από κώδικα με trace validation). Η spec μένει ευθύνη ανθρώπου.",
+   "sota_refs": [
+    "SOTA-VER-16",
+    "SOTA-VER-02"
+   ],
+   "sources": [
+    {
+     "title": "AutoVerus",
+     "url": "https://arxiv.org/abs/2409.13082",
+     "year": "2025"
+    },
+    {
+     "title": "A benchmark for vericoding",
+     "url": "https://arxiv.org/abs/2509.22908",
+     "year": "2025"
+    },
+    {
+     "title": "GenAI-accelerated TLA+ Challenge",
+     "url": "https://foundation.tlapl.us/challenge/index.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-VER-13",
+   "title": "Εργαλεία για τα όργανα σε BEAM και Common Lisp",
+   "description": "Το ADR-0013 επιλέγει supervision σε BEAM και το ADR-0012 όργανα σε Common Lisp, αλλά κανένα VT δεν ονομάζει εργαλεία συστηματικού testing γι' αυτά.",
+   "why_it_matters": "Τα VT-501 έως VT-506 και οι καμπάνιες DST καλύπτουν στην πράξη μόνο τα όργανα σε Rust.",
+   "sota_answer": "Concuerror (stateless model checking για Erlang, με ανεπιβεβαίωτη συμβατότητα με τρέχον OTP) και PropEr stateful· σε επίπεδο συστήματος Antithesis, Shadow (χωρίς ντετερμινιστικό thread scheduling by default) ή Hermit (maintenance mode). Για Common Lisp δεν βρέθηκε αντίστοιχο εργαλείο.",
+   "sota_refs": [
+    "SOTA-VER-14",
+    "SOTA-VER-12"
+   ],
+   "sources": [
+    {
+     "title": "Concuerror",
+     "url": "https://github.com/parapluu/Concuerror",
+     "year": "2023"
+    },
+    {
+     "title": "PropEr",
+     "url": "https://github.com/proper-testing/proper",
+     "year": "2026"
+    },
+    {
+     "title": "Shadow limitations",
+     "url": "https://shadow.github.io/docs/guide/limitations.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  }
+ ],
+ "unknowns": [
+  "Δεν ξέρω αν το Antithesis προσφέρει on-prem ή sovereign εγκατάσταση, το κόστος του, το throughput του ή αν τα seeds αναπαράγονται εκτός της πλατφόρμας του· η τεκμηρίωση δεν το λέει.",
+  "Το πλήρες κείμενο του CACM 2025 «Systems Correctness Practices at AWS» (HTTP 403) δεν διαβάστηκε· ο ισχυρισμός για τις υπηρεσίες AWS στηρίζεται στη σελίδα case studies του P.",
+  "Δεν τεκμηριώθηκε ποιες θεωρίες καλύπτουν οι αποδείξεις του cvc5 και ο έλεγχος του Carcara (strings, datatypes, NIA), ούτε ποιοι solvers πέραν του cvc5 παράγουν Alethe που δέχεται το Carcara· άρα αν καλύπτονται τα VT-401, VT-402, VT-403.",
+  "Δεν βρέθηκε trace-validation instrumentation για Common Lisp ή Elixir, ούτε εργαλείο συστηματικού concurrency testing για Common Lisp.",
+  "Δεν βρέθηκε επικυρωμένο μέτρο χαρακτηρολογικής συνέχειας για το VT-703.",
+  "Δεν βρέθηκε ποσοτικό recall του DST σε seeded σφάλματα πρωτοκόλλων πέρα από το Twins· εργαλεία Byzantine fuzzing (π.χ. ByzzFuzz) δεν ελέγχθηκαν.",
+  "Το εύρημα Knight & Leveson 1986 επαληθεύτηκε μόνο από δευτερογενή πηγή.",
+  "Δεν τεκμηριώθηκε αν τα canary strings είναι αποτελεσματικά κατά του contamination.",
+  "Το README του SysON δεν τεκμηριώνει υποστήριξη verification cases (VerdictKind), satisfy/verify ή headless validation σε CI.",
+  "Δεν επαληθεύονται από εδώ οι υπάρχουσες έδρες του άλλου repo που επικαλείται το πρόχειρο (deployment/verify vectors, --capability-gate, Ω+7, [0093]).",
+  "Δεν ορίζεται πουθενά στο πρόχειρο τι είναι το «KRN-12 deterministic mode» (αναφέρεται μόνο στο 19.md, INV-C08).",
+  "Δεν ελέγχθηκε αν το Shadow λειτουργεί με τα runtimes SBCL και BEAM.",
+  "Το venue (SEFM) του paper για trace validation, η σύνταξη του FizzBee και το έτος κυκλοφορίας της TLC 1.7.4 δεν επαληθεύτηκαν από τις σελίδες που άνοιξαν.",
+  "Ο προϋπολογισμός WebSearch της συνεδρίας εξαντλήθηκε· οι έλεγχοι «holds» έγιναν με στοχευμένα WebFetch, και νεότερα εργαλεία 2025–2026 μπορεί να λείπουν."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-VER-01",
+   "question": "Σε ποιο υπόστρωμα τρέχει ο Deterministic World Simulator, και πώς γίνονται ντετερμινιστικά τα μη-Rust όργανα;",
+   "recommendation": "Υβριδικό πίσω από το ICD-26: (1) in-process Rust DST (τύπου madsim ή turmoil, Shuttle για ταυτοχρονισμό) για τα όργανα Rust και για προσομοίωση σε επίπεδο μηνυμάτων στο όριο ICD-10, με ρητό συμβόλαιο ντετερμινισμού για κάθε μη-Rust όργανο (INV-C08) που ελέγχεται με replay· (2) Shadow για πολύγλωσσα σενάρια δικτύου, με γνωστό όριο στο thread scheduling· (3) πείραμα αξιολόγησης του Antithesis μόνο με συνθετικά δεδομένα. Το EXP-12 προηγείται κάθε χρήσης για αποφάσεις.",
+   "alternatives": [
+    {
+     "option": "Μόνο in-process Rust DST (όπως το πρόχειρο)",
+     "pros": "Ανοιχτό, γρήγορο, αποδεδειγμένο (FoundationDB, VOPR).",
+     "cons": "Δεν κάνει ντετερμινιστικά τα SBCL, BEAM, Python· όλο το I/O πρέπει να γίνει mock."
+    },
+    {
+     "option": "Antithesis για όλο το σύστημα",
+     "pros": "Ντετερμινισμός για containers σε κάθε γλώσσα χωρίς αλλαγές κώδικα· guided exploration· sometimes assertions.",
+     "cons": "Managed και hermetic, χωρίς δηλωμένο on-prem· κίνδυνος για εμπιστευτικό υλικό· vendor· άγνωστα κόστος, throughput και τοπικό replay."
+    },
+    {
+     "option": "Shadow και in-process, χωρίς managed υπηρεσία",
+     "pros": "Εξ ολοκλήρου ανοιχτό· real binaries.",
+     "cons": "Δίκτυο και χρόνος μόνο· thread scheduling όχι ντετερμινιστικό by default· όχι static binaries."
+    },
+    {
+     "option": "Hermit",
+     "pros": "Ελέγχει thread scheduling, χρόνο και τυχαιότητα σε unmodified binaries.",
+     "cons": "Maintenance mode· 3–6× overhead· ελλιπής συμβατότητα syscalls."
+    }
+   ],
+   "rationale": "Κανένα εργαλείο δεν καλύπτει μόνο του πολυγλωσσία, κυριαρχία στα δεδομένα και αποδεδειγμένη αποτελεσματικότητα. Το υβριδικό πίσω από συμβόλαιο κρατά ανοιχτή την επιλογή (T8).",
+   "affects_ids": [
+    "CMP-OPS-02",
+    "ICD-26",
+    "REQ-VAL-003",
+    "EXP-12",
+    "EXP-20",
+    "INV-C08",
+    "VT-601",
+    "VT-602",
+    "VT-603",
+    "VT-604",
+    "ADR-0028"
+   ]
+  },
+  {
+   "id": "DEC-VER-02",
+   "question": "Ποια είναι η μία έδρα προδιαγραφής πρωτοκόλλων;",
+   "recommendation": "TLA+ ως μοναδική έδρα (TLC, Apalache, TLAPS, trace validation)· MBT από traces που παράγουν TLC ή Apalache· καμία δεύτερη γλώσσα. Επανεξέταση του Veil όταν βγει σταθερή έκδοση με liveness.",
+   "alternatives": [
+    {
+     "option": "TLA+ (όπως το πρόχειρο)",
+     "pros": "Model checking (TLC, Apalache), αποδείξεις (TLAPS) και trace validation σε CI (CCF), όλα στο TLA+ Foundation.",
+     "cons": "Χωρίς εγγενές runtime monitoring από logs· χωρίς έτοιμο MBT για Rust."
+    },
+    {
+     "option": "P (PChecker, PObserve, PVerifier)",
+     "pros": "Κλίμακα AWS· runtime conformance από production logs· αποδείξεις με PVerifier.",
+     "cons": "Δεύτερη έδρα αν συνυπάρξει με TLA+· η ωριμότητα του PVerifier έναντι TLAPS δεν ελέγχθηκε."
+    },
+    {
+     "option": "Quint",
+     "pros": "Φιλική σύνταξη πάνω στη λογική TLA, backend Apalache, Quint Connect για MBT σε Rust.",
+     "cons": "Υποστήριξη TLAPS δεν τεκμηριώθηκε· «μία έδρα» μόνο αν αντικαταστήσει πλήρως το TLA+."
+    },
+    {
+     "option": "Veil (Lean 4)",
+     "pros": "Θα ένωνε πρωτόκολλα και Lean reference semantics (P2) σε μία έδρα· model checking και interactive proofs.",
+     "cons": "Pre-release· liveness «στο μέλλον»· χωρίς τεκμηριωμένη βιομηχανική χρήση."
+    }
+   ],
+   "rationale": "Ο νόμος «μία έδρα ανά έννοια» αποκλείει τη συνύπαρξη γλωσσών. Σήμερα μόνο το TLA+ κρατά μαζί, με τεκμηριωμένη ωριμότητα, model checking, αποδείξεις και trace validation.",
+   "affects_ids": [
+    "VT-101",
+    "VT-102",
+    "VT-103",
+    "VT-104",
+    "VT-105",
+    "VT-106",
+    "VT-107",
+    "VT-108",
+    "VT-109",
+    "VT-502",
+    "ADR-0028",
+    "CMP-OPS-02"
+   ]
+  },
+  {
+   "id": "DEC-VER-03",
+   "question": "Χρειάζεται επαλήθευση στο επίπεδο κώδικα για τον Rust TCB, πέρα από model και DRT;",
+   "recommendation": "Σήμερα: Lean model με DRT (τρόπος Cedar) και Kani σε όλο το unsafe και σε ιδιότητες panic του Rust TCB. Πείραμα: Aeneas→Lean σε ένα Tier-0 module (canonicalization ή merkle) πριν αποφασιστεί γενίκευση.",
+   "alternatives": [
+    {
+     "option": "Μόνο model και DRT (όπως το πρόχειρο)",
+     "pros": "Αποδεδειγμένο στο Cedar, χαμηλό κόστος.",
+     "cons": "Το DRT δεν αποδεικνύει· το χάσμα model/κώδικα μένει για το Tier-0."
+    },
+    {
+     "option": "Επιπλέον Kani",
+     "pros": "Αυτοματοποιημένο· κύριο εργαλείο του verify-rust-std.",
+     "cons": "Bounded· δεν δίνει πλήρη λειτουργική ορθότητα."
+    },
+    {
+     "option": "Επιπλέον Aeneas ή Verus για λειτουργικές αποδείξεις",
+     "pros": "Απόδειξη πάνω στον ίδιο τον κώδικα.",
+     "cons": "Το Aeneas καλύπτει μόνο safe Rust χωρίς concurrency· το Verus δηλώνει «active development»· μεγάλο ανθρώπινο κόστος."
+    }
+   ],
+   "rationale": "Η κλάση σφάλματος «αποδείξαμε το model, όχι το σύστημα» (31.md §31.2) πρέπει να εξαλείφεται εκεί που το κόστος το δικαιολογεί, δηλαδή στον Tier-0 TCB.",
+   "affects_ids": [
+    "VT-301",
+    "VT-302",
+    "VT-303",
+    "VT-304",
+    "VT-305",
+    "VT-306",
+    "VT-307",
+    "VT-505",
+    "KT-02",
+    "ADR-0012",
+    "ADR-0028"
+   ]
+  },
+  {
+   "id": "DEC-VER-04",
+   "question": "Τι απαιτείται για να γίνει δεκτό ένα proof object (§8.7, ICD-30);",
+   "recommendation": "Για ισχυρισμούς που φτάνουν σε COMMITTED και για Tier-0 invariants: πιστοποιητικό από ανεξάρτητο checker (cvc5 → Alethe → Carcara, ή lean-smt με μηδέν ανοιχτά holes· για Lean, leanchecker και περιοδικά εξωτερικός checker όπως lean4lean ή nanoda_lib). Ο Z3 μένει για sat/models και ταχύτητα.",
+   "alternatives": [
+    {
+     "option": "Verdict του solver με την έκδοσή του (όπως το πρόχειρο)",
+     "pros": "Απλό, γρήγορο.",
+     "cons": "Εμπιστοσύνη σε ολόκληρο τον solver· αντιβαίνει στο INV-C03."
+    },
+    {
+     "option": "Πάντα πιστοποιητικό",
+     "pros": "Μέγιστη εμπιστοσύνη.",
+     "cons": "Κάλυψη θεωριών μη τεκμηριωμένη· lean-smt σε beta· κόστος χρόνου και μεγέθους."
+    }
+   ],
+   "rationale": "Κλιμακώνει την εμπιστοσύνη ανάλογα με το επίπεδο στο trust lattice, χωρίς κόστος για ισχυρισμούς κάτω από COMMITTED.",
+   "affects_ids": [
+    "VT-401",
+    "VT-402",
+    "VT-403",
+    "VT-404",
+    "VT-301",
+    "VT-302",
+    "VT-303",
+    "VT-304",
+    "VT-305",
+    "VT-306",
+    "VT-307",
+    "ICD-30",
+    "INV-C03"
+   ]
+  },
+  {
+   "id": "DEC-VER-05",
+   "question": "Πώς αναδιατυπώνεται το REQ-VAL-003 («κάθε KT πρώτα σε DST»);",
+   "recommendation": "Ταξινόμηση των 24 KT κατά χώρο πρώτης εκτέλεσης: DST για πρωτόκολλα και σφάλματα (π.χ. KT-04, KT-05, KT-08, KT-09, KT-13, KT-21, KT-22)· formal για δομικές ιδιότητες· eval harness με statistical analysis plan για KT-14, KT-15, KT-24· adaptive red team για KT-17 και KT-19· νομική επιθεώρηση για KT-16. Διόρθωση των 31.md §31.4 και 26.md (έξοδος GP-0).",
+   "alternatives": [
+    {
+     "option": "Διατήρηση της διατύπωσης",
+     "pros": "Ενιαίος κανόνας.",
+     "cons": "Μη ικανοποιήσιμος ή κενός για τα εμπειρικά KT."
+    },
+    {
+     "option": "Ταξινόμηση ανά χώρο εκτέλεσης",
+     "pros": "Κάθε KT έχει τον κατάλληλο κριτή.",
+     "cons": "Περισσότερη πολυπλοκότητα στο μητρώο."
+    }
+   ],
+   "rationale": "Κάθε κριτήριο θανάτου πρέπει να ελέγχεται εκεί όπου μπορεί πραγματικά να αποτύχει.",
+   "affects_ids": [
+    "REQ-VAL-003",
+    "KT-14",
+    "KT-15",
+    "KT-16",
+    "KT-17",
+    "KT-24",
+    "VT-601",
+    "VT-602",
+    "VT-603",
+    "VT-604",
+    "CMP-OPS-02",
+    "CMP-OPS-03"
+   ]
+  },
+  {
+   "id": "DEC-VER-06",
+   "question": "Πολιτική για την επαναχρησιμοποίηση των σφραγισμένων συνόλων αξιολόγησης",
+   "recommendation": "Παγωμένο κρυφό σύνολο με budget πρόσβασης μέσω reusable holdout, συν νέα σύνολα ανά φάση από εξωτερικούς με διτεμπορικό cutoff· ισχύει για το ratchet του KT-15 και για το KT-14.",
+   "alternatives": [
+    {
+     "option": "Ένα παγωμένο σύνολο για πάντα (όπως το πρόχειρο)",
+     "pros": "Σταθερό μέτρο, απλό.",
+     "cons": "Overfitting στο holdout με κάθε χρήση."
+    },
+    {
+     "option": "Νέο σύνολο σε κάθε φάση",
+     "pros": "Χωρίς διαρροή.",
+     "cons": "Χάνεται η συγκρισιμότητα μεταξύ φάσεων· κόστος σύνταξης."
+    },
+    {
+     "option": "Υβριδικό με holdout budget",
+     "pros": "Διατηρεί συγκρισιμότητα και ελέγχει τη διαρροή.",
+     "cons": "Πιο σύνθετη στατιστική."
+    }
+   ],
+   "rationale": "Συμβιβάζει τα «παγωμένα» του REQ-VAL-001 με τα «περιστρεφόμενα» του CMP-OPS-03.",
+   "affects_ids": [
+    "REQ-VAL-001",
+    "ICD-27",
+    "CMP-OPS-03",
+    "KT-14",
+    "KT-15"
+   ]
+  },
+  {
+   "id": "DEC-VER-07",
+   "question": "Χτίζεται το evaluation harness από το μηδέν ή υιοθετείται υπάρχον υπόστρωμα;",
+   "recommendation": "Inspect (MIT, UK AI Security Institute) ως υπόστρωμα πίσω από adapter του ICD-27· blind panel, Battery και ablation ως δικές μας επεκτάσεις.",
+   "alternatives": [
+    {
+     "option": "Bespoke σε Python",
+     "pros": "Πλήρης έλεγχος.",
+     "cons": "Επανεφεύρεση sandboxing, logging, agents."
+    },
+    {
+     "option": "Inspect",
+     "pros": "Ώριμο, ανοιχτό, sandboxing, βάση του Hawk του METR.",
+     "cons": "Εξάρτηση από εξωτερικό έργο, που περιορίζεται με adapter."
+    },
+    {
+     "option": "lm-evaluation-harness",
+     "pros": "Πολλά ακαδημαϊκά benchmarks.",
+     "cons": "Προσανατολισμένο σε benchmarks, όχι σε agents και νομικές εργασίες."
+    }
+   ],
+   "rationale": "Ό,τι είναι ώριμο δεν ξαναχτίζεται· ο adapter κρατά ανοιχτή την αντικατάσταση.",
+   "affects_ids": [
+    "CMP-OPS-03",
+    "ICD-27"
+   ]
+  },
+  {
+   "id": "DEC-VER-08",
+   "question": "Μπαίνει στρώμα assurance case πάνω από την ιχνηλασιμότητα;",
+   "recommendation": "Ναι, ως πείραμα στο GP-0: claims, arguments, evidence και defeaters κατά SACM 2.3 ή GSN v3 και Assurance 2.0, ως SysML v2 metadata συνδεδεμένα με satisfy και verify.",
+   "alternatives": [
+    {
+     "option": "Μόνο ιχνηλασιμότητα (όπως το πρόχειρο)",
+     "pros": "Απλό· εγγενές στο SysML v2.",
+     "cons": "Δεν γράφει γιατί το evidence στηρίζει τον ισχυρισμό ούτε τους αντιλόγους."
+    },
+    {
+     "option": "Assurance case",
+     "pros": "Ελέγξιμο επιχείρημα· ταιριάζει με Court και διατήρηση μειοψηφίας.",
+     "cons": "Επιπλέον κόπος· η ενσωμάτωση SACM σε SysML v2 δεν τεκμηριώθηκε."
+    }
+   ],
+   "rationale": "Κάνει το REQ-VAL-002 πλήρες επιστημικό επιχείρημα αντί για απλό γράφο συνδέσμων.",
+   "affects_ids": [
+    "REQ-VAL-002",
+    "VT-901",
+    "CMP-OPS-03",
+    "CMP-MDL-01",
+    "ICD-32"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 98,
+  "sources_failed": [
+   {
+    "url": "https://dl.acm.org/doi/10.1145/3729175",
+    "problem": "HTTP 403· το περιεχόμενο δεν διαβάστηκε",
+    "action": "Αφαιρέθηκε από το SOTA-VER-03· ο ισχυρισμός στηρίζεται στη σελίδα P case studies που παραπέμπει στο άρθρο CACM 2025"
+   },
+   {
+    "url": "https://arxiv.org/abs/2404.16075",
+    "problem": "Το venue SEFM δεν αναγράφεται στη σελίδα· η επαλήθευση μέσω dblp απέτυχε (access denied)",
+    "action": "Αφαιρέθηκε το «(SEFM)» από τον τίτλο"
+   },
+   {
+    "url": "https://github.com/tlaplus/tlaplus/releases",
+    "problem": "Ο ερευνητής έγραψε «TLC 1.8.0 (2024)»· η 1.8.0 είναι pre-release, σταθερή η 1.7.4",
+    "action": "Διορθώθηκε το SOTA-VER-01"
+   },
+   {
+    "url": "https://github.com/apalache-mc/apalache",
+    "problem": "Το README λέει ότι οι inductive invariants ελέγχονται για σταθερές ή φραγμένες παραμέτρους· αντιβαίνει στο «για κάθε n με IndInit/IndNext»",
+    "action": "Διορθώθηκαν τα SOTA-VER-10 και VT-101…VT-109 (για κάθε n: TLAPS ή Ivy)"
+   },
+   {
+    "url": "https://foundation.tlapl.us/challenge/index.html",
+    "problem": "Η ίδια πηγή δείχνει trace validation σε Rust (Asterinas) και Go (etcd)· αντιβαίνει στο «για Rust δεν βρέθηκε»",
+    "action": "Διορθώθηκαν τα SOTA-VER-02 και VT-109"
+   },
+   {
+    "url": "https://github.com/fizzbee-io/fizzbee",
+    "problem": "Η Python-like σύνταξη δεν αναγράφεται (και το fizzbee.io επέστρεψε κομμένο περιεχόμενο)· το MBT είναι μέσω Go adapters",
+    "action": "Αφαιρέθηκε ο ισχυρισμός σύνταξης"
+   },
+   {
+    "url": "https://arxiv.org/abs/2403.04651",
+    "problem": "Το venue OOPSLA δεν αναγράφεται στη σελίδα",
+    "action": "Αφαιρέθηκε το «(OOPSLA)» από τον τίτλο"
+   },
+   {
+    "url": "https://github.com/digama0/lean4lean",
+    "problem": "Είναι παράγωγο του C++ kernel, όχι πλήρως ανεξάρτητη υλοποίηση",
+    "action": "Προστέθηκε επιφύλαξη και ο εναλλακτικός checker nanoda_lib"
+   },
+   {
+    "url": "https://www.microsoft.com/en-us/research/blog/rewriting-symcrypt-in-rust-to-modernize-microsofts-cryptographic-library/",
+    "problem": "Περιγράφει σχέδιο και σύνδεση με Lean μέσω Aeneas, χωρίς ολοκληρωμένες επαληθεύσεις αλγορίθμων",
+    "action": "Διατυπώθηκε ως ανακοίνωση (6/2025)· προκαταρκτικό ML-KEM"
+   },
+   {
+    "url": "https://github.com/model-checking/kani",
+    "problem": "Δεν αναφέρει την πρόκληση επαλήθευσης της Rust std ούτε χρήση στο Firecracker",
+    "action": "Προστέθηκε ως πηγή το verify-rust-std· αφαιρέθηκε το Firecracker"
+   },
+   {
+    "url": "https://github.com/ufmg-smite/carcara",
+    "problem": "Δεν ονομάζει veriT ή cvc5 (και τα docs επίσης)",
+    "action": "Αφαιρέθηκε το veriT· η αλυσίδα cvc5 → Alethe στηρίζεται στα docs του cvc5"
+   },
+   {
+    "url": "https://github.com/tokio-rs/turmoil",
+    "problem": "Δεν αντικαθιστά το tokio runtime· προσομοιώνει δίκτυο και filesystem σε ένα thread",
+    "action": "Διορθώθηκε το SOTA-VER-11"
+   },
+   {
+    "url": "https://antithesis.com/docs/getting_started/",
+    "problem": "Το «SaaS» δεν αναγράφεται· η σελίδα τεκμηριώνει hermetic περιβάλλον χωρίς internet",
+    "action": "Αναδιατυπώθηκε ως managed/hermetic· προστέθηκε η συνέπεια για τα γνωσιακά όργανα"
+   },
+   {
+    "url": "https://github.com/parapluu/Concuerror",
+    "problem": "Έτος 2026 ανακριβές· CI μέχρι Erlang 23.3, copyright ως 2023",
+    "action": "Έτος 2023 και επιφύλαξη συμβατότητας με τρέχον OTP"
+   },
+   {
+    "url": "https://arxiv.org/abs/2505.23135",
+    "problem": "Έτος 2025, όχι 2026",
+    "action": "Διορθώθηκε"
+   },
+   {
+    "url": "https://arxiv.org/abs/2510.09023",
+    "problem": "Επιτυχία >90% για τις περισσότερες από τις 12 άμυνες, όχι για όλες",
+    "action": "Διορθώθηκαν τα SOTA-VER-20 και VT-801…VT-805"
+   },
+   {
+    "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+    "problem": "Επιβράδυνση 1.6× (βελτιστοποιημένη) έως 2.1×, όχι «περίπου 2×»",
+    "action": "Διορθώθηκαν τα SOTA-VER-24 και GAP-VER-09"
+   },
+   {
+    "url": "https://arxiv.org/abs/2004.10474",
+    "problem": "Έτος 2020, όχι 2021",
+    "action": "Διορθώθηκε"
+   },
+   {
+    "url": "https://arxiv.org/abs/2002.09815",
+    "problem": "Η σύγκριση είναι με προσεγγίσεις activation patterns, όχι με leave-one-out ή ανεξάρτητες μεθόδους",
+    "action": "Διορθώθηκε η απόδοση στο KT-24"
+   },
+   {
+    "url": "https://arxiv.org/abs/1506.02629",
+    "problem": "Η ονομασία Thresholdout δεν εμφανίζεται στο abstract",
+    "action": "Αφαιρέθηκε η ονομασία"
+   },
+   {
+    "url": "https://www.omg.org/spec/SysML/",
+    "problem": "Η σελίδα δείχνει μόνο τη SysML 2.0 ως formal 9/2025· KerML και API δεν αναφέρονται",
+    "action": "Διατυπώθηκε με βάση το README του SysML-v2-Release (υιοθέτηση 30/6/2025)"
+   },
+   {
+    "url": "https://arxiv.org/abs/2402.10978",
+    "problem": "Το abstract δεν αναφέρει exchangeability",
+    "action": "Επαληθεύτηκε από το πλήρες κείμενο (Theorem 4.1)· προστέθηκε η HTML πηγή"
+   },
+   {
+    "url": "https://arxiv.org/abs/2510.04374",
+    "problem": "Το abstract δεν περιγράφει βαθμολόγηση ή τύφλωση",
+    "action": "Επαληθεύτηκε από το πλήρες κείμενο (blind pairwise από ειδικούς, ατελής τύφλωση)"
+   },
+   {
+    "url": "https://sensmetry.com/syside/",
+    "problem": "Το headless CLI και το CI validation ανήκουν σε εμπορικά προϊόντα",
+    "action": "Προστέθηκε η επισήμανση"
+   }
+  ],
+  "corrections": [
+   {
+    "target": "CMP-OPS-02",
+    "change": "superior-exists → gap· confidence high· αφαιρέθηκε ο ισχυρισμός «πριν από κώδικα: TLA+ αντί Rust stubs»",
+    "reason": "Καμία λύση ντετερμινισμού ολόκληρου συστήματος δεν κυριαρχεί αυστηρά (Antithesis managed/hermetic χωρίς on-prem, Shadow χωρίς ντετερμινιστικό thread scheduling, Hermit σε maintenance mode)· το κενό είναι ότι το πρόχειρο δεν ορίζει τον ντετερμινισμό των μη-Rust οργάνων"
+   },
+   {
+    "target": "KT-24",
+    "change": "superior-exists → gap· confidence low → medium",
+    "reason": "Το κενό των αλληλεπιδράσεων είναι λογικό επιχείρημα· η λύση Shapley τεκμηριώνεται μόνο αναλογικά και η πηγή δεν συγκρίνει με leave-one-out"
+   },
+   {
+    "target": "KT-14",
+    "change": "classification experiment → today· draft_position «σκοτώνεται ή επανασχεδιάζεται», GP-4",
+    "reason": "Το statistical analysis plan είναι ώριμη μεθοδολογία· ακριβέστερη απόδοση του 24.md"
+   },
+   {
+    "target": "draft_points (ψευδο-IDs VT-0nn, VT-1xx … VT-9xx)",
+    "change": "Ανάπτυξη σε μεμονωμένα IDs (VT-001 … VT-032 ένα-ένα, VT-101 κ.λπ.)· το ίδιο στα affects_ids των decisions",
+    "reason": "Κανόνας 7: IDs ένα-ένα, ποτέ εύρος ή επινοημένο ID"
+   },
+   {
+    "target": "summary",
+    "change": "Τρία σημεία superior-exists (όχι έξι)· καταγραφή υποβιβασμών και διορθώσεων",
+    "reason": "Το αρχικό summary μετρούσε ως superior και το holdout reuse (REQ-VAL-001, holds)"
+   },
+   {
+    "target": "SOTA-VER-01, SOTA-VER-02, SOTA-VER-10, VT-101…VT-109",
+    "change": "TLC 1.8.0 pre-release· Apalache για σταθερές ή φραγμένες παραμέτρους· trace validation σε Go και Rust· CAV 2026 επαληθεύτηκε",
+    "reason": "Επαλήθευση πηγών"
+   },
+   {
+    "target": "SOTA-VER-06, VT-301…VT-307, GAP-VER-05, DEC-VER-04",
+    "change": "Προστέθηκαν nanoda_lib και `lake check`· επιφύλαξη για lean4lean",
+    "reason": "Roadmap Lean FRO και README lean4lean"
+   },
+   {
+    "target": "SOTA-VER-08, VT-401…VT-404",
+    "change": "Αφαιρέθηκε το veriT· προστέθηκαν holes του lean-smt και πιθανή μη-απόφαση του cvc5 ως trade-off",
+    "reason": "README του lean-smt και του Carcara"
+   },
+   {
+    "target": "SOTA-VER-12, ICD-26, GAP-VER-09, GAP-VER-13, DEC-VER-01",
+    "change": "Antithesis hermetic/managed· Shadow limitations· Hermit ελέγχει scheduling· νέα εναλλακτική Hermit και συμβόλαιο ντετερμινισμού οργάνων",
+    "reason": "Τεκμηρίωση Antithesis, Shadow, Hermit"
+   },
+   {
+    "target": "SOTA-VER-21, REQ-VAL-004",
+    "change": "Προστέθηκε adaptive conformal inference· exchangeability τεκμηριωμένη από πλήρες κείμενο",
+    "reason": "Η χρονική ένσταση απαντάται μερικώς από το ACI"
+   },
+   {
+    "target": "SOTA-VER-19, VT-701…VT-707",
+    "change": "GDPval: blind pairwise από ειδικούς με ατελή τύφλωση· αφαιρέθηκε το σχετικό unknown",
+    "reason": "Πλήρες κείμενο GDPval"
+   },
+   {
+    "target": "VT-901…VT-905, GAP-VER-03",
+    "change": "Προστέθηκε η γρ. 580 του master («17 εγκάρσια» αντί 16) και ότι το §23 δεν γράφτηκε",
+    "reason": "Ανάγνωση master"
+   },
+   {
+    "target": "GAP-VER-02",
+    "change": "Περιορισμός στο παρόν repo· παραπομπή σε Παράρτημα Ω (Ω4, Ω5 ΕΚΚΡΕΜΕΙ)· μη επαληθεύσιμο για το άλλο repo",
+    "reason": "Το spine ορίζει package root στο STAVROPOULOSLAWCORPUS, που δεν ανοίγεται"
+   },
+   {
+    "target": "ICD-26",
+    "change": "Η σύζευξη ghost worlds και test harness διατυπώνεται ως σχεδιαστικό ερώτημα, όχι ως παραβίαση «μίας έδρας»",
+    "reason": "Δεν τεκμηριώνεται ως σφάλμα· το COG-07 έχει ρητό μέτρο (χωρίς commit capability)"
+   },
+   {
+    "target": "DEC-VER-02",
+    "change": "Διορθώθηκαν τα cons του P (έχει PObserve και PVerifier)· προστέθηκε το Veil· «χωρίς TLAPS» για Quint → «δεν τεκμηριώθηκε»",
+    "reason": "Δίκαιη παρουσίαση εναλλακτικών"
+   },
+   {
+    "target": "SOTA-VER-26",
+    "change": "Νέο στοιχείο: Veil",
+    "reason": "Εναλλακτική μίας έδρας που έλειπε από την έρευνα"
+   },
+   {
+    "target": "CMP-OPS-03, ICD-27",
+    "change": "Το draft_position περιλαμβάνει και τις πράξεις του ICD-27",
+    "reason": "Το σημείο κάλυπτε δύο IDs αλλά απέδιδε μόνο το CMP-OPS-03"
+   }
+  ],
+  "missed_superior_found": [
+   "Κανένα αυστηρά ανώτερο που να αλλάζει verdict «holds» σε «superior-exists».",
+   "Adaptive conformal inference (Gibbs & Candès 2021, https://arxiv.org/abs/2106.00170): long-run coverage χωρίς exchangeability· συμπλήρωμα για REQ-VAL-004, όχι αυστηρά ανώτερο.",
+   "Veil (https://github.com/verse-lab/veil): Lean 4 framework για πρωτόκολλα· εναλλακτική μίας έδρας, όχι αυστηρά ανώτερη του TLA+ (pre-release, χωρίς liveness).",
+   "nanoda_lib (https://github.com/ammkrn/nanoda_lib): δεύτερος εξωτερικός checker για Lean, ενισχύει το VT-301 έως VT-307 και το DEC-VER-04.",
+   "Hermit (https://github.com/facebookexperimental/hermit): ελέγχει και thread scheduling, αλλά είναι σε maintenance mode· προστέθηκε ως εναλλακτική στο DEC-VER-01."
+  ]
+ }
+}

@@ -1,0 +1,1933 @@
+{
+ "layer_key": "CCP",
+ "summary": "Η δομή του ECP ισχύει και ξεπερνά τα βιομηχανικά πρωτόκολλα: 4 επίπεδα (evidence/claims/stances/verdicts), typed speech acts, stance ανά οντότητα, verdicts μόνο μέσω Court με dissent. Κατά τη μελέτη Governance Gaps (2026), voting και dissent preservation απουσιάζουν από MCP, A2A, ACP, ANP και ERC-8004. Το A2A 1.0.0 δεν έχει commitments, voting ή dissent.\n\nΔύο σημεία έχουν αυστηρά ανώτερη λύση:\n1. Το «G-Set CRDT/SEC» (INV-K01, ADR-0031) υποθέτει έντιμους replicas. Το BEC/BFT-CRDT (hash-DAG, συμφιλίωση με heads, εγκυρότητα μόνο στο causal past) συγκλίνει με οσουσδήποτε Byzantine κόμβους. Ρητό trade-off: οι σύγχρονες με ανάκληση υπογραφές σημαίνονται (taint) αντί να απορρίπτονται. Το θεώρημα I-confluence επιβεβαιώνει τη διάκριση του ADR-0031.\n2. Το EXP-02 και το KT-07 έχουν αδύναμες baselines και κριτήρια απέναντι στα ευρήματα 2025–2026: το voting εξηγεί τα περισσότερα κέρδη του debate· τα σφάλματα συσχετίζονται· conformity και factual attrition μετριούνται.\n\nΔιορθώσεις του ελέγχου:\n- Τα ArgLLMs και το MArgE χρησιμοποιούν QBAF με DF-QuAD, όχι ASPIC+/grounded.\n- Η τρέχουσα MCP spec είναι η 2026-07-28.\n- Το CometBFT έχει τελικές εκδόσεις v1.0.0/v1.0.1· ο ισχυρισμός «v1 pre-release» ήταν λάθος.\n- Το fipa.org σερβίρει πλέον άσχετο περιεχόμενο.\n- Διορθώθηκαν αριθμοί conformity και συσχέτισης· αφαιρέθηκαν ανεπαλήθευτοι αριθμοί (56%, ~33%, AVE, AIF+, SAT, venues).\n\nΚενά:\n- Η §10 δεν γράφτηκε: λείπει σημασιολογία διαλόγου.\n- Λείπουν: σημασιολογία αναπαραγωγής ανά επίπεδο, ανεξαρτησία stance πριν από την έκθεση, εμπιστευτικότητα ιδιωτικών stances, προφίλ A2A, AIF και burden of proof, μέτρηση συσχέτισης σφαλμάτων.\n- Ασυνέπεια: το DP-3 (ελάχιστο ≥3 sites, στο σχήμα ακριβώς 3) δεν ικανοποιεί f=1 με n ≥ 3f+1 σε επίπεδο site.\n- Λάθη αντιστοίχισης INV/EXP στο §29.4.",
+ "sota": [
+  {
+   "id": "SOTA-CCP-01",
+   "name": "CRDT / Strong Eventual Consistency + μηχανικά ελεγμένες αποδείξεις σύγκλισης",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Τυπικό μοντέλο SEC με ικανές συνθήκες σύγκλισης για state-based και op-based CRDTs (Shapiro et al. 2011). Αρθρωτό framework σε Isabelle/HOL με τα πρώτα machine-checked θεωρήματα ορθότητας για τρία CRDTs (OOPSLA 2017).",
+   "relevance": "Θεμέλιο για INV-K01 και VT-103: οι αποδείξεις σύγκλισης επαναχρησιμοποιούνται αντί για μόνο model checking. Το SEC υποθέτει μη Byzantine replicas.",
+   "sources": [
+    {
+     "title": "Conflict-free Replicated Data Types (SSS 2011)",
+     "url": "https://www.lip6.fr/Marc.Shapiro/papers/2011/CRDTs_SSS-2011.pdf",
+     "year": "2011"
+    },
+    {
+     "title": "Verifying Strong Eventual Consistency in Distributed Systems (PACMPL OOPSLA)",
+     "url": "https://arxiv.org/abs/1707.01747",
+     "year": "2017"
+    },
+    {
+     "title": "crdt-isabelle repository",
+     "url": "https://github.com/trvedata/crdt-isabelle",
+     "year": "2017"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-02",
+   "name": "Byzantine Eventual Consistency (BEC) / Byzantine-fault-tolerant CRDTs",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Hash-DAG υπογεγραμμένων updates (ID = hash, predecessor hashes), συμφιλίωση χωρίς version vectors (που καταρρέουν υπό equivocation), εγκυρότητα που κρίνεται μόνο πάνω στο causal past (§3.4 του BFT-CRDT). Ανέχεται οσουσδήποτε Byzantine κόμβους (Sybil-immune). Θεώρημα: μια p2p βάση είναι Sybil-immune αν και μόνο αν όλες οι συναλλαγές είναι I-confluent ως προς όλα τα invariants· μη I-confluent παράδειγμα είναι το uniqueness constraint. Η keynote PaPoC 2025 παρουσιάζει το local-first access control υπό BEC ως νέα ερευνητική κατεύθυνση.",
+   "relevance": "Αυστηρά ανώτερο του «G-Set SEC» για το CMP-CCP-01 (και για claims/stances/taint) όταν υπάρχουν Byzantine σώματα (OS-08, KT-04). Το I-confluence δίνει τυπικό κριτήριο για το ποια επίπεδα μένουν coordination-free και ποια απαιτούν ordering.",
+   "sources": [
+    {
+     "title": "Byzantine Eventual Consistency and the Fundamental Limits of Peer-to-Peer Databases",
+     "url": "https://arxiv.org/pdf/2012.00472",
+     "year": "2020"
+    },
+    {
+     "title": "Making CRDTs Byzantine Fault Tolerant (PaPoC'22)",
+     "url": "https://martin.kleppmann.com/papers/bft-crdt-papoc22.pdf",
+     "year": "2022"
+    },
+    {
+     "title": "Keynote: Byzantine Eventual Consistency and Local-First Access Control (PaPoC 2025)",
+     "url": "https://martin.kleppmann.com/2025/03/31/papoc-keynote-byzantine.html",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-03",
+   "name": "BFT state machine replication: HotStuff-2, DAG-BFT (Mysticeti), Autobahn, CometBFT",
+   "kind": "system",
+   "maturity": "production",
+   "what": "HotStuff-2: two-phase, optimistic responsiveness, O(n²) worst-case, μοντέλο partial synchrony με n = 3t+1. Mysticeti: uncertified DAG, 3 message rounds, ~0.5 s WAN, ενσωματωμένο στο Sui mainnet· η ημερομηνία ενεργοποίησης δεν επαληθεύτηκε. Autobahn: SOSP 2024. CometBFT: τελευταία έκδοση v0.40.0 (27 Ιουλ., νέο PQ key type mldsa65)· υπάρχουν και τελικές v1.0.0/v1.0.1· κρίσιμη ευπάθεια BFT Time CSA-2026-001 (Ιαν. 2026, patched σε v0.38.21/v0.37.18).",
+   "relevance": "Υποψήφιοι για τη διατοπική διάταξη verdicts (ADR-0031, INV-K06). Ο φόρτος verdicts είναι χαμηλός, άρα το throughput των DAG-BFT δεν χρειάζεται. Κριτήρια: απλότητα, ωριμότητα, επαληθευσιμότητα. Το CSA-2026-001 δείχνει ότι και οι ώριμες υλοποιήσεις έχουν σφάλματα consensus.",
+   "sources": [
+    {
+     "title": "HotStuff-2: Optimal Two-Phase Responsive BFT",
+     "url": "https://eprint.iacr.org/2023/397",
+     "year": "2023"
+    },
+    {
+     "title": "Mysticeti: Reaching the Latency Limits with Uncertified DAGs (NDSS 2025)",
+     "url": "https://www.ndss-symposium.org/wp-content/uploads/2025-929-paper.pdf",
+     "year": "2025"
+    },
+    {
+     "title": "Autobahn: Seamless high speed BFT",
+     "url": "https://arxiv.org/abs/2401.10369",
+     "year": "2024"
+    },
+    {
+     "title": "SOSP 2024 accepted papers",
+     "url": "https://sigops.org/s/conferences/sosp/2024/accepted.html",
+     "year": "2024"
+    },
+    {
+     "title": "CometBFT releases",
+     "url": "https://github.com/cometbft/cometbft/releases",
+     "year": "2026"
+    },
+    {
+     "title": "CSA-2026-001: Tachyon (CometBFT BFT Time)",
+     "url": "https://github.com/cometbft/cometbft/security/advisories/GHSA-c32p-wcqj-j677",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-04",
+   "name": "Transparency-log witness cosigning (C2SP tlog-witness, tlog-cosignature)",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Ο witness συνυπογράφει checkpoint μόνο αφού επαληθεύσει consistency proof έναντι του τελευταίου checkpoint που συνυπέγραψε (έλεγχος atomic). Κατά το tlog-cosignature, οι clients μπορούν να επαληθεύουν quorum cosignatures για να αποτρέψουν split-view πριν εμπιστευτούν inclusion proof.",
+   "relevance": "Εναλλακτική ή συμπλήρωμα του BFT για non-equivocation του Court log (single-writer + k-of-n witnesses). Συμβατή με την έδρα tlog-1 και το witness model του προχείρου.",
+   "sources": [
+    {
+     "title": "Transparency Log Witness Protocol (C2SP)",
+     "url": "https://c2sp.org/tlog-witness@v1.0.0",
+     "year": "accessed 2026"
+    },
+    {
+     "title": "C2SP tlog-witness.md (editor's copy)",
+     "url": "https://github.com/C2SP/C2SP/blob/main/tlog-witness.md",
+     "year": "accessed 2026"
+    },
+    {
+     "title": "C2SP tlog-cosignature",
+     "url": "https://c2sp.org/tlog-cosignature",
+     "year": "accessed 2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-05",
+   "name": "Dialogue systems με commitment stores (Prakken) και η γενεαλογία FIPA ACL",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Prakken (KER 2006): locutions claim/why/concede/retract/since/question, commitment stores, protocol, effect rules, turn-taking και termination rules. FIPA ACL (2002): ιστορικό πρότυπο performatives με mentalistic σημασιολογία. Η σημασιολογία του επικρίθηκε (Pitt & Mamdani 1999· Wooldridge 2000 για ζητήματα επαλήθευσης). Ο οργανισμός FIPA διαλύθηκε το 2005 και το fipa.org δεν σερβίρει πλέον τις προδιαγραφές.",
+   "relevance": "Άμεση γενεαλογία των ASSERT/CHALLENGE/CONCEDE/RETRACT του ICD-13 και των commitment stores του CMP-CCP-03. Δίνει τις pre/post-conditions και τους κανόνες τερματισμού που λείπουν.",
+   "sources": [
+    {
+     "title": "Formal systems for persuasion dialogue (Prakken, KER)",
+     "url": "https://webspace.science.uu.nl/~prakk101/pubs/dgreview.pdf",
+     "year": "2006"
+    },
+    {
+     "title": "Some Remarks on the Semantics of FIPA's Agent Communication Language (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1023/A:1010016503852",
+     "year": "1999"
+    },
+    {
+     "title": "Semantic Issues in the Verification of Agent Communication Languages (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1023/A:1010090027213",
+     "year": "2000"
+    },
+    {
+     "title": "Foundation for Intelligent Physical Agents (Wikipedia)",
+     "url": "https://en.wikipedia.org/wiki/Foundation_for_Intelligent_Physical_Agents",
+     "year": "accessed 2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-06",
+   "name": "Declarative information protocols (BSPL, Langshaw) εκτελούμενα από LLM agents (Ahoy, Strabo)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Το BSPL (AAMAS 2011) μοντελοποιεί πρωτόκολλα με βάση την πληροφορία που χρειάζονται και παράγουν, όχι με control flow. Langshaw (IJCAI 2024· arXiv 2026): sayso, conflict constructs, έλεγχος safety/liveness. Ahoy (EMAS 2026): LLM agents εκτελούν πολλαπλά declarative πρωτόκολλα, και ταυτόχρονα, χωρίς ειδική εκπαίδευση. Strabo (2026): το τμήμα checkout του UCP ως πρωτόκολλο Langshaw, διαλειτουργικό με υπάρχουσες υλοποιήσεις UCP.",
+   "relevance": "Ανώτερη μέθοδος προδιαγραφής για τα typed speech acts του ICD-13: τα πρωτόκολλα γίνονται επαληθεύσιμα αντικείμενα, όχι λίστα performatives.",
+   "sources": [
+    {
+     "title": "BSPL, the Blindingly Simple Protocol Language (AAMAS 2011)",
+     "url": "https://www.cs.huji.ac.il/~jeff/aamas11/papers/A4_B57.pdf",
+     "year": "2011"
+    },
+    {
+     "title": "Ahoy: LLMs Enacting Multiagent Interaction Protocols",
+     "url": "https://arxiv.org/abs/2606.05390",
+     "year": "2026"
+    },
+    {
+     "title": "Strabo: Declarative Specification and Implementation of Agentic Interaction Protocols",
+     "url": "https://arxiv.org/abs/2606.05043",
+     "year": "2026"
+    },
+    {
+     "title": "Langshaw: Declarative Interaction Protocols Based on Sayso and Conflict",
+     "url": "https://arxiv.org/abs/2606.29601",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-07",
+   "name": "Βιομηχανικά agent πρωτόκολλα: A2A 1.0 (LF), MCP (AAIF), ANP",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "A2A: latest released 1.0.0· Agent Card signing (§8.4)· TaskState: 8 καταστάσεις + UNSPECIFIED· Parts text/file/structured data· extensions με URI· καμία έννοια commitments, voting ή dissent. LF project από τον Ιούνιο 2025, με >100 εταιρείες τότε. MCP: founding project του Agentic AI Foundation (LF, Δεκ. 2025)· τρέχουσα spec 2026-07-28. ANP: ταυτότητα με did:wba, spec set 1.1. Μελέτη 2026: voting και dissent preservation απουσιάζουν από MCP, A2A, ACP, ANP, ERC-8004.",
+   "relevance": "Κανένα δεν αντικαθιστά το ECP. Το A2A είναι το φυσικό εξωτερικό όριο (adapter), με τις πράξεις ECP ως data Parts κάτω από extension URI.",
+   "sources": [
+    {
+     "title": "A2A Protocol Specification (latest)",
+     "url": "https://a2a-protocol.org/latest/specification/",
+     "year": "2026"
+    },
+    {
+     "title": "Linux Foundation Launches the Agent2Agent Protocol Project",
+     "url": "https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents",
+     "year": "2025"
+    },
+    {
+     "title": "MCP joins the Agentic AI Foundation",
+     "url": "https://blog.modelcontextprotocol.io/posts/2025-12-09-mcp-joins-agentic-ai-foundation/",
+     "year": "2025"
+    },
+    {
+     "title": "MCP Specification (latest, 2026-07-28)",
+     "url": "https://modelcontextprotocol.io/specification/latest",
+     "year": "2026"
+    },
+    {
+     "title": "AgentNetworkProtocol repository",
+     "url": "https://github.com/agent-network-protocol/AgentNetworkProtocol",
+     "year": "accessed 2026"
+    },
+    {
+     "title": "Governance Gaps in Agent Interoperability Protocols: What MCP, A2A, and ACP Cannot Express",
+     "url": "https://arxiv.org/abs/2606.31498",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-08",
+   "name": "Agora meta-protocol (Protocol Documents με hash)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Τυποποιημένες ρουτίνες για συχνές επικοινωνίες, φυσική γλώσσα για σπάνιες, LLM-written ρουτίνες για τα ενδιάμεσα. Κάθε Protocol Document ταυτοποιείται με SHA1 hash. Σε demo 100 agents, ~5× φθηνότερο από την επικοινωνία μόνο με φυσική γλώσσα (36.23 έναντι 7.67 USD ανά 1000 queries).",
+   "relevance": "Εμπειρική στήριξη της θέσης «typed, όχι free text» (INV-K05) και τρόπος να παίρνουν εκδόσεις οι τύποι speech acts: σχήματα content-addressed στο CAS.",
+   "sources": [
+    {
+     "title": "A Scalable Communication Protocol for Networks of Large Language Models",
+     "url": "https://arxiv.org/html/2410.11905v1",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-09",
+   "name": "Structured argumentation: Dung AF, ASPIC+, Carneades, AIF, ICCMA",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Dung (AIJ 1995): abstract AF. ASPIC+ (2014): strict/defeasible rules, attack σε uncertain premises, defeasible inferences ή conclusions, preferences. Carneades (AIJ 2007): μοντέλο argument και burden of proof, με κατηγοριοποίηση premises που καθορίζει τις αποδεικτικές απαιτήσεις. AIF (KER 2006): I-, RA-, CA- και PA-nodes για ανταλλαγή argument graphs. ICCMA: διαγωνισμός για abstract AF· το ICCMA 2025 κάλυψε abstract και assumption-based argumentation, χωρίς track ASPIC+.",
+   "relevance": "Στηρίζει την επιλογή ASPIC+ και grounded για το CMP-CCP-02. Αναδεικνύει τα κενά AIF (interchange) και burden of proof.",
+   "sources": [
+    {
+     "title": "On the Acceptability of Arguments... (Dung, S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/0004-3702(94)00041-X",
+     "year": "1995"
+    },
+    {
+     "title": "The ASPIC+ framework for structured argumentation: a tutorial (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1080/19462166.2013.869766",
+     "year": "2014"
+    },
+    {
+     "title": "The Carneades model of argument and burden of proof (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/j.artint.2007.04.010",
+     "year": "2007"
+    },
+    {
+     "title": "Towards an argument interchange format (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1017/S0269888906001044",
+     "year": "2006"
+    },
+    {
+     "title": "The third and fourth ICCMA: Design, results and analysis (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.3233/AAC-230013",
+     "year": "2024"
+    },
+    {
+     "title": "ICCMA 2025",
+     "url": "https://www.argumentationcompetition.org/2025/index.html",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-10",
+   "name": "LLM + τυπική argumentation (ArgLLMs, MArgE) με QBAF και gradual semantics",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Τα ArgLLMs (AAAI 2025) κατασκευάζουν QBAFs από εξόδους LLM και κάνουν ντετερμινιστική inference με gradual semantics (DF-QuAD), για επεξηγήσιμο και αμφισβητήσιμο claim verification. Το MArgE (2025) συνενώνει επιχειρήματα πολλών LLM σε QBAF με DF-QuAD και ξεπερνά μεμονωμένα LLM, τα ArgLLMs και μεθόδους αδόμητου multi-LLM debate.",
+   "relevance": "Άμεση ένδειξη ότι το συλλογικό μέσω τυπικού argument graph (CMP-CCP-02) ξεπερνά το free debate. Με άλλο φορμαλισμό όμως (QBAF/gradual, όχι ASPIC+/grounded): υποψήφιο σκέλος του EXP-16 και του EXP-02.",
+   "sources": [
+    {
+     "title": "Argumentative Large Language Models for Explainable and Contestable Claim Verification (AAAI 2025)",
+     "url": "https://ojs.aaai.org/index.php/AAAI/article/view/33637",
+     "year": "2025"
+    },
+    {
+     "title": "ArgLLMs (arXiv HTML)",
+     "url": "https://arxiv.org/html/2405.02079",
+     "year": "2024"
+    },
+    {
+     "title": "MArgE: Meshing Argumentative Evidence from Multiple LLMs",
+     "url": "https://arxiv.org/html/2508.02584",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-11",
+   "name": "Nanopublications (assertion / provenance / publication info, + knowledge provenance)",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Κάθε nanopublication είναι μικρή μονάδα RDF με assertion, provenance και publication info. Επέκταση του IRCDL 2025: τέταρτο συστατικό knowledge provenance για ισχυρισμούς που προέρχονται από σώμα υποστηρικτικής και αντιφατικής μαρτυρίας, εφαρμοσμένο σε 197.511 assertions.",
+   "relevance": "Πρότυπο σχήμα για τα evidence-item και proof-carrying-claim του ICD-13, συμβατό με PROV και RDF (KNW).",
+   "sources": [
+    {
+     "title": "Nanopublications: A Growing Resource of Provenance-Centric Scientific Linked Data (IEEE eScience)",
+     "url": "https://arxiv.org/abs/1809.06532",
+     "year": "2018"
+    },
+    {
+     "title": "nanopub.net",
+     "url": "https://nanopub.net/",
+     "year": "accessed 2026"
+    },
+    {
+     "title": "Extending Nanopublications with Knowledge Provenance for Multi-Source Scientific Assertions (IRCDL 2025)",
+     "url": "https://ceur-ws.org/Vol-3937/paper10.pdf",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-12",
+   "name": "Εμπειρική επιστήμη LLM MAS: failure taxonomy, scaling, debate έναντι ensembling",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "MAST: 14 failure modes σε 3 κατηγορίες (system design, inter-agent misalignment, task verification), πάνω από 1600 annotated traces. Scaling Agent Systems: 260 διαμορφώσεις, από +80.8% (decomposable financial reasoning) έως −70.0% (sequential planning)· αρχιτεκτονικές χωρίς κεντρική επαλήθευση διαδίδουν περισσότερα σφάλματα. Debate or Vote (NeurIPS 2025 spotlight): το majority voting εξηγεί τα περισσότερα κέρδη του MAD και το debate είναι martingale. Stop Overvaluing MAD: συχνά δεν ξεπερνά CoT/Self-Consistency, η ετερογένεια βοηθά. Self-MoA: +6.6% έναντι MoA στο AlpacaEval 2.0. Talk isn't cheap: το debate μπορεί να μειώσει την ακρίβεια. Αφετηρίες: Du et al. (ICML 2024), MoA (2024).",
+   "relevance": "Ορίζει baselines και κριτήρια θανάτωσης που λείπουν από το EXP-02. Δείχνει ότι η τοπολογία του CMP-CCP-07 πρέπει να εξαρτάται από τη δομή της εργασίας.",
+   "sources": [
+    {
+     "title": "Why Do Multi-Agent LLM Systems Fail?",
+     "url": "https://arxiv.org/abs/2503.13657",
+     "year": "2025"
+    },
+    {
+     "title": "Towards a Science of Scaling Agent Systems",
+     "url": "https://arxiv.org/abs/2512.08296",
+     "year": "2025"
+    },
+    {
+     "title": "Debate or Vote: Which Yields Better Decisions in Multi-Agent LLMs?",
+     "url": "https://arxiv.org/abs/2508.17536",
+     "year": "2025"
+    },
+    {
+     "title": "Stop Overvaluing Multi-Agent Debate",
+     "url": "https://arxiv.org/abs/2502.08788",
+     "year": "2025"
+    },
+    {
+     "title": "Rethinking Mixture-of-Agents (Self-MoA)",
+     "url": "https://arxiv.org/abs/2502.00674",
+     "year": "2025"
+    },
+    {
+     "title": "Talk Isn't Always Cheap: Understanding Failure Modes in Multi-Agent Debate",
+     "url": "https://arxiv.org/abs/2509.05396",
+     "year": "2025"
+    },
+    {
+     "title": "Improving Factuality and Reasoning through Multiagent Debate (ICML 2024)",
+     "url": "https://proceedings.mlr.press/v235/du24e.html",
+     "year": "2024"
+    },
+    {
+     "title": "Mixture-of-Agents Enhances LLM Capabilities",
+     "url": "https://arxiv.org/abs/2406.04692",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-13",
+   "name": "Conformity, consensus collapse, factual attrition σε LLM MAS",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Free-MAD: anti-conformity και score πάνω σε ολόκληρη την τροχιά, χωρίς consensus. Conformity Dynamics: η τοπολογία ρυθμίζει ταχύτητα και ανθεκτικότητα· περισσότερη συνδεσιμότητα αυξάνει τα wrong-but-sure cascades. Not All Flips: αντιπαραδειγματική αποσύνθεση σε spontaneous instability, conformity και persuasion· strict conformity 29% στο κύριο setting, με 57–77% correct-to-wrong στις αναπαραγωγές· ακόμη και vacuous reasoning συνδέεται με 20–39% υιοθέτηση σφάλματος. Deliberative Illusion (DelibTrace): σβήνει έως 72% των issue-critical facts ενώ η συμφωνία αυξάνεται. Biased consensus: μετάβαση φάσης πάνω από κρίσιμο κατώφλι conformity, που η ετερογένεια στρογγυλεύει.",
+   "relevance": "Τεκμηριώνει ανεξαρτησία stance πριν από την έκθεση, αιτιολογημένες αλλαγές stance και μέτρηση επιβίωσης γεγονότων (CMP-CCP-05, KT-07).",
+   "sources": [
+    {
+     "title": "Free-MAD: Consensus-Free Multi-Agent Debate",
+     "url": "https://arxiv.org/abs/2509.11035",
+     "year": "2025"
+    },
+    {
+     "title": "Conformity Dynamics in LLM Multi-Agent Systems",
+     "url": "https://arxiv.org/abs/2601.05606",
+     "year": "2026"
+    },
+    {
+     "title": "Not All Flips Are Conformity",
+     "url": "https://arxiv.org/abs/2606.00820",
+     "year": "2026"
+    },
+    {
+     "title": "The Deliberative Illusion",
+     "url": "https://arxiv.org/abs/2606.03032",
+     "year": "2026"
+    },
+    {
+     "title": "Emergence of Biased Consensus in Multi-Agent LLM Debates",
+     "url": "https://arxiv.org/abs/2608.02827",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-14",
+   "name": "Συσχετισμένα σφάλματα LLM και wisdom of the silicon crowd",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Σε >350 LLM (ICML 2025): σε ένα leaderboard dataset τα μοντέλα συμφωνούν 60% των φορών όταν σφάλλουν και τα δύο. Η συσχέτιση οδηγείται από κοινή αρχιτεκτονική και πάροχο· τα μεγαλύτερα και ακριβέστερα μοντέλα έχουν ισχυρά συσχετισμένα σφάλματα ανεξαρτήτως αρχιτεκτονικής ή οργανισμού. Ensemble 12 LLM σε 31 δυαδικές ερωτήσεις forecasting δεν διαφέρει στατιστικά από πλήθος 925 ανθρώπων (Science Advances 2024).",
+   "relevance": "Η plurality doctrine και οι μετρήσεις stances υπερεκτιμούν την ανεξαρτησία αν δεν μετρηθεί η συσχέτιση. Αφορά EXP-02, CMP-CCP-05, ADR-0019.",
+   "sources": [
+    {
+     "title": "Correlated Errors in Large Language Models (ICML 2025)",
+     "url": "https://arxiv.org/abs/2506.07962",
+     "year": "2025"
+    },
+    {
+     "title": "Wisdom of the Silicon Crowd (arXiv)",
+     "url": "https://arxiv.org/abs/2402.19379",
+     "year": "2024"
+    },
+    {
+     "title": "Wisdom of the silicon crowd (Science Advances, S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1126/sciadv.adp1528",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-15",
+   "name": "Συνάθροιση πέρα από την πλειοψηφία: bridging, surprisingly popular, conformal social choice",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Birdwatch/Community Notes: bridging-based επιλογή με matrix factorization, με μετρημένη μείωση reshares σε field πείραμα. LLM-written notes (2026): υψηλότερες βαθμολογίες από τις ανθρώπινες σε raters όλου του πολιτικού φάσματος. Surprisingly popular (Nature 2017): επιλέγεται η απάντηση που είναι πιο δημοφιλής από όσο προβλέπουν οι ψηφοφόροι. Conformal social choice (2026): linear opinion pool + split conformal, κάλυψη ≥1−α· singleton → πράξη, αλλιώς κλιμάκωση· αναχαιτίζει 81.9% των λανθασμένων consensus σε α=0.05, με όφελος από επιλογή και όχι από καλύτερη συλλογιστική.",
+   "relevance": "Μη αυθεντικές παράγωγες όψεις για stances (CMP-CCP-05, CMP-CCP-06). Το conformal act-vs-escalate ευθυγραμμίζεται με το INV-C04 (Unknown).",
+   "sources": [
+    {
+     "title": "Birdwatch: Crowd Wisdom and Bridging Algorithms",
+     "url": "https://arxiv.org/abs/2210.15723",
+     "year": "2022"
+    },
+    {
+     "title": "AI Fact-Checking in the Wild: LLM-Written Community Notes on X",
+     "url": "https://arxiv.org/abs/2604.02592",
+     "year": "2026"
+    },
+    {
+     "title": "A solution to the single-question crowd wisdom problem (Europe PMC record)",
+     "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:%2210.1038/nature21054%22&resultType=core&format=json",
+     "year": "2017"
+    },
+    {
+     "title": "From Debate to Decision: Conformal Social Choice for Safe Multi-Agent Deliberation",
+     "url": "https://arxiv.org/abs/2604.07667",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-16",
+   "name": "Διαβούλευση με διαμεσολάβηση AI: Habermas Machine, Polis",
+   "kind": "system",
+   "maturity": "pilot",
+   "what": "Habermas Machine (Science 2024, N=5.734): οι συμμετέχοντες προτίμησαν τις δηλώσεις κοινού εδάφους που παρήγαγε το AI από εκείνες ανθρώπινων mediators· οι επιτυχημένες δηλώσεις ενσωμάτωναν τις διαφωνούσες φωνές σεβόμενες την πλειοψηφία. Επαναλήφθηκε σε citizens' assembly στο ΗΒ. Polis (Recerca 2021): χαρτογράφηση υψηλοδιάστατων χώρων γνώμης για διαβούλευση σε κλίμακα.",
+   "relevance": "Πρότυπο για προαιρετικό, μη αυθεντικό επίπεδο σύνθεσης κοινού εδάφους με διατήρηση της διαφωνίας· απουσιάζει από το ECP.",
+   "sources": [
+    {
+     "title": "AI can help humans find common ground in democratic deliberation (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1126/science.adq2852",
+     "year": "2024"
+    },
+    {
+     "title": "Polis: Scaling Deliberation by Mapping High Dimensional Opinion Spaces (αντίγραφο)",
+     "url": "https://gwern.net/doc/sociology/2021-small.pdf",
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-17",
+   "name": "Υποστρώματα συντονισμού: blackboard LLM MAS, SOP-driven MAS, auction allocation",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Blackboard LLM MAS (2025): καλύτερη μέση απόδοση με λιγότερα tokens σε commonsense και μαθηματικά. Blackboard για data discovery (2025): 13%–57% σχετική βελτίωση στην end-to-end επιτυχία έναντι της καλύτερης baseline, χωρίς master με πλήρη γνώση των agents. MetaGPT: SOPs κωδικοποιημένα σε prompts, assembly-line με επαλήθευση ενδιάμεσων αποτελεσμάτων. Agora (2026): bid = (calibrated confidence)^γ − β·cost. DALA (2025): agents κάνουν bid για να μιλήσουν, με εμφάνιση «strategic silence» και χαμηλό κόστος tokens.",
+   "relevance": "Αντίστοιχα του CMP-CCP-07. Κανένα δεν αποδεικνύεται ανώτερο σε όλα τα κριτήρια· η αξία εξαρτάται από την εργασία.",
+   "sources": [
+    {
+     "title": "Exploring Advanced LLM Multi-Agent Systems Based on Blackboard Architecture",
+     "url": "https://arxiv.org/abs/2507.01701",
+     "year": "2025"
+    },
+    {
+     "title": "LLM-Based Multi-Agent Blackboard System for Information Discovery in Data Science",
+     "url": "https://arxiv.org/abs/2510.01285",
+     "year": "2025"
+    },
+    {
+     "title": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework",
+     "url": "https://arxiv.org/abs/2308.00352",
+     "year": "2023"
+    },
+    {
+     "title": "Agora: Enhancing LLM Agent Reasoning Via Auction-Based Task Allocation",
+     "url": "https://arxiv.org/html/2607.09600v1",
+     "year": "2026"
+    },
+    {
+     "title": "Cost-Effective Communication: An Auction-based Method for Language Agent Interaction",
+     "url": "https://arxiv.org/abs/2511.13193",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-18",
+   "name": "Multi-agent security: prompt infection, steganographic collusion, Byzantine LLM agents",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Prompt Infection: αυτο-αναπαραγόμενο LLM-to-LLM injection· άμυνα LLM Tagging σε συνδυασμό με υπάρχοντα μέτρα. Secret Collusion: πλαίσιο αξιολόγησης ικανοτήτων steganographic συνωμοσίας· σήμερα περιορισμένες ικανότητες, με άλμα στα frontier LLM που απαιτεί συνεχή παρακολούθηση. Multi-Agent Risks (2025): 3 failure modes (miscoordination, conflict, collusion) και 7 risk factors, μεταξύ τους το multi-agent security. Can AI Agents Agree? (2026): η έγκυρη συμφωνία δεν είναι αξιόπιστη ούτε σε καλοήθεις συνθήκες και χειροτερεύει με το μέγεθος της ομάδας. DecentLLMs (2025): Byzantine-robust αποκεντρωμένη συνάθροιση χωρίς ευάλωτο leader.",
+   "relevance": "Δείχνει ότι το INV-K05 δεν αρκεί και ότι το consensus δεν ανατίθεται σε LLM agents: γίνεται σε τυπικό BFT/witnesses ή σε verifiers.",
+   "sources": [
+    {
+     "title": "Prompt Infection: LLM-to-LLM Prompt Injection within Multi-Agent Systems",
+     "url": "https://arxiv.org/abs/2410.07283",
+     "year": "2024"
+    },
+    {
+     "title": "Secret Collusion among AI Agents: Multi-Agent Deception via Steganography",
+     "url": "https://arxiv.org/abs/2402.07510",
+     "year": "2024"
+    },
+    {
+     "title": "Multi-Agent Risks from Advanced AI",
+     "url": "https://arxiv.org/abs/2502.14143",
+     "year": "2025"
+    },
+    {
+     "title": "Can AI Agents Agree?",
+     "url": "https://arxiv.org/abs/2603.01213",
+     "year": "2026"
+    },
+    {
+     "title": "Byzantine-Robust Decentralized Coordination of LLM Agents",
+     "url": "https://arxiv.org/abs/2507.14928",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-19",
+   "name": "Keyhive: local-first access control (convergent capabilities, group CRDT, E2EE)",
+   "kind": "tool",
+   "maturity": "research-prototype",
+   "what": "Convergent capabilities (self-certifying αλυσίδες delegation), CRDT διαχείρισης ομάδας με coordination-free revocation, E2EE με causal keys και post-compromise security (BeeKEM), Sedimentree για συγχρονισμό κρυπτογραφημένου περιεχομένου. Pre-alpha (Μάρτιος 2025), χωρίς audit, «όχι για παραγωγή»· notebook 2024–2026.",
+   "relevance": "Πρότυπο για ιδιωτικές stances και εμπιστευτικά domains μέσα σε αναπαραγόμενα επίπεδα του ECP (INV-K04, INV-L03).",
+   "sources": [
+    {
+     "title": "Keyhive: Local-first access control (lab notebook)",
+     "url": "https://www.inkandswitch.com/keyhive/notebook/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-20",
+   "name": "Επιστήμη συλλογικής νοημοσύνης και knowledge commons (με την αμφισβήτησή της)",
+   "kind": "research",
+   "maturity": "theoretical",
+   "what": "Riedl et al. (PNAS 2021): 22 μελέτες, 5.279 άτομα, 1.356 ομάδες· υποστηρίζουν ισχυρό CI factor. Δημοσιεύθηκε διόρθωση το 2022 (περιεχόμενο μη επαληθευμένο εδώ). Αποτυχίες αναπαραγωγής: Bates & Gupta (2017)· Credé & Howardson (2017, στατιστικά artifacts), με αντίκρουση από Woolley et al. (2018), κατά την ανασκόπηση Janssens et al. (2022). Hess & Ostrom (2006/2007): πλαίσιο ανάλυσης knowledge commons.",
+   "relevance": "Η plurality doctrine δεν μπορεί να στηριχθεί στον c-factor ως αποδεδειγμένο· απαιτείται εμπειρική επίδειξη (EXP-02). Η Ostrom δίνει θεσμικό λεξιλόγιο διακυβέρνησης commons, όχι μηχανισμό.",
+   "sources": [
+    {
+     "title": "Quantifying collective intelligence in human groups (Europe PMC record)",
+     "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:%2210.1073/pnas.2005737118%22&resultType=core&format=json",
+     "year": "2021"
+    },
+    {
+     "title": "Correction for Riedl et al. (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1073/pnas.2204380119",
+     "year": "2022"
+    },
+    {
+     "title": "Collective intelligence in teams (Frontiers in Psychology)",
+     "url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2022.989572/full",
+     "year": "2022"
+    },
+    {
+     "title": "Understanding Knowledge as a Commons (Open Library record)",
+     "url": "https://openlibrary.org/search.json?q=Understanding+Knowledge+as+a+Commons",
+     "year": "2006"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-21",
+   "name": "CaMeL: prompt-injection defense by design (control/data-flow separation + capabilities)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Εξάγει ρητά control και data flow από το έμπιστο query, ώστε τα μη έμπιστα δεδομένα να μη μπορούν ποτέ να επηρεάσουν τη ροή του προγράμματος. Capabilities επιβάλλουν πολιτικές ασφαλείας σε κάθε κλήση εργαλείου. Στο AgentDojo λύνει 77% των εργασιών με provable security, έναντι 84% χωρίς άμυνα.",
+   "relevance": "Ισχυρότερη απάντηση από το heuristic LLM Tagging για injection μέσα από typed πεδία (GAP-CCP-07). Συμπληρώνει τα INV-K05 και INV-S01, δεν τα αντικαθιστά· σχεδιασμένο για tool-use ενός agent, όχι για πολυπρακτορικό κανάλι.",
+   "sources": [
+    {
+     "title": "Defeating Prompt Injections by Design (CaMeL)",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-CCP-22",
+   "name": "Trust-BFT: BFT με trusted components (λιγότερα replicas)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Τα κλασικά BFT χρειάζονται f replicas περισσότερα από τα Paxos-style για να αποτρέψουν equivocation· τα Trust-BFT μειώνουν αυτό το κόστος με trusted components στους replicas. Οι Gupta et al. εντοπίζουν τρεις περιορισμούς που αποκλείουν τις περισσότερες πρακτικές αναπτύξεις, μερικούς θεμελιώδεις και μερικούς δεμένους στην τρέχουσα κατάσταση των trusted components.",
+   "relevance": "Εναλλακτική για REQ-CCP-008 και DEC-CCP-02: με τα HSM/TEE του trust plane, 3 sites θα μπορούσαν να ανεχθούν f=1. Όχι αυστηρά ανώτερη: προσθέτει υπόθεση εμπιστοσύνης στο hardware και έχει τεκμηριωμένους περιορισμούς.",
+   "sources": [
+    {
+     "title": "Dissecting BFT Consensus: In Trusted Components we Trust!",
+     "url": "https://arxiv.org/abs/2202.01354",
+     "year": "2022"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-CCP-01",
+    "INV-K01",
+    "REQ-CCP-001"
+   ],
+   "draft_ref": "master §6.3 γρ.513· spine-vocab INV-K01 (γρ.68)· _unmerged-parts/29.md γρ.68· OS-08 (master γρ.367)",
+   "draft_position": "Evidence Commons = G-Set CRDT από evidence CIDs με attestations, anti-entropy sync, σύγκλιση μετά από partition (SEC). Η δηλητηριασμένη μαρτυρία αλλάζει κατάσταση (taint) χωρίς να διαγράφεται.",
+   "verdict": "superior-exists",
+   "reasoning": "Το SEC υποθέτει μη Byzantine replicas. Κατά Kleppmann (2022), τα περισσότερα υπάρχοντα CRDT δεν εγγυώνται συνέπεια με Byzantine κόμβους, και τα version vectors καταρρέουν όταν Byzantine κόμβος στέλνει δύο updates με ίδιο ID. Το πρόχειρο έχει ήδη content-addressed CIDs (ID = hash), άρα η επίθεση ίδιου ID εξουδετερώνεται για τα evidence items. Αφήνει όμως ακαθόριστα δύο πράγματα. (α) Τον μηχανισμό anti-entropy: με version vectors αποκλίνει. (β) Τον κανόνα εγκυρότητας: η αποδοχή εξαρτάται από attestation (ICD-18, INV-E04) και από υπογραφή με live delegation («ανάκληση αποτελεσματική από τον χρόνο της», ICD-03, INV-I04). Αυτή η κατάσταση δεν ανήκει κατ' ανάγκη στο causal past του item· κατά το §3.4 του BFT-CRDT είναι ο μηχανισμός απόκλισης, ακριβώς στο σενάριο OS-08/KT-04. Επιπλέον, η «αλλαγή κατάστασης taint» δεν είναι πράξη G-Set.",
+   "superior": "BEC / BFT-CRDT: hash-DAG υπογεγραμμένων updates (ID = hash, όπως ήδη τα CIDs, συν predecessor hashes), συμφιλίωση με ανταλλαγή heads αντί για version vectors, εγκυρότητα που κρίνεται μόνο στο causal past. Το taint γίνεται grow-only σύνολο taint-attestations με ντετερμινιστική παραγωγή της κατάστασης. Ανέχεται οσουσδήποτε Byzantine κόμβους. Κατά Kleppmann & Howard (2020), τέτοια Sybil-ανοσία υπάρχει αν και μόνο αν οι συναλλαγές είναι I-confluent· η προσθήκη μαρτυρίας είναι. Κρατά grow-only, content addressing και anti-entropy. Ρητό trade-off: update υπογεγραμμένο συγχρόνως με την ανάκληση (όχι αιτιακά μετά) δεν μπορεί να απορριφθεί με τρόπο που συγκλίνει. Γίνεται δεκτό και σημαίνεται, κάτι που αλλάζει το «απόρριψη υπογραφών μετά την ανάκληση» του KT-18 σε «σήμανση». Κόστος: αποθήκευση predecessor hashes.",
+   "sota_refs": [
+    "SOTA-CCP-01",
+    "SOTA-CCP-02"
+   ],
+   "sources": [
+    {
+     "title": "Making CRDTs Byzantine Fault Tolerant",
+     "url": "https://martin.kleppmann.com/papers/bft-crdt-papoc22.pdf",
+     "year": "2022"
+    },
+    {
+     "title": "Byzantine Eventual Consistency and the Fundamental Limits of Peer-to-Peer Databases",
+     "url": "https://arxiv.org/pdf/2012.00472",
+     "year": "2020"
+    },
+    {
+     "title": "Conflict-free Replicated Data Types",
+     "url": "https://www.lip6.fr/Marc.Shapiro/papers/2011/CRDTs_SSS-2011.pdf",
+     "year": "2011"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-CCP-02",
+    "REQ-CCP-002"
+   ],
+   "draft_ref": "master §6.3 γρ.514, §8.7 γρ.770· 29.md γρ.69",
+   "draft_position": "Typed claims με supports/attacks/undercuts, structured argumentation κλάσης ASPIC+, grounded εξ ορισμού και preferred για εξερεύνηση (EXP-16). Claims ως ledger events, labels ως παράγωγα.",
+   "verdict": "holds",
+   "reasoning": "Είναι η κύρια γραμμή της έρευνας: Dung (1995), ASPIC+ (strict/defeasible rules, τρεις μορφές attack, preferences). Η grounded extension είναι μοναδική και σκεπτική, αφήνει τη διαφωνία undecided και ταιριάζει με τη διατήρηση του dissent.\n\nΔιόρθωση: τα ArgLLMs και το MArgE ΔΕΝ επιβεβαιώνουν ASPIC+/grounded· χρησιμοποιούν QBAF με gradual semantics (DF-QuAD). Στηρίζουν μόνο ότι τυπικός argument graph πάνω σε εξόδους πολλών LLM ξεπερνά το αδόμητο multi-LLM debate στο claim verification. Κάνουν επίσης τις gradual semantics υποψήφιο σκέλος του EXP-16. Δεν είναι αυστηρά ανώτερες, γιατί χάνουν τα διακριτά labels accept/reject/undecided.\n\nΤο ICCMA αφορά abstract AF και ABA· δεν βρέθηκε track για ASPIC+. Λείπουν interchange format (AIF) και burden of proof πάνω στον graph (GAP-CCP-09). Εσωτερικό σφάλμα: η αντιστοίχιση REQ-CCP-002 → INV-K05 (GAP-CCP-11).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-09",
+    "SOTA-CCP-10"
+   ],
+   "sources": [
+    {
+     "title": "The ASPIC+ framework for structured argumentation: a tutorial (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1080/19462166.2013.869766",
+     "year": "2014"
+    },
+    {
+     "title": "ArgLLMs (arXiv HTML)",
+     "url": "https://arxiv.org/html/2405.02079",
+     "year": "2024"
+    },
+    {
+     "title": "MArgE (arXiv HTML)",
+     "url": "https://arxiv.org/html/2508.02584",
+     "year": "2025"
+    },
+    {
+     "title": "ICCMA 2025",
+     "url": "https://www.argumentationcompetition.org/2025/index.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-CCP-03",
+    "REQ-CCP-003",
+    "INV-K05"
+   ],
+   "draft_ref": "master §0 γρ.90 και γρ.107, §6.3 γρ.515· spine INV-K05· 29.md γρ.70",
+   "draft_position": "Κανένα free-text write path προς trusted state: μόνο typed speech acts, που επικυρώνονται ως προς schema, υπογράφοντα, capability και κατάσταση διαλόγου. Commitment stores ως ledger events, attention budgets απέναντι σε πλημμύρα.",
+   "verdict": "holds",
+   "reasoning": "Ευθυγραμμίζεται με δύο προηγούμενα: τα persuasion dialogue systems (Prakken 2006: locutions, commitment stores, protocol, effect και termination rules) και τα Protocol Documents του Agora με hash (demo 100 agents, ~5× φθηνότερο από τη φυσική γλώσσα). Η γενεαλογία FIPA ACL ισχύει ως ιστορικό πρότυπο· η πρωτογενής πηγή όμως δεν είναι πλέον προσβάσιμη, και η σημασιολογία του επικρίθηκε (Pitt & Mamdani 1999· Wooldridge 2000).\n\nΟ κανόνας είναι αναγκαίος αλλά όχι επαρκής. Τα claims παραμένουν φυσική γλώσσα μέσα σε typed πεδία. Το Prompt Infection δείχνει αυτο-αναπαραγόμενο LLM-to-LLM injection, και το Secret Collusion αξιολογεί steganographic συντονισμό. Η εγγύηση προκύπτει μόνο σε συνδυασμό με INV-C03 και INV-S01 (GAP-CCP-07).\n\nΣτοχευμένος έλεγχος για ανώτερη εναλλακτική: το CaMeL (2025) δεν αντικαθιστά το INV-K05, το ενισχύει στο επίπεδο εκτέλεσης.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-05",
+    "SOTA-CCP-08",
+    "SOTA-CCP-18",
+    "SOTA-CCP-21"
+   ],
+   "sources": [
+    {
+     "title": "Formal systems for persuasion dialogue",
+     "url": "https://webspace.science.uu.nl/~prakk101/pubs/dgreview.pdf",
+     "year": "2006"
+    },
+    {
+     "title": "A Scalable Communication Protocol for Networks of LLMs (Agora)",
+     "url": "https://arxiv.org/html/2410.11905v1",
+     "year": "2024"
+    },
+    {
+     "title": "Prompt Infection",
+     "url": "https://arxiv.org/abs/2410.07283",
+     "year": "2024"
+    },
+    {
+     "title": "Defeating Prompt Injections by Design (CaMeL)",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ICD-13"
+   ],
+   "draft_ref": "_unmerged-parts/15.md γρ.43 και §15.1 γρ.5–17",
+   "draft_position": "Speech acts ASSERT/QUERY/CHALLENGE/SUPPORT/CONCEDE/RETRACT/PROPOSE/COMMIT/APPEAL, EvidenceSync, ClaimQuery, StancePublish, TaskAnnounce/Bid/Award. Binding AsyncAPI + gRPC query. Invariants K01, K04, K05.",
+   "verdict": "gap",
+   "reasoning": "Το §15.1 απαιτεί, για κάθε ICD, operations με προϋποθέσεις, αποτελέσματα και idempotency, καθώς και Semantics/QoS (linearizable/causal/eventual, ordering). Η γραμμή του ICD-13 δίνει μόνο λίστα performatives και τρία invariants. Λείπουν:\n- pre/post-conditions·\n- σημασιολογία commitments, relevance και termination·\n- consistency model ανά ομάδα λειτουργιών (evidence, claims, stances, verdict queries με cut, tasks).\n\nΗ §10, που θα τα όριζε, δεν γράφτηκε. Λείπει και προφίλ εξωτερικού ορίου. Το A2A 1.0.0 έχει Tasks, Parts, υπογεγραμμένα Agent Cards και extensions με URI, αλλά όχι commitments, voting ή dissent.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-05",
+    "SOTA-CCP-06",
+    "SOTA-CCP-07"
+   ],
+   "sources": [
+    {
+     "title": "BSPL (AAMAS 2011)",
+     "url": "https://www.cs.huji.ac.il/~jeff/aamas11/papers/A4_B57.pdf",
+     "year": "2011"
+    },
+    {
+     "title": "Ahoy: LLMs Enacting Multiagent Interaction Protocols",
+     "url": "https://arxiv.org/abs/2606.05390",
+     "year": "2026"
+    },
+    {
+     "title": "A2A Protocol Specification",
+     "url": "https://a2a-protocol.org/latest/specification/",
+     "year": "2026"
+    },
+    {
+     "title": "Governance Gaps in Agent Interoperability Protocols",
+     "url": "https://arxiv.org/abs/2606.31498",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-CCP-04",
+    "REQ-CCP-004"
+   ],
+   "draft_ref": "master §6.3 γρ.516· 29.md γρ.71· 15.md ICD-14 γρ.44",
+   "draft_position": "Append-only ευρετήριο verdicts, εφέσεων και standards ως προβολή πάνω σε verdict events. Οι αναγνώσεις φέρουν cut. Verdicts μόνο μέσω Court, μαζί με τις μειοψηφίες τους.",
+   "verdict": "holds",
+   "reasoning": "Κανένα υπαρκτό πρωτόκολλο δεν το ξεπερνά· voting και dissent preservation απουσιάζουν από MCP, A2A, ACP, ANP και ERC-8004. Το Habermas Machine δείχνει ότι η σύνθεση που ενσωματώνει τις διαφωνούσες φωνές είναι εφικτή και προτιμάται. Το Deliberative Illusion δείχνει ότι η συμφωνία μπορεί να αυξάνεται ενώ χάνονται γεγονότα, άρα η συναίνεση δεν είναι σήμα επιτυχίας· αυτό στηρίζει την υποχρεωτική διατήρηση του dissent. Η προβολή πάνω σε ledger με cut είναι δοκιμασμένη τεχνική.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-07",
+    "SOTA-CCP-13",
+    "SOTA-CCP-16"
+   ],
+   "sources": [
+    {
+     "title": "Governance Gaps in Agent Interoperability Protocols",
+     "url": "https://arxiv.org/abs/2606.31498",
+     "year": "2026"
+    },
+    {
+     "title": "AI can help humans find common ground (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1126/science.adq2852",
+     "year": "2024"
+    },
+    {
+     "title": "The Deliberative Illusion",
+     "url": "https://arxiv.org/abs/2606.03032",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-CCP-05",
+    "INV-K04",
+    "REQ-CCP-005"
+   ],
+   "draft_ref": "master §6.3 γρ.517, glossary γρ.277· spine INV-K04· 29.md γρ.72",
+   "draft_position": "Stance (accept/reject/suspend + βαθμός) ανά οντότητα, υπογεγραμμένη μόνο από την ιδιοκτήτρια. Πολιτική private/published, μετρικές απόκλισης. Η stance δεν είναι ψήφος.",
+   "verdict": "holds",
+   "reasoning": "Η ιδιοκτησία μέσω υπογραφής είναι σωστή, και ο διαχωρισμός stance/ψήφου συμφωνεί με τα ευρήματα ότι η πλειοψηφία δεν είναι διαδικασία αλήθειας. Υπάρχουν τρία κενά:\n(α) Δεν προβλέπεται ανεξαρτησία πριν από την έκθεση. Strict conformity 29% στο κύριο setting, με 57–77% correct-to-wrong· μετάβαση φάσης σε biased consensus· wrong-but-sure cascades (GAP-CCP-05).\n(β) Δεν ορίζεται μετρική απόκλισης. Σε ένα leaderboard dataset τα μοντέλα συμφωνούν 60% όταν σφάλλουν, και τα ακριβέστερα συσχετίζονται ισχυρά· οι απλές μετρήσεις παραπλανούν (GAP-CCP-06).\n(γ) Οι ιδιωτικές stances μέσα σε γεω-αναπαραγόμενα ledgers χρειάζονται E2EE και capabilities (GAP-CCP-14).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-13",
+    "SOTA-CCP-14",
+    "SOTA-CCP-19"
+   ],
+   "sources": [
+    {
+     "title": "Not All Flips Are Conformity",
+     "url": "https://arxiv.org/abs/2606.00820",
+     "year": "2026"
+    },
+    {
+     "title": "Emergence of Biased Consensus in Multi-Agent LLM Debates",
+     "url": "https://arxiv.org/abs/2608.02827",
+     "year": "2026"
+    },
+    {
+     "title": "Correlated Errors in Large Language Models",
+     "url": "https://arxiv.org/abs/2506.07962",
+     "year": "2025"
+    },
+    {
+     "title": "Keyhive notebook",
+     "url": "https://www.inkandswitch.com/keyhive/notebook/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-CCP-06",
+    "REQ-CCP-006"
+   ],
+   "draft_ref": "master §6.3 γρ.518· 29.md γρ.73",
+   "draft_position": "Κοινές διτεμπορικές προβολές world model από evidence + verdicts. Παράγωγες, με rebuild + differential. Rust + RDF store. INV-E01, INV-E03.",
+   "verdict": "holds",
+   "reasoning": "Η αρχή «μόνο παράγωγες, rebuildable προβολές πάνω σε ledger» είναι σωστή και συνεπής με το ADR-0015. Τα blackboards είναι χώροι συντονισμού, όχι αλήθειας.\n\nΣτοχευμένος έλεγχος: το Graphiti/Zep (2025) είναι temporally-aware knowledge graph για agent memory, αλλά συνθέτει γεγονότα από αδόμητα δεδομένα μέσω LLM. Δεν είναι ανώτερο, γιατί χάνει την ιδιότητα «μόνο από evidence + verdicts» (INV-C03).\n\nΑσάφεια του προχείρου: δεν λέει αν η προβολή περιέχει μόνο ADJUDICATED/ESTABLISHED ή και COMMITTED claims μεμονωμένων οντοτήτων. Το RDF store ανήκει στο EXP-05 (KNW) και δεν ελέγχθηκε εδώ.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-11",
+    "SOTA-CCP-17"
+   ],
+   "sources": [
+    {
+     "title": "nanopub.net",
+     "url": "https://nanopub.net/",
+     "year": "accessed 2026"
+    },
+    {
+     "title": "Zep: A Temporal Knowledge Graph Architecture for Agent Memory",
+     "url": "https://arxiv.org/abs/2501.13956",
+     "year": "2025"
+    },
+    {
+     "title": "Exploring Advanced LLM MAS Based on Blackboard Architecture",
+     "url": "https://arxiv.org/abs/2507.01701",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-CCP-07",
+    "REQ-CCP-007"
+   ],
+   "draft_ref": "master §6.3 γρ.519· 29.md γρ.74",
+   "draft_position": "Coordination Market: ανάθεση μέσω contract-net, blackboard regions, ρόλοι, budgets, timeouts και ανακατανομή. Elixir, R-A, [T].",
+   "verdict": "holds",
+   "reasoning": "Ο μηχανισμός είναι υλοποιήσιμος σήμερα και έχει πρόσφατα αντίστοιχα: blackboard (καλύτερη μέση απόδοση με λιγότερα tokens· 13%–57% σχετική βελτίωση στο data discovery), auction allocation (Agora 2026), SOP-driven (MetaGPT). Κανένα δεν κυριαρχεί. Η αξία εξαρτάται από τη δομή της εργασίας (από +80.8% έως −70.0%), και οι αρχιτεκτονικές χωρίς κεντρική επαλήθευση διαδίδουν περισσότερα σφάλματα. Άρα το [T] ισχύει για τον μηχανισμό, ενώ η ωφέλεια είναι [X]. Λείπουν επιλογή τοπολογίας ανά εργασία και σημείο επαλήθευσης (GAP-CCP-10). Η αντιστοίχιση σε INV-K05 και EXP-25 είναι αδύναμη (GAP-CCP-11).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-12",
+    "SOTA-CCP-17"
+   ],
+   "sources": [
+    {
+     "title": "Towards a Science of Scaling Agent Systems",
+     "url": "https://arxiv.org/abs/2512.08296",
+     "year": "2025"
+    },
+    {
+     "title": "Why Do Multi-Agent LLM Systems Fail?",
+     "url": "https://arxiv.org/abs/2503.13657",
+     "year": "2025"
+    },
+    {
+     "title": "Agora: Auction-Based Task Allocation",
+     "url": "https://arxiv.org/html/2607.09600v1",
+     "year": "2026"
+    },
+    {
+     "title": "LLM-Based Multi-Agent Blackboard System",
+     "url": "https://arxiv.org/abs/2510.01285",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-CCP-008"
+   ],
+   "draft_ref": "29.md γρ.75· master §7.2 DP-3 γρ.609, §7.4 γρ.642–647, §7.5 γρ.671",
+   "draft_position": "Η διάταξη verdicts μεταξύ sites αντέχει f Byzantine μέλη με n ≥ 3f+1 (ADV-02, KRN-01, ICD-14, INV-K06).",
+   "verdict": "holds",
+   "reasoning": "Η απαίτηση είναι σωστή. Η μοναδικότητα του τελικού verdict δεν είναι I-confluent (το BEC paper δίνει ως παράδειγμα το uniqueness constraint), άρα απαιτεί ordering/consensus. Το n = 3f+1 είναι το μοντέλο partial synchrony των BFT SMR (HotStuff-2: n = 3t+1). Τα Trust-BFT με trusted components χρειάζονται λιγότερα replicas, αλλά με τρεις τεκμηριωμένους περιορισμούς, άρα δεν είναι αυστηρά ανώτερα.\n\nΑσυνέπεια: το DP-3 ορίζει «≥3 sites» και το §7.4 δείχνει ακριβώς 3 (A primary, B replica + witness, C witness + cold archive). Το §7.5 δεν ορίζει n ούτε πού τρέχουν οι κόμβοι διάταξης. Με 3 ανεξάρτητα failure domains, το f=1 σε επίπεδο site δεν ικανοποιείται (GAP-CCP-04). Το REQ δεν αναφέρει κανένα CCP component (λείπει το CMP-CCP-04) ούτε το ICD-13.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-02",
+    "SOTA-CCP-03",
+    "SOTA-CCP-04",
+    "SOTA-CCP-22"
+   ],
+   "sources": [
+    {
+     "title": "Byzantine Eventual Consistency and the Fundamental Limits of P2P Databases",
+     "url": "https://arxiv.org/pdf/2012.00472",
+     "year": "2020"
+    },
+    {
+     "title": "HotStuff-2",
+     "url": "https://eprint.iacr.org/2023/397",
+     "year": "2023"
+    },
+    {
+     "title": "Dissecting BFT Consensus: In Trusted Components we Trust!",
+     "url": "https://arxiv.org/abs/2202.01354",
+     "year": "2022"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0031"
+   ],
+   "draft_ref": "_unmerged-parts/22.md γρ.37· spine ADR-0031 (γρ.118)",
+   "draft_position": "Byzantine tolerance: CRDT για τα μονότονα επίπεδα, BFT (HotStuff-family) μόνο για διατοπική διάταξη verdicts, witnesses + gossip (επέκταση του witness model του TRUST-BOOTSTRAP και του tlog).",
+   "verdict": "superior-exists",
+   "reasoning": "Η διάκριση είναι ακριβώς αυτή που δικαιολογεί το θεώρημα I-confluence: μονότονα επίπεδα χωρίς consensus, μοναδικότητα verdict με consensus. Όμως το «CRDT» σκέτο δεν παρέχει τη Byzantine tolerance που δηλώνει ο τίτλος του ADR.\n\nΓια τη διάταξη, το «HotStuff-family» παραμένει έγκυρο. Οι DAG-BFT (Mysticeti, Autobahn) βελτιστοποιούν throughput που ο φόρτος verdicts δεν χρειάζεται. Και οι ώριμες υλοποιήσεις έχουν σφάλματα: CometBFT CSA-2026-001, Critical, στο BFT Time. Υπάρχει απλούστερη εναλλακτική, single-writer Court log με quorum witness cosignatures (C2SP): DEC-CCP-02.",
+   "superior": "Αντικατάσταση του «CRDT» με «BEC/BFT-CRDT (hash-DAG, εγκυρότητα στο causal past)». Κρατά coordination-free, μονοτονία και gossip, και προσθέτει σύγκλιση με οσουσδήποτε Byzantine κόμβους, με το trade-off ανάκλησης που δηλώνεται στο CMP-CCP-01. Το τμήμα BFT/witness παραπέμπεται σε απόφαση του δημιουργού.",
+   "sota_refs": [
+    "SOTA-CCP-02",
+    "SOTA-CCP-03",
+    "SOTA-CCP-04"
+   ],
+   "sources": [
+    {
+     "title": "Making CRDTs Byzantine Fault Tolerant",
+     "url": "https://martin.kleppmann.com/papers/bft-crdt-papoc22.pdf",
+     "year": "2022"
+    },
+    {
+     "title": "Byzantine Eventual Consistency...",
+     "url": "https://arxiv.org/pdf/2012.00472",
+     "year": "2020"
+    },
+    {
+     "title": "CSA-2026-001: Tachyon",
+     "url": "https://github.com/cometbft/cometbft/security/advisories/GHSA-c32p-wcqj-j677",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-cosignature",
+     "url": "https://c2sp.org/tlog-cosignature",
+     "year": "accessed 2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0007"
+   ],
+   "draft_ref": "_unmerged-parts/22.md γρ.13· master §0 γρ.90–91, §3 γρ.280–281",
+   "draft_position": "Collective = Epistemic Commons Protocol με 4 επίπεδα (evidence, claims, verdicts, stances), plurality doctrine, κανένα free-text path.",
+   "verdict": "holds",
+   "reasoning": "Κανένα υπαρκτό πρότυπο ή σύστημα δεν καλύπτει αυτή τη σύνθεση. Κάθε επίπεδο έχει ώριμο αντίστοιχο: nanopublications για assertion/provenance, ASPIC+ και AIF για τα claims, ατομική stance, verdict μόνο μέσω διαδικασίας.\n\nΗ υπόθεση αξίας όμως είναι εμπειρική. Το majority voting εξηγεί τα περισσότερα κέρδη του debate. Ο c-factor έχει αποτυχίες αναπαραγωγής (Bates & Gupta 2017· Credé & Howardson 2017) και διόρθωση το 2022, άρα δεν στηρίζει αξιόπιστα την plurality doctrine. Το ADR πρέπει να μείνει υπό όρο του EXP-02. Λείπει προαιρετικό επίπεδο σύνθεσης κοινού εδάφους (GAP-CCP-12).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-07",
+    "SOTA-CCP-09",
+    "SOTA-CCP-11",
+    "SOTA-CCP-12",
+    "SOTA-CCP-20"
+   ],
+   "sources": [
+    {
+     "title": "Governance Gaps in Agent Interoperability Protocols",
+     "url": "https://arxiv.org/abs/2606.31498",
+     "year": "2026"
+    },
+    {
+     "title": "Debate or Vote",
+     "url": "https://arxiv.org/abs/2508.17536",
+     "year": "2025"
+    },
+    {
+     "title": "Collective intelligence in teams (Frontiers)",
+     "url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2022.989572/full",
+     "year": "2022"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-02"
+   ],
+   "draft_ref": "_unmerged-parts/26.md γρ.29· master T3 γρ.166",
+   "draft_position": "ECP έναντι καλύτερης μεμονωμένης οντότητας και free-chat multi-agent, με ίδιες εργασίες και ίσο compute. Αν ECP ≤ καλύτερης μεμονωμένης, το Collective περιορίζεται σε κοινή μαρτυρία.",
+   "verdict": "superior-exists",
+   "reasoning": "Οι baselines του προχείρου είναι ακριβώς αυτές που η βιβλιογραφία 2025 δείχνει ανεπαρκείς:\n- το majority voting εξηγεί τα περισσότερα κέρδη του MAD·\n- το MAD συχνά δεν ξεπερνά CoT/Self-Consistency·\n- το Self-MoA ξεπερνά το mixed MoA·\n- το αποτέλεσμα κυμαίνεται από +80.8% έως −70.0% ανάλογα με τη δομή της εργασίας·\n- τα σφάλματα των LLM συσχετίζονται.\nΈνα θετικό EXP-02 χωρίς αυτές τις baselines δεν αποδεικνύει την αξία του ECP.",
+   "superior": "Προκαταχωρισμένος σχεδιασμός που κρατά τις συγκρίσεις του προχείρου και προσθέτει:\n1. majority vote/self-consistency και Self-MoA με ίσο compute·\n2. στρωματοποίηση κατά δομή εργασίας (decomposable ή sequential)·\n3. μέτρηση συσχέτισης σφαλμάτων και ετερογένειας·\n4. μέτρηση επιβίωσης κρίσιμων γεγονότων και harmful conformity·\n5. σκέλος argument graph κατά MArgE.\nΚριτήριο θανάτωσης: ECP ≤ ισχυρότερης φθηνής baseline ensemble. Trade-off: περισσότερο compute αξιολόγησης.",
+   "sota_refs": [
+    "SOTA-CCP-12",
+    "SOTA-CCP-13",
+    "SOTA-CCP-14",
+    "SOTA-CCP-10"
+   ],
+   "sources": [
+    {
+     "title": "Debate or Vote (NeurIPS 2025)",
+     "url": "https://arxiv.org/abs/2508.17536",
+     "year": "2025"
+    },
+    {
+     "title": "Stop Overvaluing Multi-Agent Debate",
+     "url": "https://arxiv.org/abs/2502.08788",
+     "year": "2025"
+    },
+    {
+     "title": "Rethinking Mixture-of-Agents",
+     "url": "https://arxiv.org/abs/2502.00674",
+     "year": "2025"
+    },
+    {
+     "title": "Towards a Science of Scaling Agent Systems",
+     "url": "https://arxiv.org/abs/2512.08296",
+     "year": "2025"
+    },
+    {
+     "title": "Correlated Errors in LLMs",
+     "url": "https://arxiv.org/abs/2506.07962",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "KT-04"
+   ],
+   "draft_ref": "_unmerged-parts/24.md γρ.19· spine KT-04· master OS-08 γρ.367",
+   "draft_position": "Partition + Byzantine agents ⇒ κανένα αντιφατικό τελικό verdict, σύγκλιση evidence μετά την επανασύνδεση, ανίχνευση equivocation εντός ορίου, καραντίνα του Byzantine body. INV K01, K06, I04· EXP-12.",
+   "verdict": "holds",
+   "reasoning": "Τα κριτήρια είναι σωστά. Αντιστοιχούν σε BEC (σύγκλιση) και σε BFT ή quorum witnesses (non-equivocation), με τα υπογεγραμμένα αντιφατικά updates ως μεταβιβάσιμη απόδειξη για την καραντίνα. Χρειάζονται τρεις διορθώσεις:\n(α) Η ανίχνευση equivocation είναι δυνατή μόνο αφού οι σωστοί κόμβοι επικοινωνήσουν· άρα το όριο μετριέται από την επανασύνδεση.\n(β) Πρέπει να δηλωθεί ότι σε minority partition τα verdicts σταματούν (liveness) ενώ η safety διατηρείται.\n(γ) Με την ελάχιστη τοπολογία του DP-3 (3 sites) το κριτήριο δεν ικανοποιείται για f ≥ 1 σε επίπεδο site (GAP-CCP-04).\nΗ επαλήθευση απαιτεί DST (EXP-12).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-CCP-02",
+    "SOTA-CCP-03",
+    "SOTA-CCP-04"
+   ],
+   "sources": [
+    {
+     "title": "Making CRDTs Byzantine Fault Tolerant",
+     "url": "https://martin.kleppmann.com/papers/bft-crdt-papoc22.pdf",
+     "year": "2022"
+    },
+    {
+     "title": "C2SP tlog-cosignature",
+     "url": "https://c2sp.org/tlog-cosignature",
+     "year": "accessed 2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-07"
+   ],
+   "draft_ref": "_unmerged-parts/24.md γρ.22· spine KT-07",
+   "draft_position": "Απόκλιση evidence → 0 με συνδεσιμότητα· απόκλιση stances μετρημένη και διατηρημένη· κανένα verdict χωρίς διαδικασία. INV K01, K02, K03, K04· EXP-02.",
+   "verdict": "superior-exists",
+   "reasoning": "Το «απόκλιση stances διατηρημένη» είναι αμφίσημο. Μπορεί να σημαίνει ότι οι αποκλίνουσες stances δεν συγχωνεύονται, ή ότι το επίπεδο απόκλισης πρέπει να παραμένει. Και στις δύο αναγνώσεις το κριτήριο δεν διακρίνει τη θεμιτή σύγκλιση λόγω μαρτυρίας από τη σύγκλιση λόγω conformity. Το Not All Flips δείχνει ότι η διάκριση απαιτεί αντιπαραδειγματικούς ελέγχους. Το Deliberative Illusion δείχνει ότι η συμφωνία μπορεί να αυξάνεται ενώ σβήνονται έως 72% των issue-critical facts.",
+   "superior": "Κριτήρια που κρατούν τα τρία του προχείρου και προσθέτουν:\n1. 0 ανεξήγητες αλλαγές stance· κάθε αλλαγή ως typed CONCEDE/RETRACT με αναφορά σε νέο evidence ή argument·\n2. επιβίωση issue-critical facts ≥ προκαθορισμένου ορίου (τύπου DelibTrace)·\n3. harmful conformity μετρημένη έναντι σφραγισμένων ανεξάρτητων αρχικών stances.",
+   "sota_refs": [
+    "SOTA-CCP-13"
+   ],
+   "sources": [
+    {
+     "title": "Not All Flips Are Conformity",
+     "url": "https://arxiv.org/abs/2606.00820",
+     "year": "2026"
+    },
+    {
+     "title": "The Deliberative Illusion",
+     "url": "https://arxiv.org/abs/2606.03032",
+     "year": "2026"
+    },
+    {
+     "title": "Free-MAD",
+     "url": "https://arxiv.org/abs/2509.11035",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-CCP-01",
+   "title": "Η §10 (Collective) δεν γράφτηκε και οι αναφορές σε αυτήν κρέμονται",
+   "description": "Το glossary (master γρ.280) και ο §9.1 (γρ.811, «ECP (§10)») παραπέμπουν στην §10, που δεν υπάρχει (Παράρτημα Ω). Λείπει προδιαγραφή πρωτοκόλλου διαλόγου: pre/post-conditions ανά speech act, σημασιολογία commitment store, κανόνες relevance, turn-taking και τερματισμού, σχέση του APPEAL με το ICD-14.",
+   "why_it_matters": "Χωρίς αυτά το INV-K05 δεν ελέγχεται, το VT-013 δεν έχει oracle και το CMP-CCP-03 δεν έχει τι να επικυρώσει πέρα από το schema.",
+   "sota_answer": "Declarative information protocols (BSPL/Langshaw) με επαλήθευση safety/liveness, εκτελέσιμα από LLM agents (Ahoy), μαζί με τις locutions και τους κανόνες commitment/termination του Prakken.",
+   "sota_refs": [
+    "SOTA-CCP-05",
+    "SOTA-CCP-06"
+   ],
+   "sources": [
+    {
+     "title": "BSPL (AAMAS 2011)",
+     "url": "https://www.cs.huji.ac.il/~jeff/aamas11/papers/A4_B57.pdf",
+     "year": "2011"
+    },
+    {
+     "title": "Ahoy",
+     "url": "https://arxiv.org/abs/2606.05390",
+     "year": "2026"
+    },
+    {
+     "title": "Formal systems for persuasion dialogue",
+     "url": "https://webspace.science.uu.nl/~prakk101/pubs/dgreview.pdf",
+     "year": "2006"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-CCP-02",
+   "title": "Σημασιολογία αναπαραγωγής ορίζεται μόνο για evidence και verdicts",
+   "description": "Ορίζονται μόνο το evidence (G-Set) και η διάταξη verdicts (BFT). Για claim graph (με retractions), stances (single-owner, private/published), taint status και task contracts δεν ορίζεται διατοπική σημασιολογία. Το ICD-13 δεν δίνει consistency model ανά ομάδα λειτουργιών, όπως απαιτεί το §15.1.",
+   "why_it_matters": "Τα claims και οι attack edges εξαρτώνται αιτιακά από άλλα claims. Χωρίς causal delivery και ντετερμινιστική εγκυρότητα, οι replicas αποκλίνουν όταν υπάρχουν Byzantine σώματα.",
+   "sota_answer": "Κατάταξη κάθε λειτουργίας με το κριτήριο I-confluence: οι I-confluent πάνε σε BEC hash-DAG με causal delivery· οι μη I-confluent (μοναδικότητα verdict, αποκλειστική ανάθεση task) πάνε σε ordering/consensus.",
+   "sota_refs": [
+    "SOTA-CCP-02",
+    "SOTA-CCP-01"
+   ],
+   "sources": [
+    {
+     "title": "Byzantine Eventual Consistency...",
+     "url": "https://arxiv.org/pdf/2012.00472",
+     "year": "2020"
+    },
+    {
+     "title": "Verifying Strong Eventual Consistency in Distributed Systems",
+     "url": "https://arxiv.org/abs/1707.01747",
+     "year": "2017"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-CCP-03",
+   "title": "Εγκυρότητα που εξαρτάται από κατάσταση εκτός causal past (revocation race)",
+   "description": "Η αποδοχή evidence και speech acts εξαρτάται από attestation (INV-E04) και από live delegation/ανάκληση (INV-I04, ICD-03: «ανάκληση αποτελεσματική από τον χρόνο της»). Αν η ανάκληση δεν βρίσκεται στο causal past ενός update, οι σωστοί κόμβοι αποφασίζουν διαφορετικά για την εγκυρότητά του.",
+   "why_it_matters": "Μόνιμη απόκλιση του Evidence Commons ακριβώς στα OS-08, KT-04 και KT-18, όταν σώμα με παραβιασμένο κλειδί υπογράφει κατά τη διάρκεια partition.",
+   "sota_answer": "Εγκυρότητα που κρίνεται αποκλειστικά στο causal past (Kleppmann 2022, §3.4). Η ανάκληση ισχύει για ένα update μόνο αν είναι αιτιακά προγενέστερη. Updates σύγχρονα με την ανάκληση γίνονται δεκτά και σημαίνονται (taint) μέσω νέων attestations· αυτό απαιτεί αναδιατύπωση του κριτηρίου του KT-18.",
+   "sota_refs": [
+    "SOTA-CCP-02"
+   ],
+   "sources": [
+    {
+     "title": "Making CRDTs Byzantine Fault Tolerant (§3.4)",
+     "url": "https://martin.kleppmann.com/papers/bft-crdt-papoc22.pdf",
+     "year": "2022"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-CCP-04",
+   "title": "Η ελάχιστη τοπολογία του DP-3 δεν ικανοποιεί το n ≥ 3f+1 για f ≥ 1 σε επίπεδο site",
+   "description": "Το DP-3 ορίζει «≥3 sites» και το §7.4 δείχνει ακριβώς 3 (A primary, B replica + witness, C witness + cold archive). Το §7.5 ζητά αντοχή f με n ≥ 3f+1, χωρίς να ορίζει n ή την τοποθέτηση των κόμβων διάταξης. Τα INV-K06, REQ-CCP-008 και KT-04 απαιτούν n ≥ 3f+1. Για f=1 χρειάζονται ≥4 κόμβοι διάταξης σε ανεξάρτητα failure domains/διαχειριστές· με 3 ανεξάρτητα sites το f σε επίπεδο site είναι 0.",
+   "why_it_matters": "Ένα Tier-0 invariant και ένα kill test είναι ανικανοποίητα στην ελάχιστη τοπολογία που το ίδιο το πρόχειρο σημαίνει [T].",
+   "sota_answer": "Τρεις δρόμοι:\n- ≥4 ανεξάρτητοι κόμβοι BFT (HotStuff-2-class)·\n- Trust-BFT με trusted components (HSM/TEE), με λιγότερα replicas αλλά με τεκμηριωμένους περιορισμούς·\n- αναδιατύπωση του INV-K06 ως «Verdict Non-Equivocation» με ρητό fault model, ικανοποιούμενη με single-writer log και quorum witness cosignatures (C2SP).",
+   "sota_refs": [
+    "SOTA-CCP-03",
+    "SOTA-CCP-04",
+    "SOTA-CCP-22"
+   ],
+   "sources": [
+    {
+     "title": "HotStuff-2",
+     "url": "https://eprint.iacr.org/2023/397",
+     "year": "2023"
+    },
+    {
+     "title": "C2SP tlog-cosignature",
+     "url": "https://c2sp.org/tlog-cosignature",
+     "year": "accessed 2026"
+    },
+    {
+     "title": "Dissecting BFT Consensus: In Trusted Components we Trust!",
+     "url": "https://arxiv.org/abs/2202.01354",
+     "year": "2022"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-CCP-05",
+   "title": "Κανένας μηχανισμός κατά της conformity και του factual attrition",
+   "description": "Το πρόχειρο έχει private/published stances, αλλά όχι:\n- σφραγισμένη ανεξάρτητη stance πριν από την έκθεση στις stances άλλων·\n- υποχρέωση κάθε αλλαγή stance να παραπέμπει σε νέο evidence ή argument·\n- μέτρηση επιβίωσης κρίσιμων γεγονότων.",
+   "why_it_matters": "Σε LLM MAS:\n- η strict conformity είναι 29% στο κύριο setting, με 57–77% correct-to-wrong·\n- υπάρχει μετάβαση φάσης σε biased consensus·\n- σβήνεται έως 72% των issue-critical facts ενώ η συμφωνία αυξάνεται.\nΑυτό είναι το «χάος με συναίνεση» που το T3 αποκλείει.",
+   "sota_answer": "Anti-conformity και απόφαση πάνω στην τροχιά (Free-MAD), αντιπαραδειγματική αποσύνθεση αλλαγών stance (Not All Flips), μέτρηση τύπου DelibTrace, ετερογένεια agents, προσοχή στη συνδεσιμότητα της τοπολογίας.",
+   "sota_refs": [
+    "SOTA-CCP-13"
+   ],
+   "sources": [
+    {
+     "title": "Free-MAD",
+     "url": "https://arxiv.org/abs/2509.11035",
+     "year": "2025"
+    },
+    {
+     "title": "Not All Flips Are Conformity",
+     "url": "https://arxiv.org/abs/2606.00820",
+     "year": "2026"
+    },
+    {
+     "title": "The Deliberative Illusion",
+     "url": "https://arxiv.org/abs/2606.03032",
+     "year": "2026"
+    },
+    {
+     "title": "Conformity Dynamics in LLM MAS",
+     "url": "https://arxiv.org/abs/2601.05606",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-CCP-06",
+   "title": "Η plurality doctrine δεν λογαριάζει τη συσχέτιση σφαλμάτων",
+   "description": "Δεν μετριέται η πραγματική ποικιλία μεταξύ οντοτήτων ή organs. Πολλές σύμφωνες stances ή N-model agreement (ADR-0019, EXP-14) μπορεί να προέρχονται από το ίδιο υπόστρωμα.",
+   "why_it_matters": "Σε ένα leaderboard dataset τα LLM συμφωνούν 60% όταν σφάλλουν και τα δύο. Κοινή αρχιτεκτονική/πάροχος αυξάνει τη συσχέτιση, και τα ακριβέστερα μοντέλα συσχετίζονται ισχυρά. Η φαινομενική συναίνεση υπερεκτιμά τη βεβαιότητα, αντίθετα με το T6.",
+   "sota_answer": "Εμπειρική μέτρηση συσχέτισης σφαλμάτων ανά ζεύγος organ/παρόχου σε σφραγισμένα σύνολα, πολιτική ετερογένειας, και μείωση βάρους για συσχετισμένους μάρτυρες στις παράγωγες όψεις.",
+   "sota_refs": [
+    "SOTA-CCP-14",
+    "SOTA-CCP-12"
+   ],
+   "sources": [
+    {
+     "title": "Correlated Errors in Large Language Models",
+     "url": "https://arxiv.org/abs/2506.07962",
+     "year": "2025"
+    },
+    {
+     "title": "Stop Overvaluing Multi-Agent Debate",
+     "url": "https://arxiv.org/abs/2502.08788",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-CCP-07",
+   "title": "Injection και steganographic collusion μέσα από typed πεδία",
+   "description": "Το INV-K05 κλείνει τα free-text write paths στο επίπεδο του envelope, αλλά το περιεχόμενο ενός claim παραμένει φυσική γλώσσα. Δεν προβλέπονται ανίχνευση συνωμοσίας μεταξύ οντοτήτων, provenance tagging στα LLM-to-LLM μηνύματα του ECP, ή διαχωρισμός control/data flow στους agents που επεξεργάζονται εισερχόμενα speech acts.",
+   "why_it_matters": "Το prompt infection αναπαράγεται από agent σε agent. Η steganography επιτρέπει κρυφό συντονισμό που δύσκολα ανιχνεύεται. Και τα δύο οδηγούν σε capture του Court (KT-19) μέσω συλλογικών stances.",
+   "sota_answer": "Τέσσερα μέτρα σε στρώσεις:\n- διαχωρισμός control/data flow με capabilities (CaMeL: provable security στο 77% των εργασιών AgentDojo)·\n- LLM Tagging / provenance tags ως πρόσθετη στρώση·\n- συνεχής αξιολόγηση steganographic ικανοτήτων·\n- πάντα verifier-gated προαγωγή (INV-C03).",
+   "sota_refs": [
+    "SOTA-CCP-18",
+    "SOTA-CCP-21"
+   ],
+   "sources": [
+    {
+     "title": "Defeating Prompt Injections by Design (CaMeL)",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "Prompt Infection",
+     "url": "https://arxiv.org/abs/2410.07283",
+     "year": "2024"
+    },
+    {
+     "title": "Secret Collusion among AI Agents",
+     "url": "https://arxiv.org/abs/2402.07510",
+     "year": "2024"
+    },
+    {
+     "title": "Multi-Agent Risks from Advanced AI",
+     "url": "https://arxiv.org/abs/2502.14143",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-CCP-08",
+   "title": "Κανένα προφίλ εξωτερικής διαλειτουργικότητας (A2A/MCP/ANP)",
+   "description": "Το ICD-13 είναι μόνο εσωτερικό (AsyncAPI + gRPC). Δεν ορίζεται πώς συμμετέχουν εξωτερικοί agents ή θεσμοί, ούτε πώς προβάλλεται το ECP στα βιομηχανικά πρωτόκολλα.",
+   "why_it_matters": "Το A2A 1.0.0 (LF project από τον Ιούνιο 2025, με >100 εταιρείες τότε) και το MCP (AAIF, spec 2026-07-28) είναι το de facto εξωτερικό όριο. Χωρίς προφίλ, κάθε ενσωμάτωση γίνεται ad hoc πάνω σε free text· δηλαδή μονοπάτι παράκαμψης του INV-K05.",
+   "sota_answer": "Adapter A2A: πράξεις ECP ως data Parts κάτω από δηλωμένο extension URI, με υπογεγραμμένο Agent Card. Οι εξωτερικές οντότητες μπαίνουν ως OBSERVED/PROPOSED, ποτέ απευθείας trusted. Ταυτότητα μέσω DID (did:wba, ANP) όπου χρειάζεται. Επειδή το A2A δεν έχει commitments ή dissent, το ECP μένει overlay.",
+   "sota_refs": [
+    "SOTA-CCP-07",
+    "SOTA-CCP-06"
+   ],
+   "sources": [
+    {
+     "title": "A2A Protocol Specification",
+     "url": "https://a2a-protocol.org/latest/specification/",
+     "year": "2026"
+    },
+    {
+     "title": "Linux Foundation Launches the A2A Protocol Project",
+     "url": "https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents",
+     "year": "2025"
+    },
+    {
+     "title": "Governance Gaps in Agent Interoperability Protocols",
+     "url": "https://arxiv.org/abs/2606.31498",
+     "year": "2026"
+    },
+    {
+     "title": "Strabo",
+     "url": "https://arxiv.org/abs/2606.05043",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-CCP-09",
+   "title": "Λείπουν interchange format επιχειρημάτων και burden of proof πάνω στον claim graph",
+   "description": "Το CMP-CCP-02 δεν ορίζει μορφή ανταλλαγής argument graphs. Τα standards of proof αναφέρονται μόνο στο Court (CMP-CCP-04 «standards», glossary «Standard of proof»), όχι πάνω στον claim graph· το burden of proof δεν αναφέρεται καθόλου.",
+   "why_it_matters": "Χωρίς interchange format ο graph δεν μεταφέρεται σε solvers, εργαλεία ή εξωτερικούς αναλυτές, ούτε αντέχει αλλαγή engine (KT-03). Χωρίς κατανομή burden of proof, η κρίση μέσω grounded labelling είναι φτωχότερη από τη νομική πρακτική.",
+   "sota_answer": "AIF (I-, RA-, CA- και PA-nodes) ως εξωτερική προβολή του graph. Κατανομή burden of proof μέσω κατηγοριοποίησης premises κατά Carneades, ως παράμετρος του ASPIC+ instantiation.",
+   "sota_refs": [
+    "SOTA-CCP-09"
+   ],
+   "sources": [
+    {
+     "title": "Towards an argument interchange format (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1017/S0269888906001044",
+     "year": "2006"
+    },
+    {
+     "title": "The Carneades model of argument and burden of proof (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/j.artint.2007.04.010",
+     "year": "2007"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-CCP-10",
+   "title": "Η τοπολογία συντονισμού δεν εξαρτάται από την εργασία· δεν χρησιμοποιείται failure taxonomy",
+   "description": "Το CMP-CCP-07 προσφέρει έναν μηχανισμό (contract-net/blackboard) για κάθε εργασία, χωρίς επιλογή τοπολογίας και χωρίς υποχρεωτικό σημείο επαλήθευσης. Το MAST δεν χρησιμοποιείται ως fault model για DST ή σενάρια OS.",
+   "why_it_matters": "Το multi-agent κυμαίνεται από +80.8% σε decomposable εργασίες έως −70.0% σε sequential planning. Χωρίς κεντρική επαλήθευση τα σφάλματα διαδίδονται περισσότερο.",
+   "sota_answer": "Επιλογή αρχιτεκτονικής ανά κλάση εργασίας με βάση το Scaling Agent Systems, υποχρεωτικός verifier checkpoint πριν από κάθε commit, και οι 14 failure modes του MAST ως κατάλογος σεναρίων σφάλματος.",
+   "sota_refs": [
+    "SOTA-CCP-12",
+    "SOTA-CCP-17"
+   ],
+   "sources": [
+    {
+     "title": "Towards a Science of Scaling Agent Systems",
+     "url": "https://arxiv.org/abs/2512.08296",
+     "year": "2025"
+    },
+    {
+     "title": "Why Do Multi-Agent LLM Systems Fail?",
+     "url": "https://arxiv.org/abs/2503.13657",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-CCP-11",
+   "title": "Ασυνέπειες traceability στο §29.4 και στις απαριθμήσεις",
+   "description": "Οι ασυνέπειες:\n- REQ-CCP-002 και REQ-CCP-007 αντιστοιχίζονται στο INV-K05 (Typed Channel), που δεν εκφράζει «καλά ορισμένη σημασιολογία» ούτε «budgets/timeouts».\n- Το REQ-CCP-007 δείχνει στο EXP-25 (κίνητρα Resource Economy, CMP-CIV-05), όχι σε πείραμα CCP.\n- Το REQ-CCP-008 δεν έχει CCP component (λείπει το CMP-CCP-04) και αναφέρει μόνο το ICD-14, όχι το ICD-13.\n- Γενικά: το spine-vocab δηλώνει «COMPONENTS (76)» αλλά απαριθμεί 75, και το master γρ.580 γράφει «17 εγκάρσια» ενώ απαριθμεί 16. Ο αριθμός 7 για το CCP είναι συνεπής.",
+   "why_it_matters": "Το VT-901 (orphan/traceability gate) θα περάσει με λάθος σχέσεις satisfy/verify, και η Φάση Β θα εισαγάγει στο SysON λάθη που φαίνονται σωστά.",
+   "sota_answer": "Εσωτερικό ζήτημα, χωρίς εξωτερικό SOTA. Διόρθωση στη Δόση 1 της Φάσης Β: ένα invariant ανά ιδιότητα, και νέα IDs μόνο με έγκριση (ID-REQUESTS).",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-CCP-12",
+   "title": "Λείπει μη αυθεντικό επίπεδο σύνθεσης κοινού εδάφους",
+   "description": "Το ECP έχει stances και verdicts, αλλά καμία λειτουργία που να παράγει κοινές δηλώσεις με ευρεία αποδοχή από διαφορετικές οπτικές, διατηρώντας τη μειοψηφία.",
+   "why_it_matters": "Το T3 (συλλογική νοημοσύνη χωρίς απώλεια ατομικότητας) ωφελείται από σύνθεση που δεν είναι ψήφος. Χωρίς αυτήν μένουν μόνο τα άκρα: raw κατανομές ή Court.",
+   "sota_answer": "Γεννήτρια τύπου Habermas Machine (ενσωματώνει διαφωνούσες φωνές) και bridging-based ranking (Community Notes), με έξοδο PROPOSED που δεν γίνεται ποτέ trusted χωρίς Court. Polis για χαρτογράφηση θέσεων.",
+   "sota_refs": [
+    "SOTA-CCP-15",
+    "SOTA-CCP-16"
+   ],
+   "sources": [
+    {
+     "title": "AI can help humans find common ground (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1126/science.adq2852",
+     "year": "2024"
+    },
+    {
+     "title": "Birdwatch: Crowd Wisdom and Bridging Algorithms",
+     "url": "https://arxiv.org/abs/2210.15723",
+     "year": "2022"
+    }
+   ],
+   "classification": "extension"
+  },
+  {
+   "id": "GAP-CCP-13",
+   "title": "Καμία συλλογική έξοδος με εγγύηση κάλυψης και κλιμάκωση",
+   "description": "Δεν υπάρχει μηχανισμός που να μετατρέπει ένα σύνολο stances σε σύνολο πρόβλεψης με στατιστική εγγύηση, και σε Unknown ή κλιμάκωση όταν η αβεβαιότητα είναι υψηλή.",
+   "why_it_matters": "Το INV-C04 (Unknown ως απάντηση πρώτης τάξης) δεν έχει βαθμονομημένο συλλογικό σήμα· η λανθασμένη συναίνεση περνά ως βεβαιότητα.",
+   "sota_answer": "Conformal social choice: linear opinion pool + split conformal, κάλυψη ≥1−α, κλιμάκωση όταν το σύνολο έχει >1 στοιχείο. Αναχαιτίζει 81.9% των λανθασμένων consensus σε α=0.05· το όφελος έρχεται από επιλογή, όχι από καλύτερη συλλογιστική, με κόστος στην αυτοματοποίηση.",
+   "sota_refs": [
+    "SOTA-CCP-15"
+   ],
+   "sources": [
+    {
+     "title": "From Debate to Decision: Conformal Social Choice",
+     "url": "https://arxiv.org/abs/2604.07667",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-CCP-14",
+   "title": "Εμπιστευτικότητα ιδιωτικών stances σε αναπαραγόμενα ledgers",
+   "description": "Η πολιτική «private/published» δεν ορίζει κρυπτογράφηση ή έλεγχο πρόσβασης, ενώ τα ledgers και το CAS αναπαράγονται γεωγραφικά (DP-3).",
+   "why_it_matters": "Το INV-K04 εγγυάται την αυθεντικότητα της stance, όχι το απόρρητό της. Η διαρροή ιδιωτικών stances ακυρώνει την ανεξαρτησία (GAP-CCP-05) και μπορεί να παραβιάσει το INV-L03.",
+   "sota_answer": "E2EE με capability-based εξουσιοδότηση και CRDT διαχείρισης ομάδας (Keyhive: convergent capabilities, BeeKEM, Sedimentree· pre-alpha). Ο συνδυασμός με BEC είναι ερευνητική κατεύθυνση (PaPoC 2025).",
+   "sota_refs": [
+    "SOTA-CCP-19",
+    "SOTA-CCP-02"
+   ],
+   "sources": [
+    {
+     "title": "Keyhive notebook",
+     "url": "https://www.inkandswitch.com/keyhive/notebook/",
+     "year": "2026"
+    },
+    {
+     "title": "Keynote: BEC and Local-First Access Control",
+     "url": "https://martin.kleppmann.com/2025/03/31/papoc-keynote-byzantine.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "extension"
+  }
+ ],
+ "unknowns": [
+  "Δεν ελέγχθηκαν τα contracts/schemas του προχείρου (speech-act, stance, verdict στο contracts/): είναι ανεπαλήθευτο πρόχειρο.",
+  "Οι as-built έδρες του STAVROPOULOSLAWCORPUS (legal-dialectic.lisp, N-minds protocol, plurality doctrine, institution.lisp) είναι ανεπαλήθευτες από εδώ.",
+  "Δεν βρέθηκε επαληθευμένη production βιβλιοθήκη BEC/hash-DAG reconciliation σε Rust ή Elixir.",
+  "Η πρωτογενής προδιαγραφή FIPA (SC00037J) δεν είναι προσβάσιμη: το fipa.org σερβίρει άσχετο περιεχόμενο και το web.archive.org δεν είναι διαθέσιμο εδώ. Ο αριθμός των communicative acts και η σημασιολογία FP/RE δεν επαληθεύτηκαν.",
+  "Το περιεχόμενο της διόρθωσης του Riedl et al. (PNAS 2022) δεν επαληθεύτηκε. Ο ισχυρισμός για AVE 44% → 19.6% αφαιρέθηκε.",
+  "Η μαθηματική κριτική του Hong–Page (AMS Notices) δεν επαληθεύτηκε (HTTP 403) και αφαιρέθηκε.",
+  "Δεν επαληθεύτηκαν τα venues των MetaGPT (ICLR 2024), Secret Collusion (NeurIPS 2024) και MAST (NeurIPS 2025).",
+  "Δεν επαληθεύτηκε η ημερομηνία ενεργοποίησης του Mysticeti στο Sui mainnet. Η ανάρτηση της Sui (Απρίλιος 2024) είναι προαναγγελία.",
+  "Δεν επαληθεύτηκαν η παραγωγική υιοθέτηση και η ημερομηνία του C2SP tlog-witness v1.0.0.",
+  "Η σελίδα του CometBFT v0.40.0 δείχνει «27 Jul» χωρίς έτος. Το 2026 συνάγεται από τη σειρά patches μετά το CSA-2026-001 (v0.38.21, Ιαν. 2026).",
+  "Δεν βρέθηκε καθιερωμένη μετρική απόκλισης stances για LLM MAS.",
+  "Δεν ξέρω αν τα ευρήματα conformity μεταφέρονται σε agents περιορισμένους από typed speech acts και verifier-gated commit. Δεν βρέθηκε σχετική μελέτη.",
+  "Δεν ξέρω αν το ECP υπερέχει σε νομικές εργασίες. Είναι αντικείμενο του EXP-02.",
+  "Το budget web search εξαντλήθηκε (200/200). Οι στοχευμένοι έλεγχοι για τα holds έγιναν μόνο με WebFetch σε γνωστές πηγές (CaMeL, Graphiti/Zep, Trust-BFT). Μπορεί να έχουν διαφύγει άλλες εναλλακτικές.",
+  "Δεν ελέγχθηκε η τρέχουσα κατάσταση των bitemporal βάσεων για το CMP-CCP-06. Ανήκει στο στρώμα KNW."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-CCP-01",
+   "question": "Ποιο fault model δεσμεύει τα μονότονα επίπεδα του ECP (evidence, claims, stances, taint);",
+   "recommendation": "BEC / BFT-CRDT: hash-DAG υπογεγραμμένων updates, εγκυρότητα μόνο στο causal past, συμφιλίωση με heads, και κατάταξη κάθε λειτουργίας με το κριτήριο I-confluence. Αναδιατύπωση του INV-K01 υπό αυτό το μοντέλο, και του κριτηρίου του KT-18 (σήμανση αντί απόρριψης για updates σύγχρονα με την ανάκληση).",
+   "alternatives": [
+    {
+     "option": "BEC / BFT-CRDT (πρόταση)",
+     "pros": "Σύγκλιση με οσουσδήποτε Byzantine κόμβους, Sybil-immune, χωρίς consensus, με αποδείξεις. Επαναχρησιμοποιεί τα CIDs του προχείρου. Καλύπτει OS-08, KT-04 και το revocation race.",
+     "cons": "Αποθήκευση predecessor hashes. Δεν επαληθεύτηκε production βιβλιοθήκη σε Rust/Elixir. Αλλάζει τη σημασιολογία ανάκλησης: τα σύγχρονα updates σημαίνονται αντί να απορρίπτονται."
+    },
+    {
+     "option": "Απλό CRDT με έμπιστους replicas (crash-only στην ομοσπονδία)",
+     "pros": "Απλούστερο, ώριμα CRDT.",
+     "cons": "Αποκλίνει με Byzantine σώμα, version-vector anti-entropy ή revocation race. Αντιφάσκει με τον τίτλο του ADR-0031 και με το KT-04."
+    },
+    {
+     "option": "Όλα τα επίπεδα μέσα από BFT log",
+     "pros": "Ενιαία ολική διάταξη· η ανάκληση ισχύει κατά σειρά log.",
+     "cons": "Χάνει τη διαθεσιμότητα σε partitions (αντίθετα με το OS-08), απαιτεί n ≥ 3f+1 για ό,τι δεν το χρειάζεται και χάνει το coordination-free."
+    }
+   ],
+   "rationale": "Κατά Kleppmann & Howard (2020), η προσθήκη μαρτυρίας δεν χρειάζεται consensus. Κατά Kleppmann (2022), τα περισσότερα CRDT αποκλίνουν με Byzantine κόμβους. Η επιλογή δεσμεύει την Constitution (INV-K01), το VT-103 και το κριτήριο του KT-18.",
+   "affects_ids": [
+    "INV-K01",
+    "ADR-0031",
+    "CMP-CCP-01",
+    "CMP-CCP-02",
+    "CMP-CCP-05",
+    "REQ-CCP-001",
+    "KT-04",
+    "ICD-13"
+   ]
+  },
+  {
+   "id": "DEC-CCP-02",
+   "question": "Με ποιον μηχανισμό επιτυγχάνεται η μοναδικότητα και η μη αμφισημία των τελικών verdicts μεταξύ sites;",
+   "recommendation": "Για το GP-6: single-writer Court log με lease fencing και quorum witness cosignatures (C2SP tlog-witness/tlog-cosignature), ως επέκταση του tlog-1 και του witness model. Αναδιατύπωση του INV-K06 ως «Verdict Non-Equivocation» με ρητό fault model. Μετάβαση σε πλήρες BFT (HotStuff-2-class) μόνο με ≥4 ανεξάρτητα failure domains/διαχειριστές.",
+   "alternatives": [
+    {
+     "option": "Witnessed single-writer log (πρόταση για σήμερα)",
+     "pros": "Απλό, συμβατό με τις υπάρχουσες έδρες. Ο client που απαιτεί quorum cosignatures προστατεύεται από split-view εκτός αν συνωμοτήσει το quorum. Λειτουργεί με τα 3 sites του DP-3.",
+     "cons": "Η liveness εξαρτάται από τον writer (crash failover με fencing, όχι Byzantine). Το censorship από compromised writer ανιχνεύεται αλλά δεν αποτρέπεται."
+    },
+    {
+     "option": "Πλήρες BFT SMR (HotStuff-2 / CometBFT) με ≥4 κόμβους",
+     "pros": "Κανένας μεμονωμένος κόμβος δεν κάνει equivocation ή censorship. Ικανοποιεί κυριολεκτικά το n ≥ 3f+1.",
+     "cons": "Απαιτεί ≥4 ανεξάρτητα sites/διαχειριστές, που το DP-3 δεν έχει. Επιχειρησιακό κόστος. Και οι ώριμες υλοποιήσεις έχουν κρίσιμα σφάλματα consensus (CometBFT CSA-2026-001, BFT Time)."
+    },
+    {
+     "option": "Trust-BFT με trusted components (HSM/TEE του trust plane)",
+     "pros": "Λιγότερα replicas για το ίδιο f· 3 sites θα μπορούσαν να ανεχθούν f=1.",
+     "cons": "Νέα υπόθεση εμπιστοσύνης στο hardware (compromise του TEE σπάει την safety). Τρεις τεκμηριωμένοι περιορισμοί αποκλείουν τις περισσότερες πρακτικές αναπτύξεις (Gupta et al. 2022)."
+    },
+    {
+     "option": "DAG-BFT (Mysticeti-class)",
+     "pros": "Ελάχιστο latency, σε παραγωγή.",
+     "cons": "Βελτιστοποιημένο για throughput που ο φόρτος verdicts δεν χρειάζεται. Μεγαλύτερη πολυπλοκότητα για την ίδια safety."
+    }
+   ],
+   "rationale": "Το KT-04 και το REQ-CCP-008 είναι ανικανοποίητα στην ελάχιστη τοπολογία του DP-3 (GAP-CCP-04). Η επιλογή αλλάζει Tier-0 invariant και deployment profile, άρα απαιτεί «εγκρίνω».",
+   "affects_ids": [
+    "REQ-CCP-008",
+    "ADR-0031",
+    "KT-04",
+    "CMP-CCP-04",
+    "ICD-13"
+   ]
+  },
+  {
+   "id": "DEC-CCP-03",
+   "question": "Σε ποια σημασιολογία στηρίζονται τα typed speech acts του ICD-13, και ποιο είναι το εξωτερικό όριο;",
+   "recommendation": "Εσωτερικά: information-protocol σημασιολογία (BSPL/Langshaw) με locutions και commitment stores κατά Prakken· κάθε πρωτόκολλο είναι επαληθεύσιμο αντικείμενο content-addressed. Εξωτερικά: adapter A2A 1.0 (data Parts + extension URI) ως extension point, με το εισερχόμενο περιεχόμενο πάντα OBSERVED/PROPOSED.",
+   "alternatives": [
+    {
+     "option": "BSPL/Langshaw/Prakken εσωτερικά + A2A στο όριο (πρόταση)",
+     "pros": "Επαλήθευση safety/liveness πριν από την υλοποίηση, αποκεντρωμένη εκτέλεση, εκτελέσιμα από LLM agents (Ahoy)· έχει δειχθεί διαλειτουργικότητα με βιομηχανικό πρωτόκολλο (Strabo).",
+     "cons": "Το tooling είναι ερευνητικό. Χρειάζεται αντιστοίχιση προς AsyncAPI/JSON Schema."
+    },
+    {
+     "option": "FIPA ACL (mentalistic σημασιολογία)",
+     "pros": "Ιστορικό πρότυπο με καθορισμένα performatives και υλοποιήσεις.",
+     "cons": "Η σημασιολογία πάνω σε νοητικές καταστάσεις έχει επικριθεί ως προς την επαλήθευση. Ο οργανισμός διαλύθηκε το 2005 και οι προδιαγραφές δεν σερβίρονται πλέον από το fipa.org."
+    },
+    {
+     "option": "A2A-native (Tasks/Messages) χωρίς σημασιολογία ECP",
+     "pros": "Άμεση διαλειτουργικότητα.",
+     "cons": "Δεν έχει commitments, dissent ή voting, άρα χάνει τα INV-K03/INV-K05. Σημασιολογικά ισοδυναμεί με free text."
+    }
+   ],
+   "rationale": "Η §10 δεν γράφτηκε, οπότε το σημασιολογικό θεμέλιο πρέπει να επιλεγεί πριν από το pkg Interfaces της Φάσης Β. Επηρεάζει το VT-013 και το KT-17.",
+   "affects_ids": [
+    "ICD-13",
+    "CMP-CCP-03",
+    "INV-K05",
+    "REQ-CCP-003",
+    "ADR-0007"
+   ]
+  },
+  {
+   "id": "DEC-CCP-04",
+   "question": "Πώς προστατεύεται η ανεξαρτησία των stances από τη conformity;",
+   "recommendation": "Σφραγισμένη ανεξάρτητη stance (commit-then-reveal) πριν από την έκθεση σε stances άλλων, για κάθε θέμα που προορίζεται για Court ή συλλογική όψη. Κάθε αλλαγή stance μόνο ως typed CONCEDE/RETRACT με αναφορά σε νέο evidence ή argument, ελεγμένο από verifier. Μέτρηση harmful conformity και επιβίωσης γεγονότων στο KT-07.",
+   "alternatives": [
+    {
+     "option": "Sealed-first + αιτιολογημένες αλλαγές (πρόταση)",
+     "pros": "Η αναιτιολόγητη conformity γίνεται μη αναπαραστάσιμη (εξάλειψη κλάσης σφάλματος). Διατηρεί την ατομικότητα (T3) και δίνει baseline για μέτρηση.",
+     "cons": "Πρόσθετη καθυστέρηση και γύροι. Ακόμη και vacuous reasoning συνδέεται με 20–39% υιοθέτηση σφάλματος, άρα η αιτιολόγηση χρειάζεται έλεγχο από verifier."
+    },
+    {
+     "option": "Ελεύθερη έκθεση (debate) με εκ των υστέρων μέτρηση",
+     "pros": "Απλό και γρήγορο.",
+     "cons": "Τεκμηριωμένα wrong-but-sure cascades, biased consensus και διαγραφή έως 72% των issue-critical facts."
+    },
+    {
+     "option": "Καμία έκθεση μεταξύ οντοτήτων (μόνο ανεξάρτητες stances)",
+     "pros": "Μέγιστη ανεξαρτησία και ισχυρό σήμα ensemble (Debate or Vote).",
+     "cons": "Χάνεται η ανταλλαγή επιχειρημάτων. Το Collective εκφυλίζεται σε ψηφοφορία, αντίθετα με το glossary («Stance ≠ Ψήφος»)."
+    }
+   ],
+   "rationale": "Είναι αρχή του Collective και δεσμεύει τη σημασιολογία του CMP-CCP-05 και το κριτήριο του KT-07.",
+   "affects_ids": [
+    "CMP-CCP-05",
+    "INV-K04",
+    "REQ-CCP-005",
+    "KT-07",
+    "ICD-13"
+   ]
+  },
+  {
+   "id": "DEC-CCP-05",
+   "question": "Ποια είναι η προκαταχωρισμένη baseline και το κριτήριο θανάτωσης του EXP-02;",
+   "recommendation": "Baselines: καλύτερη μεμονωμένη οντότητα, free-chat MAD, majority vote/self-consistency και Self-MoA με ίσο compute, στρωματοποιημένα κατά δομή εργασίας, με μέτρηση συσχέτισης σφαλμάτων. Κριτήριο: αν ECP ≤ ισχυρότερης φθηνής baseline ensemble, το Collective περιορίζεται σε κοινή μαρτυρία και verdicts μέσω Court, χωρίς speech-act debate.",
+   "alternatives": [
+    {
+     "option": "Πλήρες σύνολο baselines (πρόταση)",
+     "pros": "Αντέχει τις γνωστές αδυναμίες αξιολόγησης MAD (Debate or Vote· Stop Overvaluing MAD). Το αποτέλεσμα είναι αξιόπιστο για την τύχη του στρώματος.",
+     "cons": "Περισσότερο compute και σχεδιασμός. Υψηλότερο όριο, που μπορεί να «σκοτώσει» μέρος του ECP."
+    },
+    {
+     "option": "Οι baselines του προχείρου (μεμονωμένη + free-chat)",
+     "pros": "Φθηνότερο.",
+     "cons": "Ένα θετικό αποτέλεσμα μπορεί να οφείλεται μόνο σε voting/ensembling, άρα αποτυγχάνει ως kill test."
+    }
+   ],
+   "rationale": "Κατά το ADR-0027 η αξιολόγηση παγώνει πριν από την υλοποίηση. Το κριτήριο αποφασίζει αν θα υπάρξει μέρος ολόκληρου στρώματος, άρα απαιτεί «εγκρίνω».",
+   "affects_ids": [
+    "EXP-02",
+    "ADR-0007",
+    "KT-07",
+    "REQ-CCP-002",
+    "REQ-CCP-005"
+   ]
+  },
+  {
+   "id": "DEC-CCP-06",
+   "question": "Επιτρέπονται παράγωγες συλλογικές όψεις πέρα από τα verdicts (bridging σύνθεση, conformal σύνολα);",
+   "recommendation": "Ναι, ως μη αυθεντικές όψεις: έξοδος PROPOSED με ρητή ετικέτα, ποτέ trusted state, ποτέ υποκατάστατο verdict. Το conformal act-vs-escalate συνδέεται με το Unknown (INV-C04). Υλοποίηση ως extension point μετά από πείραμα.",
+   "alternatives": [
+    {
+     "option": "Μη αυθεντικές όψεις PROPOSED (πρόταση)",
+     "pros": "Αξιοποιεί την τεκμηριωμένη αξία των bridging, Habermas και conformal μεθόδων χωρίς να παραβιάζει το INV-K02. Βαθμονομημένη αβεβαιότητα.",
+     "cons": "Κίνδυνος να εκληφθούν ως αλήθεια στο UI. Απαιτεί πείραμα και ευθυγράμμιση με το Prediction Doctrine."
+    },
+    {
+     "option": "Μόνο raw κατανομές stances + Court",
+     "pros": "Καθαρότητα, κανένα ψευδο-verdict.",
+     "cons": "Χάνονται η σύνθεση κοινού εδάφους (T3) και η βαθμονομημένη κλιμάκωση."
+    },
+    {
+     "option": "Οι όψεις ως προαγωγή εμπιστοσύνης",
+     "pros": "Ταχύτητα.",
+     "cons": "Παραβιάζει το INV-K02 (verdict μόνο μέσω διαδικασίας) και ανοίγει μονοπάτι conformity προς trusted state."
+    }
+   ],
+   "rationale": "Αγγίζει το όριο Collective–Court και το Prediction Doctrine. Πρέπει να αποφασιστεί πριν από τη δομή των pkg Functions/LogicalArchitecture.",
+   "affects_ids": [
+    "CMP-CCP-05",
+    "CMP-CCP-06",
+    "REQ-CCP-004",
+    "REQ-CCP-005",
+    "ADR-0007"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 72,
+  "sources_failed": [
+   {
+    "url": "https://www.fipa.org/specs/fipa00037/SC00037J.html",
+    "problem": "Το domain σερβίρει πλέον άσχετο περιεχόμενο (σελίδα καζίνο)· το web.archive.org δεν είναι προσβάσιμο εδώ. Οι ισχυρισμοί «22 acts» και «IEEE» δεν επαληθεύονται (η FIPA διαλύθηκε το 2005 και ιδρύθηκε επιτροπή IEEE· οι specs δεν είναι πρότυπα IEEE).",
+    "action": "Αφαιρέθηκαν ο αριθμός και το «IEEE». Αντικατάσταση με εγγραφές S2 των Pitt & Mamdani 1999 και Wooldridge 2000 και με Wikipedia για το καθεστώς της FIPA."
+   },
+   {
+    "url": "https://dl.acm.org/doi/10.1023/A:1010016503852",
+    "problem": "HTTP 403. Κατά S2 το έτος είναι 1999, όχι 2000· η περίληψη είναι κρυμμένη.",
+    "action": "Διόρθωση έτους σε 1999· ο ισχυρισμός για το περιεχόμενο περιορίστηκε σε «κριτική της σημασιολογίας»."
+   },
+   {
+    "url": "https://dblp.org/rec/conf/sosp/GiridharanSAAC24.html",
+    "problem": "Access denied (Anubis).",
+    "action": "Αντικατάσταση με arXiv 2401.10369 και τη λίστα accepted papers του SOSP 2024 (επιβεβαιώνει το venue)."
+   },
+   {
+    "url": "https://github.com/cometbft/cometbft/releases",
+    "problem": "Ο ισχυρισμός «η σειρά v1.x παραμένει pre-release» είναι λάθος: υπάρχουν τελικές v1.0.0 και v1.0.1. Το v0.40.0 εμφανίζεται χωρίς έτος.",
+    "action": "Αφαιρέθηκε ο ισχυρισμός. Το CSA-2026-001 επιβεβαιώθηκε μέσω του GHSA-c32p-wcqj-j677 (Critical, BFT Time, Ιαν. 2026, patched v0.38.21/v0.37.18)."
+   },
+   {
+    "url": "https://c2sp.org/tlog-witness@v1.0.0",
+    "problem": "Το έγγραφο δεν αναφέρει ρητά την προστασία από split-view μέσω quorum, ούτε έκδοση ή ημερομηνία στο κείμενο.",
+    "action": "Ο ισχυρισμός για quorum στηρίχθηκε στο c2sp.org/tlog-cosignature («verify a quorum of cosignatures to prevent split-view attacks»)."
+   },
+   {
+    "url": "https://www.ndss-symposium.org/wp-content/uploads/2025-929-paper.pdf",
+    "problem": "Το «στο Sui mainnet από τον Ιούλιο 2024» δεν βρέθηκε στο paper· η ανάρτηση της Sui (Απρίλιος 2024) είναι προαναγγελία.",
+    "action": "Αφαιρέθηκε η ημερομηνία· διατηρήθηκαν 3 message rounds, 0.5 s WAN και η ενσωμάτωση στο Sui."
+   },
+   {
+    "url": "https://arxiv.org/pdf/1707.01747",
+    "problem": "Δεν αναφέρεται Distinguished Paper.",
+    "action": "Αφαιρέθηκε η διάκριση· διατηρήθηκε το OOPSLA 2017 (PACMPL)."
+   },
+   {
+    "url": "https://journals.sagepub.com/doi/10.3233/AAC-230013",
+    "problem": "HTTP 403. Κατά S2 δημοσιεύθηκε το 2024, όχι το 2025· η περίληψη δεν λέει ότι πρωτεύουν οι SAT-based solvers.",
+    "action": "Διόρθωση έτους σε 2024· αφαιρέθηκε ο ισχυρισμός SAT· προστέθηκε ότι το ICCMA 2025 κάλυψε abstract και ABA, χωρίς ASPIC+."
+   },
+   {
+    "url": "https://en.wikipedia.org/wiki/Argument_Interchange_Format",
+    "problem": "Δευτερογενής πηγή· δεν αναφέρει AIF+.",
+    "action": "Αφαιρέθηκε το AIF+· προστέθηκε η πρωτογενής Chesñevar et al. 2006 (εγγραφή S2)."
+   },
+   {
+    "url": "https://www.sciencedirect.com/science/article/pii/S0004370207000677",
+    "problem": "HTTP 403· τα «proof standards ανά premise» δεν επαληθεύτηκαν.",
+    "action": "Περιορίστηκε σε «burden of proof μέσω κατηγοριοποίησης premises» (tldr του S2)."
+   },
+   {
+    "url": "https://journals.sagepub.com/doi/10.1080/19462166.2013.869766",
+    "problem": "HTTP 403.",
+    "action": "Επαληθεύτηκε μέσω της εγγραφής S2 (πλήρης περίληψη)."
+   },
+   {
+    "url": "https://arxiv.org/abs/2508.02584",
+    "problem": "Το MArgE (και τα ArgLLMs) χρησιμοποιούν QBAF με DF-QuAD, όχι ASPIC+/grounded· η χρήση τους ως επιβεβαίωσης του ASPIC+/grounded ήταν λάθος.",
+    "action": "Διορθώθηκαν το reasoning του CMP-CCP-02 και η relevance του SOTA-CCP-10."
+   },
+   {
+    "url": "https://blog.modelcontextprotocol.io/posts/2025-12-09-mcp-joins-agentic-ai-foundation/",
+    "problem": "Η spec 2025-11-25 δεν είναι πλέον η τρέχουσα.",
+    "action": "Διόρθωση σε 2026-07-28 (modelcontextprotocol.io/specification/latest)."
+   },
+   {
+    "url": "https://a2a-protocol.org/latest/specification/",
+    "problem": "Το «>150 οργανισμοί» (GAP-CCP-08) δεν έχει πηγή.",
+    "action": "Διόρθωση σε «>100 εταιρείες (Ιούνιος 2025)» κατά το δελτίο LF· το A2A 1.0.0 επιβεβαιώθηκε."
+   },
+   {
+    "url": "https://arxiv.org/abs/2606.00820",
+    "problem": "Το «harmful conformity 29–77%» συγχωνεύει δύο μεγέθη.",
+    "action": "Διόρθωση: strict conformity 29% στο κύριο setting· 57–77% correct-to-wrong στις αναπαραγωγές· vacuous reasoning → 20–39% υιοθέτηση σφάλματος."
+   },
+   {
+    "url": "https://arxiv.org/abs/2506.07962",
+    "problem": "Το «έναντι ~33% τυχαία» δεν υπάρχει στην πηγή· το 60% αφορά ένα leaderboard dataset.",
+    "action": "Αφαιρέθηκε το ~33% και προστέθηκε ο περιορισμός στο dataset."
+   },
+   {
+    "url": "https://www.science.org/doi/10.1126/sciadv.adp1528",
+    "problem": "HTTP 403.",
+    "action": "Επαληθεύτηκε μέσω S2 (Science Advances 2024) και arXiv 2402.19379."
+   },
+   {
+    "url": "https://www.nature.com/articles/nature21054",
+    "problem": "Ανακατεύθυνση σε σελίδα αυθεντικοποίησης.",
+    "action": "Επαληθεύτηκε μέσω Europe PMC (πλήρης περίληψη)."
+   },
+   {
+    "url": "https://www.science.org/doi/10.1126/science.adq2852",
+    "problem": "HTTP 403· το «>56%» δεν υπάρχει στην περίληψη.",
+    "action": "Αφαιρέθηκε το ποσοστό· επιβεβαιώθηκαν η προτίμηση και η ενσωμάτωση των διαφωνούσων φωνών (S2, Europe PMC)."
+   },
+   {
+    "url": "https://arxiv.org/abs/2308.00352",
+    "problem": "Το ICLR 2024 και το «shared publish-subscribe message pool» δεν επαληθεύτηκαν (timeout στο OpenReview· δεν υπάρχουν στην περίληψη).",
+    "action": "Αφαιρέθηκε το venue· η περιγραφή περιορίστηκε σε SOPs/assembly-line."
+   },
+   {
+    "url": "https://arxiv.org/abs/2402.07510",
+    "problem": "Το NeurIPS 2024 και τα «όρια monitoring/paraphrasing» δεν επαληθεύτηκαν.",
+    "action": "Η περιγραφή περιορίστηκε σε ό,τι λέει η περίληψη."
+   },
+   {
+    "url": "https://arxiv.org/abs/2502.14143",
+    "problem": "Τα «cascades, διαρροή μεταξύ ορίων» δεν υπάρχουν στην περίληψη.",
+    "action": "Διόρθωση σε 3 failure modes και 7 risk factors."
+   },
+   {
+    "url": "https://arxiv.org/abs/2503.13657",
+    "problem": "Το NeurIPS 2025 δεν επαληθεύτηκε.",
+    "action": "Αφαιρέθηκε το venue· επιβεβαιώθηκαν 14 modes, 3 κατηγορίες, 1600+ traces."
+   },
+   {
+    "url": "https://www.pnas.org/doi/10.1073/pnas.2204380119",
+    "problem": "HTTP 403· το περιεχόμενο της διόρθωσης (AVE 44% → 19.6%) δεν επαληθεύτηκε. Το αρχικό άρθρο επιβεβαιώθηκε μέσω Europe PMC (22 μελέτες, 1.356 ομάδες).",
+    "action": "Αφαιρέθηκαν οι αριθμοί AVE· παραμένει μόνο η ύπαρξη της διόρθωσης."
+   },
+   {
+    "url": "https://www.ams.org/notices/201501/rnoti-p9.pdf",
+    "problem": "HTTP 403 (και στη διαδρομή 201409).",
+    "action": "Η κριτική του Hong–Page αφαιρέθηκε από το SOTA-CCP-20 και από το reasoning του ADR-0007."
+   },
+   {
+    "url": "https://direct.mit.edu/books/edited-volume/3807/Understanding-Knowledge-as-a-CommonsFrom-Theory-to",
+    "problem": "HTTP 403.",
+    "action": "Αντικατάσταση με εγγραφή Open Library (Hess & Ostrom, 2006)."
+   },
+   {
+    "url": "https://martin.kleppmann.com/2025/03/31/papoc-keynote-byzantine.html",
+    "problem": "Η σελίδα μιλά για «νέες ερευνητικές κατευθύνσεις», όχι ρητά για «ανοιχτό πρόβλημα».",
+    "action": "Ο ισχυρισμός αναδιατυπώθηκε ως ερευνητική κατεύθυνση."
+   },
+   {
+    "url": "https://arxiv.org/abs/1809.06532",
+    "problem": "Η περίληψη δεν περιγράφει τη δομή assertion/provenance/pubinfo.",
+    "action": "Προστέθηκε το nanopub.net, που την περιγράφει."
+   }
+  ],
+  "corrections": [
+   {
+    "target": "draft_points CMP-CCP-01 (superior)",
+    "change": "Προστέθηκε ότι τα CIDs του προχείρου ήδη δίνουν ID = hash, ότι λείπουν η συμφιλίωση και ο κανόνας εγκυρότητας, και ρητό trade-off με το KT-18 (σήμανση αντί απόρριψης).",
+    "reason": "Κανόνας 3: δήλωση trade-off όταν αλλάζει ιδιότητα που απαιτεί το πρόχειρο."
+   },
+   {
+    "target": "draft_points CMP-CCP-02",
+    "change": "Τα ArgLLMs/MArgE δεν στηρίζουν πλέον ASPIC+/grounded· confidence από high σε medium· αφαιρέθηκαν οι ισχυρισμοί SAT και AIF+.",
+    "reason": "Οι πηγές δείχνουν QBAF + DF-QuAD· οι ισχυρισμοί SAT/AIF+ δεν επαληθεύτηκαν."
+   },
+   {
+    "target": "draft_points ICD-13",
+    "change": "Confidence από medium σε high.",
+    "reason": "Το κενό φαίνεται άμεσα στο κείμενο του προχείρου (§15.1 έναντι της γραμμής ICD-13)."
+   },
+   {
+    "target": "draft_points REQ-CCP-008 και GAP-CCP-04",
+    "change": "Το «DP-3 έχει 3 sites» έγινε «ορίζει ≥3 και δείχνει 3· δεν ορίζει n»· προστέθηκε η εναλλακτική Trust-BFT.",
+    "reason": "Ακριβής απόδοση του §7.2/§7.4/§7.5 και εναλλακτική που έλειπε."
+   },
+   {
+    "target": "draft_points KT-07",
+    "change": "Το «κακώς ορισμένο» έγινε «αμφίσημο», με εξήγηση των δύο αναγνώσεων.",
+    "reason": "Το πρόχειρο επιδέχεται ανάγνωση «διατήρηση εγγραφής αποκλινουσών stances»."
+   },
+   {
+    "target": "draft_points ADR-0007",
+    "change": "Αφαιρέθηκε η στήριξη στο Hong–Page· ο c-factor στηρίζεται σε Riedl 2021 και Janssens 2022.",
+    "reason": "Η πηγή AMS απέτυχε."
+   },
+   {
+    "target": "sota SOTA-CCP-03",
+    "change": "Αφαιρέθηκαν το «v1.x pre-release» και η ημερομηνία του Mysticeti· προστέθηκαν τα GHSA του CSA-2026-001 και η λίστα SOSP.",
+    "reason": "Λάθος ή ανεπαλήθευτοι ισχυρισμοί."
+   },
+   {
+    "target": "sota SOTA-CCP-05",
+    "change": "Αναδιατυπώθηκε σε dialogue systems + γενεαλογία FIPA· kind research / maturity research-prototype.",
+    "reason": "Η πρωτογενής FIPA είναι μη προσβάσιμη."
+   },
+   {
+    "target": "sota SOTA-CCP-07",
+    "change": "MCP spec 2026-07-28· A2A 8 καταστάσεις + UNSPECIFIED· ANP 1.1.",
+    "reason": "Τρέχουσα κατάσταση."
+   },
+   {
+    "target": "sota SOTA-CCP-13 και SOTA-CCP-14",
+    "change": "Διορθώθηκαν αριθμοί (29% / 57–77%· 60% σε ένα dataset· αφαιρέθηκε το ~33%).",
+    "reason": "Ακριβής απόδοση των περιλήψεων."
+   },
+   {
+    "target": "sota SOTA-CCP-16, SOTA-CCP-17, SOTA-CCP-18, SOTA-CCP-19, SOTA-CCP-20",
+    "change": "Αφαιρέθηκαν ανεπαλήθευτα στοιχεία (56%, venues, pub-sub, cascades, AVE, Hong–Page)· διορθώθηκε η περιγραφή του Keyhive.",
+    "reason": "Κανόνας 1."
+   },
+   {
+    "target": "sota (νέα)",
+    "change": "Προστέθηκαν SOTA-CCP-21 (CaMeL) και SOTA-CCP-22 (Trust-BFT).",
+    "reason": "Στοχευμένοι έλεγχοι βρήκαν ισχυρότερη απάντηση για το GAP-CCP-07 και εναλλακτική για το DEC-CCP-02."
+   },
+   {
+    "target": "decisions DEC-CCP-02, DEC-CCP-03, DEC-CCP-04",
+    "change": "DEC-CCP-02: νέα εναλλακτική Trust-BFT και διορθωμένα cons του CometBFT. DEC-CCP-03: διορθωμένη εναλλακτική FIPA. DEC-CCP-04: ακριβής διατύπωση του vacuous reasoning.",
+    "reason": "Δίκαιη παρουσίαση των εναλλακτικών και ακρίβεια πηγών."
+   },
+   {
+    "target": "όλα τα πεδία",
+    "change": "Οι συντομογραφίες «CCP-0n» έγιναν CMP-CCP-0n· αφαιρέθηκαν ονόματα μοντέλων που εμφανίζονταν στις πηγές.",
+    "reason": "Κανόνες 5 και 7."
+   },
+   {
+    "target": "Έλεγχος 4 (ανάγνωση προχείρου)",
+    "change": "Επιβεβαιώθηκαν όλα τα draft_ref και draft_position (master γρ.90, 107, 277, 280, 367, 513–519, 580, 609, 642–647, 671, 770, 811· 15.md γρ.43–44· 29.md γρ.68–75· 24.md γρ.19, 22· 26.md γρ.29· 22.md γρ.13, 37). Επιβεβαιώθηκαν επίσης το 75 έναντι 76 και το 16 έναντι 17 εγκάρσιων.",
+    "reason": "Επαλήθευση απόδοσης."
+   }
+  ],
+  "missed_superior_found": [
+   "CaMeL (arXiv 2503.18813, 2025): διαχωρισμός control/data flow με capabilities και provable security στο 77% των εργασιών AgentDojo. Αυστηρά ισχυρότερη απάντηση από το heuristic LLM Tagging που πρότεινε ο ερευνητής για το GAP-CCP-07. Δεν αλλάζει το verdict holds του INV-K05· το συμπληρώνει.",
+   "Trust-BFT με trusted components (arXiv 2202.01354, 2022): λιγότερα replicas για το ίδιο f. Προστέθηκε ως εναλλακτική στα DEC-CCP-02 και GAP-CCP-04· δεν είναι αυστηρά ανώτερη (υπόθεση εμπιστοσύνης στο hardware, τρεις θεμελιώδεις περιορισμοί).",
+   "Graphiti/Zep (arXiv 2501.13956, 2025): ελέγχθηκε για το CMP-CCP-06· δεν είναι ανώτερο, γιατί συνθέτει γεγονότα μέσω LLM και χάνει την προέλευση «μόνο από evidence + verdicts». Το holds παραμένει."
+  ]
+ }
+}

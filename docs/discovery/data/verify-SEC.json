@@ -1,0 +1,2100 @@
+{
+ "layer_key": "SEC",
+ "summary": "Το πρόχειρο SEC έχει σωστή κατεύθυνση: algorithm tagging, epoch re-anchoring, crypto-shredding, capability tokens, signed/reproducible artifacts, provenance-tagged κανάλια. Ο αντιπαλικός έλεγχος (82 URLs, εκ των οποίων 3 PDF μέσω τοπικού pdftotext) επιβεβαιώνει αυστηρά ανώτερη λύση σε πέντε σημεία, με διορθώσεις ακρίβειας.\n(1) Prompt injection: η INV-S01 διατυπώνει την ιδιότητα χωρίς μηχανισμό για LLM planner. Τα CaMeL και FIDES (2025) δίνουν διαχωρισμό control/data flow και IFC labels με ντετερμινιστική επιβολή, με μετρημένο κόστος utility (77% έναντι 84% στο AgentDojo). Το KT-17 δεν απαιτεί adaptive attacks και δεν πιάνει exfiltration μέσω εξουσιοδοτημένων ενεργειών.\n(2) Κλειδιά: η KERI v1.1 (pre-rotation, witnessed KEL, duplicity detection) λύνει κρυπτογραφικά τον αγώνα ανάκτησης root. PQ threshold υπογραφές δεν είναι τυποποιημένες (FROST: όχι PQ· NIST MPTS σε φάση previews 2026), άρα k-of-n multisignature. Οι έδρες KEY-LIFECYCLE/TRUST-BOOTSTRAP δεν είναι διαθέσιμες και ίσως καλύπτουν μέρος αυτών (confidence medium).\n(3) Μετάβαση αλγορίθμων: το RFC 4998 ξεχωρίζει timestamp από hash-tree renewal· το δεύτερο απαιτεί τα αρχικά δεδομένα και, αν οι δεσμεύσεις είναι σε plaintext, συγκρούεται με το crypto-shredding. Κατά NIST IR 8547 (ipd) τα symmetric/hash είναι «significantly less vulnerable to known quantum attacks». Το composite ML-DSA (draft-19, RFC Editor queue) δίνει weak non-separability. Το X25519MLKEM768 είναι πλέον RFC 10024 (Proposed Standard, 2026).\n(4) Supply chain: το πρόχειρο ήδη ελέγχει την αναπαραγωγιμότητα με δύο builders· το ανοιχτό σημείο είναι το κοινό binary seed. Το full-source bootstrap (Guix, stagex) με multi-party signing και DDC το περιορίζει δραστικά, χωρίς να το μηδενίζει (Guix: απομένει Guile driver 25 MiB).\n(5) GDPR: η CNIL (2018) δίνει ρητή σειρά commitment > keyed hash > ciphertext. Ο EDPB (02/2025 v1.1, έκδοση διαβούλευσης) κρίνει τα unsalted/unkeyed hashes κατά κανόνα ανεπαρκή για δημόσιο blockchain και τα κρυπτογραφημένα δεδομένα ως προσωπικά. Το πρόχειρο δεν ορίζει αν cid και δεσμεύσεις υπολογίζονται σε plaintext ή σε envelope.\nΆλλα κενά: η §18 δεν γράφτηκε ποτέ· καμία αντιστοίχιση σε OWASP LLM/Agentic, MITRE ATLAS, LINDDUN· KV-cache side channels (μέτρο σήμερα: vLLM cache_salt)· backdating μετά από compromise κλειδιού σώματος. Η PQ υποδομή είναι υλοποιήσιμη σήμερα: FIPS 203/204/205, OpenSSL 3.5, PKCS#11 3.2 (OASIS Standard 3/6/2026), RFC 9881, RFC 9814, RFC 10024, SP 800-227.",
+ "sota": [
+  {
+   "id": "SOTA-SEC-01",
+   "name": "NIST PQC standards (FIPS 203 ML-KEM, FIPS 204 ML-DSA, FIPS 205 SLH-DSA) + HQC + Falcon",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Τελικά FIPS από 13/8/2024 («can and should be put into use now»)· HQC επιλέχθηκε 11/3/2025 ως δεύτερος KEM μετά το ML-KEM (τελικό πρότυπο σε ~2 έτη)· Falcon σε διαδικασία τυποποίησης (underway).",
+   "relevance": "Βάση για ADR-0016, EP-04, INV-X02, CMP-KRN-03· HQC ως διάδοχος KEM στο Crypto Suite Registry.",
+   "sources": [
+    {
+     "title": "NIST Post-Quantum Cryptography project",
+     "url": "https://csrc.nist.gov/projects/post-quantum-cryptography",
+     "year": "2026"
+    },
+    {
+     "title": "HQC announced as a 4th round selection",
+     "url": "https://csrc.nist.gov/news/2025/hqc-announced-as-a-4th-round-selection",
+     "year": "2025"
+    },
+    {
+     "title": "FIPS 204 ML-DSA",
+     "url": "https://csrc.nist.gov/pubs/fips/204/final",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-02",
+   "name": "NIST IR 8547 (ipd) — PQC transition timeline",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Initial public draft 12/11/2024 (καμία τελική έκδοση στη σελίδα). ECDSA, EdDSA, RSA, finite-field/ECDH: 112-bit deprecated μετά το 2030, όλα disallowed μετά το 2035. Symmetric (hash, XOF, block ciphers, KDF, DRBG): «significantly less vulnerable to known quantum attacks», η NIST δεν αναμένει μετάβαση. Dual signatures αποδεκτές αν ≥1 συνιστώσα είναι NIST-approved. FAQ: ο Grover δίνει μικρό ή μηδενικό πλεονέκτημα έναντι AES.",
+   "relevance": "Διορθώνει την πλαισίωση του κβαντικού κινδύνου (υπογραφές/KEM, όχι SHA-2)· θέτει ορόσημα έναντι του GP-9.",
+   "sources": [
+    {
+     "title": "NIST IR 8547 ipd",
+     "url": "https://csrc.nist.gov/pubs/ir/8547/ipd",
+     "year": "2024"
+    },
+    {
+     "title": "NIST IR 8547 ipd PDF",
+     "url": "https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf",
+     "year": "2024"
+    },
+    {
+     "title": "NIST PQC FAQs",
+     "url": "https://csrc.nist.gov/Projects/post-quantum-cryptography/faqs",
+     "year": "n.d."
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-03",
+   "name": "Composite ML-DSA (IETF LAMPS)",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "ML-DSA σε hybrid με RSASSA-PKCS1-v1.5, RSASSA-PSS, ECDSA, Ed25519, Ed448 (18 συνδυασμοί)· υπογράφεται το Prefix || Label || len(ctx) || ctx || PH(M)· weak non-separability· καμία παραλλαγή SUF-CMA έναντι κβαντικού αντιπάλου· δεν καλύπτει SLH-DSA· draft-19 (21/4/2026), RFC Editor queue.",
+   "relevance": "Ανώτερο από ανεξάρτητες «διπλές υπογραφές» (ADR-0016, INV-X02) για ζεύγη PQ/traditional· ένα alg id ανά ζεύγος (INV-X01).",
+   "sources": [
+    {
+     "title": "draft-ietf-lamps-pq-composite-sigs",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-04",
+   "name": "PQ implementation readiness: OpenSSL 3.5, PKCS#11 3.2, RFC 9881, RFC 9814, SP 800-227, RFC 10024",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "OpenSSL 3.5.0 (8/4/2025): ML-KEM, ML-DSA, SLH-DSA· default TLS keyshares X25519MLKEM768 και X25519.\nPKCS#11 v3.2, OASIS Standard (3/6/2026): ML-DSA, ML-KEM, SLH-DSA, HSS, XMSS/XMSSMT.\nRFC 9881 (2025), ML-DSA στο X.509: ctx κενό σε αυτό το profile, HashML-DSA MUST NOT· ML-DSA-65 pk 1952 B / sig 3309 B, ML-DSA-87 sig 4627 B.\nRFC 9814 (2025): SLH-DSA στο CMS.\nSP 800-227 final (18/9/2025): συστάσεις για KEMs.\nRFC 10024 (Proposed Standard, 2026): X25519MLKEM768, SecP256r1MLKEM768, SecP384r1MLKEM1024 για TLS 1.3, πάνω στο RFC 9954 (Informational).",
+   "relevance": "Κάνει το CMP-KRN-03 (HSM μέσω PKCS#11), την PQ σουίτα και το hybrid TLS [T] σήμερα· δεδομένα για το EXP-11.",
+   "sources": [
+    {
+     "title": "OpenSSL 3.5 release notes",
+     "url": "https://openssl-library.org/news/openssl-3.5-notes/",
+     "year": "2025"
+    },
+    {
+     "title": "PKCS #11 v3.2",
+     "url": "https://docs.oasis-open.org/pkcs11/pkcs11-spec/v3.2/pkcs11-spec-v3.2.html",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 9881 ML-DSA in X.509",
+     "url": "https://www.rfc-editor.org/rfc/rfc9881",
+     "year": "2025"
+    },
+    {
+     "title": "RFC 9814 SLH-DSA in CMS",
+     "url": "https://www.rfc-editor.org/rfc/rfc9814",
+     "year": "2025"
+    },
+    {
+     "title": "NIST SP 800-227",
+     "url": "https://csrc.nist.gov/pubs/sp/800/227/final",
+     "year": "2025"
+    },
+    {
+     "title": "RFC 10024 PQ/T Hybrid Key Agreement for TLS 1.3",
+     "url": "https://www.rfc-editor.org/rfc/rfc10024",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 9954 Hybrid Key Exchange in TLS 1.3",
+     "url": "https://www.rfc-editor.org/rfc/rfc9954",
+     "year": "n.d."
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-05",
+   "name": "Crypto agility practice: NIST CSWP 39, CBOM (CycloneDX 1.7 / ECMA-424), multihash, RFC 8725",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "CSWP 39 final 19/12/2025, αποσύρθηκε 29/6/2026 υπέρ του CSWP 39upd1. CycloneDX 1.7 (21/10/2025) και ECMA-424 (10/12/2025), με cryptography registry (CBOM). Multihash: self-describing digests (TLV: function code, length, digest)· spec υπό προετοιμασία για το IETF, όχι πρότυπο. RFC 8725 (BCP 225, JWT) §3.1: allowlist αλγορίθμων· κάθε κλειδί με ακριβώς έναν αλγόριθμο, έλεγχος κατά την πράξη.",
+   "relevance": "Εξειδικεύει τα INV-X01 και EP-04: αλγόριθμος δεμένος στο κλειδί, κρυπτογραφική απογραφή. Το RFC 8725 αφορά JWT· η αρχή μεταφέρεται κατ' αναλογία.",
+   "sources": [
+    {
+     "title": "NIST CSWP 39",
+     "url": "https://csrc.nist.gov/pubs/cswp/39/considerations-for-achieving-cryptographic-agility/final",
+     "year": "2025"
+    },
+    {
+     "title": "CycloneDX specification overview",
+     "url": "https://cyclonedx.org/specification/overview/",
+     "year": "2025"
+    },
+    {
+     "title": "Multihash",
+     "url": "https://multiformats.io/multihash/",
+     "year": "n.d."
+    },
+    {
+     "title": "RFC 8725 JWT BCP",
+     "url": "https://www.rfc-editor.org/rfc/rfc8725",
+     "year": "2020"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-06",
+   "name": "KERI (Key Event Receipt Infrastructure) v1.1",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Self-certifying identifiers με append-only Key Event Log. Pre-rotation σε «unexposed but pre-committed» κλειδιά. Witness pools (KAWA) με receipts, watchers με first-seen policy, nonrepudiable duplicity proofs, delegated inception/rotation, SQAR (Surprise Quantum Attack Recovery). Δηλώνει crypto agility pre- και post-quantum.",
+   "relevance": "Αντιστοιχία στο CMP-KRN-03 και ICD-03 (charter, delegate, rotate, revoke, continuity). Λύνει κρυπτογραφικά τον αγώνα ανάκτησης του KT-23, υπό την προϋπόθεση ότι τα next keys φυλάσσονται χωριστά από τα τρέχοντα.",
+   "sources": [
+    {
+     "title": "KERI Specification v1.1 (ToIP KSWG)",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "n.d."
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-07",
+   "name": "Transparency & witnessing: C2SP tlog-witness, Sigsum, IETF KEYTRANS, Sigstore Rekor v2",
+   "kind": "system",
+   "maturity": "production",
+   "what": "C2SP tlog-witness: οι witnesses ελέγχουν checkpoint signature και consistency proof και επιστρέφουν timestamped cosignature· ο μηχανισμός monitor retrieval είναι ακόμη υπό συζήτηση. Sigsum: δημόσιο log υπογραφών με witnesses για ανίχνευση κακής χρήσης κλειδιού. KEYTRANS protocol-05 (6/7/2026, WG I-D): log tree και prefix tree. Rekor v2 GA 10/10/2025: tile-backed (Tessera), backends GCP/AWS/MySQL/POSIX· το ενσωματωμένο witnessing ανακοινώθηκε ως επερχόμενο.",
+   "relevance": "Ανίχνευση κακής χρήσης κλειδιών (KT-18, KT-23) και διαφάνεια release signatures (CMP-OPS-01)· συμβατό με τα witnessed checkpoints του ICD-01.",
+   "sources": [
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness",
+     "year": "n.d."
+    },
+    {
+     "title": "Sigsum",
+     "url": "https://www.sigsum.org/",
+     "year": "n.d."
+    },
+    {
+     "title": "IETF KEYTRANS WG",
+     "url": "https://datatracker.ietf.org/wg/keytrans/about/",
+     "year": "n.d."
+    },
+    {
+     "title": "draft-ietf-keytrans-protocol",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-keytrans-protocol/",
+     "year": "2026"
+    },
+    {
+     "title": "Rekor v2 GA",
+     "url": "https://blog.sigstore.dev/rekor-v2-ga/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-08",
+   "name": "Long-term evidence & time: RFC 4998 ERS, RFC 3161, eIDAS Art. 41, Roughtime",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "ERS (Proposed Standard, 2007): Timestamp Renewal (συμβιβασμός κλειδιού TSU ή αδυναμία αλγορίθμου της χρονοσφραγίδας) έναντι Hash-Tree Renewal (αδυναμία του hash των δέντρων)· το δεύτερο απαιτεί πρόσβαση στα αρχειοθετημένα δεδομένα. RFC 3161 (updated by RFC 5816): tokens SHOULD be time-stamped again. eIDAS Art. 41(2): το qualified time stamp έχει τεκμήριο ακρίβειας ημερομηνίας/ώρας και ακεραιότητας. Roughtime draft-19 (Experimental), σε τελικό στάδιο προς RFC· malfeasance reports από αλυσίδες απαντήσεων πολλών servers.",
+   "relevance": "Τυποποιημένη μορφή του INV-X02· νομική ισχύς χρονοσφραγίδων για LAWMAX· KT-21, KT-23 (pre-compromise TSA-timed υπογραφές), GAP-SEC-05.",
+   "sources": [
+    {
+     "title": "RFC 4998 Evidence Record Syntax",
+     "url": "https://www.rfc-editor.org/rfc/rfc4998",
+     "year": "2007"
+    },
+    {
+     "title": "RFC 3161 TSP",
+     "url": "https://www.rfc-editor.org/rfc/rfc3161",
+     "year": "2001"
+    },
+    {
+     "title": "eIDAS Regulation 910/2014",
+     "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910",
+     "year": "2014"
+    },
+    {
+     "title": "draft-ietf-ntp-roughtime",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-ntp-roughtime/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-09",
+   "name": "Threshold/multisig: FROST RFC 9591, NIST MPTS (IR 8214C), TUF root rotation",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "FROST: threshold Schnorr (Informational, 2024), βασίζεται στο discrete log, άρα όχι PQ· trusted dealer ή DKG (το DKG εκτός εμβέλειας). NIST IR 8214C final 20/1/2026· previews υποβολών Ιανουάριος και Ιούλιος 2026, τρίτος γύρος 29–30/9/2026· καμία τυποποιημένη PQ threshold. TUF spec 1.0.36: το νέο root υπογράφεται από threshold του παλιού ΚΑΙ του νέου root· κάθε keyid μετρά μία φορά.",
+   "relevance": "Για PQ root σήμερα: k-of-n multisignature (TUF-style) αντί threshold signature· PQ threshold ως επέκταση του EP-04.",
+   "sources": [
+    {
+     "title": "RFC 9591 FROST",
+     "url": "https://www.rfc-editor.org/rfc/rfc9591",
+     "year": "2024"
+    },
+    {
+     "title": "NIST Threshold Cryptography project",
+     "url": "https://csrc.nist.gov/projects/threshold-cryptography",
+     "year": "2026"
+    },
+    {
+     "title": "TUF specification",
+     "url": "https://theupdateframework.github.io/specification/latest/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-10",
+   "name": "Prompt injection by design: CaMeL, FIDES, Design Patterns, Dual LLM, Progent",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "CaMeL: το control flow εξάγεται μόνο από το trusted query, untrusted δεδομένα δεν επηρεάζουν τη ροή· capabilities και πολιτικές σε κάθε tool call· 77% εργασιών AgentDojo με provable security (84% χωρίς άμυνα). FIDES: planner με confidentiality και integrity labels, ντετερμινιστική επιβολή πολιτικών, primitives επιλεκτικής απόκρυψης, τυπικό μοντέλο. Design Patterns (2025): Action-Selector, Plan-Then-Execute, LLM Map-Reduce, Dual LLM, Code-Then-Execute, Context-Minimization. Dual LLM (2023): privileged και quarantined LLM με controller. Progent: συμβολικοί κανόνες σε tools/arguments, SMT για narrowing/expansion, το action space μόνο συρρικνώνεται χωρίς έγκριση.",
+   "relevance": "Ο μηχανισμός που λείπει από την INV-S01 και το KT-17.",
+   "sources": [
+    {
+     "title": "Defeating Prompt Injections by Design (CaMeL)",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "Securing AI Agents with Information-Flow Control (FIDES)",
+     "url": "https://arxiv.org/abs/2505.23643",
+     "year": "2025"
+    },
+    {
+     "title": "Design Patterns for Securing LLM Agents against Prompt Injections",
+     "url": "https://arxiv.org/abs/2506.08837",
+     "year": "2025"
+    },
+    {
+     "title": "The Dual LLM pattern",
+     "url": "https://simonwillison.net/2023/Apr/25/dual-llm-pattern/",
+     "year": "2023"
+    },
+    {
+     "title": "Progent",
+     "url": "https://arxiv.org/abs/2504.11703",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-11",
+   "name": "Injection evaluation & structural rules: AgentDojo, adaptive attacks, Spotlighting, AgentPoison, Rule of Two",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "AgentDojo: 97 tasks, 629 security test cases. «The Attacker Moves Second» (10/2025): 12 άμυνες παρακάμφθηκαν με ASR >90% στις περισσότερες, ενώ οι περισσότερες ανέφεραν αρχικά σχεδόν μηδενικό ASR. Spotlighting: ASR από >50% σε <2% (πιθανοτική άμυνα). AgentPoison: μέσο ASR >80% με poison rate <0,1%, σε RAG driving, knowledge-intensive QA και EHRAgent. Agents Rule of Two (31/10/2025): όχι ταυτόχρονα [A] untrusted input, [B] sensitive data/systems, [C] αλλαγή κατάστασης ή εξωτερική επικοινωνία χωρίς human-in-the-loop.",
+   "relevance": "Κριτήρια και σώμα επιθέσεων για KT-17 και VT-801· κανόνας σύνθεσης για το INV-C07.",
+   "sources": [
+    {
+     "title": "AgentDojo",
+     "url": "https://arxiv.org/abs/2406.13352",
+     "year": "2024"
+    },
+    {
+     "title": "The Attacker Moves Second",
+     "url": "https://arxiv.org/abs/2510.09023",
+     "year": "2025"
+    },
+    {
+     "title": "Spotlighting",
+     "url": "https://arxiv.org/abs/2403.14720",
+     "year": "2024"
+    },
+    {
+     "title": "AgentPoison",
+     "url": "https://arxiv.org/abs/2407.12784",
+     "year": "2024"
+    },
+    {
+     "title": "Agents Rule of Two",
+     "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-12",
+   "name": "Threat taxonomies: OWASP LLM Top 10 2025, OWASP Agentic Top 10 2026, MITRE ATLAS, LINDDUN",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "OWASP LLM 2025: LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM03 Supply Chain, LLM04 Data and Model Poisoning, LLM05 Improper Output Handling, LLM06 Excessive Agency, LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses, LLM09 Misinformation, LLM10 Unbounded Consumption. OWASP Top 10 for Agentic Applications 2026 (9/12/2025) και OWASP Agentic AI Threats and Mitigations (17/2/2025): δημοσιεύσεις επιβεβαιωμένες, το περιεχόμενο των λιστών δεν επαληθεύτηκε. MITRE ATLAS data 2026.05. LINDDUN (KU Leuven DistriNet): Linking, Identifying, Non-repudiation, Detecting, Data Disclosure, Unawareness, Non-compliance.",
+   "relevance": "Εξωτερικό πλέγμα κάλυψης για την §18 που δεν γράφτηκε και για την απρόσιτη έδρα THREAT-MODEL.",
+   "sources": [
+    {
+     "title": "OWASP Top 10 for LLM Applications 2025",
+     "url": "https://genai.owasp.org/llm-top-10/",
+     "year": "2025"
+    },
+    {
+     "title": "OWASP Top 10 for Agentic Applications 2026",
+     "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+     "year": "2025"
+    },
+    {
+     "title": "OWASP Agentic AI Threats and Mitigations",
+     "url": "https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/",
+     "year": "2025"
+    },
+    {
+     "title": "MITRE ATLAS data",
+     "url": "https://github.com/mitre-atlas/atlas-data",
+     "year": "2026"
+    },
+    {
+     "title": "LINDDUN",
+     "url": "https://linddun.org/",
+     "year": "n.d."
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-13",
+   "name": "Supply-chain frameworks: SLSA v1.2, in-toto attestations, TUF",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "SLSA v1.2 (Approved): Build track L0, L1, L2, L3· κανένα Build level δεν απαιτεί reproducible ή hermetic build· το Source track επανεισάγεται στο 1.2. in-toto: DSSE envelope, statement, predicates (SLSA provenance, SPDX, CycloneDX, VSA). TUF: CNCF graduated· ρόλοι root, targets, snapshot, timestamp· προστασία από arbitrary installation, rollback, indefinite freeze, mix-and-match, fast-forward και από συμβιβασμό κλειδιών κάτω από το threshold.",
+   "relevance": "Η INV-S03 είναι αυστηρότερη από το SLSA· το TUF καλύπτει τη διανομή artifacts στους organ hosts, που λείπει από το πρόχειρο.",
+   "sources": [
+    {
+     "title": "SLSA specification",
+     "url": "https://slsa.dev/spec/",
+     "year": "n.d."
+    },
+    {
+     "title": "SLSA v1.2 Build track basics",
+     "url": "https://slsa.dev/spec/v1.2/build-track-basics",
+     "year": "n.d."
+    },
+    {
+     "title": "in-toto Attestation Framework",
+     "url": "https://github.com/in-toto/attestation",
+     "year": "n.d."
+    },
+    {
+     "title": "The Update Framework",
+     "url": "https://theupdateframework.io/",
+     "year": "n.d."
+    },
+    {
+     "title": "TUF specification",
+     "url": "https://theupdateframework.github.io/specification/latest/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-14",
+   "name": "Reproducible & bootstrappable builds: Guix FSB, stagex, DDC",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Reproducible: οποιοσδήποτε αναπαράγει bit-by-bit πανομοιότυπα artifacts. Guix full-source bootstrap (26/4/2023): γράφος >22.000 κόμβων από seed 357 bytes, x86_64/i686· ως driver απομένει στατικό Guile 25 MiB. Guix Rust (2018): bootstrap από πηγή μέσω mrustc, χωρίς binary rustc. stagex: seed <190 bytes, deterministic, υπογραφές 4 maintainers με hardware-backed PGP. DDC (Wheeler, 2005 και 2009): ανίχνευση trusting-trust με δεύτερο compiler. NixOS: η Nix από μόνη της δεν εγγυάται αναπαραγωγιμότητα.",
+   "relevance": "Ισχυρότερο από τους «δύο builders» για το kernel TCB (INV-S03, CMP-OPS-01)· περιορίζει δραστικά, όχι μηδενίζει, το common-mode trusting-trust.",
+   "sources": [
+    {
+     "title": "Reproducible builds definition",
+     "url": "https://reproducible-builds.org/docs/definition/",
+     "year": "n.d."
+    },
+    {
+     "title": "Guix full-source bootstrap",
+     "url": "https://guix.gnu.org/en/blog/2023/the-full-source-bootstrap-building-from-source-all-the-way-down/",
+     "year": "2023"
+    },
+    {
+     "title": "Guix: Bootstrapping Rust",
+     "url": "https://guix.gnu.org/en/blog/2018/bootstrapping-rust/",
+     "year": "2018"
+    },
+    {
+     "title": "StageX",
+     "url": "https://stagex.tools/",
+     "year": "n.d."
+    },
+    {
+     "title": "Countering Trusting Trust (DDC)",
+     "url": "https://dwheeler.com/trusting-trust/",
+     "year": "2009"
+    },
+    {
+     "title": "NixOS reproducibility",
+     "url": "https://reproducible.nixos.org/",
+     "year": "n.d."
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-15",
+   "name": "Authorization & workload identity: Cedar, Biscuit, Macaroons, SPIFFE/SPIRE",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Cedar (2024): μοντέλο και αποδείξεις ιδιοτήτων σε Lean, sound και complete logical encoding για ανάλυση πολιτικών, υλοποίηση σε Rust. Biscuit (Eclipse): capability tokens με public key, offline attenuation με blocks, Datalog, revocation ids· Ed25519 (default) και ECDSA secp256r1, καμία PQ. Macaroons (NDSS 2014): chained HMACs με caveats, άρα μόνο συμμετρική κρυπτογραφία. SPIFFE/SPIRE: short-lived SVIDs (X.509/JWT), node και workload attestation, αυτόματη rotation.",
+   "relevance": "Υλοποιήσεις για INV-S02, INV-C07, ADR-0010 και για τα leases των bodies.",
+   "sources": [
+    {
+     "title": "Cedar paper",
+     "url": "https://arxiv.org/abs/2403.04651",
+     "year": "2024"
+    },
+    {
+     "title": "Biscuit",
+     "url": "https://github.com/eclipse-biscuit/biscuit",
+     "year": "n.d."
+    },
+    {
+     "title": "Biscuit SPECIFICATIONS",
+     "url": "https://github.com/eclipse-biscuit/biscuit/blob/main/SPECIFICATIONS.md",
+     "year": "n.d."
+    },
+    {
+     "title": "Macaroons",
+     "url": "https://research.google/pubs/macaroons-cookies-with-contextual-caveats-for-decentralized-authorization-in-the-cloud/",
+     "year": "2014"
+    },
+    {
+     "title": "SPIFFE overview",
+     "url": "https://spiffe.io/docs/latest/spiffe-about/overview/",
+     "year": "n.d."
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-16",
+   "name": "GDPR vs append-only: EDPB Guidelines 02/2025, CNIL blockchain guidance, CJEU C-413/23 P",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "EDPB 02/2025 v1.1 (υιοθέτηση 8/4/2025, έκδοση διαβούλευσης έως 9/6/2025):\n- η τεχνική αδυναμία δεν δικαιολογεί μη συμμόρφωση·\n- τα κρυπτογραφημένα δεδομένα παραμένουν προσωπικά· η κρυπτογράφηση «overtaken by time» αν το blockchain διατηρείται επ' αόριστον·\n- salted/keyed hash: μετά τη διαγραφή key/salt δεν πρέπει να είναι linkable· unsalted/unkeyed hashes κατά κανόνα ανεπαρκή για δημόσιο blockchain·\n- perfectly hiding commitment: μετά τη διαγραφή δεδομένων και witness γίνεται «useless».\nCNIL (Σεπτ. 2018): ρητή σειρά προτίμησης commitment > keyed hash > ciphertext· με διαγραφή witness ή key το αποτέλεσμα κινείται «closer to» erasure· perfectly hiding commitment μαζί με διαγραφή witness και τιμής ⇒ ανώνυμο.\nCJEU C-413/23 P (4/9/2025): τα pseudonymised δεδομένα δεν είναι αναγκαστικά προσωπικά για αποδέκτη χωρίς εύλογα μέσα ταυτοποίησης.",
+   "relevance": "Ορίζει τις προϋποθέσεις για ADR-0018 και KT-16 και την είσοδο του EXP-19· η δήλωση για unsalted hashes αφορά δημόσιο blockchain και εφαρμόζεται κατ' αναλογία στο ιδιωτικό ledger του GRAIL.",
+   "sources": [
+    {
+     "title": "EDPB adopts guidelines on blockchain (news)",
+     "url": "https://www.edpb.europa.eu/news/news/2025/edpb-adopts-guidelines-processing-personal-data-through-blockchains-and-ready_en",
+     "year": "2025"
+    },
+    {
+     "title": "EDPB Guidelines 02/2025 PDF",
+     "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+     "year": "2025"
+    },
+    {
+     "title": "CNIL Blockchain guidance (EN)",
+     "url": "https://www.cnil.fr/sites/default/files/atoms/files/blockchain_en.pdf",
+     "year": "2018"
+    },
+    {
+     "title": "CJEU C-413/23 P EDPS v SRB",
+     "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62023CJ0413",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-17",
+   "name": "Confidential computing & attestation: RFC 9334 RATS, Private Cloud Compute, TEE.fail",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "RFC 9334 (Informational, 2023): Attester, Verifier, Relying Party· Evidence και Attestation Results. PCC (10/6/2024): stateless computation, enforceable guarantees, no privileged runtime access, non-targetability, verifiable transparency. TEE.fail (IEEE S&P'26): DDR5 interposer <1000$· εξαγωγή attestation keys από Intel TDX/SGX, ιδιωτικών ECDSA κλειδιών σε AMD SEV-SNP, παραβίαση του NVIDIA CC με «δανεικά» attestation keys.",
+   "relevance": "Το TB-4 (provider egress) μπορεί να προσθέσει attested inference, αλλά ο TEE δεν αντικαθιστά residency και τοπικά μοντέλα για privileged δεδομένα.",
+   "sources": [
+    {
+     "title": "RFC 9334 RATS",
+     "url": "https://www.rfc-editor.org/rfc/rfc9334",
+     "year": "2023"
+    },
+    {
+     "title": "Private Cloud Compute",
+     "url": "https://security.apple.com/blog/private-cloud-compute/",
+     "year": "2024"
+    },
+    {
+     "title": "TEE.fail",
+     "url": "https://tee.fail/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-18",
+   "name": "LLM serving side channels (KV / semantic cache)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Timing side channels σε KV cache και semantic cache· token-by-token ανάκτηση κοινών prefixes, δηλαδή system prompts και prompts άλλων χρηστών, σε multi-tenant serving (αποδεκτό στο IEEE TIFS).",
+   "relevance": "Κίνδυνος cross-matter leakage στους τοπικούς model servers του DP-2 (REQ-SEC-006, VT-805).",
+   "sources": [
+    {
+     "title": "The Early Bird Catches the Leak",
+     "url": "https://arxiv.org/abs/2409.20002",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-19",
+   "name": "EU regulatory security frame: CRA, EU PQC roadmap, AI Act Art. 15",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "CRA: σε ισχύ από 10/12/2024· υποχρεώσεις αναφοράς από 11/9/2026· κύριες υποχρεώσεις από 11/12/2027. EU PQC coordinated implementation roadmap: 23/6/2025 (ορόσημα μη επαληθευμένα). AI Act Art. 15(5): ανθεκτικότητα high-risk συστημάτων σε data poisoning, model poisoning, adversarial examples, confidentiality attacks, model flaws.",
+   "relevance": "Δυνητικές υποχρεώσεις για LAWMAX/GRAIL· η εφαρμοσιμότητα κρίνεται στο EXP-19.",
+   "sources": [
+    {
+     "title": "Cyber Resilience Act",
+     "url": "https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act",
+     "year": "2024"
+    },
+    {
+     "title": "EU PQC coordinated implementation roadmap",
+     "url": "https://digital-strategy.ec.europa.eu/en/library/coordinated-implementation-roadmap-transition-post-quantum-cryptography",
+     "year": "2025"
+    },
+    {
+     "title": "AI Act Article 15",
+     "url": "https://artificialintelligenceact.eu/article/15/",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-20",
+   "name": "BFT ordering: HotStuff, HotStuff-2",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "HotStuff (2018· PODC'19): partial synchrony, n = 3f+1, linear view change, responsiveness. HotStuff-2 (2023): δύο φάσεις ανά view αντί τριών, με optimistic responsiveness και χωρίς ουσιαστική πρόσθετη πολυπλοκότητα.",
+   "relevance": "Στηρίζει το REQ-SEC-003 και το ADR-0031 («HotStuff-family»)· το HotStuff-2 είναι βελτίωση latency μέσα στην ίδια οικογένεια.",
+   "sources": [
+    {
+     "title": "HotStuff",
+     "url": "https://arxiv.org/abs/1803.05069",
+     "year": "2018"
+    },
+    {
+     "title": "HotStuff-2",
+     "url": "https://eprint.iacr.org/2023/397",
+     "year": "2023"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-21",
+   "name": "NIST SP 800-88 Rev. 2 — Media Sanitization (Cryptographic Erase)",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Guidelines for Media Sanitization, Rev. 2 (Σεπτ. 2025), αντικαθιστά την Rev. 1 (2014)· περιλαμβάνει το cryptographic erase ως τεχνική sanitization. Οι απαιτήσεις επαλήθευσης δεν ελέγχθηκαν εδώ.",
+   "relevance": "Τυποποιημένη βάση για το «επαληθευμένη καταστροφή κλειδιού» του KT-16 και το ADR-0018.",
+   "sources": [
+    {
+     "title": "NIST SP 800-88 Rev. 2",
+     "url": "https://csrc.nist.gov/pubs/sp/800/88/r2/final",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-SEC-22",
+   "name": "vLLM prefix-cache isolation (cache_salt)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Το cache_salt μπαίνει στο hash του πρώτου block, ώστε μόνο αιτήματα με το ίδιο salt να μοιράζονται KV blocks· στοχεύει ρητά timing side channels.",
+   "relevance": "Μέτρο διαθέσιμο σήμερα για GAP-SEC-09 και REQ-SEC-006: ένα salt ανά confidentiality domain.",
+   "sources": [
+    {
+     "title": "vLLM Automatic Prefix Caching design",
+     "url": "https://docs.vllm.ai/en/latest/design/prefix_caching.html",
+     "year": "n.d."
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-KRN-03"
+   ],
+   "draft_ref": "master §6.3 γρ.471",
+   "draft_position": "Identity charters, threshold root keys (offline/HSM), delegated body keys με lease, rotation/revocation, continuity proofs, αλγοριθμική ευελιξία· μυστικά μόνο σε HSM/TEE· compromise root → threshold + time-locked recovery· σπάσιμο αλγορίθμου → dual signatures· HSM μέσω PKCS#11.",
+   "verdict": "superior-exists",
+   "reasoning": "Η KERI μοντελοποιεί ακριβώς αυτή την έννοια: KEL, delegated inception/rotation, witness receipts, duplicity proofs. Η pre-rotation δεσμεύει τα επόμενα, μη εκτεθειμένα κλειδιά, οπότε ο κάτοχος του τρέχοντος κλειδιού δεν μπορεί να κάνει rotation. Το «threshold root» με PQ δεν υλοποιείται σήμερα ως threshold signature: το FROST στηρίζεται στο discrete log και το NIST MPTS είναι σε φάση previews. Υλοποιήσιμο είναι k-of-n multisignature (TUF). Το ίδιο το πρόχειρο κατατάσσει τα threshold σχήματα και ως επέκταση (EP-04), που δημιουργεί ασάφεια. Το PKCS#11 3.2 (OASIS Standard, 3/6/2026) ορίζει ML-DSA, SLH-DSA, ML-KEM, HSS, XMSS. Επιφύλαξη: η έδρα KEY-LIFECYCLE δεν είναι διαθέσιμη και ίσως ήδη ορίζει μέρος αυτών.",
+   "superior": "KERI-style KEL με pre-rotation (commitment επόμενων κλειδιών), witnesses/watchers και k-of-n multisignature από PQ κλειδιά. Αποκλείει δομικά τον «αγώνα rotation» με επιτιθέμενο που κατέχει το τρέχον κλειδί και κρατά HSM, leases και continuity proofs. Προϋπόθεση: τα next keys φυλάσσονται χωριστά από τα τρέχοντα.",
+   "sota_refs": [
+    "SOTA-SEC-06",
+    "SOTA-SEC-09",
+    "SOTA-SEC-04"
+   ],
+   "sources": [
+    {
+     "title": "KERI Specification v1.1",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "n.d."
+    },
+    {
+     "title": "RFC 9591 FROST",
+     "url": "https://www.rfc-editor.org/rfc/rfc9591",
+     "year": "2024"
+    },
+    {
+     "title": "NIST Threshold Cryptography",
+     "url": "https://csrc.nist.gov/projects/threshold-cryptography",
+     "year": "2026"
+    },
+    {
+     "title": "TUF specification",
+     "url": "https://theupdateframework.github.io/specification/latest/",
+     "year": "2026"
+    },
+    {
+     "title": "PKCS #11 v3.2",
+     "url": "https://docs.oasis-open.org/pkcs11/pkcs11-spec/v3.2/pkcs11-spec-v3.2.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ICD-03"
+   ],
+   "draft_ref": "_unmerged-parts/15.md γρ.28",
+   "draft_position": "CreateCharter (μόνο με Owner Root delegation) · Delegate(role, scope, not_before, not_after) · Rotate · Revoke · Sign(payload, kid) · Verify · ContinuityProof(cut_a, cut_b)· signature {kid, alg, sig}· μυστικά μόνο σε HSM/TEE· ανάκληση αποτελεσματική από τον χρόνο της.",
+   "verdict": "superior-exists",
+   "reasoning": "Τρία κενά στο συμβόλαιο.\n(α) Δεν υπάρχει πεδίο pre-rotation commitment (KERI).\n(β) Το Sign(payload, kid) είναι γενικό signing oracle χωρίς typed/domain-separated payload. Το FIPS 204 έχει προαιρετικό ctx· το RFC 9881 το αφήνει κενό στο X.509 profile, άρα η χρήση του ορίζεται ανά profile. Το composite ML-DSA δεσμεύει Prefix/Label.\n(γ) Το ICD-03 δεν ορίζει ρητά ότι ο αλγόριθμος είναι δεμένος στο kid· το RFC 8725 §3.1 απαιτεί ένα κλειδί ανά αλγόριθμο και allowlist. Η KL-4 δεν είναι διαθέσιμη.\nΤο key state as-of cut είναι ήδη παράγωγο από τα ledger events μέσω ICD-01 Read και των witnessed checkpoints· ένα KeyStateAt είναι μόνο εργονομική βελτίωση.",
+   "superior": "ICD-03 με:\n- NextKeyDigests στα CreateCharter και Rotate·\n- Sign(typed_payload, domain_tag, kid) με υποχρεωτικό domain separation·\n- αλγόριθμο ως ιδιότητα του kid στο ledger·\n- προαιρετικά KeyStateAt(kid, cut).\nΑποκλείει κλάσεις σφάλματος (cross-protocol reuse, algorithm substitution) χωρίς απώλεια ευελιξίας.",
+   "sota_refs": [
+    "SOTA-SEC-06",
+    "SOTA-SEC-05",
+    "SOTA-SEC-03",
+    "SOTA-SEC-04"
+   ],
+   "sources": [
+    {
+     "title": "KERI Specification v1.1",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "n.d."
+    },
+    {
+     "title": "RFC 8725",
+     "url": "https://www.rfc-editor.org/rfc/rfc8725",
+     "year": "2020"
+    },
+    {
+     "title": "RFC 9881",
+     "url": "https://www.rfc-editor.org/rfc/rfc9881",
+     "year": "2025"
+    },
+    {
+     "title": "draft-ietf-lamps-pq-composite-sigs",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-23"
+   ],
+   "draft_ref": "24.md γρ.43· master §6.3 γρ.471",
+   "draft_position": "Owner root compromise: ανάκληση εκτός ζώνης σε ≥2 κανάλια· υπογραφές πριν το compromise με ανεξάρτητο TSA χρόνο παραμένουν έγκυρες· νέο root με continuity statement· καμία αναθεώρηση του επιτιθέμενου δεκτή· μηχανισμός (KRN-03): threshold + time-locked recovery.",
+   "verdict": "superior-exists",
+   "reasoning": "Αν ο επιτιθέμενος κατέχει το root, μπορεί να παράγει εξίσου «continuity statement» και «ανάκληση»· τα out-of-band κανάλια λύνουν το ζήτημα μόνο διαδικαστικά. Με KERI pre-rotation, μόνο ο κάτοχος των ήδη δεσμευμένων, μη εκτεθειμένων κλειδιών κάνει rotation, και οι watchers με first-seen policy παράγουν απόδειξη duplicity. Το TUF δείχνει αλυσίδα root εκδόσεων με threshold του παλιού ΚΑΙ του νέου root. Το κριτήριο «pre-compromise TSA-timed» ευθυγραμμίζεται με RFC 3161 και eIDAS Art. 41. Το T_cool των Tier-0 αναθεωρήσεων (19.md) λειτουργεί ήδη ως time-lock. Επιφύλαξη: οι KEY-LIFECYCLE/TRUST-BOOTSTRAP δεν είναι διαθέσιμες.",
+   "superior": "Ανάκτηση με pre-rotated next keys (KERI), watcher duplicity evidence και TUF-style αλυσίδα root εκδόσεων. Κρυπτογραφική, όχι διαδικαστική, λύση του αγώνα ανάκτησης· κρατά όλα τα κριτήρια του KT-23. Προτεινόμενη προσθήκη κριτηρίου: rotation με το τρέχον (παραβιασμένο) κλειδί απορρίπτεται.",
+   "sota_refs": [
+    "SOTA-SEC-06",
+    "SOTA-SEC-09",
+    "SOTA-SEC-08"
+   ],
+   "sources": [
+    {
+     "title": "KERI Specification v1.1",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "n.d."
+    },
+    {
+     "title": "TUF specification",
+     "url": "https://theupdateframework.github.io/specification/latest/",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 3161",
+     "url": "https://www.rfc-editor.org/rfc/rfc3161",
+     "year": "2001"
+    },
+    {
+     "title": "eIDAS 910/2014",
+     "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910",
+     "year": "2014"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-SEC-005",
+    "KT-18"
+   ],
+   "draft_ref": "29.md γρ.141· 24.md γρ.38· 19.md γρ.59 (INV-I04)",
+   "draft_position": "Κλειδιά που διέρρευσαν (body ή owner root) ανακαλούνται χωρίς απώλεια ταυτότητας· KT-18: ανάκληση εντός ορίου, απόρριψη υπογραφών μετά την ανάκληση, ταυτότητα ανεπηρέαστη· INV-I04: υπογραφή body έγκυρη ⇔ ζωντανό lease τη στιγμή της υπογραφής και καμία ανάκληση πριν.",
+   "verdict": "holds",
+   "reasoning": "Η απαίτηση και το κριτήριο είναι σωστά και υλοποιήσιμα: short-lived credentials (SPIFFE), delegated identifiers (KERI), witnessed logs για ανίχνευση κακής χρήσης (Sigsum). Προϋπόθεση που δεν ρητοποιείται: η INV-I04 κρίνει με βάση «τη στιγμή της υπογραφής». Αν ο χρόνος δηλώνεται από τον υπογράφοντα, ο κάτοχος διαρρεύσαντος κλειδιού μπορεί να οπισθοχρονολογήσει υπογραφές εκτός ledger. Ο χρόνος πρέπει να είναι ledger-inclusion ή TSA (GAP-SEC-05). Δεν βρέθηκε αυστηρά ανώτερη εναλλακτική.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-15",
+    "SOTA-SEC-06",
+    "SOTA-SEC-07",
+    "SOTA-SEC-08"
+   ],
+   "sources": [
+    {
+     "title": "SPIFFE overview",
+     "url": "https://spiffe.io/docs/latest/spiffe-about/overview/",
+     "year": "n.d."
+    },
+    {
+     "title": "Sigsum",
+     "url": "https://www.sigsum.org/",
+     "year": "n.d."
+    },
+    {
+     "title": "RFC 3161",
+     "url": "https://www.rfc-editor.org/rfc/rfc3161",
+     "year": "2001"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-X01"
+   ],
+   "draft_ref": "19.md γρ.77",
+   "draft_position": "Κάθε digest/υπογραφή φέρει αναγνωριστικό αλγορίθμου· κανένας verifier δεν υποθέτει default (Tier 1· KL-4, CS-1).",
+   "verdict": "superior-exists",
+   "reasoning": "Το tagging των digests είναι σωστό (multihash-class, όχι ακόμη πρότυπο IETF). Για υπογραφές, το tag στην υπογραφή είναι αναγκαίο αλλά όχι επαρκές. Το RFC 8725 §3.1 (JWT BCP, αρχή μεταφερόμενη) απαιτεί allowlist, ένα κλειδί ανά αλγόριθμο και έλεγχο κατά την πράξη, ώστε να αποκλείεται algorithm substitution. Κατά το δόγμα §0.1 (εξάλειψη κλάσης σφάλματος) το σωστό σχήμα είναι ο αλγόριθμος δεμένος στο κλειδί. Επιφύλαξη: η KL-4 (μη διαθέσιμη) ίσως ήδη το ορίζει.",
+   "superior": "INV-X01′: ο αλγόριθμος είναι ιδιότητα του kid, καταγεγραμμένη στο ledger ανά epoch· ο verifier δέχεται μόνο ζεύγη (kid, alg) του allowlist της ενεργής epoch· το tag της υπογραφής απλώς επιβεβαιώνεται. Κρατά πλήρως την ευελιξία.",
+   "sota_refs": [
+    "SOTA-SEC-05"
+   ],
+   "sources": [
+    {
+     "title": "RFC 8725",
+     "url": "https://www.rfc-editor.org/rfc/rfc8725",
+     "year": "2020"
+    },
+    {
+     "title": "Multihash",
+     "url": "https://multiformats.io/multihash/",
+     "year": "n.d."
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-X02"
+   ],
+   "draft_ref": "19.md γρ.78· master §6.3 γρ.470 (KRN-02)",
+   "draft_position": "Πριν αποσυρθεί η σουίτα s, όλες οι ζωντανές ρίζες επαναγκυρώνονται στη διάδοχη s' με διπλές υπογραφές και k-of-n TSA (Tier 1)· KRN-02: σπάσιμο digest → epoch re-anchor.",
+   "verdict": "superior-exists",
+   "reasoning": "Τυποποιημένη μορφή του ίδιου μηχανισμού είναι το RFC 4998 (ERS). Ξεχωρίζει Timestamp Renewal (συμβιβασμός κλειδιού TSU ή αδυναμία αλγορίθμου της χρονοσφραγίδας) από Hash-Tree Renewal (αδυναμία του hash των δέντρων), που απαιτεί ρητά πρόσβαση στα αρχειοθετημένα δεδομένα. Το πρόχειρο δεν κάνει τη διάκριση. Δεν ορίζει επίσης αν οι δεσμεύσεις προσωπικών δεδομένων είναι σε plaintext ή envelope. Αν είναι σε plaintext (ή αν διαγράφεται και το ciphertext), το hash-tree renewal είναι αδύνατο μετά το crypto-shredding. Κατά NIST IR 8547 τα hash είναι «significantly less vulnerable to known quantum attacks»· άρα το κύριο κβαντικό σενάριο είναι σπάσιμο υπογραφής, όπου αρκεί timestamp renewal, και σπάσιμο hash θα προερχόταν κυρίως από κλασική κρυπτανάλυση (συμπέρασμα).",
+   "superior": "Epoch re-anchoring κατά RFC 4998:\n- δύο ρητοί τύποι renewal με πολιτική ανά τύπο·\n- ρητή μεταχείριση των shredded αντικειμένων.\nΔική μας πρόταση, όχι SOTA: dual-hash commitments από την εγγραφή ή κατάσταση «erased, non-renewable».\nΚαλύπτει και την περίπτωση του hash που το πρόχειρο αφήνει ανοιχτή.",
+   "sota_refs": [
+    "SOTA-SEC-08",
+    "SOTA-SEC-02"
+   ],
+   "sources": [
+    {
+     "title": "RFC 4998",
+     "url": "https://www.rfc-editor.org/rfc/rfc4998",
+     "year": "2007"
+    },
+    {
+     "title": "NIST IR 8547 ipd PDF",
+     "url": "https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-09",
+    "REQ-SEC-004"
+   ],
+   "draft_ref": "24.md γρ.24· 29.md γρ.140",
+   "draft_position": "KT-09: αποτυχία post-quantum hash/υπογραφής → όλες οι ζωντανές ρίζες επαναγκυρωμένες στη διάδοχη σουίτα πριν την απόσυρση· συνέχεια μέσω epoch chain· κανένα πλαστό ιστορικό μετά το σπάσιμο (πρώτο GP: GP-9). REQ-SEC-004: κρυπτογραφική ευελιξία με δοκιμασμένη post-quantum μετάβαση εποχής.",
+   "verdict": "holds",
+   "reasoning": "Το κριτήριο και η απαίτηση είναι σωστά και υλοποιήσιμα σήμερα: FIPS 204/205, OpenSSL 3.5, PKCS#11 3.2, RFC 3161. Τρεις διευκρινίσεις:\n(1) Η διατύπωση «post-quantum hash/signature failure» είναι ασαφής: σπάσιμο PQ αλγορίθμου ή κβαντική επίθεση; Για hash ο κβαντικός κίνδυνος είναι μικρός (NIST IR 8547).\n(2) Το pass criterion να ορίζει ότι υπογραφές με σπασμένο αλγόριθμο γίνονται δεκτές μόνο με ERS/TSA anchor πριν το σπάσιμο.\n(3) Το GP-9 (τελευταία φάση) να τοποθετηθεί έναντι του 2030/2035 της NIST.\nΔεν βρέθηκε αυστηρά ανώτερη εναλλακτική.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-01",
+    "SOTA-SEC-02",
+    "SOTA-SEC-04",
+    "SOTA-SEC-08"
+   ],
+   "sources": [
+    {
+     "title": "NIST PQC project",
+     "url": "https://csrc.nist.gov/projects/post-quantum-cryptography",
+     "year": "2026"
+    },
+    {
+     "title": "NIST IR 8547 ipd PDF",
+     "url": "https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf",
+     "year": "2024"
+    },
+    {
+     "title": "OpenSSL 3.5 notes",
+     "url": "https://openssl-library.org/news/openssl-3.5-notes/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0016"
+   ],
+   "draft_ref": "22.md γρ.22",
+   "draft_position": "Content addressing & crypto agility: JCS + algorithm-tagged digests (spec v2)· PQ: ML-DSA, SLH-DSA, ML-KEM, διπλές υπογραφές.",
+   "verdict": "superior-exists",
+   "reasoning": "JCS και tagged digests: ισχύουν, δεν βρέθηκε ανώτερο. Οι «διπλές υπογραφές» ως ανεξάρτητες υπογραφές επιτρέπουν stripping αν δεν δεθούν. Το composite ML-DSA (draft-19, RFC Editor queue) δίνει weak non-separability μέσω Prefix/Label και έναν αλγόριθμο ανά ζεύγος. Το NIST IR 8547 δέχεται dual signatures αν ≥1 συνιστώσα είναι approved. Για ML-KEM: το X25519MLKEM768 είναι πλέον RFC 10024 (Proposed Standard, 2026) και default στο OpenSSL 3.5· το X-Wing είναι expired individual draft (ISE stream), όχι έγγραφο CFRG/IETF. Το RFC 9881 απαγορεύει HashML-DSA και αφήνει το ctx κενό στο X.509. Όριο: το composite δεν καλύπτει ML-DSA+SLH-DSA.",
+   "superior": "Composite ML-DSA για ζεύγη PQ/traditional (non-separable, τυποποιημένα OIDs)· ML-DSA χωρίς HashML-DSA· hybrid KEM μέσω των groups του RFC 10024. Trade-off: για PQ+PQ (ML-DSA+SLH-DSA) χρειάζεται δική μας domain-separated σύνδεση· το composite δεν είναι ακόμη RFC.",
+   "sota_refs": [
+    "SOTA-SEC-03",
+    "SOTA-SEC-04",
+    "SOTA-SEC-02"
+   ],
+   "sources": [
+    {
+     "title": "draft-ietf-lamps-pq-composite-sigs",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/",
+     "year": "2026"
+    },
+    {
+     "title": "draft-connolly-cfrg-xwing-kem",
+     "url": "https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 10024",
+     "url": "https://www.rfc-editor.org/rfc/rfc10024",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 9881",
+     "url": "https://www.rfc-editor.org/rfc/rfc9881",
+     "year": "2025"
+    },
+    {
+     "title": "NIST IR 8547 ipd PDF",
+     "url": "https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-11"
+   ],
+   "draft_ref": "26.md γρ.38",
+   "draft_position": "Κόστος PQ διπλών υπογραφών και επαναγκύρωσης σε μέγεθος/latency/αποθήκευση σε κλίμακα· απόφαση σουίτας ή batching (GP-9, KRN-03).",
+   "verdict": "holds",
+   "reasoning": "Έγκυρο πείραμα. Μέρος του απαντάται από δημοσιευμένα μεγέθη (RFC 9881: ML-DSA-65 pk 1952 B, sig 3309 B· ML-DSA-87 sig 4627 B). Το ζητούμενο είναι το κόστος στην κλίμακα του GRAIL: υπογραφή ανά ledger event έναντι υπογραφής μόνο στα checkpoints ή Merkle batching, και κόστος ERS renewal. Να μετρηθούν και composite και SLH-DSA (τα μεγέθη SLH-DSA δεν επαληθεύτηκαν εδώ).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-04",
+    "SOTA-SEC-03",
+    "SOTA-SEC-08"
+   ],
+   "sources": [
+    {
+     "title": "RFC 9881",
+     "url": "https://www.rfc-editor.org/rfc/rfc9881",
+     "year": "2025"
+    },
+    {
+     "title": "RFC 9814",
+     "url": "https://www.rfc-editor.org/rfc/rfc9814",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "EP-04"
+   ],
+   "draft_ref": "28.md γρ.14",
+   "draft_position": "Crypto Suite Registry (ICD-03): post-quantum σουίτες, νέα πρότυπα, threshold σχήματα (μόνο μεταξύ συσκευών του κυρίαρχου, KL-7)· προστασία: INV-X01, INV-X02, KT-09.",
+   "verdict": "holds",
+   "reasoning": "Σωστό σημείο επέκτασης, συμβατό με CSWP 39 (final 12/2025, αντικαταστάθηκε από upd1 6/2026). Προσθήκες:\n- το registry ορίζει ολόκληρες σουίτες (sig, KEM, hash, ctx profile) ανά epoch, όχι μεμονωμένους αλγορίθμους·\n- συνοδεύεται από CBOM (CycloneDX 1.7 / ECMA-424)·\n- έχει θέση για HQC, Falcon/FN-DSA και μελλοντικό PQ threshold (NIST MPTS σε εξέλιξη· το FROST δεν είναι PQ).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-05",
+    "SOTA-SEC-01",
+    "SOTA-SEC-09"
+   ],
+   "sources": [
+    {
+     "title": "NIST CSWP 39",
+     "url": "https://csrc.nist.gov/pubs/cswp/39/considerations-for-achieving-cryptographic-agility/final",
+     "year": "2025"
+    },
+    {
+     "title": "CycloneDX overview",
+     "url": "https://cyclonedx.org/specification/overview/",
+     "year": "2025"
+    },
+    {
+     "title": "NIST Threshold Cryptography",
+     "url": "https://csrc.nist.gov/projects/threshold-cryptography",
+     "year": "2026"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-S01"
+   ],
+   "draft_ref": "19.md γρ.81· master §0.1 γρ.114",
+   "draft_position": "Περιεχόμενο OBSERVED/PROPOSED δεν ερμηνεύεται ποτέ ως εντολή προς COG-10/KRN-11· εντολές = μόνο υπογεγραμμένες προθέσεις Principal/δημιουργού (Tier 1· formal artifact «—»)· §0.1: κανάλια με provenance-tag.",
+   "verdict": "superior-exists",
+   "reasoning": "Η ιδιότητα διατυπώνεται χωρίς μηχανισμό που την κάνει αληθή όταν ένας LLM planner διαβάζει OBSERVED περιεχόμενο και μετά προτείνει ενέργειες· το KRN-11 δεν ξέρει αν η πρόταση επηρεάστηκε. Το CaMeL εξάγει το control flow μόνο από το trusted query, ώστε τα untrusted δεδομένα να μην επηρεάζουν τη ροή, με capabilities και πολιτικές σε κάθε tool call (77% AgentDojo με provable security, 84% χωρίς άμυνα). Το FIDES προσθέτει integrity και confidentiality labels με ντετερμινιστική επιβολή και τυπικό μοντέλο, άρα η INV-S01 μπορεί να αποκτήσει formal artifact. Το Spotlighting είναι μόνο πιθανοτικό.",
+   "superior": "CaMeL/FIDES-class planner:\n- ο planner δεν βλέπει ποτέ μη έμπιστο περιεχόμενο, μόνο αναφορές·\n- όλες οι τιμές φέρουν IFC labels·\n- το KRN-11 επιβάλλει πολιτική ροής στο sink.\nΚάνει την INV-S01 δομικά αληθή και τυπικά ελέγξιμη. Trade-off: μετρημένη απώλεια utility, ακόμη άγνωστη σε νομικές ροές.",
+   "sota_refs": [
+    "SOTA-SEC-10",
+    "SOTA-SEC-11"
+   ],
+   "sources": [
+    {
+     "title": "CaMeL",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "FIDES",
+     "url": "https://arxiv.org/abs/2505.23643",
+     "year": "2025"
+    },
+    {
+     "title": "Design Patterns",
+     "url": "https://arxiv.org/abs/2506.08837",
+     "year": "2025"
+    },
+    {
+     "title": "Spotlighting",
+     "url": "https://arxiv.org/abs/2403.14720",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "REQ-SEC-001"
+   ],
+   "draft_ref": "29.md γρ.137",
+   "draft_position": "Περιεχόμενο από πηγές δεν δρα ποτέ ως εντολή (COG-02, COG-10, KRN-11· ICD-28, ICD-08· INV-S01· KT-17· [T]).",
+   "verdict": "holds",
+   "reasoning": "Η απαίτηση είναι σωστή και συμβατή με το OWASP LLM01:2025. Ο μηχανισμός και η επαλήθευση χρειάζονται αναβάθμιση (βλ. INV-S01, KT-17), γι' αυτό η κατάταξη είναι experiment και όχι [T]. Να καλύπτει ρητά tool/organ metadata και ανάκληση από μνήμη/RAG (AgentPoison: ASR >80% με poison rate <0,1%), όχι μόνο έγγραφα πηγών.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-10",
+    "SOTA-SEC-12",
+    "SOTA-SEC-11"
+   ],
+   "sources": [
+    {
+     "title": "OWASP Top 10 for LLM Applications 2025",
+     "url": "https://genai.owasp.org/llm-top-10/",
+     "year": "2025"
+    },
+    {
+     "title": "AgentPoison",
+     "url": "https://arxiv.org/abs/2407.12784",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-17"
+   ],
+   "draft_ref": "24.md γρ.37",
+   "draft_position": "Prompt injection μέσω μαρτυρίας: 0 εκτελέσεις εντολών από παρατηρούμενο περιεχόμενο στο σώμα επιθέσεων· καμία κλιμάκωση capability (GP-3· S01, K05, C07).",
+   "verdict": "superior-exists",
+   "reasoning": "Τρία ελλείμματα.\n(1) Δεν απαιτούνται adaptive attacks· το «The Attacker Moves Second» παρέκαμψε 12 άμυνες με ASR >90% στις περισσότερες, ενώ ανέφεραν σχεδόν μηδενικό ASR.\n(2) Το «0 instruction executions» δεν πιάνει επιθέσεις ροής δεδομένων: exfiltration ή αλλοίωση arguments μέσω εξουσιοδοτημένων ενεργειών, που στοχεύουν CaMeL/FIDES.\n(3) Δεν ορίζεται σώμα επιθέσεων· υπάρχει το AgentDojo (97 tasks, 629 security cases), που χρειάζεται νομικό αντίστοιχο.",
+   "superior": "KT-17′: 0 παραβιάσεις πολιτικής IFC (integrity και confidentiality) υπό adaptive attacks, σε σώμα AgentDojo-class μαζί με σώμα νομικών εγγράφων, με ταυτόχρονη μέτρηση utility. Αυστηρότερο κριτήριο, χωρίς απώλεια του αρχικού.",
+   "sota_refs": [
+    "SOTA-SEC-11",
+    "SOTA-SEC-10"
+   ],
+   "sources": [
+    {
+     "title": "The Attacker Moves Second",
+     "url": "https://arxiv.org/abs/2510.09023",
+     "year": "2025"
+    },
+    {
+     "title": "AgentDojo",
+     "url": "https://arxiv.org/abs/2406.13352",
+     "year": "2024"
+    },
+    {
+     "title": "CaMeL",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "INV-S02"
+   ],
+   "draft_ref": "19.md γρ.82· 15.md γρ.33 (ICD-08)",
+   "draft_position": "Κανένα ambient authority· κάθε επίδραση απαιτεί scoped, χρονικά φραγμένο token (Tier 1)· ICD-08: το KRN-11 είναι το μόνο μονοπάτι επιδράσεων.",
+   "verdict": "holds",
+   "reasoning": "Το σχήμα object-capability με gateway είναι το σωστό. Υπάρχουν ώριμες υλοποιήσεις: Biscuit (offline attenuation, Datalog, revocation ids), SPIFFE/SPIRE (short-lived SVIDs), Cedar (αναλύσιμες πολιτικές), Progent (πολιτικές ανά tool/argument που μόνο συρρικνώνονται). Ανοιχτό: μορφή token. Το Biscuit είναι Ed25519/ECDSA secp256r1, disallowed μετά το 2035 κατά NIST IR 8547 (ipd). Τα Macaroons (HMAC) είναι συμμετρικά και άρα PQ-ανθεκτικά, αλλά απαιτούν κοινό μυστικό στον verifier: trade-off, όχι αυστηρά ανώτερα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-15",
+    "SOTA-SEC-10",
+    "SOTA-SEC-02"
+   ],
+   "sources": [
+    {
+     "title": "Biscuit SPECIFICATIONS",
+     "url": "https://github.com/eclipse-biscuit/biscuit/blob/main/SPECIFICATIONS.md",
+     "year": "n.d."
+    },
+    {
+     "title": "SPIFFE",
+     "url": "https://spiffe.io/docs/latest/spiffe-about/overview/",
+     "year": "n.d."
+    },
+    {
+     "title": "Progent",
+     "url": "https://arxiv.org/abs/2504.11703",
+     "year": "2025"
+    },
+    {
+     "title": "Macaroons",
+     "url": "https://research.google/pubs/macaroons-cookies-with-contextual-caveats-for-decentralized-authorization-in-the-cloud/",
+     "year": "2014"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-C07"
+   ],
+   "draft_ref": "19.md γρ.54· 29.md γρ.147 (REQ-GOV-005)",
+   "draft_position": "Lawful Capability Envelope: κάθε εκτελεσμένη επίδραση έχει capability token εντός του δηλωμένου νόμιμου πεδίου· token εκτός πεδίου δεν εκδίδεται (Tier 0).",
+   "verdict": "holds",
+   "reasoning": "Ο μηχανισμός είναι υλοποιήσιμος και τυπικά αναλύσιμος: έκδοση token με Cedar-class πολιτική (ADR-0010), με αποδείξεις σε Lean και sound/complete encoding. Το «νόμιμο πεδίο» όμως είναι νομικό περιεχόμενο (LAW-09, EXP-19) και δεν αποφασίζεται μηχανικά. Προτείνεται κανόνας σύνθεσης κατά Agents Rule of Two: συνεδρία με untrusted input, sensitive data και external effect απαιτεί έγκριση Principal.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-15",
+    "SOTA-SEC-11"
+   ],
+   "sources": [
+    {
+     "title": "Cedar",
+     "url": "https://arxiv.org/abs/2403.04651",
+     "year": "2024"
+    },
+    {
+     "title": "Agents Rule of Two",
+     "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-S03"
+   ],
+   "draft_ref": "19.md γρ.83· master §7.1 γρ.592· §7.7 γρ.702",
+   "draft_position": "Εκτελούνται μόνο reproducible (δύο ανεξάρτητοι builders συμφωνούν), υπογεγραμμένα artifacts με SBOM/SLSA provenance (Tier 1, formal artifact «—»)· kernel plane μόνο υπογεγραμμένα reproducible artifacts· admission μόνο υπογεγραμμένων images με SLSA provenance.",
+   "verdict": "superior-exists",
+   "reasoning": "Η απαίτηση είναι ήδη αυστηρότερη από το SLSA v1.2, που δεν απαιτεί reproducibility σε κανένα Build level. Όμως οι «δύο builders συμφωνούν» πάνω στο ίδιο binary seed toolchain αφήνουν common-mode trusting-trust. Το full-source bootstrap (Guix: seed 357 B, με Guile driver 25 MiB ως υπόλοιπο εμπιστοσύνης· stagex: seed <190 B, deterministic, 4 υπογράφοντες) μαζί με DDC περιορίζουν δραστικά αυτόν τον κίνδυνο. Το Rust είναι bootstrappable από πηγή μέσω mrustc (Guix, 2018).",
+   "superior": "Για το kernel TCB: full-source bootstrapped + reproducible + k-of-n multi-party signed builds (stagex/Guix-class), με in-toto/SLSA provenance και διανομή μέσω TUF. Κυριαρχεί στο κριτήριο ακεραιότητας. Trade-off: κόστος χρόνου build· πλήρης κάλυψη σύγχρονων εκδόσεων Rust στο stagex ανεπιβεβαίωτη.",
+   "sota_refs": [
+    "SOTA-SEC-14",
+    "SOTA-SEC-13"
+   ],
+   "sources": [
+    {
+     "title": "SLSA v1.2 build track",
+     "url": "https://slsa.dev/spec/v1.2/build-track-basics",
+     "year": "n.d."
+    },
+    {
+     "title": "Guix full-source bootstrap",
+     "url": "https://guix.gnu.org/en/blog/2023/the-full-source-bootstrap-building-from-source-all-the-way-down/",
+     "year": "2023"
+    },
+    {
+     "title": "Guix: Bootstrapping Rust",
+     "url": "https://guix.gnu.org/en/blog/2018/bootstrapping-rust/",
+     "year": "2018"
+    },
+    {
+     "title": "StageX",
+     "url": "https://stagex.tools/",
+     "year": "n.d."
+    },
+    {
+     "title": "DDC",
+     "url": "https://dwheeler.com/trusting-trust/",
+     "year": "2009"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-SEC-002"
+   ],
+   "draft_ref": "29.md γρ.138",
+   "draft_position": "Εκτελούνται μόνο reproducible, υπογεγραμμένα artifacts με SBOM/provenance (OPS-01, KRN-04· ICD-04· S03· VT-803).",
+   "verdict": "holds",
+   "reasoning": "Ως απαίτηση ισχύει και επαληθεύεται με VT-803 (unsigned refusal) και in-toto attestations. Το SBOM να είναι SPDX ή CycloneDX 1.7 / ECMA-424, με CBOM. Η αυστηροποίηση του μηχανισμού αφορά την INV-S03. Δεν βρέθηκε αυστηρά ανώτερη διατύπωση.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-13",
+    "SOTA-SEC-05"
+   ],
+   "sources": [
+    {
+     "title": "in-toto attestation",
+     "url": "https://github.com/in-toto/attestation",
+     "year": "n.d."
+    },
+    {
+     "title": "CycloneDX overview",
+     "url": "https://cyclonedx.org/specification/overview/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-OPS-01"
+   ],
+   "draft_ref": "master §6.3 γρ.574· 22.md γρ.35 (ADR-0029)",
+   "draft_position": "Build & Release Chain: Nix reproducible builds, OCI images, SLSA provenance, υπογραφές, SBOM, release attestation· μη αναπαραγώγιμο build → απόρριψη (δύο ανεξάρτητοι builders συμφωνούν)· Nix, OCI, sigstore-class signing.",
+   "verdict": "superior-exists",
+   "reasoning": "(1) Το πρόχειρο δεν στηρίζεται σε εγγύηση του Nix (που δεν υπάρχει)· ελέγχει την αναπαραγωγιμότητα ανά build. Θέμα μόνο ορολογίας: «Nix builds με ελεγμένη αναπαραγωγιμότητα».\n(2) Λείπουν full-source bootstrap και multi-party signing (stagex/Guix).\n(3) Λείπει TUF για τη διανομή στους organ hosts (rollback, freeze, mix-and-match).\n(4) Το Rekor v2 (GA 10/2025) υποστηρίζει ιδιωτικούς operators (POSIX/MySQL backends) για κυρίαρχο DP-2· το witnessing ανακοινώθηκε ως επερχόμενο· εναλλακτικά Sigsum.\n(5) Το SLSA v1.2 Source track καλύπτει και την πηγή.\n(6) Αν το προϊόν διατίθεται στην αγορά, οι υποχρεώσεις αναφοράς του CRA ισχύουν ήδη από 11/9/2026.",
+   "superior": "Build chain με:\n- bootstrappable + reproducible builds με ρητή επαλήθευση ανά artifact·\n- k-of-n υπογραφές·\n- SLSA Build + Source provenance·\n- self-hosted transparency log·\n- διανομή μέσω TUF.",
+   "sota_refs": [
+    "SOTA-SEC-14",
+    "SOTA-SEC-13",
+    "SOTA-SEC-07",
+    "SOTA-SEC-19"
+   ],
+   "sources": [
+    {
+     "title": "NixOS reproducibility",
+     "url": "https://reproducible.nixos.org/",
+     "year": "n.d."
+    },
+    {
+     "title": "StageX",
+     "url": "https://stagex.tools/",
+     "year": "n.d."
+    },
+    {
+     "title": "Rekor v2 GA",
+     "url": "https://blog.sigstore.dev/rekor-v2-ga/",
+     "year": "2025"
+    },
+    {
+     "title": "TUF specification",
+     "url": "https://theupdateframework.github.io/specification/latest/",
+     "year": "2026"
+    },
+    {
+     "title": "Cyber Resilience Act",
+     "url": "https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0018"
+   ],
+   "draft_ref": "22.md γρ.24· master §9.8 γρ.896· 15.md γρ.27 (ICD-02 ShredEnvelope)",
+   "draft_position": "Crypto-shredding με διατήρηση δεσμεύσεων [X]: προσωπικά δεδομένα κρυπτογραφημένα με κλειδί ανά υποκείμενο· το ledger κρατά μόνο δεσμεύσεις· διαγραφή = καταστροφή κλειδιού + erasure Control· γενεαλογία (hashes) επαληθεύσιμη· νομική επάρκεια: EXP-19.",
+   "verdict": "superior-exists",
+   "reasoning": "Η κατεύθυνση συμφωνεί με EDPB και CNIL, με προϋποθέσεις που λείπουν.\n(α) Κατά EDPB τα κρυπτογραφημένα δεδομένα παραμένουν προσωπικά και η κρυπτογράφηση «overtaken by time» αν διατηρείται επ' αόριστον· αυτό αφορά replicas του CAS και offline cold archive.\n(β) Το πρόχειρο δεν ορίζει τον τύπο των «δεσμεύσεων» ούτε αν το cid (canonical bytes, JCS) υπολογίζεται σε plaintext ή σε envelope. Αν σε plaintext, είναι unsalted hash που επιτρέπει επιβεβαίωση υποθέσεων μετά τη διαγραφή. Ο EDPB κρίνει τέτοια hashes κατά κανόνα ανεπαρκή για δημόσιο blockchain· κατ' αναλογία για ιδιωτικό ledger.\n(γ) Η CNIL δίνει ρητή σειρά commitment > keyed hash > ciphertext.\nΤο C-413/23 P (σχετική έννοια προσωπικών δεδομένων) στηρίζει μέρος της ανάλυσης· το [X] παραμένει σωστό.",
+   "superior": "Ιεραρχία EDPB/CNIL:\n- στο ledger μόνο perfectly hiding (ή keyed) commitments·\n- cid πάντα στο ciphertext, ποτέ στο plaintext·\n- ciphertext με AES-256 (symmetric, σημαντικά λιγότερο ευάλωτο κατά NIST IR 8547), όχι σε μόνιμα αρχεία·\n- καταστροφή κλειδιού και witness (cryptographic erase, SP 800-88r2).\nΑφαιρεί την εναπομένουσα linkability και κρατά τις consistency proofs του append-only.",
+   "sota_refs": [
+    "SOTA-SEC-16",
+    "SOTA-SEC-02",
+    "SOTA-SEC-21"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 PDF",
+     "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+     "year": "2025"
+    },
+    {
+     "title": "CNIL Blockchain guidance",
+     "url": "https://www.cnil.fr/sites/default/files/atoms/files/blockchain_en.pdf",
+     "year": "2018"
+    },
+    {
+     "title": "CJEU C-413/23 P",
+     "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:62023CJ0413",
+     "year": "2025"
+    },
+    {
+     "title": "NIST SP 800-88 Rev. 2",
+     "url": "https://csrc.nist.gov/pubs/sp/800/88/r2/final",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-16"
+   ],
+   "draft_ref": "24.md γρ.36",
+   "draft_position": "Διαγραφή GDPR έναντι append-only: περιεχόμενο μη ανακτήσιμο (επαληθευμένη καταστροφή κλειδιού)· consistency proofs ισχύουν· καταγεγραμμένη διαγραφή· καθαρισμός παράγωγων indexes (GP-4· I03, C02, E01).",
+   "verdict": "gap",
+   "reasoning": "Το κριτήριο αφήνει εκτός:\n(1) τη μη-συνδεσιμότητα των cids/δεσμεύσεων (δοκιμή dictionary confirmation), αν υπολογίζονται σε plaintext·\n(2) αντίγραφα κλειδιών σε HSM backups και ciphertext σε cold archive·\n(3) κατάλοιπα σε παρόχους μέσω TB-4·\n(4) παράγωγα πέρα από indexes: embeddings, consolidated memories (AEO-04), weights του DP-4·\n(5) εξαιρέσεις legal hold του Άρθρου 17(3)·\n(6) τη σύγκρουση με το hash-tree renewal (RFC 4998).\nΓια την «επαληθευμένη καταστροφή» υπάρχει τυποποιημένη τεχνική (cryptographic erase, SP 800-88 Rev. 2)· δεν επαλήθευσα εδώ αν ορίζει μέθοδο απόδειξης.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-16",
+    "SOTA-SEC-08",
+    "SOTA-SEC-21"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 PDF",
+     "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+     "year": "2025"
+    },
+    {
+     "title": "RFC 4998",
+     "url": "https://www.rfc-editor.org/rfc/rfc4998",
+     "year": "2007"
+    },
+    {
+     "title": "NIST SP 800-88 Rev. 2",
+     "url": "https://csrc.nist.gov/pubs/sp/800/88/r2/final",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "REQ-SEC-003"
+   ],
+   "draft_ref": "29.md γρ.139· master §7.5 γρ.663· 22.md γρ.37 (ADR-0031)",
+   "draft_position": "Επιβίωση σε partitions, Byzantine μέλη, απώλεια site και αποτυχίες ρολογιού (KT-04, KT-21, KT-22)· §7.5: RPO 0, f με n ≥ 3f+1 μέσω BFT ordering· ADR-0031: CRDT για μονότονα επίπεδα, BFT (HotStuff-family) για cross-site verdicts, witnesses + gossip.",
+   "verdict": "holds",
+   "reasoning": "Τα δομικά στοιχεία είναι ώριμα: HotStuff-family BFT με n ≥ 3f+1, witness cosigning (C2SP), k-of-n TSA (RFC 3161), Roughtime (draft-19, Experimental, malfeasance reports). Το HotStuff-2 (2023) μειώνει τις φάσεις από τρεις σε δύο μέσα στην ίδια οικογένεια· βελτίωση, όχι αλλαγή verdict. Επιφύλαξη: στο C2SP tlog-witness ο μηχανισμός monitor retrieval, που χρειάζεται για να μη διαχωρίζονται clients από monitors, είναι ακόμη υπό συζήτηση. Προτείνεται ≥1 eIDAS qualified TSA για νομικό τεκμήριο (Art. 41(2)).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-20",
+    "SOTA-SEC-07",
+    "SOTA-SEC-08"
+   ],
+   "sources": [
+    {
+     "title": "HotStuff",
+     "url": "https://arxiv.org/abs/1803.05069",
+     "year": "2018"
+    },
+    {
+     "title": "HotStuff-2",
+     "url": "https://eprint.iacr.org/2023/397",
+     "year": "2023"
+    },
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness",
+     "year": "n.d."
+    },
+    {
+     "title": "draft-ietf-ntp-roughtime",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-ntp-roughtime/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-SEC-006"
+   ],
+   "draft_ref": "29.md γρ.142· master §2.4 γρ.229–230 (TB-3, TB-4)· §7.3 γρ.620 (Z3)",
+   "draft_position": "Απομόνωση confidentiality domains και στη δρομολόγηση παρόχων (KRN-11, KRN-08, COG-01· ICD-08, ICD-11, ICD-22· INV-L03· VT-205, VT-805)· TB-3 μέσω Capability Gateway + residency· TB-4 μέσω Inference Gateway (redaction, residency, receipts)· Z3 μόνο allowlisted, residency-filtered πάροχοι.",
+   "verdict": "holds",
+   "reasoning": "Η απαίτηση είναι σωστή και υλοποιήσιμη: gateway, residency, τοπικά μοντέλα DP-2. Δύο ελλείψεις.\n(1) Τα KV/semantic-cache timing side channels μεταξύ domains στους τοπικούς servers (TIFS)· μέτρο σήμερα: vLLM cache_salt ανά domain.\n(2) Δεν υπάρχει attested egress. Το confidential inference (RATS/PCC-class) βοηθά, αλλά το TEE.fail εξήγαγε κλειδιά από Intel TDX/SGX και AMD SEV-SNP και παραβίασε το NVIDIA CC με interposer <1000$. Άρα ο TEE συμπληρώνει και δεν αντικαθιστά residency και local-only για privileged δεδομένα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-SEC-18",
+    "SOTA-SEC-22",
+    "SOTA-SEC-17"
+   ],
+   "sources": [
+    {
+     "title": "The Early Bird Catches the Leak",
+     "url": "https://arxiv.org/abs/2409.20002",
+     "year": "2024"
+    },
+    {
+     "title": "vLLM prefix caching",
+     "url": "https://docs.vllm.ai/en/latest/design/prefix_caching.html",
+     "year": "n.d."
+    },
+    {
+     "title": "TEE.fail",
+     "url": "https://tee.fail/",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 9334",
+     "url": "https://www.rfc-editor.org/rfc/rfc9334",
+     "year": "2023"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-SEC-01",
+   "title": "Λείπει η αφήγηση §18 και το threat model",
+   "description": "Η §18 (security/fault) δεν γράφτηκε ποτέ. Οι έδρες THREAT-MODEL, KEY-LIFECYCLE (το πρόχειρο αναφέρει τις KL-4, KL-5, KL-6, KL-7) και TRUST-BOOTSTRAP είναι ανεπαλήθευτες από εδώ. Το αρχείο verification/KILL-TESTS.md δεν υπάρχει στο docs/architecture-draft/. Δεν υπάρχει αντιστοίχιση σε OWASP LLM Top 10 2025, OWASP Agentic Top 10 2026, MITRE ATLAS ή LINDDUN.",
+   "why_it_matters": "Χωρίς threat model δεν ελέγχεται η πληρότητα των TB-1, TB-2, TB-3, TB-4, TB-5, TB-6, των INV-S01, INV-S02, INV-S03 και των VT-801, VT-802, VT-803, VT-804, VT-805.",
+   "sota_answer": "Threat model χαρτογραφημένο σε OWASP LLM/Agentic και ATLAS (security) και σε LINDDUN (privacy), με ίχνος προς invariants και tests.",
+   "sota_refs": [
+    "SOTA-SEC-12"
+   ],
+   "sources": [
+    {
+     "title": "OWASP Top 10 for LLM Applications 2025",
+     "url": "https://genai.owasp.org/llm-top-10/",
+     "year": "2025"
+    },
+    {
+     "title": "MITRE ATLAS data",
+     "url": "https://github.com/mitre-atlas/atlas-data",
+     "year": "2026"
+    },
+    {
+     "title": "LINDDUN",
+     "url": "https://linddun.org/",
+     "year": "n.d."
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-SEC-02",
+   "title": "Επιθέσεις ροής δεδομένων και κανόνας σύνθεσης",
+   "description": "Το πρόχειρο εμποδίζει «εντολές» από περιεχόμενο, αλλά όχι exfiltration ή αλλοίωση arguments μέσω εξουσιοδοτημένων ενεργειών. Δεν υπάρχουν IFC labels στο sink ούτε κανόνας τύπου Rule of Two.",
+   "why_it_matters": "Κύρια επιφάνεια επίθεσης σε νομικό AI με εμπιστευτικά δεδομένα.",
+   "sota_answer": "CaMeL/FIDES: labels ακεραιότητας και εμπιστευτικότητας σε κάθε τιμή, πολιτική στο KRN-11· Progent για privilege ανά tool/argument· Rule of Two για αυτονομία συνεδρίας.",
+   "sota_refs": [
+    "SOTA-SEC-10",
+    "SOTA-SEC-11"
+   ],
+   "sources": [
+    {
+     "title": "FIDES",
+     "url": "https://arxiv.org/abs/2505.23643",
+     "year": "2025"
+    },
+    {
+     "title": "CaMeL",
+     "url": "https://arxiv.org/abs/2503.18813",
+     "year": "2025"
+    },
+    {
+     "title": "Agents Rule of Two",
+     "url": "https://ai.meta.com/blog/practical-ai-agent-security/",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-SEC-03",
+   "title": "Πιθανή linkability των cids/δεσμεύσεων μετά το shredding",
+   "description": "Το ICD-02 υπολογίζει το cid από canonical bytes (JCS)· η §9.8 λέει ότι το ledger κρατά «δεσμεύσεις» χωρίς να ορίζει τύπο. Δεν ορίζεται αν για προσωπικά δεδομένα το cid υπολογίζεται σε plaintext ή σε envelope. Αν σε plaintext, είναι unsalted hash που μένει μόνιμα στο ledger και στα replicas.",
+   "why_it_matters": "Ο EDPB κρίνει τα unsalted/unkeyed hashes κατά κανόνα ανεπαρκή (για δημόσιο blockchain)· μετά τη διαγραφή ένα τέτοιο cid επιβεβαιώνει εικασίες για το περιεχόμενο.",
+   "sota_answer": "Perfectly hiding ή keyed commitments στο ledger, cid στο ciphertext, διαγραφή witness και key (CNIL: commitment > keyed hash > ciphertext· EDPB 02/2025).",
+   "sota_refs": [
+    "SOTA-SEC-16"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 PDF",
+     "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+     "year": "2025"
+    },
+    {
+     "title": "CNIL Blockchain guidance",
+     "url": "https://www.cnil.fr/sites/default/files/atoms/files/blockchain_en.pdf",
+     "year": "2018"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-SEC-04",
+   "title": "Hash-tree renewal έναντι crypto-shredding",
+   "description": "Το hash-tree renewal απαιτεί τα αρχειοθετημένα δεδομένα (RFC 4998). Αν οι δεσμεύσεις αφορούν plaintext ή αν διαγράφεται το ciphertext, το renewal είναι αδύνατο μετά το shredding. Το πρόχειρο δεν ορίζει τι γίνεται με τα διαγραμμένα αντικείμενα όταν σπάσει ένα hash.",
+   "why_it_matters": "Αντίφαση ανάμεσα σε INV-X02 και ADR-0018 που θα εμφανιστεί στην πρώτη μετάβαση hash.",
+   "sota_answer": "ERS με δύο τύπους renewal. Για τα διαγραμμένα, δική μας πρόταση και όχι SOTA: dual-hash commitments από την εγγραφή ή ρητή κατάσταση «erased, non-renewable».",
+   "sota_refs": [
+    "SOTA-SEC-08"
+   ],
+   "sources": [
+    {
+     "title": "RFC 4998",
+     "url": "https://www.rfc-editor.org/rfc/rfc4998",
+     "year": "2007"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-SEC-05",
+   "title": "Backdating μετά από compromise κλειδιού σώματος",
+   "description": "Η INV-I04 κρίνει την εγκυρότητα με βάση «τη στιγμή της υπογραφής» και το ICD-03 λέει «ανάκληση αποτελεσματική από τον χρόνο της». Δεν ορίζεται ρητά ότι ο χρόνος είναι ledger-inclusion ή TSA. Για υπογραφές εκτός ledger, ο κάτοχος διαρρεύσαντος κλειδιού μπορεί να οπισθοχρονολογήσει. Το KT-18 δεν το ελέγχει.",
+   "why_it_matters": "Χωρίς αυτό το «post-revocation signatures rejected» παρακάμπτεται.",
+   "sota_answer": "Εγκυρότητα μόνο με witnessed ή TSA-anchored χρόνο (KERI receipts, RFC 3161).",
+   "sota_refs": [
+    "SOTA-SEC-06",
+    "SOTA-SEC-08"
+   ],
+   "sources": [
+    {
+     "title": "KERI v1.1",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "n.d."
+    },
+    {
+     "title": "RFC 3161",
+     "url": "https://www.rfc-editor.org/rfc/rfc3161",
+     "year": "2001"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-SEC-06",
+   "title": "Signing oracle χωρίς domain separation",
+   "description": "Το ICD-03 Sign(payload, kid) υπογράφει αυθαίρετα bytes, χωρίς typed payload ή domain tag ανά πρωτόκολλο (charter, delegation, gate verdict, checkpoint, effect receipt).",
+   "why_it_matters": "Cross-protocol reuse υπογραφών σε σύστημα με πολλά είδη υπογεγραμμένων πράξεων.",
+   "sota_answer": "Το FIPS 204 έχει προαιρετικό ctx (κενό στο X.509 profile του RFC 9881, άρα ορίζεται ανά profile)· το composite ML-DSA δεσμεύει Prefix/Label· typed signing API με υποχρεωτικό domain tag.",
+   "sota_refs": [
+    "SOTA-SEC-04",
+    "SOTA-SEC-03"
+   ],
+   "sources": [
+    {
+     "title": "RFC 9881",
+     "url": "https://www.rfc-editor.org/rfc/rfc9881",
+     "year": "2025"
+    },
+    {
+     "title": "draft-ietf-lamps-pq-composite-sigs",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-lamps-pq-composite-sigs/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-SEC-07",
+   "title": "Ελλιπή trust boundaries",
+   "description": "Τα TB-1, TB-2, TB-3, TB-4, TB-5, TB-6 δεν περιλαμβάνουν:\n- όριο build/supply chain·\n- όριο key ceremony (το Z0 είναι ζώνη δικτύου, όχι TB)·\n- κανάλι Principal/δημιουργού (social engineering, τα out-of-band κανάλια του KT-23)·\n- tool/organ metadata ως OBSERVED.",
+   "why_it_matters": "Τα πιο κρίσιμα σημεία (root, build, άνθρωπος) μένουν χωρίς ρητό όριο και σημείο διέλευσης.",
+   "sota_answer": "Ρητά όρια για build (SLSA/in-toto, TUF), key ceremony (HSM, PKCS#11) και ανθρώπινο κανάλι· αντιστοίχιση στις ταξινομίες OWASP (LLM03 Supply Chain, LLM06 Excessive Agency) και ATLAS.",
+   "sota_refs": [
+    "SOTA-SEC-13",
+    "SOTA-SEC-12"
+   ],
+   "sources": [
+    {
+     "title": "SLSA specification",
+     "url": "https://slsa.dev/spec/",
+     "year": "n.d."
+    },
+    {
+     "title": "OWASP Top 10 for LLM Applications 2025",
+     "url": "https://genai.owasp.org/llm-top-10/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-SEC-08",
+   "title": "Χρονοδιάγραμμα PQ και κρυπτογραφική απογραφή",
+   "description": "Η δοκιμή μετάβασης (KT-09, EXP-11) τοποθετείται στο GP-9, την τελευταία φάση, χωρίς ημερομηνίες και χωρίς CBOM. Το ADR-0016 αναφέρει ML-KEM αλλά όχι hybrid KEM για το TLS, παρά τον κίνδυνο harvest-now-decrypt-later για εμπιστευτικά matters.",
+   "why_it_matters": "NIST IR 8547 (ipd): deprecated μετά το 2030, disallowed μετά το 2035· EU PQC roadmap από 23/6/2025.",
+   "sota_answer": "X25519MLKEM768 σήμερα (RFC 10024, OpenSSL 3.5 default), CBOM (CycloneDX 1.7 / ECMA-424), χρονοδιάγραμμα ευθυγραμμισμένο με IR 8547 και το ευρωπαϊκό roadmap.",
+   "sota_refs": [
+    "SOTA-SEC-02",
+    "SOTA-SEC-04",
+    "SOTA-SEC-05",
+    "SOTA-SEC-19"
+   ],
+   "sources": [
+    {
+     "title": "NIST IR 8547 ipd PDF",
+     "url": "https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf",
+     "year": "2024"
+    },
+    {
+     "title": "RFC 10024",
+     "url": "https://www.rfc-editor.org/rfc/rfc10024",
+     "year": "2026"
+    },
+    {
+     "title": "OpenSSL 3.5 notes",
+     "url": "https://openssl-library.org/news/openssl-3.5-notes/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-SEC-09",
+   "title": "Side channels στο LLM serving μεταξύ confidentiality domains",
+   "description": "Το VT-805 και η INV-L03 δεν καλύπτουν ρητά timing channels από κοινόχρηστα KV/semantic caches στους τοπικούς model servers.",
+   "why_it_matters": "Διαρροή prompts μεταξύ matters χωρίς καμία ρητή ροή δεδομένων.",
+   "sota_answer": "Cache ανά confidentiality domain (π.χ. vLLM cache_salt) ή απενεργοποίηση του prefix sharing· ρητό test timing leakage στο VT-805.",
+   "sota_refs": [
+    "SOTA-SEC-18",
+    "SOTA-SEC-22"
+   ],
+   "sources": [
+    {
+     "title": "The Early Bird Catches the Leak",
+     "url": "https://arxiv.org/abs/2409.20002",
+     "year": "2024"
+    },
+    {
+     "title": "vLLM prefix caching",
+     "url": "https://docs.vllm.ai/en/latest/design/prefix_caching.html",
+     "year": "n.d."
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-SEC-10",
+   "title": "Κενά κάλυψης διαγραφής",
+   "description": "Το KT-16 και η §9.8 δεν αναφέρουν:\n- replicas και offline cold archive (§7.4)·\n- backups κλειδιών στο HSM·\n- κατάλοιπα σε παρόχους (TB-4)·\n- consolidated memories, embeddings και weights (DP-4)·\n- legal hold.",
+   "why_it_matters": "Η διαγραφή μένει ημιτελής σε σημεία που ο EDPB θεωρεί ευάλωτα («overtaken by time»).",
+   "sota_answer": "Απογραφή όλων των αντιγράφων, symmetric-only ciphertext, πολιτική διατήρησης ανά αντίγραφο, cryptographic erase (SP 800-88r2) και test ανά παράγωγο.",
+   "sota_refs": [
+    "SOTA-SEC-16",
+    "SOTA-SEC-21"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 PDF",
+     "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+     "year": "2025"
+    },
+    {
+     "title": "NIST SP 800-88 Rev. 2",
+     "url": "https://csrc.nist.gov/pubs/sp/800/88/r2/final",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-SEC-11",
+   "title": "Κανονιστικό security πλαίσιο πέρα από GDPR",
+   "description": "Η §2.5 αναφέρει GDPR, AI Act (ταξινόμηση, διαφάνεια, καταγραφή, εποπτεία), Κώδικα Δικηγόρων, eIDAS και NIS2. Δεν αναφέρει τον CRA (αναφορές από 11/9/2026, κύριες υποχρεώσεις από 11/12/2027) ούτε το Άρθρο 15(5) του AI Act για ανθεκτικότητα σε poisoning, adversarial και confidentiality attacks.",
+   "why_it_matters": "Αν εφαρμόζονται, διαμορφώνουν τα CMP-OPS-01, VT-801 και VT-802 και τη διαχείριση ευπαθειών.",
+   "sota_answer": "Επέκταση του EXP-19 με ανάλυση εφαρμοσιμότητας CRA και AI Act Art. 15.",
+   "sota_refs": [
+    "SOTA-SEC-19"
+   ],
+   "sources": [
+    {
+     "title": "Cyber Resilience Act",
+     "url": "https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 15",
+     "url": "https://artificialintelligenceact.eu/article/15/",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-SEC-12",
+   "title": "Εσωτερικές ασάφειες SEC στο πρόχειρο",
+   "description": "(1) Το Z0 λέει «threshold shares, φυσική παρουσία, M-of-N» χωρίς να ορίζει αν αφορά πρόσωπα ή συσκευές· το EP-04 περιορίζει τα threshold σχήματα «μόνο μεταξύ συσκευών του κυρίαρχου (KL-7)».\n(2) Το CMP-KRN-03 [T] προβλέπει «threshold root keys», ενώ το EP-04 κατατάσσει τα threshold σχήματα ως επέκταση· PQ threshold δεν είναι τυποποιημένο.\n(3) Η διατύπωση του KT-09 «post-quantum hash/signature failure» δεν ορίζει αν εννοεί σπάσιμο PQ αλγορίθμου ή κβαντική επίθεση.\n(4) Το 24.md και η §6.2 παραπέμπουν στο verification/KILL-TESTS.md, που δεν υπάρχει εδώ.\n(5) Η INV-S01 και η INV-S03 (Tier 1) δεν έχουν formal artifact («—»).",
+   "why_it_matters": "Κάθε ασάφεια θα γινόταν ελάττωμα στο SysML model.",
+   "sota_answer": "Επίλυση πριν τη δόση 1: KL-7 ως κανόνας k-of-n συσκευών ενός προσώπου· multisignature αντί threshold signature· αποσαφήνιση του KT-09· formal artifact για INV-S01 κατά το μοντέλο FIDES.",
+   "sota_refs": [
+    "SOTA-SEC-09",
+    "SOTA-SEC-02",
+    "SOTA-SEC-10"
+   ],
+   "sources": [
+    {
+     "title": "RFC 9591 FROST",
+     "url": "https://www.rfc-editor.org/rfc/rfc9591",
+     "year": "2024"
+    },
+    {
+     "title": "NIST Threshold Cryptography",
+     "url": "https://csrc.nist.gov/projects/threshold-cryptography",
+     "year": "2026"
+    },
+    {
+     "title": "FIDES",
+     "url": "https://arxiv.org/abs/2505.23643",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  }
+ ],
+ "unknowns": [
+  "Τρέχουσα κατάσταση του FIPS 206 (FN-DSA): η σελίδα PQC της NIST λέει μόνο ότι το Falcon είναι «underway».",
+  "Αν δημοσιεύτηκε draft πρότυπο HQC ως τον Σεπτέμβριο 2026 (ορίζοντας ~2 ετών από 11/3/2025).",
+  "Αν το NIST IR 8547 οριστικοποιήθηκε· η σελίδα δείχνει μόνο το ipd της 12/11/2024.",
+  "Χρονοδιάγραμμα CNSA 2.0 (δεν επαληθεύτηκε).",
+  "Ορόσημα του ευρωπαϊκού PQC roadmap: η σελίδα δείχνει μόνο την ημερομηνία 23/6/2025.",
+  "Αν υπάρχει τελική έκδοση των EDPB Guidelines 02/2025 μετά τη διαβούλευση (έληξε 9/6/2025)· δύο υποψήφια URLs της EDPB επέστρεψαν 404.",
+  "Αριθμός RFC και τελική μορφή του composite ML-DSA (RFC Editor queue από 4/2026).",
+  "Ωριμότητα threshold ML-DSA και ποιες PQ υποβολές υπάρχουν στο NIST MPTS.",
+  "Ποια HSM έχουν επικύρωση FIPS 140-3 για ML-DSA/SLH-DSA, και αν το SP 800-88r2 ορίζει μέθοδο επαλήθευσης του cryptographic erase (για το «verified» του KT-16).",
+  "Υποστήριξη PQ σουιτών και ωριμότητα παραγωγής στις υλοποιήσεις KERI.",
+  "Αν οι σύγχρονες εκδόσεις του Rust toolchain καλύπτονται από full-source bootstrap στο stagex· για το Guix επιβεβαιώθηκε μόνο bootstrap μέσω mrustc (2018).",
+  "Τρέχοντα ποσοστά reproducibility του NixOS (η σελίδα δεν τα δείχνει).",
+  "Περιεχόμενο των λιστών του OWASP Top 10 for Agentic Applications 2026 και του OWASP Agentic AI Threats and Mitigations: οι σελίδες δείχνουν μόνο ημερομηνίες.",
+  "Αν το GRAIL/LAWMAX υπάγεται στον CRA ή στην κατηγορία high-risk του AI Act, και η ημερομηνία εφαρμογής του Άρθρου 15.",
+  "Utility της σχεδίασης CaMeL/FIDES σε νομικές ροές εργασίας: δεν έχει μετρηθεί πουθενά.",
+  "Περιεχόμενο των THREAT-MODEL, KEY-LIFECYCLE (KL-4, KL-5, KL-6, KL-7) και TRUST-BOOTSTRAP: βρίσκονται στο άλλο repo· κάθε ισχυρισμός για as-built έδρες είναι ανεπαλήθευτος.",
+  "Αν λύθηκε το monitor retrieval του C2SP tlog-witness και αν το Rekor v2 ενσωμάτωσε πλέον witnessing.",
+  "Χρήση του HotStuff/HotStuff-2 σε παραγωγή: δεν επαληθεύτηκε, γι' αυτό η maturity του SOTA-SEC-20 είναι pilot.",
+  "Ημερομηνία δημοσίευσης του RFC 9954 (η σελίδα δεν την έδειξε)."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-SEC-01",
+   "question": "Αρχιτεκτονική άμυνας prompt injection: planner που δεν βλέπει ποτέ OBSERVED περιεχόμενο (CaMeL/FIDES) ή provenance-tagged κανάλια με επιβολή στο gateway (πρόχειρο);",
+   "recommendation": "CaMeL/FIDES-class planner με IFC labels και πολιτική στο KRN-11 για κάθε ροή που καταλήγει σε εξωτερική επίδραση. Rule of Two ως κανόνας σύνθεσης στο INV-C07. Το κόστος utility μετράται σε πείραμα πριν τη δέσμευση.",
+   "alternatives": [
+    {
+     "option": "CaMeL/FIDES-class (IFC + quarantined parsing)",
+     "pros": "Δομική εγγύηση για τις ροές που επιβάλλει· τυπικό μοντέλο (FIDES)· δεν στηρίζεται σε πιθανοτική συμπεριφορά του μοντέλου",
+     "cons": "Απώλεια utility (77% έναντι 84% στο AgentDojo)· πιο σύνθετος planner· utility σε νομικές ροές άγνωστη"
+    },
+    {
+     "option": "Πρόχειρο: provenance tags + gateway",
+     "pros": "Απλούστερο· ήδη στο πρόχειρο",
+     "cons": "Ο LLM planner επηρεάζεται από το περιεχόμενο· οι πιθανοτικές άμυνες παρακάμπτονται από adaptive attacks"
+    },
+    {
+     "option": "Υβριδικό ανά κλάση κινδύνου (Rule of Two)",
+     "pros": "Αυστηρό μόνο όπου συνυπάρχουν [A], [B] και [C]",
+     "cons": "Απαιτεί σωστή ταξινόμηση συνεδριών· περισσότερες εγκρίσεις Principal"
+    }
+   ],
+   "rationale": "Η INV-S01 είναι Tier 1 και το KT-17 δεν περνά αξιόπιστα με πιθανοτικές άμυνες. Μόνο system-level σχεδιάσεις δίνουν αποδείξιμη ιδιότητα.",
+   "affects_ids": [
+    "INV-S01",
+    "REQ-SEC-001",
+    "KT-17",
+    "INV-C07",
+    "CMP-KRN-11",
+    "CMP-COG-02",
+    "ICD-08"
+   ]
+  },
+  {
+   "id": "DEC-SEC-02",
+   "question": "Μοντέλο ταυτότητας/κλειδιών: σημασιολογία KERI (KEL, pre-rotation, witnesses) ή το σχήμα του προχείρου (threshold root + time-locked recovery);",
+   "recommendation": "Υιοθέτηση της σημασιολογίας KERI (pre-rotation, witnessed key events, delegated identifiers) μέσα στο ICD-03, με υλοποίηση πάνω στο ledger του GRAIL και όχι κατ' ανάγκη το KERI wire format. Προϋπόθεση: ευθυγράμμιση με KEY-LIFECYCLE/TRUST-BOOTSTRAP από τον δημιουργό.",
+   "alternatives": [
+    {
+     "option": "Σημασιολογία KERI στο ICD-03",
+     "pros": "Κρυπτογραφική ανάκτηση root· duplicity evidence· ταιριάζει σε delegate/rotate/revoke· μία έδρα ταυτότητας (ledger)",
+     "cons": "Νέα έννοια προς δήλωση· πρέπει να ευθυγραμμιστεί με τις μη διαθέσιμες KEY-LIFECYCLE/TRUST-BOOTSTRAP"
+    },
+    {
+     "option": "Πλήρες KERI stack (υπάρχουσες υλοποιήσεις)",
+     "pros": "Έτοιμο πρωτόκολλο και εργαλεία",
+     "cons": "Δεύτερη έδρα ταυτότητας δίπλα στο ledger· ωριμότητα και PQ σουίτες των υλοποιήσεων άγνωστες"
+    },
+    {
+     "option": "Πρόχειρο: threshold + time-lock",
+     "pros": "Απλό· συμβατό με HSM· το T_cool υπάρχει ήδη για Tier-0 αναθεωρήσεις",
+     "cons": "Αγώνας ανάκτησης με τον επιτιθέμενο· PQ threshold μη τυποποιημένο"
+    }
+   ],
+   "rationale": "Το KT-23 αφορά Tier 0 (INV-C05). Η pre-rotation λύνει κρυπτογραφικά το πρόβλημα, χωρίς να στηρίζεται μόνο σε διαδικαστικά κανάλια.",
+   "affects_ids": [
+    "CMP-KRN-03",
+    "ICD-03",
+    "KT-23",
+    "KT-18",
+    "REQ-SEC-005",
+    "INV-C05",
+    "INV-I04"
+   ]
+  },
+  {
+   "id": "DEC-SEC-03",
+   "question": "Κατασκευή root υπό PQ και KL-7: k-of-n multisignature, threshold signature ή μονό κλειδί HSM με pre-rotation; Και το M-of-N του Z0 αφορά πρόσωπα ή μόνο συσκευές του δημιουργού;",
+   "recommendation": "k-of-n ανεξάρτητες PQ υπογραφές σε συσκευές/HSM του δημιουργού (TUF-style, συμβατό με KL-7) μαζί με pre-rotation. Το «M-of-N» του Z0 να οριστεί ρητά ως συσκευές ενός προσώπου.",
+   "alternatives": [
+    {
+     "option": "k-of-n multisignature (PQ)",
+     "pros": "Υλοποιήσιμο σήμερα με ML-DSA/SLH-DSA· διαφανές· δοκιμασμένο στο TUF",
+     "cons": "Μεγαλύτερες υπογραφές· ο verifier ελέγχει k υπογραφές"
+    },
+    {
+     "option": "Threshold signature (FROST)",
+     "pros": "Μία συμπαγής υπογραφή",
+     "cons": "Όχι PQ (discrete log)· trusted dealer ή DKG· αντίθετο με το PQ plan"
+    },
+    {
+     "option": "Μονό HSM κλειδί + pre-rotation",
+     "pros": "Απλούστερο",
+     "cons": "Ένα σημείο αστοχίας για διαθεσιμότητα"
+    }
+   ],
+   "rationale": "Το PQ threshold δεν είναι τυποποιημένο (NIST MPTS σε previews το 2026)· το EP-04 περιορίζει τα threshold σχήματα σε συσκευές του κυρίαρχου.",
+   "affects_ids": [
+    "CMP-KRN-03",
+    "EP-04",
+    "KT-23",
+    "ICD-03"
+   ]
+  },
+  {
+   "id": "DEC-SEC-04",
+   "question": "Μορφή υπογραφών στη μεταβατική περίοδο και σουίτα root: composite ML-DSA, ανεξάρτητες διπλές υπογραφές ή PQ-only· για το root SLH-DSA, ML-DSA-87 ή stateful LMS/XMSS;",
+   "recommendation": "Composite ML-DSA για ζεύγη PQ/traditional στη μεταβατική περίοδο. Για το owner root SLH-DSA (υπόθεση μόνο hash) ή ML-DSA-87 σε composite, με απόφαση βάσει δεδομένων του EXP-11.",
+   "alternatives": [
+    {
+     "option": "Composite ML-DSA",
+     "pros": "Weak non-separability· ένα alg id (INV-X01)· τυποποίηση IETF σε τελικό στάδιο",
+     "cons": "Όχι ακόμη RFC· δεν καλύπτει ML-DSA+SLH-DSA"
+    },
+    {
+     "option": "Ανεξάρτητες διπλές υπογραφές",
+     "pros": "Ευέλικτο ζευγάρωμα (και PQ+PQ)· αποδεκτό κατά IR 8547 αν ≥1 approved",
+     "cons": "Stripping αν δεν δεθούν με domain separation"
+    },
+    {
+     "option": "PQ-only (ML-DSA ή SLH-DSA μόνο)",
+     "pros": "Απλούστερο· μικρότερο κόστος από διπλές υπογραφές",
+     "cons": "Καμία αντιστάθμιση αν αποδειχθεί αδυναμία στον PQ αλγόριθμο ή στην υλοποίηση"
+    },
+    {
+     "option": "Stateful LMS/XMSS για root",
+     "pros": "Συντηρητικό (μόνο hash)· υποστηρίζεται στο PKCS#11 3.2 (HSS, XMSS)",
+     "cons": "Διαχείριση state· κίνδυνος επαναχρησιμοποίησης OTS κλειδιού"
+    }
+   ],
+   "rationale": "Επηρεάζει το μέγεθος του ledger, το ERS και την ταυτότητα· η επιλογή δεν αντιστρέφεται φθηνά μετά τη δόση 1.",
+   "affects_ids": [
+    "ADR-0016",
+    "INV-X01",
+    "INV-X02",
+    "EXP-11",
+    "EP-04",
+    "KT-09"
+   ]
+  },
+  {
+   "id": "DEC-SEC-05",
+   "question": "Αρχιτεκτονική διαγραφής: τι μπαίνει στο ledger (hash, keyed hash ή perfectly hiding commitment), σε τι υπολογίζεται το cid, πού ζει το ciphertext και πώς αντιμετωπίζεται το hash-tree renewal για τα διαγραμμένα;",
+   "recommendation": "Perfectly hiding commitments στο ledger· cid στο ciphertext· ciphertext μόνο AES-256 με κλειδιά σε HSM, όχι σε μόνιμο cold archive· για τα διαγραμμένα dual-hash commitments ή ρητή κατάσταση «erased, non-renewable». Νομική επικύρωση μέσω EXP-19.",
+   "alternatives": [
+    {
+     "option": "Hiding commitments + cid στο ciphertext + dual-hash",
+     "pros": "Ευθυγράμμιση με CNIL (ρητή σειρά) και EDPB· καμία linkability· renewal χωρίς τα αρχικά",
+     "cons": "Πολυπλοκότητα CAS· αποθήκευση witness"
+    },
+    {
+     "option": "Πρόχειρο: δεσμεύσεις αδιευκρίνιστου τύπου + crypto-shredding",
+     "pros": "Απλό· συμβατό με την §9.8",
+     "cons": "Αν τα hashes είναι unsalted σε plaintext, ανεπαρκή κατά EDPB (για δημόσιο blockchain, κατ' αναλογία εδώ)· σύγκρουση με RFC 4998"
+    },
+    {
+     "option": "Καθόλου προσωπικά δεδομένα στο ledger/CAS (εξωτερική αποθήκη με πραγματική διαγραφή)",
+     "pros": "Καθαρότερη συμμόρφωση",
+     "cons": "Μειώνει τις εγγυήσεις provenance (INV-C06) για αυτά τα δεδομένα"
+    }
+   ],
+   "rationale": "Συνδέει Tier 0 και Tier 1 σημεία (INV-I03, INV-X02, INV-C06) με νομική υποχρέωση· χρειάζεται έγκριση πριν το μοντέλο του ICD-02.",
+   "affects_ids": [
+    "ADR-0018",
+    "KT-16",
+    "INV-X02",
+    "ICD-02",
+    "CMP-KRN-02",
+    "INV-I03"
+   ]
+  },
+  {
+   "id": "DEC-SEC-06",
+   "question": "Όριο supply chain για το kernel TCB: full-source bootstrap + reproducible + multi-party signing, ή Nix + δύο builders (πρόχειρο), ή μόνο SLSA Build L3;",
+   "recommendation": "Full-source bootstrapped, reproducible, k-of-n signed builds για το kernel plane (R-C)· Nix/Docker για τα υπόλοιπα, με αναπαραγωγιμότητα ελεγμένη ανά artifact· διανομή μέσω TUF.",
+   "alternatives": [
+    {
+     "option": "Bootstrappable (stagex/Guix-class) για το TCB",
+     "pros": "Περιορίζει δραστικά το common-mode trusting-trust· Rust bootstrappable μέσω mrustc (Guix)",
+     "cons": "Κόστος χρόνου build· υπόλοιπο εμπιστοσύνης (Guile driver στο Guix)· κάλυψη σύγχρονου Rust στο stagex ανεπιβεβαίωτη"
+    },
+    {
+     "option": "Πρόχειρο: Nix + δύο builders",
+     "pros": "Ήδη στο σχέδιο (ADR-0029)· ελέγχει την αναπαραγωγιμότητα ανά build",
+     "cons": "Κοινό binary seed: δύο builders μπορεί να συμφωνούν σε μολυσμένο αποτέλεσμα"
+    },
+    {
+     "option": "SLSA Build L3 μόνο",
+     "pros": "Ευρεία υιοθέτηση",
+     "cons": "Δεν απαιτεί reproducibility· ασθενέστερο από την INV-S03"
+    }
+   ],
+   "rationale": "Το kernel είναι R-C (0 διαφωνίες, έγκριση δημιουργού)· η ακεραιότητα του build είναι προϋπόθεση για όλα τα invariants.",
+   "affects_ids": [
+    "INV-S03",
+    "CMP-OPS-01",
+    "REQ-SEC-002",
+    "ADR-0029"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 82,
+  "sources_failed": [
+   {
+    "url": "https://nvlpubs.nist.gov/nistpubs/ir/2024/NIST.IR.8547.ipd.pdf",
+    "problem": "Το WebFetch δεν διάβασε το PDF (binary).",
+    "action": "Τοπικό pdftotext: επιβεβαιώθηκαν 2030/2035, «significantly less vulnerable to known quantum attacks» και dual signatures με ≥1 approved συνιστώσα. Ο ισχυρισμός κρατήθηκε."
+   },
+   {
+    "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+    "problem": "Το WebFetch δεν διάβασε το PDF· επιπλέον ο ισχυρισμός για unsalted hashes αφορά ρητά δημόσιο blockchain, ο EDPB δεν δίνει ρητή σειρά προτίμησης, και η υιοθέτηση είναι 8/4/2025 (όχι 14/4).",
+    "action": "Τοπικό pdftotext· διορθώθηκαν ημερομηνία, εμβέλεια (δημόσιο blockchain) και απόδοση της σειράς προτίμησης στη CNIL."
+   },
+   {
+    "url": "https://www.cnil.fr/sites/default/files/atoms/files/blockchain_en.pdf",
+    "problem": "Το WebFetch δεν διάβασε το PDF· το έτος είχε δοθεί ως n.d.",
+    "action": "Τοπικό pdftotext: επιβεβαιώθηκε η σειρά commitment > keyed hash > ciphertext και το «closer to»· έτος 2018 (Σεπτέμβριος)."
+   },
+   {
+    "url": "https://www.rfc-editor.org/rfc/rfc9881",
+    "problem": "Δόθηκε ως πηγή για «ρητό ctx», ενώ ορίζει το ctx κενό στο X.509 profile.",
+    "action": "Διορθώθηκαν ICD-03, ADR-0016, GAP-SEC-06: το FIPS 204 έχει προαιρετικό ctx και η χρήση του ορίζεται ανά profile."
+   },
+   {
+    "url": "https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/",
+    "problem": "Η σελίδα δεν δείχνει τη λίστα απειλών (memory poisoning, tool misuse, privilege compromise, identity spoofing).",
+    "action": "Αφαιρέθηκε η απαρίθμηση από SOTA-SEC-12 και GAP-SEC-07· κρατήθηκε μόνο η ημερομηνία 17/2/2025."
+   },
+   {
+    "url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/",
+    "problem": "Η σελίδα δείχνει μόνο ημερομηνία (9/12/2025), όχι λίστα.",
+    "action": "Κρατήθηκε μόνο η ημερομηνία· η λίστα έμεινε στα unknowns."
+   },
+   {
+    "url": "https://datatracker.ietf.org/wg/keytrans/about/",
+    "problem": "Δεν αναγράφει έτος chartering (δόθηκε 2025).",
+    "action": "Έτος σε n.d."
+   },
+   {
+    "url": "https://c2sp.org/tlog-witness",
+    "problem": "Δεν λέει ότι «η προστασία split-view δεν είναι πλήρης»· λέει ότι το monitor retrieval είναι ακόμη υπό συζήτηση.",
+    "action": "Αναδιατυπώθηκαν SOTA-SEC-07 και REQ-SEC-003."
+   },
+   {
+    "url": "https://guix.gnu.org/en/blog/2023/the-full-source-bootstrap-building-from-source-all-the-way-down/",
+    "problem": "Αναφέρει ως υπόλοιπο εμπιστοσύνης στατικό Guile driver 25 MiB· το «αποκλείει το trusting-trust» ήταν υπερβολή.",
+    "action": "«Αποκλείει» → «περιορίζει δραστικά» σε SOTA-SEC-14, INV-S03 και DEC-SEC-06."
+   },
+   {
+    "url": "https://tee.fail/",
+    "problem": "Σε AMD SEV-SNP εξήχθησαν ιδιωτικά ECDSA κλειδιά, όχι attestation keys· το NVIDIA CC παραβιάστηκε με «δανεικά» attestation keys· έτος δημοσίευσης 2026.",
+    "action": "Διορθώθηκε η ακρίβεια στα SOTA-SEC-17 και REQ-SEC-006· έτος 2026."
+   },
+   {
+    "url": "https://blog.sigstore.dev/rekor-v2-ga/",
+    "problem": "Κατά το GA το witnessing ανακοινώθηκε ως επερχόμενο, όχι διαθέσιμο.",
+    "action": "Προστέθηκε η επιφύλαξη στα SOTA-SEC-07 και CMP-OPS-01."
+   },
+   {
+    "url": "https://datatracker.ietf.org/doc/draft-connolly-cfrg-xwing-kem/",
+    "problem": "Expired individual draft στο ISE stream· το «χωρίς standing» ήταν ανακριβές.",
+    "action": "Αναδιατύπωση: «expired individual draft (ISE stream), όχι έγγραφο CFRG/IETF»."
+   },
+   {
+    "url": "https://arxiv.org/abs/1803.05069",
+    "problem": "Δεν τεκμηριώνει χρήση σε παραγωγή (maturity production).",
+    "action": "Maturity του SOTA-SEC-20 → pilot· προστέθηκε HotStuff-2."
+   },
+   {
+    "url": "https://reproducible.nixos.org/",
+    "problem": "Επιβεβαιώνει ότι η Nix δεν εγγυάται αναπαραγωγιμότητα, αλλά το πρόχειρο ήδη ελέγχει ανά build με δύο builders.",
+    "action": "Το σημείο (1) του CMP-OPS-01 υποβαθμίστηκε σε θέμα ορολογίας· αφαιρέθηκε από τις ασυνέπειες του GAP-SEC-12."
+   },
+   {
+    "url": "https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-022025-processing-personal-data-through-blockchains_en",
+    "problem": "HTTP 404 (δική μου απόπειρα εύρεσης τελικής έκδοσης).",
+    "action": "Η τελική έκδοση έμεινε στα unknowns."
+   }
+  ],
+  "corrections": [
+   {
+    "target": "draft_points INV-S03 draft_ref",
+    "change": "«master §6.3 γρ.592, γρ.702» → «master §7.1 γρ.592· §7.7 γρ.702».",
+    "reason": "Οι γραμμές 592 και 702 ανήκουν στις §7.1 και §7.7, όχι στην §6.3."
+   },
+   {
+    "target": "draft_points ICD-03",
+    "change": "Αφαιρέθηκε το «δεν υπάρχουν witness receipts για key events»· confidence high → medium.",
+    "reason": "Τα delegations/rotations είναι ledger events (KRN-03) και τα checkpoints του ICD-01 είναι witness co-signed· η KL-4 δεν είναι διαθέσιμη."
+   },
+   {
+    "target": "draft_points CMP-KRN-03, KT-23, INV-X01, INV-X02",
+    "change": "Confidence high → medium· προστέθηκε η επιφύλαξη για τις μη διαθέσιμες έδρες και η προϋπόθεση χωριστής φύλαξης των next keys.",
+    "reason": "Οι KEY-LIFECYCLE/TRUST-BOOTSTRAP ίσως ήδη καλύπτουν μέρος των προτάσεων· η KERI είναι pilot."
+   },
+   {
+    "target": "draft_points INV-X02, GAP-SEC-03, GAP-SEC-04, ADR-0018",
+    "change": "Η σύγκρουση με το crypto-shredding και η linkability διατυπώθηκαν υπό όρο (αν η δέσμευση/cid είναι σε plaintext)· το dual-hash σημειώνεται ως δική μας πρόταση, όχι SOTA· αφαιρέθηκε το «και στους witnesses».",
+    "reason": "Το πρόχειρο δεν ορίζει τύπο δέσμευσης ούτε αν το cid είναι σε plaintext ή envelope· οι witnesses υπογράφουν checkpoints, όχι μεμονωμένα cids."
+   },
+   {
+    "target": "draft_points KT-09/REQ-SEC-004 και GAP-SEC-12",
+    "change": "Το «λάθος πλαισίωση» έγινε «ασάφεια διατύπωσης».",
+    "reason": "Το «post-quantum hash/signature failure» μπορεί να σημαίνει σπάσιμο PQ αλγορίθμου, που είναι νόμιμο σενάριο."
+   },
+   {
+    "target": "draft_points CMP-OPS-01 και DEC-SEC-06",
+    "change": "Το «Nix reproducible είναι υπερβολή» έγινε θέμα ορολογίας· το μειονέκτημα του προχείρου είναι το κοινό seed.",
+    "reason": "Το πρόχειρο απορρίπτει μη αναπαραγώγιμα builds με δύο builders και δεν στηρίζεται σε εγγύηση της Nix."
+   },
+   {
+    "target": "GAP-SEC-12",
+    "change": "Μετονομάστηκε σε «ασάφειες»· αφαιρέθηκε το σημείο Nix· προστέθηκαν η σύγκρουση CMP-KRN-03 [T] με EP-04 [E] και η απουσία formal artifact στην INV-S03· επιβεβαιώθηκε ότι το KILL-TESTS.md δεν υπάρχει.",
+    "reason": "Έλεγχος κειμένου του προχείρου."
+   },
+   {
+    "target": "SOTA-SEC-04, ADR-0016, GAP-SEC-08",
+    "change": "Προστέθηκαν RFC 10024 (X25519MLKEM768, SecP256r1MLKEM768, SecP384r1MLKEM1024, Proposed Standard 2026) και RFC 9954.",
+    "reason": "Το draft-ietf-tls-ecdhe-mlkem δημοσιεύτηκε ως RFC· αυτό στηρίζει τον ισχυρισμό για «τυποποιημένα TLS groups»."
+   },
+   {
+    "target": "SOTA-SEC-16 και summary",
+    "change": "EDPB: υιοθέτηση 8/4/2025, v1.1, διαβούλευση έως 9/6/2025· οι unsalted hashes αφορούν δημόσιο blockchain· η ρητή σειρά προτίμησης αποδίδεται στη CNIL (2018).",
+    "reason": "Κείμενο των PDF."
+   },
+   {
+    "target": "SOTA-SEC-01",
+    "change": "Το HQC χαρακτηρίζεται «δεύτερος KEM μετά το ML-KEM», όπως στην ανακοίνωση.",
+    "reason": "Διατύπωση της ανακοίνωσης NIST της 11/3/2025."
+   },
+   {
+    "target": "SOTA-SEC-05",
+    "change": "Σημειώθηκε ότι το multihash δεν είναι πρότυπο και ότι το RFC 8725 αφορά JWT (εφαρμογή κατ' αναλογία).",
+    "reason": "Σελίδες multiformats.io και RFC 8725."
+   },
+   {
+    "target": "SOTA-SEC-12",
+    "change": "Προστέθηκε η πλήρης λίστα LLM Top 10 2025 και οι 7 κατηγορίες LINDDUN· αφαιρέθηκε η μη επαληθευμένη λίστα OWASP Agentic.",
+    "reason": "Επαληθευμένο περιεχόμενο."
+   },
+   {
+    "target": "SOTA-SEC-14, SOTA-SEC-15, SOTA-SEC-20, INV-S02",
+    "change": "Προστέθηκαν Guix Rust bootstrap (mrustc, 2018), Macaroons (trade-off PQ/κοινό μυστικό) και HotStuff-2.",
+    "reason": "Έλεγχοι για αυστηρά ανώτερες εναλλακτικές των holds· καμία δεν άλλαξε verdict."
+   },
+   {
+    "target": "sota νέα SOTA-SEC-21, SOTA-SEC-22",
+    "change": "Προστέθηκαν NIST SP 800-88 Rev. 2 (cryptographic erase) και vLLM cache_salt.",
+    "reason": "Τυποποιημένη τεχνική για το KT-16 και μέτρο διαθέσιμο σήμερα για τα GAP-SEC-09 και REQ-SEC-006."
+   },
+   {
+    "target": "Ονοματολογία IDs (GAP-SEC-01, GAP-SEC-07, unknowns)",
+    "change": "Τα εύρη «TB-1..6», «INV-S01..S03», «VT-801..805», «KL-1..7», «E1–E6, Θ1–Θ14», «ASI01–ASI10» αντικαταστάθηκαν με απαρίθμηση ένα-ένα ή αφαιρέθηκαν.",
+    "reason": "Κανόνας 7: IDs ένα-ένα, ποτέ εύρος."
+   },
+   {
+    "target": "DEC-SEC-04",
+    "change": "Προστέθηκε η εναλλακτική PQ-only.",
+    "reason": "Η ερώτηση την ανέφερε, αλλά έλειπε από τις εναλλακτικές (δίκαιη παρουσίαση)."
+   },
+   {
+    "target": "draft_points draft_refs (REQ-SEC-003, REQ-SEC-006, ADR-0018, INV-S02, INV-C07)",
+    "change": "Προστέθηκαν ακριβείς γραμμές: 22.md γρ.37 (ADR-0031), master §2.4 γρ.229–230, §7.3 γρ.620, §9.8 γρ.896, 15.md γρ.27/33, 29.md γρ.147.",
+    "reason": "Επιβεβαιώθηκαν με ανάγνωση των αρχείων."
+   },
+   {
+    "target": "Κάλυψη IDs",
+    "change": "Καμία προσθήκη: και τα 24 ανατεθέντα IDs βρίσκονται σε draft_points.",
+    "reason": "Έλεγχος κάλυψης: CMP-KRN-03, CMP-OPS-01, ICD-03, INV-C07, INV-X01, INV-X02, INV-S01, INV-S02, INV-S03, KT-09, KT-16, KT-17, KT-18, KT-23, EXP-11, ADR-0016, ADR-0018, EP-04, REQ-SEC-001, REQ-SEC-002, REQ-SEC-003, REQ-SEC-004, REQ-SEC-005, REQ-SEC-006."
+   }
+  ],
+  "missed_superior_found": [
+   "RFC 10024 (Proposed Standard, 2026): τυποποιημένα hybrid TLS groups· ενισχύει ADR-0016 και GAP-SEC-08 (όχι αλλαγή verdict).",
+   "HotStuff-2 (IACR ePrint 2023/397): δύο φάσεις αντί τριών μέσα στην «HotStuff-family» του ADR-0031· το REQ-SEC-003 μένει holds.",
+   "vLLM cache_salt: μέτρο σήμερα για το KV-cache side channel· το REQ-SEC-006 μένει holds με προσθήκη.",
+   "NIST SP 800-88 Rev. 2 (Σεπτ. 2025): cryptographic erase ως τυποποιημένη τεχνική για το KT-16 και το ADR-0018.",
+   "Macaroons (NDSS 2014): συμμετρικά, άρα PQ-ανθεκτικά, capability tokens για την INV-S02· όχι αυστηρά ανώτερα (απαιτούν κοινό μυστικό), η INV-S02 μένει holds.",
+   "Guix Rust bootstrap μέσω mrustc (2018): μειώνει το trade-off του INV-S03 για το Rust kernel."
+  ]
+ }
+}

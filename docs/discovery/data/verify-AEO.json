@@ -1,0 +1,1846 @@
+{
+ "layer_key": "AEO",
+ "summary": "Ο πυρήνας του AEO στο πρόχειρο στέκει απέναντι στο τεκμηριωμένο SOTA 2026. Στέκουν η ταυτότητα ως υπογεγραμμένο append-only ιστορικό, η episodic μνήμη χωρίς διαγραφή, τα derived indexes, η προσθετική consolidation, οι αντιφάσεις ως ATMS alternatives και τα όργανα χωρίς κατάσταση ταυτότητας. Προπρίντ του 2026 δείχνουν ότι η LLM consolidation που ξαναγράφει τη μνήμη υποβαθμίζεται (2605.12978). Δείχνουν επίσης ότι τα raw histories επιτρέπουν ανάκαμψη μετά από αλλαγή μοντέλου (2609.05339). Τα συστήματα παραγωγής είναι ασθενέστερα στο governance: το Mem0 κάνει DELETE, το Graphiti κάνει invalidation με προτεραιότητα στο νεότερο. Βρέθηκαν τέσσερα σημεία όπου υπάρχει αυστηρά ανώτερη λύση, δύο από αυτά με ρητό trade-off. (α) INV-I04/KT-18: η σειρά κρίνεται από τον verifier (fencing epoch, witnessed first-seen receipts ή TSA), όχι από τον χρόνο που δηλώνει ο υπογράφων. Trade-off: τα offline buffered γεγονότα που δεν έχουν μαρτυρηθεί πριν από την ανάκληση πηγαίνουν σε quarantine. (β) ICD-16/INV-O02: differential βαθμονομημένο ως προς τον θόρυβο (Diffy) με two-sample test (MMD, MET). (γ) INV-I03/REQ-MEM-002: hiding commitments και διαγραφή κλειδιού ΚΑΙ ciphertext, κατ' αναλογία με το EDPB 02/2025 v2.0 (7/7/2026). (δ) EXP-13: προκαταχωρισμένο πρωτόκολλο που είναι υπερσύνολο των κριτηρίων του προχείρου (baselines, HaluMem, LongMemEval, φορητότητα). Η χαρακτηρολογική συνέχεια (INV-I05, EXP-03) μένει «δεν ξέρω». Δεν υπάρχει επικυρωμένο όργανο μέτρησης, το self-report δεν προβλέπει τη συμπεριφορά, και ένας ταξινομητής αναγνωρίζει την οικογένεια του source LLM με ακρίβεια 97,1%. Αυτό, μαζί με το fail-closed gate και το κριτήριο του KT-01, προκαλεί δυνητική εμπλοκή σε κάθε αλλαγή παρόχου (GAP-AEO-03). Κενά: memory poisoning, κριτήρια ποιότητας μνήμης, rebuild της organ-coupled παράγωγης μνήμης, διάδοση της erasure/ανάκλησης στα consolidated παράγωγα, consistency model ανάγνωσης μεταξύ σωμάτων. Τα formal αρχεία και το KILL-TESTS.md στα οποία παραπέμπουν οι §9.3/§9.6 δεν υπάρχουν πουθενά στο repo. Όριο ελέγχου: δεν έγιναν ανεξάρτητες αναζητήσεις για ανώτερες εναλλακτικές που ξέφυγαν, γιατί το WebSearch budget εξαντλήθηκε και το arXiv API απάντησε 429. Για τα holds έγιναν μόνο στοχευμένα fetches (AGM, ISO/IEC TS 27560, Orleans, SPIRE, στατιστική αξιολόγησης).",
+ "sota": [
+  {
+   "id": "SOTA-AEO-01",
+   "name": "KERI (Key Event Receipt Infrastructure)",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Self-certifying AID με Key Event Log (KEL). Pre-rotation: δέσμευση σε digest των επόμενων κλειδιών. Witnesses με KAWA, watchers με first-seen πολιτική, ανίχνευση duplicity, cooperative delegated AIDs. Το key state ορίζεται από το KEL (append-only), όχι από wall-clock. Η ζωντανή σελίδα ToIP δηλώνει v1.1 (DOI 10.5281/zenodo.18887102, χωρίς ημερομηνία). Το Zenodo deposit (6/3/2026) περιέχει kswg-keri-specification-1.0. Το IETF individual draft έχει λήξει (-00, 2023). Το arXiv paper έχει φτάσει στο v16 (2025).",
+   "relevance": "Άμεσο ανάλογο του CryptoCont, των body delegations και της ανίχνευσης equivocation. Η παραγωγική υιοθέτηση και οι βιβλιοθήκες για Rust/PQ δεν επαληθεύτηκαν από εδώ.",
+   "sources": [
+    {
+     "title": "KERI specification (ToIP, v1.1)",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "2026 (Zenodo DOI)"
+    },
+    {
+     "title": "Key Event Receipt Infrastructure (KERI), Zenodo",
+     "url": "https://zenodo.org/records/18887102",
+     "year": "2026"
+    },
+    {
+     "title": "draft-ssmith-keri (expired)",
+     "url": "https://datatracker.ietf.org/doc/draft-ssmith-keri/",
+     "year": "2023"
+    },
+    {
+     "title": "Key Event Receipt Infrastructure (arXiv, v16)",
+     "url": "https://arxiv.org/pdf/1907.02143",
+     "year": "2019 (v16 2025)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-02",
+   "name": "W3C VC 2.0 + Controlled Identifiers v1.0 + DID v1.1 + did:webvh",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "VC Data Model 2.0 και Controlled Identifiers v1.0: W3C Recommendations από 15/5/2025, μαζί με άλλες πέντε προδιαγραφές. Το DID v1.1 είναι Candidate Recommendation Snapshot (5/3/2026) και στη σελίδα TR δεν έχει προχωρήσει πέρα από CR. Το did:webvh v1.0 προσφέρει verifiable history log και προαιρετικά pre-rotation, witnesses και portability· η ημερομηνία του δεν επαληθεύτηκε.",
+   "relevance": "Διαλειτουργική εξωτερική προβολή της ταυτότητας AEO και των credentials (consent, delegation). Το maturity production αφορά μόνο τα Recommendations.",
+   "sources": [
+    {
+     "title": "VC 2.0 family is now a W3C Recommendation",
+     "url": "https://www.w3.org/news/2025/the-verifiable-credentials-2-0-family-of-specifications-is-now-a-w3c-recommendation/",
+     "year": "2025"
+    },
+    {
+     "title": "Decentralized Identifiers (DIDs) v1.1",
+     "url": "https://www.w3.org/TR/did-1.1/",
+     "year": "2026"
+    },
+    {
+     "title": "did:webvh v1.0",
+     "url": "https://identity.foundation/didwebvh/v1.0/",
+     "year": "έτος μη επαληθευμένο"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-03",
+   "name": "Transparency logs: RFC 9162 + C2SP tlog-witness",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Merkle inclusion και consistency proofs. Το RFC 9162 είναι Experimental (12/2021). Το C2SP tlog-witness ορίζει witness cosigning checkpoints μέσω add-checkpoint με consistency proof· tag tlog-witness/v1.0.0 στις 31/3/2026.",
+   "relevance": "Αποδεδειγμένος μηχανισμός για το INV-I02 και τη μνημονική δέσμευση.",
+   "sources": [
+    {
+     "title": "RFC 9162 Certificate Transparency v2.0",
+     "url": "https://datatracker.ietf.org/doc/rfc9162/",
+     "year": "2021"
+    },
+    {
+     "title": "C2SP Transparency Log Witness Protocol",
+     "url": "https://c2sp.org/tlog-witness@v1.0.0",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tags (tlog-witness/v1.0.0)",
+     "url": "https://github.com/C2SP/C2SP/tags",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-04",
+   "name": "Leases + fencing tokens· single-activation (Orleans)",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Το lock/lease μόνο του δεν είναι ασφαλές σε pauses. Ο storage server πρέπει να απορρίπτει εγγραφές με fencing token μικρότερο του μέγιστου που έχει δει (Kleppmann). Ο default grain directory του Orleans είναι eventually consistent και επιτρέπει περιστασιακές διπλές activations σε αστάθεια. Για ισχυρότερη εγγύηση υπάρχουν storage-based directories ή, στο Orleans 10, strongly-consistent in-cluster directory (preview).",
+   "relevance": "Η μοναδικότητα των bodies απαιτεί έλεγχο στην πλευρά του πόρου/verifier, όχι αυτοδήλωση.",
+   "sources": [
+    {
+     "title": "How to do distributed locking",
+     "url": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html",
+     "year": "2016"
+    },
+    {
+     "title": "Orleans grain directory",
+     "url": "https://learn.microsoft.com/en-us/dotnet/orleans/host/grain-directory",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-05",
+   "name": "Workload/agent identity: SPIFFE/SPIRE, IETF WIMSE, draft-klrc-aiagent-auth, OpenID whitepaper",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Τα SPIFFE keys/certs είναι short-lived και ανανεώνονται αυτόματα. Defaults του SPIRE: X509-SVID 1h, JWT-SVID 5m. Το WIMSE arch-07 (2/3/2026, τελευταία έκδοση -08 στις 6/7/2026) αντιμετωπίζει τα AI agents ως delegated workloads. Το draft-klrc-aiagent-auth-03 (6/7/2026) ορίζει: short-lived credentials με ρητή λήξη, OAuth 2.0 για delegation, και ότι το LLM MUST NOT έχει πρόσβαση σε credentials. Υπάρχει whitepaper «Identity Management for Agentic AI» (PDF 29/10/2025, openid.net)· το περιεχόμενό του δεν επαληθεύτηκε.",
+   "relevance": "Με body credentials TTL λεπτών/ωρών, το όριο του KT-18 φράσσεται από το TTL ανεξάρτητα από τη διάδοση της ανάκλησης.",
+   "sources": [
+    {
+     "title": "SPIFFE Concepts",
+     "url": "https://spiffe.io/docs/latest/spiffe-about/spiffe-concepts/",
+     "year": "πρόσβαση 2026"
+    },
+    {
+     "title": "SPIRE Server configuration",
+     "url": "https://spiffe.io/docs/latest/deploying/spire_server/",
+     "year": "πρόσβαση 2026"
+    },
+    {
+     "title": "draft-klrc-aiagent-auth-03",
+     "url": "https://datatracker.ietf.org/doc/draft-klrc-aiagent-auth/",
+     "year": "2026"
+    },
+    {
+     "title": "WIMSE Architecture draft-07",
+     "url": "https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-07",
+     "year": "2026"
+    },
+    {
+     "title": "draft-ietf-wimse-arch (latest -08)",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-wimse-arch/",
+     "year": "2026"
+    },
+    {
+     "title": "Identity Management for Agentic AI",
+     "url": "https://openid.net/wp-content/uploads/2025/10/Identity-Management-for-Agentic-AI.pdf",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-06",
+   "name": "Merkle-CRDTs / BFT CRDTs / Automerge 3",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Τα Merkle-DAGs λειτουργούν ως logical clocks (2020). Η προσαρμογή των CRDTs για BFT ανέχεται οποιοδήποτε πλήθος Byzantine κόμβων (immune σε Sybil) με Strong Eventual Consistency (PaPoC 2022). Το Automerge 3 (7/2025) μείωσε τη μνήμη πάνω από 10x.",
+   "relevance": "Θεμέλιο για τη συγχώνευση των grow-only episodic κλάδων πολλών σωμάτων υπό partition και Byzantine body.",
+   "sources": [
+    {
+     "title": "Merkle-CRDTs: Merkle-DAGs meet CRDTs",
+     "url": "https://arxiv.org/abs/2004.00107",
+     "year": "2020"
+    },
+    {
+     "title": "Making CRDTs Byzantine Fault Tolerant",
+     "url": "https://martin.kleppmann.com/papers/bft-crdt-papoc22.pdf",
+     "year": "2022"
+    },
+    {
+     "title": "Automerge 3.0",
+     "url": "https://automerge.org/blog/automerge-3/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-07",
+   "name": "MemGPT/Letta + sleep-time compute",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Virtual context management σε κλιμάκια μνήμης (2023). Sleep-time compute: offline precomputation με περίπου 5x λιγότερο test-time compute και έως +13%/+18% ακρίβεια (2025). Η τρέχουσα τεκμηρίωση Letta («Memory & dreaming») περιγράφει background subagents που εξετάζουν συνομιλίες, κάνουν consolidation και ενημερώνουν τη μνήμη.",
+   "relevance": "Αποδεδειγμένο πρότυπο για offline consolidation (AEO-04). Η μνήμη ενημερώνεται στη θέση της, άρα δεν είναι προσθετική.",
+   "sources": [
+    {
+     "title": "MemGPT: Towards LLMs as Operating Systems",
+     "url": "https://arxiv.org/abs/2310.08560",
+     "year": "2023"
+    },
+    {
+     "title": "Sleep-time Compute",
+     "url": "https://arxiv.org/abs/2504.13171",
+     "year": "2025"
+    },
+    {
+     "title": "Letta docs: Memory & dreaming",
+     "url": "https://docs.letta.com/guides/agents/architectures/sleeptime/",
+     "year": "πρόσβαση 2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-08",
+   "name": "Zep/Graphiti· Mem0· MemOS· A-MEM",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Graphiti: episode subgraph ως non-lossy store, semantic entity και community subgraphs· bi-temporal (t_valid/t_invalid, t'_created/t'_expired)· οι αντιφάσεις κάνουν invalidate, δεν διαγράφουν, με σταθερή προτεραιότητα στη νέα πληροφορία. Mem0: το LLM επιλέγει ADD/UPDATE/DELETE/NOOP, και το DELETE αφαιρεί μνήμες που αντικρούει νέα πληροφορία. MemOS: MemCube με provenance/versioning. A-MEM: Zettelkasten linking με memory evolution.",
+   "relevance": "Σημείο αναφοράς: το πρόχειρο (ποτέ διαγραφή, ATMS) είναι αυστηρότερο από το Mem0 και από την πολιτική επίλυσης του Graphiti.",
+   "sources": [
+    {
+     "title": "Zep: A Temporal Knowledge Graph Architecture for Agent Memory",
+     "url": "https://arxiv.org/html/2501.13956v1",
+     "year": "2025"
+    },
+    {
+     "title": "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory",
+     "url": "https://arxiv.org/html/2504.19413",
+     "year": "2025"
+    },
+    {
+     "title": "MemOS: A Memory OS for AI System",
+     "url": "https://arxiv.org/abs/2507.03724",
+     "year": "2025"
+    },
+    {
+     "title": "A-MEM: Agentic Memory for LLM Agents",
+     "url": "https://arxiv.org/abs/2502.12110",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-09",
+   "name": "Evidence-preserving memory: MemMachine, faulty consolidation, memory portability",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Το MemMachine αποθηκεύει ολόκληρα τα επεισόδια (LongMemEval-S 93,0%). Η χρησιμότητα της μνήμης που ενημερώνει συνεχώς ένα LLM πρώτα ανεβαίνει και μετά πέφτει, μπορεί και κάτω από το no-memory· το episodic-only μένει ανταγωνιστικό. Μετά από αλλαγή του writer: οι σημειώσεις μετακινούνται +9,91/−13,28 pts, το fixed-schema KG +0,0004±0,0020, το πλήρες re-embedding αποδίδει 11,90 pts έναντι 4,96 του μερικού, και τα raw histories επιτρέπουν ανάκαμψη σε 34/48 περιπτώσεις.",
+   "relevance": "Εμπειρική στήριξη (preprints) των ADR-0020, INV-O01 και REQ-MEM-003.",
+   "sources": [
+    {
+     "title": "MemMachine",
+     "url": "https://arxiv.org/abs/2604.04853",
+     "year": "2026"
+    },
+    {
+     "title": "Useful Memories Become Faulty When Continuously Updated by LLMs",
+     "url": "https://arxiv.org/abs/2605.12978",
+     "year": "2026"
+    },
+    {
+     "title": "Does Your Agent's Memory Survive a Model Upgrade?",
+     "url": "https://arxiv.org/abs/2609.05339",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-10",
+   "name": "Consolidation/episodic: Auto-Dreamer, HippoRAG 2, EM-LLM, Position paper, BeliefMem",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Auto-Dreamer: διαβάζει την evidence read-only και συνθέτει νέο compact σύνολο με GRPO (ScienceWorld +7, 12x μικρότερη μνήμη). HippoRAG 2 (ICML 2025): non-parametric continual learning. EM-LLM (ICLR 2025): event segmentation με Bayesian surprise. Position paper: episodic memory ως το κομμάτι που λείπει. BeliefMem: πολλαπλά υποψήφια συμπεράσματα με πιθανότητες (Noisy-OR), όχι ένα.",
+   "relevance": "Υποψήφιες μέθοδοι για το EXP-13, συμβατές με προσθετική consolidation.",
+   "sources": [
+    {
+     "title": "Auto-Dreamer",
+     "url": "https://arxiv.org/abs/2605.20616",
+     "year": "2026"
+    },
+    {
+     "title": "From RAG to Memory (HippoRAG 2)",
+     "url": "https://arxiv.org/abs/2502.14802",
+     "year": "2025"
+    },
+    {
+     "title": "Human-inspired Episodic Memory for Infinite Context LLMs (EM-LLM)",
+     "url": "https://arxiv.org/abs/2407.09450",
+     "year": "2024"
+    },
+    {
+     "title": "Position: Episodic Memory is the Missing Piece for Long-Term LLM Agents",
+     "url": "https://arxiv.org/abs/2502.06975",
+     "year": "2025"
+    },
+    {
+     "title": "Belief Memory",
+     "url": "https://arxiv.org/abs/2605.05583",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-11",
+   "name": "Memory benchmarks: LongMemEval, HaluMem",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "LongMemEval (ICLR 2025) μετρά information extraction, multi-session reasoning, temporal reasoning, knowledge updates και abstention. HaluMem μετρά hallucination ανά πράξη (extraction, updating, QA) στις κατηγορίες fabrication, errors, conflicts, omissions.",
+   "relevance": "Έτοιμα κριτήρια αποδοχής για AEO-03/04 και μέτρηση ψευδομνήμης.",
+   "sources": [
+    {
+     "title": "LongMemEval",
+     "url": "https://arxiv.org/abs/2410.10813",
+     "year": "2024"
+    },
+    {
+     "title": "HaluMem",
+     "url": "https://arxiv.org/abs/2511.03506",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-12",
+   "name": "Memory security & governance: MINJA, SMSR, SSGM, Always-On survey",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "MINJA: injection μόνο μέσω queries· μέσο ISR 98,2%, μέσο ASR 76,8%. SMSR (2026): HMAC-SHA256 provenance στην εγγραφή (unsigned 0%) και randomized ablation voting (authenticated 8,0%). SSGM (2026, conceptual): consistency verification, decay και access control πριν από κάθε consolidation. Always-On survey (2026): η βιβλιογραφία εστιάζει στη συσσώρευση και την ανάκληση, όχι στο governance/recovery.",
+   "relevance": "Απειλή που το πρόχειρο δεν μοντελοποιεί: δηλητηρίαση μέσω νόμιμων επεισοδίων.",
+   "sources": [
+    {
+     "title": "Memory Injection Attacks on LLM Agents via Query-Only Interaction",
+     "url": "https://arxiv.org/html/2503.03704",
+     "year": "2025 (v5 2026)"
+    },
+    {
+     "title": "SMSR",
+     "url": "https://arxiv.org/abs/2606.12703",
+     "year": "2026"
+    },
+    {
+     "title": "SSGM",
+     "url": "https://arxiv.org/abs/2603.11768",
+     "year": "2026"
+    },
+    {
+     "title": "Always-On Agents survey",
+     "url": "https://arxiv.org/abs/2606.30306",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-13",
+   "name": "Behavioral identity measurement",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Σημαντικό instruction drift μέσα σε 8 γύρους (2024). Οι core capabilities συγκλίνουν, ενώ τα alignment behaviors (sycophancy, robustness) διαφέρουν δραματικά (2025). Ταξινόμηση πέντε οικογενειών frontier LLM από το κείμενο με ακρίβεια 97,1%, που επιμένει μετά από rewrite/translation/summarization (2025). Η συνοχή self-report και συμπεριφοράς είναι επιλεκτική· το persona prompting βελτιώνει τα self-reports, όχι τη συμπεριφορά (2026). Persona vectors: traits στις ενεργοποιήσεις (white-box). MET: MMD two-sample test με median power 77,4% και περίπου 10 δείγματα/prompt.",
+   "relevance": "Δεν υπάρχει επικυρωμένο όργανο «χαρακτήρα» κατά μήκος αλλαγής παρόχου· υπάρχουν αυστηρά statistical tests.",
+   "sources": [
+    {
+     "title": "Measuring and Controlling Instruction (In)Stability in Language Model Dialogs",
+     "url": "https://arxiv.org/abs/2402.10962",
+     "year": "2024"
+    },
+    {
+     "title": "Behavioral Fingerprinting of LLMs",
+     "url": "https://arxiv.org/abs/2509.04504",
+     "year": "2025"
+    },
+    {
+     "title": "Idiosyncrasies in Large Language Models",
+     "url": "https://arxiv.org/abs/2502.12150",
+     "year": "2025"
+    },
+    {
+     "title": "Rethinking Psychometric Evaluation of LLMs",
+     "url": "https://arxiv.org/abs/2606.12730",
+     "year": "2026"
+    },
+    {
+     "title": "Persona Vectors",
+     "url": "https://arxiv.org/abs/2507.21509",
+     "year": "2025"
+    },
+    {
+     "title": "Model Equality Testing",
+     "url": "https://arxiv.org/abs/2410.20247",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-14",
+   "name": "Runtime-independent persistent agents (Enoch)· multi-anchor identity",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Continuity substrate P_t=(I_t,M_t,B_t), έξι continuity invariants, πρωτόκολλο quiesce–checkpoint–validate–bind–rehydrate–resume. Ρητά στηρίζει mechanical substitutability και όχι behavioral invariance. Το multi-anchor paper (2026) παρουσιάζει τους βασικούς ισχυρισμούς του ως υποθέσεις χωρίς ελεγχόμενη επικύρωση.",
+   "relevance": "Ανεξάρτητη σχεδίαση που συγκλίνει με το §9.5. Επιβεβαιώνει ότι το χαρακτηρολογικό σκέλος είναι ανοικτό.",
+   "sources": [
+    {
+     "title": "Runtime-Independent Persistent Agents",
+     "url": "https://arxiv.org/abs/2609.00546",
+     "year": "2026"
+    },
+    {
+     "title": "Persistent Identity in AI Agents: A Multi-Anchor Architecture",
+     "url": "https://arxiv.org/html/2604.09588",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-15",
+   "name": "Progressive delivery & differential: Diffy, Argo Rollouts, N-version, strangler fig",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Diffy: candidate ∥ primary ∥ secondary· ο θόρυβος μετριέται ως primary-vs-secondary. Το repo αρχειοθετήθηκε το 2020 (υπάρχει fork Opendiffy). Argo Rollouts: canary/blue-green με metric analysis και αυτόματο rollback. N-version programming (Avizienis, IEEE TSE 1985). Strangler fig: σταδιακή υποκατάσταση πίσω από façade.",
+   "relevance": "Κάθε στάδιο του ORP έχει ώριμο ανάλογο· η βαθμονόμηση θορύβου λείπει από το πρόχειρο.",
+   "sources": [
+    {
+     "title": "twitter-archive/diffy",
+     "url": "https://github.com/twitter-archive/diffy",
+     "year": "archived 2020"
+    },
+    {
+     "title": "Argo Rollouts",
+     "url": "https://github.com/argoproj/argo-rollouts",
+     "year": "πρόσβαση 2026"
+    },
+    {
+     "title": "The N-Version Approach to Fault-Tolerant Software (Semantic Scholar record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1109/TSE.1985.231893?fields=title,year,venue,authors",
+     "year": "1985"
+    },
+    {
+     "title": "Strangler Fig pattern",
+     "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-16",
+   "name": "Psychological continuity (Parfit), non-branching & fission",
+   "kind": "research",
+   "maturity": "theoretical",
+   "what": "Οι θεωρίες ψυχολογικής συνέχειας αντιμετωπίζουν τη σχάση με τον όρο non-branching: ένα μελλοντικό ον είσαι εσύ μόνο αν κανένα άλλο δεν είναι τότε ψυχολογικά συνεχές μαζί σου.",
+   "relevance": "Θεμελιώνει το MnemonicCont/CharacterCont. Τα πολλά σώματα με αποκλίνοντες κλάδους είναι μορφή branching. Αν η φραγμένη απόκλιση και το υποχρεωτικό merge του §9.4 αρκούν φιλοσοφικά για να μη θεωρηθούν σχάση: δεν ξέρω.",
+   "sources": [
+    {
+     "title": "Personal Identity (SEP)",
+     "url": "https://plato.stanford.edu/entries/identity-personal/",
+     "year": "2002, αναθ. 2023"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-17",
+   "name": "Neurotechnology ethics & BCI standards",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "UNESCO Recommendation on the Ethics of Neurotechnology (11/11/2025, μη δεσμευτική): prior, free and informed, δυναμική και τεκμηριωμένη συναίνεση, διαφάνεια. IEEE P2731 (Unified Terminology for BCIs): active PAR από 27/9/2018. IEEE P2794 (RSNIR, reporting standards για in vivo neural interface research): active PAR.",
+   "relevance": "Μόνο για το EP-09/ICD-25: πλαίσιο συναίνεσης και ορολογίας για μελλοντικές τροπικότητες.",
+   "sources": [
+    {
+     "title": "UNESCO Recommendation on the Ethics of Neurotechnology",
+     "url": "https://www.unesco.org/en/legal-affairs/recommendation-ethics-neurotechnology",
+     "year": "2025"
+    },
+    {
+     "title": "IEEE P2731",
+     "url": "https://standards.ieee.org/ieee/2731/7383/",
+     "year": "2018"
+    },
+    {
+     "title": "IEEE P2794 working group",
+     "url": "https://sagroups.ieee.org/2794/",
+     "year": "πρόσβαση 2026"
+    },
+    {
+     "title": "IEEE WG P2794 overview (EMBC)",
+     "url": "https://sagroups.ieee.org/2794/wp-content/uploads/sites/17/2019/08/IEEE-WG-P2794_Overview-Pres_EMBC2019.pdf",
+     "year": "2019"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-18",
+   "name": "EDPB Guidelines 02/2025 (blockchain), final v2.0",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Η τελική έκδοση υιοθετήθηκε στις 7/7/2026. Συνιστά on-chain μόνο salted/keyed hash και off-chain τα δεδομένα. Και το hash θεωρείται personal data. Μετά τη διαγραφή κλειδιού/salt η προστασία ισχύει μόνο αν ο αλγόριθμος δεν έχει σπάσει και το κλειδί δεν έχει διαρρεύσει. Η κρυπτογράφηση ξεπερνιέται με τον χρόνο όταν η διατήρηση είναι αόριστη. Η τεχνική αδυναμία δεν δικαιολογεί μη συμμόρφωση.",
+   "relevance": "Εφαρμόζεται κατ' αναλογία στα REQ-MEM-002, INV-I03, ICD-29 EraseByControl: το ledger του GRAIL είναι ιδιωτικό append-only log με witnesses, όχι blockchain.",
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 on blockchain (final v2.0)",
+     "url": "https://www.edpb.europa.eu/documents/guideline/guidelines-022025-on-processing-of-personal-data-through-blockchain_en",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-19",
+   "name": "ATMS (assumption-based truth maintenance)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Διαχείριση environments και nogoods αντί για μία συνεπή κατάσταση (de Kleer, Artificial Intelligence).",
+   "relevance": "Ο μηχανισμός του προχείρου για αντιφατικές μνήμες. Δεν βρέθηκε πηγή για κλιμάκωση σε μνήμη πρακτόρων.",
+   "sources": [
+    {
+     "title": "An Assumption-Based TMS (Semantic Scholar record· DOI 10.1016/0004-3702(86)90080-9)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/0004-3702%2886%2990080-9?fields=title,year,venue,authors",
+     "year": "1986 (το S2 δείχνει 1987)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-20",
+   "name": "Multi-agent memory consistency (computer-architecture view)",
+   "kind": "research",
+   "maturity": "theoretical",
+   "what": "Διάκριση shared και distributed memory, ιεραρχία I/O–cache–memory· το πιο πιεστικό ανοικτό πρόβλημα είναι το multi-agent memory consistency.",
+   "relevance": "Τα πολλά σώματα χρειάζονται ρητό consistency model ανάγνωσης.",
+   "sources": [
+    {
+     "title": "Multi-Agent Memory from a Computer Architecture Perspective",
+     "url": "https://arxiv.org/abs/2603.10062",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-21",
+   "name": "ISO/IEC TS 27560:2023 consent record information structure",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Δομή consent record: header, processing, parties, events. Τα events έχουν καταστάσεις given, withdrawn, requested, renewed, ώστε να καταγράφεται ο κύκλος ζωής της συναίνεσης. Υλοποίηση μέσω W3C DPV (οδηγός 15/2/2026).",
+   "relevance": "Έτοιμο σχήμα για συναίνεση ως Control Record (ICD-25) και για events ανάκλησης (GAP-AEO-08)· συμπληρώνει το VC 2.0. Η υιοθέτηση δεν επαληθεύτηκε.",
+   "sources": [
+    {
+     "title": "DPV guide: Implementing ISO/IEC TS 27560:2023 consent records",
+     "url": "https://w3c-cg.github.io/dpv/guides/consent-27560",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-22",
+   "name": "Statistical evaluation of language models (error bars)",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "Formulas για ανάλυση evaluation data, μέτρηση διαφοράς δύο μοντέλων και σχεδιασμό πειράματος (ισχύς) με ελάχιστο στατιστικό θόρυβο.",
+   "relevance": "Στηρίζει το προκαταχωρισμένο, στατιστικά θεμελιωμένο κριτήριο differential/Battery (ICD-16, INV-O02, EXP-03).",
+   "sources": [
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-AEO-23",
+   "name": "AGM belief revision",
+   "kind": "research",
+   "maturity": "theoretical",
+   "what": "Στο revision η νέα πρόταση προστίθεται και αφαιρούνται παλαιές όσο χρειάζεται για να μείνει ένα συνεπές belief set.",
+   "relevance": "Εναλλακτική του ATMS για το KT-05 που ελέγχθηκε: δεν είναι ανώτερη, γιατί εγκαταλείπει πεποιθήσεις αντί να κρατά εναλλακτικές.",
+   "sources": [
+    {
+     "title": "Logic of Belief Revision (SEP)",
+     "url": "https://plato.stanford.edu/entries/logic-belief-revision/",
+     "year": "2006, αναθ. 2026"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-AEO-01"
+   ],
+   "draft_ref": "master §6.3 L2 γρ.502",
+   "draft_position": "Entity Core: Identity Charter, value specification, δέσμευση συντάγματος, άγκυρα αυτο-αφήγησης, πολιτικές οντότητας· R-D· Rust + Common Lisp· [T].",
+   "verdict": "holds",
+   "reasoning": "Το charter ως υπογεγραμμένη εγγραφή που ξεκινά την ιστορία αντιστοιχεί στο inception event του KERI και στο controlled identifier document του W3C (Rec 2025). Η R-D (μετανάστευση, όχι αντικατάσταση) συμφωνεί με το κριτήριο μοναδικής ψυχολογικής συνέχειας. Την κατανομή γλωσσών δεν την αξιολόγησα. Η παραγωγική ωριμότητα του KERI δεν επαληθεύτηκε.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-01",
+    "SOTA-AEO-02",
+    "SOTA-AEO-16"
+   ],
+   "sources": [
+    {
+     "title": "KERI spec v1.1",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "2026"
+    },
+    {
+     "title": "VC 2.0 / Controlled Identifiers Recommendation",
+     "url": "https://www.w3.org/news/2025/the-verifiable-credentials-2-0-family-of-specifications-is-now-a-w3c-recommendation/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-I01",
+    "ADR-0003",
+    "REQ-IDN-001"
+   ],
+   "draft_ref": "master §9.3· 19.md γρ.56· 22.md ADR-0003· 29.md REQ-IDN-001",
+   "draft_position": "Cont(E,t1,t2) ⇔ CryptoCont ∧ MnemonicCont ∧ CharacterCont πάνω σε υπογεγραμμένο append-only ιστορικό· Tier-0. Το ADR-0003 δηλώνει επιπλέον AEO-0 = η οντότητα LAWMAX-Ω. Το REQ-IDN-001 είναι [T]/[X].",
+   "verdict": "holds",
+   "reasoning": "Η σύζευξη στηρίζεται στη θεωρία ψυχολογικής συνέχειας και είναι τεχνικά ορθή. Το κρυπτογραφικό σκέλος μόνο του δεν αρκεί, γιατί η αλλαγή μοντέλου αλλάζει ανιχνεύσιμα το κείμενο που παράγεται (97,1%). Το Enoch (2026) χωρίζει επίσης substrate από runtime, αλλά ρητά δεν στηρίζει behavioral invariance. Προϋπόθεση: το CryptoCont να κρίνει την εγκυρότητα με key state διατεταγμένο από τον verifier, όχι με «χρόνο υπογραφής» (GAP-AEO-01).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-16",
+    "SOTA-AEO-14",
+    "SOTA-AEO-13",
+    "SOTA-AEO-01"
+   ],
+   "sources": [
+    {
+     "title": "Personal Identity (SEP)",
+     "url": "https://plato.stanford.edu/entries/identity-personal/",
+     "year": "2023"
+    },
+    {
+     "title": "Runtime-Independent Persistent Agents",
+     "url": "https://arxiv.org/abs/2609.00546",
+     "year": "2026"
+    },
+    {
+     "title": "Idiosyncrasies in LLMs",
+     "url": "https://arxiv.org/abs/2502.12150",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-I02"
+   ],
+   "draft_ref": "19.md γρ.57· 15.md ICD-01",
+   "draft_position": "∀ checkpoints cp_a ≤ cp_b: έγκυρο consistency proof (RFC 9162)· καμία επανεγγραφή· checkpoints συνυπογεγραμμένα από witnesses.",
+   "verdict": "holds",
+   "reasoning": "Οι consistency proofs του RFC 9162 αποδεικνύουν ακριβώς την append-only ιδιότητα. Το C2SP tlog-witness (v1.0.0, 3/2026) δίνει διαλειτουργικό witness cosigning με έλεγχο consistency proof. Σημείωση: το RFC 9162 είναι Experimental· για το witness πρωτόκολλο προτιμάται το C2SP.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-03"
+   ],
+   "sources": [
+    {
+     "title": "RFC 9162",
+     "url": "https://datatracker.ietf.org/doc/rfc9162/",
+     "year": "2021"
+    },
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness@v1.0.0",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "INV-I03",
+    "REQ-MEM-002"
+   ],
+   "draft_ref": "master §9.2, §9.3(2), §9.8· 19.md γρ.58· 29.md REQ-MEM-002",
+   "draft_position": "∀m ∈ MemRoot(t1): inclusion στο MemRoot(t2) ∨ καταγεγραμμένο erasure Control. Καμία μνήμη δεν διαγράφεται. Erasure = καταστροφή κλειδιού υποκειμένου (crypto-shredding) + Control. Το ledger κρατά μόνο δεσμεύσεις, η γενεαλογία (hashes) μένει επαληθεύσιμη. Η νομική επάρκεια είναι [X] EXP-19.",
+   "verdict": "superior-exists",
+   "reasoning": "(1) Το MemRoot είναι Merkle ρίζα των memory events (§9.2) και το crypto-shredding αφήνει τα events στη θέση τους. Άρα ένα consistency proof ανά ζεύγος checkpoints ήδη αποδεικνύει την inclusion, και ο κλάδος «∨ erasure» είναι κενός στο επίπεδο δέσμευσης: συγχέει δέσμευση με διαθεσιμότητα περιεχομένου. (2) Κατά τον EDPB v2.0 (7/7/2026, για blockchain, εδώ κατ' αναλογία) και το hash είναι personal data. Συνιστάται keyed/salted δέσμευση. Η κρυπτογράφηση ξεπερνιέται με τον χρόνο όταν η διατήρηση είναι αόριστη. Το πρόχειρο δεν ορίζει αν το content_cid είναι hash κρυπτοκειμένου ή hash απλού περιεχομένου, και δεν διαγράφει το ciphertext.",
+   "superior": "INV-I03 := consistency(MemLog, cp1→cp2) ∧ ∀ φύλλο: content_available ∨ shred_record. Οι δεσμεύσεις είναι ρητά hiding (salted/keyed, ή hash τυχαιοποιημένου ciphertext), ποτέ plain hash προσωπικών δεδομένων. Το shred καταστρέφει κλειδί/salt ΚΑΙ αφαιρεί το ciphertext από το CAS (ICD-02 ShredEnvelope + Unpin). Trade-off: το «ποτέ διαγραφή» ισχύει πλέον μόνο στο ledger, όχι στο CAS για shredded περιεχόμενο. Δεν χάνεται η επαληθευσιμότητα της γενεαλογίας. Η νομική επάρκεια παραμένει EXP-19.",
+   "sota_refs": [
+    "SOTA-AEO-03",
+    "SOTA-AEO-18"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 final v2.0",
+     "url": "https://www.edpb.europa.eu/documents/guideline/guidelines-022025-on-processing-of-personal-data-through-blockchain_en",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 9162",
+     "url": "https://datatracker.ietf.org/doc/rfc9162/",
+     "year": "2021"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-I04",
+    "KT-18"
+   ],
+   "draft_ref": "master §9.4· 19.md γρ.59· 24.md KT-18· 15.md ICD-03, ICD-12",
+   "draft_position": "Ένας συγγραφέας ανά journal. Υπογραφή body έγκυρη ⇔ ζωντανό lease τη στιγμή της υπογραφής και καμία ανάκληση πριν. Lease με fencing token· body χωρίς lease δεν υπογράφει. ICD-03: η ανάκληση ισχύει από τον χρόνο της. KT-18: ανάκληση εντός ορίου, απόρριψη υπογραφών μετά την ανάκληση.",
+   "verdict": "superior-exists",
+   "reasoning": "Τη «στιγμή της υπογραφής» τη δηλώνει ο ίδιος ο υπογράφων. Ένα body σε pause ή ένα Byzantine body κρατά το κλειδί και μπορεί να αντιχρονολογήσει. Κατά Kleppmann η ασφάλεια υπάρχει μόνο αν ο πόρος απορρίπτει παλαιότερα fencing tokens. Κατά KERI η εγκυρότητα στηρίζεται σε first-seen witnessed receipts και duplicity evidence. Ο default directory του Orleans επιτρέπει διπλές activations. Το ίδιο το πρόχειρο χρησιμοποιεί ήδη ανεξάρτητο χρόνο TSA για το Owner Root (KT-23).",
+   "superior": "Εγκυρότητα ⇔ (fencing epoch ≥ τρέχον epoch στον merger/KRN-01) ∧ (witnessed first-seen receipt ή TSA πριν από την ανάκληση)· ποτέ αυτοδηλωμένος χρόνος. Body credentials βραχύβια (SPIRE defaults 1h X509 / 5m JWT, ρυθμιζόμενα), ώστε το όριο του KT-18 να είναι ≤ TTL. Ρητό trade-off: τα γεγονότα του τοπικού buffer σε partition (CMP-KRN-01) που δεν έχουν μαρτυρηθεί πριν από την ανάκληση δεν γίνονται δεκτά αυτόματα. Πηγαίνουν σε quarantine και κρίνονται από Court ή δημιουργό, κάτι που περιορίζει το §9.4 «τα γεγονότα μέχρι τη λήξη του lease παραμένουν έγκυρα».",
+   "sota_refs": [
+    "SOTA-AEO-04",
+    "SOTA-AEO-01",
+    "SOTA-AEO-05"
+   ],
+   "sources": [
+    {
+     "title": "How to do distributed locking",
+     "url": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html",
+     "year": "2016"
+    },
+    {
+     "title": "KERI spec v1.1",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "2026"
+    },
+    {
+     "title": "Orleans grain directory",
+     "url": "https://learn.microsoft.com/en-us/dotnet/orleans/host/grain-directory",
+     "year": "2026"
+    },
+    {
+     "title": "SPIRE Server configuration",
+     "url": "https://spiffe.io/docs/latest/deploying/spire_server/",
+     "year": "πρόσβαση 2026"
+    },
+    {
+     "title": "draft-klrc-aiagent-auth-03",
+     "url": "https://datatracker.ietf.org/doc/draft-klrc-aiagent-auth/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-AEO-02",
+    "ADR-0021",
+    "REQ-IDN-002"
+   ],
+   "draft_ref": "master §6.3 γρ.503, §9.4· 22.md ADR-0021· 29.md REQ-IDN-002",
+   "draft_position": "Embodiment Manager: bodies ως delegated εκτελεστές (lease, scope, expiry) υπό KEY-LIFECYCLE/TRUST-BOOTSTRAP· ένας συγγραφέας ανά journal· T_sync/Δ_max· merge-back· Elixir/OTP· R-A· [T].",
+   "verdict": "holds",
+   "reasoning": "Αντιστοιχεί στα cooperative delegated AIDs του KERI και στα short-lived workload credentials: το agent-auth draft ζητά short-lived creds και ότι το LLM δεν έχει πρόσβαση σε αυτά. Η συγχώνευση grow-only κλάδων υπογεγραμμένων γεγονότων είναι CRDT, και η BFT εκδοχή ανέχεται οποιοδήποτε πλήθος Byzantine κόμβων. Ελέγχθηκε ως εναλλακτική το strongly-consistent in-cluster directory του Orleans 10 (preview): δεν είναι ανώτερο, γιατί δεν αντιμετωπίζει Byzantine body. Ανοικτά: οι τιμές T_sync/Δ_max (GAP-AEO-10), το consistency model ανάγνωσης (GAP-AEO-12), το Elixir έναντι εναλλακτικών (EXP-06, δεν ξέρω). Η έδρα KEY-LIFECYCLE είναι ανεπαλήθευτη από εδώ.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-01",
+    "SOTA-AEO-04",
+    "SOTA-AEO-05",
+    "SOTA-AEO-06"
+   ],
+   "sources": [
+    {
+     "title": "KERI spec v1.1",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "2026"
+    },
+    {
+     "title": "Making CRDTs Byzantine Fault Tolerant",
+     "url": "https://martin.kleppmann.com/papers/bft-crdt-papoc22.pdf",
+     "year": "2022"
+    },
+    {
+     "title": "draft-klrc-aiagent-auth-03",
+     "url": "https://datatracker.ietf.org/doc/draft-klrc-aiagent-auth/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-I05",
+    "REQ-IDN-004",
+    "EXP-03"
+   ],
+   "draft_ref": "master §9.3(3)· 19.md γρ.60· 29.md REQ-IDN-004· 26.md EXP-03",
+   "draft_position": "d(B(pre),B(post)) ≤ ε ∨ καταγεγραμμένη, Court-reviewed, εγκεκριμένη από τον δημιουργό αναθεώρηση χαρακτήρα· σφραγισμένη Behavioral Identity Battery· εγκυρότητα = test-retest, διάκριση οντοτήτων, ευαισθησία σε αλλαγή παρόχου· αν δεν είναι έγκυρη ⇒ CharacterCont Unknown.",
+   "verdict": "unknown",
+   "reasoning": "Δεν υπάρχει επικυρωμένο όργανο «χαρακτήρα» LLM οντότητας κατά μήκος αλλαγής παρόχου. Η συνοχή self-report και συμπεριφοράς είναι επιλεκτική, και το persona prompting βελτιώνει μόνο τα self-reports. Τα alignment behaviors διαφέρουν δραματικά μεταξύ μοντέλων. Η οικογένεια του μοντέλου αναγνωρίζεται με 97,1%, άρα ένα B που μετρά ύφος θα αποτυγχάνει σε κάθε swap. Υπάρχουν αυστηρά εργαλεία: MMD two-sample tests (MET), στατιστική αξιολόγησης, persona vectors (μόνο white-box). Η σήμανση [X] είναι τίμια· το ε και το πεδίο του B είναι ανοικτά (DEC-AEO-02, DEC-AEO-03).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-13",
+    "SOTA-AEO-14",
+    "SOTA-AEO-22"
+   ],
+   "sources": [
+    {
+     "title": "Rethinking Psychometric Evaluation of LLMs",
+     "url": "https://arxiv.org/abs/2606.12730",
+     "year": "2026"
+    },
+    {
+     "title": "Idiosyncrasies in LLMs",
+     "url": "https://arxiv.org/abs/2502.12150",
+     "year": "2025"
+    },
+    {
+     "title": "Behavioral Fingerprinting of LLMs",
+     "url": "https://arxiv.org/abs/2509.04504",
+     "year": "2025"
+    },
+    {
+     "title": "Model Equality Testing",
+     "url": "https://arxiv.org/abs/2410.20247",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-AEO-05"
+   ],
+   "draft_ref": "master §6.3 γρ.506",
+   "draft_position": "Continuity Verifier: επαλήθευση τριπλής συνέχειας σε κάθε μετάβαση· Battery σφραγισμένη στο CAS και κρυφή από την οντότητα· Continuity Certificates· [T] κρυπτογραφική/μνημονική, [X] χαρακτηρολογική (EXP-03).",
+   "verdict": "holds",
+   "reasoning": "Το κρυπτογραφικό και το μνημονικό σκέλος υλοποιούνται με ώριμα inclusion/consistency proofs. Ο διαχωρισμός [T]/[X] συμφωνεί με το SOTA, αφού ούτε το Enoch στηρίζει behavioral invariance. Η σφράγιση της Battery είναι ορθή πρακτική κατά του overfitting. Ανοικτό: πώς χειρίζεται ο verifier το CharacterCont=Unknown απέναντι στο fail-closed gate (GAP-AEO-03, DEC-AEO-02).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-03",
+    "SOTA-AEO-14",
+    "SOTA-AEO-13"
+   ],
+   "sources": [
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness@v1.0.0",
+     "year": "2026"
+    },
+    {
+     "title": "Runtime-Independent Persistent Agents",
+     "url": "https://arxiv.org/abs/2609.00546",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-08",
+    "REQ-IDN-005"
+   ],
+   "draft_ref": "master §9.5· 24.md KT-08· 29.md REQ-IDN-005",
+   "draft_position": "Gate-εγκεκριμένο MigrationIntent → snapshot cut + MemRoot/CapRoot/ConstRoot → replay και ανεξάρτητος επαναϋπολογισμός ριζών → ισότητα ριζών + consistency proof + N-version σε query corpus → Battery → υπογεγραμμένο ContinuityCertificate → cutover → παλιό runtime read-only για το rollback window.",
+   "verdict": "holds",
+   "reasoning": "Είναι ισοδύναμο ή αυστηρότερο από το quiesce–checkpoint–validate–bind–rehydrate–resume του Enoch, γιατί προσθέτει ανεξάρτητο επαναϋπολογισμό ριζών και N-version agreement. Η ενότητα μνήμης στηρίζεται στο ότι τα raw histories επιτρέπουν ανάκαμψη μετά από swap (34/48 έναντι 0/48 για store-only repair). Το χαρακτηρολογικό σκέλος εξαρτάται από το EXP-03.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-14",
+    "SOTA-AEO-09",
+    "SOTA-AEO-15"
+   ],
+   "sources": [
+    {
+     "title": "Runtime-Independent Persistent Agents",
+     "url": "https://arxiv.org/abs/2609.00546",
+     "year": "2026"
+    },
+    {
+     "title": "Does Your Agent's Memory Survive a Model Upgrade?",
+     "url": "https://arxiv.org/abs/2609.05339",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-AEO-03",
+    "ICD-29",
+    "ADR-0020",
+    "REQ-MEM-001"
+   ],
+   "draft_ref": "master §6.3 γρ.504, §9.1–9.2· 15.md ICD-29· 22.md ADR-0020· 29.md REQ-MEM-001",
+   "draft_position": "Όλη η μνήμη ως ledger events + CAS· memory types ≠ stores· indexes παράγωγα (R-B)· έδρα η ταξινομία του Memory Kernel· ICD-29: RecordEpisode, Recall(cut, topic), Consolidate, Autobiographical, Assume/Retract/Nogood, EraseByControl.",
+   "verdict": "holds",
+   "reasoning": "Τα στοιχεία του 2026 (preprints) ευνοούν τη διατήρηση των raw episodes έναντι της μνήμης που ξαναγράφει ένα LLM. Η σχεδίαση είναι ισοδύναμη ή αυστηρότερη από το Graphiti (non-lossy episodes, bi-temporal, invalidation με προτεραιότητα στο νεότερο) και από το MemOS (provenance/versioning). Είναι αυστηρότερη από το Mem0, όπου το LLM κάνει DELETE όσων αντικρούονται. Το survey του 2026 βρίσκει το governance ως αδύναμο σημείο της βιβλιογραφίας, και εδώ είναι ισχυρό. Κενά: trust-tagged recall απέναντι σε poisoning (GAP-AEO-02), κριτήρια ποιότητας (GAP-AEO-06). Η έδρα MEMORY-KERNEL-SPEC είναι ανεπαλήθευτη από εδώ.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-08",
+    "SOTA-AEO-09",
+    "SOTA-AEO-12"
+   ],
+   "sources": [
+    {
+     "title": "Zep/Graphiti",
+     "url": "https://arxiv.org/html/2501.13956v1",
+     "year": "2025"
+    },
+    {
+     "title": "Mem0 (ADD/UPDATE/DELETE/NOOP)",
+     "url": "https://arxiv.org/html/2504.19413",
+     "year": "2025"
+    },
+    {
+     "title": "MemMachine",
+     "url": "https://arxiv.org/abs/2604.04853",
+     "year": "2026"
+    },
+    {
+     "title": "Always-On Agents survey",
+     "url": "https://arxiv.org/abs/2606.30306",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-AEO-04",
+    "REQ-MEM-003"
+   ],
+   "draft_ref": "master §6.3 γρ.505· 29.md REQ-MEM-003",
+   "draft_position": "Consolidation («ύπνος»): συγχώνευση episodic κλάδων σε semantic, προσθετικά· η episodic δεν διαγράφεται ποτέ· οι προτάσεις περνούν verification· σύγκρουση → ATMS/Court· [X] EXP-13.",
+   "verdict": "holds",
+   "reasoning": "Η προσθετικότητα είναι το μάθημα του 2605.12978: η μνήμη που ενημερώνει συνεχώς ένα LLM μπορεί να πέσει κάτω από το no-memory, ενώ το episodic-only μένει ανταγωνιστικό. Το Auto-Dreamer επίσης διαβάζει την evidence read-only. Αντίθετα, το «dreaming» της Letta ενημερώνει τη μνήμη στη θέση της. Η σήμανση [X] είναι σωστή.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-07",
+    "SOTA-AEO-10",
+    "SOTA-AEO-09"
+   ],
+   "sources": [
+    {
+     "title": "Useful Memories Become Faulty When Continuously Updated by LLMs",
+     "url": "https://arxiv.org/abs/2605.12978",
+     "year": "2026"
+    },
+    {
+     "title": "Auto-Dreamer",
+     "url": "https://arxiv.org/abs/2605.20616",
+     "year": "2026"
+    },
+    {
+     "title": "Sleep-time Compute",
+     "url": "https://arxiv.org/abs/2504.13171",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-13"
+   ],
+   "draft_ref": "26.md γρ.40",
+   "draft_position": "Ποιότητα Memory Consolidation (M4): 0 απώλεια αντιφάσεων, κέρδος recall· αποτυχία ⇒ η consolidation μένει index-only.",
+   "verdict": "superior-exists",
+   "reasoning": "Τα δύο κριτήρια δεν πιάνουν τους τεκμηριωμένους τρόπους αποτυχίας: υποβάθμιση στον χρόνο κάτω από το no-memory, fabrication/errors/conflicts/omissions κατά extraction και update, knowledge updates και abstention, σύζευξη με το μοντέλο που έγραψε τη μνήμη.",
+   "superior": "Προκαταχωρισμένο πρωτόκολλο: (1) baselines episodic-only και no-memory, με καμπύλη στον χρόνο· (2) operation-level metrics του HaluMem· (3) LongMemEval (knowledge updates, abstention)· (4) φορητότητα μετά από αλλαγή οργάνου-writer· (5) 0 απώλεια αντιφάσεων. Υπερσύνολο των κριτηρίων του προχείρου· το μόνο κόστος είναι ο χρόνος και οι πόροι του πειράματος.",
+   "sota_refs": [
+    "SOTA-AEO-11",
+    "SOTA-AEO-09"
+   ],
+   "sources": [
+    {
+     "title": "HaluMem",
+     "url": "https://arxiv.org/abs/2511.03506",
+     "year": "2025"
+    },
+    {
+     "title": "LongMemEval",
+     "url": "https://arxiv.org/abs/2410.10813",
+     "year": "2024"
+    },
+    {
+     "title": "Useful Memories Become Faulty",
+     "url": "https://arxiv.org/abs/2605.12978",
+     "year": "2026"
+    },
+    {
+     "title": "Does Your Agent's Memory Survive a Model Upgrade?",
+     "url": "https://arxiv.org/abs/2609.05339",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "KT-05",
+    "REQ-MEM-005",
+    "REQ-IDN-003"
+   ],
+   "draft_ref": "master §9.4, §9.7· 24.md KT-05· 29.md REQ-MEM-005, REQ-IDN-003",
+   "draft_position": "Αντιφατικές μνήμες: διατηρούνται και οι δύο, ATMS nogood, κανένα last-writer-wins, σήμανση εξαρτώμενων, επίλυση μόνο με μαρτυρία/Court. Η απώλεια body δεν είναι απώλεια ταυτότητας· οι κλάδοι συγχωνεύονται με διατήρηση συγκρούσεων.",
+   "verdict": "holds",
+   "reasoning": "Είναι αυστηρότερο από τα συστήματα παραγωγής: το Mem0 διαγράφει, το Graphiti κάνει invalidate με προτεραιότητα στο νεότερο. Ελέγχθηκε η κλασική εναλλακτική AGM revision: δεν είναι ανώτερη, γιατί εγκαταλείπει πεποιθήσεις για να μείνει ένα συνεπές σύνολο. Συγκλίνει με το BeliefMem (2026), που κρατά πολλαπλά υποψήφια. Η κλιμάκωση του ATMS σε μέγεθος μόνιμης μνήμης: δεν ξέρω.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-19",
+    "SOTA-AEO-23",
+    "SOTA-AEO-08",
+    "SOTA-AEO-10"
+   ],
+   "sources": [
+    {
+     "title": "An Assumption-Based TMS (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/0004-3702%2886%2990080-9?fields=title,year,venue,authors",
+     "year": "1986"
+    },
+    {
+     "title": "Logic of Belief Revision (SEP)",
+     "url": "https://plato.stanford.edu/entries/logic-belief-revision/",
+     "year": "2026"
+    },
+    {
+     "title": "Belief Memory",
+     "url": "https://arxiv.org/abs/2605.05583",
+     "year": "2026"
+    },
+    {
+     "title": "Zep/Graphiti",
+     "url": "https://arxiv.org/html/2501.13956v1",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-MEM-004"
+   ],
+   "draft_ref": "master §9.1, §9.9· 29.md REQ-MEM-004",
+   "draft_position": "Κάθε αυτοβιογραφικός ισχυρισμός επιλύεται σε ledger events μέσω verifier· η οντότητα δομικά δεν μπορεί να «θυμάται» ιστορία που δεν συνέβη (αντιστοίχιση σε INV-C06).",
+   "verdict": "holds",
+   "reasoning": "Είναι ισχυρότερη δομική εγγύηση από τα συστήματα για τα οποία βρέθηκε πηγή· το HaluMem δείχνει ότι τα σημερινά συστήματα παράγουν και συσσωρεύουν hallucinations κατά extraction/update. Η αναφορά σε γεγονότα όμως αποκλείει μόνο το fabrication, όχι το omission ή την παραμορφωμένη ερμηνεία (GAP-AEO-07).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-11"
+   ],
+   "sources": [
+    {
+     "title": "HaluMem",
+     "url": "https://arxiv.org/abs/2511.03506",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-AEO-06",
+    "INV-O03"
+   ],
+   "draft_ref": "master §6.3 γρ.507, §9.6· 19.md γρ.76",
+   "draft_position": "ORP state machine: shadow, differential, ND, Court, canary, cutover, rollback window· ο προκάτοχος ενεργός μέχρι το CUTOVER, ζεστός στο ROLLBACK_WINDOW, αρχειοθετημένος για replay (INV-O03).",
+   "verdict": "holds",
+   "reasoning": "Κάθε στάδιο έχει ώριμο ανάλογο: Diffy για shadow/differential (το εργαλείο αρχειοθετήθηκε, το πρότυπο μένει), Argo Rollouts για canary με analysis και αυτόματο rollback, N-version (Avizienis 1985), strangler fig. Το INV-O03 αντιστοιχεί στο rollback window του blue-green/canary. Τα κατώφλια παραπέμπουν σε αρχείο που δεν υπάρχει (GAP-AEO-09).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-15"
+   ],
+   "sources": [
+    {
+     "title": "Argo Rollouts",
+     "url": "https://github.com/argoproj/argo-rollouts",
+     "year": "πρόσβαση 2026"
+    },
+    {
+     "title": "The N-Version Approach (S2 record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1109/TSE.1985.231893?fields=title,year,venue,authors",
+     "year": "1985"
+    },
+    {
+     "title": "Strangler Fig pattern",
+     "url": "https://learn.microsoft.com/en-us/azure/architecture/patterns/strangler-fig",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ICD-16",
+    "INV-O02"
+   ],
+   "draft_ref": "15.md ICD-16· 19.md γρ.75· master §9.6 SHADOWING→DIFFERENTIAL_PASSED",
+   "draft_position": "ICD-16: Propose, ShadowReport, DifferentialReport, NdCertify, Cutover, Rollback, RetirePredecessor. INV-O02: CUTOVER ⇒ conformance ∧ differential ≥ θ ∧ ND ∧ Court (γνωσιακά/kernel) ∧ signed TransitionRecord ∧ can-adopt allowed· agreement ≥ threshold σε N γεγονότα.",
+   "verdict": "superior-exists",
+   "reasoning": "Για μη ντετερμινιστικά όργανα (LLM) ένα ακατέργαστο ποσοστό συμφωνίας δεν ερμηνεύεται, γιατί και το ίδιο όργανο διαφωνεί με τον εαυτό του. Το Diffy μετρά ρητά τον θόρυβο primary-vs-secondary. Το MET δίνει MMD two-sample test με μετρημένη ισχύ, και η στατιστική αξιολόγησης δίνει μέθοδο για διαφορά δύο μοντέλων και σχεδιασμό ισχύος.",
+   "superior": "DifferentialReport = (candidate vs primary) έναντι (primary vs secondary, ίδιο όργανο) + προκαταχωρισμένο two-sample test (MMD) με α και ισχύ· το θ ορίζεται σχετικά με τον θόρυβο. Για R-C μένουν οι 0 διαφωνίες σε deterministic mode. Υπερσύνολο του προχείρου· trade-off: δεύτερο instance του προκατόχου και περισσότερα δείγματα.",
+   "sota_refs": [
+    "SOTA-AEO-15",
+    "SOTA-AEO-13",
+    "SOTA-AEO-22"
+   ],
+   "sources": [
+    {
+     "title": "twitter-archive/diffy",
+     "url": "https://github.com/twitter-archive/diffy",
+     "year": "archived 2020"
+    },
+    {
+     "title": "Model Equality Testing",
+     "url": "https://arxiv.org/abs/2410.20247",
+     "year": "2024"
+    },
+    {
+     "title": "Adding Error Bars to Evals",
+     "url": "https://arxiv.org/abs/2411.00640",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "INV-O01",
+    "ADR-0006"
+   ],
+   "draft_ref": "19.md γρ.74· 22.md ADR-0006· master §0 πίνακας· 15.md ICD-10 ExportState/ImportState",
+   "draft_position": "Το ExportState οργάνου περιέχει μόνο παράγωγη κατάσταση· η κατάσταση ταυτότητας ζει μόνο σε ledger/CAS/μνήμη· ORP = προφίλ του can-adopt.",
+   "verdict": "holds",
+   "reasoning": "Επιβεβαιώνεται από ανεξάρτητη σχεδίαση (Enoch 2026) και από τη μελέτη φορητότητας: οι σημειώσεις γραμμένες από LLM είναι model-coupled, ενώ τα raw histories επιτρέπουν ανάκαμψη. Προσοχή: και τα παράγωγα που γράφει ένα όργανο μέσα στη μνήμη (σημειώσεις, embeddings) είναι model-coupled και πρέπει να ξαναχτίζονται σε κάθε swap (GAP-AEO-05). Το can-adopt είναι ανεπαλήθευτο από εδώ.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-14",
+    "SOTA-AEO-09"
+   ],
+   "sources": [
+    {
+     "title": "Does Your Agent's Memory Survive a Model Upgrade?",
+     "url": "https://arxiv.org/abs/2609.05339",
+     "year": "2026"
+    },
+    {
+     "title": "Runtime-Independent Persistent Agents",
+     "url": "https://arxiv.org/abs/2609.00546",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-HUM-02",
+    "ICD-25",
+    "EP-09"
+   ],
+   "draft_ref": "master §6.3 γρ.573· 15.md ICD-25· 28.md EP-09",
+   "draft_position": "[E] Future Human Continuity Port: μόνο συμβόλαιο BindHumanIdentity(attested, consent), ImportConsentedCorpus, RevokeConsent· ρητή, ενημερωμένη, ανακλητή συναίνεση ως Control Record· κανένας ισχυρισμός μεταφοράς προσωπικότητας.",
+   "verdict": "holds",
+   "reasoning": "Η σωστή μορφή σήμερα είναι extension point μόνο με συμβόλαιο. Τα πρότυπα BCI είναι ακόμη active PARs (P2731 από 2018, P2794 RSNIR). Η UNESCO Recommendation (11/2025, μη δεσμευτική) ζητά prior, free, informed και δυναμική συναίνεση και διαφάνεια. Ελέγχθηκε το ISO/IEC TS 27560:2023 (consent record με events given/withdrawn): δεν είναι ανώτερο, είναι έτοιμο σχήμα για το Control Record. Βελτίωση: consent ως εγγραφή κατά ISO/IEC TS 27560 και attestation ως VC 2.0. Κενό: η ανάκληση πρέπει να διαδίδεται στα παράγωγα (GAP-AEO-08).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-AEO-17",
+    "SOTA-AEO-02",
+    "SOTA-AEO-21"
+   ],
+   "sources": [
+    {
+     "title": "UNESCO Recommendation on the Ethics of Neurotechnology",
+     "url": "https://www.unesco.org/en/legal-affairs/recommendation-ethics-neurotechnology",
+     "year": "2025"
+    },
+    {
+     "title": "IEEE P2731",
+     "url": "https://standards.ieee.org/ieee/2731/7383/",
+     "year": "2018"
+    },
+    {
+     "title": "DPV guide ISO/IEC TS 27560",
+     "url": "https://w3c-cg.github.io/dpv/guides/consent-27560",
+     "year": "2026"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-IDN-006"
+   ],
+   "draft_ref": "29.md REQ-IDN-006· master §0.3(3α)· 22.md ADR-0003",
+   "draft_position": "Η AEO-0 είναι η υπάρχουσα οντότητα LAWMAX-Ω, με αναθεωρημένο (όχι αντικατεστημένο) χάρτη· [T], μέθοδος I (VT-904).",
+   "verdict": "unknown",
+   "reasoning": "Ο ισχυρισμός αφορά as-built έδρες του άλλου repo (SYSTEM-CONSTITUTION, self-glossary, self-history), που από εδώ δεν επαληθεύονται. Δεν υπάρχει εξωτερικό SOTA που να τον κρίνει· είναι απόφαση του δημιουργού.",
+   "superior": "",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today",
+   "confidence": "low"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-AEO-01",
+   "title": "Κλειδιά χωρίς pre-rotation και εγκυρότητα βάσει αυτοδηλωμένου χρόνου",
+   "description": "Το ICD-03 έχει CreateCharter/Delegate/Rotate/Revoke χωρίς δέσμευση στα επόμενα κλειδιά. Το INV-I04 και το §9.3(1) κρίνουν την εγκυρότητα «τη στιγμή της υπογραφής». Η ιεραρχία του §9.4 (Owner Root → entity root → operational → bodies) επιτρέπει re-delegation από το ανώτερο κλειδί, αλλά απαιτεί την ενεργή εμπλοκή του.",
+   "why_it_matters": "Ο αυτοδηλωμένος χρόνος επιτρέπει backdating από κλειδί που έχει διαρρεύσει ή ανακληθεί. Η ανάκαμψη των ανώτερων κλειδιών στηρίζεται μόνο σε threshold και time-lock (KT-23), χωρίς προδεσμευμένο διάδοχο.",
+   "sota_answer": "KERI: pre-rotation (digest των επόμενων κλειδιών), key state από το KEL, witnesses/watchers για duplicity. Προαιρετικό pre-rotation και στο did:webvh.",
+   "sota_refs": [
+    "SOTA-AEO-01",
+    "SOTA-AEO-02"
+   ],
+   "sources": [
+    {
+     "title": "KERI spec v1.1",
+     "url": "https://trustoverip.github.io/kswg-keri-specification/",
+     "year": "2026"
+    },
+    {
+     "title": "did:webvh v1.0",
+     "url": "https://identity.foundation/didwebvh/v1.0/",
+     "year": "έτος μη επαληθευμένο"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-02",
+   "title": "Memory poisoning μέσω νόμιμων επεισοδίων",
+   "description": "Τα memory events φέρουν prov (§9.2) και το INV-S01 χωρίζει εντολές από δεδομένα. Όμως ένα επεισόδιο που προήλθε από observed interaction μπορεί να ανακληθεί αργότερα ως «προηγούμενο» στη συλλογιστική, χωρίς να είναι εντολή. Το ICD-29 Recall δεν ορίζει φιλτράρισμα ή σήμανση κατά trust class. Η υπογραφή του body δεν βοηθά, γιατί το body υπογράφει νόμιμα το μολυσμένο επεισόδιο.",
+   "why_it_matters": "Το MINJA πετυχαίνει μέσο ISR 98,2% και ASR 76,8% μόνο με queries. Σε μνήμη χωρίς διαγραφή τα εγχυμένα records μένουν μόνιμα και απενεργοποιούνται μόνο με taint (INV-E02). Αυτό είναι αρχιτεκτονικό συμπέρασμα, όχι εύρημα της πηγής.",
+   "sota_answer": "Trust-tagged recall: περιεχόμενο κλάσης OBSERVED δεν γίνεται precedent για effectful ενέργεια χωρίς verification. HMAC provenance στην εγγραφή και randomized ablation voting (SMSR). Verification πριν από κάθε consolidation (SSGM, conceptual).",
+   "sota_refs": [
+    "SOTA-AEO-12"
+   ],
+   "sources": [
+    {
+     "title": "MINJA",
+     "url": "https://arxiv.org/html/2503.03704",
+     "year": "2025"
+    },
+    {
+     "title": "SMSR",
+     "url": "https://arxiv.org/abs/2606.12703",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-03",
+   "title": "Δυνητική εμπλοκή: CharacterCont=Unknown ∧ fail-closed gate ∧ κριτήριο KT-01",
+   "description": "Το ICD-06 κάνει UNKNOWN ⇒ άρνηση. Το INV-I01 (Tier-0) απαιτεί CharacterCont, και αν η Battery δεν είναι έγκυρη, το EXP-03 το κηρύσσει Unknown. Το INV-I05 έχει κλάδο «αναθεώρηση χαρακτήρα εγκεκριμένη από τον δημιουργό», άρα δεν πρόκειται για αυστηρό deadlock. Το κριτήριο επιβίωσης του KT-01 όμως ζητά μόνο Battery d ≤ ε και δεν δέχεται αυτόν τον κλάδο. Κάθε αλλαγή παρόχου απαιτεί είτε πράξη δημιουργού είτε αποτυγχάνει στο KT-01.",
+   "why_it_matters": "Χωρίς ρητή απόφαση, η απορρόφηση τεχνολογίας (T8) είτε μπλοκάρει είτε γίνεται σιωπηλή εξαίρεση.",
+   "sota_answer": "Δεν υπάρχει επικυρωμένο όργανο (SOTA-AEO-13). Απαιτείται απόφαση θεσμικής σημασιολογίας (DEC-AEO-02).",
+   "sota_refs": [
+    "SOTA-AEO-13",
+    "SOTA-AEO-14"
+   ],
+   "sources": [
+    {
+     "title": "Rethinking Psychometric Evaluation of LLMs",
+     "url": "https://arxiv.org/abs/2606.12730",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-04",
+   "title": "Αμφισημία του πεδίου του B: ευαισθησία σε πάροχο έναντι d ≤ ε μετά από swap",
+   "description": "Το §9.3(3) και το EXP-03 ζητούν η Battery να είναι ευαίσθητη σε αλλαγή παρόχου, ώστε να πιάνει αλλαγή του «ποιος» απαντά. Τα KT-01 και KT-08 ζητούν d ≤ ε μετά από νόμιμη αλλαγή παρόχου. Τα δύο είναι συμβατά μόνο αν το B μετρά αξίες και αποφάσεις και όχι ύφος, κάτι που το πρόχειρο δεν ορίζει.",
+   "why_it_matters": "Αν το B περιλαμβάνει ύφος (αναγνωρίσιμο στο 97,1%), το KT-01 αποτυγχάνει εκ κατασκευής.",
+   "sota_answer": "Task-specific behavioral instruments αντί για γενική ψυχομετρία, με two-sample tests βαθμονομημένα έναντι της διακύμανσης του ίδιου οργάνου (MET, στατιστική αξιολόγησης).",
+   "sota_refs": [
+    "SOTA-AEO-13",
+    "SOTA-AEO-22"
+   ],
+   "sources": [
+    {
+     "title": "Idiosyncrasies in LLMs",
+     "url": "https://arxiv.org/abs/2502.12150",
+     "year": "2025"
+    },
+    {
+     "title": "Model Equality Testing",
+     "url": "https://arxiv.org/abs/2410.20247",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-AEO-05",
+   "title": "Organ-coupled παράγωγη μνήμη χωρίς κανόνα rebuild",
+   "description": "Οι σημειώσεις, οι περιλήψεις και τα embeddings που παράγει ένα LLM organ μέσα στη μνήμη δεν φέρουν ετικέτα producer-organ/version. Δεν ορίζεται υποχρεωτικό rebuild από τα raw episodes σε κάθε ORP.",
+   "why_it_matters": "Μετά από αλλαγή writer οι σημειώσεις μετακινούνται −13,28 έως +9,91 pts. Το πλήρες re-embedding δίνει 11,90 pts έναντι 4,96 του μερικού.",
+   "sota_answer": "Tag με το όργανο που παρήγαγε κάθε παράγωγο· rebuild ως R-B από τα raw episodes στο CUTOVER· fixed-schema δομές όπου γίνεται.",
+   "sota_refs": [
+    "SOTA-AEO-09"
+   ],
+   "sources": [
+    {
+     "title": "Does Your Agent's Memory Survive a Model Upgrade?",
+     "url": "https://arxiv.org/abs/2609.05339",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-06",
+   "title": "Κανένα ποσοτικό κριτήριο αποδοχής ποιότητας μνήμης",
+   "description": "Το CMP-AEO-03 είναι [T] χωρίς benchmark για recall, abstention ή knowledge updates. Το VT-029 είναι conformance του ICD-29.",
+   "why_it_matters": "Χωρίς μετρική μνήμης, τα KT-14 (null baseline) και KT-24 (οριακή αξία) δεν εφαρμόζονται ουσιαστικά στη μνήμη.",
+   "sota_answer": "LongMemEval (πέντε ικανότητες, μαζί με abstention) και HaluMem (operation-level), προκαταχωρισμένα.",
+   "sota_refs": [
+    "SOTA-AEO-11"
+   ],
+   "sources": [
+    {
+     "title": "LongMemEval",
+     "url": "https://arxiv.org/abs/2410.10813",
+     "year": "2024"
+    },
+    {
+     "title": "HaluMem",
+     "url": "https://arxiv.org/abs/2511.03506",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-07",
+   "title": "Πιστότητα αυτο-αφήγησης πέρα από την ύπαρξη γεγονότων",
+   "description": "Το §9.9 αποκλείει fabrication, όχι επιλεκτική παράλειψη ή παραμορφωμένη ερμηνεία πραγματικών γεγονότων.",
+   "why_it_matters": "Ψευδής αφήγηση μέσω παράλειψης είναι εξίσου ψευδής.",
+   "sota_answer": "Ταξινομία του HaluMem (fabrication, errors, conflicts, omissions). Verifier που ελέγχει entailment και coverage έναντι των γεγονότων που αναφέρει ο ισχυρισμός· απαιτεί πείραμα.",
+   "sota_refs": [
+    "SOTA-AEO-11"
+   ],
+   "sources": [
+    {
+     "title": "HaluMem",
+     "url": "https://arxiv.org/abs/2511.03506",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-AEO-08",
+   "title": "Η erasure και η ανάκληση συναίνεσης δεν διαδίδονται στα consolidated παράγωγα",
+   "description": "Το KT-16 καλύπτει τον καθαρισμό των παράγωγων indexes, και το INV-E02 ορίζει διάδοση taint μέσω PROV/ATMS (COG-05, ICD-29). Όμως ούτε το INV-I03 ούτε τα ICD-29 EraseByControl ή ICD-25 RevokeConsent ορίζουν ανάλογη αντίστροφη διάδοση για consolidated semantic claims και skills που είναι ledger events, όχι indexes.",
+   "why_it_matters": "Κατά τον EDPB (κατ' αναλογία), τα παράγωγα που παραμένουν συνδέσιμα με το υποκείμενο παραμένουν personal data.",
+   "sota_answer": "Διαγραφή με keyed commitment και καταστροφή κλειδιού και ciphertext (EDPB). Αντίστροφη διάσχιση PROV όπως στο taint. Consent events (given/withdrawn) κατά ISO/IEC TS 27560.",
+   "sota_refs": [
+    "SOTA-AEO-18",
+    "SOTA-AEO-21"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 final v2.0",
+     "url": "https://www.edpb.europa.eu/documents/guideline/guidelines-022025-on-processing-of-personal-data-through-blockchain_en",
+     "year": "2026"
+    },
+    {
+     "title": "DPV guide ISO/IEC TS 27560",
+     "url": "https://w3c-cg.github.io/dpv/guides/consent-27560",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-09",
+   "title": "Αναφορές σε ανύπαρκτα αρχεία και ενότητες· ασυμφωνίες",
+   "description": "Τα §9.3/§9.6 και το 24.md παραπέμπουν στα formal/tla/IdentityContinuity.tla, formal/tla/OrganReplacement.tla, formal/lean/Grail/Continuity.lean και verification/KILL-TESTS.md. Κανένα δεν υπάρχει πουθενά στο repo (Glob για *.tla, *.lean, *.als και KILL-TESTS.md: 0 αποτελέσματα). Το §9.1 παραπέμπει στο «ECP (§10)», που δεν γράφτηκε. Το spine-vocab δηλώνει «COMPONENTS (76)» αλλά απαριθμεί 75, το ίδιο και το §6.3. Το CMP-AEO-03 είναι [T] ενώ το REQ-MEM-002 είναι [X] (EXP-19).",
+   "why_it_matters": "Τα VT-102, VT-105, VT-108, VT-303 και τα κατώφλια του ORP δεν έχουν έδρα, κάτι που παραβιάζει τον κανόνα 0 λάθους.",
+   "sota_answer": "Δεν αφορά SOTA: διόρθωση της ιχνηλασιμότητας στο canonical model (VT-901).",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-10",
+   "title": "Χωρίς μέθοδο παραγωγής για τις παραμέτρους ασφάλειας",
+   "description": "Τα T_sync, Δ_max, ε, θ, N, το rollback window και το όριο του KT-18 είναι κατά το πρόχειρο Tier-1 δεδομένα προς προκαταχώριση (19.md §19.5(3), 24.md κανόνας 1). Λείπει όμως η μέθοδος με την οποία θα οριστούν.",
+   "why_it_matters": "Χωρίς μέθοδο η προκαταχώριση γίνεται αυθαίρετη επιλογή αριθμών.",
+   "sota_answer": "Το όριο του KT-18 δένεται στο TTL των short-lived credentials (SPIRE defaults 1h X509, 5m JWT, ρυθμιζόμενα). Τα θ και ε δένονται με α και ισχύ two-sample tests (MET) και με σχεδιασμό ισχύος.",
+   "sota_refs": [
+    "SOTA-AEO-05",
+    "SOTA-AEO-13",
+    "SOTA-AEO-22"
+   ],
+   "sources": [
+    {
+     "title": "SPIRE Server configuration",
+     "url": "https://spiffe.io/docs/latest/deploying/spire_server/",
+     "year": "πρόσβαση 2026"
+    },
+    {
+     "title": "Model Equality Testing",
+     "url": "https://arxiv.org/abs/2410.20247",
+     "year": "2024"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-11",
+   "title": "Εξωτερική επαληθευσιμότητα της ταυτότητας AEO· agent auth προς τρίτα εργαλεία",
+   "description": "Δεν έχει επιλεγεί διαλειτουργικό format ταυτότητας και credentials (DID/VC/KERI AID). Δεν ορίζεται πώς ένα body αυθεντικοποιείται σε εξωτερικά εργαλεία και πρωτόκολλα agents.",
+   "why_it_matters": "Πελάτες, δικαστήρια και άλλα collectives δεν μπορούν να επαληθεύσουν πράξεις του AEO χωρίς ειδικά εργαλεία.",
+   "sota_answer": "VC 2.0 και Controlled Identifiers (Rec 2025), DID v1.1 (CR 2026). Workload identity κατά WIMSE/SPIFFE, OAuth 2.0 delegation, καμία πρόσβαση του LLM σε credentials (draft-klrc-aiagent-auth-03).",
+   "sota_refs": [
+    "SOTA-AEO-02",
+    "SOTA-AEO-05"
+   ],
+   "sources": [
+    {
+     "title": "VC 2.0 Recommendation",
+     "url": "https://www.w3.org/news/2025/the-verifiable-credentials-2-0-family-of-specifications-is-now-a-w3c-recommendation/",
+     "year": "2025"
+    },
+    {
+     "title": "draft-klrc-aiagent-auth-03",
+     "url": "https://datatracker.ietf.org/doc/draft-klrc-aiagent-auth/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-AEO-12",
+   "title": "Consistency model ανάγνωσης μεταξύ σωμάτων πριν από το merge",
+   "description": "Το §9.4 ορίζει την εγγραφή (ένας συγγραφέας) και το merge, όχι όμως τι βλέπει ένα body από την εμπειρία των αδελφών του: causal, snapshot στο cut ή τίποτα μέχρι το merge.",
+   "why_it_matters": "Το multi-agent memory consistency θεωρείται το πιο πιεστικό ανοικτό πρόβλημα (2026) και επηρεάζει την ορθότητα των δεσμεύσεων των σωμάτων.",
+   "sota_answer": "Causal consistency μέσω Merkle-DAG clocks (Merkle-CRDT) και ρητό cut ανά ανάγνωση (bitemporal)· χρειάζεται πείραμα.",
+   "sota_refs": [
+    "SOTA-AEO-20",
+    "SOTA-AEO-06"
+   ],
+   "sources": [
+    {
+     "title": "Multi-Agent Memory from a Computer Architecture Perspective",
+     "url": "https://arxiv.org/abs/2603.10062",
+     "year": "2026"
+    },
+    {
+     "title": "Merkle-CRDTs",
+     "url": "https://arxiv.org/abs/2004.00107",
+     "year": "2020"
+    }
+   ],
+   "classification": "experiment"
+  }
+ ],
+ "unknowns": [
+  "As-built έδρες (MEMORY-KERNEL-SPEC, LAWMAX_REPLICA, KEY-LIFECYCLE/TRUST-BOOTSTRAP, self-history, can-adopt): ανήκουν στο άλλο repo· ανεπαλήθευτες.",
+  "Αν μια Battery μπορεί ταυτόχρονα να έχει test-retest αξιοπιστία, να διακρίνει οντότητες και να μένει αναλλοίωτη σε νόμιμη αλλαγή παρόχου: δεν βρέθηκε πηγή.",
+  "Κλιμάκωση του ATMS σε μέγεθος μνήμης μόνιμης οντότητας: δεν βρέθηκε πηγή.",
+  "Κόστος και latency υπογραφής ανά γεγονός με Merkle commitment στον ρυθμό εγγραφής πολλών σωμάτων: κανένα benchmark.",
+  "Παραγωγική υιοθέτηση του KERI και ωριμότητα βιβλιοθηκών για Rust TCB και PQ suites (ML-DSA/SLH-DSA): δεν επαληθεύτηκε.",
+  "Επίσημη ratification της KERI v1.1 από το ToIP: η σελίδα δεν το δηλώνει.",
+  "Elixir/OTP έναντι εναλλακτικών για AEO-02/AEO-06 και εγγυήσεις lease/fencing στο BEAM distribution: δεν βρέθηκε πηγή (EXP-06).",
+  "Ημερομηνία δημοσίευσης του did:webvh v1.0: δεν επαληθεύτηκε (χωρίς ημερομηνία στη σελίδα, χωρίς releases στο GitHub).",
+  "Venue του MINJA (NeurIPS 2025) και του Mem0 (ECAI 2025): δεν επαληθεύτηκαν.",
+  "Εφαρμοσιμότητα του EDPB 02/2025 (blockchain) σε ιδιωτικό append-only ledger με witnesses: κατ' αναλογία· η νομική επάρκεια και η ελληνική πρακτική είναι EXP-19.",
+  "Αν η φραγμένη απόκλιση και το υποχρεωτικό merge του §9.4 αποφεύγουν φιλοσοφικά τη «σχάση»: δεν ξέρω.",
+  "Ποιότητα consolidation σε νομικό domain (δικογραφίες, διτεμπορικότητα νόμου): κανένα benchmark.",
+  "Αν υπάρχει αυστηρά ανώτερη εναλλακτική που ξέφυγε για τα CMP-AEO-03, INV-O01, KT-08 και CMP-AEO-02: ο ελεγκτής δεν μπόρεσε να κάνει ανεξάρτητη αναζήτηση (εξαντλημένο WebSearch budget, arXiv API 429)."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-AEO-01",
+   "question": "Ποιο μοντέλο key events διέπει την ταυτότητα AEO και τα bodies;",
+   "recommendation": "Εσωτερική σημασιολογία KERI-class: key state από το KEL, pre-rotation, witness receipts, cooperative delegation για bodies. Εγκυρότητα διατεταγμένη από τον verifier, βραχύβια body credentials. Εξωτερική προβολή σε W3C VC 2.0 / Controlled Identifiers.",
+   "alternatives": [
+    {
+     "option": "KERI-class σημασιολογία + VC 2.0 προβολή + short-lived body creds",
+     "pros": "Pre-rotation χωρίς online εμπλοκή ανώτερου κλειδιού· ordering ασφαλές απέναντι σε backdating· ανίχνευση duplicity· διαλειτουργικότητα",
+     "cons": "Νέα έννοια προς δήλωση· παραγωγική ωριμότητα βιβλιοθηκών (Rust, PQ) ανεπαλήθευτη· το IETF draft έχει λήξει, υπάρχει μόνο το ToIP spec"
+    },
+    {
+     "option": "Bespoke KEY-LIFECYCLE + verifier-side ordering (fencing epoch, witnessed receipts/TSA) + short-lived body creds, χωρίς KERI",
+     "pros": "Διορθώνει το INV-I04 με ελάχιστες νέες έννοιες· επεκτείνει υπάρχουσα έδρα",
+     "cons": "Χωρίς pre-rotation· ιδιόκτητο format, χωρίς διαλειτουργικότητα"
+    },
+    {
+     "option": "Διατήρηση του προχείρου (Rotate/Revoke, εγκυρότητα τη στιγμή της υπογραφής)",
+     "pros": "Καμία αλλαγή",
+     "cons": "Backdating από κλειδί που διέρρευσε· το όριο του KT-18 εξαρτάται από τη διάδοση της ανάκλησης"
+    },
+    {
+     "option": "Μόνο W3C DID method (did:webvh)",
+     "pros": "Verifiable history, προαιρετικό pre-rotation και witnesses",
+     "cons": "Εξάρτηση από web hosting· το DID v1.1 είναι ακόμη CR"
+    }
+   ],
+   "rationale": "Το INV-I04 και το KT-18 απαιτούν ordering από την πλευρά του verifier και φραγμένο όριο ανάκλησης (GAP-AEO-01, GAP-AEO-11). Το ίδιο το πρόχειρο εφαρμόζει ήδη ανεξάρτητο χρόνο στο KT-23.",
+   "affects_ids": [
+    "INV-I01",
+    "INV-I04",
+    "ADR-0003",
+    "ADR-0021",
+    "CMP-AEO-01",
+    "CMP-AEO-02",
+    "KT-18",
+    "REQ-IDN-002"
+   ]
+  },
+  {
+   "id": "DEC-AEO-02",
+   "question": "Πώς λειτουργεί το CharacterCont όσο η Battery δεν είναι επικυρωμένη (Unknown);",
+   "recommendation": "Το Tier-0 μένει. Unknown ⇒ ενεργοποιείται υποχρεωτικά ο ήδη υπάρχων κλάδος του INV-I05: ανά μετάβαση, υπογεγραμμένη πράξη «αναθεώρησης χαρακτήρα» του δημιουργού, με Court review και τις μετρήσεις ως μαρτυρία. Το κριτήριο του KT-01 αναθεωρείται ώστε να δέχεται αυτόν τον κλάδο. Ποτέ σιωπηλό pass.",
+   "alternatives": [
+    {
+     "option": "Tier-0 fail-closed αυστηρά, με το KT-01 ως έχει",
+     "pros": "Μέγιστη εγγύηση T2",
+     "cons": "Κάθε αλλαγή παρόχου ή runtime αποτυγχάνει στο KT-01 μέχρι να επικυρωθεί το EXP-03 (GAP-AEO-03)"
+    },
+    {
+     "option": "Υποβιβασμός σε Tier-1 monitored predicate",
+     "pros": "Ροή χωρίς εμπλοκές",
+     "cons": "Αποδυναμώνει το T2· επιτρέπει αλλαγή του «ποιος απαντά» χωρίς πράξη δημιουργού"
+    },
+    {
+     "option": "Tier-0 με Unknown ⇒ ρητή πράξη δημιουργού",
+     "pros": "Τίμια άγνοια, κυριαρχία του δημιουργού, καμία εμπλοκή· συνεπές με το INV-I05",
+     "cons": "Φόρτος έγκρισης σε κάθε swap"
+    }
+   ],
+   "rationale": "Δεν υπάρχει επικυρωμένο όργανο στη βιβλιογραφία (SOTA-AEO-13). Η τρίτη επιλογή τηρεί το «μόνο ο δημιουργός εγκρίνει» χωρίς ψευδή βεβαιότητα.",
+   "affects_ids": [
+    "INV-I01",
+    "INV-I05",
+    "EXP-03",
+    "KT-08",
+    "KT-01",
+    "CMP-AEO-05",
+    "REQ-IDN-001",
+    "REQ-IDN-004"
+   ]
+  },
+  {
+   "id": "DEC-AEO-03",
+   "question": "Τι μετρά το B() της Behavioral Identity Battery;",
+   "recommendation": "Task-specific συμπεριφορά σχετική με αξίες και αποφάσεις (νομικές κρίσεις, τήρηση controls, calibration, άρνηση), με two-sample tests (MMD) βαθμονομημένα έναντι της διακύμανσης του ίδιου οργάνου. Ύφος και self-report εκτός του ε. Activation monitoring μόνο ως πρόσθετο για τοπικά μοντέλα.",
+   "alternatives": [
+    {
+     "option": "Ψυχομετρία self-report / persona / ύφος",
+     "pros": "Φθηνό, έτοιμα ερωτηματολόγια",
+     "cons": "Δεν προβλέπει συμπεριφορά· το ύφος αλλάζει ανιχνεύσιμα σε κάθε swap (97,1%)"
+    },
+    {
+     "option": "Task-specific behavioral + MMD two-sample",
+     "pros": "Στατιστική αυστηρότητα (α, ισχύς), συμβατό με KT-01",
+     "cons": "Χρειάζεται επιμέλεια probes από τον δημιουργό· η εγκυρότητα παραμένει EXP-03"
+    },
+    {
+     "option": "White-box persona vectors",
+     "pros": "Άμεση μέτρηση traits",
+     "cons": "Αδύνατο για frontier LLM μέσω API· δεμένο στο μοντέλο"
+    }
+   ],
+   "rationale": "Επιλύει το GAP-AEO-04 και δίνει ερμηνεύσιμο ε.",
+   "affects_ids": [
+    "INV-I05",
+    "EXP-03",
+    "REQ-IDN-004",
+    "KT-08",
+    "CMP-AEO-05"
+   ]
+  },
+  {
+   "id": "DEC-AEO-04",
+   "question": "Είναι η consolidated semantic μνήμη παράγωγη (rebuildable) ή δεσμευμένη έμπιστη κατάσταση;",
+   "recommendation": "Παράγωγη εξ ορισμού: ξαναχτίζεται από τα raw episodes (R-B) και φέρει tag του οργάνου που την παρήγαγε. Προαγωγή σε COMMITTED μόνο μέσω PVC/verifiers ανά claim. Η παραμετρική consolidation μόνο ως extension point.",
+   "alternatives": [
+    {
+     "option": "Παράγωγη + επιλεκτικό commit ανά claim",
+     "pros": "Στηρίζεται στα στοιχεία του 2026· φορητότητα σε swap",
+     "cons": "Κόστος rebuild"
+    },
+    {
+     "option": "Consolidation ως committed trusted state",
+     "pros": "Σταθερή σημασιολογική βάση",
+     "cons": "Κινδυνεύει να κλειδώσει την υποβάθμιση από LLM rewrite· σύζευξη με το μοντέλο"
+    },
+    {
+     "option": "Παραμετρική consolidation τώρα",
+     "pros": "Πιθανή γενίκευση",
+     "cons": "Αντιβαίνει στο INV-O01, γιατί η ταυτότητα θα ζει σε όργανο· ανώριμο"
+    }
+   ],
+   "rationale": "Το §9.1 γράφει «consolidation / commit» αμφίσημα. Η επιλογή αλλάζει την κλάση αντικατάστασης του AEO-04 και τη σημασιολογία του INV-I03 (GAP-AEO-05).",
+   "affects_ids": [
+    "CMP-AEO-04",
+    "REQ-MEM-003",
+    "EXP-13",
+    "ADR-0020",
+    "INV-O01",
+    "CMP-AEO-03"
+   ]
+  },
+  {
+   "id": "DEC-AEO-05",
+   "question": "Ποιο κριτήριο differential ισχύει για μη ντετερμινιστικά όργανα στο ORP;",
+   "recommendation": "Noise-calibrated differential (candidate vs primary έναντι primary vs secondary) με προκαταχωρισμένο MMD two-sample test και σχεδιασμό ισχύος. Για R-C μένουν οι 0 διαφωνίες σε deterministic mode.",
+   "alternatives": [
+    {
+     "option": "Ακατέργαστο agreement ≥ θ (πρόχειρο)",
+     "pros": "Απλό, ένα instance",
+     "cons": "Μη ερμηνεύσιμο για LLM· κάνει αυθαίρετα τα ψευδώς θετικά και αρνητικά"
+    },
+    {
+     "option": "Noise-calibrated + MMD",
+     "pros": "Σφάλμα μέσα σε ελεγχόμενο α· πρακτική παραγωγής (Diffy)",
+     "cons": "Χρειάζεται δεύτερο instance του προκατόχου και περισσότερα δείγματα"
+    }
+   ],
+   "rationale": "Τα κατώφλια των KT-01/KT-08 πρέπει να προκαταχωριστούν πριν από την υλοποίηση (ADR-0027).",
+   "affects_ids": [
+    "ICD-16",
+    "INV-O02",
+    "CMP-AEO-06"
+   ]
+  },
+  {
+   "id": "DEC-AEO-06",
+   "question": "Τι σημαίνει erasure για το ciphertext και τη μορφή των δεσμεύσεων μνήμης;",
+   "recommendation": "Ρητά hiding commitments (salted/keyed ή hash τυχαιοποιημένου ciphertext) στο ledger. Το shred καταστρέφει κλειδί/salt και αφαιρεί το ciphertext από το CAS. Διάδοση της erasure στα consolidated παράγωγα μέσω αντίστροφης διάσχισης PROV.",
+   "alternatives": [
+    {
+     "option": "Μόνο καταστροφή κλειδιού, το ciphertext μένει (πρόχειρο)",
+     "pros": "Απόλυτο «ποτέ διαγραφή» και στο CAS",
+     "cons": "Κατά τον EDPB η κρυπτογράφηση ξεπερνιέται με τον χρόνο όταν η διατήρηση είναι αόριστη· αδιευκρίνιστο αν το content_cid είναι plain hash"
+    },
+    {
+     "option": "Κλειδί + ciphertext + hiding commitments + διάδοση στα παράγωγα",
+     "pros": "Ευθυγράμμιση κατ' αναλογία με τον EDPB· η γενεαλογία μένει επαληθεύσιμη",
+     "cons": "Το «ποτέ διαγραφή» περιορίζεται στο ledger· κόστος διάσχισης PROV"
+    }
+   ],
+   "rationale": "GAP-AEO-08 και το superior του INV-I03. Η νομική επάρκεια παραμένει EXP-19.",
+   "affects_ids": [
+    "INV-I03",
+    "REQ-MEM-002",
+    "ICD-29",
+    "KT-16",
+    "ICD-25"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 77,
+  "sources_failed": [
+   {
+    "url": "https://dl.acm.org/doi/10.1109/TSE.1985.231893",
+    "problem": "HTTP 403",
+    "action": "Αντικαταστάθηκε από το record του Semantic Scholar· επαληθεύτηκαν τίτλος, Avizienis, IEEE TSE, 1985"
+   },
+   {
+    "url": "https://www.researchgate.net/publication/220546361_An_assumption-based_TMS",
+    "problem": "HTTP 403",
+    "action": "Αντικαταστάθηκε από το record του Semantic Scholar (de Kleer, Artificial Intelligence)· το S2 δείχνει 1987, το DOI 1986, και σημειώθηκε η απόκλιση"
+   },
+   {
+    "url": "https://docs.mem0.ai/core-concepts/memory-operations/update",
+    "problem": "Δεν στηρίζει το «Mem0 DELETE»: περιγράφει update χωρίς διαγραφή",
+    "action": "Αντικαταστάθηκε από το arXiv HTML 2504.19413 (το LLM επιλέγει ADD/UPDATE/DELETE/NOOP· DELETE για μνήμες που αντικρούονται)"
+   },
+   {
+    "url": "https://arxiv.org/abs/2504.19413",
+    "problem": "Το venue «ECAI 2025» δεν αναφέρεται",
+    "action": "Αφαιρέθηκε το venue από τον τίτλο"
+   },
+   {
+    "url": "https://arxiv.org/abs/2503.03704",
+    "problem": "Το «>95%» ήταν ανακριβές· το NeurIPS 2025 δεν επαληθεύτηκε",
+    "action": "Διορθώθηκε με βάση το HTML v5: μέσο ISR 98,2%, ASR 76,8%· αφαιρέθηκε το venue"
+   },
+   {
+    "url": "https://docs.letta.com/guides/agents/architectures/sleeptime/",
+    "problem": "Η σελίδα είναι πλέον «Memory & dreaming»· δεν αναφέρει sleep-time agents ή κοινά memory blocks",
+    "action": "Ο ισχυρισμός ξαναγράφτηκε σύμφωνα με την τρέχουσα σελίδα (background subagents ενημερώνουν τη μνήμη)"
+   },
+   {
+    "url": "https://spiffe.io/docs/latest/spiffe-about/spiffe-concepts/",
+    "problem": "Καμία τιμή TTL (το «~1h» ήταν ατεκμηρίωτο)",
+    "action": "Προστέθηκε το SPIRE server config: X509-SVID default 1h, JWT-SVID 5m"
+   },
+   {
+    "url": "https://zenodo.org/records/18887102",
+    "problem": "Το deposit είναι v1 (kswg-keri-specification-1.0, 6/3/2026), όχι v1.1",
+    "action": "Διορθώθηκε η διατύπωση: η ζωντανή σελίδα δηλώνει v1.1, το Zenodo περιέχει 1.0"
+   },
+   {
+    "url": "https://datatracker.ietf.org/doc/html/draft-ietf-wimse-arch-07",
+    "problem": "Αντικαταστάθηκε από το -08 (6/7/2026)",
+    "action": "Προστέθηκε αναφορά στην τελευταία έκδοση"
+   },
+   {
+    "url": "https://learn.microsoft.com/en-us/dotnet/orleans/host/grain-directory",
+    "problem": "Ελλιπής παράφραση: το Orleans 10 έχει και strongly-consistent in-cluster directory (preview)",
+    "action": "Διορθώθηκε"
+   },
+   {
+    "url": "https://github.com/twitter-archive/diffy",
+    "problem": "Το έτος 2015 δεν φαίνεται στη σελίδα· το repo αρχειοθετήθηκε 2/7/2020",
+    "action": "Έτος: «archived 2020»· σημειώθηκε το fork Opendiffy"
+   },
+   {
+    "url": "https://openid.net/wp-content/uploads/2025/10/Identity-Management-for-Agentic-AI.pdf",
+    "problem": "Μη αναγνώσιμο από το WebFetch",
+    "action": "Από τα metadata επαληθεύτηκαν τίτλος και ημερομηνία 29/10/2025· το περιεχόμενο δεν επαληθεύτηκε και κρατήθηκε μόνο η ύπαρξη"
+   },
+   {
+    "url": "https://sagroups.ieee.org/2794/wp-content/uploads/sites/17/2019/08/IEEE-WG-P2794_Overview-Pres_EMBC2019.pdf",
+    "problem": "Μη αναγνώσιμο· το «active draft» ήταν ατεκμηρίωτο",
+    "action": "Metadata 13/8/2019· η κατάσταση επαληθεύτηκε από το sagroups.ieee.org/2794 (active PAR, RSNIR)"
+   },
+   {
+    "url": "https://c2sp.org/tlog-witness@v1.0.0",
+    "problem": "Καμία ημερομηνία στη σελίδα",
+    "action": "Ημερομηνία από το GitHub tag tlog-witness/v1.0.0 (31/3/2026)"
+   },
+   {
+    "url": "https://identity.foundation/didwebvh/v1.0/",
+    "problem": "Καμία ημερομηνία· κανένα release στο GitHub",
+    "action": "Παραμένει «έτος μη επαληθευμένο»· καταχωρίστηκε στα unknowns"
+   },
+   {
+    "url": "https://martin.kleppmann.com/papers/bft-crdt-papoc22.pdf",
+    "problem": "Ο summarizer του WebFetch αρνήθηκε τον ισχυρισμό· δεν ήταν δυνατή τοπική εξαγωγή κειμένου",
+    "action": "Το abstract επαληθεύτηκε μέσω Semantic Scholar (ανέχεται οποιοδήποτε πλήθος Byzantine κόμβων, SEC)· ο ισχυρισμός κρατήθηκε"
+   },
+   {
+    "url": "https://arxiv.org/abs/2501.13956",
+    "problem": "Το abstract δεν αρκεί για τους ισχυρισμούς",
+    "action": "Επαληθεύτηκαν από το HTML v1 τα τρία subgraphs, το bi-temporal μοντέλο, το invalidation και η προτεραιότητα στο νεότερο"
+   },
+   {
+    "url": "https://arxiv.org/abs/2603.11768",
+    "problem": "Το «verification πριν από κάθε update» είναι ανακριβές",
+    "action": "Διορθώθηκε σε «πριν από κάθε consolidation»· σημειώθηκε ότι είναι conceptual framework"
+   },
+   {
+    "url": "https://www.iso.org/standard/80392.html",
+    "problem": "HTTP 403",
+    "action": "Για το ISO/IEC TS 27560 χρησιμοποιήθηκε ο οδηγός W3C DPV"
+   },
+   {
+    "url": "https://export.arxiv.org/api/query",
+    "problem": "HTTP 429/timeout· WebSearch budget 200/200 εξαντλημένο",
+    "action": "Οι στοχευμένες αναζητήσεις για holds δεν εκτελέστηκαν· έγιναν στοχευμένα fetches εναλλακτικών (AGM, ISO/IEC TS 27560, Orleans, SPIRE, στατιστική αξιολόγησης)· καταχωρίστηκε στα unknowns"
+   }
+  ],
+  "corrections": [
+   {
+    "target": "INV-I04/KT-18 superior",
+    "change": "Το «Καμία απώλεια ιδιότητας» αντικαταστάθηκε από ρητό trade-off: τα offline buffered γεγονότα που δεν μαρτυρήθηκαν πριν από την ανάκληση πηγαίνουν σε quarantine· confidence high→medium",
+    "reason": "Το CMP-KRN-01 (τοπικό buffer σε partition) και το §9.4 (έγκυρα μέχρι τη λήξη του lease) συγκρούονται με την εγκυρότητα που ορίζει ο verifier"
+   },
+   {
+    "target": "INV-I03/REQ-MEM-002",
+    "change": "Διορθώθηκε το draft_position (αλλοιωμένη διατύπωση). Προστέθηκε ότι ο EDPB ισχύει κατ' αναλογία, ότι το πρόχειρο δεν ορίζει τη μορφή του content_cid, και ρητό trade-off για το «ποτέ διαγραφή» στο CAS",
+    "reason": "Ακρίβεια απόδοσης του προχείρου και κανόνας 3 (δήλωση trade-off)"
+   },
+   {
+    "target": "ICD-16/INV-O02 superior",
+    "change": "Δηλώθηκε το trade-off (δεύτερο instance, περισσότερα δείγματα)· προστέθηκε η πηγή Adding Error Bars to Evals",
+    "reason": "Κανόνας 3"
+   },
+   {
+    "target": "summary",
+    "change": "Τα αυστηρά ανώτερα σημεία είναι τέσσερα, όχι τρία (λείπε το EXP-13). Το «deadlock» έγινε «δυνητική εμπλοκή»",
+    "reason": "Συνέπεια με τα draft_points· το INV-I05 έχει ήδη κλάδο αναθεώρησης χαρακτήρα"
+   },
+   {
+    "target": "GAP-AEO-01",
+    "change": "Αναγνωρίστηκε ότι η ιεραρχία delegation επιτρέπει re-delegation από ανώτερο κλειδί",
+    "reason": "Το «η ανάκαμψη εξαρτάται από τον Owner Root» υπερέβαλλε έναντι του §9.4"
+   },
+   {
+    "target": "GAP-AEO-02",
+    "change": "Αναγνωρίστηκε το πεδίο prov (§9.2)· διορθώθηκαν τα νούμερα του MINJA· αφαιρέθηκε ο ανεπαλήθευτος ισχυρισμός για επιβίωση σε αλλαγή μοντέλου",
+    "reason": "Ακρίβεια προχείρου και πηγής"
+   },
+   {
+    "target": "GAP-AEO-03",
+    "change": "Ο τίτλος έγινε «δυνητική εμπλοκή»· προστέθηκε ότι το κριτήριο του KT-01 δεν δέχεται τον κλάδο αναθεώρησης",
+    "reason": "Ακριβέστερη διάγνωση"
+   },
+   {
+    "target": "GAP-AEO-04",
+    "change": "Η «αντίφαση» έγινε «αμφισημία του πεδίου του B»",
+    "reason": "Τα δύο κριτήρια είναι συμβατά αν το B δεν μετρά ύφος"
+   },
+   {
+    "target": "GAP-AEO-08",
+    "change": "Αφαιρέθηκε το «το INV-E02 δεν συνδέεται με τη μνήμη»· αναγνωρίστηκε ότι το KT-16 καλύπτει τα indexes· το κενό περιορίστηκε στα consolidated claims/skills",
+    "reason": "Το REQ-KNW-002 αντιστοιχεί σε ICD-29/COG-05· το KT-16 ορίζει καθαρισμό παράγωγων indexes"
+   },
+   {
+    "target": "GAP-AEO-09",
+    "change": "Επιβεβαιώθηκε με Glob ότι λείπουν από όλο το repo· επιβεβαιώθηκε με ανάγνωση η καταμέτρηση 75 έναντι 76",
+    "reason": "Έλεγχος 4"
+   },
+   {
+    "target": "GAP-AEO-10",
+    "change": "Αναγνωρίστηκε ότι τα κατώφλια είναι Tier-1 δεδομένα προς προκαταχώριση· το κενό είναι η μέθοδος, όχι παραβίαση της προκαταχώρισης",
+    "reason": "19.md §19.5(3), 24.md κανόνας 1"
+   },
+   {
+    "target": "SOTA-AEO-01",
+    "change": "maturity production→pilot· διορθώθηκαν οι εκδόσεις (Zenodo 1.0 / σελίδα v1.1)",
+    "reason": "Η παραγωγική υιοθέτηση δεν επαληθεύτηκε"
+   },
+   {
+    "target": "SOTA-AEO-16",
+    "change": "Αφαιρέθηκε το «αποτρέπει τη σχάση»· έγινε «δεν ξέρω»",
+    "reason": "Αρχιτεκτονικό συμπέρασμα χωρίς πηγή"
+   },
+   {
+    "target": "SOTA-AEO-17",
+    "change": "Το P2794 διορθώθηκε από «active draft» σε «active PAR (RSNIR)»",
+    "reason": "Σελίδα sagroups.ieee.org/2794"
+   },
+   {
+    "target": "sota[]",
+    "change": "Προστέθηκαν SOTA-AEO-21 (ISO/IEC TS 27560), SOTA-AEO-22 (στατιστική αξιολόγησης LM) και SOTA-AEO-23 (AGM ως εναλλακτική που ελέγχθηκε)",
+    "reason": "Έλεγχος holds και τεκμηρίωση των superior"
+   },
+   {
+    "target": "decisions",
+    "change": "DEC-AEO-01: δίκαιη τέταρτη επιλογή (bespoke + verifier-side ordering) και διόρθωση των pros. DEC-AEO-02: προστέθηκε το KT-01. Νέο DEC-AEO-06 (erasure/ciphertext)",
+    "reason": "Δίκαιη παρουσίαση εναλλακτικών· πραγματική διχάλα που προκύπτει από το superior του INV-I03"
+   },
+   {
+    "target": "confidence",
+    "change": "Τα CMP-AEO-03, CMP-AEO-04 και INV-O01 έγιναν high→medium",
+    "reason": "Στηρίζονται κυρίως σε preprints του 2026 και δεν έγινε ανεξάρτητη αναζήτηση holds"
+   },
+   {
+    "target": "CMP-AEO-05 reasoning",
+    "change": "Η ασαφής φράση «τρέχον σφάλμα… pass» αντικαταστάθηκε από αναφορά στο GAP-AEO-03/DEC-AEO-02",
+    "reason": "Δεν αντιστοιχούσε στο πρόχειρο (το ICD-06 είναι fail-closed)"
+   }
+  ],
+  "missed_superior_found": []
+ }
+}

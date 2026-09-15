@@ -1,0 +1,2088 @@
+{
+ "layer_key": "LAW",
+ "summary": "Η κατεύθυνση του προχείρου για το LAWMAX ισχύει στα περισσότερα σημεία. Το σχήμα «έξοδοι μοντέλων ως PROPOSED, verifier, υπογραφή Principal» στηρίζεται από την έρευνα και από το μόνο ρυθμιστικό προηγούμενο που επαλήθευσα (SRA, 05/2025). Προσοχή στη χρονολόγηση: τα ποσοστά παραισθήσεων 17–33% (εμπορικά νομικά AI, Harvey-class) και 58–88% (γενικά μοντέλα) είναι μετρήσεις του 2024 (Magesh· Dahl). Στη Vals Legal Research (10/2025), σε 200 ερωτήσεις αμερικανικής νομικής έρευνας, τα νομικά AI εργαλεία (74–78%) και το γενικής χρήσης AI (78%) ξεπέρασαν baseline έμπειρων δικηγόρων (69%)· κύριος διαφοροποιητής έμειναν οι πηγές και οι παραπομπές.\n\nΑυστηρά ανώτερο υπάρχει σε τρία σημεία:\n(α) INV-L01: η επίλυση με receipt δεν πιάνει τη misgrounded παραπομπή (υπαρκτή πηγή που δεν στηρίζει την πρόταση)· η Magesh την κρίνει δυνητικά πιο επικίνδυνη από την επινόηση.\n(β) INV-L04: LegalRuleML/Akoma Ntoso διακρίνουν in force, efficacy, applicability, enforceability· το invariant μιλά μόνο για «ισχύ».\n(γ) CMP-LAW-10 (εύρημα του ελέγχου): ο διπλός υπολογισμός δεν πιάνει κοινή αμφισημία στην αριθμητική ημερομηνιών· υπάρχει τυπική σημασιολογία με ρητά rounding modes και ανίχνευση αμφισημίας (Catala dates-calc, ESOP 2024).\nΥποβαθμίσεις έναντι του ερευνητή: CMP-LAW-12 σε holds (το «eIDAS, 910/2014 όπως τροποποιήθηκε» του προχείρου καλύπτει ήδη το EUDI Wallet· το OpenID4VP 1.0 είναι εξειδίκευση)· ICD-19 σε gap.\n\nΚανονιστικά (tracker AI Act, ενημ. 31/08/2026):\n- Annex III 8(a): μόνο συστήματα για χρήση από/για λογαριασμό δικαστικής αρχής ή ανάλογα σε ADR· ο βοηθός δικηγόρου κατά κανόνα εκτός.\n- Το Art. 50 εφαρμόζεται ήδη από 02/08/2026. Ο δημιουργός, που αναπτύσσει το σύστημα και το θέτει σε λειτουργία για ίδια χρήση, είναι provider (Art. 3(3), 3(11)) και οφείλει 50(1) και 50(2). Η εξαίρεση του 50(4) αφορά μόνο δημοσιεύσεις δημόσιου ενδιαφέροντος· ο ερευνητής την εφάρμοσε λάθος.\n- Annex III υψηλού κινδύνου από 02/12/2027, Annex I από 02/08/2028· το Art. 4 εμφανίζεται τροποποιημένο από το Digital Omnibus. Αριθμός πράξης και έναρξη ισχύος του Omnibus δεν επαληθεύτηκαν (η 27/07/2026 του tracker αφορά τα Art. 102–110).\n\nΚενά: ουσιαστικό sign-off απέναντι στο automation bias· μάθηση μεταξύ υποθέσεων έναντι INV-L03· ελληνόγλωσσο εξωτερικό anchor (GreekBarBench)· διαφάνεια Art. 50· εξωτερικά λεξιλόγια υποθέσεων· επίπεδο δικαστή στον simulator (η Γαλλία απαγορεύει ποινικά τα judge analytics, ν. 2019-222 άρθ. 33).\n\nΕσωτερικές ασυνέπειες: η §12 δεν γράφτηκε· τα contracts/ και formal/ δεν υπάρχουν· το ICD-19 δηλώνει provider ενιαίο εύρος, ενώ στο §6.3 το παρέχουν μόνο πέντε LAW components· ένταση ανάμεσα στην «ενοποίηση εδρών ημερολογιακής αριθμητικής» (6.4) και στις «δύο ανεξάρτητες μεθόδους» (REQ-LAW-011)· το spine δηλώνει 76 CMP αλλά απαριθμεί 75.\n\nΠεριορισμός: το WebSearch ήταν εξαντλημένο και στον έλεγχο· όλες οι πηγές επαληθεύτηκαν με άμεσο WebFetch, και η αναζήτηση για παραλειφθέντα ανώτερα έγινε μόνο μέσω γνωστών URLs.",
+ "sota": [
+  {
+   "id": "SOTA-LAW-01",
+   "name": "Magesh et al., Hallucination-Free? (τυπολογία correctness/groundedness)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Εμπειρική αξιολόγηση (2024) εμπορικών νομικών AI research tools (Harvey-class) με RAG. Παραίσθηση = απάντηση «incorrect ή misgrounded»· misgrounded είναι η παραπομπή σε υπαρκτή πηγή που δεν στηρίζει την πρόταση. Παραισθήσεις 17%–33%, ακρίβεια 19%–65%. Οι συγγραφείς κρίνουν τα misgrounded σφάλματα δυνητικά πιο επικίνδυνα από την επινόηση απόφασης, επειδή είναι λεπτότερα και εντοπίζονται δυσκολότερα.",
+   "relevance": "Μέτρο για INV-L01 και KT-15: η ύπαρξη παραπομπής δεν αρκεί, χρειάζεται έλεγχος στήριξης της πρότασης. Το RAG μόνο του δεν εξαλείφει σφάλματα. Μέτρηση του 2024· νεότερη εικόνα στο SOTA-LAW-07.",
+   "sources": [
+    {
+     "title": "Hallucination-Free? Assessing the Reliability of Leading AI Legal Research Tools (arXiv 2405.20362)",
+     "url": "https://arxiv.org/abs/2405.20362",
+     "year": "2024"
+    },
+    {
+     "title": "Hallucination-Free? (HTML: typology, per-tool rates)",
+     "url": "https://arxiv.org/html/2405.20362",
+     "year": "2024"
+    },
+    {
+     "title": "Semantic Scholar record (publication venue: Journal of Empirical Legal Studies)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/arXiv:2405.20362?fields=title,year,venue,journal,publicationVenue,externalIds",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-02",
+   "name": "Dahl et al., Large Legal Fictions",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Προφίλ νομικών παραισθήσεων γενικών LLM (2024): 58%–88% σε ερωτήσεις για αποφάσεις ομοσπονδιακών δικαστηρίων ΗΠΑ. Contra-factual bias (δεν διορθώνουν λανθασμένες προκείμενες του χρήστη). Τα μοντέλα δεν ξέρουν πάντα πότε παράγουν παραίσθηση.",
+   "relevance": "Το LLM δεν μπορεί να είναι verifier του εαυτού του. Στηρίζει PVC, INV-C04 και τον εξωτερικό citation verifier του CMP-LAW-08.",
+   "sources": [
+    {
+     "title": "Large Legal Fictions (Journal of Legal Analysis 16(1):64–93; arXiv 2401.01301)",
+     "url": "https://arxiv.org/abs/2401.01301",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-03",
+   "name": "Legal NLP benchmarks (LegalBench, LexGLUE, LawBench, CaseHOLD, SARA)",
+   "kind": "research",
+   "maturity": "production",
+   "what": "LegalBench: 162 εργασίες, 6 τύποι νομικής συλλογιστικής, από νομικούς. LexGLUE: σουίτα legal NLU (ACL 2022). LawBench: 20 εργασίες σε 3 γνωστικά επίπεδα, στο κινεζικό δίκαιο· συμπέρασμα: «still a long way from obtaining usable and reliable LLMs in legal tasks». CaseHOLD: >53k ερωτήσεις αναγνώρισης holding (ICAIL 2021). SARA (2020): statutory reasoning στο φορολογικό δίκαιο ΗΠΑ· χειροποίητο σύστημα Prolog έλυσε πλήρως το task, ενώ τα machine-reading μοντέλα της εποχής απέδωσαν χαμηλά.",
+   "relevance": "Εξωτερικά σημεία αναφοράς για VT-701. Το CaseHOLD είναι το πλησιέστερο task στην «αναγνώριση κρίσιμων λόγων» του EXP-09. Το SARA στηρίζει τον συμβολικό πυρήνα του CMP-LAW-04, αλλά μετρά μοντέλα προ του 2021.",
+   "sources": [
+    {
+     "title": "LegalBench (arXiv 2308.11462)",
+     "url": "https://arxiv.org/abs/2308.11462",
+     "year": "2023"
+    },
+    {
+     "title": "LexGLUE (arXiv 2110.00976)",
+     "url": "https://arxiv.org/abs/2110.00976",
+     "year": "2022"
+    },
+    {
+     "title": "LawBench (arXiv 2309.16289)",
+     "url": "https://arxiv.org/abs/2309.16289",
+     "year": "2023"
+    },
+    {
+     "title": "open-compass/LawBench (GitHub: tasks based on the Chinese legal system)",
+     "url": "https://github.com/open-compass/LawBench",
+     "year": "2023"
+    },
+    {
+     "title": "CaseHOLD (arXiv 2104.08671)",
+     "url": "https://arxiv.org/abs/2104.08671",
+     "year": "2021"
+    },
+    {
+     "title": "A Dataset for Statutory Reasoning in Tax Law Entailment and Question Answering (arXiv 2005.05257)",
+     "url": "https://arxiv.org/abs/2005.05257",
+     "year": "2020"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-04",
+   "name": "LEXam (ICLR 2026)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "7.537 ερωτήσεις από 340 εξετάσεις (116 μαθήματα), EN/DE, ανοιχτές και πολλαπλής επιλογής. Ensemble LLM-as-a-Judge με αυστηρή επικύρωση από ειδικούς. Τα LLM δυσκολεύονται σε ανοιχτές ερωτήσεις δομημένης πολυβηματικής νομικής συλλογιστικής.",
+   "relevance": "Μεθοδολογικό πρότυπο για VT-701 και VT-702: ανοιχτές ερωτήσεις με επικυρωμένο αυτόματο κριτή.",
+   "sources": [
+    {
+     "title": "LEXam: Benchmarking Legal Reasoning on 340 Law Exams (arXiv 2505.12864)",
+     "url": "https://arxiv.org/abs/2505.12864",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-05",
+   "name": "GreekBarBench (EMNLP 2025)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Benchmark ελεύθερου κειμένου σε θέματα των εξετάσεων του ελληνικού δικηγορικού συλλόγου, 5 πεδία δικαίου, με υποχρεωτικές παραπομπές σε διατάξεις και πραγματικά περιστατικά. Τρισδιάστατη βαθμολόγηση, LLM-as-judge με meta-evaluation (τα span-based rubrics βελτιώνουν τη συμφωνία με ειδικούς). 13 μοντέλα· τα κορυφαία ξεπερνούν τον μέσο ειδικό αλλά όχι το 95ο εκατοστημόριο.",
+   "relevance": "Το μόνο ελληνόγλωσσο νομικό benchmark με έλεγχο παραπομπών που εντόπισα. Εξωτερικό anchor για KT-15, VT-701 και μέτρο για INV-L01.",
+   "sources": [
+    {
+     "title": "GreekBarBench (arXiv 2505.17267)",
+     "url": "https://arxiv.org/abs/2505.17267",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-06",
+   "name": "GDPval — blinded pairwise σύγκριση με ειδικούς",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "44 επαγγέλματα, μεταξύ τους οι δικηγόροι· εργασίες από επαγγελματίες με μέσο όρο 14 ετών εμπειρίας, τυφλή βαθμολόγηση ανά ζεύγος από ειδικούς. Στο gold subset το καλύτερο μοντέλο κρίθηκε ισοδύναμο ή καλύτερο (win-or-tie) στο 47,6%. Inter-rater agreement 71%· αυτόματος grader 66%. Οι συγγραφείς αναγνωρίζουν ότι οι κριτές μπορεί να αναγνώριζαν την προέλευση από υφολογικές ενδείξεις.",
+   "relevance": "Πλησιέστερο πρωτόκολλο στο KT-15. Δείχνει δύο αδυναμίες που το KT-15 πρέπει να καλύψει: διαρροή τυφλότητας από το ύφος και όριο συμφωνίας κριτών.",
+   "sources": [
+    {
+     "title": "GDPval (arXiv 2510.04374)",
+     "url": "https://arxiv.org/abs/2510.04374",
+     "year": "2025"
+    },
+    {
+     "title": "GDPval full text (HTML)",
+     "url": "https://arxiv.org/html/2510.04374",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-07",
+   "name": "Vals Legal AI Report (VLAIR) και Legal Research Report — lawyer baseline",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "(α) 27/02/2025: 7 εργασίες με ομάδα ελέγχου δικηγόρων. Τα εμπορικά νομικά AI (Harvey-class) ξεπέρασαν τη baseline σε data extraction, document Q&A, summarization, transcript analysis· η baseline ισοφάρισε το καλύτερο εργαλείο στη χρονολόγηση· οι δικηγόροι υπερείχαν σε redlining και EDGAR research.\n(β) 14/10/2025: 200 ερωτήσεις αμερικανικής νομικής έρευνας, τυφλή βαθμολόγηση από δικηγόρους και βιβλιοθηκονόμους (accuracy 50%, authoritativeness 40%, appropriateness 10%). Νομικά AI 74–78%, γενικής χρήσης AI 78%, baseline έμπειρων δικηγόρων 69%. Κύριος διαφοροποιητής οι πηγές και οι παραπομπές (+6 μονάδες authoritativeness για τα νομικά εργαλεία)· το γενικής χρήσης AI υπερείχε σε πρόσφατη πληροφορία μέσω web search. Η έκθεση αναφέρει >370 καταγεγραμμένες περιπτώσεις δικογράφων με παραισθημένες παραπομπές παγκοσμίως.",
+   "relevance": "Υπαρκτό πρωτόκολλο «AI έναντι δικηγόρων» για το KT-15. Η υπεροχή εξαρτάται από την εργασία (στρωματοποίηση), και η baseline έμπειρων δικηγόρων έχει ήδη ξεπεραστεί στην αμερικανική νομική έρευνα· οι δυσκολότεροι συγκριτές είναι τα συστήματα. Μόνο δίκαιο ΗΠΑ.",
+   "sources": [
+    {
+     "title": "Vals Legal AI Report (VLAIR), 02/2025",
+     "url": "https://www.vals.ai/vlair",
+     "year": "2025"
+    },
+    {
+     "title": "VLAIR Legal Research Report (14/10/2025)",
+     "url": "https://www.vals.ai/industry-reports/vlair-10-14-25",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-08",
+   "name": "LegalAgentBench — αξιολόγηση νομικών agents με progress rate",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "17 corpora, 37 εργαλεία, 300 σχολιασμένες εργασίες (κινεζικό δίκαιο). Μετρά και την πρόοδο των ενδιάμεσων βημάτων (progress rate μέσω keyword analysis).",
+   "relevance": "Πρότυπο για end-to-end ροές (OS-01) με μέτρηση ενδιάμεσων βημάτων, συμβατό με receipts ανά βήμα.",
+   "sources": [
+    {
+     "title": "LegalAgentBench (arXiv 2412.17259)",
+     "url": "https://arxiv.org/abs/2412.17259",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-09",
+   "name": "Νομική ανάκτηση (CLERC, LegalBench-RAG)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "CLERC: ανάκτηση αποφάσεων και retrieval-augmented analysis· zero-shot recall@1000 48,3%· το μοντέλο με τα υψηλότερα ROUGE F-scores είχε και τις περισσότερες παραισθήσεις. LegalBench-RAG: 6.858 ζεύγη πάνω σε >79M χαρακτήρες, ανάκτηση ελάχιστων σχετικών snippets.",
+   "relevance": "Στηρίζει τις επιλογές του CMP-LAW-05 (πολυστρατηγική ανάκτηση, coverage report, καμία εμπιστοσύνη χωρίς CMP-LAW-08). Το pinpoint snippet είναι προϋπόθεση ελέγχου στήριξης πρότασης.",
+   "sources": [
+    {
+     "title": "CLERC (arXiv 2406.17186)",
+     "url": "https://arxiv.org/abs/2406.17186",
+     "year": "2024"
+    },
+    {
+     "title": "LegalBench-RAG (arXiv 2408.10343)",
+     "url": "https://arxiv.org/abs/2408.10343",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-10",
+   "name": "Akoma Ntoso / AKN4EU, ELI, ECLI",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Akoma Ntoso v1.0 (OASIS Standard, 29/08/2018): FRBR levels (Work, Expression, Manifestation, Item)· ισχύς με @start/@end και efficacy με @startEfficacy/@endEfficacy· active/passive modifications για point-in-time ενοποίηση. AKN4EU: ευρωπαϊκό profile, ρητά work in progress. ELI: 4 πυλώνες (URI, οντολογία FRBR, RDFa/JSON-LD, συγχρονισμός με sitemap/Atom). ECLI: πενταμερές αναγνωριστικό + Dublin Core (Council conclusions 29/04/2011). Η εφαρμογή ELI/ECLI στην Ελλάδα δεν επαληθεύτηκε.",
+   "relevance": "Κανονικά πρότυπα για CMP-LAW-02, CMP-KNW-05 και ταυτοποίηση αυθεντιών στο CMP-LAW-08. Η διάκριση ισχύος/efficacy τεκμηριώνει το ανώτερο του INV-L04.",
+   "sources": [
+    {
+     "title": "Akoma Ntoso Version 1.0 Part 1: XML Vocabulary (OASIS Standard)",
+     "url": "https://docs.oasis-open.org/legaldocml/akn-core/v1.0/akn-core-v1.0-part1-vocabulary.html",
+     "year": "2018"
+    },
+    {
+     "title": "AKN4EU (EU Vocabularies)",
+     "url": "https://op.europa.eu/en/web/eu-vocabularies/akn4eu",
+     "year": "2026"
+    },
+    {
+     "title": "ELI register — About",
+     "url": "https://eur-lex.europa.eu/eli-register/about.html",
+     "year": "2026"
+    },
+    {
+     "title": "European Case Law Identifier (ECLI) — e-Justice",
+     "url": "https://e-justice.europa.eu/topics/legislation-and-case-law/european-case-law-identifier-ecli_en",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-11",
+   "name": "LegalRuleML Core 1.0",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "OASIS Standard (30/08/2021): defeasibility (strict/defeasible rules, defeaters, Override για superiority)· δεοντικά Obligation, Permission, Prohibition, Right· temporal characteristics InForce, Efficacious, Applicability, Enforceability· μεταδεδομένα Jurisdiction/Authority· Alternatives για πολλαπλές ερμηνείες· isomorphism N:M κανόνα ↔ πηγής.",
+   "relevance": "Αναφορά για τον δεοντικό/defeasible πυρήνα του CMP-LAW-04, τη διατήρηση εναλλακτικών ερμηνειών (ATMS §8.8) και την ιχνηλασιμότητα κανόνα → διάταξη as-of· τεκμηριώνει το ανώτερο του INV-L04.",
+   "sources": [
+    {
+     "title": "LegalRuleML Core Specification Version 1.0 (OASIS Standard)",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-12",
+   "name": "Rules-as-code: Catala, OpenFisca, Blawx",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Catala (ICFP 2021): default logic ως first-class χαρακτηριστικό (README)· απόδειξη ορθότητας των βασικών βημάτων μεταγλώττισης σε F*· στην αξιολόγηση εντόπισε ένα bug σε επίσημη υλοποίηση· κατά το README research project της Inria με compiler «yet unstable». OpenFisca: σε παραγωγή σε δημόσιους φορείς (Βαρκελώνη, LexImpact της Γαλλικής Εθνοσυνέλευσης, Ιαπωνία). Blawx: reasoner SWI-Prolog/s(CASP) με εξηγήσεις· «not production-quality», για εκπαιδευτική/πειραματική χρήση.",
+   "relevance": "Υπαρκτή εναλλακτική έναντι της μελλοντικής LexDSL (GP-8) για τους εκτελέσιμους κανόνες των CMP-LAW-04 και CMP-LAW-10· ο Catala μπορεί να λειτουργήσει και ως ανεξάρτητη N-version αναφορά.",
+   "sources": [
+    {
+     "title": "Catala: A Programming Language for the Law (arXiv 2103.03198)",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    },
+    {
+     "title": "CatalaLang/catala (GitHub README)",
+     "url": "https://github.com/CatalaLang/catala",
+     "year": "2026"
+    },
+    {
+     "title": "OpenFisca",
+     "url": "https://openfisca.org/en/",
+     "year": "2026"
+    },
+    {
+     "title": "Lexpedite/blawx (GitHub)",
+     "url": "https://github.com/Lexpedite/blawx",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-13",
+   "name": "Argumentation και θεωρία αποδείξεων (Carneades· hybrid theory· legal probabilism)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Carneades: μοντέλο επιχειρημάτων και βάρους απόδειξης (Gordon, Prakken, Walton, Artificial Intelligence 2007) και λογισμικό 4.3 (2017) με argumentation schemes και αξιολόγηση επιχειρημάτων· 2η θέση και στα τέσσερα grounded tracks του ICCMA 2015. Hybrid theory επιχειρημάτων, ιστοριών και ποινικής μαρτυρίας (Bex, van Koppen, Prakken, Verheij, AI & Law 2010). Legal probabilism (SEP, 2021): Bayesian network idioms (Fenton, Neil, Lagnado 2013)· ανοιχτά προβλήματα paradoxes of proof και naked statistical evidence. Για τα άρθρα 2007/2010 επαληθεύτηκαν μόνο μεταδεδομένα.",
+   "relevance": "Αναφορά για typed argument graphs (CMP-LAW-04, CMP-CCP-02) και για το CMP-LAW-03: βάρος απόδειξης, αποδεικτικά standards, σύγκριση σεναρίων.",
+   "sources": [
+    {
+     "title": "Carneades Argumentation System",
+     "url": "https://carneades.github.io/",
+     "year": "2017"
+    },
+    {
+     "title": "Gordon, Prakken, Walton — The Carneades model of argument and burden of proof (Artificial Intelligence 171:875–896), Semantic Scholar record",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/j.artint.2007.04.010?fields=title,authors,year,venue,journal,abstract",
+     "year": "2007"
+    },
+    {
+     "title": "Bex, van Koppen, Prakken, Verheij — A hybrid formal theory of arguments, stories and criminal evidence (AI & Law 18:123–152), Semantic Scholar record",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1007/s10506-010-9092-x?fields=title,authors,year,venue,journal,abstract",
+     "year": "2010"
+    },
+    {
+     "title": "Legal Probabilism (Stanford Encyclopedia of Philosophy)",
+     "url": "https://plato.stanford.edu/entries/legal-probabilism/",
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-14",
+   "name": "Πρόβλεψη δικαστικών αποφάσεων και η κριτική της· adversarial προσομοίωση δίκης",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Chalkidis, Androutsopoulos, Aletras (ACL 2019): πρόβλεψη αποφάσεων ΕΔΔΑ. Medvedeva, Wieling, Vols (AI & Law 31:195–212, online 2022): διακρίνουν outcome identification, outcome-based judgement categorisation και outcome forecasting και κατατάσσουν τις υπάρχουσες μελέτες σε αυτές. AgentCourt (2024, v2 2025): προσομοίωση 1.000 αστικών υποθέσεων με adversarial evolvable lawyer agents· +12,1% έναντι των αρχικών agents (CourtBench).",
+   "relevance": "Στηρίζει τον στόχο του EXP-09 (κρίσιμοι λόγοι αντί για έκβαση)· το leakage-free as-of backtest (VT-705) αντιστοιχεί στο forecasting της διάκρισης Medvedeva (συναγωγή). Προηγούμενο γεννήτριας αντεπιχειρημάτων για το CMP-LAW-07.",
+   "sources": [
+    {
+     "title": "Neural Legal Judgment Prediction in English (arXiv 1906.02059)",
+     "url": "https://arxiv.org/abs/1906.02059",
+     "year": "2019"
+    },
+    {
+     "title": "Medvedeva, Wieling, Vols — Rethinking the field of automatic prediction of court decisions (AI & Law 31:195–212), Semantic Scholar record with abstract",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1007/s10506-021-09306-3?fields=title,authors,year,venue,journal,abstract",
+     "year": "2022"
+    },
+    {
+     "title": "AgentCourt (arXiv 2408.08089)",
+     "url": "https://arxiv.org/abs/2408.08089",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-15",
+   "name": "Πρότυπα δεδομένων νομικών υποθέσεων (SALI LMSS, FOLIO, LEDES)",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "SALI LMSS: κοινή γλώσσα κατάταξης υποθέσεων, χρόνου, εγγράφων και οργανισμών. FOLIO (μετονομασία του SOLI): >18.000 νομικές έννοιες σε OWL, CC-BY 4.0, με μεταφράσεις σε πολλές γλώσσες· στόχος η διαλειτουργικότητα πολλών νομικών προτύπων. LEDES: XML Ebilling 2.2, LEDES API v1 (2020), UTBMS, budgeting format.",
+   "relevance": "Εξωτερικά λεξιλόγια για το ICD-19 (matters, εργασίες, παραδοτέα, billing) και για τη διαλειτουργικότητα του CMP-LAW-01. Η κάλυψη ελληνικών κατηγοριών δικαίου δεν επαληθεύτηκε.",
+   "sources": [
+    {
+     "title": "SALI Alliance — LMSS",
+     "url": "https://www.sali.org/",
+     "year": "2026"
+    },
+    {
+     "title": "FOLIO — Federated Open Legal Information Ontology",
+     "url": "https://openlegalstandard.org/",
+     "year": "2025"
+    },
+    {
+     "title": "LEDES",
+     "url": "https://ledes.org/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-16",
+   "name": "EU AI Act (Κανονισμός 2024/1689) όπως αποτυπώνεται στον tracker (ενημ. 31/08/2026)",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "- Annex III 8(a): συστήματα για χρήση από ή για λογαριασμό δικαστικής αρχής (έρευνα/ερμηνεία πραγματικών και δικαίου, εφαρμογή), ή ανάλογη χρήση σε ADR.\n- Art. 3(3), 3(11): provider είναι και όποιος αναπτύσσει σύστημα και το θέτει σε λειτουργία για ίδια χρήση.\n- Art. 6(3): εξαιρέσεις από τον υψηλό κίνδυνο· το profiling φυσικών προσώπων μένει πάντα υψηλού κινδύνου· 6(4): τεκμηρίωση και καταχώριση (Art. 49(2)) όταν ο πάροχος κρίνει ότι σύστημα του Annex III δεν είναι υψηλού κινδύνου.\n- Art. 4 (AI literacy, από 02/02/2025): εμφανίζεται τροποποιημένο από το Digital Omnibus (νέες παρ. 2–3)· η ακριβής ισχύουσα διατύπωση δεν επαληθεύτηκε.\n- Art. 5(1)(f): απαγόρευση συμπερασμού συναισθημάτων σε χώρο εργασίας/εκπαίδευσης, εκτός ιατρικών λόγων ή λόγων ασφάλειας.\n- Art. 14(4)(b) automation bias· Art. 26 υποχρεώσεις deployer: μόνο για υψηλό κίνδυνο.\n- Art. 50: 50(1) δήλωση αλληλεπίδρασης με AI (provider)· 50(2) machine-readable σήμανση συνθετικού περιεχομένου, και κειμένου (provider)· 50(4) εξαίρεση editorial ελέγχου μόνο για κείμενα που δημοσιεύονται για ενημέρωση του κοινού σε θέματα δημόσιου ενδιαφέροντος.\n- Ημερομηνίες: Art. 50 από 02/08/2026, μεταβατικό 50(2) έως 02/12/2026· Chapter III §1–3 για Annex III από 02/12/2027, για Annex I από 02/08/2028. Πρόταση Omnibus 19/11/2025· αριθμός πράξης και έναρξη ισχύος δεν επαληθεύτηκαν.",
+   "relevance": "Ορίζει τα Control Records του CMP-LAW-09 και το EXP-19. Ο βοηθός δικηγόρου κατά κανόνα δεν είναι Annex III 8(a)· χρήση σε ADR ή για λογαριασμό δικαστικής αρχής θα τον καθιστούσε υψηλού κινδύνου. Οι υποχρεώσεις provider του Art. 50 ισχύουν ήδη.",
+   "sources": [
+    {
+     "title": "AI Act Annex III",
+     "url": "https://artificialintelligenceact.eu/annex/3/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 3",
+     "url": "https://artificialintelligenceact.eu/article/3/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 4 (with Digital Omnibus amendment markers)",
+     "url": "https://artificialintelligenceact.eu/article/4/",
+     "year": "2026"
+    },
+    {
+     "title": "AI Act Article 5",
+     "url": "https://artificialintelligenceact.eu/article/5/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 6",
+     "url": "https://artificialintelligenceact.eu/article/6/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 14",
+     "url": "https://artificialintelligenceact.eu/article/14/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 26",
+     "url": "https://artificialintelligenceact.eu/article/26/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 49",
+     "url": "https://artificialintelligenceact.eu/article/49/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 50",
+     "url": "https://artificialintelligenceact.eu/article/50/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act implementation timeline (updated 31/08/2026)",
+     "url": "https://artificialintelligenceact.eu/implementation-timeline/",
+     "year": "2026"
+    },
+    {
+     "title": "Digital Omnibus on AI Regulation Proposal (European Commission)",
+     "url": "https://digital-strategy.ec.europa.eu/en/library/digital-omnibus-ai-regulation-proposal",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-17",
+   "name": "Εγκεκριμένο από ρυθμιστή AI-driven δικηγορικό γραφείο (SRA, Αγγλία και Ουαλία)",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Η SRA ενέκρινε στις 06/05/2025 το πρώτο AI-driven γραφείο (είσπραξη οφειλών μέσω small claims έως τη δίκη). Δικλίδες: επώνυμοι ρυθμιζόμενοι solicitors φέρουν την τελική ευθύνη για κάθε έξοδο· το σύστημα δεν προτείνει νομολογία, ως «high-risk area» για LLMs· δεν είναι αυτόνομο και προχωρά μόνο σε βήμα που ενέκρινε ο πελάτης· διαδικασίες για συγκρούσεις συμφερόντων και απόρρητο· αυξημένη αρχική εποπτεία. Όπως κάθε ρυθμιζόμενο γραφείο, οφείλει ελάχιστη ασφαλιστική κάλυψη.",
+   "relevance": "Ρυθμιστικό προηγούμενο για το «νομικό ίδρυμα» του T7· επιβεβαιώνει την υπογραφή Principal (ADR-0026)· ο αποκλεισμός νομολογίας αφορά το INV-L01 (DEC-LAW-03).",
+   "sources": [
+    {
+     "title": "SRA approves first AI-driven law firm",
+     "url": "https://www.sra.org.uk/sra/news/press/garfield-ai-authorised/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-18",
+   "name": "Cedar — analysable policy language",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Γλώσσα εξουσιοδότησης με sound και complete λογική κωδικοποίηση για ακριβή ανάλυση πολιτικών· ιδιότητες σχεδίασης αποδεδειγμένες σε Lean· υλοποίηση σε Rust, open source· καλύτερη απόδοση από OpenFGA και Rego. Χρήση σε παραγωγή δεν επαληθεύτηκε από την πηγή.",
+   "relevance": "Υποψήφια policy language για τα Control Records του CMP-LAW-09 (ADR-0010, Cedar-class [X]): μηχανικός έλεγχος ότι οι κανονιστικοί έλεγχοι δεν συγκρούονται.",
+   "sources": [
+    {
+     "title": "Cedar: A New Language for Expressive, Fast, Safe, and Analyzable Authorization (arXiv 2403.04651)",
+     "url": "https://arxiv.org/abs/2403.04651",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-19",
+   "name": "Cognitive forcing έναντι overreliance",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Πείραμα με 199 συμμετέχοντες: οι cognitive forcing functions μείωσαν σημαντικά την υπερβολική εμπιστοσύνη στο AI, περισσότερο από απλές εξηγήσεις. Κόστος: χαμηλότερη ικανοποίηση· ωφελούνται περισσότερο όσοι έχουν υψηλό κίνητρο νοητικής προσπάθειας.",
+   "relevance": "Μηχανισμός για ουσιαστικό, όχι τυπικό, sign-off του Principal (INV-L02, CMP-HUM-01)· συνδέεται με το Art. 14(4)(b).",
+   "sources": [
+    {
+     "title": "To Trust or to Think (arXiv 2102.09692)",
+     "url": "https://arxiv.org/abs/2102.09692",
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-20",
+   "name": "eIDAS 2 / EUDI Wallet και OpenID4VP 1.0",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Κανονισμός 2024/1183 (11/04/2024, European Digital Identity Framework): κατά την αιτ. 56, ιδιώτες relying parties που οφείλουν strong user authentication πρέπει να δέχονται EUDI Wallets. OpenID4VP 1.0: Final, 09/07/2025, με DCQL, selective disclosure, cross-device flows· υποστηρίζει W3C VC, ISO mdoc, SD-JWT VC.",
+   "relevance": "Συγκεκριμένη σύνδεση για αυθεντικοποίηση και επαλήθευση ιδιοτήτων πελάτη (π.χ. εκπροσώπηση νομικού προσώπου) στο CMP-LAW-12 και στο ICD-23· εξειδικεύει το «eIDAS/OIDC» του προχείρου. Διαθεσιμότητα wallet στην Ελλάδα άγνωστη.",
+   "sources": [
+    {
+     "title": "Regulation (EU) 2024/1183 (European Digital Identity Framework)",
+     "url": "https://eur-lex.europa.eu/eli/reg/2024/1183/oj",
+     "year": "2024"
+    },
+    {
+     "title": "OpenID for Verifiable Presentations 1.0 (Final)",
+     "url": "https://openid.net/specs/openid-4-verifiable-presentations-1_0.html",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-21",
+   "name": "Ελληνικά νομικά δεδομένα και πηγές",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "Greek Legal Code: >47.000 κατηγοριοποιημένα ελληνικά νομοθετήματα (NLLP 2021). search.et.gr: αναζήτηση ΦΕΚ με ελεύθερο κείμενο και ειδική αναζήτηση νομοθεσίας· δεν αναφέρεται API ή bulk/open data. Αναζήτηση αποφάσεων Αρείου Πάγου: web φόρμα με πεδία αριθμού, ημερομηνιών και διατάξεων· δεν φάνηκε ECLI ούτε API. Αρχική σελίδα ΔΣΑ (09/2026): καμία ορατή οδηγία για AI.",
+   "relevance": "Αφορά την attested ingestion των CMP-LAW-02 και CMP-KNW-04 και τα δεδομένα backtest του EXP-09. Η απουσία εμφανούς ECLI/API κάνει την ταυτοποίηση και την πληρότητα νομολογίας ανοιχτό ζήτημα.",
+   "sources": [
+    {
+     "title": "Multi-granular Legal Topic Classification on Greek Legislation (arXiv 2109.15298)",
+     "url": "https://arxiv.org/abs/2109.15298",
+     "year": "2021"
+    },
+    {
+     "title": "Εθνικό Τυπογραφείο — Αναζήτηση ΦΕΚ",
+     "url": "https://search.et.gr/el/",
+     "year": "2026"
+    },
+    {
+     "title": "Άρειος Πάγος — Αναζήτηση αποφάσεων",
+     "url": "https://www.areiospagos.gr/nomologia/apofaseis.asp",
+     "year": "2026"
+    },
+    {
+     "title": "ΔΣΑ (Athens Bar Association)",
+     "url": "https://www.dsa.gr/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-22",
+   "name": "Κανονιστικό πλαίσιο δεδομένων και επαγγέλματος (EDPB, CCBE)",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "EDPB Opinion 28/2024 (18/12/2024): ανωνυμία AI models (πρέπει να αποδεικνύεται), legitimate interest, συνέπειες παράνομης επεξεργασίας στην ανάπτυξη. EDPB Guidelines 02/2025 για blockchain (14/04/2025, διαβούλευση έως 09/06/2025): να αποφεύγεται η αποθήκευση προσωπικών δεδομένων σε blockchain όταν συγκρούεται με τις αρχές. CCBE: Guide on the use of AI-based tools by lawyers and law firms in the EU (31/03/2022).",
+   "relevance": "Στοιχεία για το EXP-19 (crypto-shredding έναντι append-only), για τη μάθηση μεταξύ υποθέσεων (GAP-LAW-06) και για τα Control Records απορρήτου του CMP-LAW-09.",
+   "sources": [
+    {
+     "title": "EDPB Opinion 28/2024 on AI models",
+     "url": "https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en",
+     "year": "2024"
+    },
+    {
+     "title": "EDPB adopts guidelines on processing personal data through blockchains",
+     "url": "https://www.edpb.europa.eu/news/news/2025/edpb-adopts-guidelines-processing-personal-data-through-blockchains-and-ready_en",
+     "year": "2025"
+    },
+    {
+     "title": "CCBE AI4Lawyers (guide listing)",
+     "url": "https://www.ccbe.eu/actions/events/ai4lawyers/",
+     "year": "2022"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-23",
+   "name": "Τυπική αριθμητική ημερομηνιών με ανίχνευση αμφισημίας (Catala dates-calc, ESOP 2024)",
+   "kind": "tool",
+   "maturity": "research-prototype",
+   "what": "Βιβλιοθήκη (OCaml, Python, C) για ημερομηνίες και περιόδους σε ημέρες/μήνες/έτη, με ρητά ορισμένους τελεστές στρογγυλοποίησης και επιλέξιμα rounding modes για την πρόσθεση μηνών/ετών. Συνοδεύει τη δημοσίευση «Formalizing Date Arithmetic and Statically Detecting Ambiguities for the Law» (ESOP 2024). Διαβάστηκε μόνο το README, όχι το άρθρο.",
+   "relevance": "Κλείνει την κλάση σφάλματος που ο διπλός υπολογισμός του CMP-LAW-10 δεν πιάνει: δύο μέθοδοι μπορεί να συμφωνούν στην ίδια σιωπηλή στρογγυλοποίηση ενώ ο κανόνας είναι αμφίσημος.",
+   "sources": [
+    {
+     "title": "CatalaLang/dates-calc (GitHub; cites the ESOP 2024 paper)",
+     "url": "https://github.com/CatalaLang/dates-calc",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-24",
+   "name": "Moise / JaCaMo — οργανωσιακό μοντέλο πολυπρακτορικών συστημάτων",
+   "kind": "tool",
+   "maturity": "research-prototype",
+   "what": "Οργανωσιακή πλατφόρμα για πολυπρακτορικά συστήματα με ρόλους, ομάδες και αποστολές (missions): agents και μηχανισμοί επιβολής αναφέρονται σε ρητή οργανωσιακή προδιαγραφή. Μέρος της πλατφόρμας JaCaMo· τελευταία ενημέρωση σελίδας 12/2023.",
+   "relevance": "Πλησιέστερος γενικός συγκριτής για τα Organization Charters του CMP-LAW-11 (και του CMP-CIV-02). Δεν αξιολόγησα αν είναι ανώτερος του Charter DSL με ελέγχους Alloy/SMT.",
+   "sources": [
+    {
+     "title": "Moise — organisational platform for MAS (part of JaCaMo)",
+     "url": "https://moise-lang.github.io/",
+     "year": "2023"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-LAW-25",
+   "name": "Γαλλία: απαγόρευση judge analytics (ν. 2019-222, άρθ. 33)",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Ο ν. 2019-222 απαγορεύει την επαναχρησιμοποίηση δεδομένων ταυτότητας δικαστών με σκοπό την αξιολόγηση, ανάλυση, σύγκριση ή πρόβλεψη των επαγγελματικών τους πρακτικών, με ποινικές κυρώσεις. Επαληθεύτηκε το κείμενο της δημοσίευσης στην επίσημη εφημερίδα· η τρέχουσα ενοποιημένη μορφή δεν ελέγχθηκε.",
+   "relevance": "Ευρωπαϊκό προηγούμενο για το DEC-LAW-04: η μοντελοποίηση σε επίπεδο δικαστή μπορεί να είναι παράνομη σε κράτος μέλος. Για την Ελλάδα δεν ξέρω.",
+   "sources": [
+    {
+     "title": "Loi n° 2019-222 (Légifrance, JORF)",
+     "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000038261631",
+     "year": "2019"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-LAW-01",
+    "REQ-LAW-001"
+   ],
+   "draft_ref": "master §6.3 L4 CMP-LAW-01· 29.md §29.6 REQ-LAW-001· 6.4.md (case-workspace.lisp)",
+   "draft_position": "Matter Management: intake, conflict check, ανάθεση, matter ledger, confidentiality domain, κύκλος ζωής υπόθεσης. Mitigations: conflict check πάνω στον KG των μερών με verifier· απομόνωση domain. R-B, Elixir + TypeScript API, [T]. REQ-LAW-001: end-to-end διαχείριση με conflict checks και confidentiality domains (INV-L03, VT-019, VT-805).",
+   "verdict": "holds",
+   "reasoning": "Η ροή intake → conflicts → domain → κύκλος ζωής με ledger events είναι η καθιερωμένη πρακτική. Το ρυθμιστικό προηγούμενο της SRA (05/2025) δένει τη λογοδοσία σε επώνυμους solicitors, απαιτεί έγκριση πελάτη πριν από κάθε βήμα και διαδικασίες για συγκρούσεις συμφερόντων και απόρρητο — όλα συμβατά με το CMP-LAW-01. Στοχευμένη αναζήτηση για ανώτερα conflict-check συστήματα δεν έγινε (εξαντλημένο WebSearch)· δεν ξέρω αν υπάρχει. Λείπει η σύνδεση με ανοιχτά λεξιλόγια υποθέσεων (GAP-LAW-05). Η as-built έδρα case-workspace.lisp είναι ανεπαλήθευτη.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-15",
+    "SOTA-LAW-17"
+   ],
+   "sources": [
+    {
+     "title": "SRA approves first AI-driven law firm",
+     "url": "https://www.sra.org.uk/sra/news/press/garfield-ai-authorised/",
+     "year": "2025"
+    },
+    {
+     "title": "FOLIO — Federated Open Legal Information Ontology",
+     "url": "https://openlegalstandard.org/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-02",
+    "REQ-LAW-002"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-02· 15.md ICD-17 (νομικό προφίλ)· 29.md REQ-LAW-002· 6.4.md",
+   "draft_position": "Νομικό corpus ως υπάρχουσα έδρα: ελληνικές/ενωσιακές πηγές, FEK compiler, σημασιολογία τροποποιήσεων, commencement/regimes, receipts, PCL, ELI/AKN· σημασιολογία version-graph (valid × recorded × known-at). Κενά πηγών: πληρότητα σχετική προς source-frontier. R-B, Common Lisp (as-built), [T]. ICD-17: AsOf, ResolveEli, ValidateShacl.",
+   "verdict": "holds",
+   "reasoning": "Ο άξονας known-at είναι ιδιότητα του συστήματος που το Akoma Ntoso δεν θεσπίζει· το AKN καλύπτει σε επίπεδο εγγράφου FRBR levels, ισχύ (@start/@end), efficacy (@startEfficacy/@endEfficacy) και active/passive modifications για point-in-time ενοποίηση. Οι δύο προσεγγίσεις είναι συμπληρωματικές (συναγωγή). Το πρόχειρο είναι συμβατό με ELI και ECLI, και το ICD-17 ήδη δηλώνει ResolveEli. Όροι: (1) ρητή απεικόνιση σε AKN/ELI/ECLI στο ICD-17 και στο CMP-KNW-05, και καταγραφή efficacy/applicability ώστε να στηρίζεται το ενισχυμένο INV-L04· (2) ρητή δήλωση πληρότητας των ελληνικών πηγών. Άγνωστα: εφαρμογή ELI/ECLI στην Ελλάδα· API ή bulk δεδομένα ΦΕΚ (το search.et.gr δεν αναφέρει). Οι as-built έδρες είναι ανεπαλήθευτες.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-10",
+    "SOTA-LAW-21"
+   ],
+   "sources": [
+    {
+     "title": "Akoma Ntoso Version 1.0 Part 1 (OASIS Standard)",
+     "url": "https://docs.oasis-open.org/legaldocml/akn-core/v1.0/akn-core-v1.0-part1-vocabulary.html",
+     "year": "2018"
+    },
+    {
+     "title": "ELI register — About",
+     "url": "https://eur-lex.europa.eu/eli-register/about.html",
+     "year": "2026"
+    },
+    {
+     "title": "Εθνικό Τυπογραφείο — Αναζήτηση ΦΕΚ",
+     "url": "https://search.et.gr/el/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-L04"
+   ],
+   "draft_ref": "19.md γρ. 87 INV-L04· spine INVARIANTS",
+   "draft_position": "«Εφαρμόζεται η εκδοχή σε ισχύ στον κρίσιμο valid time όπως ήταν γνωστή στο known-at της απόφασης· αβεβαιότητα ⇒ Unknown(temporal-uncertainty), ποτέ τρέχον κείμενο». Tier 1· επιβολή CMP-LAW-02, CMP-LAW-04, CMP-KNW-02.",
+   "verdict": "superior-exists",
+   "reasoning": "Τα πρότυπα διακρίνουν περισσότερους νομικούς χρόνους από την «ισχύ»: το Akoma Ntoso χωρίζει ισχύ από efficacy· το LegalRuleML ορίζει InForce, Efficacious, Applicability, Enforceability. Μια διάταξη μπορεί να ισχύει χωρίς να εφαρμόζεται στο πραγματικό (μεταβατικό δίκαιο, regimes). Το invariant όπως είναι γραμμένο δεν αποκλείει «ισχύουσα» αλλά μη εφαρμοστέα εκδοχή. Το CMP-LAW-02 αναφέρει ήδη commencement/regimes, άρα το έλλειμμα μπορεί να είναι μόνο στη διατύπωση του invariant (as-built ανεπαλήθευτο). Συναγωγή από τα πρότυπα, όχι δημοσιευμένο εύρημα.",
+   "superior": "Invariant εφαρμοστέας εκδοχής: στον κρίσιμο valid time, όπως ήταν γνωστή στο known-at, η εκδοχή πρέπει να είναι in force, efficacious και applicable στο πραγματικό (και enforceable όπου κρίνεται δυνατότητα επιβολής), κατά LegalRuleML/AKN· Unknown(temporal-uncertainty) όταν οποιαδήποτε διάσταση είναι αβέβαιη. Κυριαρχεί γιατί περιέχει το σημερινό ως ειδική περίπτωση και κρατά τον άξονα known-at. Trade-off: περισσότερα Unknown έως ότου μοντελοποιηθεί το μεταβατικό δίκαιο.",
+   "sota_refs": [
+    "SOTA-LAW-10",
+    "SOTA-LAW-11"
+   ],
+   "sources": [
+    {
+     "title": "LegalRuleML Core Specification Version 1.0",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    },
+    {
+     "title": "Akoma Ntoso Version 1.0 Part 1",
+     "url": "https://docs.oasis-open.org/legaldocml/akn-core/v1.0/akn-core-v1.0-part1-vocabulary.html",
+     "year": "2018"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-03",
+    "REQ-LAW-003"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-03· 29.md REQ-LAW-003· §8.8 ATMS",
+   "draft_position": "Πραγματικά περιστατικά ως claims με μαρτυρία, αποδεικτικά standards, χρονολόγια, αμφισβητούμενα γεγονότα· αστήρικτο γεγονός ⇒ ATMS assumption (ASSUMED). R-A. REQ-LAW-003: τεκμηριωμένοι ισχυρισμοί ή ρητές υποθέσεις (INV-C06).",
+   "verdict": "holds",
+   "reasoning": "Η αναπαράσταση γεγονότων ως τεκμηριωμένων claims ή ρητών υποθέσεων με ATMS συμφωνεί με την argumentation-based θεωρία αποδείξεων: μοντέλο Carneades με βάρος απόδειξης (Gordon, Prakken, Walton 2007)· hybrid theory επιχειρημάτων και ιστοριών (Bex et al. 2010). Τα Bayesian networks για νομική αποδεικτική (idioms Fenton, Neil, Lagnado) αντιμετωπίζουν γνωστά ανοιχτά προβλήματα (paradoxes of proof, naked statistical evidence) και θα χρειάζονταν ρητή οριοθέτηση έναντι του Prediction Doctrine· δεν είναι αυστηρά ανώτερα. Λείπουν ρητά η κατανομή βάρους απόδειξης και η σύγκριση σεναρίων (GAP-LAW-10). Για τα άρθρα 2007/2010 επαληθεύτηκαν μόνο μεταδεδομένα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-13"
+   ],
+   "sources": [
+    {
+     "title": "Legal Probabilism (SEP)",
+     "url": "https://plato.stanford.edu/entries/legal-probabilism/",
+     "year": "2021"
+    },
+    {
+     "title": "Gordon, Prakken, Walton — The Carneades model of argument and burden of proof (Semantic Scholar record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/j.artint.2007.04.010?fields=title,authors,year,venue,journal,abstract",
+     "year": "2007"
+    },
+    {
+     "title": "Bex et al. — A hybrid formal theory of arguments, stories and criminal evidence (Semantic Scholar record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1007/s10506-010-9092-x?fields=title,authors,year,venue,journal,abstract",
+     "year": "2010"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-04",
+    "REQ-LAW-004"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-04· §8.7 verifier table· 29.md REQ-LAW-004· 6.4.md",
+   "draft_position": "Υπαγωγή, WFS/JTMS, δεοντικός κύκλος, casegrammar, typed argument graphs, εκτελέσιμοι κανόνες LexDSL (GP-8), SMT· σύγκρουση κανόνων ⇒ precedence algebra (υπάρχουσα) + Unknown όταν αναπόφαστο· stateless R-A. REQ-LAW-004: αποδείξεις παραγωγής ή Unknown.",
+   "verdict": "holds",
+   "reasoning": "Η καθαρά LLM συλλογιστική αποτυγχάνει σε δομημένη πολυβηματική νομική ανάλυση: LEXam· LawBench («still a long way from obtaining usable and reliable LLMs in legal tasks»)· Dahl (τα μοντέλα δεν ξέρουν πότε παράγουν παραίσθηση). Στο SARA χειροποίητο σύστημα Prolog έλυσε πλήρως το statutory reasoning task όπου τα machine-reading μοντέλα απέτυχαν (2020, προ-LLM εποχή). Ο συμβολικός πυρήνας με αποδείξεις παραγωγής και Unknown είναι η ορθή κατεύθυνση. Υπαρκτά πρότυπα και εργαλεία (LegalRuleML· Catala με default logic ως first-class και αποδεδειγμένα βήματα μεταγλώττισης σε F*· Blawx/s(CASP) με εξηγήσεις) επιβεβαιώνουν τη σύνθεση, δεν την υπερβαίνουν. Ανοιχτά: LexDSL έναντι Catala-class γλώσσας (DEC-LAW-02)· ρητή isomorphism κανόνα ↔ provision-id στο as-of.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-11",
+    "SOTA-LAW-12",
+    "SOTA-LAW-04",
+    "SOTA-LAW-02",
+    "SOTA-LAW-03"
+   ],
+   "sources": [
+    {
+     "title": "LEXam (arXiv 2505.12864)",
+     "url": "https://arxiv.org/abs/2505.12864",
+     "year": "2025"
+    },
+    {
+     "title": "LawBench (arXiv 2309.16289)",
+     "url": "https://arxiv.org/abs/2309.16289",
+     "year": "2023"
+    },
+    {
+     "title": "SARA (arXiv 2005.05257)",
+     "url": "https://arxiv.org/abs/2005.05257",
+     "year": "2020"
+    },
+    {
+     "title": "CatalaLang/catala (GitHub README)",
+     "url": "https://github.com/CatalaLang/catala",
+     "year": "2026"
+    },
+    {
+     "title": "LegalRuleML Core 1.0",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-05",
+    "REQ-LAW-005"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-05· 29.md REQ-LAW-005",
+   "draft_position": "Ανάκτηση νομοθεσίας/νομολογίας/θεωρίας, Graph-RAG, as-of queries, υποψήφιες παραπομπές· indexes μόνο παράγωγα· χαμένο αποτέλεσμα ⇒ πολυστρατηγική ανάκτηση + coverage report· επινοημένη παραπομπή μπλοκάρεται από CMP-LAW-08. R-A. REQ-LAW-005 (INV-E01).",
+   "verdict": "holds",
+   "reasoning": "Η ανάκτηση είναι αδύναμο σημείο: CLERC, zero-shot recall@1000 48,3%, και το μοντέλο με τα καλύτερα ROUGE F-scores είχε τις περισσότερες παραισθήσεις· τα εμπορικά εργαλεία με RAG είχαν 17–33% παραισθήσεις το 2024. Στη Vals Legal Research (10/2025) οι πηγές και οι παραπομπές ήταν ο κύριος διαφοροποιητής, ενώ το γενικής χρήσης AI υπερείχε σε πρόσφατη πληροφορία μέσω web search. Ο διαχωρισμός του προχείρου (η ανάκτηση προτείνει, το CMP-LAW-08 επαληθεύει, το coverage report δηλώνει κενά) είναι ορθός. Προϋποθέσεις: pinpoint snippet retrieval (LegalBench-RAG) για τον έλεγχο στήριξης πρότασης· μετρική καθυστέρησης ingestion νέων αποφάσεων στο coverage report (συναγωγή από το εύρημα Vals). Το coverage report δεν έχει ορισμένη μετρική· ελληνόγλωσσο benchmark ανάκτησης δεν εντόπισα (GAP-LAW-07).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-09",
+    "SOTA-LAW-01",
+    "SOTA-LAW-07"
+   ],
+   "sources": [
+    {
+     "title": "CLERC (arXiv 2406.17186)",
+     "url": "https://arxiv.org/abs/2406.17186",
+     "year": "2024"
+    },
+    {
+     "title": "LegalBench-RAG (arXiv 2408.10343)",
+     "url": "https://arxiv.org/abs/2408.10343",
+     "year": "2024"
+    },
+    {
+     "title": "VLAIR Legal Research Report (14/10/2025)",
+     "url": "https://www.vals.ai/industry-reports/vlair-10-14-25",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-06",
+    "REQ-LAW-006",
+    "EXP-24"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-06 [X]· 29.md REQ-LAW-006· 26.md EXP-24",
+   "draft_position": "Strategy Engine: MCTS διαδικαστικών κινήσεων, ανάλυση συμβιβασμού, κίνδυνος/αξία, game-theoretic μοντέλα αντιδίκου· strategy claims πάνω από κατώφλι stakes απαιτούν Court review. REQ-LAW-006: ανάλυση ευαισθησίας, ποτέ πιθανότητες νίκης. EXP-24: τυφλή προτίμηση ειδικών· χαμηλή ⇒ μόνο γεννήτρια ιδεών.",
+   "verdict": "holds",
+   "reasoning": "Δεν εντόπισα τεκμηρίωση ότι αυτοματοποιημένη νομική στρατηγική υπερέχει της στρατηγικής ειδικών (αναζήτηση μόνο μέσω γνωστών URLs). Το AgentCourt μετρά βελτίωση μόνο έναντι των αρχικών του agents σε δικό του benchmark. Στο GDPval το καλύτερο μοντέλο κρίθηκε ισοδύναμο ή καλύτερο από ειδικό στο 47,6% του gold subset. Η κατάταξη [X] και ο κλάδος αποτυχίας είναι σωστά. Το EXP-24 πρέπει να αντιγράψει το blinded pairwise πρωτόκολλο με υφολογική κανονικοποίηση (το GDPval αναγνωρίζει διαρροή τυφλότητας από το ύφος) και προκαταχωρισμένο κατώφλι συμφωνίας κριτών (71% στο GDPval). Η ένταση με την κλασική ανάλυση δικαστικού κινδύνου είναι DEC-LAW-01.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-06",
+    "SOTA-LAW-14"
+   ],
+   "sources": [
+    {
+     "title": "GDPval (HTML)",
+     "url": "https://arxiv.org/html/2510.04374",
+     "year": "2025"
+    },
+    {
+     "title": "AgentCourt (arXiv 2408.08089)",
+     "url": "https://arxiv.org/abs/2408.08089",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-07",
+    "REQ-LAW-007",
+    "EXP-09"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-07 [X]· 29.md REQ-LAW-007· 26.md EXP-09· spine VT-705",
+   "draft_position": "Προσομοίωση αντιδίκου και δικαστηρίων (ΑΠ, ΣτΕ, πρώτος βαθμός) από μοντέλα νομολογίας· ισχυρότερα αντεπιχειρήματα· κακή βαθμονόμηση ⇒ backtest (VT-705) σε διτεμπορικά leakage-free splits. EXP-09: αναγνώριση κρίσιμων λόγων σε αποφάσεις ΑΠ· χαμηλή συμφωνία ⇒ μόνο γεννήτρια αντεπιχειρημάτων.",
+   "verdict": "holds",
+   "reasoning": "Οι Medvedeva, Wieling, Vols διακρίνουν outcome identification, judgement categorisation και forecasting και κατατάσσουν τις μελέτες σε αυτές. Το διτεμπορικό as-of backtest (μόνο πληροφορία πριν από την απόφαση) αντιστοιχεί στο forecasting, και ο στόχος «κρίσιμοι λόγοι» αποφεύγει την αριθμητική πρόβλεψη έκβασης (συναγωγή). Το CaseHOLD είναι το πλησιέστερο υπαρκτό task· η adversarial γεννήτρια επιχειρημάτων έχει προηγούμενο (AgentCourt). Ανοιχτά: (1) η αναζήτηση ΑΠ είναι web φόρμα χωρίς ορατό ECLI ή API· για το ΣτΕ δεν ξέρω· (2) το πρόχειρο δεν αποκλείει ρητά το επίπεδο δικαστή, που στη Γαλλία απαγορεύεται ποινικά (ν. 2019-222, άρθ. 33) (DEC-LAW-04, GAP-LAW-09).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-14",
+    "SOTA-LAW-03",
+    "SOTA-LAW-21",
+    "SOTA-LAW-25"
+   ],
+   "sources": [
+    {
+     "title": "Medvedeva, Wieling, Vols (Semantic Scholar record with abstract)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1007/s10506-021-09306-3?fields=title,authors,year,venue,journal,abstract",
+     "year": "2022"
+    },
+    {
+     "title": "CaseHOLD (arXiv 2104.08671)",
+     "url": "https://arxiv.org/abs/2104.08671",
+     "year": "2021"
+    },
+    {
+     "title": "Άρειος Πάγος — Αναζήτηση αποφάσεων",
+     "url": "https://www.areiospagos.gr/nomologia/apofaseis.asp",
+     "year": "2026"
+    },
+    {
+     "title": "Loi n° 2019-222 (Légifrance)",
+     "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000038261631",
+     "year": "2019"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-08",
+    "INV-L01",
+    "REQ-LAW-008"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-08· 19.md γρ. 84 INV-L01· 29.md REQ-LAW-008· §8.7",
+   "draft_position": "Κάθε παραπομπή επιλύεται σε στοιχείο του corpus με LegalAuthorityReceipt στο as-of cut της υπόθεσης· ανεπίλυτη ⇒ αφαιρείται/επισημαίνεται, ποτέ σιωπηλά (INV-L01, Tier 1). Citation verifier με proof object «receipt chain στο as-of cut».",
+   "verdict": "superior-exists",
+   "reasoning": "Η επίλυση με receipt εξαλείφει τις ανύπαρκτες παραπομπές. Κατά την τυπολογία Magesh, όμως, παραίσθηση είναι και η misgrounded παραπομπή (υπαρκτή πηγή που δεν στηρίζει την πρόταση), δυνητικά πιο επικίνδυνη από την επινόηση επειδή εντοπίζεται δυσκολότερα. Στη Vals Legal Research (10/2025) πηγές και παραπομπές ήταν ο κύριος διαφοροποιητής, και η έκθεση καταγράφει >370 δικόγραφα με παραισθημένες παραπομπές ή λανθασμένη ανάλυση παγκοσμίως. Το GreekBarBench απαιτεί και βαθμολογεί παραπομπές σε διατάξεις και πραγματικά με span-based rubrics. Το INV-L01 δεν πιάνει λάθος απόσπασμα ούτε αρνητική μεταγενέστερη μεταχείριση. Εναλλακτικά, η SRA δέχτηκε σύστημα που δεν προτείνει νομολογία· ασφαλέστερο αλλά με απώλεια ικανότητας (DEC-LAW-03).",
+   "superior": "Citation verity πέντε σκελών:\n1. Ύπαρξη με receipt (σημερινό).\n2. Χρονική εφαρμοσιμότητα στο as-of (ενισχυμένο INV-L04).\n3. Πιστότητα αποσπάσματος/pinpoint (byte-level σύγκριση με το CAS).\n4. Στήριξη της πρότασης: entailment verifier· αν δεν αποδεικνύεται, Unknown και επισήμανση για τον Principal, ποτέ pass· έξοδος LLM μόνο ως PROPOSED.\n5. Μεταγενέστερη μεταχείριση: για διατάξεις από τον version graph· για αποφάσεις απαιτείται citator (ελληνικός: άγνωστο αν υπάρχει).\nΚυριαρχεί γιατί περιέχει το σημερινό σκέλος και κλείνει την κλάση misgrounded. Τα σκέλη 1–3 υλοποιούνται σήμερα· τα 4–5 σε αυτοματοποιημένη μορφή απαιτούν πείραμα, ιδίως στα ελληνικά· έως τότε η επισήμανση για χειροκίνητο έλεγχο υλοποιείται σήμερα.",
+   "sota_refs": [
+    "SOTA-LAW-01",
+    "SOTA-LAW-05",
+    "SOTA-LAW-07",
+    "SOTA-LAW-17",
+    "SOTA-LAW-09"
+   ],
+   "sources": [
+    {
+     "title": "Hallucination-Free? (HTML, typology)",
+     "url": "https://arxiv.org/html/2405.20362",
+     "year": "2024"
+    },
+    {
+     "title": "GreekBarBench (arXiv 2505.17267)",
+     "url": "https://arxiv.org/abs/2505.17267",
+     "year": "2025"
+    },
+    {
+     "title": "VLAIR Legal Research Report (14/10/2025)",
+     "url": "https://www.vals.ai/industry-reports/vlair-10-14-25",
+     "year": "2025"
+    },
+    {
+     "title": "SRA approves first AI-driven law firm",
+     "url": "https://www.sra.org.uk/sra/news/press/garfield-ai-authorised/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-LAW-09",
+    "REQ-LAW-010",
+    "EXP-19"
+   ],
+   "draft_ref": "master §2.5, §6.3 CMP-LAW-09· 29.md REQ-LAW-010· 26.md EXP-19",
+   "draft_position": "Συγκρούσεις, προνόμιο, απόρρητο, GDPR, AI Act, Κώδικας Δικηγόρων· συντάσσει Control Records· audits· κανονιστική αλλαγή ⇒ ενημέρωση controls με έγκριση Principal ([T]). Ταξινόμηση κάθε χρήσης κατά AI Act, επάρκεια crypto-shredding και Κώδικας Δικηγόρων ως [X] EXP-19 με γνωμοδότηση υπογεγραμμένη από Principal.",
+   "verdict": "holds",
+   "reasoning": "Η απόδοση των υποχρεώσεων σε εξωτερικά, ορατά Control Records είναι ορθή, και υπάρχει analysable policy language για μηχανικό έλεγχο (Cedar: sound και complete κωδικοποίηση, αποδείξεις σε Lean). Το EXP-19 είναι σωστά πείραμα, αλλά μέρος του λύνεται ήδη από το κείμενο:\n- Το Annex III 8(a) αφορά χρήση από/για λογαριασμό δικαστικής αρχής ή σε ADR· ο βοηθός δικηγόρου κατά κανόνα εκτός.\n- Ο δημιουργός, που αναπτύσσει το σύστημα και το θέτει σε λειτουργία για ίδια χρήση, είναι provider (Art. 3(3), 3(11)): οι υποχρεώσεις 50(1) και 50(2) ισχύουν από 02/08/2026 (μεταβατικό 50(2) έως 02/12/2026).\n- Κατά τον tracker, Annex III υψηλού κινδύνου από 02/12/2027· το Art. 4 εμφανίζεται τροποποιημένο από το Omnibus.\nΤίποτα από αυτά δεν υπάρχει στο §2.5 (GAP-LAW-04, GAP-LAW-11). Για το crypto-shredding οι οδηγίες EDPB 02/2025 συστήνουν αποφυγή προσωπικών δεδομένων σε blockchain όταν συγκρούεται με τις αρχές· θέση για την ισοδυναμία καταστροφής κλειδιού με διαγραφή δεν είδα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-16",
+    "SOTA-LAW-18",
+    "SOTA-LAW-22"
+   ],
+   "sources": [
+    {
+     "title": "AI Act Annex III",
+     "url": "https://artificialintelligenceact.eu/annex/3/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 3",
+     "url": "https://artificialintelligenceact.eu/article/3/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 50",
+     "url": "https://artificialintelligenceact.eu/article/50/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act implementation timeline",
+     "url": "https://artificialintelligenceact.eu/implementation-timeline/",
+     "year": "2026"
+    },
+    {
+     "title": "Cedar (arXiv 2403.04651)",
+     "url": "https://arxiv.org/abs/2403.04651",
+     "year": "2024"
+    },
+    {
+     "title": "EDPB guidelines on blockchains (news)",
+     "url": "https://www.edpb.europa.eu/news/news/2025/edpb-adopts-guidelines-processing-personal-data-through-blockchains-and-ready_en",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0026",
+    "INV-L02",
+    "REQ-LAW-009"
+   ],
+   "draft_ref": "22.md ADR-0026· 19.md γρ. 85 INV-L02 (Tier 0)· 29.md REQ-LAW-009· master §2.2(2)–(3)",
+   "draft_position": "Κανένα νομικό παραδοτέο δεν φεύγει προς τρίτους χωρίς υπογραφή του λογοδοτούντος Principal (INV-L02, Tier 0). ADR-0026: υπογραφή Principal· AI Act/GDPR/Κώδικας Δικηγόρων ως Control Records· Prediction Doctrine δεσμευτικό. §2.2: καμία νομική προσωπικότητα AI· καμία αυτόνομη εκπροσώπηση χωρίς υπογραφή.",
+   "verdict": "holds",
+   "reasoning": "Το εγκεκριμένο AI-driven γραφείο της SRA στηρίζεται στην ίδια αρχή: επώνυμοι solicitors φέρουν την τελική ευθύνη και το σύστημα προχωρά μόνο σε βήματα που ενέκρινε ο πελάτης. Διόρθωση: η εξαίρεση editorial ελέγχου του Art. 50(4) αφορά μόνο κείμενα που δημοσιεύονται για ενημέρωση του κοινού σε θέματα δημόσιου ενδιαφέροντος· δεν καλύπτει γενικά νομικά παραδοτέα, και η υπογραφή Principal δεν αίρει τις υποχρεώσεις provider του Art. 50(2) (GAP-LAW-11). Αδυναμία: το INV-L02 διασφαλίζει ότι υπάρχει υπογραφή, όχι ότι προηγήθηκε ουσιαστικός έλεγχος· το Art. 14(4)(b) (δεσμευτικό μόνο για υψηλό κίνδυνο) και η έρευνα για cognitive forcing δείχνουν ότι η τυπική έγκριση δεν αρκεί (GAP-LAW-03). Η οριοθέτηση του Prediction Doctrine είναι DEC-LAW-01.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-17",
+    "SOTA-LAW-16",
+    "SOTA-LAW-19"
+   ],
+   "sources": [
+    {
+     "title": "SRA approves first AI-driven law firm",
+     "url": "https://www.sra.org.uk/sra/news/press/garfield-ai-authorised/",
+     "year": "2025"
+    },
+    {
+     "title": "AI Act Article 50",
+     "url": "https://artificialintelligenceact.eu/article/50/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 14",
+     "url": "https://artificialintelligenceact.eu/article/14/",
+     "year": "2024"
+    },
+    {
+     "title": "To Trust or to Think (arXiv 2102.09692)",
+     "url": "https://arxiv.org/abs/2102.09692",
+     "year": "2021"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "INV-L03"
+   ],
+   "draft_ref": "19.md γρ. 86 INV-L03 (Tier 1, VT-205, VT-805)· master §2.4 TB-3",
+   "draft_position": "Καμία ροή δεδομένων μεταξύ confidentiality domains χωρίς ρητό control· η δρομολόγηση παρόχων σέβεται residency. Επιβολή CMP-KRN-11, CMP-KRN-08, CMP-COG-01· formal ConfidentialityDomains.als (VT-205).",
+   "verdict": "holds",
+   "reasoning": "Η απομόνωση ανά υπόθεση/πελάτη με residency και redaction στο egress είναι ορθή και ελέγξιμη (VT-205). Το invariant όμως καλύπτει «ροές δεδομένων», όχι τη μάθηση: η consolidation μνήμης (CMP-AEO-04), το outcome learning (§8.11) και η εξέλιξη (CMP-CIV-03) μαθαίνουν από όλες τις υποθέσεις, οπότε γνώση από την υπόθεση Α μπορεί να επηρεάσει τη Β χωρίς να μετακινηθεί εγγραφή. Η EDPB Opinion 28/2024 απαιτεί να αποδεικνύεται η ανωνυμία εκπαιδευμένου μοντέλου. Σημείο GAP-LAW-06 και DEC-LAW-07. Δεν επαλήθευσα τον ν. 4194/2013 ούτε την ABA Formal Opinion 512 (403).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-22"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Opinion 28/2024 on AI models",
+     "url": "https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-10",
+    "REQ-LAW-011"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-10· §8.7· 29.md REQ-LAW-011 (VT-402)· 6.4.md γρ. 52",
+   "draft_position": "Διαδικαστικές προθεσμίες από κανόνες (ΚΠολΔ, ΚΠΔ, ΚΔΔ κ.ά.), αργίες, αναστολές, δικαστικές διακοπές· αποδείξεις υπολογισμού· διπλός υπολογισμός (SMT + rule engine) + κλιμακούμενες ειδοποιήσεις. REQ-LAW-011: δύο ανεξάρτητες μέθοδοι σε συμφωνία. 6.4.md: «ενοποιεί τις δύο έδρες ημερολογιακής αριθμητικής» (legal-temporal και date+ του version-graph, ΑΚ 241–243).",
+   "verdict": "superior-exists",
+   "reasoning": "Ο διπλός υπολογισμός πιάνει μόνο διαφωνία των δύο μεθόδων. Η πρόσθεση μηνών/ετών σε ημερομηνίες απαιτεί στρογγυλοποίηση· η ομάδα του Catala όρισε ρητούς τελεστές στρογγυλοποίησης με επιλέξιμα rounding modes (dates-calc) και τυπική σημασιολογία με στατική ανίχνευση αμφισημίας (ESOP 2024). Δύο υπολογισμοί με την ίδια σιωπηλή στρογγυλοποίηση συμφωνούν και στο λάθος. Εσωτερική ένταση: το 6.4.md ενοποιεί τις δύο έδρες ημερολογιακής αριθμητικής, ενώ το REQ-LAW-011 απαιτεί ανεξάρτητες μεθόδους (GAP-LAW-08). Δεν επαλήθευσα αν οι ΑΚ 241–243 λύνουν ρητά κάθε στρογγυλοποίηση· όπου τη λύνουν, ο έλεγχος απλώς επιβεβαιώνει τον κανόνα. Διαβάστηκε μόνο το README, όχι το άρθρο ESOP.",
+   "superior": "Διπλός ανεξάρτητος υπολογισμός (όπως σήμερα) + ρητή τυπική σημασιολογία ημερομηνιών/περιόδων με δηλωμένο rounding mode ανά κανόνα (κλάση Catala dates-calc) + ανίχνευση αμφισημίας ⇒ Unknown(ambiguous) με τις υποψήφιες ημερομηνίες και κλιμάκωση στον Principal (DEC-LAW-08). Κυριαρχεί γιατί περιέχει τον διπλό υπολογισμό και κλείνει την κλάση της κοινής σιωπηρής στρογγυλοποίησης. Trade-off: περισσότερες κλιμακώσεις.",
+   "sota_refs": [
+    "SOTA-LAW-23",
+    "SOTA-LAW-12",
+    "SOTA-LAW-11"
+   ],
+   "sources": [
+    {
+     "title": "CatalaLang/dates-calc (GitHub; cites ESOP 2024 paper)",
+     "url": "https://github.com/CatalaLang/dates-calc",
+     "year": "2024"
+    },
+    {
+     "title": "Catala (arXiv 2103.03198)",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-LAW-11",
+    "REQ-LAW-012"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-11· OS-05· 29.md REQ-LAW-012· 6.4.md (9 ρόλοι institution.lisp)",
+   "draft_position": "Organization Charters εξειδικευμένων νομικών οργανισμών (Αναιρέσεων, Διοικητικό, Φορολογικό, Ενωσιακό, Ποινική Υπεράσπιση, Compliance) σε Charter DSL· ασύμβατο charter ⇒ έλεγχοι Alloy/SMT (VT-204, VT-403) πριν την instantiation.",
+   "verdict": "unknown",
+   "reasoning": "Δεν εντόπισα πρότυπο για charters νομικών μονάδων. Πλησιέστερος γενικός συγκριτής του μηχανισμού είναι το Moise (JaCaMo): οργανωσιακή προδιαγραφή με ρόλους, ομάδες και αποστολές. Δεν αξιολόγησα αν είναι ανώτερος ή κατώτερος του Charter DSL με Alloy/SMT, και στοχευμένη αναζήτηση ήταν αδύνατη. Από την SRA προκύπτει ότι η ρυθμιζόμενη μονάδα είναι το γραφείο με επώνυμους λογοδοτούντες νομικούς· κάθε template θα έπρεπε να δεσμεύει ρητά Principal και πεδίο υπηρεσιών (συναγωγή).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-24",
+    "SOTA-LAW-17"
+   ],
+   "sources": [
+    {
+     "title": "Moise (part of JaCaMo)",
+     "url": "https://moise-lang.github.io/",
+     "year": "2023"
+    },
+    {
+     "title": "SRA approves first AI-driven law firm",
+     "url": "https://www.sra.org.uk/sra/news/press/garfield-ai-authorised/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "low"
+  },
+  {
+   "ids": [
+    "CMP-LAW-12",
+    "REQ-LAW-013"
+   ],
+   "draft_ref": "master §6.3 CMP-LAW-12· master §2.5 (eIDAS 910/2014 όπως τροποποιήθηκε)· 29.md REQ-LAW-013",
+   "draft_position": "Ασφαλής διεπαφή πελάτη: εντολές, έγγραφα, παραδοτέα με receipts, κατάσταση· ισχυρή αυθεντικοποίηση eIDAS/OIDC· domain-scoped tokens. REQ-LAW-013 (INV-L03, VT-023).",
+   "verdict": "holds",
+   "reasoning": "Υποβάθμιση από superior-exists: το πρόχειρο αναφέρει eIDAS «όπως τροποποιήθηκε»· η τροποποίηση 2024/1183 θεσπίζει το EUDI Wallet και, κατά την αιτ. 56, την αποδοχή του από ιδιώτες relying parties που οφείλουν strong authentication. Το OpenID4VP 1.0 (Final, 09/07/2025, selective disclosure, DCQL) είναι συγκεκριμένη σύνδεση μέσα στο ίδιο πλαίσιο, νεότερη και πιο εξειδικευμένη, όχι αυστηρά ανώτερη. Συνιστάται ρητή δέσμευση στο ICD-23 (π.χ. επαλήθευση εκπροσώπησης νομικού προσώπου με ελάχιστα δεδομένα) με OIDC ως fallback· διαθεσιμότητα wallet στην Ελλάδα άγνωστη. Πραγματικό κενό: αν ο πελάτης αλληλεπιδρά με AI στο portal, το Art. 50(1) απαιτεί δήλωση (GAP-LAW-11).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-20",
+    "SOTA-LAW-16"
+   ],
+   "sources": [
+    {
+     "title": "Regulation (EU) 2024/1183",
+     "url": "https://eur-lex.europa.eu/eli/reg/2024/1183/oj",
+     "year": "2024"
+    },
+    {
+     "title": "OpenID for Verifiable Presentations 1.0 (Final)",
+     "url": "https://openid.net/specs/openid-4-verifiable-presentations-1_0.html",
+     "year": "2025"
+    },
+    {
+     "title": "AI Act Article 50",
+     "url": "https://artificialintelligenceact.eu/article/50/",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-HUM-01",
+    "REQ-HUM-001",
+    "ICD-23"
+   ],
+   "draft_ref": "master §6.3 Εγκάρσια CMP-HUM-01· 15.md ICD-23· 29.md §29.9 REQ-HUM-001",
+   "draft_position": "Principal Console: εγκρίσεις, Control Records, Court dashboard, matter workspace, επιθεώρηση μαρτυρίας· παραπλανητικό UI ⇒ κάθε ενέργεια υπογεγραμμένη με receipts. ICD-23: approvals, sign-off, Control Records, ειδοποιήσεις, domain-scoped client views.",
+   "verdict": "holds",
+   "reasoning": "Υπογραφή και receipt σε κάθε ενέργεια λύνουν τη λογοδοσία. Το Art. 14(4) ορίζει τι πρέπει να μπορεί ο επόπτης: (a) να κατανοεί όρια και να παρακολουθεί· (b) να έχει επίγνωση του automation bias· (c) να ερμηνεύει τις εξόδους· (d) να παρακάμπτει ή να αντιστρέφει· (e) να διακόπτει το σύστημα. Οι cognitive forcing functions μειώνουν το overreliance περισσότερο από απλές εξηγήσεις, με κόστος στην ικανοποίηση. Κονσόλα και ICD-23 δεν ορίζουν τίποτα από αυτά (GAP-LAW-03), ούτε δήλωση Art. 50(1) στις client views (GAP-LAW-11). Το Art. 14 δεσμεύει μόνο υψηλό κίνδυνο, αλλά είναι το ισχυρότερο διαθέσιμο πρότυπο εποπτείας.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-16",
+    "SOTA-LAW-19"
+   ],
+   "sources": [
+    {
+     "title": "AI Act Article 14",
+     "url": "https://artificialintelligenceact.eu/article/14/",
+     "year": "2024"
+    },
+    {
+     "title": "To Trust or to Think (arXiv 2102.09692)",
+     "url": "https://arxiv.org/abs/2102.09692",
+     "year": "2021"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ICD-19"
+   ],
+   "draft_ref": "15.md §15.3 ICD-19· §15.1 και §15.4 κανόνας 2· master §6.3 στήλη Provides",
+   "draft_position": "LAWMAX Matter API (OpenAPI lawmax-matter.yaml): matters, conflicts, facts, issues, arguments, strategy (ευαισθησία), drafts, deadlines, deliverables, RequestSignOff· provider δηλωμένος ως ενιαίο εύρος των δέκα πρώτων LAW components· κάθε παραδοτέο InstitutionalAct με receipts· καμία εξωτερική επίδραση χωρίς υπογραφή Principal· καμία «X% νίκη».",
+   "verdict": "gap",
+   "reasoning": "Η σημασιολογία (InstitutionalAct, sign-off, Prediction Doctrine) ισχύει. Διόρθωση: gap αντί για superior-exists, γιατί η σύνδεση με εξωτερικά λεξιλόγια είναι προσθήκη διαλειτουργικότητας με άγνωστη κάλυψη του ελληνικού δικαίου, όχι υπαρκτό ανώτερο συμβόλαιο. Δύο κενά: (1) Εσωτερικό: ο provider δεν απαριθμεί ομάδες λειτουργιών (§15.1, §15.4(2)), και κατά τη στήλη Provides του §6.3 το ICD-19 το παρέχουν μόνο τα CMP-LAW-01, CMP-LAW-03, CMP-LAW-08, CMP-LAW-09, CMP-LAW-10· issues, arguments και strategy μένουν χωρίς provider (GAP-LAW-13). Η αντιστοίχιση του ερευνητή (issues/arguments στο CMP-LAW-04, strategy στο CMP-LAW-06) αντιβαίνει στο §6.3. (2) Εξωτερικό: κανένα λεξιλόγιο για κατάταξη υποθέσεων (SALI LMSS, FOLIO), billing/budgets (LEDES, UTBMS) ή αναγνωριστικά αυθεντιών (ELI/ECLI) (GAP-LAW-05). Το contracts/lawmax-matter.yaml δεν υπάρχει (GAP-LAW-01).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-15",
+    "SOTA-LAW-10"
+   ],
+   "sources": [
+    {
+     "title": "FOLIO — Federated Open Legal Information Ontology",
+     "url": "https://openlegalstandard.org/",
+     "year": "2025"
+    },
+    {
+     "title": "LEDES",
+     "url": "https://ledes.org/",
+     "year": "2026"
+    },
+    {
+     "title": "SALI Alliance — LMSS",
+     "url": "https://www.sali.org/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-15",
+    "REQ-LAW-014"
+   ],
+   "draft_ref": "24.md KT-15· 24.3· master §1.2 T7· 29.md REQ-LAW-014",
+   "draft_position": "Σύγκριση υπό ίσα δεδομένα με κορυφαίο γενικό μοντέλο, εμπορικό νομικό AI (Harvey-class) και κορυφαία ανθρώπινη ομάδα· τυφλό, προκαταχωρισμένο, matters από δημιουργό ή εξωτερικούς· υπεροχή σε ποιότητα, μη-κατωτερότητα σε ασφάλεια, 0 παραβιάσεις Prediction Doctrine· ratchet σε κάθε φάση από το GP-4. REQ-LAW-014: και έναντι null baseline (KT-14).",
+   "verdict": "holds",
+   "reasoning": "Ο σχεδιασμός συμπίπτει με τα ισχυρότερα υπαρκτά πρωτόκολλα: GDPval (τυφλή σύγκριση ανά ζεύγος, με δικηγόρους)· Vals (lawyer baseline, τυφλή βαθμολόγηση από δικηγόρους/βιβλιοθηκονόμους)· LEXam και GreekBarBench (επικυρωμένος LLM-judge). Το KT-15 πρέπει να ορίσει ρητά:\n- διαρροή τυφλότητας από το ύφος (GDPval)·\n- συμφωνία ειδικών κριτών μόλις 71% (GDPval)·\n- εξάρτηση από την εργασία (Vals 02/2025: δικηγόροι καλύτεροι σε redlining, EDGAR research)·\n- η baseline έμπειρων δικηγόρων έχει ξεπεραστεί στην αμερικανική νομική έρευνα (Vals 10/2025: 69% έναντι 74–78%), και το γενικής χρήσης AI ισοφάρισε ή ξεπέρασε τα νομικά εργαλεία (78%)· ο δυσκολότερος άξονας είναι οι συστημικοί συγκριτές·\n- στο GreekBarBench τα καλύτερα μοντέλα μένουν κάτω από το 95ο εκατοστημόριο, άρα η επιλογή συγκριτή αλλάζει το συμπέρασμα (DEC-LAW-06).\nΤα «ίσα δεδομένα» με Harvey-class σύστημα δεν ελέγχονται πλήρως· η υλοποιησιμότητα είναι άγνωστη.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-06",
+    "SOTA-LAW-07",
+    "SOTA-LAW-04",
+    "SOTA-LAW-05"
+   ],
+   "sources": [
+    {
+     "title": "GDPval (HTML)",
+     "url": "https://arxiv.org/html/2510.04374",
+     "year": "2025"
+    },
+    {
+     "title": "Vals Legal AI Report (VLAIR)",
+     "url": "https://www.vals.ai/vlair",
+     "year": "2025"
+    },
+    {
+     "title": "VLAIR Legal Research Report (14/10/2025)",
+     "url": "https://www.vals.ai/industry-reports/vlair-10-14-25",
+     "year": "2025"
+    },
+    {
+     "title": "GreekBarBench (arXiv 2505.17267)",
+     "url": "https://arxiv.org/abs/2505.17267",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0027"
+   ],
+   "draft_ref": "22.md ADR-0027· spine VT-701, VT-702, VT-703, VT-704, VT-705",
+   "draft_position": "Evaluation-first: τα benchmarks επαναχρησιμοποιούν Ω+7/OMEGA §10/external-benchmark/capability-gate· blind set από δημιουργό/εξωτερικούς· Behavioral Battery· παγώνουν πριν την υλοποίηση.",
+   "verdict": "holds",
+   "reasoning": "Η δέσμευση μετρικών πριν τον κώδικα, τα σφραγισμένα σύνολα και οι εξωτερικοί συντάκτες ταιριάζουν με την καλύτερη πρακτική: LEXam και GreekBarBench επικυρώνουν τον αυτόματο κριτή με ειδικούς· το GDPval δημοσιεύει gold subset και μετρά συμφωνία κριτών. Η ADR στηρίζεται σε σύνολα του πρωτοτύπου (Ω+7, OMEGA §10, --external-benchmark-gate, --capability-gate), ανεπαλήθευτα από εδώ, και δεν δεσμεύει δημόσιο αναπαραγώγιμο anchor· υπάρχουν LegalBench, LEXam, GreekBarBench (ελληνικά, με έλεγχο παραπομπών) και LegalAgentBench (GAP-LAW-07).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-04",
+    "SOTA-LAW-05",
+    "SOTA-LAW-06",
+    "SOTA-LAW-08",
+    "SOTA-LAW-03"
+   ],
+   "sources": [
+    {
+     "title": "LEXam (arXiv 2505.12864)",
+     "url": "https://arxiv.org/abs/2505.12864",
+     "year": "2025"
+    },
+    {
+     "title": "GreekBarBench (arXiv 2505.17267)",
+     "url": "https://arxiv.org/abs/2505.17267",
+     "year": "2025"
+    },
+    {
+     "title": "LegalAgentBench (arXiv 2412.17259)",
+     "url": "https://arxiv.org/abs/2412.17259",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-22"
+   ],
+   "draft_ref": "26.md EXP-22 (GP-3, CMP-COG-06)· master §8.9",
+   "draft_position": "Αξία αιτιακών μοντέλων για νομική αιτιότητα· μέτρο η συμφωνία με ειδικούς· χαμηλή ⇒ μόνο ζημία/πολιτική. §8.9: SCMs, identifiability πριν από απάντηση, αλλιώς Unknown.",
+   "verdict": "holds",
+   "reasoning": "Η νομική αιτιότητα περιλαμβάνει but-for, NESS, pre-emption και overdetermination, όπου το απλό αντιπαραδειγματικό κριτήριο αποτυγχάνει· η proximate cause έχει σε μεγάλο βαθμό κανονιστικό χαρακτήρα. Άρα η identifiability ενός SCM δεν αρκεί για νομική αιτιότητα, και η κατάταξη ως πείραμα με συμφωνία ειδικών είναι ορθή. Το σύνολο δοκιμών πρέπει να περιέχει ρητά pre-emption και overdetermination. Benchmarks LLM για νομική αιτιότητα δεν εντόπισα.",
+   "superior": "",
+   "sota_refs": [],
+   "sources": [
+    {
+     "title": "Causation in the Law (SEP, rev. 04/02/2024)",
+     "url": "https://plato.stanford.edu/entries/causation-law/",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "low"
+  },
+  {
+   "ids": [
+    "EP-08"
+   ],
+   "draft_ref": "28.md EP-08",
+   "draft_position": "Human Interface Modality πάνω στο ICD-23: φωνή, AR/VR, BCI υπό controls συναίνεσης· φύλακες INV-C02, INV-L02.",
+   "verdict": "holds",
+   "reasoning": "Η τοποθέτηση ως extension point με συναίνεση είναι σωστή. Δύο εξωτερικά όρια πρέπει να γίνουν ρητοί φύλακες: (α) το Art. 5(1)(f) απαγορεύει τον συμπερασμό συναισθημάτων σε χώρο εργασίας, εκτός ιατρικών λόγων ή λόγων ασφάλειας· φωνητική διεπαφή για Principals ή προσωπικό δεν επιτρέπεται να συμπεραίνει συναισθήματα· (β) για BCI και νευρο-δεδομένα, η UNESCO υιοθέτησε Recommendation on the Ethics of Neurotechnology (43η Γενική Διάσκεψη, 11/2025).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-LAW-16"
+   ],
+   "sources": [
+    {
+     "title": "AI Act Article 5",
+     "url": "https://artificialintelligenceact.eu/article/5/",
+     "year": "2024"
+    },
+    {
+     "title": "UNESCO Recommendation on the Ethics of Neurotechnology",
+     "url": "https://www.unesco.org/en/ethics-neurotech/recommendation",
+     "year": "2025"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "medium"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-LAW-01",
+   "title": "Η αφηγηματική §12 (LAWMAX) και τα συμβόλαια δεν υπάρχουν",
+   "description": "Η §12 δεν γράφτηκε ποτέ (Παράρτημα Ω)· το στρώμα LAW υπάρχει μόνο ως γραμμές πινάκων (§6.3, §29.6, 15.md, 19.md). Λείπουν αρχεία που αναφέρονται: contracts/lawmax-matter.yaml (ICD-19)· contracts/control-plane.yaml (ICD-05, ICD-23)· formal/ (π.χ. ConfidentialityDomains.als, VT-205)· verification/ (KILL-TESTS.md, TRACEABILITY-MATRIX.md). Το docs/architecture-draft περιέχει μόνο master, spine και _unmerged-parts, αν και το CLAUDE.md αναφέρει formal/, contracts/, adrs/, model/. Το spine παραπέμπει σε package root και scratchpad (asbuilt-tight.md) του άλλου repo.",
+   "why_it_matters": "Χωρίς §12 δεν ορίζονται ροές, ρόλοι και όρια ευθύνης μεταξύ των δώδεκα LAW components, και το VT-901 δεν έχει αντικείμενο. Αναφορές σε ανύπαρκτα αρχεία παραβιάζουν τον κανόνα «μία έδρα ανά έννοια».",
+   "sota_answer": "ELI και Akoma Ntoso δίνουν σημασιολογία για τα σχήματα του corpus· SALI LMSS, FOLIO και LEDES για τα δεδομένα υποθέσεων. Τα συμβόλαια γράφονται ως SysML v2 interfaces στη Φάση Β.",
+   "sota_refs": [
+    "SOTA-LAW-10",
+    "SOTA-LAW-15"
+   ],
+   "sources": [
+    {
+     "title": "ELI register — About",
+     "url": "https://eur-lex.europa.eu/eli-register/about.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-LAW-02",
+   "title": "Ασυμφωνία πλήθους components στο spine",
+   "description": "Το spine-vocab.md δηλώνει «COMPONENTS (76)» αλλά απαριθμεί 75 (KRN 12, COG 11, AEO 6, CCP 7, LAW 12, CIV 6, FRG 5, ADV 3, KNW 5, GOV 1, HUM 2, OPS 4, MDL 1). Το §29 ισχυρίζεται κάλυψη «76 CMP».",
+   "why_it_matters": "Ο μηχανικός έλεγχος πληρότητας (VT-901, «0 ορφανά») δεν έχει νόημα με λάθος σύνολο αναφοράς.",
+   "sota_answer": "Το σύνολο των IDs πρέπει να προκύπτει από το canonical model, όχι από δηλωμένους αριθμούς.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-LAW-03",
+   "title": "Ουσιαστικό, όχι τυπικό, sign-off του Principal (automation bias)",
+   "description": "Τα INV-L02 και CMP-HUM-01 εγγυώνται ότι υπάρχει υπογραφή με receipt, όχι ότι προηγήθηκε έλεγχος. Δεν υπάρχει μηχανισμός κατά του rubber-stamping: τεκμήριο ελέγχου, cognitive forcing, υποχρεωτική επιθεώρηση σημείων Unknown ή χαμηλού βαθμού, μέτρηση συχνότητας παρακάμψεων.",
+   "why_it_matters": "Το πρόχειρο στηρίζει την ευθύνη στον Principal· το sign-off γίνεται τυπικότητα αν ο Principal εμπιστεύεται υπερβολικά τις εξόδους.",
+   "sota_answer": "Art. 14(4)(a)–(e) του AI Act (ικανότητες επόπτη, επίγνωση automation bias)· cognitive forcing functions (Buçinca 2021), με κόστος στην ικανοποίηση.",
+   "sota_refs": [
+    "SOTA-LAW-16",
+    "SOTA-LAW-19"
+   ],
+   "sources": [
+    {
+     "title": "AI Act Article 14",
+     "url": "https://artificialintelligenceact.eu/article/14/",
+     "year": "2024"
+    },
+    {
+     "title": "To Trust or to Think (arXiv 2102.09692)",
+     "url": "https://arxiv.org/abs/2102.09692",
+     "year": "2021"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-LAW-04",
+   "title": "Το κανονιστικό §2.5 δεν αντανακλά την τρέχουσα κατάσταση του AI Act",
+   "description": "Το §2.5 παραλείπει:\n- ότι το Annex III 8(a) αφορά χρήση από/για λογαριασμό δικαστικής αρχής ή ανάλογη χρήση σε ADR (ο βοηθός δικηγόρου κατά κανόνα εκτός· χρήση σε διαιτησία ή διαμεσολάβηση τον φέρνει εντός)·\n- ότι ο δημιουργός είναι provider για ίδια χρήση (Art. 3(3), 3(11)) και ότι το Art. 50 εφαρμόζεται από 02/08/2026 (μεταβατικό 50(2) έως 02/12/2026)·\n- το Art. 4 (AI literacy), που κατά τον tracker τροποποιήθηκε από το Digital Omnibus·\n- το Art. 6(4) (τεκμηρίωση, καταχώριση κατά Art. 49(2)), μόνο εφόσον κάποια χρήση εμπίπτει στο Annex III και επικαλείται το 6(3)·\n- τις νέες ημερομηνίες: Annex III 02/12/2027, Annex I 02/08/2028.",
+   "why_it_matters": "Τα Control Records του CMP-LAW-09 και το EXP-19 στηρίζονται σε αυτό το πλαίσιο· σήμερα (15/09/2026) το Art. 50 ήδη εφαρμόζεται. Λάθος χρονοδιάγραμμα σημαίνει λάθος προτεραιότητες ελέγχων.",
+   "sota_answer": "Tracker του AI Act (ενημ. 31/08/2026) και κείμενα Art. 3, 4, 6, 50 και Annex III· σελίδα πρότασης της Επιτροπής (19/11/2025). Αριθμός πράξης και έναρξη ισχύος του Omnibus δεν επαληθεύτηκαν.",
+   "sota_refs": [
+    "SOTA-LAW-16"
+   ],
+   "sources": [
+    {
+     "title": "AI Act implementation timeline",
+     "url": "https://artificialintelligenceact.eu/implementation-timeline/",
+     "year": "2026"
+    },
+    {
+     "title": "AI Act Article 3",
+     "url": "https://artificialintelligenceact.eu/article/3/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 4",
+     "url": "https://artificialintelligenceact.eu/article/4/",
+     "year": "2026"
+    },
+    {
+     "title": "AI Act Annex III",
+     "url": "https://artificialintelligenceact.eu/annex/3/",
+     "year": "2024"
+    },
+    {
+     "title": "Digital Omnibus on AI (European Commission)",
+     "url": "https://digital-strategy.ec.europa.eu/en/library/digital-omnibus-ai-regulation-proposal",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-LAW-05",
+   "title": "Κανένα εξωτερικό λεξιλόγιο νομικών υποθέσεων",
+   "description": "Τα CMP-LAW-01 και ICD-19 δεν δεσμεύουν λεξιλόγιο για κατάταξη υποθέσεων, εργασιών και παραδοτέων (SALI LMSS, FOLIO), ούτε για billing και budgets (LEDES, UTBMS).",
+   "why_it_matters": "Χωρίς αυτά δεν υπάρχει διαλειτουργικότητα με πελάτες και εταιρικά νομικά τμήματα, ούτε συγκρίσιμες μετρήσεις ανά τύπο υπόθεσης, που χρειάζεται η στρωματοποίηση του KT-15.",
+   "sota_answer": "SALI LMSS (υποθέσεις, χρόνος, έγγραφα, οργανισμοί)· FOLIO (>18.000 έννοιες, OWL, CC-BY 4.0, πολυγλωσσικό)· LEDES XML Ebilling 2.2, LEDES API v1 (2020), UTBMS. Η κάλυψη ελληνικών κατηγοριών δικαίου δεν επαληθεύτηκε.",
+   "sota_refs": [
+    "SOTA-LAW-15"
+   ],
+   "sources": [
+    {
+     "title": "FOLIO",
+     "url": "https://openlegalstandard.org/",
+     "year": "2025"
+    },
+    {
+     "title": "LEDES",
+     "url": "https://ledes.org/",
+     "year": "2026"
+    },
+    {
+     "title": "SALI Alliance",
+     "url": "https://www.sali.org/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-LAW-06",
+   "title": "Μάθηση μεταξύ υποθέσεων έναντι INV-L03",
+   "description": "Κανένας κανόνας δεν ορίζει τι γνώση επιτρέπεται να περάσει από ένα confidentiality domain σε άλλο μέσω μάθησης (CMP-AEO-04 consolidation, outcome learning §8.11, CMP-CIV-03 evolution, Behavioral Battery). Το INV-L03 καλύπτει μόνο ροές δεδομένων.",
+   "why_it_matters": "Αφορά επαγγελματικό απόρρητο και GDPR· είναι ο πιθανότερος αθέατος δίαυλος διαρροής σε σύστημα σχεδιασμένο να μαθαίνει.",
+   "sota_answer": "Η EDPB Opinion 28/2024 απαιτεί απόδειξη ανωνυμίας για μοντέλα εκπαιδευμένα σε προσωπικά δεδομένα. Σχεδιαστικές επιλογές (δική μου απαρίθμηση, όχι τεκμηριωμένο SOTA): per-domain adapters, μάθηση μόνο από δημόσιο corpus. Ποια αρκεί νομικά δεν ξέρω.",
+   "sota_refs": [
+    "SOTA-LAW-22"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Opinion 28/2024",
+     "url": "https://www.edpb.europa.eu/our-work-tools/our-documents/opinion-board-art-64/opinion-282024-certain-data-protection-aspects_en",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-LAW-07",
+   "title": "Κανένα δημόσιο, ελληνόγλωσσο anchor αξιολόγησης",
+   "description": "Τα VT-701, KT-15 και ADR-0027 στηρίζονται σε σύνολα του πρωτοτύπου (Ω+7, OMEGA §10, --external-benchmark-gate, --capability-gate), ανεπαλήθευτα από εδώ, και δεν δεσμεύουν κανένα δημόσιο, αναπαραγώγιμο benchmark — ούτε ελληνικό νομικό ούτε ανάκτησης σε ελληνικό corpus.",
+   "why_it_matters": "Οι ισχυρισμοί υπεροχής του T7 χρειάζονται και εξωτερικό, αναπαραγώγιμο μέτρο στη γλώσσα και στο δίκαιο της υπόθεσης.",
+   "sota_answer": "GreekBarBench (EMNLP 2025, έλεγχος παραπομπών, meta-evaluation κριτών)· Greek Legal Code (47k νομοθετήματα)· LEXam και LegalBench ως διεθνή σημεία αναφοράς.",
+   "sota_refs": [
+    "SOTA-LAW-05",
+    "SOTA-LAW-21",
+    "SOTA-LAW-04"
+   ],
+   "sources": [
+    {
+     "title": "GreekBarBench (arXiv 2505.17267)",
+     "url": "https://arxiv.org/abs/2505.17267",
+     "year": "2025"
+    },
+    {
+     "title": "Greek Legal Code (arXiv 2109.15298)",
+     "url": "https://arxiv.org/abs/2109.15298",
+     "year": "2021"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-LAW-08",
+   "title": "Προθεσμίες: ανεξαρτησία μεθόδων και αμφισημία αριθμητικής ημερομηνιών",
+   "description": "Το 6.4.md (CMP-LAW-10) «ενοποιεί τις δύο έδρες ημερολογιακής αριθμητικής», ενώ REQ-LAW-011 και §8.7 απαιτούν δύο ανεξάρτητους υπολογισμούς σε συμφωνία. Δεν ορίζεται τι σημαίνει «ανεξάρτητοι» (ξεχωριστή κωδικοποίηση κανόνων ή μόνο ξεχωριστός solver), ούτε τι γίνεται όταν ο κανόνας είναι αμφίσημος (στρογγυλοποίηση μηνών/ετών).",
+   "why_it_matters": "Αν οι δύο υπολογισμοί μοιράζονται την ίδια κωδικοποίηση ή την ίδια σιωπηλή στρογγυλοποίηση, η συμφωνία τους δεν πιάνει κοινό λάθος. Η χαμένη προθεσμία είναι μη αναστρέψιμη ζημία.",
+   "sota_answer": "(α) Ρητή τυπική σημασιολογία ημερομηνιών/περιόδων με δηλωμένα rounding modes και ανίχνευση αμφισημίας (Catala dates-calc, ESOP 2024)· (β) δεύτερη κωδικοποίηση κανόνων από διαφορετικό συντάκτη σε Catala-class γλώσσα (δική μου πρόταση, όχι δημοσιευμένο πρότυπο).",
+   "sota_refs": [
+    "SOTA-LAW-23",
+    "SOTA-LAW-12"
+   ],
+   "sources": [
+    {
+     "title": "CatalaLang/dates-calc (GitHub)",
+     "url": "https://github.com/CatalaLang/dates-calc",
+     "year": "2024"
+    },
+    {
+     "title": "Catala (arXiv 2103.03198)",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-LAW-09",
+   "title": "Όρια του Judge Simulator: επίπεδο δικαστή και πρόσβαση σε νομολογία",
+   "description": "Το CMP-LAW-07 δεν ορίζει αν μοντελοποιεί δικαστήρια/σχηματισμούς ή μεμονωμένους δικαστές, ούτε την πηγή και την πληρότητα της ελληνικής νομολογίας για το backtest του EXP-09· η αναζήτηση ΑΠ είναι web φόρμα χωρίς ορατό ECLI ή API.",
+   "why_it_matters": "Η μοντελοποίηση σε επίπεδο δικαστή είναι profiling φυσικών προσώπων (GDPR) και στη Γαλλία απαγορεύεται ποινικά (ν. 2019-222, άρθ. 33). Χωρίς πλήρες, ταυτοποιημένο σύνολο αποφάσεων το backtest μπορεί να είναι μεροληπτικό.",
+   "sota_answer": "Η διάκριση Medvedeva απαιτεί σαφή ορισμό του task (forecasting)· ο γαλλικός νόμος δείχνει ότι το επίπεδο δικαστή μπορεί να είναι νομικά αποκλεισμένο. Για την Ελλάδα δεν ξέρω.",
+   "sota_refs": [
+    "SOTA-LAW-14",
+    "SOTA-LAW-21",
+    "SOTA-LAW-25"
+   ],
+   "sources": [
+    {
+     "title": "Medvedeva, Wieling, Vols (Semantic Scholar record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1007/s10506-021-09306-3?fields=title,authors,year,venue,journal,abstract",
+     "year": "2022"
+    },
+    {
+     "title": "Loi n° 2019-222 (Légifrance)",
+     "url": "https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000038261631",
+     "year": "2019"
+    },
+    {
+     "title": "Άρειος Πάγος — Αναζήτηση αποφάσεων",
+     "url": "https://www.areiospagos.gr/nomologia/apofaseis.asp",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-LAW-10",
+   "title": "Βάρος απόδειξης και σύγκριση σεναρίων στο CMP-LAW-03",
+   "description": "Το CMP-LAW-03 αναφέρει «αποδεικτικά standards» αλλά δεν ορίζει κατανομή βάρους απόδειξης ανά ισχυρισμό, ούτε σύγκριση εναλλακτικών ιστοριών/σεναρίων για τα αμφισβητούμενα γεγονότα.",
+   "why_it_matters": "Στην πολιτική και στην ποινική δίκη η κρίση εξαρτάται από το ποιος φέρει το βάρος και από τη συνοχή των σεναρίων, όχι μόνο από το αν ένα γεγονός τεκμηριώνεται.",
+   "sota_answer": "Μοντέλο Carneades με βάρος απόδειξης (Gordon, Prakken, Walton 2007)· hybrid theory επιχειρημάτων και ιστοριών (Bex et al. 2010)· Bayesian networks με τα γνωστά όριά τους (SEP).",
+   "sota_refs": [
+    "SOTA-LAW-13"
+   ],
+   "sources": [
+    {
+     "title": "Gordon, Prakken, Walton 2007 (Semantic Scholar record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1016/j.artint.2007.04.010?fields=title,authors,year,venue,journal,abstract",
+     "year": "2007"
+    },
+    {
+     "title": "Bex et al. 2010 (Semantic Scholar record)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1007/s10506-010-9092-x?fields=title,authors,year,venue,journal,abstract",
+     "year": "2010"
+    },
+    {
+     "title": "Legal Probabilism (SEP)",
+     "url": "https://plato.stanford.edu/entries/legal-probabilism/",
+     "year": "2021"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-LAW-11",
+   "title": "Διαφάνεια κατά Art. 50: δήλωση AI προς πελάτες και σήμανση συνθετικού κειμένου",
+   "description": "Τα ICD-23 και CMP-LAW-12 δεν προβλέπουν (α) δήλωση στον πελάτη ότι αλληλεπιδρά με AI (Art. 50(1), provider, εκτός αν είναι προφανές)· (β) machine-readable σήμανση του συνθετικού κειμένου που παράγει το σύστημα (Art. 50(2), provider, με εξαίρεση υποβοηθητικές λειτουργίες standard editing). Η εξαίρεση editorial ελέγχου του 50(4) αφορά μόνο κείμενα που δημοσιεύονται για ενημέρωση του κοινού σε θέματα δημόσιου ενδιαφέροντος· δεν καλύπτει γενικά νομικά παραδοτέα.",
+   "why_it_matters": "Εφαρμόζεται από 02/08/2026 (50(2) για συστήματα που ήδη κυκλοφορούν: έως 02/12/2026), ανεξάρτητα από υψηλό κίνδυνο· ο δημιουργός είναι provider για ίδια χρήση (Art. 3(3), 3(11)). Πώς η σήμανση του 50(2) συνδυάζεται με παραδοτέο υπογεγραμμένο από Principal δεν ξέρω· ανήκει στο EXP-19.",
+   "sota_answer": "Κείμενα Art. 50 και Art. 3· tracker για τις ημερομηνίες.",
+   "sota_refs": [
+    "SOTA-LAW-16"
+   ],
+   "sources": [
+    {
+     "title": "AI Act Article 50",
+     "url": "https://artificialintelligenceact.eu/article/50/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act Article 3",
+     "url": "https://artificialintelligenceact.eu/article/3/",
+     "year": "2024"
+    },
+    {
+     "title": "AI Act implementation timeline",
+     "url": "https://artificialintelligenceact.eu/implementation-timeline/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-LAW-12",
+   "title": "Κανένα REQ-LAW για νομική αιτιότητα",
+   "description": "Το EXP-22 συνδέεται μόνο με το REQ-COG-007 (CMP-COG-06). Καμία απαίτηση LAW δεν ορίζει πότε και πώς η αιτιακή ανάλυση μπαίνει σε νομικό παραδοτέο (ζημία, αιτιώδης συνάφεια).",
+   "why_it_matters": "Ορφανή σύνδεση μεταξύ στρωμάτων: το αποτέλεσμα του πειράματος δεν αλλάζει καμία απαίτηση του LAWMAX.",
+   "sota_answer": "Τα νομικά κριτήρια (but-for, NESS, pre-emption, overdetermination, proximate cause) γίνονται κλάσεις verifier ή Unknown.",
+   "sota_refs": [],
+   "sources": [
+    {
+     "title": "Causation in the Law (SEP)",
+     "url": "https://plato.stanford.edu/entries/causation-law/",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-LAW-13",
+   "title": "ICD-19: provider ασύμβατος με §6.3 και §15.4(2)",
+   "description": "Το ICD-19 δηλώνει provider ένα ενιαίο εύρος δέκα LAW components χωρίς ομάδες λειτουργιών. Κατά τη στήλη Provides του §6.3 το ICD-19 το παρέχουν μόνο τα CMP-LAW-01, CMP-LAW-03, CMP-LAW-08, CMP-LAW-09, CMP-LAW-10· τα CMP-LAW-02, CMP-LAW-04, CMP-LAW-05, CMP-LAW-06, CMP-LAW-07 δεν το αναφέρουν. Έτσι οι λειτουργίες issues, arguments και strategy του ICD-19 δεν έχουν provider.",
+   "why_it_matters": "Παραβιάζει τον κανόνα «ένας ιδιοκτήτης ανά ομάδα λειτουργιών» (§15.1, §15.4(2)) και αφήνει λειτουργίες χωρίς ιδιοκτήτη· το VT-901 δεν μπορεί να ελέγξει την ιχνηλασιμότητα CMP→ICD.",
+   "sota_answer": "Εσωτερική διόρθωση στη Φάση Β: ρητές ομάδες λειτουργιών με έναν ιδιοκτήτη η καθεμία, συνεπείς με τα Provides του §6.3.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  }
+ ],
+ "unknowns": [
+  "Το WebSearch ήταν εξαντλημένο (200/200) και για τον ερευνητή και για τον έλεγχο· χρησιμοποιήθηκε μόνο άμεσο WebFetch. Η αναζήτηση για παραλειφθέντα ανώτερα στα holds έγινε μόνο μέσω γνωστών URLs· η κάλυψη 2025–2026 είναι μερική.",
+  "Digital Omnibus on AI: ο tracker (ενημ. 31/08/2026) αποτυπώνει νέες ημερομηνίες και σημειώνει τροποποίηση του Art. 4, αλλά αριθμός πράξης, έναρξη ισχύος και ακριβής ισχύουσα διατύπωση του Art. 4 δεν επαληθεύτηκαν σε επίσημη εφημερίδα. Οι σελίδες Art. 6(4) και 49(2) δεν δείχνουν τροποποίηση.",
+  "Πώς η machine-readable σήμανση του Art. 50(2) συνδυάζεται με νομικό παραδοτέο υπογεγραμμένο από Principal, και αν ισχύει κάποια εξαίρεση: άγνωστο (EXP-19).",
+  "ABA Formal Opinion 512 (2024): 403· περιεχόμενο ανεπαλήθευτο. CCBE: επαληθεύτηκε μόνο ο οδηγός του 2022· νεότερη οδηγία άγνωστη. ΔΣΑ/Ολομέλεια ΔΣΕ: οδηγία για AI πέρα από την αρχική σελίδα άγνωστη.",
+  "Γαλλικός ν. 2019-222 άρθ. 33: επαληθεύτηκε το αρχικό κείμενο· η τρέχουσα ενοποιημένη μορφή δεν ελέγχθηκε.",
+  "Aletras 2016, ASPIC+, HYPO/CATO/Horty, COLIEE 2025, βάση περιπτώσεων AI hallucinations: δεν επαληθεύτηκαν.",
+  "Catala: παραγωγικές χρήσεις σε γαλλικές υπηρεσίες δεν επαληθεύτηκαν· το άρθρο ESOP 2024 για την αριθμητική ημερομηνιών δεν διαβάστηκε (HAL μπλοκαρισμένο), μόνο το README του dates-calc.",
+  "Άρθρα Gordon/Prakken/Walton 2007 και Bex et al. 2010: επαληθεύτηκαν μόνο μεταδεδομένα (abstracts κρυμμένα από τους εκδότες).",
+  "Magesh et al.: το Semantic Scholar δίνει venue το Journal of Empirical Legal Studies· τόμος και έτος έντυπης δημοσίευσης ανεπαλήθευτα.",
+  "Ελλάδα: άγνωστα η εφαρμογή ELI (η σελίδα χωρών δεν βρέθηκε) και ECLI (η σελίδα Ελλάδας 404)· kodiko.gov.gr (DNS failure)· πρόσβαση σε νομολογία ΣτΕ· bulk/open data ή API για ΦΕΚ και αποφάσεις.",
+  "Κείμενο ν. 4194/2013 (απόρρητο, αντίθετα συμφέροντα) και ΑΚ 241–243 (αν λύνουν κάθε στρογγυλοποίηση προθεσμιών): ανεπαλήθευτα.",
+  "Άγνωστο αν υπάρχει ελληνικός citator για το σκέλος 5 του ενισχυμένου INV-L01.",
+  "Άγνωστο αν EDPB ή κάποια DPA δέχονται το crypto-shredding ως διαγραφή κατά Art. 17 GDPR.",
+  "Διαθεσιμότητα EUDI Wallet στην Ελλάδα και προθεσμίες υποχρεωτικής αποδοχής από ιδιώτες: ανεπαλήθευτα.",
+  "Δεν βρέθηκε τεκμήριο υπεροχής αυτοματοποιημένης νομικής στρατηγικής (EXP-24) ούτε benchmark LLM για νομική αιτιότητα (EXP-22).",
+  "Τα ευρήματα Vals αφορούν μόνο δίκαιο ΗΠΑ· η μεταφορά τους σε ελληνικό δίκαιο είναι άγνωστη.",
+  "Όλοι οι ισχυρισμοί για as-built έδρες του LAWMAX-Ω (citation-authority, version-graph, legal-temporal, case-workspace.lisp, Ω+7, OMEGA §10, Prediction Doctrine) είναι ανεπαλήθευτοι από εδώ.",
+  "Υλοποιησιμότητα των «ίσων δεδομένων» του KT-15 έναντι εμπορικού νομικού AI (Harvey-class): άγνωστη."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-LAW-01",
+   "question": "Εύρος του Prediction Doctrine: απαγορεύονται μόνο οι πιθανότητες έκβασης που παράγει το σύστημα, ή και κάθε αριθμητική πιθανότητα στις αναλύσεις στρατηγικής;",
+   "recommendation": "(β): το σύστημα δεν παράγει ποτέ πιθανότητα έκβασης, μόνο ευαισθησία και κρίσιμους λόγους· ο Principal μπορεί να εισάγει δικές του εκτιμήσεις ως επισημασμένες παραμέτρους «κρίση Principal» σε δέντρα απόφασης, και το σύστημα δείχνει μόνο την ευαισθησία της απόφασης σε αυτές.",
+   "alternatives": [
+    {
+     "option": "(α) Αυστηρό: καμία αριθμητική πιθανότητα έκβασης πουθενά",
+     "pros": "Συνέπεια με T1 και ADR-0026· κανένας κίνδυνος παραπλάνησης πελάτη",
+     "cons": "Αποκλείει την καθιερωμένη ανάλυση δικαστικού κινδύνου για συμβιβασμό"
+    },
+    {
+     "option": "(β) Πιθανότητες μόνο ως επισημασμένη είσοδος του Principal, με ευαισθησία",
+     "pros": "Ανάλυση συμβιβασμού χωρίς ισχυρισμό πρόβλεψης από το σύστημα· η ευθύνη μένει ανθρώπινη",
+     "cons": "Κίνδυνος να παρουσιαστούν ως «πρόβλεψη LAWMAX»· απαιτεί ρητή σήμανση στο ICD-19"
+    },
+    {
+     "option": "(γ) Βαθμονομημένες πιθανότητες από το σύστημα",
+     "pros": "Μέγιστη πληροφορία",
+     "cons": "Αντιβαίνει στο T1 (όχι πιθανότητες έκβασης) και στο ADR-0026· δεν εντόπισα τεκμηριωμένα βαθμονομημένο forecasting για ελληνικά δικαστήρια"
+    }
+   ],
+   "rationale": "Η ανάλυση συμβιβασμού χρειάζεται βαθμό πεποίθησης, ενώ το πρόχειρο απαγορεύει πιθανότητες έκβασης από το σύστημα. Η (β) κρατά την πεποίθηση ανθρώπινη, επισημασμένη και ορατή.",
+   "affects_ids": [
+    "CMP-LAW-06",
+    "REQ-LAW-006",
+    "ICD-19",
+    "ADR-0026",
+    "EXP-24",
+    "KT-15"
+   ]
+  },
+  {
+   "id": "DEC-LAW-02",
+   "question": "Γλώσσα εκτελέσιμων νομικών κανόνων: δική μας LexDSL (Forge, KT-10) ή υπαρκτή γλώσσα Catala-class;",
+   "recommendation": "(γ): η LexDSL ορίζεται με σημασιολογία default logic συμβατή με τον Catala, και ο Catala (μαζί με το dates-calc) χρησιμοποιείται ως ανεξάρτητη αναφορά για differential και N-version έλεγχο σε κανόνες και προθεσμίες.",
+   "alternatives": [
+    {
+     "option": "(α) Μόνο LexDSL",
+     "pros": "Αποδεικνύει το T4/KT-10· πλήρης έλεγχος",
+     "cons": "Νέα γλώσσα χωρίς ιστορικό· ορθότητα μόνο μετά το GP-8"
+    },
+    {
+     "option": "(β) Catala ως γλώσσα κανόνων, LexDSL μόνο ως επίδειξη του Forge",
+     "pros": "Default logic ως first-class· βασικά βήματα μεταγλώττισης αποδεδειγμένα σε F*· κοινό μέσο νομικών και προγραμματιστών",
+     "cons": "Research project με compiler «yet unstable»· εξωτερική εξάρτηση"
+    },
+    {
+     "option": "(γ) LexDSL συμβατή με Catala, με differential έναντι Catala",
+     "pros": "Διατηρεί το KT-10 και δίνει ανεξάρτητη αναφορά για το REQ-LAW-011",
+     "cons": "Κόστος διπλής κωδικοποίησης"
+    }
+   ],
+   "rationale": "Η διπλή ανεξάρτητη κωδικοποίηση κλείνει και το GAP-LAW-08.",
+   "affects_ids": [
+    "CMP-LAW-04",
+    "CMP-LAW-10",
+    "REQ-LAW-004",
+    "REQ-LAW-011"
+   ]
+  },
+  {
+   "id": "DEC-LAW-03",
+   "question": "Πολιτική παραπομπών νομολογίας: πλήρης, αποκλεισμός (όπως στο προηγούμενο της SRA) ή σταδιακή;",
+   "recommendation": "(γ) σταδιακή: σήμερα νομοθεσία και νομολογία που εισάγει ο Principal, με το INV-L01 σκέλη 1–3· αυτόνομη πρόταση νομολογίας από το σύστημα μόνο αφού ο verifier στήριξης πρότασης (σκέλος 4) και ο έλεγχος μεταχείρισης (σκέλος 5) περάσουν προκαταχωρισμένο πείραμα σε ελληνικά δεδομένα.",
+   "alternatives": [
+    {
+     "option": "(α) Πλήρης πρόταση νομολογίας με το ενισχυμένο INV-L01",
+     "pros": "Μέγιστη ικανότητα έρευνας",
+     "cons": "Ο αυτόματος έλεγχος στήριξης πρότασης δεν έχει επικυρωθεί στα ελληνικά"
+    },
+    {
+     "option": "(β) Το σύστημα δεν προτείνει ποτέ νομολογία",
+     "pros": "Αποδεκτό από ρυθμιστή (SRA 2025)· μηδενικός κίνδυνος επινοημένης νομολογίας",
+     "cons": "Χάνει τον πυρήνα της νομικής έρευνας· ασύμβατο με το T7"
+    },
+    {
+     "option": "(γ) Σταδιακή",
+     "pros": "Κάθε κλίμακα ικανότητας ανοίγει μόνο με τεκμήρια",
+     "cons": "Καθυστέρηση πλήρους ικανότητας"
+    }
+   ],
+   "rationale": "Κατά τη Magesh η misgrounded παραπομπή είναι δυνητικά πιο επικίνδυνη από την επινόηση, επειδή εντοπίζεται δυσκολότερα· η SRA απέκλεισε τη νομολογία ως «high-risk area» για LLMs.",
+   "affects_ids": [
+    "CMP-LAW-05",
+    "CMP-LAW-08",
+    "INV-L01",
+    "REQ-LAW-008",
+    "KT-15"
+   ]
+  },
+  {
+   "id": "DEC-LAW-04",
+   "question": "Επίπεδο μοντελοποίησης του Judge Simulator: δικαστήριο/σχηματισμός ή μεμονωμένος δικαστής;",
+   "recommendation": "Μόνο δικαστήριο και σχηματισμός (ΑΠ, ΣτΕ, είδος δικαστηρίου). Το επίπεδο δικαστή αποκλείεται έως ότου το EXP-19 δώσει γνωμοδότηση υπογεγραμμένη από Principal για GDPR/profiling και για εθνικά εμπόδια.",
+   "alternatives": [
+    {
+     "option": "(α) Δικαστήριο/σχηματισμός",
+     "pros": "Χωρίς profiling φυσικών προσώπων· αρκεί για αντεπιχειρήματα και κρίσιμους λόγους",
+     "cons": "Χάνει τυχόν διαφορές μεταξύ δικαστών"
+    },
+    {
+     "option": "(β) Επίπεδο δικαστή",
+     "pros": "Περισσότερη πληροφορία για στρατηγική",
+     "cons": "Profiling φυσικών προσώπων (GDPR)· στη Γαλλία απαγορεύεται ποινικά (ν. 2019-222, άρθ. 33)· για την Ελλάδα άγνωστο· αντίκειται στο πνεύμα του Prediction Doctrine"
+    }
+   ],
+   "rationale": "Το EXP-09 στοχεύει στους κρίσιμους λόγους, όχι στη συμπεριφορά προσώπων· η (α) αρκεί για το telos και αποφεύγει τεκμηριωμένο νομικό κίνδυνο.",
+   "affects_ids": [
+    "CMP-LAW-07",
+    "EXP-09",
+    "REQ-LAW-007",
+    "EXP-19"
+   ]
+  },
+  {
+   "id": "DEC-LAW-05",
+   "question": "Θέση του LAWMAX απέναντι στον AI Act: εκτός υψηλού κινδύνου ή εκούσια τήρηση απαιτήσεων υψηλού κινδύνου; Επιτρέπεται χρήση σε ADR ή για λογαριασμό δικαστικών αρχών;",
+   "recommendation": "(α), με εκούσια εποπτεία τύπου Art. 14 (GAP-LAW-03), πλήρη συμμόρφωση provider κατά Art. 50 (GAP-LAW-11) και ρητό Control Record που απαγορεύει ανάπτυξη για λογαριασμό δικαστικής αρχής ή σε ADR χωρίς νέα έγκριση.",
+   "alternatives": [
+    {
+     "option": "(α) Εργαλείο δικηγόρου εκτός Annex III 8(a)· Art. 4, Art. 50 ως provider, τεκμηρίωση",
+     "pros": "Ακριβής ανάγνωση του κειμένου· χαμηλό κανονιστικό βάρος",
+     "cons": "Αν επεκταθεί σε ADR ή για λογαριασμό δικαστικής αρχής, γίνεται υψηλού κινδύνου (κατά τον tracker από 02/12/2027)"
+    },
+    {
+     "option": "(β) Εκούσια πλήρης συμμόρφωση υψηλού κινδύνου",
+     "pros": "Ανθεκτικό σε μελλοντική επέκταση· αυξάνει την εμπιστοσύνη",
+     "cons": "Κόστος (QMS, conformity assessment χωρίς νομική υποχρέωση)"
+    },
+    {
+     "option": "(γ) Ενεργή επιδίωξη χρήσης σε ADR",
+     "pros": "Νέα αγορά",
+     "cons": "Υψηλός κίνδυνος με όλες τις υποχρεώσεις· απομακρύνεται από την ιδιότητα senior partner"
+    }
+   ],
+   "rationale": "Η τελική ταξινόμηση θέλει γνωμοδότηση Principal (EXP-19)· οι υποχρεώσεις του Art. 50 ισχύουν όμως ήδη από 02/08/2026, και η απόφαση αλλάζει τώρα τα Control Records και την κονσόλα.",
+   "affects_ids": [
+    "CMP-LAW-09",
+    "EXP-19",
+    "ADR-0026",
+    "REQ-LAW-010",
+    "CMP-HUM-01",
+    "CMP-LAW-12"
+   ]
+  },
+  {
+   "id": "DEC-LAW-06",
+   "question": "Ποιος είναι ο ανθρώπινος συγκριτής του KT-15 («κορυφαία ανθρώπινη ομάδα») και ποιο το στατιστικό σχέδιο;",
+   "recommendation": "(γ): ποσοστημοριακή κατάταξη έναντι δεξαμενής ειδικών, με στόχο το 95ο εκατοστημόριο κατά τη μετρική του GreekBarBench· έπειτα τυφλή σύγκριση ανά ζεύγος (τύπου GDPval) με αμειβόμενη εξωτερική ομάδα ίσου χρόνου, στρωματοποιημένη ανά τύπο εργασίας. Όλα προκαταχωρισμένα, με υφολογική κανονικοποίηση και κατώφλι συμφωνίας κριτών.",
+   "alternatives": [
+    {
+     "option": "(α) Μία αμειβόμενη εξωτερική ομάδα ίσου χρόνου",
+     "pros": "Ρεαλιστικός συγκριτής",
+     "cons": "Ένα σημείο δεδομένων· ποιος πιστοποιεί ότι είναι «κορυφαία»· η baseline έμπειρων δικηγόρων έχει ήδη ξεπεραστεί από υπαρκτά συστήματα στη νομική έρευνα ΗΠΑ"
+    },
+    {
+     "option": "(β) Πάνελ ειδικών που επιλέγει ο δημιουργός",
+     "pros": "Ποιότητα κρίσης",
+     "cons": "Εξάρτηση από την επιλογή· κίνδυνος μεροληψίας"
+    },
+    {
+     "option": "(γ) Ποσοστημόρια δεξαμενής και ζεύγη τύπου GDPval",
+     "pros": "Στατιστική ισχύς· αντέχει στη διαρροή τυφλότητας",
+     "cons": "Μεγαλύτερο κόστος οργάνωσης"
+    }
+   ],
+   "rationale": "Στο GreekBarBench τα καλύτερα μοντέλα ξεπερνούν τον μέσο ειδικό αλλά όχι το 95ο εκατοστημόριο· στη Vals Legal Research (10/2025) τα AI εργαλεία ξεπέρασαν baseline έμπειρων δικηγόρων. Η επιλογή συγκριτή και rubric καθορίζει το αποτέλεσμα και πρέπει να προηγηθεί του πάγου των μετρικών (ADR-0027).",
+   "affects_ids": [
+    "KT-15",
+    "REQ-LAW-014",
+    "ADR-0027"
+   ]
+  },
+  {
+   "id": "DEC-LAW-07",
+   "question": "Επιτρέπεται μάθηση μεταξύ υποθέσεων (confidentiality domains);",
+   "recommendation": "(α) κατά κανόνα, με opt-in (γ) ανά πελάτη μέσω ενημερωμένης συναίνεσης που καταγράφεται ως Control Record.",
+   "alternatives": [
+    {
+     "option": "(α) Καμία μάθηση μεταξύ domains· μάθηση μόνο από δημόσιο corpus και υλικό του δημιουργού",
+     "pros": "Πλήρης συμμόρφωση με το απόρρητο· απλή απόδειξη (VT-205)",
+     "cons": "Χάνεται η εμπειρία των υποθέσεων (outcome learning)"
+    },
+    {
+     "option": "(β) Μάθηση αποπροσωποποιημένων διαδικαστικών/στρατηγικών μοτίβων υπό Control Record",
+     "pros": "Διατηρεί μέρος της μάθησης",
+     "cons": "Η αποπροσωποποίηση νομικών πραγματικών είναι αβέβαιη· η ανωνυμία πρέπει να αποδεικνύεται (EDPB 28/2024)"
+    },
+    {
+     "option": "(γ) Opt-in ανά πελάτη",
+     "pros": "Ενημερωμένη συναίνεση· κλιμακώσιμο",
+     "cons": "Πολυπλοκότητα διακυβέρνησης"
+    }
+   ],
+   "rationale": "Κλείνει το GAP-LAW-06 πριν σχεδιαστούν η consolidation και το outcome learning.",
+   "affects_ids": [
+    "INV-L03",
+    "CMP-LAW-01",
+    "REQ-LAW-001"
+   ]
+  },
+  {
+   "id": "DEC-LAW-08",
+   "question": "Όταν ο κανόνας προθεσμίας είναι αμφίσημος (π.χ. στρογγυλοποίηση μηνών στο τέλος μήνα, σειρά πρόσθεσης περιόδων), τι επιστρέφει το CMP-LAW-10;",
+   "recommendation": "(α): Unknown(ambiguous) με όλες τις υποψήφιες ημερομηνίες, συναγερμό στην πρωιμότερη και απόφαση Principal ως υπογεγραμμένη εγγραφή.",
+   "alternatives": [
+    {
+     "option": "(α) Unknown + συναγερμός στην πρωιμότερη + απόφαση Principal",
+     "pros": "Καμία σιωπηλή επιλογή· συντηρητικό απέναντι σε μη αναστρέψιμη ζημία",
+     "cons": "Φόρτος Principal· ψευδοσυναγερμοί"
+    },
+    {
+     "option": "(β) Προκαθορισμένο rounding mode ανά κανόνα (Tier-1 δεδομένα), χωρίς κλιμάκωση",
+     "pros": "Ντετερμινισμός· λιγότερος φόρτος",
+     "cons": "Αν η κωδικοποίηση του mode είναι λάθος, και οι δύο υπολογισμοί συμφωνούν στο λάθος"
+    },
+    {
+     "option": "(γ) Μόνο διπλός υπολογισμός, όπως στο πρόχειρο",
+     "pros": "Απλότητα",
+     "cons": "Δεν πιάνει κοινή αμφισημία"
+    }
+   ],
+   "rationale": "Η χαμένη προθεσμία είναι μη αναστρέψιμη· η τίμια άγνοια (INV-C04) προτιμά Unknown από σιωπηλή επιλογή.",
+   "affects_ids": [
+    "CMP-LAW-10",
+    "REQ-LAW-011"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 80,
+  "sources_failed": [
+   {
+    "url": "https://link.springer.com/article/10.1007/s10506-021-09306-3",
+    "problem": "Ανακατεύθυνση σε login· περιεχόμενο μη ορατό· ο ισχυρισμός «πολλές μελέτες φουσκώνουν τα αποτελέσματα με leakage» δεν στηρίζεται από το abstract",
+    "action": "Αντικαταστάθηκε από εγγραφή Semantic Scholar με abstract (Medvedeva, Wieling, Vols, AI & Law 31:195–212)· ο ισχυρισμός περιορίστηκε στη διάκριση identification/categorisation/forecasting"
+   },
+   {
+    "url": "https://plato.stanford.edu/entries/legal-probabilism/",
+    "problem": "Λάθος έτος (πρώτη δημοσίευση 08/06/2021, καμία ορατή αναθεώρηση 2024)· δεν παρουσιάζει την hybrid theory του Bex",
+    "action": "Έτος σε 2021· η hybrid theory τεκμηριώθηκε με Bex et al. 2010"
+   },
+   {
+    "url": "https://carneades.github.io/",
+    "problem": "Δεν τεκμηριώνει proof standards/βάρος απόδειξης",
+    "action": "Προστέθηκε Gordon, Prakken, Walton 2007 (Semantic Scholar)"
+   },
+   {
+    "url": "https://arxiv.org/abs/2103.03198",
+    "problem": "Το abstract λέει «a bug in the official implementation» (ενικός) και δεν αναφέρει default logic",
+    "action": "Διορθώθηκε σε ενικό· το default logic τεκμηριώθηκε από το GitHub README"
+   },
+   {
+    "url": "https://github.com/Lexpedite/blawx",
+    "problem": "Ο χαρακτηρισμός «alpha» δεν υπάρχει",
+    "action": "Αφαιρέθηκε· κρατήθηκε «not production-quality»"
+   },
+   {
+    "url": "https://arxiv.org/html/2405.20362",
+    "problem": "Δεν στηρίζει ότι η misgrounded παραπομπή είναι «η κύρια μορφή σφάλματος»· στηρίζει ότι είναι δυνητικά πιο επικίνδυνη",
+    "action": "Μαλακώθηκε σε SOTA-LAW-01, CMP-LAW-08, DEC-LAW-03"
+   },
+   {
+    "url": "https://arxiv.org/abs/2309.16289",
+    "problem": "Το «unreliable» δεν είναι αυτολεξεί· η δικαιοδοσία δεν φαίνεται στο abstract",
+    "action": "Διορθώθηκε το παράθεμα· προστέθηκε το GitHub του LawBench"
+   },
+   {
+    "url": "https://artificialintelligenceact.eu/implementation-timeline/",
+    "problem": "Δεν αναφέρει έναρξη ισχύος του Omnibus 27/07/2026· η εγγραφή εκείνης της ημερομηνίας αφορά τα Art. 102–110",
+    "action": "Ο ισχυρισμός αφαιρέθηκε· κρατήθηκαν οι επαληθευμένες ημερομηνίες"
+   },
+   {
+    "url": "https://digital-strategy.ec.europa.eu/en/library/digital-omnibus-ai-regulation-proposal",
+    "problem": "Σελίδα πρότασης χωρίς στοιχεία έκδοσης ή έναρξης ισχύος",
+    "action": "Χρησιμοποιείται μόνο για την ημερομηνία πρότασης"
+   },
+   {
+    "url": "https://artificialintelligenceact.eu/article/4/",
+    "problem": "Δείχνει τροποποίηση από το Omnibus με ασαφή απόδοση παλαιού/νέου κειμένου· ο ισχυρισμός «εφαρμόζεται από 02/2025» ήταν ελλιπής",
+    "action": "Σημειώθηκε η τροποποίηση· η ακριβής διατύπωση πέρασε στα unknowns"
+   },
+   {
+    "url": "https://artificialintelligenceact.eu/article/50/",
+    "problem": "Η εξαίρεση του 50(4) αφορά μόνο δημοσιεύσεις για ενημέρωση του κοινού σε θέματα δημόσιου ενδιαφέροντος· ο ερευνητής την εφάρμοσε σε νομικά παραδοτέα",
+    "action": "Διορθώθηκε σε ADR-0026, GAP-LAW-11, SOTA-LAW-16"
+   },
+   {
+    "url": "https://www.sra.org.uk/sra/news/press/garfield-ai-authorised/",
+    "problem": "Η ασφάλιση είναι γενική υποχρέωση κάθε ρυθμιζόμενου γραφείου, όχι όρος της έγκρισης· ονομαζόταν εμπορικό νομικό AI σύστημα",
+    "action": "Αναδιατυπώθηκε· αφαιρέθηκε το όνομα (κανόνας ονοματολογίας)"
+   },
+   {
+    "url": "https://openlegalstandard.org/",
+    "problem": "Το FOLIO παρουσιάζεται ως μετονομασία του SOLI, όχι ταυτόσημο με το SALI LMSS",
+    "action": "Διορθώθηκε σε SOTA-LAW-15 και GAP-LAW-05"
+   },
+   {
+    "url": "https://www.vals.ai/vlair",
+    "problem": "Η νομική έρευνα εξαιρέθηκε και δημοσιεύτηκε χωριστά (14/10/2025)· ο ερευνητής δεν την είχε",
+    "action": "Προστέθηκε η Legal Research Report"
+   },
+   {
+    "url": "https://www.areiospagos.gr/nomologia/apofaseis.asp",
+    "problem": "Προβλήματα κωδικοποίησης· τα φίλτρα είναι πεδία αριθμού, ημερομηνιών και διατάξεων, όχι «τύπου/έτους»",
+    "action": "Διορθώθηκε η περιγραφή"
+   },
+   {
+    "url": "https://arxiv.org/abs/2403.04651",
+    "problem": "Χρήση σε παραγωγή δεν αναφέρεται στην πηγή",
+    "action": "Maturity του SOTA-LAW-18 σε pilot με ρητή σημείωση"
+   },
+   {
+    "url": "https://www.sciencedirect.com/science/article/pii/S0004370207000677",
+    "problem": "403 (νέος έλεγχος)",
+    "action": "Χρησιμοποιήθηκε εγγραφή Semantic Scholar"
+   },
+   {
+    "url": "https://link.springer.com/article/10.1007/s10506-010-9092-x",
+    "problem": "Ανακατεύθυνση σε login (νέος έλεγχος)",
+    "action": "Χρησιμοποιήθηκε εγγραφή Semantic Scholar"
+   },
+   {
+    "url": "https://hal.science/search/index/?q=%22Formalizing+Date+Arithmetic%22",
+    "problem": "Access denied (νέος έλεγχος)",
+    "action": "Στηρίχτηκε στο README του dates-calc"
+   },
+   {
+    "url": "https://www.americanbar.org/content/dam/aba/administrative/professional_responsibility/ethics-opinions/aba-formal-opinion-512.pdf",
+    "problem": "403",
+    "action": "Παραμένει στα unknowns"
+   },
+   {
+    "url": "https://www.kodiko.gov.gr/",
+    "problem": "DNS failure",
+    "action": "Παραμένει στα unknowns"
+   },
+   {
+    "url": "https://eur-lex.europa.eu/eli-register/eli_in_eu_countries.html",
+    "problem": "404· η implementing_eli.html δεν περιέχει λίστα",
+    "action": "Κατάσταση ELI στην Ελλάδα στα unknowns"
+   },
+   {
+    "url": "https://e-justice.europa.eu/topics/legislation-and-case-law/european-case-law-identifier-ecli/greece_en",
+    "problem": "404",
+    "action": "Κατάσταση ECLI στην Ελλάδα στα unknowns"
+   },
+   {
+    "url": "https://arxiv.org/pdf/2103.03198",
+    "problem": "Δυαδικό PDF μη αναγνώσιμο· και το catala-lang.org χωρίς κείμενο",
+    "action": "Χρησιμοποιήθηκε το GitHub README"
+   }
+  ],
+  "corrections": [
+   {
+    "target": "summary",
+    "change": "Χρονολογήθηκαν τα ποσοστά 2024· προστέθηκε η Vals 10/2025· τρία ανώτερα (INV-L01, INV-L04, CMP-LAW-10)· CMP-LAW-12 και ICD-19 εκτός superior· διορθώθηκαν τα στοιχεία του AI Act",
+    "reason": "Ευρήματα επαλήθευσης πηγών"
+   },
+   {
+    "target": "SOTA-LAW-01",
+    "change": "Maturity σε research-prototype· αφαιρέθηκε η «κύρια μορφή σφάλματος»· προστέθηκε εγγραφή Semantic Scholar (venue JELS)",
+    "reason": "Εμπειρική μελέτη· ο ισχυρισμός δεν υπάρχει στην πηγή"
+   },
+   {
+    "target": "SOTA-LAW-03",
+    "change": "Διορθώθηκε το παράθεμα LawBench· δικαιοδοσία από GitHub· προστέθηκε SARA",
+    "reason": "Ακρίβεια παραθέματος· τεκμήριο για τον συμβολικό πυρήνα"
+   },
+   {
+    "target": "SOTA-LAW-07",
+    "change": "Kind σε research, maturity σε pilot· προστέθηκε η Legal Research Report 10/2025",
+    "reason": "Είναι αξιολόγηση, όχι σύστημα· κρίσιμο νέο τεκμήριο για KT-15"
+   },
+   {
+    "target": "SOTA-LAW-12",
+    "change": "Catala: «ένα bug», default logic από README, «core compilation steps»· Blawx χωρίς «alpha»",
+    "reason": "Αντιστοίχιση με τις πηγές"
+   },
+   {
+    "target": "SOTA-LAW-13",
+    "change": "SEP έτος 2021· hybrid theory από Bex 2010· βάρος απόδειξης από Carneades 2007· αφαιρέθηκε «reference class»",
+    "reason": "Λάθος απόδοση πηγών"
+   },
+   {
+    "target": "SOTA-LAW-14",
+    "change": "Συγγραφείς Medvedeva, Wieling, Vols· νέα πηγή· μαλακώθηκε ο ισχυρισμός leakage",
+    "reason": "Η Springer δεν ήταν προσβάσιμη· το abstract δεν στηρίζει το «φουσκώνουν»"
+   },
+   {
+    "target": "SOTA-LAW-15",
+    "change": "FOLIO ως μετονομασία του SOLI, χωριστά από το SALI LMSS",
+    "reason": "Πηγή FOLIO"
+   },
+   {
+    "target": "SOTA-LAW-16",
+    "change": "Αφαιρέθηκε η έναρξη ισχύος Omnibus 27/07/2026· Art. 4 τροποποιημένο· προστέθηκαν Art. 3(3)/3(11) και το πεδίο του 50(4)· εξαιρέσεις Art. 5(1)(f)",
+    "reason": "Tracker και κείμενα άρθρων"
+   },
+   {
+    "target": "SOTA-LAW-17",
+    "change": "Όνομα χωρίς εμπορικό σύστημα· ασφάλιση ως γενική υποχρέωση· προστέθηκαν conflicts/απόρρητο και εποπτεία",
+    "reason": "Κανόνας ονοματολογίας και πηγή SRA"
+   },
+   {
+    "target": "SOTA-LAW-18, SOTA-LAW-21",
+    "change": "Cedar maturity σε pilot· διορθώθηκε η περιγραφή ΑΠ και ΔΣΑ",
+    "reason": "Ανεπαλήθευτη παραγωγή· πηγές"
+   },
+   {
+    "target": "SOTA-LAW-23, SOTA-LAW-24, SOTA-LAW-25",
+    "change": "Προστέθηκαν dates-calc/ESOP 2024, Moise/JaCaMo, ν. 2019-222 άρθ. 33",
+    "reason": "Νέα ευρήματα ελέγχου με επαληθευμένες πηγές"
+   },
+   {
+    "target": "draft_point CMP-LAW-10",
+    "change": "holds σε superior-exists (ανίχνευση αμφισημίας ημερομηνιών)",
+    "reason": "Παραλειφθέν ανώτερο που κυριαρχεί του διπλού υπολογισμού"
+   },
+   {
+    "target": "draft_point CMP-LAW-12",
+    "change": "superior-exists σε holds",
+    "reason": "Το eIDAS «όπως τροποποιήθηκε» καλύπτει ήδη το EUDI Wallet· το OpenID4VP είναι εξειδίκευση, όχι αυστηρά ανώτερο"
+   },
+   {
+    "target": "draft_point ICD-19",
+    "change": "superior-exists σε gap· βρέθηκε ασυμφωνία με τη στήλη Provides του §6.3· απορρίφθηκε η αντιστοίχιση του ερευνητή",
+    "reason": "Εσωτερική ασυνέπεια και μη ανώτερο εξωτερικό συμβόλαιο"
+   },
+   {
+    "target": "draft_point ADR-0026",
+    "change": "Αφαιρέθηκε η εφαρμογή του Art. 50(4)",
+    "reason": "Το 50(4) αφορά μόνο δημοσιεύσεις δημόσιου ενδιαφέροντος"
+   },
+   {
+    "target": "draft_point CMP-LAW-08",
+    "change": "«Κύρια μορφή» σε «δυνητικά πιο επικίνδυνη»· προστέθηκαν τα τεκμήρια Vals· το σκέλος 5 χωρίστηκε σε διατάξεις/αποφάσεις",
+    "reason": "Πηγή Magesh· νέο τεκμήριο"
+   },
+   {
+    "target": "draft_point CMP-LAW-09",
+    "change": "Διορθώθηκαν στοιχεία AI Act· προστέθηκε η ιδιότητα provider για ίδια χρήση",
+    "reason": "Art. 3, tracker"
+   },
+   {
+    "target": "draft_points CMP-LAW-02, CMP-LAW-03, CMP-LAW-04, CMP-LAW-06, CMP-LAW-07, KT-15, ADR-0027",
+    "change": "«Πλουσιότερη από AKN» σε «συμπληρωματική»· διορθωμένες αποδόσεις πηγών· SARA· Court review στο draft_position του CMP-LAW-06· γαλλικός νόμος· Vals 10/2025· «μόνο εσωτερικά σύνολα» διορθώθηκε",
+    "reason": "Ακρίβεια έναντι πηγών και προχείρου"
+   },
+   {
+    "target": "GAP-LAW-04, GAP-LAW-07, GAP-LAW-08, GAP-LAW-09, GAP-LAW-10, GAP-LAW-11",
+    "change": "Αναδιατυπώθηκαν με τα επαληθευμένα στοιχεία· «ημερολογιακής» αντί «ημερομηνιακής»· dates-calc, γαλλικός νόμος, σωστές πηγές, σωστό πεδίο 50(4)",
+    "reason": "Επαλήθευση πηγών και προχείρου"
+   },
+   {
+    "target": "GAP-LAW-13, DEC-LAW-08",
+    "change": "Προστέθηκαν",
+    "reason": "Νέα ευρήματα (ICD-19 providers· πολιτική αμφίσημων προθεσμιών)"
+   },
+   {
+    "target": "DEC-LAW-01, DEC-LAW-03, DEC-LAW-04, DEC-LAW-05, DEC-LAW-06",
+    "change": "(γ) του DEC-LAW-01 χωρίς INV-C04 (αντί T1/ADR-0026)· rationale DEC-LAW-03 μαλακώθηκε· γαλλικός νόμος στο DEC-LAW-04· ημερομηνίες και Art. 50 στο DEC-LAW-05· Vals στο DEC-LAW-06",
+    "reason": "Δίκαιη παρουσίαση και ακρίβεια"
+   },
+   {
+    "target": "όλο το αντικείμενο",
+    "change": "Σύντομα IDs (π.χ. LAW-08) σε πλήρη (CMP-LAW-08)· αφαιρέθηκαν εύρη IDs (VT-701 έως VT-705, LAW-01 έως LAW-10)",
+    "reason": "Κανόνας 7 ονοματολογίας"
+   }
+  ],
+  "missed_superior_found": [
+   "CMP-LAW-10 / REQ-LAW-011: τυπική σημασιολογία αριθμητικής ημερομηνιών με ρητά rounding modes και στατική ανίχνευση αμφισημίας (Catala dates-calc, ESOP 2024)· ο διπλός υπολογισμός σε συμφωνία δεν πιάνει κοινή σιωπηρή στρογγυλοποίηση· verdict από holds σε superior-exists (SOTA-LAW-23, GAP-LAW-08, DEC-LAW-08)."
+  ]
+ }
+}

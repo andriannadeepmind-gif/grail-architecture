@@ -1,0 +1,1466 @@
+{
+ "layer_key": "PLT",
+ "summary": "Το ιστορικό του model πρέπει να ζει στο git, γιατί το SysON δεν έχει ούτε version control (cm.html, FAQ) ούτε authentication/authorization (security.html). Το REST API του δίνει ένα commit/branch ανά project και «the API for creating additional commits isn't functional». Η ADR-0002 έχει όμως κενό ως μηχανισμός: (1) συγκρούεται με την CLAUDE.md («ζωντανό SysML v2 model στο SysON, όχι ως κείμενο») και με το header του νέου, untracked platform/export-model.ps1 («The model lives in SysON»)· (2) τα «clients μέσω SysML v2 API» δεν πραγματοποιούνται με το SysON· (3) το κείμενο δεν φέρει element IDs (Sodius Willert 2026). Προτεινόμενος συνδυασμός για έγκριση: git = έδρα της εγκεκριμένης κατάστασης, με κείμενο .sysml και byte-exact SysON JSON· SysON + mcp-syson = έδρα εργασίας· μηχανική πύλη σε κάθε δόση. Κανένα υπαρκτό σύστημα δεν κυριαρχεί αυστηρά. Το Flexo MMS είναι beta. Το CATIA Teamwork Cloud δηλώνει πλήρη conformance στο API με branches/merge, αλλά είναι εμπορικό. Το Syside, που χρησιμοποιεί η πρακτική SEI 2026, έχει επί πληρωμή τα Modeler/Automator. Το EXP-17 στοχεύει εργαλεία εκτός της πραγματικής έδρας και είναι κενό, όχι «ανώτερο». Το CMP-MDL-01 υπερδηλώνει [T]. Την ADR-0001 την έχει ήδη υπερκεράσει το ξεχωριστό repo. Το τοπικό SysON είναι v2026.7.0, το ίδιο με το οποίο πιστοποιήθηκε το mcp-syson. Η αναφορά σιωπηλής μερικής εισαγωγής έρχεται μόνο στην 2026.11.0, που είναι υπό ανάπτυξη.",
+ "sota": [
+  {
+   "id": "SOTA-PLT-01",
+   "name": "OMG SysML 2.0 + KerML 1.0 + Systems Modeling API & Services 1.0",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Final adoption 21-07-2025, formal έκδοση Σεπτ. 2025 και για τα τρία. Το API έχει PIM και PSMs, με REST/HTTP και JSON schemas για OpenAPI/KerML/SysML. Το Cookbook καλύπτει Projects/Commits/Branches/Tags/Elements/Queries. Η OMG ανέφερε (07-2025) reference implementation και conformance test suite υπό ανάπτυξη· η σημερινή κατάστασή της δεν τεκμηριώνεται.",
+   "relevance": "Η μόνη προτυποποιημένη γλώσσα και API για την έδρα. Η γραμμή βάσης για τις ADR-0002 και ICD-32.",
+   "sources": [
+    {
+     "title": "OMG Approves Final Adoption of the SysML V2 Specification",
+     "url": "https://www.omg.org/news/releases/pr2025/07-21-25.htm",
+     "year": "2025"
+    },
+    {
+     "title": "OMG SysML specification versions",
+     "url": "https://www.omg.org/spec/SysML/",
+     "year": "2025"
+    },
+    {
+     "title": "OMG KerML specification",
+     "url": "https://www.omg.org/spec/KerML/",
+     "year": "2025"
+    },
+    {
+     "title": "Systems Modeling API and Services",
+     "url": "https://www.omg.org/spec/SystemsModelingAPI/",
+     "year": "2025"
+    },
+    {
+     "title": "SysML-v2-API-Cookbook",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-API-Cookbook",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-02",
+   "name": "KerML 1.1 Beta 2 / SysML 2.1 Beta 2 (αναθεωρήσεις υπό εξέλιξη)",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Η pilot release 2026-07 (0.61.0, 20-08-2026) «brings the implementation into conformance with the KerML 1.1 Beta 2 and SysML 2.1 Beta 2 metamodels». Ακολούθησε η 0.62.0 (11-09-2026). Οι δημόσιες σελίδες προδιαγραφών της OMG δείχνουν μόνο τις 2.0/1.0 formal.",
+   "relevance": "Κίνδυνος version drift: οι libraries του SysON είναι «SysMLv2 and KerML 2025-07» (από την 2025.10.0). Χρειάζεται pin έκδοσης.",
+   "sources": [
+    {
+     "title": "SysML-v2-Pilot-Implementation releases",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation/releases",
+     "year": "2026"
+    },
+    {
+     "title": "SysON release notes",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/release-notes/release-notes.html",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-03",
+   "name": "Eclipse SysON v2026.x (Obeo + CEA, EPL-2.0)",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Web γραφικό εργαλείο SysML v2 με textual import/export .sysml ανά document («some concept are still under development»), GraphQL InsertTextualSysMLv2/UploadDocument, GET document ως κείμενο (Accept: text/html) και project archive ZIP με manifest documentIdsToName. Όρια: 150.000 σημασιολογικά στοιχεία, 1.000 ανά representation, 80 ταυτόχρονοι χρήστες, ~10 MB. «SysON doesn't include built-in version control tools»· προτείνει ZIP ανά έκδοση μέσα σε Git. «SysON does not include built-in mechanisms for authentication or authorization». REST API: ένα commit/branch ανά project, «API for creating additional commits isn't functional». Validation «experimental… not recommended for production». Satisfy στο Requirements View «not yet available», αλλά textual export SatisfyRequirementUsage από την 2026.1.0· derivation edges (#original/#derive) από την 2026.9.0. Η αναφορά συντακτικών σφαλμάτων που αφήνουν upload «partially imported» είναι στην 2026.11.0 (work in progress). Εκδόσεις: v2026.7.0 (10-07-2026), v2026.9.0 (09-09-2026). Ωριμότητα: teaching/research/industrial pilot· Early Adopter Program για επιχειρησιακή χρήση το 2026.",
+   "relevance": "Η επιλεγμένη ζωντανή πλατφόρμα και το τοπικό image v2026.7.0 (επιβεβαιωμένο με docker inspect). Ισχυρή στην επεξεργασία από agents, στα διαγράμματα και στα όρια κλίμακας. Αδύναμη σε ιστορικό, έλεγχο πρόσβασης, fidelity του κειμένου και satisfy/verify.",
+   "sources": [
+    {
+     "title": "SysON SysML v2 textual format",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/import-export-textual.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON release notes",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/release-notes/release-notes.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON Version control and change management",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/cm.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON Security and compliance",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/security.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON FAQ",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/faq/faq.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON Scaling limits",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/scaling-limits.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON API details",
+     "url": "https://doc.mbse-syson.org/syson/main/developer-guide/api/api-details.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON APIs cookbook",
+     "url": "https://doc.mbse-syson.org/syson/main/developer-guide/api/api-cookbook.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON Requirements management",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/requirement-management.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON Validation",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/validation.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON home (maturity, Early Adopter)",
+     "url": "https://mbse-syson.org/",
+     "year": "2026"
+    },
+    {
+     "title": "eclipse-syson/syson releases",
+     "url": "https://github.com/eclipse-syson/syson/releases",
+     "year": "2026"
+    },
+    {
+     "title": "eclipse-syson/syson (Obeo, CEA)",
+     "url": "https://github.com/eclipse-syson/syson",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-04",
+   "name": "mcp-syson 0.8.7 (Casys AI, MIT, 05-09-2026)",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "MCP provider για SysON (GraphQL + REST) με 31 εργαλεία syson_* (επιβεβαιωμένα από το τοπικό tool listing). Κανένα δεν κάνει textual export, commit ή diff. Fail-closed delete: αναφέρει «deleted: true» μόνο αφού REST GET αποδείξει απουσία. Read-back για κρίσιμες εγγραφές· OUTCOME_UNKNOWN «Do not retry». «SysON and its PostgreSQL database remain authoritative for live model state». Η AQL μπορεί να μεταλλάξει (eSet) και να παρακάμψει το editor command path. Οι τιμές είναι αδιάστατες (δεν διαβάζει MeasurementReferences). Η 0.8.4 (30-08-2026) πιστοποιήθηκε έναντι digest-pinned SysON v2026.7.0. Το stdio αφαιρέθηκε στην 0.4.0 και επανήλθε («Native --stdio») στην 0.8.0.",
+   "relevance": "Η σημερινή λύση για ζωντανή εγγραφή από agents, με τεκμηριωμένα όρια ασφάλειας.",
+   "sources": [
+    {
+     "title": "Casys-AI/mcp-syson",
+     "url": "https://github.com/Casys-AI/mcp-syson",
+     "year": "2026"
+    },
+    {
+     "title": "mcp-syson CHANGELOG",
+     "url": "https://raw.githubusercontent.com/Casys-AI/mcp-syson/main/CHANGELOG.md",
+     "year": "2026"
+    },
+    {
+     "title": "mcp-syson capabilities and safety",
+     "url": "https://github.com/Casys-AI/mcp-syson/blob/main/docs/capabilities-and-safety.md",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-05",
+   "name": "OMG SysML v2 Pilot Implementation",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Reference Xtext parser/editor για .sysml και .kerml μέσα στο Eclipse, με Jupyter kernel και PlantUML visualization. EPL από την 2026-04· 0.62.0 στις 11-09-2026. Τα README του repo και του SysML-v2-Release δεν τεκμηριώνουν headless/CLI parse-validate για CI.",
+   "relevance": "Ανεξάρτητος reference oracle. Η χρήση του σε CI απαιτεί πείραμα (π.χ. μέσω Jupyter kernel ή Xtext standalone).",
+   "sources": [
+    {
+     "title": "SysML-v2-Pilot-Implementation",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation",
+     "year": "2026"
+    },
+    {
+     "title": "Pilot releases",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation/releases",
+     "year": "2026"
+    },
+    {
+     "title": "SysML-v2-Release",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-Release",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-06",
+   "name": "SysML v2 API Services (reference, PoC)",
+   "kind": "tool",
+   "maturity": "research-prototype",
+   "what": "«Proof-of-concept pilot implementation for the Systems Modeling API and Services» με PostgreSQL. Release 2026-04 (14-05-2026), άδεια EPL.",
+   "relevance": "Πιθανός provider για ICD-32 (commits/branches), όχι βαθμού παραγωγής.",
+   "sources": [
+    {
+     "title": "SysML-v2-API-Services",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-API-Services",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "SysML-v2-API-Services releases",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-API-Services/releases",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-07",
+   "name": "OpenMBEE Flexo MMS SysML v2 (+ Flexo MCP)",
+   "kind": "system",
+   "maturity": "pilot",
+   "what": "REST/HTTP PSM του Systems Modeling API πάνω στο Flexo, graph-native/RDF, με Layer 1 σε Apache Jena Fuseki quadstore (Apache-2.0). Beta («try out the beta»), με diff μοντέλων. Ο Flexo MCP server έχει 35 εργαλεία, μεταξύ τους Branches, Commits και Merge· 10 commits.",
+   "relevance": "Η μόνη ανοιχτή λύση με ιστορικό μέσα στο πρότυπο API. Εναλλακτική έδρα ή provider για ICD-32, μη ώριμη και χωρίς ενσωμάτωση με SysON.",
+   "sources": [
+    {
+     "title": "OpenMBEE Flexo",
+     "url": "https://www.openmbee.org/flexo.html",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "flexo-mms-sysmlv2",
+     "url": "https://github.com/Open-MBEE/flexo-mms-sysmlv2",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "flexo-mms-layer1-service",
+     "url": "https://github.com/Open-MBEE/flexo-mms-layer1-service",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "flexo-mms-sysmlv2-mcp",
+     "url": "https://github.com/Open-MBEE/flexo-mms-sysmlv2-mcp",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-08",
+   "name": "Syside (Sensmetry): Editor / Modeler / Automator",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Text-first SysML v2 στο VS Code. Το Editor είναι δωρεάν· τα Modeler και Automator «paid-for and licensed». Headless CLI για validate/format/export διαγραμμάτων και CSV σε CI/CD. Διαγράμματα με τη μηχανή Tom Sawyer. On-prem και air-gapped. Roadmap (13-05-2026): v1 το Q3 2026, MCP servers, αρχική υποστήριξη SysML v2 API (Q2) και model servers (Q3) μέσω Automator. Είναι το language-aware toolchain της πρακτικής SEI 2026.",
+   "relevance": "Το πιο τεκμηριωμένο text+git+CI toolchain. Κόστος άδειας και εξάρτηση από vendor για την πύλη.",
+   "sources": [
+    {
+     "title": "Syside",
+     "url": "https://sensmetry.com/syside/",
+     "year": "2026"
+    },
+    {
+     "title": "Syside Automator docs",
+     "url": "https://docs.sensmetry.com/automator/index.html",
+     "year": "2026"
+    },
+    {
+     "title": "Syside Modeler docs",
+     "url": "https://docs.sensmetry.com/modeler/index.html",
+     "year": "2026"
+    },
+    {
+     "title": "Syside Roadmap Q2 2026 update",
+     "url": "https://sensmetry.com/product-roadmap-2026-q2-update/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-09",
+   "name": "Sysand (package manager SysML v2/KerML)",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Package manager για model interchange projects (.kpar, KerML clause 10.3), με official index (sysand.com) και private indexes, CLI και Python/Java APIs. MIT/Apache-2.0. Ο v1 στοχεύεται το Q3 2026.",
+   "relevance": "Μηχανισμός για pinned αναφορές βιβλιοθηκών ανάμεσα σε repos χωρίς συγχώνευσή τους. Χρήση git ως πηγής δεν τεκμηριώνεται στο README.",
+   "sources": [
+    {
+     "title": "sensmetry/sysand",
+     "url": "https://github.com/sensmetry/sysand",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Introducing Sysand",
+     "url": "https://sensmetry.com/introducing-sysand-the-package-manager-for-the-sysml-v2-ecosystem/",
+     "year": "2025"
+    },
+    {
+     "title": "Syside Roadmap Q2 2026 update",
+     "url": "https://sensmetry.com/product-roadmap-2026-q2-update/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-10",
+   "name": "CATIA Magic / Cameo SysML v2 (2026x) + Teamwork Cloud",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Άμεσος αμφίδρομος συγχρονισμός κειμένου και γραφικών. «Teamwork Cloud fully conforms to the SysML v2 API and Services specification» (δήλωση vendor)· branches με επανένταξη μέσω model patch και αυτόματο merge. Η δωρεάν Community Edition: «up to 500 major elements», για μάθηση/εκπαίδευση, χωρίς δημοσιευμένο ορισμό του major element.",
+   "relevance": "Εμπορικός provider που καλύπτει ιστορικό και API, με vendor lock-in. Το πρόχειρο έχει ~345 IDs πριν από σχέσεις, ports και usages, οπότε η CE είναι εύλογα ανεπαρκής· ακριβής σύγκριση αδύνατη χωρίς τον ορισμό.",
+   "sources": [
+    {
+     "title": "CATIA Magic/Cameo SysML v2 Solution",
+     "url": "https://docs.nomagic.com/SYSML2P/2026x/catia-magic-cameo-sysml-v2-solution-272740940.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysML v2 Community Edition",
+     "url": "https://docs.nomagic.com/SYSML2P/2026x/catia-magic-cameo-sysml-v2-community-edition-286557495.html",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-11",
+   "name": "IBM Rhapsody Systems Engineering 1.5 / 1.8",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Η 1.5 (14-10-2025) φέρνει ιδιωτικά branches έναντι του δημόσιου «main» για υιοθέτηση του SysML v2. Η 1.8 (09-07-2026) φέρνει AI MCP API και υποστήριξη air-gapped.",
+   "relevance": "Εμπορικό σημείο αναφοράς. Οι ανακοινώσεις δεν τεκμηριώνουν textual interchange ούτε conformance στο SysML v2 API.",
+   "sources": [
+    {
+     "title": "Rhapsody SE 1.8",
+     "url": "https://www.ibm.com/new/announcements/scaling-sysml-v2-systems-engineering-with-ibm-rhapsody-systems-engineering-v1-8",
+     "year": "2026"
+    },
+    {
+     "title": "Rhapsody SE 1.5",
+     "url": "https://www.ibm.com/new/announcements/ibm-introduces-rhapsody-systems-engineering-v1-5-simplifying-the-adoption-of-sysml-v2-for-complex-product-development",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-12",
+   "name": "PySAM (ansys-sam-sysml2)",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Η 0.3.3 (03-09-2026, MIT, Beta) φορτώνει models από εργαλεία που υλοποιούν το πρότυπο SysML v2 API, επιτρέπει επεξεργασία σε Python και συγχρονίζει πίσω.",
+   "relevance": "Παράδειγμα Python client πάνω στο πρότυπο API. Συνδέεται με την εμπορική πλατφόρμα Ansys SAM.",
+   "sources": [
+    {
+     "title": "ansys-sam-sysml2 (PyPI)",
+     "url": "https://pypi.org/project/ansys-sam-sysml2/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-13",
+   "name": "Tom Sawyer SysML v2 Viewer 2.1",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Automatic layout και ενσωμάτωση «with any SysML v2 API-compliant repository» (20-05-2026, πάνω στο reference implementation 2026-03). Είναι επίσης η μηχανή διαγραμμάτων του Syside Modeler.",
+   "relevance": "Διαγράμματα ως παραγόμενες προβολές (ADR-0033). Εμπορικό.",
+   "sources": [
+    {
+     "title": "Tom Sawyer SysML v2 Viewer 2.1",
+     "url": "https://www.tomsawyer.com/news/tom-sawyer-software-releases-sysml-v2-viewer-2.1",
+     "year": "2026"
+    },
+    {
+     "title": "Syside Modeler docs",
+     "url": "https://docs.sensmetry.com/modeler/index.html",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-14",
+   "name": "Ανεξάρτητοι parsers: MontiCore sysmlv2, sysml-v2-lsp",
+   "kind": "tool",
+   "maturity": "research-prototype",
+   "what": "MontiCore: «second SysML v2 parser for comparison… with the Pilot», με CLI (java -jar MCSysMLv2.jar -i …). Τα context conditions «definitely not yet complete»· άδεια BSD-3-based. sysml-v2-lsp: ANTLR4 LSP με semantic validation (unresolved types, multiplicity, duplicates) και sysml-mcp CLI, MIT.",
+   "relevance": "Υποψήφιοι για N-version parsing στην πύλη, σύμφωνα με το δόγμα N-version του GRAIL. Ελλιπείς σημασιολογικοί έλεγχοι.",
+   "sources": [
+    {
+     "title": "MontiCore/sysmlv2",
+     "url": "https://github.com/MontiCore/sysmlv2",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "daltskin/sysml-v2-lsp",
+     "url": "https://github.com/daltskin/sysml-v2-lsp",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-15",
+   "name": "SEI/CMU: Native AI integration for MBSE (3 layers)",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "Τρία στρώματα (C. Dempsey, 02-09-2026): (1) AI coding assistants πάνω σε version-controlled artifacts, (2) language-aware toolchain (Syside μέσω LSP και CLI στο CI), (3) knowledge/workflow layer με Markdown οδηγούς, MCP retrieval και skill files. Ένα καθαρό validation run δείχνει μόνο ότι το model περνά τους ελέγχους· απαιτείται ανθρώπινη engineering review.",
+   "relevance": "Η πιο πρόσφατη τεκμηριωμένη πρακτική agent-authored MBSE: κείμενο + git + μηχανικός έλεγχος + ανθρώπινη έγκριση.",
+   "sources": [
+    {
+     "title": "Native AI Integration for MBSE: Three Layers",
+     "url": "https://www.sei.cmu.edu/blog/native-ai-integration-for-model-based-systems-engineering-three-layers-that-make-it-work/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-16",
+   "name": "Έρευνα LLM → SysML v2",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "SysTemp: multi-agent με template generator (το abstract δεν αναφέρει parser feedback). SysMBench: 151 σενάρια, 17 LLMs, μέγιστο SysMEval-F1 62%. KG-augmented semantic fault localization (22-06-2026): repair από <3% σε >91% μετά από fine-tuning μικρού μοντέλου, με human-in-the-loop. LLM semantic alignment (ISSE 2025).",
+   "relevance": "Η παραγωγή από LLM δεν είναι αξιόπιστη χωρίς μηχανικό έλεγχο και ανθρώπινη έγκριση, άρα η πύλη είναι υποχρεωτική.",
+   "sources": [
+    {
+     "title": "SysTemp",
+     "url": "https://arxiv.org/abs/2506.21608",
+     "year": "2025"
+    },
+    {
+     "title": "System Model Generation Benchmark (SysMBench)",
+     "url": "https://arxiv.org/abs/2508.03215",
+     "year": "2025"
+    },
+    {
+     "title": "Automated Semantic Fault Localization in SysML v2",
+     "url": "https://arxiv.org/abs/2606.23395",
+     "year": "2026"
+    },
+    {
+     "title": "LLM-Assisted Semantic Alignment with SysML v2",
+     "url": "https://arxiv.org/abs/2508.16181",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-17",
+   "name": "Textual vs JSON interchange (element IDs)",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Η textual interchange είναι «less suited for round-trip scenarios due to the absence of element identifiers». Για round-trip προτείνεται JSON-based interchange, ιδανικά μαζί με το κείμενο (04-03-2026).",
+   "relevance": "Μια επανεισαγωγή από κείμενο δεν διατηρεί IDs. Ένα byte-exact JSON αντίγραφο στο git είναι ο πιθανός μετριασμός (ανεπαλήθευτο για το SysON).",
+   "sources": [
+    {
+     "title": "A Practical Guide for SysML v2 Adoption (Sodius Willert)",
+     "url": "https://www.sodiuswillert.com/en/blog/a-practical-guide-for-sysml-v2-adoption",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-18",
+   "name": "Capella/Arcadia ↔ SysML v2",
+   "kind": "tool",
+   "maturity": "research-prototype",
+   "what": "Arcadia library για SysML v2 (10-06-2026): «a first, foundational step», «still an early basis». Το SysML Bridge for Capella είναι custom υπηρεσία για SysML v1.4 (Eclipse UML XMI), όχι SysML v2.",
+   "relevance": "Το «Capella bridge» του EXP-17 δεν είναι σήμερα SysML v2 client.",
+   "sources": [
+    {
+     "title": "Obeo strengthens its commitment to the future of Capella",
+     "url": "https://blog.obeosoft.com/obeo-strengthens-its-commitment-to-the-future-of-capella",
+     "year": "2026"
+    },
+    {
+     "title": "SysML Bridge for Capella",
+     "url": "https://www.obeosoft.com/en/products/sysml-bridge-for-capella/",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-19",
+   "name": "Structurizr (C4 models as code)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "DSL και όλες οι εντολές δωρεάν, εκτός του server με prebuilt binaries (v2026.06.28) που θέλει άδεια. Lite και On-Premises σε end of life.",
+   "relevance": "Προαιρετική C4 προβολή (architecture/workspace.dsl). Δεν βρέθηκε generator από SysML v2.",
+   "sources": [
+    {
+     "title": "Structurizr docs",
+     "url": "https://docs.structurizr.com/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-20",
+   "name": "Άλλοι SysML v2 MCP servers και Gaphor",
+   "kind": "tool",
+   "maturity": "research-prototype",
+   "what": "redsteve SysML-v2-API-MCP-Server: C++, MIT, «WORK IN PROGRESS… by no means suitable for productive use». Dassault: MCP πάνω στο SysML v2 REST API, prototype demo (02-12-2025). Gaphor: core language-agnostic από την 3.0 (01-2025)· η πλήρης υποστήριξη SysML v2 είναι ανοιχτό issue (milestone 4.0).",
+   "relevance": "Κανένας τεκμηριωμένα ωριμότερος από το mcp-syson για ζωντανή on-prem εγγραφή (δεν ελέγχθηκε το Flexo MCP σε λειτουργία).",
+   "sources": [
+    {
+     "title": "redsteve/SysML-v2-API-MCP-Server",
+     "url": "https://github.com/redsteve/SysML-v2-API-MCP-Server",
+     "year": "2025"
+    },
+    {
+     "title": "SysML v2 MCP is Next Level Digital Engineering",
+     "url": "https://3dswym.3dexperience.3ds.com/post/catia-mbse-cyber-systems/sysml-v2-mcp-is-next-level-digital-engineering_ZhL0f2H8TL-_b6m9fDkX9w",
+     "year": "2025"
+    },
+    {
+     "title": "Gaphor: Full Support for SysML v2 (issue)",
+     "url": "https://github.com/gaphor/gaphor/issues/1399",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Gaphor 3.0",
+     "url": "https://gaphor.org/de/2025/01/26/gaphor-3.0/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-PLT-21",
+   "name": "Git signed commits/tags",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "commit -S, tag -s, log --show-signature, merge --verify-signatures, commit.gpgsign.",
+   "relevance": "Το σημερινό ισοδύναμο του «κάθε αλλαγή σχεδίου = υπογεγραμμένο γεγονός» (P5), χωρίς ledger.",
+   "sources": [
+    {
+     "title": "Git Tools - Signing Your Work",
+     "url": "https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work",
+     "year": "2026 (accessed)"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "REQ-MDL-001"
+   ],
+   "draft_ref": "29.md §29.9 γρ. 168",
+   "draft_position": "Το canonical model είναι η μία έδρα· όλες οι προβολές, οι πίνακες και η μελέτη παράγονται από αυτό (VT-901, VT-903, EXP-17· [T]).",
+   "verdict": "holds",
+   "reasoning": "Η αρχή «μία σημασιολογική έδρα, προβολές μόνο παραγόμενες» συμπίπτει με την πρακτική του SysML v2. Στο SysON τα diagrams/tables είναι representations του ίδιου σημασιολογικού model. Οι viewers αποδίδουν από το model/API (Tom Sawyer, PlantUML του pilot). Η SEI 2026 δουλεύει με ένα version-controlled model και μηχανικό έλεγχο. Το «[T]» όμως δεν στέκει: οι generators (archgen, §30) δεν υπάρχουν, η fidelity του SysON export δεν έχει αποδειχθεί («some concept are still under development»), και η στήλη επαλήθευσης δείχνει στο EXP-17, που δεν ελέγχει τον δρόμο SysON↔git. Το ποια αποθήκη είναι η έδρα κρίνεται στο ADR-0002 και στο DEC-PLT-01.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-05",
+    "SOTA-PLT-13",
+    "SOTA-PLT-15"
+   ],
+   "sources": [
+    {
+     "title": "SysON SysML v2 textual format",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/import-export-textual.html",
+     "year": "2026"
+    },
+    {
+     "title": "SEI three layers",
+     "url": "https://www.sei.cmu.edu/blog/native-ai-integration-for-model-based-systems-engineering-three-layers-that-make-it-work/",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0002"
+   ],
+   "draft_ref": "22.md γρ. 8",
+   "draft_position": "Canonical model seat: textual SysML v2/KerML στο git· τα εργαλεία MBSE είναι clients μέσω SysML v2 API· όλες οι προβολές generated (MDL-01, ICD-32, VT-901, EXP-17).",
+   "verdict": "gap",
+   "reasoning": "Το «ιστορικό στο git» ενισχύεται από το SOTA: το SysON δεν έχει built-in version control (cm.html· προτείνει ZIP μέσα σε Git) ούτε authentication/authorization, και το REST API του δεν δημιουργεί commits. Ο μηχανισμός της ADR όμως έχει τρία κενά. (1) Συγκρούεται με το ισχύον συμβόλαιο: η CLAUDE.md ορίζει «ζωντανό SysML v2 model στο SysON, όχι ως κείμενο», και το untracked platform/export-model.ps1 γράφει «The model lives in SysON; do not edit this file by hand». Η έδρα λοιπόν είναι σήμερα αντιφατική. (2) Το «clients μέσω SysML v2 API» δεν πραγματοποιείται με το SysON (ένα commit/branch)· οι clients μπαίνουν μέσω GraphQL/textual import και MCP. (3) Το κείμενο δεν φέρει element IDs (Sodius Willert 2026), οπότε μια έδρα μόνο-κείμενο δεν αναπαράγει πιστά την κατάσταση του SysON. Το export script κρατά ήδη και byte-exact SysON JSON, αλλά αν η επαναφόρτωσή του διατηρεί IDs δεν ξέρω. Η επίλυση είναι απόφαση του δημιουργού (DEC-PLT-01).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-01",
+    "SOTA-PLT-03",
+    "SOTA-PLT-07",
+    "SOTA-PLT-15",
+    "SOTA-PLT-17"
+   ],
+   "sources": [
+    {
+     "title": "SysON Version control and change management",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/cm.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON API details",
+     "url": "https://doc.mbse-syson.org/syson/main/developer-guide/api/api-details.html",
+     "year": "2026"
+    },
+    {
+     "title": "Sodius Willert guide",
+     "url": "https://www.sodiuswillert.com/en/blog/a-practical-guide-for-sysml-v2-adoption",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-MDL-01"
+   ],
+   "draft_ref": "master §6.3 γρ. 578",
+   "draft_position": "Canonical Model & Generators: έδρα SysML v2/KerML, SysML v2 API server, archgen (προβολές, πίνακες, orphan gate), design-change events. ICD-32 → ICD-01 (self-hosting από GP-0.5). Τεχνολογίες: SysML v2, SysIDE, Python. Κατάσταση [T].",
+   "verdict": "gap",
+   "reasoning": "Η ετικέτα [T] υπερδηλώνεται. (1) Δεν υπάρχει archgen: η §30 δεν γράφτηκε και δεν υπάρχει tools/ στο repo. (2) Δεν υπάρχει SysML v2 API server με commits στην πλατφόρμα (SysON: ένα commit). (3) Για τα «design-change events» δεν βρέθηκε αντίστοιχο στο πρότυπο API· αν υπάρχει, δεν ξέρω. (4) Το «SysIDE» σήμερα λέγεται Syside· τα Modeler/Automator είναι «paid-for and licensed», αν και είναι το toolchain της πρακτικής SEI 2026. (5) Το GP-0.5 δεν ορίζεται πουθενά· το spine έχει μόνο ακέραιες GP-n. (6) Δεν ονομάζονται η πραγματική πλατφόρμα (SysON + mcp-syson) και ο δρόμος export. Στο working tree υπάρχει untracked platform/export-model.ps1: GET /api/editingcontexts/{ec}/documents/{doc} με Accept: text/html, project ZIP, JSON copy και έλεγχος logs του SysMLv2DocumentExporter. Δεν είναι committed και το model/ δεν υπάρχει.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-04",
+    "SOTA-PLT-05",
+    "SOTA-PLT-08",
+    "SOTA-PLT-14"
+   ],
+   "sources": [
+    {
+     "title": "Syside Automator docs",
+     "url": "https://docs.sensmetry.com/automator/index.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON APIs cookbook",
+     "url": "https://doc.mbse-syson.org/syson/main/developer-guide/api/api-cookbook.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON API details",
+     "url": "https://doc.mbse-syson.org/syson/main/developer-guide/api/api-details.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "REQ-MDL-002"
+   ],
+   "draft_ref": "29.md §29.9 γρ. 169· 29.md γρ. 7–10",
+   "draft_position": "Το model gate αποτυγχάνει σε κάθε ορφανή απαίτηση, component, interface, invariant ή test (VT-901). Κανόνες ορφανών: κάθε REQ έχει ≥1 Telos/CMP/ICD/test/evidence· κάθε CMP/ICD/INV/VT/KT/EXP εμφανίζεται σε ≥1 REQ.",
+   "verdict": "holds",
+   "reasoning": "Υλοποιείται ως script CI πάνω στο exported model, αφού το SysML v2 έχει εγγενώς satisfy/verify/derivation. Το SysON εξάγει SatisfyRequirementUsage από την 2026.1.0· τα derivation edges (#original/#derive) είναι μόνο από την 2026.9.0, όχι στο τοπικό v2026.7.0. Η πύλη δεν πρέπει να στηρίζεται στο SysON: η validation είναι «experimental… not recommended for production», το satisfy στο Requirements View «not yet available», και για το verify δεν υπάρχει τεκμηρίωση. Οι κανόνες ορφανών του VT-901 είναι custom, όχι του προτύπου. Με SysMBench F1 ≤62% και την προειδοποίηση της SEI ότι το validation δεν αρκεί, η πύλη και η ανθρώπινη έγκριση είναι απαραίτητες.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-04",
+    "SOTA-PLT-14",
+    "SOTA-PLT-15",
+    "SOTA-PLT-16"
+   ],
+   "sources": [
+    {
+     "title": "SysON release notes",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/release-notes/release-notes.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON Validation",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/validation.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysMBench",
+     "url": "https://arxiv.org/abs/2508.03215",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ICD-32"
+   ],
+   "draft_ref": "15.md γρ. 62· spine-vocab γρ. 62",
+   "draft_position": "Canonical Model API = OMG SysML v2 API (REST/JSON): Commit/Branch/Query elements, Generate(view), Check() (orphans/traceability), design-change events (spine), git-backed seat, VT-032.",
+   "verdict": "holds",
+   "reasoning": "Το formal Systems Modeling API 1.0 ως συμβόλαιο είναι η σωστή επιλογή· ανώτερο πρότυπο δεν υπάρχει. Κανένας provider όμως στην επιλεγμένη πλατφόρμα δεν το καλύπτει με ιστορικό: στο SysON η δημιουργία commits δεν λειτουργεί, το API Services είναι PoC, το Flexo MMS είναι beta. Εμπορικά, το Teamwork Cloud δηλώνει πλήρη conformance με branches/merge. Τα Generate(view) και Check() είναι επεκτάσεις του GRAIL έξω από το OMG API. Αν το API ορίζει events/subscriptions δεν το ξέρω (η σελίδα της OMG δεν τα αναφέρει). Git-backed SysML v2 API server δεν βρέθηκε. Άρα: συμβόλαιο σήμερα, υλοποίηση αργότερα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-01",
+    "SOTA-PLT-03",
+    "SOTA-PLT-06",
+    "SOTA-PLT-07",
+    "SOTA-PLT-10"
+   ],
+   "sources": [
+    {
+     "title": "Systems Modeling API and Services",
+     "url": "https://www.omg.org/spec/SystemsModelingAPI/",
+     "year": "2025"
+    },
+    {
+     "title": "SysON API details",
+     "url": "https://doc.mbse-syson.org/syson/main/developer-guide/api/api-details.html",
+     "year": "2026"
+    },
+    {
+     "title": "flexo-mms-sysmlv2",
+     "url": "https://github.com/Open-MBEE/flexo-mms-sysmlv2",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "CATIA Magic/Cameo SysML v2 Solution",
+     "url": "https://docs.nomagic.com/SYSML2P/2026x/catia-magic-cameo-sysml-v2-solution-272740940.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-17"
+   ],
+   "draft_ref": "26.md γρ. 44 και γρ. 11 (κριτήριο εξόδου GP-0)· 31.md §31.5",
+   "draft_position": "Ωριμότητα διαλειτουργίας MBSE μέσω SysML v2 API: round-trip σε CATIA Magic / SysIDE / Capella bridge / Rhapsody. Εργαλείο με απώλειες γίνεται μόνο viewer ή μένει εκτός· η έδρα μένει ανεπηρέαστη. Η αναφορά του είναι κριτήριο εξόδου του GP-0.",
+   "verdict": "gap",
+   "reasoning": "Το πρόχειρο γράφτηκε πριν επιλεγεί η πλατφόρμα, και το πείραμα δεν ελέγχει τον πραγματικό δρόμο της έδρας: το SysON απουσιάζει. Δύο από τους τέσσερις clients δεν είναι σήμερα βιώσιμοι SysML v2 clients: το Capella bridge είναι custom υπηρεσία SysML v1.4 XMI, και για το Rhapsody SE δεν τεκμηριώνονται textual interchange ή conformance στο API. Η CE του CATIA Magic σταματά στα 500 major elements. Το κείμενο χωρίς IDs δεν είναι round-trip. Η επαναστόχευση (DEC-PLT-04) είναι καλύτερη σχεδίαση πειράματος, όχι υπαρκτό ανώτερο σύστημα. Γι' αυτό ταξινομείται ως κενό και όχι ως «superior-exists»· η πολυ-vendor διαλειτουργικότητα διατηρείται μόνο αν μείνει το εμπορικό στάδιο ως προαιρετικό.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-05",
+    "SOTA-PLT-10",
+    "SOTA-PLT-11",
+    "SOTA-PLT-17",
+    "SOTA-PLT-18"
+   ],
+   "sources": [
+    {
+     "title": "CATIA Magic SysML v2 Community Edition",
+     "url": "https://docs.nomagic.com/SYSML2P/2026x/catia-magic-cameo-sysml-v2-community-edition-286557495.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysML Bridge for Capella",
+     "url": "https://www.obeosoft.com/en/products/sysml-bridge-for-capella/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Obeo: future of Capella",
+     "url": "https://blog.obeosoft.com/obeo-strengthens-its-commitment-to-the-future-of-capella",
+     "year": "2026"
+    },
+    {
+     "title": "Rhapsody SE 1.8",
+     "url": "https://www.ibm.com/new/announcements/scaling-sysml-v2-systems-engineering-with-ibm-rhapsody-systems-engineering-v1-8",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0028"
+   ],
+   "draft_ref": "22.md γρ. 34· 31.md §31.3 P1, P5",
+   "draft_position": "Genesis Design Platform. P1: μία έδρα σε textual SysML v2+KerML στο git, σερβιρισμένη μέσω του SysML v2 API, με clients CATIA Magic, SysIDE, Capella, Rhapsody, και archgen για κάθε προβολή και το orphan gate. P5: self-hosted Foundry, όπου κάθε αλλαγή σχεδίου είναι υπογεγραμμένο γεγονός (ledger).",
+   "verdict": "gap",
+   "reasoning": "Κρίνονται μόνο οι P1 και P5· οι P2, P3, P4, P6, P7 ανήκουν σε άλλα στρώματα. Η P1 δεν ονομάζει την πραγματική πλατφόρμα (SysON + mcp-syson), προϋποθέτει API server με ιστορικό που δεν υπάρχει στην πλατφόρμα, και δεν έχει πύλη round-trip. Επιπλέον ισχύουν τα κενά του ADR-0002. Η P5 εξαρτάται από ledger που δεν υπάρχει σε αυτό το repo· ό,τι υπάρχει στο STAVROPOULOSLAWCORPUS είναι ανεπαλήθευτο από εδώ. Το σημερινό ισοδύναμο είναι υπογεγραμμένα git commits/tags, merge --verify-signatures, protected branch και CI.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-04",
+    "SOTA-PLT-21"
+   ],
+   "sources": [
+    {
+     "title": "Git Tools - Signing Your Work",
+     "url": "https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "SysON Version control and change management",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/cm.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0001"
+   ],
+   "draft_ref": "22.md γρ. 7· master γρ. 15, 17",
+   "draft_position": "Το πακέτο μπαίνει στο deployment/grail/ του STAVROPOULOSLAWCORPUS, ως crosswalk και πρόταση αναθεώρησης, χωρίς νέο top-level φάκελο (:no-new-top-level).",
+   "verdict": "gap",
+   "reasoning": "Αντιφάσκει με το τρέχον συμβόλαιο: ξεχωριστό ιδιωτικό repo grail-architecture, όπου το LAWMAX-Ω είναι «άλλο project» και ισχύει «καμία αλλαγή εκεί από εδώ». Οι διαδρομές του προχείρου (deployment/grail/…) και ο κανόνας :no-new-top-level ανήκουν στο άλλο repo, και το crosswalk προς «υπάρχουσες έδρες» δεν επαληθεύεται από εδώ. Χρειάζεται ADR που αντικαθιστά ρητά την ADR-0001. Το crosswalk μπορεί να γίνει με read-only pinned αναφορές (repo, commit, path)· αργότερα, αν χρειαστεί, με πακέτα .kpar μέσω Sysand (index ή private index).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-09"
+   ],
+   "sources": [
+    {
+     "title": "sensmetry/sysand",
+     "url": "https://github.com/sensmetry/sysand",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0032"
+   ],
+   "draft_ref": "22.md γρ. 38· master γρ. 17",
+   "draft_position": "Οι φάσεις GP-n είναι προτάσεις ένταξης στην κλειδωμένη σειρά / Ω+ plan· οι ετικέτες σβήνουν με την έγκριση.",
+   "verdict": "unknown",
+   "reasoning": "Η αρχή «πρόταση, και μόνο ο δημιουργός εγκρίνει» συμφωνεί με την CLAUDE.md. Η αγκύρωση όμως στην κλειδωμένη σειρά και στο Ω+ plan [0018] του άλλου repo δεν επαληθεύεται από εδώ, και η CLAUDE.md ορίζει πλέον δικό της πρόγραμμα (Φάση Α/Β, δόσεις). Αν οι GP-n επιζούν ή αντιστοιχίζονται στις δόσεις είναι απόφαση του δημιουργού. Δεν υπάρχει εξωτερικό SOTA που να εφαρμόζεται.",
+   "superior": "",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0033"
+   ],
+   "draft_ref": "22.md γρ. 39 (παραπέμπει στην §20, που δεν γράφτηκε)",
+   "draft_position": "Οι μηχανές οπτικοποίησης (Bevy/Godot) είναι μόνο προβολές, ποτέ αλήθεια.",
+   "verdict": "holds",
+   "reasoning": "Η αρχή «μόνο προβολές» συμπίπτει με την πρακτική του SysML v2: οι viewers αποδίδουν από το model/API (Tom Sawyer από κάθε API-compliant repository, PlantUML του pilot, representations του SysON). Οι Bevy/Godot αφορούν μόνο runtime οπτικοποίηση· για το model σχεδιασμού σχετικές είναι οι SysON, pilot/PlantUML, Tom Sawyer και προαιρετικά Structurizr. Η τεκμηρίωση textual import/export του SysON δεν αναφέρει διατήρηση διαγραμμάτων/layout, άρα θεωρούνται αναλώσιμες προβολές μέχρι να αποδειχθεί το αντίθετο.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-PLT-13",
+    "SOTA-PLT-05",
+    "SOTA-PLT-03",
+    "SOTA-PLT-19"
+   ],
+   "sources": [
+    {
+     "title": "Tom Sawyer SysML v2 Viewer 2.1",
+     "url": "https://www.tomsawyer.com/news/tom-sawyer-software-releases-sysml-v2-viewer-2.1",
+     "year": "2026"
+    },
+    {
+     "title": "SysON SysML v2 textual format",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/import-export-textual.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-PLT-01",
+   "title": "Round-trip SysON→git: υπάρχει export, λείπει η απόδειξη fidelity",
+   "description": "Το πρόχειρο και η CLAUDE.md δεν ορίζουν μηχανισμό, και το mcp-syson δεν έχει εργαλείο export. Στο working tree υπάρχει untracked platform/export-model.ps1 (και αναφορά του στο τροποποιημένο README): .sysml ανά document, byte-exact JSON, manifest, και διακοπή αν τα logs δείξουν στοιχεία που δεν σειριοποιήθηκαν. Δεν είναι committed, το model/ δεν υπάρχει, και ο ισχυρισμός «verified against SysON v2026.7.0» δεν επαληθεύτηκε εδώ. Λείπουν ανεξάρτητο parse, re-import σε scratch project, δομικό diff και καταμέτρηση στοιχείων.",
+   "why_it_matters": "Προϋπόθεση κάθε ορόσημου και της έδρας.",
+   "sota_answer": "Τεκμηριωμένα endpoints: GET /api/editingcontexts/{ec}/documents/{doc} (Accept: text/html), GET /api/projects/{id} (ZIP με documentIdsToName), InsertTextualSysMLv2/UploadDocument. Το SysON προτείνει ZIP ανά έκδοση στο Git.",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-17"
+   ],
+   "sources": [
+    {
+     "title": "SysON APIs cookbook",
+     "url": "https://doc.mbse-syson.org/syson/main/developer-guide/api/api-cookbook.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON Version control and change management",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/cm.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-PLT-02",
+   "title": "Ανεξάρτητος μηχανικός oracle για το model",
+   "description": "Το πρόχειρο δεν ορίζει parser/validator ανεξάρτητο από το εργαλείο επεξεργασίας.",
+   "why_it_matters": "Οι εγγραφές agents και η validation του SysON (experimental) δεν αρκούν για «0 λάθος».",
+   "sota_answer": "Headless CLI τεκμηριώνεται μόνο για MontiCore (ελλιπή context conditions) και Syside Modeler (επί πληρωμή, χρησιμοποιείται από τη SEI). Για το OMG pilot η headless χρήση δεν τεκμηριώνεται· το sysml-v2-lsp έχει validation και MCP CLI. Χρειάζεται συγκριτικό πείραμα στο ίδιο exported corpus.",
+   "sota_refs": [
+    "SOTA-PLT-05",
+    "SOTA-PLT-08",
+    "SOTA-PLT-14",
+    "SOTA-PLT-15"
+   ],
+   "sources": [
+    {
+     "title": "MontiCore/sysmlv2",
+     "url": "https://github.com/MontiCore/sysmlv2",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "SysML-v2-Pilot-Implementation",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation",
+     "year": "2026"
+    },
+    {
+     "title": "Syside",
+     "url": "https://sensmetry.com/syside/",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-PLT-03",
+   "title": "Χωρίς pin έκδοσης SysML/KerML",
+   "description": "Οι libraries του SysON είναι στη βάση 2025-07· το pilot 0.61.0/0.62.0 είναι σε KerML 1.1/SysML 2.1 Beta 2.",
+   "why_it_matters": "Κείμενο που δέχεται το ένα εργαλείο μπορεί να απορρίπτεται από το άλλο.",
+   "sota_answer": "Pin σε SysML 2.0 / KerML 1.0 formal, με release του pilot που αντιστοιχεί στην ίδια βάση, καταγεγραμμένο στα metadata του model.",
+   "sota_refs": [
+    "SOTA-PLT-01",
+    "SOTA-PLT-02"
+   ],
+   "sources": [
+    {
+     "title": "Pilot releases",
+     "url": "https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation/releases",
+     "year": "2026"
+    },
+    {
+     "title": "SysON release notes",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/release-notes/release-notes.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-PLT-04",
+   "title": "Σιωπηλή μερική εισαγωγή στο SysON v2026.7.0",
+   "description": "Η αναφορά συντακτικών σφαλμάτων που αφήνουν upload «partially imported» υπάρχει μόνο στην 2026.11.0 (work in progress), όχι στην 2026.9.0. Το τοπικό image είναι v2026.7.0 και το mcp-syson είναι πιστοποιημένο μόνο σε αυτή.",
+   "why_it_matters": "Κίνδυνος απώλειας περιεχομένου χωρίς προειδοποίηση.",
+   "sota_answer": "Υποχρεωτικό read-back και καταμέτρηση στοιχείων μετά από κάθε import/insert (και οι οδηγίες του mcp-syson: η επιβεβαίωση λήψης δεν είναι σημασιολογική πληρότητα). Αναβάθμιση μόνο μετά από νέα πιστοποίηση του mcp-syson.",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-04"
+   ],
+   "sources": [
+    {
+     "title": "SysON release notes",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/release-notes/release-notes.html",
+     "year": "2026"
+    },
+    {
+     "title": "mcp-syson CHANGELOG",
+     "url": "https://raw.githubusercontent.com/Casys-AI/mcp-syson/main/CHANGELOG.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-PLT-05",
+   "title": "Κάλυψη satisfy/verify στο SysON",
+   "description": "Satisfy στο Requirements View «not yet available»· textual export SatisfyRequirementUsage από την 2026.1.0· derivation edges μόνο από την 2026.9.0· το verify δεν τεκμηριώνεται.",
+   "why_it_matters": "Η ιχνηλασιμότητα REQ→CMP και Test→REQ είναι ο πυρήνας της Φάσης Β, δόση 3.",
+   "sota_answer": "Πείραμα εισαγωγής satisfy/verify μέσω insert_sysml, με read-back και έλεγχο με requirements_trace. Η πύλη τρέχει στο exported model.",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-04"
+   ],
+   "sources": [
+    {
+     "title": "SysON Requirements management",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/requirement-management.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON release notes",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/release-notes/release-notes.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-PLT-06",
+   "title": "Επιβολή «μόνο ο δημιουργός εγκρίνει»",
+   "description": "Το SysON δεν έχει authentication/authorization ούτε version control. Τοπικά η πρόσβαση περιορίζεται μόνο με bind σε loopback (compose), και τα APIs καλούνται χωρίς διαπιστευτήρια (export-model.ps1).",
+   "why_it_matters": "Νόμος του δημιουργού· αποτρέπει μη εγκεκριμένες αλλαγές.",
+   "sota_answer": "Υπογεγραμμένα commits/tags, merge --verify-signatures, protected branch και ετικέτα «εγκρίνω» ανά δόση. Για δικτυακή χρήση το SysON προτείνει εξωτερικό SSO.",
+   "sota_refs": [
+    "SOTA-PLT-21",
+    "SOTA-PLT-03"
+   ],
+   "sources": [
+    {
+     "title": "Git Tools - Signing Your Work",
+     "url": "https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "SysON Security and compliance",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/security.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-PLT-07",
+   "title": "Backup/DR της ζωντανής κατάστασης",
+   "description": "Υπάρχει μόνο named volume PostgreSQL. Το export-model.ps1 αντιγράφει documents/*.json και το manifest, όχι ρητά τις representations (διαγράμματα). Η τεκμηρίωση παραγωγής του SysON δεν ορίζει backup.",
+   "why_it_matters": "Αν χαθεί η βάση, χάνονται προβολές και πιθανώς IDs.",
+   "sota_answer": "Αρχειοθέτηση ολόκληρου του project ZIP (τεκμηριωμένο από το SysON) ανά δόση, και dump της βάσης PostgreSQL.",
+   "sota_refs": [
+    "SOTA-PLT-03"
+   ],
+   "sources": [
+    {
+     "title": "SysON Version control and change management",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/cm.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON Production-Grade Deployment",
+     "url": "https://doc.mbse-syson.org/syson/main/installation-guide/how-tos/install/production_deploy.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-PLT-08",
+   "title": "Κίνδυνος μετάλλαξης μέσω AQL",
+   "description": "Τα query_aql/query_eval μπορούν να κάνουν eSet παρακάμπτοντας το command path του editor.",
+   "why_it_matters": "Αθέατες μεταλλάξεις στο model.",
+   "sota_answer": "Πολιτική: μόνο εκφράσεις που έχουν ελεγχθεί, καμία AQL σε ροές εγγραφής των agents.",
+   "sota_refs": [
+    "SOTA-PLT-04"
+   ],
+   "sources": [
+    {
+     "title": "mcp-syson capabilities and safety",
+     "url": "https://github.com/Casys-AI/mcp-syson/blob/main/docs/capabilities-and-safety.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-PLT-09",
+   "title": "Εσωτερικές ασυνέπειες του προχείρου (PLT)",
+   "description": "Το spine δηλώνει «COMPONENTS (76)» αλλά απαριθμεί 75 (μετρημένα: KRN 12, COG 11, AEO 6, CCP 7, LAW 12, CIV 6, FRG 5, λοιπά 16)· το 29.md λέει «76 CMP». Η §30 (archgen) δεν γράφτηκε. Λείπουν τα model/grail-world-os.sysml/.kerml, tools/archgen/, architecture/workspace.dsl, verification/TRACEABILITY-MATRIX.md. Το GP-0.5 δεν ορίζεται. Η CLAUDE.md αναφέρει docs/architecture-draft/{formal,contracts,adrs,model}/ που δεν υπάρχουν. Τα πακέτα του προχείρου (OperationalAnalysis, FunctionalAnalysis, PhysicalArchitecture) διαφέρουν από αυτά της Φάσης Β.",
+   "why_it_matters": "Αριθμήσεις και διαδρομές θα αποτύγχαναν στην πύλη. Χρειάζεται μία έδρα για τη δομή πακέτων.",
+   "sota_answer": "Διόρθωση στο DESIGN-START-PLAN: δομή της CLAUDE.md και πίνακας αντιστοίχισης προς τα πακέτα του προχείρου.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-PLT-10",
+   "title": "Ξεχωριστό αρχείο KerML (GrailKernel)",
+   "description": "Το πρόχειρο ορίζει ως σημασιολογική έδρα το model/grail-world-os.kerml. Η τεκμηρίωση του SysON καλύπτει μόνο .sysml για download/import («must be suffixed by .sysml») και αναφέρει εξαρτήσεις «SysML or KerML files», χωρίς να επιβεβαιώνει textual KerML.",
+   "why_it_matters": "Δύο τύποι αρχείων σημαίνουν δύο δρόμους επαλήθευσης και πιθανή απώλεια στο SysON.",
+   "sota_answer": "Το pilot υποστηρίζει .kerml. Χρειάζεται πείραμα import στο SysON ή ενσωμάτωση σε SysML library package.",
+   "sota_refs": [
+    "SOTA-PLT-05",
+    "SOTA-PLT-03"
+   ],
+   "sources": [
+    {
+     "title": "SysON SysML v2 textual format",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/import-export-textual.html",
+     "year": "2026"
+    },
+    {
+     "title": "SysON APIs cookbook",
+     "url": "https://doc.mbse-syson.org/syson/main/developer-guide/api/api-cookbook.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-PLT-11",
+   "title": "Knowledge/workflow layer για agents",
+   "description": "Δεν υπάρχει οδηγός ύφους ή βιβλιοθήκη μοτίβων SysML v2 για τους agents που γράφουν το model.",
+   "why_it_matters": "Ομοιομορφία και ποιότητα στις εγγραφές agents.",
+   "sota_answer": "Version-controlled Markdown με μοτίβα και κανόνες validation, εκτεθειμένο μέσω MCP, και skill files (SEI 2026).",
+   "sota_refs": [
+    "SOTA-PLT-15"
+   ],
+   "sources": [
+    {
+     "title": "SEI three layers",
+     "url": "https://www.sei.cmu.edu/blog/native-ai-integration-for-model-based-systems-engineering-three-layers-that-make-it-work/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-PLT-12",
+   "title": "Προβολή C4 χωρίς generator",
+   "description": "Το architecture/workspace.dsl προβλέπεται ως προβολή, αλλά δεν υπάρχει μετασχηματισμός από SysML v2.",
+   "why_it_matters": "Αλλιώς γίνεται δεύτερη χειροποίητη έδρα.",
+   "sota_answer": "Το Structurizr DSL/CLI είναι δωρεάν (Lite/On-Prem EOL). Generator από SysML v2 δεν βρέθηκε.",
+   "sota_refs": [
+    "SOTA-PLT-19"
+   ],
+   "sources": [
+    {
+     "title": "Structurizr docs",
+     "url": "https://docs.structurizr.com/",
+     "year": "2026"
+    }
+   ],
+   "classification": "extension"
+  },
+  {
+   "id": "GAP-PLT-13",
+   "title": "Αντιφατική δήλωση έδρας στο ίδιο το repo",
+   "description": "Η ADR-0002 λέει «έδρα = κείμενο στο git». Η CLAUDE.md λέει «ζωντανό model στο SysON, όχι ως κείμενο». Το export-model.ps1 λέει «The model lives in SysON… the files… once committed, are the model's history».",
+   "why_it_matters": "Παραβιάζει τον νόμο «μία έδρα ανά έννοια» πριν ξεκινήσει η Φάση Β.",
+   "sota_answer": "Ρητή απόφαση του δημιουργού (DEC-PLT-01), με διάκριση ανάμεσα στην έδρα της εγκεκριμένης κατάστασης και στην έδρα εργασίας.",
+   "sota_refs": [
+    "SOTA-PLT-03",
+    "SOTA-PLT-17"
+   ],
+   "sources": [
+    {
+     "title": "SysON Version control and change management",
+     "url": "https://doc.mbse-syson.org/syson/main/user-manual/features/cm.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  }
+ ],
+ "decisions": [
+  {
+   "id": "DEC-PLT-01",
+   "question": "Ποια είναι η μία έδρα του model: το git (κείμενο + JSON) ή η βάση του SysON;",
+   "recommendation": "(A) Έδρα της εγκεκριμένης κατάστασης είναι το git: .sysml κείμενο για review/parse/diff και byte-exact SysON JSON για πιστή επαναφορά, σε υπογεγραμμένο tag ανά δόση. Το SysON + mcp-syson είναι η έδρα εργασίας. Ροή μόνο SysON → export → πύλη → «εγκρίνω» → commit. Αυτό απαιτεί ρητή τροποποίηση ή ερμηνεία του «όχι ως κείμενο» της CLAUDE.md και αναθεώρηση της ADR-0002.",
+   "alternatives": [
+    {
+     "option": "A: git = έδρα εγκεκριμένης κατάστασης (κείμενο + JSON), SysON = έδρα εργασίας",
+     "pros": "Ιστορικό, υπογραφές και review που το SysON δεν έχει· ζωντανά εργαλεία για agents· η επαναφορά με το JSON μπορεί να διατηρεί IDs.",
+     "cons": "Δύο αποθήκες προς συμφιλίωση· αν η επαναφόρτωση του JSON διατηρεί IDs και διαγράμματα δεν ξέρω· αποκλίνει από τη διατύπωση της CLAUDE.md."
+    },
+    {
+     "option": "B: βάση SysON = έδρα, git = ιστορικό στιγμιοτύπων (κατά γράμμα η CLAUDE.md και το export-model.ps1)",
+     "pros": "Συμφωνεί με το ισχύον συμβόλαιο και το υπάρχον script· καμία ασάφεια για το πού γίνεται η επεξεργασία.",
+     "cons": "Η έδρα δεν έχει VC ούτε authentication· η εγκεκριμένη κατάσταση δεν ξεχωρίζει από την εργασία σε εξέλιξη· η ανάκτηση εξαρτάται από τη βάση."
+    },
+    {
+     "option": "C: text-first, το SysON μόνο viewer",
+     "pros": "Καθαρή μία έδρα· ροή όπως στον κώδικα (SEI 2026).",
+     "cons": "Χάνονται τα ζωντανά εργαλεία του mcp-syson ή χρειάζεται re-import κάθε φορά, με απώλεια IDs· το ώριμο language toolchain (Syside) είναι επί πληρωμή."
+    },
+    {
+     "option": "D: Flexo MMS (SysML v2 API με ιστορικό) = έδρα",
+     "pros": "Commits/branches/merge/diff μέσα στο πρότυπο API.",
+     "cons": "Beta· RDF/Fuseki stack· καμία ενσωμάτωση με SysON· MCP με 10 commits."
+    }
+   ],
+   "rationale": "Κανένα υπαρκτό σύστημα δεν κυριαρχεί. Η A κρατά την αρχή της ADR-0002 (ιστορικό, έγκριση) χωρίς να χάνει τη ζωντανή πλατφόρμα της CLAUDE.md. Τη διατύπωση όμως μόνο ο δημιουργός μπορεί να την αλλάξει.",
+   "affects_ids": [
+    "ADR-0002",
+    "REQ-MDL-001",
+    "CMP-MDL-01",
+    "ICD-32",
+    "ADR-0028"
+   ]
+  },
+  {
+   "id": "DEC-PLT-02",
+   "question": "Πώς αντικαθίσταται η ADR-0001 και πώς γίνεται το crosswalk προς το LAWMAX-Ω;",
+   "recommendation": "Νέα ADR που αντικαθιστά την ADR-0001: έδρα το repo grail-architecture. Το crosswalk γίνεται με read-only pinned αναφορές (repo, commit, path) στα metadata του model, χωρίς εγγραφές στο άλλο repo. Οι GP-n αντιστοιχίζονται στις δόσεις της CLAUDE.md με απόφαση του δημιουργού.",
+   "alternatives": [
+    {
+     "option": "Διατήρηση της ADR-0001 (deployment/grail/)",
+     "pros": "Συνύπαρξη με τις έδρες του LAWMAX-Ω.",
+     "cons": "Παραβιάζει την CLAUDE.md· κατά το πρόχειρο, το branch εκεί αποκλίνει από το origin/main κατά 420 commits (ανεπαλήθευτο από εδώ)."
+    },
+    {
+     "option": "git submodule του άλλου repo",
+     "pros": "Pinned αναφορά σε επίπεδο git.",
+     "cons": "Απαιτεί πρόσβαση σε ιδιωτικό repo και φέρνει περιεχόμενο άλλου έργου στο working tree."
+    },
+    {
+     "option": "Καθόλου crosswalk",
+     "pros": "Απλότητα.",
+     "cons": "Χάνεται το δόγμα «επέκταση υπαρχουσών εδρών»· κίνδυνος διπλών εδρών."
+    }
+   ],
+   "rationale": "Το συμβόλαιο του δημιουργού έχει ήδη αλλάξει την τοποθεσία· χρειάζεται ρητή τυπική αντικατάσταση.",
+   "affects_ids": [
+    "ADR-0001",
+    "ADR-0032"
+   ]
+  },
+  {
+   "id": "DEC-PLT-03",
+   "question": "Ποιος είναι ο μηχανικός oracle της πύλης του model;",
+   "recommendation": "Σύντομο συγκριτικό πείραμα στο ίδιο exported corpus: OMG pilot (αν τρέχει headless μέσω Jupyter kernel ή Xtext standalone), MontiCore CLI, sysml-v2-lsp και, αν δοθεί άδεια ή trial, Syside Modeler CLI. Κύριος oracle γίνεται ο pilot αν αποδειχθεί headless· με N-version ≥2. Αλλιώς ο δημιουργός αποφασίζει για άδεια Syside.",
+   "alternatives": [
+    {
+     "option": "Syside Modeler CLI ως κύριος",
+     "pros": "Headless CLI για CI, on-prem/air-gapped, τεκμηριωμένη χρήση στην πρακτική SEI 2026.",
+     "cons": "Επί πληρωμή· η πύλη εξαρτάται από vendor (αρχή 5)."
+    },
+    {
+     "option": "OMG pilot ως κύριος, χωρίς πείραμα",
+     "pros": "Reference, EPL, μηδενικό κόστος.",
+     "cons": "Η headless χρήση για CI δεν τεκμηριώνεται· κίνδυνος χρόνου στήσιμου."
+    },
+    {
+     "option": "Μόνο η validation του SysON",
+     "pros": "Μηδενικό στήσιμο.",
+     "cons": "«experimental… not recommended for production»· δεν είναι ανεξάρτητη."
+    }
+   ],
+   "rationale": "Ανεξαρτησία και δόγμα N-version, χωρίς να δεσμευτεί η σχεδίαση σε oracle που δεν έχει δείξει ότι τρέχει σε CI.",
+   "affects_ids": [
+    "CMP-MDL-01",
+    "REQ-MDL-002",
+    "REQ-MDL-001"
+   ]
+  },
+  {
+   "id": "DEC-PLT-04",
+   "question": "Επαναστόχευση του EXP-17;",
+   "recommendation": "Ναι: fidelity SysON↔git. (1) insert/upload με read-back και καταμέτρηση· (2) export μέσω του τεκμηριωμένου GET, parse με τον oracle του DEC-PLT-03, re-import σε scratch project και δομικό diff κατά qualified names· (3) δοκιμή επαναφοράς από το JSON (IDs, representations)· (4) κάλυψη των κατασκευών του GRAIL (requirement def/usage, satisfy, verify, derivation, constraint/assert, interface/port, allocation, metadata). Το εμπορικό round-trip μένει προαιρετικό στάδιο viewer.",
+   "alternatives": [
+    {
+     "option": "Διατήρηση του αρχικού (εμπορικό round-trip)",
+     "pros": "Ελέγχει πολυ-vendor διαλειτουργικότητα.",
+     "cons": "Άδειες· όριο CE 500 στοιχείων· το Capella bridge είναι SysML v1.4· δεν ελέγχει τον δρόμο της έδρας."
+    },
+    {
+     "option": "Κατάργηση του EXP-17",
+     "pros": "Εξοικονόμηση.",
+     "cons": "Η fidelity της έδρας μένει ανεπαλήθευτη, ενώ είναι κριτήριο εξόδου του GP-0."
+    }
+   ],
+   "rationale": "Ελέγχει την πραγματική έδρα χωρίς κόστος αδειών· η διαλειτουργικότητα διατηρείται ως προαιρετικό στάδιο.",
+   "affects_ids": [
+    "EXP-17",
+    "REQ-MDL-001",
+    "ADR-0002"
+   ]
+  },
+  {
+   "id": "DEC-PLT-05",
+   "question": "Pin γλώσσας και πολιτική αναβάθμισης του SysON;",
+   "recommendation": "Pin σε SysML 2.0 / KerML 1.0 formal. Παραμονή στο τοπικό SysON v2026.7.0 (επιβεβαιωμένο με docker inspect· πιστοποιημένο με mcp-syson από την 0.8.4) με υποχρεωτικό read-back. Αναβάθμιση μόνο αφού το mcp-syson πιστοποιηθεί σε νεότερη έκδοση.",
+   "alternatives": [
+    {
+     "option": "Αναβάθμιση τώρα σε v2026.9.0 (09-09-2026)",
+     "pros": "Derivation edges (#original/#derive) και άλλες βελτιώσεις.",
+     "cons": "Χωρίς πιστοποίηση με mcp-syson· δεν φέρνει την αναφορά μερικής εισαγωγής, που είναι στην 2026.11.0 (υπό ανάπτυξη)."
+    },
+    {
+     "option": "Pin σε 2.1/1.1 Beta",
+     "pros": "Νεότερο metamodel, ευθυγραμμισμένο με τον pilot 0.61.0.",
+     "cons": "Beta· οι libraries του SysON είναι στη βάση 2025-07."
+    }
+   ],
+   "rationale": "Σταθερότητα, ανιχνευσιμότητα απώλειας και ταύτιση με την πιστοποιημένη τοπολογία.",
+   "affects_ids": [
+    "CMP-MDL-01",
+    "ADR-0002"
+   ]
+  },
+  {
+   "id": "DEC-PLT-06",
+   "question": "Κρατάμε ξεχωριστό αρχείο .kerml για το GrailKernel;",
+   "recommendation": "Ενσωμάτωση σε SysML v2 library package (.sysml), εκτός αν πείραμα δείξει καθαρό import .kerml στο SysON.",
+   "alternatives": [
+    {
+     "option": "Ξεχωριστό .kerml",
+     "pros": "Ακρίβεια KerML· υποστηρίζεται από τον pilot.",
+     "cons": "Δεν τεκμηριώνεται στο SysON· δύο δρόμοι επαλήθευσης."
+    }
+   ],
+   "rationale": "Μία μορφή, μία πύλη.",
+   "affects_ids": [
+    "ADR-0002",
+    "CMP-MDL-01"
+   ]
+  }
+ ],
+ "unknowns": [
+  "Αν το textual export του SysON v2026.7.0 είναι χωρίς απώλειες για τις κατασκευές του GRAIL: η λίστα των μη υποστηριζόμενων εννοιών δεν δημοσιεύεται.",
+  "Αν το export-model.ps1 έχει εκτελεστεί ποτέ με επιτυχία (το model/ δεν υπάρχει) και αν το SysMLv2DocumentExporter όντως καταγράφει κάθε στοιχείο που δεν σειριοποιεί (ισχυρισμός του script).",
+  "Αν η επαναφόρτωση του SysON JSON διατηρεί element IDs και representations/διαγράμματα.",
+  "Αν ο OMG pilot τρέχει headless για CI (Jupyter kernel ή Xtext standalone): δεν τεκμηριώνεται στα README.",
+  "Αν το SysON εισάγει textual .kerml.",
+  "Αν το Systems Modeling API 1.0 ορίζει change events/subscriptions.",
+  "Αν υπάρχει git-backed SysML v2 API server: δεν βρέθηκε.",
+  "Αν δουλεύει εισαγωγή satisfy/verify μέσω insert_sysml στην v2026.7.0.",
+  "Αν το Sysand δέχεται git repositories ως πηγές: δεν τεκμηριώνεται στο README.",
+  "Υποστήριξη SysML v2 (textual/API) σε PTC Modeler, MathWorks System Composer, Siemens: δεν ερευνήθηκε.",
+  "Textual interchange και conformance στο API του IBM Rhapsody SE: δεν τεκμηριώνονται· ούτε το .sysml import/export του CATIA Magic στη σελίδα που ελέγχθηκε.",
+  "Λεπτομέρειες του Ansys SAM 2026 R1: το blog επιστρέφει 403.",
+  "Τιμολόγηση του Syside και αν υπάρχει trial για το CLI.",
+  "Κατάσταση της OMG conformance suite και αν υπάρχουν πιστοποιημένα εργαλεία.",
+  "Η κάλυψη περιορίστηκε από εξάντληση του ορίου αναζητήσεων: δεν ελέγχθηκαν official MCP από την Obeo, κυκλοφορημένοι MCP servers του Syside ή semantic diff/merge για SysML v2 (η σελίδα του LemonTree δεν αναφέρει SysML v2· οι release notes του SysON v2026.9.0 δεν αναφέρουν MCP)."
+ ],
+ "verification": {
+  "sources_checked": 62,
+  "sources_failed": [
+   {
+    "url": "https://raw.githubusercontent.com/Casys-AI/mcp-syson/main/docs/capabilities-and-safety.md",
+    "problem": "Το fetch δεν επέστρεψε περιεχόμενο.",
+    "action": "Επαληθεύτηκε από το github.com/.../blob/main/docs/capabilities-and-safety.md, που αντικατέστησε την πηγή· ο ισχυρισμός «derived views μη authoritative» δεν βρέθηκε αυτολεξεί και αναδιατυπώθηκε σε «SysON and its PostgreSQL database remain authoritative for live model state»."
+   },
+   {
+    "url": "https://www.ansys.com/blog/advancing-mbse-ansys-sam-2026-r1",
+    "problem": "301 προς ansys.synopsys.com και μετά 403.",
+    "action": "Αφαιρέθηκαν η πηγή και ο ισχυρισμός «textual live view / ευθυγράμμιση με το spec»· το SOTA-PLT-12 κρατά μόνο το PyPI."
+   },
+   {
+    "url": "https://doc.mbse-syson.org/syson/main/user-manual/faq/faq.html",
+    "problem": "Δεν λέει τίποτα για access control· αποδιδόταν σε αυτό το «χωρίς access control».",
+    "action": "Πηγή πλέον το security.html («does not include built-in mechanisms for authentication or authorization»)· προστέθηκε το cm.html για το version control."
+   },
+   {
+    "url": "https://doc.mbse-syson.org/syson/main/user-manual/release-notes/release-notes.html",
+    "problem": "Η αναφορά «partially imported» είναι στην 2026.11.0 (work in progress), όχι στην 2026.9.0 όπως έγραφε ο ερευνητής.",
+    "action": "Διορθώθηκαν SOTA-PLT-03, GAP-PLT-04, DEC-PLT-05."
+   },
+   {
+    "url": "https://arxiv.org/abs/2506.21608",
+    "problem": "Το abstract δεν αναφέρει parser feedback.",
+    "action": "Αφαιρέθηκε από SOTA-PLT-16 και GAP-PLT-02."
+   },
+   {
+    "url": "https://github.com/sensmetry/sysand",
+    "problem": "Το README δεν αναφέρει git ως πηγή πακέτων.",
+    "action": "Αφαιρέθηκε από SOTA-PLT-09, ADR-0001 και DEC-PLT-02· προστέθηκε στα unknowns."
+   },
+   {
+    "url": "https://sensmetry.com/introducing-sysand-the-package-manager-for-the-sysml-v2-ecosystem/",
+    "problem": "Έτος: 03-10-2025, όχι 2026.",
+    "action": "Διορθώθηκε σε 2025."
+   },
+   {
+    "url": "https://docs.nomagic.com/SYSML2P/2026x/catia-magic-cameo-sysml-v2-solution-272740940.html",
+    "problem": "Δεν αναφέρει .sysml import/export.",
+    "action": "Αφαιρέθηκε ο ισχυρισμός· προστέθηκε η δήλωση vendor «Teamwork Cloud fully conforms»."
+   },
+   {
+    "url": "https://www.ibm.com/new/announcements/ibm-introduces-rhapsody-systems-engineering-v1-5-simplifying-the-adoption-of-sysml-v2-for-complex-product-development",
+    "problem": "Δεν περιγράφει το προϊόν ως web-based ή cloud-native.",
+    "action": "Αφαιρέθηκαν οι χαρακτηρισμοί."
+   },
+   {
+    "url": "https://github.com/Open-MBEE/flexo-mms-sysmlv2",
+    "problem": "Δεν αναφέρει backend· το GraphDB δεν επιβεβαιώνεται πουθενά.",
+    "action": "Επιβεβαιώθηκε Apache Jena Fuseki από το flexo-mms-layer1-service (νέα πηγή)· αφαιρέθηκε το GraphDB."
+   },
+   {
+    "url": "https://github.com/Systems-Modeling/SysML-v2-Pilot-Implementation",
+    "problem": "Δεν τεκμηριώνει headless/CLI χρήση για CI· ούτε το SysML-v2-Release.",
+    "action": "Το GAP-PLT-02 έγινε experiment και το DEC-PLT-03 έγινε συγκριτικό πείραμα."
+   },
+   {
+    "url": "https://github.com/Systems-Modeling/SysML-v2-API-Services/releases",
+    "problem": "Η σελίδα releases δεν γράφει PoC.",
+    "action": "Επιβεβαιώθηκε από το README του repo («Proof-of-concept pilot implementation», PostgreSQL), που προστέθηκε ως πηγή."
+   }
+  ],
+  "corrections": [
+   {
+    "target": "draft_points ADR-0002 + REQ-MDL-001",
+    "change": "Διαχωρισμός: το REQ-MDL-001 μένει holds (αρχή μίας έδρας και παραγόμενων προβολών)· η ADR-0002 γίνεται gap, confidence high.",
+    "reason": "Ο μηχανισμός της ADR συγκρούεται με την CLAUDE.md («όχι ως κείμενο») και το export-model.ps1 («The model lives in SysON»)· τα API clients δεν πραγματοποιούνται με το SysON· το κείμενο δεν έχει IDs."
+   },
+   {
+    "target": "draft_points EXP-17",
+    "change": "Το verdict από superior-exists έγινε gap και το πεδίο superior άδειασε.",
+    "reason": "Η επαναστόχευση είναι νέα σχεδίαση πειράματος, όχι υπαρκτό ανώτερο (κανόνας 3). Χωρίς το εμπορικό στάδιο χάνεται η απόδειξη πολυ-vendor διαλειτουργικότητας. Προστέθηκε ότι το Capella bridge είναι SysML v1.4."
+   },
+   {
+    "target": "GAP-PLT-01",
+    "change": "Αναδιατυπώθηκε: υπάρχει untracked export-model.ps1 (export, JSON copy, έλεγχος logs), όχι committed, χωρίς parse, re-import ή diff.",
+    "reason": "Ανάγνωση του working tree (git status, README diff, script)."
+   },
+   {
+    "target": "SOTA-PLT-03, GAP-PLT-04, DEC-PLT-05",
+    "change": "Η αναφορά «partially imported» τοποθετείται στην 2026.11.0 (WIP)· προστέθηκαν ημερομηνίες v2026.7.0 (10-07) και v2026.9.0 (09-09)· το τοπικό image επιβεβαιώθηκε ως v2026.7.0 με docker inspect.",
+    "reason": "Release notes, GitHub releases, labels του τοπικού image."
+   },
+   {
+    "target": "SOTA-PLT-04 και unknowns",
+    "change": "Το stdio αφαιρέθηκε στην 0.4.0 και επανήλθε στην 0.8.0· το unknown αφαιρέθηκε. Τα 31 εργαλεία επιβεβαιώθηκαν από το τοπικό tool listing.",
+    "reason": "CHANGELOG· λίστα εργαλείων syson_* της συνεδρίας."
+   },
+   {
+    "target": "SOTA-PLT-03, GAP-PLT-06",
+    "change": "Το «χωρίς access control» έχει πλέον πηγή το security.html· προστέθηκαν το cm.html (ZIP στο Git) και το loopback-only της τοπικής εγκατάστασης.",
+    "reason": "Η παλιά πηγή (FAQ) δεν το έλεγε."
+   },
+   {
+    "target": "SOTA-PLT-05, GAP-PLT-02, DEC-PLT-03",
+    "change": "Ο pilot ως oracle για CI χαρακτηρίζεται μη τεκμηριωμένος· το GAP-PLT-02 έγινε experiment· το DEC-PLT-03 έγινε συγκριτικό πείραμα και η εναλλακτική Syside παρουσιάζεται δίκαια (SEI).",
+    "reason": "Τα README του pilot και του SysML-v2-Release δεν τεκμηριώνουν headless χρήση· η SEI 2026 χρησιμοποιεί Syside CLI στο CI."
+   },
+   {
+    "target": "SOTA-PLT-02",
+    "change": "Αφαιρέθηκε το «RTF»· προστέθηκε η 0.62.0.",
+    "reason": "Μη τεκμηριωμένο στις πηγές."
+   },
+   {
+    "target": "SOTA-PLT-07",
+    "change": "Fuseki αντί Fuseki/GraphDB· προστέθηκε η πηγή layer1· το «πρώιμος» τεκμηριώνεται με 10 commits.",
+    "reason": "Επαλήθευση πηγών."
+   },
+   {
+    "target": "SOTA-PLT-08",
+    "change": "Η πρόσβαση σε model servers παρουσιάζεται ως στόχος roadmap (Q3)· προστέθηκε η χρήση από τη SEI.",
+    "reason": "Roadmap 13-05-2026· SEI."
+   },
+   {
+    "target": "SOTA-PLT-10",
+    "change": "Αφαιρέθηκε το .sysml import/export· η εκτίμηση «~500–1000» αντικαταστάθηκε με ~345 IDs του προχείρου χωρίς ορισμό του major element.",
+    "reason": "Μη τεκμηριωμένο· η εκτίμηση ήταν χωρίς πηγή."
+   },
+   {
+    "target": "SOTA-PLT-15",
+    "change": "Αφαιρέθηκαν ονόματα προϊόντων AI assistants· προστέθηκε ότι το toolchain είναι το Syside και ότι το validation δεν αρκεί.",
+    "reason": "Κανόνας ονοματολογίας 5· επαλήθευση πηγής."
+   },
+   {
+    "target": "SOTA-PLT-18",
+    "change": "Το SysML Bridge for Capella αφορά SysML v1.4 (Eclipse UML XMI).",
+    "reason": "Σελίδα Obeo."
+   },
+   {
+    "target": "SOTA-PLT-20",
+    "change": "Gaphor: η πλήρης υποστήριξη SysML v2 είναι ανοιχτό issue (milestone 4.0), όχι «δεν υποστηρίζει».",
+    "reason": "Issue 1399 και ανάρτηση για την 3.0."
+   },
+   {
+    "target": "SOTA-PLT-03",
+    "change": "Αφαιρέθηκαν τα ορισμένα αλλού κριτήρια (α)…(η)· επιβεβαιώθηκε ότι αναπτύσσεται από Obeo + CEA.",
+    "reason": "Μη ορισμένα στο αντικείμενο· README του repo."
+   },
+   {
+    "target": "GAP-PLT-07",
+    "change": "Το export script δεν αντιγράφει ρητά τις representations· η τεκμηρίωση παραγωγής του SysON δεν ορίζει backup.",
+    "reason": "Ανάγνωση του script· σελίδα production_deploy."
+   },
+   {
+    "target": "GAP-PLT-09",
+    "change": "Επιβεβαιώθηκαν τα 75 CMP με καταμέτρηση ανά στρώμα· αφαιρέθηκε το εύρος GP-n.",
+    "reason": "Ανάγνωση του spine-vocab γρ. 19–27· κανόνας 7."
+   },
+   {
+    "target": "GAP-PLT-13 (νέο)",
+    "change": "Προστέθηκε η αντιφατική δήλωση έδρας (ADR-0002, CLAUDE.md, export-model.ps1).",
+    "reason": "Ανάγνωση των τριών κειμένων."
+   },
+   {
+    "target": "DEC-PLT-01",
+    "change": "Προστέθηκε το JSON στο git για πιστή επαναφορά· καταγράφεται ότι η B είναι η κατά γράμμα ανάγνωση της CLAUDE.md και του script.",
+    "reason": "Δίκαιη παρουσίαση εναλλακτικών και σεβασμός του συμβολαίου του δημιουργού."
+   },
+   {
+    "target": "DEC-PLT-02",
+    "change": "Τα «420 commits» σημειώνονται ως ισχυρισμός του προχείρου, ανεπαλήθευτος· αφαιρέθηκε το «Sysand με git πηγές».",
+    "reason": "Master γρ. 18· README του Sysand."
+   }
+  ],
+  "missed_superior_found": []
+ }
+}

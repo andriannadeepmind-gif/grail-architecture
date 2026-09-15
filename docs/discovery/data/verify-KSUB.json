@@ -1,0 +1,2446 @@
+{
+ "layer_key": "KSUB",
+ "summary": "Ο πυρήνας-υπόστρωμα του προχείρου (ledger ως μόνη αλήθεια, CAS, HLC με διτεμπορικά cuts, transport ≠ truth, Wasm/microVM organ host, OTP supervision, deterministic replay με καταγραφή μη ντετερμινισμού) ισχύει στις περισσότερες θέσεις του έναντι του SOTA 2025–2026 (Temporal/Restate/DBOS, FoundationDB/TigerBeetle/Antithesis, WASI 0.3.0 της 11/6/2026, Wasm 3.0 DET profile, OTP 29, NATS 2.14, Kafka 4.3.1, PostgreSQL 18, XTDB v2). Το AIOS/MemGPT δεν είναι ανώτερο για το telos, οπότε το ADR-0004 ισχύει. Αυστηρά ανώτερο, με ρητό trade-off, υπάρχει σε δύο σημεία. (1) Το προφίλ C2SP tlog-tiles/checkpoint/cosignature/witness για το Merkle/witness υπόστρωμα του KRN-01 (Tessera v1.0.0 22/9/2025, Rekor v2 GA 10/10/2025). Trade-off: τα tiles είναι μόνο SHA-256. Το RFC 9162 δεν έχει ούτε αυτό hash agility μέσα στο ίδιο log (ο αλγόριθμος είναι αμετάβλητη παράμετρος του log)· χάνεται μόνο η επιλογή μη SHA-256 hash για νέο log. Η cosignature v1.0.1 είναι μόνο Ed25519· το v1.1.0-rc.1 (23/4/2026) προσθέτει ML-DSA-44. Το Tessera είναι Go, σε σύγκρουση με το Rust TCB του ADR-0012, άρα υιοθετείται το προφίλ και όχι απαραίτητα η βιβλιοθήκη. (2) Αυτο-περιγραφόμενη διεύθυνση CIDv1: το πρόχειρο ήδη λέει «multihash-style», αλλά λείπει ο codec/canonicalization· υπάρχει draft multicodec json-jcs (0xb601). Σοβαρά κενά: το «ή witness quorum» του §7.5 δεν δίνει RPO 0, γιατί οι witnesses κρατούν μόνο checkpoints· το DP-2 είναι ένα site αλλά στοχεύει RPO 0· δεν δηλώνεται το κατώτερο όριο του TCB· τα EP drills γίνονται μόνο εφάπαξ στο GP-9 και κανένα δεν αφορά EP-02 ή EP-03· δεν υπάρχει αυθεντικοποιημένος χρόνος (NTS, Roughtime) ούτε qualified TSA (eIDAS Art. 41) στο k-of-n· λείπει pinning της έκδοσης κώδικα στο replay. Για τα προσωπικά δεδομένα, το EDPB 02/2025 κρίνει μη ενδεδειγμένη την εγγραφή clear, encrypted ή hashed μορφής τους σε αμετάβλητη αλυσίδα· επιτρέπει μόνο keyed hash ή perfectly hiding commitment, με τα δεδομένα off-chain. Ο έλεγχος διόρθωσε και σημεία του ερευνητή: το Hyperlight δεν φιλοξενεί SBCL (guests no_std Rust/C χωρίς OS)· το §7.1 ήδη βάζει το SBCL σε microVM· το wRPC δεν έχει NATS transport· η JSON Schema είναι ήδη «η μία έδρα σχημάτων» στο §15.1· το sigstore.dev κρατά το Rekor v1 ως default (28/6/2026)· τα EP drills του GP-9 υπάρχουν. Εσωτερικές ασυνέπειες: 75 αντί 76 components, σύγκρουση ονομάτων «Control Plane», 7 έναντι 8 ουσιών του πυρήνα, machine contracts που δηλώνονται ΕΚΚΡΕΜΕΙ (Ω5) αλλά αναφέρονται ως υπαρκτά. Ο έλεγχος έγινε χωρίς WebSearch (budget 200/200 εξαντλημένο), με απευθείας ανάγνωση πρωτογενών σελίδων.",
+ "sota": [
+  {
+   "id": "SOTA-KSUB-01",
+   "name": "C2SP tlog-tiles / tlog-checkpoint / tlog-cosignature / tlog-witness",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Στατικό HTTP API tiles για transparency logs. Όλες οι Merkle πράξεις γίνονται κατά RFC 6962, με μόνο SHA-256, και ο client υπολογίζει μόνος τα inclusion/consistency proofs από cacheable tiles. Checkpoint είναι ένα signed note (origin, size, root) που δέχεται πολλαπλές υπογραφές, με τις άγνωστες να αγνοούνται. Για τον log προβλέπεται SHOULD Ed25519, αλλά επιτρέπεται και άλλος note αλγόριθμος. Η cosignature v1.0.1 (28/3/2026) είναι μόνο Ed25519· το v1.1.0-rc.1 (23/4/2026) προσθέτει ML-DSA-44 ως SHOULD για νέες εγκαταστάσεις. Ο witness (v1.0.0, 31/3/2026) κρατά μόνο το τελευταίο επαληθευμένο checkpoint ανά log και συνυπογράφει μόνο μετά από έγκυρο consistency proof. Ο μηχανισμός ανάκτησης από monitors κατά του split-view είναι «still under discussion».",
+   "relevance": "Υποψήφιο προφίλ για τα proofs, τα checkpoints και το witnessing του CMP-KRN-01/ICD-01 και του REQ-KRN-002.",
+   "sources": [
+    {
+     "title": "C2SP tlog-tiles",
+     "url": "https://c2sp.org/tlog-tiles",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-checkpoint",
+     "url": "https://c2sp.org/tlog-checkpoint",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-cosignature (v1.0.1)",
+     "url": "https://c2sp.org/tlog-cosignature",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-cosignature v1.1.0-rc.1 (ML-DSA-44)",
+     "url": "https://github.com/C2SP/C2SP/blob/tlog-cosignature/v1.1.0-rc.1/tlog-cosignature.md",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tags",
+     "url": "https://github.com/C2SP/C2SP/tags",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-02",
+   "name": "Tessera (transparency-dev) + Sigstore Rekor v2",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Go βιβλιοθήκη για tile-based logs, «logical successor» του Trillian v1. Η v1.0.0 κυκλοφόρησε στις 22/9/2025, ενώ το README τη δηλώνει production ready ήδη από το v0.2.0 beta. Έχει drivers POSIX, AWS και GCP, antispam, σύγχρονη δημοσίευση μέσω PublicationAwaiter και C2SP tlog-witness με witness policies. Το Trillian δηλώνει maintenance mode και συστήνει Tessera σε νέους operators. Το Rekor v2 έγινε GA στις 10/10/2025 με tile-backed backend Tessera και public-good instance με 99.5% SLO. Στις 28/6/2026 όμως το Sigstore δήλωσε ότι το sigstore.dev κρατά το Rekor v1 ως default «for the foreseeable future», λόγω breaking changes στους clients και της επερχόμενης PQC μετάβασης.",
+   "relevance": "Αποδεδειγμένη υλοποίηση του προφίλ C2SP, με sovereign POSIX backend (EP-05). Η απόφαση του Sigstore δείχνει ότι η PQ μετάβαση των tlogs θεωρείται ακόμη ανοιχτή.",
+   "sources": [
+    {
+     "title": "transparency-dev/tessera",
+     "url": "https://github.com/transparency-dev/tessera",
+     "year": "2026"
+    },
+    {
+     "title": "Tessera v1.0.0 release (GitHub API)",
+     "url": "https://api.github.com/repos/transparency-dev/tessera/releases/tags/v1.0.0",
+     "year": "2025"
+    },
+    {
+     "title": "google/trillian README (maintenance mode)",
+     "url": "https://github.com/google/trillian",
+     "year": "2026"
+    },
+    {
+     "title": "sigstore/rekor-tiles README",
+     "url": "https://raw.githubusercontent.com/sigstore/rekor-tiles/main/README.md",
+     "year": "2025"
+    },
+    {
+     "title": "Rekor v2 GA",
+     "url": "https://blog.sigstore.dev/rekor-v2-ga/",
+     "year": "2025"
+    },
+    {
+     "title": "sigstore.dev and Rekor evolution",
+     "url": "https://blog.sigstore.dev/rekor-evolution/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-03",
+   "name": "RFC 9162 (CT 2.0) — καθεστώς",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Experimental RFC του 2021 που κάνει obsolete το RFC 6962. Εισάγει IANA registry hash algorithms, με τον αλγόριθμο ως αμετάβλητη παράμετρο κάθε log. Το Static CT API κρατά το write path του RFC 6962, αντικαθιστά το read path με tiles και δεν αναφέρει το RFC 9162.",
+   "relevance": "Το πρόχειρο βασίζει τα proofs στο RFC 9162. Η ευελιξία του είναι ευελιξία ανά log, όχι μέσα στο ίδιο log, άρα το trade-off έναντι των tiles είναι στενότερο απ' όσο φαίνεται.",
+   "sources": [
+    {
+     "title": "RFC 9162 info page",
+     "url": "https://www.rfc-editor.org/info/rfc9162",
+     "year": "2021"
+    },
+    {
+     "title": "RFC 9162 text",
+     "url": "https://www.rfc-editor.org/rfc/rfc9162",
+     "year": "2021"
+    },
+    {
+     "title": "C2SP Static CT API",
+     "url": "https://c2sp.org/static-ct-api",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-04",
+   "name": "Witness Network / Sigsum",
+   "kind": "system",
+   "maturity": "pilot",
+   "what": "Το Witness Network είναι κοινοτική υπηρεσία που τηρεί λίστες εγκεκριμένων logs και witnesses πάνω στο C2SP tlog-witness και δηλώνει «experimental / work-in-progress». Το Sigsum είναι σύστημα διαφάνειας υπογραφών με threshold witnesses. Καμία από τις δύο σελίδες δεν έχει ημερομηνία.",
+   "relevance": "Προσφέρει ανεξάρτητους witnesses (SH-11) χωρίς bespoke «witness gossip». Η ωριμότητά του είναι χαμηλή.",
+   "sources": [
+    {
+     "title": "Witness Network",
+     "url": "https://witness-network.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Sigsum",
+     "url": "https://www.sigsum.org/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-05",
+   "name": "AT Protocol repositories + DASL/DRISL",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Ένα repository ανά account, με signed commits, Merkle Search Tree (SHA-256, fanout 4), CID links και κωδικοποίηση DRISL CBOR. Τα signing keys είναι rotatable μέσω του DID document, και το repo εξάγεται σε CAR v1. Το DASL είναι αυστηρό υποσύνολο IPFS CIDs/IPLD· το DRISL είναι deterministic CBOR profile. Στηρίζει τον γράφο του Bluesky.",
+   "relevance": "Αποδεικνύει σε μεγάλη κλίμακα το μοτίβο «υπογεγραμμένη, content-addressed ιστορία ανά ταυτότητα με έναν συγγραφέα». Είναι άμεσο ανάλογο των KRN-01/02 και του INV-I04.",
+   "sources": [
+    {
+     "title": "AT Protocol Repository spec",
+     "url": "https://atproto.com/specs/repository",
+     "year": "2026"
+    },
+    {
+     "title": "DASL",
+     "url": "https://dasl.ing/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-06",
+   "name": "CIDv1 (multicodec + multihash)",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Αυτο-περιγραφόμενη διεύθυνση <version><content-type multicodec><multihash>, με εκδόσεις ώστε η ίδια η μορφή να εξελίσσεται. Στον πίνακα multicodec το raw έχει code 0x55 (permanent) και το json-jcs code 0xb601 (draft).",
+   "relevance": "Προσθέτει την ετικέτα codec/canonicalization που λείπει από το {alg, digest} του ICD-02, και υπάρχει ήδη code για JCS.",
+   "sources": [
+    {
+     "title": "multiformats/cid",
+     "url": "https://github.com/multiformats/cid",
+     "year": "2026"
+    },
+    {
+     "title": "multicodec table.csv",
+     "url": "https://raw.githubusercontent.com/multiformats/multicodec/master/table.csv",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-07",
+   "name": "Deterministic serializations: RFC 8785 JCS, CBOR CDE, dCBOR",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Το JCS είναι Informational RFC (2020). Απαιτεί I-JSON και σειριοποιεί αριθμούς κατά ECMAScript· τα binary δεδομένα μόνο ως JSON strings (π.χ. Base64). Το CBOR CDE (draft-ietf-cbor-cde-13, 13/10/2025, intended BCP) είναι σήμερα Expired. Το dCBOR (draft-mcnally-deterministic-cbor-18, 10/8/2026) είναι ατομικό draft χωρίς IETF stream.",
+   "relevance": "Κανένα deterministic CBOR δεν είναι RFC. Το JCS επαρκεί για JSON, όχι για blobs.",
+   "sources": [
+    {
+     "title": "RFC 8785",
+     "url": "https://www.rfc-editor.org/rfc/rfc8785",
+     "year": "2020"
+    },
+    {
+     "title": "draft-ietf-cbor-cde",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-cbor-cde/",
+     "year": "2025"
+    },
+    {
+     "title": "draft-mcnally-deterministic-cbor",
+     "url": "https://datatracker.ietf.org/doc/draft-mcnally-deterministic-cbor/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-08",
+   "name": "Hybrid Logical Clocks (Kulkarni, Demirbas et al.)",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Το HLC διατηρεί την ιδιότητα e hb f ⇒ l.e < l.f, με |l.e − pt.e| φραγμένο και χώρο O(1). Χωρά στο 64-bit NTP timestamp και ανέχεται τα NTP kinks. Το CockroachDB υλοποιεί HLC· όταν ένας κόμβος διαπιστώσει ότι απέχει από τουλάχιστον τους μισούς κόμβους κατά 80% του μέγιστου offset, τερματίζεται αμέσως.",
+   "relevance": "Επιβεβαιώνει το ADR-0017 και δίνει συγκεκριμένη πολιτική για παραβίαση του ε (KT-21).",
+   "sources": [
+    {
+     "title": "Logical Physical Clocks and Consistent Snapshots in Globally Distributed Databases (tech report 2014-04)",
+     "url": "https://cse.buffalo.edu/tech-reports/2014-04.pdf",
+     "year": "2014"
+    },
+    {
+     "title": "Murat Demirbas: Hybrid Logical Clocks",
+     "url": "https://muratbuffalo.blogspot.com/2014/07/hybrid-logical-clocks.html",
+     "year": "2014"
+    },
+    {
+     "title": "CockroachDB transaction layer (HLC, max offset)",
+     "url": "https://docs.cockroachlabs.com/docs/stable/architecture/transaction-layer",
+     "year": "2026"
+    },
+    {
+     "title": "CockroachDB: Living without atomic clocks",
+     "url": "https://www.cockroachlabs.com/blog/living-without-atomic-clocks/",
+     "year": "2022"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-09",
+   "name": "Αυθεντικοποιημένος και νομικός χρόνος: NTS (RFC 8915), Roughtime, RFC 3161, eIDAS Art. 41",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Το NTS (Standards Track, 2020) δίνει αυθεντικοποίηση, anti-replay και TLS 1.3 key establishment στο NTP. Το Roughtime (draft-ietf-ntp-roughtime-19, 17/3/2026) βρίσκεται στο RFC Editor queue ως Experimental και επιτρέπει proofs of malfeasance. Το RFC 3161 (2001, ενημερωμένο από το RFC 5816) δίνει proof-of-existence από TSA. Το eIDAS (910/2014) Art. 41 δίνει τεκμήριο ακρίβειας μόνο στις qualified electronic time stamps από QTSP.",
+   "relevance": "Κλείνει το κενό του προχείρου, όπου το ε του HLC στηρίζεται σε μη αυθεντικοποιημένο NTP. Προσθέτει νομικό τεκμήριο στις χρονοσφραγίδες του LAWMAX.",
+   "sources": [
+    {
+     "title": "RFC 8915",
+     "url": "https://www.rfc-editor.org/rfc/rfc8915",
+     "year": "2020"
+    },
+    {
+     "title": "draft-ietf-ntp-roughtime",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-ntp-roughtime/",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 3161",
+     "url": "https://www.rfc-editor.org/rfc/rfc3161",
+     "year": "2001"
+    },
+    {
+     "title": "Regulation (EU) 910/2014 (eIDAS)",
+     "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910",
+     "year": "2014"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-10",
+   "name": "Bitemporal stores: XTDB v2, PostgreSQL 18",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Το XTDB v2 είναι immutable SQL database με bitemporal λειτουργίες κατά SQL:2011, άδεια MPL 2.0, GA από τις 5/6/2025. Το PostgreSQL 18 (25/9/2025) προσθέτει PRIMARY KEY/UNIQUE WITHOUT OVERLAPS, foreign keys με PERIOD και uuidv7().",
+   "relevance": "Υποψήφιες μηχανές για παράγωγες διτεμπορικές προβολές (ADR-0015, EP-05), όχι για την αλήθεια.",
+   "sources": [
+    {
+     "title": "XTDB docs",
+     "url": "https://docs.xtdb.com/",
+     "year": "2026"
+    },
+    {
+     "title": "XTDB blog: Launching XTDB v2",
+     "url": "https://xtdb.com/blog",
+     "year": "2025"
+    },
+    {
+     "title": "PostgreSQL 18 release notes",
+     "url": "https://www.postgresql.org/docs/18/release-18.html",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-11",
+   "name": "Durable execution: Temporal, Restate, DBOS",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Temporal: ντετερμινιστικός workflow code με replay του Event History· χρόνος και τυχαιότητα μόνο μέσω SDK APIs· αλλαγές κώδικα με Worker Versioning ή patching. Restate: journal κάθε βήματος, virtual objects με single-writer, idempotency keys, και immutable deployments όπου κάθε invocation μένει pinned στην έκδοση όπου ξεκίνησε. DBOS: versioning ώστε τα workflows να ανακάμπτουν μόνο σε συμβατό κώδικα. Το paper του DBOS (PVLDB 2022) προτείνει distributed transactional DBMS ως βάση cluster OS και επισημαίνει ότι το provenance απουσιάζει από τα σημερινά OS.",
+   "relevance": "Είναι η βιομηχανική μορφή του INV-C08. Δείχνει ότι το replay χρειάζεται pinning της έκδοσης κώδικα, που λείπει από το πρόχειρο.",
+   "sources": [
+    {
+     "title": "Temporal workflow definition",
+     "url": "https://docs.temporal.io/workflow-definition",
+     "year": "2026"
+    },
+    {
+     "title": "Restate durable execution",
+     "url": "https://docs.restate.dev/concepts/durable_execution",
+     "year": "2026"
+    },
+    {
+     "title": "Restate versioning",
+     "url": "https://docs.restate.dev/operate/versioning",
+     "year": "2026"
+    },
+    {
+     "title": "DBOS architecture (versioning)",
+     "url": "https://docs.dbos.dev/architecture",
+     "year": "2026"
+    },
+    {
+     "title": "DBOS: A DBMS-oriented Operating System",
+     "url": "https://www.vldb.org/pvldb/vol15/p21-skiadopoulos.pdf",
+     "year": "2022"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-12",
+   "name": "Deterministic simulation testing: FoundationDB, TigerBeetle VOPR, Antithesis",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Ολόκληρο το cluster εκτελείται σε μία ντετερμινιστική διεργασία με fault injection σε δίκτυο, δίσκο και μηχανές. Στο VOPR τα clock, network και disk είναι stubs, και κάθε bug αναπαράγεται από το seed μαζί με το commit hash. Το Antithesis προσφέρει deterministic simulation για κατανεμημένα συστήματα.",
+   "relevance": "Στηρίζει το OPS-02 και την εκτέλεση των KT-21/KT-22 σε DST πριν από τον κώδικα.",
+   "sources": [
+    {
+     "title": "FoundationDB Simulation and Testing",
+     "url": "https://apple.github.io/foundationdb/testing.html",
+     "year": "2026"
+    },
+    {
+     "title": "TigerBeetle VOPR",
+     "url": "https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/internals/vopr.md",
+     "year": "2026"
+    },
+    {
+     "title": "Antithesis docs",
+     "url": "https://antithesis.com/docs/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-13",
+   "name": "Consensus replication: Raft, Viewstamped Replication (TigerBeetle)",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Replicated log με commit πλειοψηφίας, ώστε κανένας κόμβος να μην εφαρμόσει διαφορετική εντολή στην ίδια θέση. Το TigerBeetle χρησιμοποιεί Viewstamped Replication, υποθέτει ότι ο δίσκος θα αστοχήσει, κρατά checksummed και hash-chained δεδομένα και σταματά με ασφάλεια (safe halt) αντί για σιωπηλή απώλεια.",
+   "relevance": "Αποδεδειγμένος μηχανισμός για RPO 0 και HA ενός single-writer journal. Το πρόχειρο δεν τον ορίζει.",
+   "sources": [
+    {
+     "title": "Raft",
+     "url": "https://raft.github.io/",
+     "year": "2026"
+    },
+    {
+     "title": "TigerBeetle safety",
+     "url": "https://docs.tigerbeetle.com/concepts/safety/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-14",
+   "name": "Wasm Component Model: WASI 0.3, Wasm 3.0 DET profile, Wasmtime LTS, wRPC",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Το WASI 0.2.0 κυκλοφόρησε τον Ιανουάριο 2024, με patches έως 0.2.12. Το 0.3.0 (11/6/2026) προσθέτει native async (async func, stream, future) και ακολούθησε το 0.3.1 (11/8/2026)· υλοποιείται στο Wasmtime 46+. Το WIT ορίζει packages με semver, worlds, interfaces και resources/handles. Το Wasm 3.0 DET profile ορίζει canonical NaN και fixed relaxed SIMD, αλλά τα memory.grow/table.grow μένουν μη ντετερμινιστικά. Το Wasmtime βγάζει μηνιαία major έκδοση, με LTS κάθε 12η και υποστήριξη 24 μηνών· τελευταία είναι η v48.0.2 (10/9/2026). Το wRPC μεταφέρει WIT πάνω από δίκτυο, με bindings Rust/Go και transports TCP, QUIC, WebTransport, WebSockets και Unix sockets.",
+   "relevance": "Βάση του ICD-10/EP-02. Δίνει ορισμό για το «deterministic mode» και ενιαίο IDL για τοπικά και απομακρυσμένα organs.",
+   "sources": [
+    {
+     "title": "WASI roadmap",
+     "url": "https://wasi.dev/roadmap",
+     "year": "2026"
+    },
+    {
+     "title": "WebAssembly/WASI",
+     "url": "https://github.com/WebAssembly/WASI",
+     "year": "2026"
+    },
+    {
+     "title": "Wasm 3.0 profiles",
+     "url": "https://webassembly.github.io/spec/core/appendix/profiles.html",
+     "year": "2026"
+    },
+    {
+     "title": "Wasmtime stability & release",
+     "url": "https://docs.wasmtime.dev/stability-release.html",
+     "year": "2026"
+    },
+    {
+     "title": "Wasmtime releases",
+     "url": "https://github.com/bytecodealliance/wasmtime/releases",
+     "year": "2026"
+    },
+    {
+     "title": "WIT",
+     "url": "https://component-model.bytecodealliance.org/design/wit.html",
+     "year": "2026"
+    },
+    {
+     "title": "wRPC README",
+     "url": "https://raw.githubusercontent.com/bytecodealliance/wrpc/main/README.md",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-15",
+   "name": "Sandboxes: Firecracker, Hyperlight, gVisor",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Το Firecracker είναι KVM microVM με minimal device model και jailer, και στηρίζει τα Lambda και Fargate. Το vsock του μεσολαβεί AF_UNIX στον host και AF_VSOCK στον guest, ως κανάλι ανεξάρτητο από network interface. Το Hyperlight είναι micro-VM χωρίς kernel ή OS, με guests ELF σε no_std Rust ή C· είναι CNCF sandbox, pre-1.0, με hyperlight-wasm. Το gVisor είναι application kernel σε userspace (Sentry), με αντάλλαγμα μειωμένη συμβατότητα και υψηλότερο κόστος ανά syscall.",
+   "relevance": "Επιλογές για το CMP-KRN-12. Το Hyperlight ταιριάζει σε Wasm ή no_std organs, όχι σε SBCL image.",
+   "sources": [
+    {
+     "title": "Firecracker",
+     "url": "https://github.com/firecracker-microvm/firecracker",
+     "year": "2026"
+    },
+    {
+     "title": "Firecracker vsock",
+     "url": "https://github.com/firecracker-microvm/firecracker/blob/main/docs/vsock.md",
+     "year": "2026"
+    },
+    {
+     "title": "Hyperlight",
+     "url": "https://github.com/hyperlight-dev/hyperlight",
+     "year": "2026"
+    },
+    {
+     "title": "gVisor docs",
+     "url": "https://gvisor.dev/docs/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-16",
+   "name": "Capability microkernels & hardware: seL4 (+MCS), LionsOS, Genode, Zircon, CHERI",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Το seL4 έχει formal verification, και οι security proofs ολοκληρώθηκαν σε AArch64 (ανακοίνωση 24/8/2026). Τα MCS scheduling contexts επιβάλλουν budget/period με sporadic server για temporal isolation. Το LionsOS (v0.4.0) πάνω σε seL4 δεν έχει ακόμη «concrete verification story». Το Genode είναι framework ειδικών OS με αναδρομικό sandbox model, πάνω σε seL4, NOVA, Fiasco.OC, Linux κ.ά. Τα Zircon handles φέρουν rights, μεταφέρονται ρητά μέσω channels, και δεν υπάρχει πρόσβαση χωρίς handle. Η CHERI Alliance έχει 50+ μέλη.",
+   "relevance": "Αφορά το κατώτερο όριο του TCB (ADR-0004), το EP-03 και το «capability hardware» του EP-02, και δίνει πρότυπο budgets για το ICD-11.",
+   "sources": [
+    {
+     "title": "seL4 About",
+     "url": "https://sel4.systems/About/",
+     "year": "2026"
+    },
+    {
+     "title": "seL4 MCS tutorial",
+     "url": "https://docs.sel4.systems/Tutorials/mcs.html",
+     "year": "2026"
+    },
+    {
+     "title": "LionsOS",
+     "url": "https://lionsos.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Genode",
+     "url": "https://genode.org/about/index",
+     "year": "2026"
+    },
+    {
+     "title": "Zircon handles",
+     "url": "https://fuchsia.dev/fuchsia-src/concepts/kernel/handles",
+     "year": "2026"
+    },
+    {
+     "title": "CHERI Alliance",
+     "url": "https://cheri-alliance.org/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-17",
+   "name": "Rust OS / verified Rust: Asterinas, Theseus, Verus",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Το Asterinas είναι framekernel: το unsafe Rust περιορίζεται στο OSTD, υποστηρίζει 230+ Linux syscalls, είχε δύο papers στο USENIX ATC 2025 και τελευταία έκδοση την 0.18.1 (1/9/2026). Το Theseus είναι ερευνητικό Rust OS, «not yet mature», με στόχο live evolution και fault recovery. Το Verus επαληθεύει στατικά προδιαγραφές σε Rust και είναι σε ενεργή ανάπτυξη.",
+   "relevance": "Τεκμηριώνει ότι η ζωντανή αντικατάσταση kernel components (REQ-ABS-002) μένει έρευνα. Δίνει δρόμο για επαλήθευση Rust TCB.",
+   "sources": [
+    {
+     "title": "Asterinas",
+     "url": "https://github.com/asterinas/asterinas",
+     "year": "2026"
+    },
+    {
+     "title": "Theseus OS",
+     "url": "https://github.com/theseus-os/Theseus",
+     "year": "2026"
+    },
+    {
+     "title": "Verus",
+     "url": "https://github.com/verus-lang/verus",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-18",
+   "name": "Supervision runtimes: Erlang/OTP 29, Apache Pekko, Orleans, Ray",
+   "kind": "system",
+   "maturity": "production",
+   "what": "OTP: supervisors με στρατηγικές one_for_one, one_for_all, rest_for_one και simple_one_for_one, και restart intensity/period (προεπιλογή 1 ανά 5s)· η OTP 29.0 κυκλοφόρησε στις 13/5/2026. Pekko: fork του Akka 2.6.x πριν το Akka περάσει σε BSL. Orleans: virtual actors με αυτόματη activation, placement και grain versioning. Ray: η κατάσταση του actor χάνεται στο restart (ξανατρέχει ο constructor), με max_restarts· ισχύει owner fate-sharing, όχι supervision trees με στρατηγικές.",
+   "relevance": "Στηρίζει το ADR-0013 και ορίζει τα σκέλη του EXP-06.",
+   "sources": [
+    {
+     "title": "Erlang/OTP news",
+     "url": "https://www.erlang.org/news",
+     "year": "2026"
+    },
+    {
+     "title": "OTP supervisor principles",
+     "url": "https://www.erlang.org/doc/system/sup_princ.html",
+     "year": "2026"
+    },
+    {
+     "title": "Apache Pekko",
+     "url": "https://pekko.apache.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Orleans overview",
+     "url": "https://learn.microsoft.com/en-us/dotnet/orleans/overview",
+     "year": "2026"
+    },
+    {
+     "title": "Ray actor fault tolerance",
+     "url": "https://docs.ray.io/en/latest/ray-core/fault_tolerance/actors.html",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-19",
+   "name": "Event transport: NATS JetStream 2.14, Apache Kafka 4.x",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Το NATS 2.14 (30/4/2026) προσθέτει high-throughput publishing σε JetStream· από το 2.12 (22/9/2025) ο κύκλος εκδόσεων είναι 6μηνος. Το 2025 η Synadia επιχείρησε έξοδο του NATS από το CNCF και μετάβαση σε BUSL· η διαφορά λύθηκε με παραμονή στο CNCF (1/5/2025). Το Kafka 4.0 (18/3/2025) λειτουργεί χωρίς ZooKeeper, με KIP-848 GA και KIP-932 σε early access. Ακολούθησαν η 4.3.0 (22/5/2026) και η 4.3.1 (25/6/2026).",
+   "relevance": "Αφορά το ADR-0014/EP-06. Ο κίνδυνος διακυβέρνησης και άδειας είναι πραγματικός, αλλά το «transport ≠ truth» τον περιορίζει.",
+   "sources": [
+    {
+     "title": "NATS blog",
+     "url": "https://nats.io/blog/",
+     "year": "2026"
+    },
+    {
+     "title": "CNCF: Protecting NATS",
+     "url": "https://www.cncf.io/blog/2025/05/01/protecting-nats-and-the-integrity-of-open-source-cncfs-commitment-to-the-community/",
+     "year": "2025"
+    },
+    {
+     "title": "Apache Kafka 4.0.0 announcement",
+     "url": "https://kafka.apache.org/blog/2025/03/18/apache-kafka-4.0.0-release-announcement/",
+     "year": "2025"
+    },
+    {
+     "title": "Apache Kafka blog",
+     "url": "https://kafka.apache.org/blog",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-20",
+   "name": "AI agent OS: AIOS, MemGPT",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Το AIOS (COLM 2025, αναθεώρηση 12/8/2025) βάζει σε «AIOS kernel» scheduling, context, memory, storage και access control για LLM agents και αναφέρει έως 2.1x ταχύτερη εκτέλεση. Το MemGPT (2023) εφαρμόζει virtual context management κατά το πρότυπο της ιεραρχίας μνήμης των OS.",
+   "relevance": "Είναι η αντίθετη σχολή από το ADR-0004. Χρήσιμο ως πρότυπο scheduling και context για το COG-01, όχι για TCB.",
+   "sources": [
+    {
+     "title": "AIOS: LLM Agent Operating System",
+     "url": "https://arxiv.org/abs/2403.16971",
+     "year": "2025"
+    },
+    {
+     "title": "MemGPT: Towards LLMs as Operating Systems",
+     "url": "https://arxiv.org/abs/2310.08560",
+     "year": "2023"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-21",
+   "name": "Observability: OpenTelemetry GenAI semconv, W3C Trace Context",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Οι GenAI spans (inference, embeddings, execute_tool, invoke_agent) είναι σε Development στη v1.37.0. Οι instrumentations που ήταν σε v1.36.0 ή παλαιότερη κάνουν opt-in με OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental. Οι συμβάσεις μεταφέρθηκαν στο semantic-conventions-genai, που καλύπτει και MCP. Το W3C Trace Context είναι Recommendation (23/11/2021).",
+   "relevance": "Αφορά το ICD-24/OPS-04: correlation traceparent ↔ event_cid, με τα ασταθή GenAI attributes πίσω από adapter.",
+   "sources": [
+    {
+     "title": "OTel GenAI semconv (moved notice)",
+     "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/",
+     "year": "2026"
+    },
+    {
+     "title": "semantic-conventions-genai",
+     "url": "https://github.com/open-telemetry/semantic-conventions-genai",
+     "year": "2026"
+    },
+    {
+     "title": "GenAI spans v1.37.0",
+     "url": "https://github.com/open-telemetry/semantic-conventions/blob/v1.37.0/docs/gen-ai/gen-ai-spans.md",
+     "year": "2025"
+    },
+    {
+     "title": "W3C Trace Context",
+     "url": "https://www.w3.org/TR/trace-context/",
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-22",
+   "name": "Reproducible builds & supply chain: Nix, Guix full-source bootstrap, SLSA 1.2",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Μελέτη του MSR 2025 σε 709.816 πακέτα του nixpkgs (2017–2023) μέτρησε bitwise reproducibility 69–91% με ανοδική τάση και rebuildability πάνω από 99%. Το Guix (26/4/2023) χτίζει γράφο 22.000+ κόμβων από seed 357 bytes. Το SLSA 1.1 έχει αποσυρθεί· η 1.2 είναι Approved και προσθέτει Source track.",
+   "relevance": "Αφορά το ADR-0029/OPS-01: το Nix είναι τεκμηριωμένο, και το full-source bootstrap είναι ισχυρότερο για artifacts του TCB.",
+   "sources": [
+    {
+     "title": "Does Functional Package Management Enable Reproducible Builds at Scale? Yes",
+     "url": "https://arxiv.org/abs/2501.15919",
+     "year": "2025"
+    },
+    {
+     "title": "Guix full-source bootstrap",
+     "url": "https://guix.gnu.org/en/blog/2023/the-full-source-bootstrap-building-from-source-all-the-way-down/",
+     "year": "2023"
+    },
+    {
+     "title": "SLSA v1.1 (Retired)",
+     "url": "https://slsa.dev/spec/v1.1/",
+     "year": "2026"
+    },
+    {
+     "title": "SLSA v1.2",
+     "url": "https://slsa.dev/spec/v1.2/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-23",
+   "name": "Contract IDLs & tooling: OpenAPI 3.2, AsyncAPI 3.1, Protobuf Editions 2024, JSON Schema 2020-12, TypeSpec, Buf",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Το OpenAPI 3.2.0 (19/9/2025) προσθέτει sequential/streaming media types (και SSE), QUERY και webhooks. Το AsyncAPI είναι στην 3.1.0 με NATS bindings. Τα Protobuf Editions αντικαθιστούν τα proto2/proto3, με τελευταία την 2024. Το JSON Schema 2020-12 παραμένει τρέχον. Το TypeSpec έχει emitters για OpenAPI3 και JSON Schema· Protobuf/WIT δεν επαληθεύτηκαν. Το Buf ελέγχει breaking changes σε επίπεδα FILE, PACKAGE, WIRE_JSON και WIRE.",
+   "relevance": "Αφορά το ADR-0025/REQ-INT-001: επικαιροποίηση εκδόσεων και κανόνας παραγωγής των bindings από τη μία έδρα.",
+   "sources": [
+    {
+     "title": "OpenAPI 3.2.0",
+     "url": "https://spec.openapis.org/oas/v3.2.0.html",
+     "year": "2025"
+    },
+    {
+     "title": "AsyncAPI latest",
+     "url": "https://www.asyncapi.com/docs/reference/specification/latest",
+     "year": "2026"
+    },
+    {
+     "title": "Protobuf Editions",
+     "url": "https://protobuf.dev/editions/overview/",
+     "year": "2026"
+    },
+    {
+     "title": "JSON Schema specification",
+     "url": "https://json-schema.org/specification",
+     "year": "2026"
+    },
+    {
+     "title": "TypeSpec docs",
+     "url": "https://typespec.io/docs/",
+     "year": "2026"
+    },
+    {
+     "title": "Buf breaking",
+     "url": "https://buf.build/docs/breaking/",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-24",
+   "name": "Verification-guided development (Cedar) και όρια του N-version",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Στο Cedar, ένα εκτελέσιμο Lean model αποδείχθηκε και συγκρίθηκε με την Rust υλοποίηση με differential random testing: 4 bugs βρέθηκαν μέσω proofs και 21 μέσω DRT/PBT. Οι Knight & Leveson (IEEE TSE 12(1), 1986) απέρριψαν στατιστικά την ανεξαρτησία αστοχιών στο N-version programming (δευτερογενής πηγή).",
+   "relevance": "Το N-version του προχείρου ανιχνεύει διαφωνίες αλλά δεν εγγυάται ορθότητα όταν οι εκδόσεις συμφωνούν. Χρειάζεται VGD.",
+   "sources": [
+    {
+     "title": "How We Built Cedar: A Verification-Guided Approach",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    },
+    {
+     "title": "N-version programming (Knight & Leveson 1986 citation)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-25",
+   "name": "RFC 9170 — Long-term viability of protocol extension mechanisms",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Informational RFC του IAB (2021): «Mechanisms that aren't used are the ones that fail most often». Συστήνει ενεργή χρήση των μηχανισμών επέκτασης, GREASE και ρητή τεκμηρίωση των invariants.",
+   "relevance": "Κατ' αναλογία για το §28: EPs που δεν ασκούνται κινδυνεύουν να απολιθωθούν.",
+   "sources": [
+    {
+     "title": "RFC 9170",
+     "url": "https://www.rfc-editor.org/rfc/rfc9170",
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-26",
+   "name": "Leases & fencing tokens",
+   "kind": "research",
+   "maturity": "production",
+   "what": "Ένα lease χωρίς fencing token δεν είναι ασφαλές απέναντι σε GC pauses και καθυστερήσεις. Η λύση είναι μονότονο token που ο πόρος ελέγχει και με το οποίο απορρίπτει παλαιότερα tokens.",
+   "relevance": "Για τη μοναδικότητα body του ICD-12/INV-I04, ο έλεγχος πρέπει να γίνεται στο ledger.",
+   "sources": [
+    {
+     "title": "Kleppmann: How to do distributed locking",
+     "url": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html",
+     "year": "2016"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-27",
+   "name": "AWS ClockBound",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Daemon και client library που δίνουν Clock Error Bound ως ζεύγος (earliest, latest), από NTP, PTP Hardware Clock ή VMClock. Διατίθεται ως Rust crate και C FFI.",
+   "relevance": "Κάνει μετρήσιμο το ε του HLC (GAP-KSUB-06). Η έκταση χρήσης εκτός AWS δεν επαληθεύτηκε.",
+   "sources": [
+    {
+     "title": "aws/clock-bound",
+     "url": "https://github.com/aws/clock-bound",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-KSUB-28",
+   "name": "EDPB Guidelines 02/2025 (blockchain και προσωπικά δεδομένα)",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Έκδοση 1.1 για δημόσια διαβούλευση (υιοθέτηση 8/4/2025, διαβούλευση έως 9/6/2025). Κρίνει μη ενδεδειγμένη την εγγραφή προσωπικών δεδομένων σε clear, encrypted ή hashed μορφή σε blockchain· αυτά πρέπει να φυλάσσονται off-chain. Ως μέτρα προτείνει salted ή keyed hash με salt/κλειδί off-chain, και perfectly hiding commitments που γίνονται άχρηστα μόλις διαγραφούν τα δεδομένα και ο witness. Απαιτεί DPIA και erasure by design.",
+   "relevance": "Άμεσο για append-only ledger και CAS με προσωπικά δεδομένα (KT-16, REQ-MEM-002, ShredEnvelope).",
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 v1.1 (PDF)",
+     "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+     "year": "2025"
+    },
+    {
+     "title": "EDPB adopts guidelines on blockchains",
+     "url": "https://www.edpb.europa.eu/news/news/2025/edpb-adopts-guidelines-processing-personal-data-through-blockchains-and-ready_en",
+     "year": "2025"
+    },
+    {
+     "title": "EDPB Guidelines 02/2025 consultation page",
+     "url": "https://www.edpb.europa.eu/our-work-tools/documents/public-consultations/2025/guidelines-022025-processing-personal-data_en",
+     "year": "2025"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-KRN-01",
+    "ICD-01",
+    "REQ-KRN-002"
+   ],
+   "draft_ref": "master §6.3 CMP-KRN-01, §3 (Ledger)· 6.4.md CMP-KRN-01· 15.md §15.2 ICD-01· 29.md REQ-KRN-002",
+   "draft_position": "Append-only υπογεγραμμένο Merkle log ανά οντότητα/θεσμό: RFC 6962 hashing, RFC 9162 consistency/inclusion proofs, διτεμπορικά indexes, checkpoints συνυπογεγραμμένα από witnesses, και equivocation που ανιχνεύεται με «witness gossip». Segments στο CAS, index σε PostgreSQL· Rust + PostgreSQL. Ένας συγγραφέας ανά journal, linearizable, ack μόνο με Persistence Receipt :durable και read-back. Κατά το §6.4, ο Rust εκτελεστής μπαίνει μόνο μέσω ORP R-C με N-version έναντι της Lisp έδρας (journal, merkle, tlog-1), με ρητό «καμία τρίτη αλυσίδα».",
+   "verdict": "superior-exists",
+   "reasoning": "Η σημασιολογία ισχύει. Για το Merkle/witness υπόστρωμα όμως υπάρχει τυποποιημένο προφίλ με υλοποιήσεις σε παραγωγή. Το tlog-tiles κάνει τις Merkle πράξεις κατά RFC 6962, αλλά σερβίρει cacheable tiles από τα οποία ο client υπολογίζει μόνος τα proofs. Τα tlog-checkpoint/cosignature/witness ορίζουν witness protocol όπου ο witness συνυπογράφει μόνο μετά από έγκυρο consistency proof. Το «witness gossip» του προχείρου δεν αντιστοιχεί σε κανένα πρωτόκολλο. Το Tessera έφτασε v1.0.0 (22/9/2025), το Trillian είναι σε maintenance mode, και το Rekor v2 έγινε GA με backend Tessera. Το RFC 9162 είναι Experimental, και το Static CT API χτίζεται στο RFC 6962 χωρίς να το αναφέρει. Αυτό που υπερέχει είναι το προφίλ, όχι απαραίτητα η βιβλιοθήκη: το Tessera είναι Go, σε σύγκρουση με το Rust TCB του ADR-0012. Επιπλέον, λόγω του «καμία τρίτη αλυσίδα», το προφίλ πρέπει να γίνει η εξέλιξη της έδρας tlog-1, κάτι μη επαληθεύσιμο από εδώ.",
+   "superior": "Προφίλ C2SP (tlog-tiles, tlog-checkpoint, tlog-cosignature, tlog-witness) ως μορφή proofs, checkpoints και witnessing του KRN-01. Το Tessera ή μια Rust υλοποίηση του ίδιου προφίλ αποφασίζεται μαζί με το ADR-0012. Κρατά RFC 6962 hashing και proofs· προσθέτει τυποποιημένους witnesses, Witness Network και sovereign POSIX backend. Ρητό trade-off: τα tiles είναι μόνο SHA-256. Και στο RFC 9162 ο hash αλγόριθμος είναι αμετάβλητη παράμετρος του log, άρα και στις δύο περιπτώσεις η αλλαγή αλγορίθμου σημαίνει νέο log με νέο origin και επαναγκύρωση κατά INV-X02. Χάνεται μόνο η επιλογή μη SHA-256 hash για νέο log. Η cosignature v1.0.1 είναι μόνο Ed25519· το v1.1.0-rc.1 προσθέτει ML-DSA-44 αλλά είναι release candidate. Persistence Receipt, διτεμπορικά indexes και Subscribe μένουν δική μας στρώση.",
+   "sota_refs": [
+    "SOTA-KSUB-01",
+    "SOTA-KSUB-02",
+    "SOTA-KSUB-03",
+    "SOTA-KSUB-04"
+   ],
+   "sources": [
+    {
+     "title": "C2SP tlog-tiles",
+     "url": "https://c2sp.org/tlog-tiles",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-cosignature v1.1.0-rc.1",
+     "url": "https://github.com/C2SP/C2SP/blob/tlog-cosignature/v1.1.0-rc.1/tlog-cosignature.md",
+     "year": "2026"
+    },
+    {
+     "title": "Tessera v1.0.0 release",
+     "url": "https://api.github.com/repos/transparency-dev/tessera/releases/tags/v1.0.0",
+     "year": "2025"
+    },
+    {
+     "title": "google/trillian",
+     "url": "https://github.com/google/trillian",
+     "year": "2026"
+    },
+    {
+     "title": "Rekor v2 GA",
+     "url": "https://blog.sigstore.dev/rekor-v2-ga/",
+     "year": "2025"
+    },
+    {
+     "title": "RFC 9162",
+     "url": "https://www.rfc-editor.org/rfc/rfc9162",
+     "year": "2021"
+    },
+    {
+     "title": "C2SP Static CT API",
+     "url": "https://c2sp.org/static-ct-api",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-KRN-001",
+    "INV-C08",
+    "REQ-KRN-014"
+   ],
+   "draft_ref": "29.md §29.1 REQ-KRN-001, REQ-KRN-014· master §0 σημείο 1, §0.3 (Art.5)· spine INV-C08",
+   "draft_position": "Κάθε μετάβαση κατάστασης γίνεται υπογεγραμμένο, content-addressed, διτεμπορικό, αιτιακά διατεταγμένο γεγονός σε append-only ledger. Η κατάσταση είναι καθαρή συνάρτηση του prefix του ledger, και κάθε μη ντετερμινισμός (π.χ. inference) εισέρχεται μόνο ως καταγεγραμμένο γεγονός (Deterministic Replay).",
+   "verdict": "holds",
+   "reasoning": "Είναι η αρχή του Temporal (replay του Event History, χρόνος και τυχαιότητα μόνο μέσω SDK APIs), του journal του Restate και του DBOS. Η επιλογή «καταγράφω, δεν αναπαράγω» για τα LLM είναι σωστή: ο κύριος λόγος μη ντετερμινισμού της inference είναι η έλλειψη batch invariance στους kernels. Διορθώνεται με batch-invariant kernels με κόστος περίπου 2x στην υλοποίηση της πηγής, κάτι που δεν ελέγχεται σε εξωτερικό πάροχο. Παράλειψη (GAP-KSUB-11): η «συνάρτηση» αλλάζει με κάθε ORP. Τα Temporal (Worker Versioning/patching), Restate (invocations pinned σε immutable deployment) και DBOS (ανάκαμψη μόνο σε συμβατό κώδικα) λύνουν ρητά αυτό το πρόβλημα· το πρόχειρο όχι.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-11",
+    "SOTA-KSUB-12"
+   ],
+   "sources": [
+    {
+     "title": "Temporal workflow definition",
+     "url": "https://docs.temporal.io/workflow-definition",
+     "year": "2026"
+    },
+    {
+     "title": "Restate durable execution",
+     "url": "https://docs.restate.dev/concepts/durable_execution",
+     "year": "2026"
+    },
+    {
+     "title": "Restate versioning",
+     "url": "https://docs.restate.dev/operate/versioning",
+     "year": "2026"
+    },
+    {
+     "title": "DBOS architecture",
+     "url": "https://docs.dbos.dev/architecture",
+     "year": "2026"
+    },
+    {
+     "title": "DBOS VLDB 2022",
+     "url": "https://www.vldb.org/pvldb/vol15/p21-skiadopoulos.pdf",
+     "year": "2022"
+    },
+    {
+     "title": "Defeating Nondeterminism in LLM Inference",
+     "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-KRN-02",
+    "ICD-02",
+    "REQ-KRN-003"
+   ],
+   "draft_ref": "master §6.3 CMP-KRN-02, §3 (CID)· 15.md ICD-02· 22.md ADR-0016· 29.md REQ-KRN-003",
+   "draft_position": "CAS με διεύθυνση {alg, digest}, που το §3 ορίζει ως «algorithm-tagged digest (multihash-style)». Ο provider την υπολογίζει από τα canonical bytes (JCS) και ο consumer την επαληθεύει. Λειτουργίες Put/Get/Has/Pin/Unpin/Replicate/ShredEnvelope· S3-compatible store με ≥3 replicas σε ≥2 sites και erasure coding· σε σπάσιμο digest, epoch re-anchor (INV-X02).",
+   "verdict": "superior-exists",
+   "reasoning": "Το algorithm tagging ισχύει, και το §3 ήδη μιλά για multihash. Λείπουν όμως ο codec και η έκδοση: η διεύθυνση δεν λέει ούτε τη μορφή ούτε την canonicalization. Αν αλλάξει το JCS από spec v1 σε v2 (ADR-0016) ή γίνει μετάβαση σε CBOR, το ίδιο λογικό αντικείμενο παίρνει άλλο digest χωρίς να φαίνεται ο λόγος. Επιπλέον το JCS απαιτεί I-JSON και αναπαριστά binary μόνο ως strings, οπότε το «cid από JCS bytes» δεν καλύπτει PDFs, scans και artifacts. Το CIDv1 λύνει ακριβώς αυτό, είναι σε παραγωγή μεγάλης κλίμακας (DASL/AT Protocol), και ο πίνακας multicodec έχει ήδη raw (0x55, permanent) και json-jcs (0xb601, draft).",
+   "superior": "Διεύθυνση τύπου CIDv1 <version><codec><multihash>: raw για blobs, json-jcs για την υπάρχουσα έδρα JCS, και ρητός codec για deterministic CBOR αν υιοθετηθεί. Κρατά το algorithm tagging και προσθέτει ετικέτα canonicalization, διευθυνσιοδότηση binary και διαλειτουργικότητα IPLD/DASL. Δεν χάνεται ιδιότητα του προχείρου. Κόστος: μετάπτωση ή διπλή αναπαράσταση για τις διευθύνσεις της as-built έδρας (JCS v1, μη επαληθεύσιμη από εδώ), και εξάρτηση από draft code για το json-jcs.",
+   "sota_refs": [
+    "SOTA-KSUB-06",
+    "SOTA-KSUB-05",
+    "SOTA-KSUB-07"
+   ],
+   "sources": [
+    {
+     "title": "multiformats/cid",
+     "url": "https://github.com/multiformats/cid",
+     "year": "2026"
+    },
+    {
+     "title": "multicodec table.csv",
+     "url": "https://raw.githubusercontent.com/multiformats/multicodec/master/table.csv",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 8785",
+     "url": "https://www.rfc-editor.org/rfc/rfc8785",
+     "year": "2020"
+    },
+    {
+     "title": "DASL",
+     "url": "https://dasl.ing/",
+     "year": "2026"
+    },
+    {
+     "title": "AT Protocol repository",
+     "url": "https://atproto.com/specs/repository",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-KRN-07",
+    "ICD-07",
+    "REQ-KRN-008",
+    "ADR-0017"
+   ],
+   "draft_ref": "master §6.3 CMP-KRN-07, §2.5 (eIDAS)· 6.4.md CMP-KRN-07· 15.md ICD-07· 29.md REQ-KRN-008· 22.md ADR-0017",
+   "draft_position": "HLC με φράγμα απόκλισης ε, όπου clock skew εκτός ε σημαίνει απόρριψη. Λειτουργίες Cut(valid_at, known_at), DeterministicClock(seed) για replay και TimestampAttest k-of-n (RFC 3161)· UTC Z, και legal time μέσω των τύπων του version-graph. ADR-0017: υπάρχουσες έδρες χρόνου + HLC ως concept declaration.",
+   "verdict": "holds",
+   "reasoning": "Το HLC (Kulkarni, Demirbas et al. 2014) διατηρεί το e hb f ⇒ l.e < l.f, μένει κοντά στο NTP και χωρά σε 64-bit NTP timestamp. Το CockroachDB το υλοποιεί σε παραγωγή, και το k-of-n RFC 3161 είναι ώριμο. Δεν βρέθηκε αυστηρά ανώτερη εναλλακτική για αιτιακή διάταξη χωρίς atomic clocks. Λείπουν τρία στοιχεία (GAP-KSUB-06). (α) Αυθεντικοποιημένες πηγές χρόνου: NTS (RFC 8915, Standards Track) και Roughtime (draft-19, RFC Editor queue, Experimental, proofs of malfeasance). (β) Πολιτική υπέρβασης του ε: στο CockroachDB, ο κόμβος που απέχει από τουλάχιστον τους μισούς κατά 80% του max offset τερματίζεται αμέσως. (γ) Νομικό τεκμήριο: το eIDAS Art. 41 το αναγνωρίζει μόνο στις qualified electronic time stamps από QTSP. Το §2.5 αναφέρει το eIDAS για χρονοσφραγίδες, αλλά το ICD-07 δεν απαιτεί qualified TSA στο k-of-n.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-08",
+    "SOTA-KSUB-09"
+   ],
+   "sources": [
+    {
+     "title": "HLC tech report 2014-04",
+     "url": "https://cse.buffalo.edu/tech-reports/2014-04.pdf",
+     "year": "2014"
+    },
+    {
+     "title": "CockroachDB transaction layer",
+     "url": "https://docs.cockroachlabs.com/docs/stable/architecture/transaction-layer",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 8915",
+     "url": "https://www.rfc-editor.org/rfc/rfc8915",
+     "year": "2020"
+    },
+    {
+     "title": "draft-ietf-ntp-roughtime",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-ntp-roughtime/",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 3161",
+     "url": "https://www.rfc-editor.org/rfc/rfc3161",
+     "year": "2001"
+    },
+    {
+     "title": "eIDAS 910/2014",
+     "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910",
+     "year": "2014"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "KT-21"
+   ],
+   "draft_ref": "24.md KT-21· master §6.3 CMP-KRN-07 failure modes",
+   "draft_position": "Σε αποτυχία ρολογιού ή TSA: τα όρια του HLC ισχύουν, γίνεται fallback σε k-of-n TSA, κανένα committed γεγονός δεν αναδιατάσσεται, και η αγκύρωση ολοκληρώνεται μετά την ανάκαμψη (GP-2).",
+   "verdict": "holds",
+   "reasoning": "Το κριτήριο είναι σωστό και ελέγξιμο σε DST, αφού το VOPR και το FoundationDB κάνουν stub το clock. Για να είναι πλήρες χρειάζονται: αριθμητική τιμή του ε και μέθοδος μέτρησης (π.χ. Clock Error Bound τύπου ClockBound)· fail-stop όταν το offset ξεπερνά το όριο, κατά το πρότυπο του CockroachDB· και έγχυση κακόβουλου time server με ανίχνευση μέσω Roughtime. Χωρίς αυθεντικοποιημένο χρόνο, ένα «clock failure» δεν διακρίνεται από επίθεση.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-08",
+    "SOTA-KSUB-09",
+    "SOTA-KSUB-12",
+    "SOTA-KSUB-27"
+   ],
+   "sources": [
+    {
+     "title": "CockroachDB transaction layer",
+     "url": "https://docs.cockroachlabs.com/docs/stable/architecture/transaction-layer",
+     "year": "2026"
+    },
+    {
+     "title": "draft-ietf-ntp-roughtime",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-ntp-roughtime/",
+     "year": "2026"
+    },
+    {
+     "title": "TigerBeetle VOPR",
+     "url": "https://github.com/tigerbeetle/tigerbeetle/blob/main/docs/internals/vopr.md",
+     "year": "2026"
+    },
+    {
+     "title": "aws/clock-bound",
+     "url": "https://github.com/aws/clock-bound",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KRN-08",
+    "ICD-11",
+    "REQ-KRN-009"
+   ],
+   "draft_ref": "master §6.3 CMP-KRN-08· 15.md ICD-11· 29.md REQ-KRN-009",
+   "draft_position": "Namespaces, placement, locality, residency, quotas/budgets και accounting. Η εξάντληση επιστρέφει τυποποιημένη άρνηση, ποτέ σιωπηλή υποβάθμιση· placement εκτός residency είναι μη αναπαραστάσιμο μέσω placement predicates στο Gate. Allocations στο ledger, live usage παράγωγο.",
+   "verdict": "holds",
+   "reasoning": "Αντιστοιχεί σε αποδεδειγμένα πρότυπα. Στο Kubernetes ResourceQuota, η παραβίαση απορρίπτεται με 403 Forbidden και μήνυμα για τον περιορισμό. Στο seL4 MCS, τα scheduling contexts με budget/period και sporadic server δίνουν χρονική απομόνωση. Δεν βρέθηκε αυστηρά ανώτερη προσέγγιση. Η κλάση R-B, με allocations στο ledger και usage ως παράγωγο, είναι συνεπής με το ADR-0015.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-16"
+   ],
+   "sources": [
+    {
+     "title": "Kubernetes ResourceQuotas",
+     "url": "https://kubernetes.io/docs/concepts/policy/resource-quotas/",
+     "year": "2026"
+    },
+    {
+     "title": "seL4 MCS",
+     "url": "https://docs.sel4.systems/Tutorials/mcs.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KRN-09",
+    "ICD-09",
+    "REQ-KRN-010",
+    "ADR-0014",
+    "EP-06"
+   ],
+   "draft_ref": "master §6.3 CMP-KRN-09, §7.1· 15.md ICD-09· 22.md ADR-0014· 28.md EP-06",
+   "draft_position": "NATS JetStream ως μεταφορά, με το Kafka υποκαταστάσιμο (KT-03) και ποτέ πηγή αλήθειας. At-least-once, idempotent consumers με κλειδί το event CID, διάταξη ανά subject, rebuild από ledger· binding AsyncAPI grail-events.yaml. Το EP-06 δέχεται νέα messaging και delay-tolerant δικτύωση.",
+   "verdict": "holds",
+   "reasoning": "Το «transport ≠ truth», με rebuild από το ledger, εξουδετερώνει τον κίνδυνο vendor. Αυτό μετράει μετά το επεισόδιο του 2025, όταν η Synadia επιχείρησε έξοδο του NATS από το CNCF και μετάβαση σε BUSL· λύθηκε με παραμονή στο CNCF (1/5/2025). Το NATS 2.14 (30/4/2026) και το Kafka 4.x (χωρίς ZooKeeper, τελευταία 4.3.1 της 25/6/2026) είναι ώριμα, και το AsyncAPI 3.1.0 έχει NATS bindings. Χρειάζεται ένας κανόνας: υπάρχουν δύο Subscribe, το ICD-01 Subscribe(from_seq) ως αλήθεια και το ICD-09 ως μεταφορά. Κάθε consumer πρέπει να δηλώνει ποιο είναι το αυθεντικό του.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-19",
+    "SOTA-KSUB-23"
+   ],
+   "sources": [
+    {
+     "title": "NATS blog",
+     "url": "https://nats.io/blog/",
+     "year": "2026"
+    },
+    {
+     "title": "CNCF: Protecting NATS",
+     "url": "https://www.cncf.io/blog/2025/05/01/protecting-nats-and-the-integrity-of-open-source-cncfs-commitment-to-the-community/",
+     "year": "2025"
+    },
+    {
+     "title": "Kafka 4.0.0",
+     "url": "https://kafka.apache.org/blog/2025/03/18/apache-kafka-4.0.0-release-announcement/",
+     "year": "2025"
+    },
+    {
+     "title": "Apache Kafka blog",
+     "url": "https://kafka.apache.org/blog",
+     "year": "2026"
+    },
+    {
+     "title": "AsyncAPI latest",
+     "url": "https://www.asyncapi.com/docs/reference/specification/latest",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-KRN-10",
+    "ICD-12",
+    "REQ-KRN-011",
+    "ADR-0013",
+    "EXP-06"
+   ],
+   "draft_ref": "master §6.3 CMP-KRN-10, §7.1, §7.5· 6.4.md CMP-KRN-10· 15.md ICD-12· 22.md ADR-0013· 26.md EXP-06",
+   "draft_position": "Actor supervision trees για bodies και organ proxies με Elixir/OTP, restart strategies και hot-upgrade hooks για ORP. Lease με fencing token· body χωρίς lease δεν υπογράφει· split-brain λύνεται με μοναδικότητα μέσω delegation lease στο ledger. Ray μόνο για ML batch. Το EXP-06 συγκρίνει BEAM, Ray και SBCL threads, και το §6.4 χαρακτηρίζει το KRN-10 νέα έννοια ([X] EXP-06).",
+   "verdict": "holds",
+   "reasoning": "Το OTP παραμένει το SOTA για supervision trees, με στρατηγικές και restart intensity (OTP 29.0, 13/5/2026). Στο Ray η κατάσταση του actor χάνεται στο restart και ισχύει owner fate-sharing, όχι supervision trees με στρατηγικές. Το Orleans δίνει virtual actors με αυτόματη activation, όχι supervision. Το Akka πέρασε σε BSL· η ανοιχτή εναλλακτική είναι το Pekko. Το fencing token που ελέγχεται στο ledger είναι ακριβώς η λύση του Kleppmann για pauses και καθυστερήσεις. Προτείνεται το EXP-06 να αποκτήσει σκέλος durable execution (Restate/Temporal pattern) για τα μακροχρόνια βήματα των bodies, με την αλήθεια πάντα στο ledger.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-18",
+    "SOTA-KSUB-26",
+    "SOTA-KSUB-11"
+   ],
+   "sources": [
+    {
+     "title": "OTP supervisor principles",
+     "url": "https://www.erlang.org/doc/system/sup_princ.html",
+     "year": "2026"
+    },
+    {
+     "title": "Erlang/OTP news",
+     "url": "https://www.erlang.org/news",
+     "year": "2026"
+    },
+    {
+     "title": "Ray actor fault tolerance",
+     "url": "https://docs.ray.io/en/latest/ray-core/fault_tolerance/actors.html",
+     "year": "2026"
+    },
+    {
+     "title": "Orleans overview",
+     "url": "https://learn.microsoft.com/en-us/dotnet/orleans/overview",
+     "year": "2026"
+    },
+    {
+     "title": "Apache Pekko",
+     "url": "https://pekko.apache.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Kleppmann distributed locking",
+     "url": "https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html",
+     "year": "2016"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-KRN-12",
+    "ICD-10",
+    "REQ-KRN-013",
+    "EP-02",
+    "EXP-20"
+   ],
+   "draft_ref": "master §6.3 CMP-KRN-12, §7.1 (Organ plane)· 6.4.md CMP-KRN-12· 15.md ICD-10· 28.md EP-02· 26.md EXP-20",
+   "draft_position": "Organs ως Wasm components (WIT world grail:organ@1, WASI, capability handles) ή ως sandboxed processes σε microVM (Firecracker/gVisor)· defense in depth (Wasm + microVM) για evolved κώδικα. ExportState/ImportState μόνο για παράγωγη κατάσταση, και deterministic mode για replay. Κατά το §7.1, τα Common Lisp/SBCL, Python και C++ organs τρέχουν ως microVM processes. Το EXP-20 συγκρίνει Wasm, microVM και in-image SBCL για Lisp organs, και το EP-02 δέχεται νέες εκδόσεις WIT, ABIs και capability hardware.",
+   "verdict": "holds",
+   "reasoning": "Η επιλογή ισχύει και επικαιροποιείται. Το WASI 0.3.0 (11/6/2026, με 0.3.1 στις 11/8/2026) δίνει native async και υλοποιείται στο Wasmtime 46+. Το Wasmtime έχει LTS κάθε 12η major με 24 μήνες υποστήριξης (τρέχουσα v48.0.2), οπότε το ICD-10 μπορεί να κλειδώνει σε LTS. Το «deterministic mode» πρέπει να οριστεί ως το Wasm 3.0 DET profile, με καταγραφή κατά INV-C08 των memory.grow/table.grow, που μένουν μη ντετερμινιστικά. Το Hyperlight (χωρίς guest OS, guests no_std Rust/C) ταιριάζει σε Wasm ή no_std organs, όχι σε SBCL· άρα δεν είναι σκέλος του EXP-20. Δεν βρέθηκε Wasm target για SBCL, και το ECL→WASI (NLnet, 7/2025) είναι σε εξέλιξη· το σκέλος Wasm του EXP-20 δεν στηρίζεται σήμερα. Το wRPC επιτρέπει ενιαίο WIT για τοπικά και απομακρυσμένα organs (TCP/QUIC/WebTransport, όχι NATS) στη θέση του διπλού WIT + gRPC, αλλά είναι χωρίς δηλωμένη σταθερότητα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-14",
+    "SOTA-KSUB-15"
+   ],
+   "sources": [
+    {
+     "title": "WASI roadmap",
+     "url": "https://wasi.dev/roadmap",
+     "year": "2026"
+    },
+    {
+     "title": "Wasm 3.0 profiles",
+     "url": "https://webassembly.github.io/spec/core/appendix/profiles.html",
+     "year": "2026"
+    },
+    {
+     "title": "Wasmtime release policy",
+     "url": "https://docs.wasmtime.dev/stability-release.html",
+     "year": "2026"
+    },
+    {
+     "title": "Wasmtime releases",
+     "url": "https://github.com/bytecodealliance/wasmtime/releases",
+     "year": "2026"
+    },
+    {
+     "title": "Hyperlight",
+     "url": "https://github.com/hyperlight-dev/hyperlight",
+     "year": "2026"
+    },
+    {
+     "title": "ECL Web/WASI grant",
+     "url": "https://ecl.common-lisp.dev/posts/Web-ECL-Grant-Announcement.html",
+     "year": "2025"
+    },
+    {
+     "title": "wRPC README",
+     "url": "https://raw.githubusercontent.com/bytecodealliance/wrpc/main/README.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-KRN-012"
+   ],
+   "draft_ref": "29.md REQ-KRN-012· master §6.3 CMP-KRN-11/12, §7.1, §7.3 (Z2)",
+   "draft_position": "Κάθε επίδραση περνά από το capability gateway και τα όργανα δεν έχουν ambient authority: δίκτυο και fs μόνο μέσω handles του gateway, με Wasmtime host functions και egress proxy για τα process organs.",
+   "verdict": "holds",
+   "reasoning": "Το μοντέλο ταιριάζει με τα Zircon handles (rights, ρητή μεταφορά, καμία πρόσβαση χωρίς handle) και με τα WIT resources/handles. Για process organs, το Firecracker vsock δίνει κανάλι host↔guest ανεξάρτητο από network interface. Ένα microVM χωρίς network device, με μόνη έξοδο vsock προς το gateway, κάνει την παράκαμψη δομικά αδύνατη· αυτό είναι ισχυρότερο από egress proxy. Υπάρχει ασυνέπεια: το σκέλος «in-image SBCL» του EXP-20 παραβιάζει την απαίτηση, εκτός αν το image τρέχει ολόκληρο ως ένα όργανο σε microVM, που είναι ήδη η θέση του §7.1 (GAP-KSUB-10).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-16",
+    "SOTA-KSUB-14",
+    "SOTA-KSUB-15"
+   ],
+   "sources": [
+    {
+     "title": "Zircon handles",
+     "url": "https://fuchsia.dev/fuchsia-src/concepts/kernel/handles",
+     "year": "2026"
+    },
+    {
+     "title": "WIT",
+     "url": "https://component-model.bytecodealliance.org/design/wit.html",
+     "year": "2026"
+    },
+    {
+     "title": "Firecracker vsock",
+     "url": "https://github.com/firecracker-microvm/firecracker/blob/main/docs/vsock.md",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0004"
+   ],
+   "draft_ref": "22.md ADR-0004· master §0, §3 (Kernel)· 15.md §15.4 κανόνας 3· 28.md §28.1",
+   "draft_position": "Ο μικροπυρήνας του World OS είναι μόνο υπόστρωμα· η γνώση δεν μπαίνει ποτέ στον πυρήνα. Τα kernel ICDs γνωρίζουν μόνο γεγονότα, content addresses, κλειδιά, capabilities, controls, κατηγορήματα, χρόνο, χώρο και πόρους.",
+   "verdict": "holds",
+   "reasoning": "Η αντίθετη σχολή, το AIOS (COLM 2025) και το MemGPT, βάζει το LLM ως πόρο του «kernel» για scheduling και context. Βελτιώνει την απόδοση (έως 2.1x) αλλά δεν δίνει επαληθευσιμότητα ή TCB. Για το telos (INV-C03, T6), το ADR-0004 κυριαρχεί. Ο όρος «microkernel» είναι μεταφορά σε επίπεδο υπηρεσιών, όχι OS kernel τύπου seL4. Το πραγματικό κατώτερο όριο του TCB δεν δηλώνεται (GAP-KSUB-04). Επίσης το σύνολο των ουσιών του πυρήνα δεν έχει μία έδρα: το §0 και το §3 απαριθμούν 7, το §15.4 και το §28.1 απαριθμούν 8 (GAP-KSUB-08). Νεότερες ερευνητικές προτάσεις agent OS του 2026 δεν αναζητήθηκαν, γιατί το WebSearch δεν ήταν διαθέσιμο.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-20",
+    "SOTA-KSUB-16"
+   ],
+   "sources": [
+    {
+     "title": "AIOS",
+     "url": "https://arxiv.org/abs/2403.16971",
+     "year": "2025"
+    },
+    {
+     "title": "MemGPT",
+     "url": "https://arxiv.org/abs/2310.08560",
+     "year": "2023"
+    },
+    {
+     "title": "seL4 About",
+     "url": "https://sel4.systems/About/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0012"
+   ],
+   "draft_ref": "22.md ADR-0012 (παραπέμπει στο §20, ΕΚΚΡΕΜΕΙ κατά Ω4)· master §7.1",
+   "draft_position": "Rust για το TCB, Common Lisp για αναστοχαστικά/συμβολικά organs, reference interpreters και υπάρχουσες έδρες, C++23 για απόδοση, Python/JAX/PyTorch για έρευνα, Elixir/BEAM για supervision, TypeScript control plane, Wasm packaging, LLVM/MLIR/Tree-sitter/ANTLR για το forge.",
+   "verdict": "holds",
+   "reasoning": "Η Rust για το TCB στηρίζεται από τον οδηγό CISA/NSA για memory-safe languages (24/6/2025). Το ADR-0012 λέει «Wasm packaging» γενικά, ενώ το §7.1 βάζει ρητά το SBCL σε microVM processes. Άρα το μόνο μη στηριζόμενο σημείο είναι το σκέλος Wasm του EXP-20 για Lisp organs: δεν βρέθηκε Wasm target για SBCL, και το ECL→WASI είναι σε εξέλιξη. Ο όρος «TypeScript control plane» συγκρούεται με το CMP-KRN-05 Control Plane, που είναι Rust και TCB (GAP-KSUB-09). Αν υιοθετηθεί Tessera (DEC-KSUB-01), μπαίνει Go στο TCB, εκτός της κατανομής. Το §20, που θα αιτιολογούσε την κατανομή, δεν γράφτηκε.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-14",
+    "SOTA-KSUB-02"
+   ],
+   "sources": [
+    {
+     "title": "CISA/NSA Memory Safe Languages",
+     "url": "https://www.cisa.gov/resources-tools/resources/memory-safe-languages-reducing-vulnerabilities-modern-software-development",
+     "year": "2025"
+    },
+    {
+     "title": "ECL Web/WASI grant",
+     "url": "https://ecl.common-lisp.dev/posts/Web-ECL-Grant-Announcement.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0015",
+    "KT-03",
+    "EP-05"
+   ],
+   "draft_ref": "22.md ADR-0015· 24.md KT-03· 28.md EP-05· master §7.1 (Data plane)",
+   "draft_position": "Η αλήθεια βρίσκεται μόνο στα journals/ledger· PostgreSQL, RDF store και pgvector είναι παράγωγες προβολές, με EXP και :canonical-stores. Η αντικατάσταση database, graph engine ή transport γίνεται με rebuild από το ledger και ταυτόσημο differential query corpus (GP-9).",
+   "verdict": "holds",
+   "reasoning": "Είναι το μοτίβο «log ως αλήθεια, projections ως παράγωγα» των Temporal, Restate και DBOS. Υποψήφιες μηχανές διτεμπορικών προβολών πίσω από το EP-05: XTDB v2 (GA 5/6/2025, SQL:2011 bitemporal, MPL 2.0) και PostgreSQL 18 (WITHOUT OVERLAPS, PERIOD FK). Το KT-03 περνά μόνο αν οι projections είναι ντετερμινιστικές, με pinned έκδοση κώδικα (GAP-KSUB-11). Το index του ledger σε PostgreSQL (CMP-KRN-01) πρέπει να δηλωθεί ρητά παράγωγο, ώστε το R-C να μην εξαρτάται από αυτό.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-10",
+    "SOTA-KSUB-11"
+   ],
+   "sources": [
+    {
+     "title": "XTDB docs",
+     "url": "https://docs.xtdb.com/",
+     "year": "2026"
+    },
+    {
+     "title": "XTDB blog (v2 GA)",
+     "url": "https://xtdb.com/blog",
+     "year": "2025"
+    },
+    {
+     "title": "PostgreSQL 18 release notes",
+     "url": "https://www.postgresql.org/docs/18/release-18.html",
+     "year": "2025"
+    },
+    {
+     "title": "DBOS VLDB 2022",
+     "url": "https://www.vldb.org/pvldb/vol15/p21-skiadopoulos.pdf",
+     "year": "2022"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "KT-22"
+   ],
+   "draft_ref": "24.md KT-22· master §7.2 (DP-2), §7.4, §7.5",
+   "draft_position": "Σε ολική απώλεια site: RPO 0 για committed γεγονότα, RTO εντός στόχου και continuity certificate (GP-9). Κατά το §7.5, το commit ack δίνεται μόνο μετά από αναπαραγωγή σε ≥2 sites «ή» witness quorum· στόχος RPO 0 για DP-2 και DP-3, με αντοχή σε απώλεια site μόνο για το DP-3. Το DP-2 είναι on-prem cluster (3 kernel nodes) σε ένα site.",
+   "verdict": "gap",
+   "reasoning": "Το σκέλος «ή witness quorum» δεν μπορεί να δώσει RPO 0. Κατά το tlog-witness, οι witnesses κρατούν μόνο το τελευταίο checkpoint (size, root), όχι γεγονότα: αν χαθεί το site, τα σώματα των γεγονότων χάνονται, ενώ το ότι υπήρξαν αποδεικνύεται. Το RPO 0 απαιτεί σύγχρονη αναπαραγωγή με quorum (Raft ή VSR, όπως στο TigerBeetle) πριν από το ack. Στο DP-2, που είναι ένα site, η αναπαραγωγή σε ≥2 sites είναι αδύνατη. Άρα ο στόχος RPO 0 του DP-2 στηρίζεται στο ελαττωματικό σκέλος, και το KT-22 μπορεί να περάσει μόνο στο DP-3.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-13",
+    "SOTA-KSUB-01"
+   ],
+   "sources": [
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness",
+     "year": "2026"
+    },
+    {
+     "title": "Raft",
+     "url": "https://raft.github.io/",
+     "year": "2026"
+    },
+    {
+     "title": "TigerBeetle safety",
+     "url": "https://docs.tigerbeetle.com/concepts/safety/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-OPS-04",
+    "ICD-24",
+    "REQ-OPS-001"
+   ],
+   "draft_ref": "master §6.3 CMP-OPS-04, §7.1· 15.md ICD-24· 29.md REQ-OPS-001",
+   "draft_position": "OTel traces, metrics και logs με correlation turn_id/event_cid προς το ledger, και SLOs. Μη αυθεντικά: η απώλεια telemetry δεν είναι απώλεια audit.",
+   "verdict": "holds",
+   "reasoning": "Ο διαχωρισμός «audit = ledger, telemetry = μη αυθεντικό» είναι σωστός. Οι GenAI semantic conventions (inference, embeddings, execute_tool, invoke_agent, MCP) είναι σε Development, με opt-in μέσω OTEL_SEMCONV_STABILITY_OPT_IN=gen_ai_latest_experimental, και μεταφέρθηκαν σε ξεχωριστό repo. Το ICD-24 πρέπει να δεσμεύει μόνο τα σταθερά σημεία, δηλαδή W3C Trace Context (Recommendation) και event_cid ως span attribute ή link, και να κρατά τα gen_ai.* πίσω από adapter με ρητή έκδοση.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-21"
+   ],
+   "sources": [
+    {
+     "title": "GenAI spans v1.37.0",
+     "url": "https://github.com/open-telemetry/semantic-conventions/blob/v1.37.0/docs/gen-ai/gen-ai-spans.md",
+     "year": "2025"
+    },
+    {
+     "title": "semantic-conventions-genai",
+     "url": "https://github.com/open-telemetry/semantic-conventions-genai",
+     "year": "2026"
+    },
+    {
+     "title": "W3C Trace Context",
+     "url": "https://www.w3.org/TR/trace-context/",
+     "year": "2021"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0025",
+    "REQ-INT-001"
+   ],
+   "draft_ref": "22.md ADR-0025 (παραπέμπει στο §16, ΕΚΚΡΕΜΕΙ)· 15.md §15.1 (Binding, Data, Versioning)· 29.md REQ-INT-001",
+   "draft_position": "OpenAPI 3.1, AsyncAPI 3.0, Protobuf/gRPC και JSON Schema 2020-12, με τα JSON Schemas του contracts/schemas/ δηλωμένα ως «η μία έδρα σχημάτων». Semver, additive-only εντός major, breaking change = νέο major + ADR + VT-902. Τα εξωτερικά συμβόλαια είναι versioned προβολές εσωτερικών εδρών. Το §15.1 δέχεται ως bindings και WIT, OTLP και SysML v2 API.",
+   "verdict": "holds",
+   "reasoning": "Οι επιλογές ισχύουν, με νεότερες εκδόσεις: OpenAPI 3.2.0 (19/9/2025) με streaming media types χρήσιμα για το Subscribe, AsyncAPI 3.1.0, Protobuf Editions 2024 στη θέση του proto3. Η JSON Schema 2020-12 παραμένει τρέχουσα, και το Buf καλύπτει breaking changes για Protobuf. Η έδρα δεδομένων είναι ήδη μία, η JSON Schema. Το πρόχειρο όμως δεν ορίζει ότι proto, WIT και AsyncAPI παράγονται από αυτήν, οπότε το ίδιο δεδομένο γράφεται χειρόγραφα σε έως 4 IDLs (DEC-KSUB-05). Κατά συμπερασμό, τα WIT resources (handles σε οντότητες εκτός του component) δεν έχουν άμεσο αντίστοιχο στο JSON Schema, άρα χρειάζεται ρητός κανόνας απεικόνισης. Το TypeSpec εκπέμπει OpenAPI3 και JSON Schema· Protobuf και WIT δεν επαληθεύτηκαν.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-23"
+   ],
+   "sources": [
+    {
+     "title": "OpenAPI 3.2.0",
+     "url": "https://spec.openapis.org/oas/v3.2.0.html",
+     "year": "2025"
+    },
+    {
+     "title": "AsyncAPI latest",
+     "url": "https://www.asyncapi.com/docs/reference/specification/latest",
+     "year": "2026"
+    },
+    {
+     "title": "Protobuf Editions",
+     "url": "https://protobuf.dev/editions/overview/",
+     "year": "2026"
+    },
+    {
+     "title": "JSON Schema",
+     "url": "https://json-schema.org/specification",
+     "year": "2026"
+    },
+    {
+     "title": "Buf breaking",
+     "url": "https://buf.build/docs/breaking/",
+     "year": "2026"
+    },
+    {
+     "title": "TypeSpec",
+     "url": "https://typespec.io/docs/",
+     "year": "2026"
+    },
+    {
+     "title": "WIT",
+     "url": "https://component-model.bytecodealliance.org/design/wit.html",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-INT-002",
+    "REQ-INT-003"
+   ],
+   "draft_ref": "29.md §29.9· 15.md §15.1 (Conformance), §15.4· master §6.1, Παράρτημα Ω (Ω5)",
+   "draft_position": "Κάθε ICD έχει σουίτα conformance VT-0nn με vectors στο deployment/verify/, που περνά κάθε υλοποίηση σε οποιαδήποτε γλώσσα. Κάθε component εξαρτάται μόνο από interfaces, και αυτό ελέγχεται από archgen --check.",
+   "verdict": "holds",
+   "reasoning": "Είναι η πρακτική των language-neutral test vectors και του differential testing. Το Cedar δείχνει ότι vectors μαζί με differential random testing έναντι εκτελέσιμου formal model βρίσκουν bugs που ξεφεύγουν από review και unit tests (21 με DRT/PBT). Δεν βρέθηκε ανώτερη προσέγγιση. Τα contracts, vectors, WIT world και archgen δηλώνονται ΕΚΚΡΕΜΕΙ στο Ω5 και δεν υπάρχουν σε αυτό το repo, αλλά οι γραμμές των ICD τα αναφέρουν σαν να υπάρχουν. Σήμερα η απαίτηση είναι μόνο πρόθεση (GAP-KSUB-08).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-24"
+   ],
+   "sources": [
+    {
+     "title": "How We Built Cedar",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0029",
+    "REQ-OPS-002",
+    "REQ-OPS-003"
+   ],
+   "draft_ref": "22.md ADR-0029· master §7.2, §7.7· 29.md REQ-OPS-002/003",
+   "draft_position": "Σήμερα Docker αποδεικτική αλυσίδα, Nix μετά το FF4 με byte parity, και OCI + Kubernetes πίσω από Orchestrator Adapter, με το placement να το αποφασίζει το KRN-08. Profiles DP-1 έως DP-5, με sovereign on-prem. Admission μόνο υπογεγραμμένων images με SLSA provenance.",
+   "verdict": "holds",
+   "reasoning": "Το Nix τεκμηριώνεται εμπειρικά: η μελέτη του MSR 2025 σε 709.816 πακέτα βρήκε bitwise reproducibility 69–91% με ανοδική τάση. Η byte parity είναι επομένως εφικτή αλλά όχι αυτόματη, και το κριτήριο «δύο ανεξάρτητοι builders» είναι σωστό. Το Guix full-source bootstrap (seed 357 bytes) είναι ισχυρότερο για artifacts του TCB και μπορεί να μπει ως επέκταση. Η σειρά Docker→Nix είναι κλειδωμένη στο άλλο repo και δεν επαληθεύεται από εδώ. Το SLSA πρέπει να δηλωθεί με έκδοση: η 1.1 έχει αποσυρθεί, η 1.2 είναι Approved και προσθέτει Source track.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-22"
+   ],
+   "sources": [
+    {
+     "title": "Nix reproducibility at scale",
+     "url": "https://arxiv.org/abs/2501.15919",
+     "year": "2025"
+    },
+    {
+     "title": "Guix full-source bootstrap",
+     "url": "https://guix.gnu.org/en/blog/2023/the-full-source-bootstrap-building-from-source-all-the-way-down/",
+     "year": "2023"
+    },
+    {
+     "title": "SLSA v1.2",
+     "url": "https://slsa.dev/spec/v1.2/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EP-03",
+    "REQ-ABS-001"
+   ],
+   "draft_ref": "28.md §28.1–§28.3, §28.6· 26.md GP-9· 24.md KT-09· 29.md REQ-ABS-001",
+   "draft_position": "Νέα τεχνολογία μπαίνει μόνο μέσω EPs και ORP/TAP, με μηδενικό diff στα ICD-01 έως ICD-12. Το EP-03 καλύπτει substrate adapters: επιταχυντές, neuromorphic, photonic, κβαντικούς συνεπεξεργαστές και αρχειακά μέσα. Το GP-9 «Absorption drills» ασκεί crypto epoch (KT-09), αλλαγή storage/transport (KT-03), πλήρη migration (KT-08) και DR (KT-22), και δηλώνει «συνεχές TAP».",
+   "verdict": "gap",
+   "reasoning": "Η αρχή ισχύει, και drills υπάρχουν: τα EP-04, EP-05 και EP-06 ασκούνται μέσω KT-09 και KT-03, αλλά μόνο εφάπαξ στο GP-9. Το «συνεχές TAP» δεν έχει συχνότητα, και για τα EP-02 και EP-03 δεν υπάρχει κανένα drill ή KT. Κατ' αναλογία προς το RFC 9170, όπου μηχανισμοί επέκτασης που δεν χρησιμοποιούνται είναι αυτοί που αποτυγχάνουν συχνότερα, το «0 diff» για το EP-03 μένει αδοκίμαστο μέχρι να εμφανιστεί η τεχνολογία. Χρειάζονται περιοδικά drills ανά EP μέσα από το πλήρες TAP σε DST, με συνθετικό adapter, crypto suite ή transport, και το ίδιο κριτήριο 0 diff.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-25",
+    "SOTA-KSUB-12"
+   ],
+   "sources": [
+    {
+     "title": "RFC 9170",
+     "url": "https://www.rfc-editor.org/rfc/rfc9170",
+     "year": "2021"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-ABS-002"
+   ],
+   "draft_ref": "29.md REQ-ABS-002· master §6.2 R-C· 28.md §28.4",
+   "draft_position": "Ο ίδιος ο πυρήνας αντικαθίσταται με διατήρηση συνέχειας: ORP με N-version dual-run και 0 διαφωνίες σε παράθυρο Ν γεγονότων, Constitution Gate και ρητή έγκριση δημιουργού. Η κατάσταση (ledger) δεν μετακινείται, αλλάζει μόνο ο εκτελεστής.",
+   "verdict": "holds",
+   "reasoning": "Η ιδέα «αλλάζει ο εκτελεστής, όχι η κατάσταση» στηρίζεται στο event sourcing και στο replay. Η ζωντανή αντικατάσταση kernel components μένει ερευνητική (Theseus: «not yet mature»). Το «0 διαφωνίες» δεν αποδεικνύει ορθότητα, γιατί οι Knight & Leveson (1986) απέρριψαν στατιστικά την ανεξαρτησία αστοχιών στο N-version. Χρειάζεται συνδυασμός με verification-guided development (Lean model και differential testing, όπως στο Cedar) ή Verus για τη Rust υλοποίηση. Προϋπόθεση είναι επίσης το pinning έκδοσης του GAP-KSUB-11.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-17",
+    "SOTA-KSUB-24"
+   ],
+   "sources": [
+    {
+     "title": "Theseus OS",
+     "url": "https://github.com/theseus-os/Theseus",
+     "year": "2026"
+    },
+    {
+     "title": "N-version programming (Knight & Leveson)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026"
+    },
+    {
+     "title": "How We Built Cedar",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    },
+    {
+     "title": "Verus",
+     "url": "https://github.com/verus-lang/verus",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-ABS-003"
+   ],
+   "draft_ref": "29.md REQ-ABS-003· 15.md ICD-25· 28.md EP-09",
+   "draft_position": "Το Future Human Continuity Port υπάρχει μόνο ως συμβόλαιο ([E]), δεμένο σε ρητή, ενημερωμένη και ανακλητή συναίνεση, χωρίς ισχυρισμό μεταφοράς προσωπικότητας.",
+   "verdict": "holds",
+   "reasoning": "Ως [E], μόνο συμβόλαιο, είναι σωστό. Δεν τεκμηριώθηκε SOTA «συνέχειας ανθρώπου–AEO» προς σύγκριση. Για τη δομή της συναίνεσης υπάρχει πρότυπο: ISO/IEC 27560:2023 για consent records, με οδηγό υλοποίησης στο W3C DPV 2.3 (Community Group, 25/2/2026). Το ICD-25 θα έπρεπε να δεσμεύει αυτή τη δομή για το Control Record συναίνεσης.",
+   "superior": "",
+   "sota_refs": [],
+   "sources": [
+    {
+     "title": "W3C DPV (ISO/IEC 27560 consent records guide)",
+     "url": "https://w3c-cg.github.io/dpv/",
+     "year": "2026"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "low"
+  },
+  {
+   "ids": [
+    "REQ-ABS-004"
+   ],
+   "draft_ref": "29.md REQ-ABS-004· 28.md EP-10",
+   "draft_position": "Επέκταση σε νέο επιστημονικό domain μέσω domain institution template, χωρίς αλλαγή πυρήνα (KT-12, EXP-10).",
+   "verdict": "unknown",
+   "reasoning": "Από την πλευρά του υποστρώματος, η απαίτηση προκύπτει από το ADR-0004, αφού τα kernel ICDs δεν γνωρίζουν domain. Η ποιότητα μεταφοράς σε νέο domain όμως ανήκει στα στρώματα CIV/KNW και στο EXP-10· δεν τεκμηριώθηκε SOTA σε αυτή την εμβέλεια.",
+   "superior": "",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "experiment",
+   "confidence": "low"
+  },
+  {
+   "ids": [
+    "REQ-KRN-004"
+   ],
+   "draft_ref": "29.md REQ-KRN-004· master §6.3 CMP-KRN-03· 15.md ICD-03",
+   "draft_position": "Μοντέλο owner-root/delegation με rotation και revocation. Μυστικά μόνο σε HSM/TEE, και κάθε υπογραφή φέρει kid και alg.",
+   "verdict": "holds",
+   "reasoning": "Από πλευράς υποστρώματος ισχύει και αντιστοιχεί στα rotatable signing keys ανά ταυτότητα του AT Protocol, όπου η rotation γίνεται μέσω DID document με νέο commit. Για ανάκαμψη από compromise του root (KT-23), το KERI προσφέρει pre-rotation και witnessed key event logs. Όμως το IETF draft έληξε (τελευταία αναθεώρηση 27/7/2023) και η προδιαγραφή του ToIP είναι σε εξέλιξη. Η αξιολόγησή του ανήκει στο στρώμα ασφάλειας/κρυπτογραφίας.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-05"
+   ],
+   "sources": [
+    {
+     "title": "AT Protocol repository",
+     "url": "https://atproto.com/specs/repository",
+     "year": "2026"
+    },
+    {
+     "title": "draft-ssmith-keri",
+     "url": "https://datatracker.ietf.org/doc/draft-ssmith-keri/",
+     "year": "2023"
+    },
+    {
+     "title": "ToIP KERI specification repo",
+     "url": "https://github.com/trustoverip/kswg-keri-specification",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-KRN-005"
+   ],
+   "draft_ref": "29.md REQ-KRN-005· master §6.3 CMP-KRN-04· 15.md ICD-04",
+   "draft_position": "Ικανότητες καταχωρίζονται μόνο με evidence του harness και σχηματίζουν μονότονο lattice ανά οντότητα, με TTL και επαναπιστοποίηση.",
+   "verdict": "gap",
+   "reasoning": "Οι Madaan et al. (2024) δείχνουν ότι οι διαφορές απόδοσης έχουν νόημα μόνο όταν ξεπερνούν τη διακύμανση του benchmark, που σπάνια ποσοτικοποιείται. Ένα μονότονο lattice με αυστηρή σύγκριση είτε θα μπλοκάρει κάθε μετάβαση είτε θα δέχεται θόρυβο. Λείπει στατιστικός ορισμός της μη υποβάθμισης: περιθώριο non-inferiority, διαστήματα εμπιστοσύνης ανά seed, διόρθωση πολλαπλών συγκρίσεων. Η εμβάθυνση ανήκει στο στρώμα εξέλιξης.",
+   "superior": "",
+   "sota_refs": [],
+   "sources": [
+    {
+     "title": "Quantifying Variance in Evaluation Benchmarks",
+     "url": "https://arxiv.org/abs/2406.10229",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-KRN-006"
+   ],
+   "draft_ref": "29.md REQ-KRN-006· master §6.3 CMP-KRN-05/11· 22.md ADR-0010",
+   "draft_position": "Κάθε control είναι εξωτερικό, ορατό, αποδοτέο και αναστρέψιμο Control Record, που επιβάλλεται μόνο στο gateway. Η πολιτική γράφεται σε formally analysable policy language τύπου Cedar ([X] κατά ADR-0010).",
+   "verdict": "holds",
+   "reasoning": "Η επιλογή formally analysable policy language έχει ισχυρό τεκμήριο: το Cedar χτίστηκε με verification-guided development, με Lean proofs και differential testing έναντι της Rust υλοποίησης. Η επιβολή σε ένα μόνο σημείο είναι συνεπής με το capability model χωρίς ambient authority (REQ-KRN-012).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-24"
+   ],
+   "sources": [
+    {
+     "title": "How We Built Cedar",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-KRN-007"
+   ],
+   "draft_ref": "29.md REQ-KRN-007· 15.md ICD-06· master §6.3 CMP-KRN-06",
+   "draft_position": "Fail-closed Constitution Gate σε N-version (Rust + Common Lisp reference) με υπογεγραμμένα verdicts. Διαφωνία σημαίνει άρνηση και υπόθεση στο Court· UNKNOWN ή σφάλμα κατηγορήματος σημαίνει άρνηση.",
+   "verdict": "holds",
+   "reasoning": "Το fail-closed, με UNKNOWN και διαφωνία ως άρνηση, είναι σωστό και κλείνει την κλάση fail-open (CG-FAILOPEN). Το N-version όμως δεν δίνει ανεξάρτητες αστοχίες (Knight & Leveson 1986), άρα δεν προστατεύει όταν οι δύο εκδόσεις σφάλλουν με τον ίδιο τρόπο. Συμπλήρωση με εκτελέσιμο formal model και differential random testing (VGD κατά Cedar) δίνει αυστηρά ισχυρότερη διασφάλιση χωρίς να χάνεται τίποτα.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-KSUB-24"
+   ],
+   "sources": [
+    {
+     "title": "N-version programming (Knight & Leveson)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026"
+    },
+    {
+     "title": "How We Built Cedar",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-KSUB-01",
+   "title": "Η διεύθυνση CAS δεν φέρει codec/canonicalization· το JCS δεν διευθυνσιοδοτεί blobs",
+   "description": "Το ICD-02 ορίζει τη διεύθυνση ως {alg, digest} πάνω σε «canonical bytes (JCS)», και το §3 τη λέει «multihash-style». Όμως το Put(bytes) δέχεται αυθαίρετα blobs (PDF, scans, artifacts), που δεν είναι I-JSON. Επιπλέον, η αλλαγή JCS spec v1→v2 (ADR-0016) αλλάζει τα digests χωρίς αυτό να φαίνεται στη διεύθυνση.",
+   "why_it_matters": "Υπονομεύει το REQ-KRN-003 και το T8: διευθύνσεις που δεν αυτο-περιγράφονται σπάνε σιωπηλά σε κάθε αλλαγή serialization.",
+   "sota_answer": "CIDv1: version, multicodec και multihash, με raw (0x55, permanent) για blobs και json-jcs (0xb601, draft) για JCS. Σε παραγωγή μέσω DASL/AT Protocol.",
+   "sota_refs": [
+    "SOTA-KSUB-06",
+    "SOTA-KSUB-05",
+    "SOTA-KSUB-07"
+   ],
+   "sources": [
+    {
+     "title": "multiformats/cid",
+     "url": "https://github.com/multiformats/cid",
+     "year": "2026"
+    },
+    {
+     "title": "multicodec table.csv",
+     "url": "https://raw.githubusercontent.com/multiformats/multicodec/master/table.csv",
+     "year": "2026"
+    },
+    {
+     "title": "RFC 8785",
+     "url": "https://www.rfc-editor.org/rfc/rfc8785",
+     "year": "2020"
+    },
+    {
+     "title": "DASL",
+     "url": "https://dasl.ing/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KSUB-02",
+   "title": "Προσωπικά δεδομένα σε append-only ledger και CAS: τι επιτρέπεται να μείνει μετά το shredding",
+   "description": "Το πρόχειρο κάνει content addressing και crypto-shredding (ShredEnvelope), αλλά δεν ορίζει τρία πράγματα: αν το CID προσωπικού αντικειμένου υπολογίζεται πάνω σε plaintext· αν hashes ή ciphertext προσωπικών δεδομένων μπαίνουν στο αμετάβλητο ledger· και αν το ciphertext στο CAS μπορεί να διαγραφεί φυσικά (Unpin/GC) ή μένει για πάντα.",
+   "why_it_matters": "Ένα CID πάνω σε plaintext, ή unkeyed hash στο ledger, επιβιώνει του shredding και μπορεί να αντιστραφεί με λεξικό, υπονομεύοντας τα KT-16 και REQ-MEM-002. Το EDPB θεωρεί δύσκολη τη διαγραφή clear, encrypted ή hashed δεδομένων σε αμετάβλητη αλυσίδα.",
+   "sota_answer": "EDPB Guidelines 02/2025 (v1.1): δεν ενδείκνυται η εγγραφή προσωπικών δεδομένων σε clear, encrypted ή hashed μορφή στην αλυσίδα· φυλάσσονται off-chain. Στην αλυσίδα επιτρέπονται μόνο salted/keyed hash με το κλειδί off-chain, ή perfectly hiding commitment που γίνεται άχρηστο όταν διαγραφούν δεδομένα και witness· απαιτούνται DPIA και erasure by design. Τεχνική αντιστοίχιση για το GRAIL: στο ledger μόνο keyed hash ή commitment και δείκτης· στο CAS ciphertext με DEK ανά υποκείμενο, CID όχι πάνω σε plaintext, και δυνατότητα φυσικής διαγραφής πέρα από την καταστροφή κλειδιού. Η τελική έκδοση των οδηγιών δεν επαληθεύτηκε.",
+   "sota_refs": [
+    "SOTA-KSUB-28"
+   ],
+   "sources": [
+    {
+     "title": "EDPB Guidelines 02/2025 v1.1 (PDF)",
+     "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+     "year": "2025"
+    },
+    {
+     "title": "EDPB adopts guidelines on blockchains",
+     "url": "https://www.edpb.europa.eu/news/news/2025/edpb-adopts-guidelines-processing-personal-data-through-blockchains-and-ready_en",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-KSUB-03",
+   "title": "Πρωτόκολλο αναπαραγωγής του ledger: ο μηχανισμός RPO 0 είναι ελαττωματικός",
+   "description": "Το §7.4 έχει «Ledger ×3», και το §7.5 «leader lease + fencing» και ack «μετά από αναπαραγωγή σε ≥2 sites ή witness quorum». Δεν ορίζεται πρωτόκολλο consensus για το single-writer journal, και ο witness quorum δεν αποθηκεύει γεγονότα. Το DP-2 είναι ένα site αλλά στοχεύει RPO 0, και το KT-22 ζητά RPO 0 σε ολική απώλεια site.",
+   "why_it_matters": "Η μονιμότητα των οντοτήτων (T2) και το INV-I02 προϋποθέτουν ότι committed γεγονότα δεν χάνονται.",
+   "sota_answer": "Σύγχρονη αναπαραγωγή με quorum (Raft ή Viewstamped Replication) πριν από το ack, με storage fault model και safe halt όπως στο TigerBeetle. Ο witness quorum κρατείται μόνο για ανίχνευση equivocation.",
+   "sota_refs": [
+    "SOTA-KSUB-13",
+    "SOTA-KSUB-01"
+   ],
+   "sources": [
+    {
+     "title": "Raft",
+     "url": "https://raft.github.io/",
+     "year": "2026"
+    },
+    {
+     "title": "TigerBeetle safety",
+     "url": "https://docs.tigerbeetle.com/concepts/safety/",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KSUB-04",
+   "title": "Αδήλωτο κατώτερο όριο του TCB",
+   "description": "Το TB-1 ορίζει το kernel ως Rust services, αλλά δεν απαριθμεί τι βρίσκεται από κάτω και γίνεται εξίσου έμπιστο: Linux kernel, KVM/hypervisor, container runtime, Kubernetes, PostgreSQL (index του ledger), object store, HSM firmware.",
+   "why_it_matters": "Χωρίς απογραφή του TCB, το «ελάχιστος, αποδείξιμος πυρήνας» του §0 δεν ελέγχεται, και το ADR-0004 μένει μεταφορά.",
+   "sota_answer": "Ρητή απογραφή και ελαχιστοποίηση του TCB σήμερα. Σε βάθος χρόνου, μέσω του EP-03, formally verified microkernel (seL4, με security proofs πλήρεις σε AArch64) ή framekernel (Asterinas) για τις κρισιμότερες υπηρεσίες.",
+   "sota_refs": [
+    "SOTA-KSUB-16",
+    "SOTA-KSUB-17"
+   ],
+   "sources": [
+    {
+     "title": "seL4 About",
+     "url": "https://sel4.systems/About/",
+     "year": "2026"
+    },
+    {
+     "title": "Asterinas",
+     "url": "https://github.com/asterinas/asterinas",
+     "year": "2026"
+    },
+    {
+     "title": "Genode",
+     "url": "https://genode.org/about/index",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KSUB-05",
+   "title": "Τα extension points ασκούνται μόνο εφάπαξ· τα EP-02 και EP-03 καθόλου",
+   "description": "Το GP-9 ασκεί μία φορά τα EP-04 (KT-09) και EP-05/EP-06 (KT-03), μαζί με migration και DR. Το «συνεχές TAP» δεν έχει συχνότητα, και για τα EP-02, EP-03 και EP-07…EP-12 δεν υπάρχει drill ή KT.",
+   "why_it_matters": "Το μετρήσιμο κριτήριο του T8 («0 diff στα ICD-01…12») μένει ανέλεγκτο για τις περισσότερες κλάσεις τεχνολογίας.",
+   "sota_answer": "Κατ' αναλογία προς το RFC 9170 (ενεργή χρήση, GREASE): τακτικά drills ανά EP μέσα από το πλήρες TAP σε DST, με συνθετικό adapter, crypto suite ή transport, και το ίδιο κριτήριο 0 diff.",
+   "sota_refs": [
+    "SOTA-KSUB-25",
+    "SOTA-KSUB-12"
+   ],
+   "sources": [
+    {
+     "title": "RFC 9170",
+     "url": "https://www.rfc-editor.org/rfc/rfc9170",
+     "year": "2021"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KSUB-06",
+   "title": "Αυθεντικοποιημένος και νομικά τεκμαιρόμενος χρόνος· πολιτική υπέρβασης του ε",
+   "description": "Τα KRN-07 και ICD-07 δηλώνουν «HLC με φράγμα ε» χωρίς πηγή συγχρονισμού, αυθεντικοποίηση, μέθοδο μέτρησης του ε ή πολιτική υπέρβασης. Το TimestampAttest k-of-n δεν απαιτεί qualified TSA, παρότι το §2.5 επικαλείται το eIDAS για χρονοσφραγίδες.",
+   "why_it_matters": "Το ε θεμελιώνει τον νομικό διτεμπορικό χρόνο (KT-21, LAW-10). Ένας πλαστογραφημένος time server αλλοιώνει τη διάταξη χωρίς να ανιχνεύεται, και χωρίς qualified time stamp δεν υπάρχει τεκμήριο ακρίβειας.",
+   "sota_answer": "NTS (RFC 8915) για αυθεντικοποιημένο NTP· Roughtime (draft-19) για proofs of malfeasance· Clock Error Bound (τύπου ClockBound) για μέτρηση του ε· fail-stop του κόμβου πέρα από το όριο (CockroachDB)· και k-of-n TSA κατά RFC 3161 με ≥1 qualified TSA κατά eIDAS Art. 41.",
+   "sota_refs": [
+    "SOTA-KSUB-09",
+    "SOTA-KSUB-08",
+    "SOTA-KSUB-27"
+   ],
+   "sources": [
+    {
+     "title": "RFC 8915",
+     "url": "https://www.rfc-editor.org/rfc/rfc8915",
+     "year": "2020"
+    },
+    {
+     "title": "draft-ietf-ntp-roughtime",
+     "url": "https://datatracker.ietf.org/doc/draft-ietf-ntp-roughtime/",
+     "year": "2026"
+    },
+    {
+     "title": "CockroachDB transaction layer",
+     "url": "https://docs.cockroachlabs.com/docs/stable/architecture/transaction-layer",
+     "year": "2026"
+    },
+    {
+     "title": "eIDAS 910/2014",
+     "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910",
+     "year": "2014"
+    },
+    {
+     "title": "aws/clock-bound",
+     "url": "https://github.com/aws/clock-bound",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KSUB-07",
+   "title": "Witness protocol: πολιτική, split-view και post-quantum",
+   "description": "Το πρόχειρο αναφέρει «witness gossip» και «≥3 ανεξάρτητους witnesses» χωρίς πρωτόκολλο, quorum, κριτήρια επιλογής ή αλγόριθμο. Το tlog-cosignature v1.0.1 είναι μόνο Ed25519· το v1.1.0-rc.1 (23/4/2026) προσθέτει ML-DSA-44 αλλά είναι release candidate. Ο μηχανισμός monitor κατά του split-view είναι ακόμη υπό συζήτηση, και τα tiles είναι μόνο SHA-256.",
+   "why_it_matters": "Σχετίζεται με το σχέδιο PQ (ADR-0016, INV-X01, KT-09) και με το INV-I02: equivocation που δεν ανιχνεύεται ισοδυναμεί με παραποίηση ιστορίας.",
+   "sota_answer": "Υιοθέτηση tlog-witness/cosignature με ρητό quorum και κριτήρια ανεξαρτησίας. Ο αλγόριθμος cosignature δηλώνεται στο EP-04, με ML-DSA-44 μόλις σταθεροποιηθεί το v1.1.0· ο log μπορεί ήδη να υπογράφει checkpoints με άλλο note αλγόριθμο. Η εποχή κρυπτογραφίας ορίζεται ως νέο log origin (INV-X02).",
+   "sota_refs": [
+    "SOTA-KSUB-01",
+    "SOTA-KSUB-04"
+   ],
+   "sources": [
+    {
+     "title": "C2SP tlog-cosignature v1.1.0-rc.1",
+     "url": "https://github.com/C2SP/C2SP/blob/tlog-cosignature/v1.1.0-rc.1/tlog-cosignature.md",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-checkpoint",
+     "url": "https://c2sp.org/tlog-checkpoint",
+     "year": "2026"
+    },
+    {
+     "title": "C2SP tlog-witness",
+     "url": "https://c2sp.org/tlog-witness",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-KSUB-08",
+   "title": "Εσωτερικές ασυνέπειες: αριθμός components, ουσίες πυρήνα, άγραφες ενότητες, εκκρεμή artifacts",
+   "description": "(α) Το spine-vocab και το §6.3 δηλώνουν 76 components, αλλά η απαρίθμηση δίνει 75· το §6.3 γράφει «17 εγκάρσια» και απαριθμεί 16 (ADV 3, KNW 5, GOV 1, HUM 2, OPS 4, MDL 1). (β) Οι ουσίες του πυρήνα είναι 7 στο §0 και στο §3 και 8 στα §15.4 και §28.1, όπου προστίθενται χώρος και πόροι. (γ) Το ADR-0012 παραπέμπει στο §20, το ADR-0025 στο §16 και το CMP-LAW-02 στο §27· όλα είναι ΕΚΚΡΕΜΕΙ κατά το Ω4. (δ) Τα ICD-01 έως ICD-12 αναφέρουν contracts/proto, control-plane.yaml, grail-events.yaml, WIT grail:organ@1 και vectors στο deployment/verify/ σαν να υπάρχουν, ενώ το Ω5 τα δηλώνει ΕΚΚΡΕΜΕΙ. Στο repo δεν υπάρχει κανένα .proto, .wit, .tla, .als ή .lean, και τα μόνα .yml είναι τα docker-compose της πλατφόρμας. Οι φάκελοι formal/, contracts/, adrs/ και model/ που αναφέρει το CLAUDE.md δεν υπάρχουν στο docs/architecture-draft.",
+   "why_it_matters": "Παραβιάζει το «0 λάθος» και το «μία έδρα ανά έννοια». Το VT-901 δεν μπορεί να περάσει με ψευδή σύνολα και ανύπαρκτες έδρες.",
+   "sota_answer": "Εσωτερικό ζήτημα, όχι θέμα SOTA. Διορθώνεται με μηχανική παραγωγή μετρήσεων και πινάκων από το canonical model στη Φάση Β.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KSUB-09",
+   "title": "Σύγκρουση ονομάτων «Control Plane»",
+   "description": "Το CMP-KRN-05 Control Plane είναι Rust, ανήκει στο TCB (kernel plane κατά §7.1) και κρατά τα Control Records. Το §7.1 όμως ονομάζει «Control plane & UI» την TypeScript διεπαφή (Console, Portal, public APIs), και το ADR-0012 γράφει «TypeScript control plane».",
+   "why_it_matters": "Παραβιάζει το «μία έδρα ανά έννοια» και ανοίγει δρόμο για μεταφορά λογικής πολιτικής σε κώδικα εκτός TCB.",
+   "sota_answer": "Εσωτερικό ζήτημα: μετονομασία του plane του §7.1 σε «Principal/Client plane» και διόρθωση του ADR-0012.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KSUB-10",
+   "title": "Το σκέλος in-image SBCL του EXP-20 παραβιάζει το REQ-KRN-012",
+   "description": "Ένα Lisp organ μέσα στο ίδιο image ή διεργασία μοιράζεται address space και FFI με τον host, άρα έχει ambient authority. Το §7.1 ήδη βάζει το SBCL σε microVM processes, αλλά το EXP-20 κρατά το in-image ως επιλογή. Δεν βρέθηκε Wasm target για SBCL, και το Hyperlight δεν μπορεί να φιλοξενήσει SBCL, γιατί οι guests του είναι no_std Rust/C χωρίς OS.",
+   "why_it_matters": "Αν το αποτέλεσμα του EXP-20 υιοθετηθεί χωρίς αυτόν τον περιορισμό, ακυρώνεται το INV-S02 και η δομική αδυναμία παράκαμψης του gateway.",
+   "sota_answer": "Ολόκληρο το SBCL image τρέχει ως ένα όργανο σε Firecracker microVM, με μόνη διέξοδο vsock προς το gateway, όπως ήδη προβλέπει το §7.1. Το Wasm για Lisp επανεξετάζεται όταν ωριμάσει το ECL→WASI.",
+   "sota_refs": [
+    "SOTA-KSUB-15",
+    "SOTA-KSUB-14"
+   ],
+   "sources": [
+    {
+     "title": "Firecracker vsock",
+     "url": "https://github.com/firecracker-microvm/firecracker/blob/main/docs/vsock.md",
+     "year": "2026"
+    },
+    {
+     "title": "Hyperlight",
+     "url": "https://github.com/hyperlight-dev/hyperlight",
+     "year": "2026"
+    },
+    {
+     "title": "ECL Web/WASI grant",
+     "url": "https://ecl.common-lisp.dev/posts/Web-ECL-Grant-Announcement.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-KSUB-11",
+   "title": "Pinning της έκδοσης κώδικα στο deterministic replay",
+   "description": "Το INV-C08 ορίζει την κατάσταση ως καθαρή συνάρτηση του prefix του ledger, αλλά η συνάρτηση (reducers, projections, organs) αλλάζει με κάθε ORP. Το πρόχειρο δεν ορίζει ποια έκδοση κώδικα εφαρμόζεται σε ποιο τμήμα του prefix.",
+   "why_it_matters": "Χωρίς αυτό, τα KT-03, KT-08 και REQ-ABS-002 δεν είναι ντετερμινιστικά: rebuild με νέο κώδικα δίνει άλλη κατάσταση.",
+   "sota_answer": "Worker Versioning/patching (Temporal)· immutable deployments με invocations pinned στην έκδοση (Restate)· recovery μόνο σε συμβατή έκδοση εφαρμογής (DBOS). Για το GRAIL: content address του κώδικα που εφαρμόζεται, καταγεγραμμένο ανά γεγονός ή εποχή, με replay που επιλέγει την pinned έκδοση.",
+   "sota_refs": [
+    "SOTA-KSUB-11"
+   ],
+   "sources": [
+    {
+     "title": "Temporal workflow definition",
+     "url": "https://docs.temporal.io/workflow-definition",
+     "year": "2026"
+    },
+    {
+     "title": "Restate versioning",
+     "url": "https://docs.restate.dev/operate/versioning",
+     "year": "2026"
+    },
+    {
+     "title": "DBOS architecture",
+     "url": "https://docs.dbos.dev/architecture",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-KSUB-12",
+   "title": "Ασαφής ορισμός των χρονικών αξόνων",
+   "description": "Το spine αποδίδει στο version-graph τρεις άξονες (valid × recorded × known-at) αλλά το χαρακτηρίζει «bitemporal», και το §0 κάνει το ίδιο. Το ICD-07 Cut έχει μόνο (valid_at, known_at), ενώ το cut του receipt είναι {graph_root, journal_seq, known_at}.",
+   "why_it_matters": "Χωρίς έναν ορισμό, το «καμία σιωπηλή προεπιλογή χρόνου» (INV-E03) δεν ελέγχεται μηχανικά στο ICD-07.",
+   "sota_answer": "Το SQL:2011 (XTDB v2) ορίζει ρητά valid time και system time. Αν το known-at είναι τρίτος άξονας (decision time), χρειάζεται ρητό tritemporal cut. Η as-built έδρα δεν επαληθεύεται από εδώ.",
+   "sota_refs": [
+    "SOTA-KSUB-10"
+   ],
+   "sources": [
+    {
+     "title": "XTDB docs",
+     "url": "https://docs.xtdb.com/",
+     "year": "2026"
+    }
+   ],
+   "classification": "today"
+  }
+ ],
+ "unknowns": [
+  "Οι as-built έδρες του STAVROPOULOSLAWCORPUS (journal, merkle, tlog-1, JCS v1, deterministic-time, Docker proof chain, deployment/verify vectors) δεν επαληθεύονται από εδώ, ούτε η συμβατότητα του tlog-1 με C2SP tiles.",
+  "Τελική έκδοση των EDPB Guidelines 02/2025: η σελίδα διαβούλευσης αναφέρει τελική έκδοση, αλλά η σελίδα της δεν ανοίχτηκε (404). Χρησιμοποιήθηκε το κείμενο v1.1 της διαβούλευσης.",
+  "Knight & Leveson 1986: η πρωτογενής πηγή (IEEE, doi 10.1109/TSE.1986.6312924) δεν ήταν προσβάσιμη· χρησιμοποιήθηκε δευτερογενής αναφορά.",
+  "Δεν βρέθηκε Wasm target για SBCL. Η κατάσταση του ECL→WASI μετά το ετήσιο πλάνο ορόσημων (7/2025) είναι άγνωστη.",
+  "Κόστος εκκίνησης και μνήμης microVM για Lisp organs: δεν βρέθηκαν δημοσιευμένα δεδομένα.",
+  "Καθεστώς σταθερότητας των OTel GenAI semconv στο νέο repo: επαληθεύτηκε μόνο το Development της v1.37.0.",
+  "Αν το TypeSpec έχει emitters για Protobuf και WIT.",
+  "Κλιμάκωση του Tessera σε χιλιάδες per-entity logs· υποστήριξη ML-DSA-44 cosignatures από το Tessera· πότε κλειδώνει το tlog-cosignature v1.1.0.",
+  "Ακριβής διατύπωση του eIDAS Art. 41: η έξοδος της ανάγνωσης δεν ήταν αξιόπιστα αυτολεξεί, γι' αυτό χρησιμοποιήθηκε μόνο η ουσία (τεκμήριο ακρίβειας για qualified time stamps). Το ETSI EN 319 422 δεν ήταν προσβάσιμο (403).",
+  "Αν το ε του HLC επιτυγχάνεται με πηγές μόνο NTS στη γεωγραφία του DP-3: απαιτεί μέτρηση.",
+  "Αν τα known-at και recorded είναι διακριτοί άξονες στην έδρα version-graph.",
+  "Αν το ciphertext στο CAS μπορεί να διαγραφεί φυσικά μέσω Unpin/GC χωρίς να σπάσουν consistency proofs όπου αναφέρεται το CID του.",
+  "Το WebSearch ήταν εξαντλημένο (200/200) τόσο για τον ερευνητή όσο και για τον έλεγχο. Οι έλεγχοι για ανώτερη εναλλακτική σε θέσεις «holds» έγιναν μόνο με απευθείας ανάγνωση γνωστών URLs, οπότε νεότερες πηγές 2025–2026 (π.χ. νέα papers για agent OS ή witness networks) μπορεί να λείπουν."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-KSUB-01",
+   "question": "Merkle/witness υπόστρωμα του ledger: bespoke υπηρεσία RFC 9162, ή υιοθέτηση του προφίλ C2SP tlog, και με ποια υλοποίηση;",
+   "recommendation": "Υιοθέτηση του προφίλ C2SP (tlog-tiles, checkpoint, cosignature, witness) ως εξέλιξη της έδρας tlog-1, όχι ως τρίτη αλυσίδα. Η υλοποίηση (Tessera σε Go ή Rust υλοποίηση του προφίλ) αποφασίζεται μαζί με το ADR-0012. Η εποχή κρυπτογραφίας ορίζεται ως νέο log origin με επαναγκύρωση (INV-X02). Persistence Receipt, διτεμπορικά indexes και Subscribe μένουν δική μας στρώση.",
+   "alternatives": [
+    {
+     "option": "Bespoke RFC 9162 σε Rust (πρόχειρο)",
+     "pros": "Ο hash αλγόριθμος επιλέγεται ανά log· πλήρης έλεγχος· Rust σύμφωνα με το ADR-0012.",
+     "cons": "Experimental RFC που το Static CT API δεν αναφέρει· κανένα τυποποιημένο witness protocol· περισσότερος κώδικας TCB προς επαλήθευση."
+    },
+    {
+     "option": "Προφίλ C2SP + Tessera",
+     "pros": "Πρότυπο με v1.0.0 (22/9/2025), σε παραγωγή μέσω Rekor v2· static serving· witnesses· RFC 6962 proofs· POSIX backend.",
+     "cons": "Tiles μόνο SHA-256· cosignature ML-DSA-44 μόνο σε rc· Go μέσα στο TCB, εκτός ADR-0012· το sigstore.dev κρατά ακόμη το Rekor v1 ως default."
+    },
+    {
+     "option": "Προφίλ C2SP με δική μας Rust υλοποίηση",
+     "pros": "Διαλειτουργικότητα με witnesses και Rust TCB.",
+     "cons": "Νέος κώδικας χωρίς αποδεδειγμένη παραγωγή· η conformance έναντι Tessera πρέπει να αποδειχθεί."
+    },
+    {
+     "option": "immudb",
+     "pros": "Έτοιμη βάση με client-side verification.",
+     "cons": "Business Source License 1.1· μη τυποποιημένα proofs· δεν ταιριάζει σε per-entity journals."
+    }
+   ],
+   "rationale": "Κρατά όλες τις ιδιότητες του προχείρου εκτός από την επιλογή μη SHA-256 hash για νέο log· ούτε το RFC 9162 έχει αλλαγή αλγορίθμου μέσα στο ίδιο log. Προσθέτει ό,τι λείπει: τυποποιημένους witnesses και διαλειτουργικότητα.",
+   "affects_ids": [
+    "CMP-KRN-01",
+    "ICD-01",
+    "REQ-KRN-002",
+    "KT-22",
+    "ADR-0012"
+   ]
+  },
+  {
+   "id": "DEC-KSUB-02",
+   "question": "Μορφή content address: {alg, digest} πάνω σε JCS, ή αυτο-περιγραφόμενη διεύθυνση με codec;",
+   "recommendation": "Διεύθυνση τύπου CIDv1 (version, codec, multihash): raw για blobs και json-jcs για την υπάρχουσα έδρα JCS. Το DRISL/deterministic CBOR μένει υποψήφιο για νέα δομημένα αντικείμενα μετά από πείραμα.",
+   "alternatives": [
+    {
+     "option": "Διατήρηση {alg, digest} + JCS",
+     "pros": "Ταιριάζει με την as-built έδρα (JCS v1).",
+     "cons": "Χωρίς ετικέτα canonicalization· αδύνατο για binary· σιωπηλή αλλαγή digest με το spec v2."
+    },
+    {
+     "option": "CIDv1 με codecs raw και json-jcs",
+     "pros": "Αυτο-περιγραφόμενη διεύθυνση· κρατά το JCS· καλύπτει blobs· διαλειτουργική με IPLD· ο codec json-jcs υπάρχει ήδη (0xb601).",
+     "cons": "Ο json-jcs είναι σε κατάσταση draft στον πίνακα multicodec· χρειάζεται μετάπτωση ή διπλή αναπαράσταση για τις as-built διευθύνσεις."
+    },
+    {
+     "option": "DASL CIDs + DRISL",
+     "pros": "Binary-native, ντετερμινιστικό, σε παραγωγή μεγάλης κλίμακας.",
+     "cons": "Απομάκρυνση από την έδρα JCS· τα CDE και dCBOR δεν είναι RFC."
+    }
+   ],
+   "rationale": "Κλείνει το GAP-KSUB-01 χωρίς να εγκαταλείπεται η υπάρχουσα έδρα JCS· ταιριάζει με το «multihash-style» του §3.",
+   "affects_ids": [
+    "CMP-KRN-02",
+    "ICD-02",
+    "REQ-KRN-003"
+   ]
+  },
+  {
+   "id": "DEC-KSUB-03",
+   "question": "Πώς συνυπάρχουν προσωπικά δεδομένα με append-only ledger και CAS;",
+   "recommendation": "Στο ledger μόνο keyed hash (κλειδί ανά υποκείμενο, εκτός ledger) ή perfectly hiding commitment, μαζί με δείκτη· ποτέ plaintext, ciphertext ή unkeyed hash προσωπικών δεδομένων. Στο CAS ciphertext με DEK ανά υποκείμενο, με CID πάνω στο ciphertext, και διαγραφή που περιλαμβάνει και φυσική αφαίρεση (Unpin/GC), όχι μόνο καταστροφή κλειδιού. Επικύρωση μέσω EXP-19 και DPIA.",
+   "alternatives": [
+    {
+     "option": "CID πάνω σε plaintext + ShredEnvelope (πρόχειρο, όπως φαίνεται)",
+     "pros": "Απλό· επιτρέπει dedup.",
+     "cons": "Ο digest επιβιώνει του shredding και αντιστρέφεται με λεξικό· αντίθετο στη σύσταση του EDPB για hashed δεδομένα."
+    },
+    {
+     "option": "Keyed hash ή commitment στο ledger, διαγράψιμο ciphertext στο CAS",
+     "pros": "Μετά τη διαγραφή δεν μένει ανακτήσιμο ή αναγνωρίσιμο περιεχόμενο· τα consistency proofs του ledger μένουν έγκυρα.",
+     "cons": "Χάνεται το dedup μεταξύ υποκειμένων· χρειάζεται διαχείριση κλειδιών ανά υποκείμενο· το CAS παύει να είναι απόλυτα αμετάβλητο για αυτή την κλάση αντικειμένων."
+    },
+    {
+     "option": "Προσωπικά δεδομένα εκτός ledger και CAS, σε διαγράψιμο store",
+     "pros": "Απλούστερη συμμόρφωση.",
+     "cons": "Διασπά την έδρα αλήθειας· το provenance γίνεται έμμεσο."
+    }
+   ],
+   "rationale": "Είναι η επιλογή που ικανοποιεί ταυτόχρονα το append-only (INV-I02) και την πραγματική διαγραφή (KT-16) με τα μέτρα που προτείνει το EDPB 02/2025.",
+   "affects_ids": [
+    "CMP-KRN-02",
+    "ICD-02",
+    "CMP-KRN-01",
+    "REQ-KRN-003"
+   ]
+  },
+  {
+   "id": "DEC-KSUB-04",
+   "question": "Μηχανισμός RPO 0 και HA του ledger.",
+   "recommendation": "Σύγχρονη αναπαραγωγή με quorum (Raft ή VSR) πριν από το ack. Στο DP-3, τουλάχιστον 3 replicas σε 2 ή περισσότερα sites. Στο DP-2, τοπικό quorum και ρητή δήλωση ότι η απώλεια site δεν καλύπτεται με RPO 0. Αφαίρεση του «ή witness quorum».",
+   "alternatives": [
+    {
+     "option": "Σύγχρονο quorum σε πολλά sites",
+     "pros": "Πραγματικό RPO 0· αποδεδειγμένος μηχανισμός.",
+     "cons": "Latency ίση με το RTT μεταξύ sites σε κάθε commit."
+    },
+    {
+     "option": "Ασύγχρονη γεω-αναπαραγωγή με δηλωμένο RPO > 0",
+     "pros": "Χαμηλό latency.",
+     "cons": "Το KT-22 αποτυγχάνει ως έχει· χάνονται committed γεγονότα."
+    },
+    {
+     "option": "Witness quorum (πρόχειρο)",
+     "pros": "Φθηνό.",
+     "cons": "Οι witnesses κρατούν μόνο checkpoints· δεν είναι μηχανισμός durability."
+    }
+   ],
+   "rationale": "Το KT-22 και το T2 απαιτούν να μη χάνονται ποτέ committed γεγονότα, και μόνο η quorum αναπαραγωγή το εγγυάται.",
+   "affects_ids": [
+    "KT-22",
+    "CMP-KRN-01",
+    "ICD-01",
+    "REQ-OPS-003"
+   ]
+  },
+  {
+   "id": "DEC-KSUB-05",
+   "question": "Η JSON Schema είναι ήδη η μία έδρα σχημάτων (§15.1)· από πού παράγονται τα bindings OpenAPI, AsyncAPI, Protobuf και WIT;",
+   "recommendation": "Μηχανική παραγωγή όλων των bindings (OpenAPI 3.2, AsyncAPI 3.1, Protobuf Editions, WIT) από JSON Schema 2020-12 για τα δεδομένα και από το canonical model για τις λειτουργίες, με ρητό κανόνα για έννοιες χωρίς αντίστοιχο (π.χ. WIT resources). Έλεγχος με Buf, diff και VT-902. Το TypeSpec δοκιμάζεται πιλοτικά ως γεννήτρια.",
+   "alternatives": [
+    {
+     "option": "Χειρόγραφα bindings ανά μορφή με lint (σιωπηρό στο πρόχειρο)",
+     "pros": "Άμεσο.",
+     "cons": "Η έννοια γράφεται σε έως 4 IDLs· drift από την έδρα JSON Schema."
+    },
+    {
+     "option": "Παραγωγή από SysML v2 και JSON Schema μέσω archgen",
+     "pros": "Σέβεται τη «μία έδρα»· ευθυγραμμίζεται με το ADR-0002.",
+     "cons": "Οι γεννήτριες είναι custom και αναπόδεικτες."
+    },
+    {
+     "option": "TypeSpec ως έδρα",
+     "pros": "Ώριμοι emitters για OpenAPI3 και JSON Schema.",
+     "cons": "Protobuf και WIT δεν επαληθεύτηκαν· δεύτερη γλώσσα δίπλα στο SysML."
+    }
+   ],
+   "rationale": "Ο νόμος «μία έδρα ανά έννοια» δεν ικανοποιείται αν η έδρα δεδομένων είναι μία αλλά τα bindings γράφονται ανεξάρτητα.",
+   "affects_ids": [
+    "ADR-0025",
+    "REQ-INT-001",
+    "ICD-10",
+    "ICD-09"
+   ]
+  },
+  {
+   "id": "DEC-KSUB-06",
+   "question": "Περιορισμός του EXP-20 πριν εκτελεστεί: επιτρέπεται το σκέλος «in-image SBCL»;",
+   "recommendation": "Αφαίρεση του σκέλους in-image εκτός sandbox. Βασική λύση όπως στο §7.1: το SBCL image τρέχει ως ένα όργανο σε Firecracker microVM, με μόνη διέξοδο vsock προς το gateway. Το EXP-20 μετρά μόνο το κόστος αυτής της λύσης έναντι Wasm, όπου υπάρχει target (σήμερα κανένα για SBCL). Το Hyperlight δεν είναι σκέλος για Lisp.",
+   "alternatives": [
+    {
+     "option": "In-image SBCL (σκέλος του EXP-20)",
+     "pros": "Μηδενικό overhead.",
+     "cons": "Ambient authority, που παραβιάζει τα REQ-KRN-012 και INV-S02."
+    },
+    {
+     "option": "SBCL σε Firecracker microVM",
+     "pros": "Απομόνωση hypervisor· διατηρεί τις υπάρχουσες έδρες· συμφωνεί με το §7.1.",
+     "cons": "Κόστος μνήμης και εκκίνησης ανά όργανο, άγνωστο για Lisp."
+    },
+    {
+     "option": "ECL→WASI",
+     "pros": "Ενιαίο μοντέλο Wasm component.",
+     "cons": "Σε εξέλιξη· άγνωστη συμβατότητα με τις έδρες SBCL."
+    }
+   ],
+   "rationale": "Κρατά αμετάβλητο το INV-S02 και αφήνει στο πείραμα μόνο το κόστος απόδοσης.",
+   "affects_ids": [
+    "EXP-20",
+    "CMP-KRN-12",
+    "REQ-KRN-012",
+    "ADR-0012"
+   ]
+  },
+  {
+   "id": "DEC-KSUB-07",
+   "question": "Κατώτερο όριο του TCB: Linux/KVM σήμερα με ρητή δήλωση, ή formally verified microkernel από την αρχή για τις κρίσιμες υπηρεσίες;",
+   "recommendation": "Ρητή απογραφή του TCB σήμερα (Linux/KVM, runtime, PostgreSQL index, HSM) με ελαχιστοποίηση. Φιλοξενία seL4-class για τις υπηρεσίες signing και gate ως σημείο επέκτασης (EP-03), με πείραμα αργότερα.",
+   "alternatives": [
+    {
+     "option": "Linux/KVM με ρητή απογραφή",
+     "pros": "Υλοποιήσιμο σήμερα· ώριμο.",
+     "cons": "Μεγάλο, μη επαληθευμένο TCB."
+    },
+    {
+     "option": "seL4 ή Genode για KRN-03, KRN-06 και KRN-11 τώρα",
+     "pros": "Αποδεδειγμένη απομόνωση· security proofs πλήρεις σε AArch64.",
+     "cons": "Κόστος οικοσυστήματος· το LionsOS δεν έχει ακόμη verification story."
+    }
+   ],
+   "rationale": "Το §0 μιλά για «αποδείξιμο πυρήνα»· χωρίς δηλωμένο TCB, ο ισχυρισμός δεν ελέγχεται.",
+   "affects_ids": [
+    "ADR-0004",
+    "CMP-KRN-12",
+    "EP-03"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 104,
+  "sources_failed": [
+   {
+    "url": "https://cse.buffalo.edu/tech-reports/2014-04.pdf",
+    "problem": "Το WebFetch δεν διάβασε το PDF· ο λάθος τίτλος «Hybrid Logical Clocks» αντί του πραγματικού τίτλου.",
+    "action": "Εξαγωγή κειμένου τοπικά με pdftotext· επιβεβαιώθηκαν οι ιδιότητες και διορθώθηκε ο τίτλος."
+   },
+   {
+    "url": "https://www.cockroachlabs.com/blog/living-without-atomic-clocks/",
+    "problem": "Δεν αναφέρει το HLC με το όνομά του.",
+    "action": "Ο ισχυρισμός για χρήση HLC και crash σε 80% του max offset μεταφέρθηκε στο docs.cockroachlabs.com/docs/stable/architecture/transaction-layer."
+   },
+   {
+    "url": "https://github.com/bytecodealliance/wrpc",
+    "problem": "Κανένα NATS transport· αναφέρονται TCP, QUIC, WebTransport, WebSockets και Unix sockets.",
+    "action": "Διορθώθηκε στο SOTA-KSUB-14 και στο draft point του CMP-KRN-12."
+   },
+   {
+    "url": "https://github.com/hyperlight-dev/hyperlight",
+    "problem": "Οι guests είναι no_std Rust/C χωρίς OS· η πρόταση του Hyperlight ως σκέλους του EXP-20 για SBCL δεν στηρίζεται.",
+    "action": "Αφαιρέθηκε από GAP-KSUB-10 και DEC-KSUB-06· περιορίστηκε σε Wasm ή no_std organs."
+   },
+   {
+    "url": "https://c2sp.org/tlog-cosignature",
+    "problem": "Το «μόνο Ed25519» ισχύει για τη v1.0.1, αλλά το v1.1.0-rc.1 (23/4/2026) προσθέτει ML-DSA-44.",
+    "action": "Διορθώθηκαν SOTA-KSUB-01, το draft point του CMP-KRN-01, GAP-KSUB-07 και DEC-KSUB-01."
+   },
+   {
+    "url": "https://github.com/sigstore/rekor-tiles",
+    "problem": "Το README δεν λέει ρητά «built on Tessera».",
+    "action": "Προστέθηκαν το blog Rekor v2 GA (backend Tessera) και το blog Rekor evolution (v1 παραμένει default στο sigstore.dev, 28/6/2026)."
+   },
+   {
+    "url": "https://github.com/transparency-dev/tessera",
+    "problem": "Το README λέει «production ready since v0.2.0 beta» και δεν αναφέρει GA.",
+    "action": "Η v1.0.0 επιβεβαιώθηκε με ημερομηνία 22/9/2025 μέσω GitHub API."
+   },
+   {
+    "url": "https://www.edpb.europa.eu/system/files/2025-04/edpb_guidelines_202502_blockchain_en.pdf",
+    "problem": "Το WebFetch δεν διάβασε το PDF· ο ερευνητής είχε δηλώσει τη διατύπωση ανεπαλήθευτη.",
+    "action": "Εξαγωγή κειμένου τοπικά· επαληθεύτηκε η διατύπωση της v1.1 για clear, encrypted και hashed δεδομένα, keyed hashes και commitments. Αναδιατυπώθηκαν GAP-KSUB-02 και DEC-KSUB-03."
+   },
+   {
+    "url": "https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-022025-processing-personal-data-through_en",
+    "problem": "404· η τελική έκδοση των οδηγιών δεν ανακτήθηκε.",
+    "action": "Σημειώθηκε στα unknowns."
+   },
+   {
+    "url": "https://ieeexplore.ieee.org/document/6312924/",
+    "problem": "Κενή απόκριση· η πρωτογενής πηγή Knight & Leveson δεν ήταν προσβάσιμη.",
+    "action": "Διατηρήθηκε η δευτερογενής πηγή Wikipedia με την πλήρη αναφορά, σημειωμένη ως δευτερογενής."
+   },
+   {
+    "url": "https://www.etsi.org/deliver/etsi_en/319400_319499/319422/",
+    "problem": "403.",
+    "action": "Το ETSI EN 319 422 δεν χρησιμοποιήθηκε ως τεκμήριο."
+   },
+   {
+    "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910",
+    "problem": "Η παράθεση του Art. 41 από τον summarizer δεν είναι αξιόπιστα αυτολεξεί.",
+    "action": "Χρησιμοποιήθηκε μόνο η ουσία (τεκμήριο ακρίβειας για qualified time stamps), χωρίς παράθεση."
+   },
+   {
+    "url": "https://docs.restate.dev/concepts/durable_execution",
+    "problem": "Δεν καλύπτει code versioning ούτε καταγραφή time/random.",
+    "action": "Η ιδιότητα pinning αποδόθηκε στο docs.restate.dev/operate/versioning."
+   },
+   {
+    "url": "https://github.com/theseus-os/Theseus",
+    "problem": "Ο όρος «state spill» δεν υπάρχει στη σελίδα.",
+    "action": "Αφαιρέθηκε."
+   },
+   {
+    "url": "https://genode.org/about/index",
+    "problem": "Η σελίδα περιγράφει «recursive sandbox model», όχι «capability component framework».",
+    "action": "Αναδιατυπώθηκε η περιγραφή στο SOTA-KSUB-16."
+   },
+   {
+    "url": "https://docs.ray.io/en/latest/ray-core/fault_tolerance/actors.html",
+    "problem": "Το Ray έχει owner fate-sharing, όχι απλώς «καμία ιεραρχία».",
+    "action": "Αναδιατυπώθηκε στο SOTA-KSUB-18 και στο draft point του CMP-KRN-10."
+   },
+   {
+    "url": "https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/",
+    "problem": "Το «εξαλείφεται μόνο με batch-invariant kernels» ήταν υπερβολικό.",
+    "action": "Αναδιατυπώθηκε ως κύρια αιτία, με λύση batch-invariant kernels και κόστος περίπου 2x."
+   },
+   {
+    "url": "https://typespec.io/docs/emitters/protobuf/reference/",
+    "problem": "Δεν επιβεβαιώθηκε Protobuf emitter.",
+    "action": "Διατηρήθηκε ως «δεν επαληθεύτηκε»."
+   },
+   {
+    "url": "https://c2sp.org/tlog-tiles",
+    "problem": "Οι σελίδες C2SP δεν έχουν ημερομηνίες.",
+    "action": "Χρησιμοποιήθηκαν ημερομηνίες από τα C2SP GitHub tags (cosignature v1.0.1 28/3/2026, witness v1.0.0 31/3/2026, static-ct-api v1.1.0 20/3/2026)· για tiles και checkpoint, το έτος είναι έτος πρόσβασης."
+   },
+   {
+    "url": "https://github.com/open-telemetry/semantic-conventions-genai",
+    "problem": "Η σελίδα δεν δηλώνει καθεστώς σταθερότητας.",
+    "action": "Διατηρήθηκε στα unknowns."
+   }
+  ],
+  "corrections": [
+   {
+    "target": "SOTA-KSUB-01 / draft point CMP-KRN-01 / DEC-KSUB-01",
+    "change": "Το trade-off «χάνεται η hash agility μέσα στο ίδιο log» διορθώθηκε: στο RFC 9162 ο αλγόριθμος είναι αμετάβλητη παράμετρος του log, άρα χάνεται μόνο η επιλογή μη SHA-256 hash για νέο log. Προστέθηκε το ML-DSA-44 του tlog-cosignature v1.1.0-rc.1.",
+    "reason": "Κείμενο του RFC 9162 (IANA registry, log parameter) και tag v1.1.0-rc.1 του C2SP."
+   },
+   {
+    "target": "draft point CMP-KRN-01 superior / DEC-KSUB-01",
+    "change": "Το ανώτερο είναι το προφίλ C2SP, όχι απαραίτητα το Tessera (Go έναντι Rust TCB)· προστέθηκε εναλλακτική «δική μας Rust υλοποίηση του προφίλ» και ο περιορισμός «καμία τρίτη αλυσίδα» του §6.4.",
+    "reason": "Αυστηρή ανωτερότητα χωρίς απώλεια ιδιότητας που απαιτεί το πρόχειρο (ADR-0012, 6.4.md)."
+   },
+   {
+    "target": "SOTA-KSUB-02",
+    "change": "Προστέθηκαν Tessera v1.0.0 (22/9/2025), Rekor v2 GA (10/10/2025) και το ότι το sigstore.dev κρατά το Rekor v1 ως default (28/6/2026). Επιλύθηκε το unknown για τη διανομή SigningConfig.",
+    "reason": "Τρέχουσα κατάσταση κατά τα blogs του Sigstore."
+   },
+   {
+    "target": "draft point CMP-KRN-02 / GAP-KSUB-01 / DEC-KSUB-02",
+    "change": "Προστέθηκε ότι το §3 ήδη ορίζει CID «multihash-style» και ότι υπάρχει multicodec json-jcs 0xb601 (draft). Επιλύθηκε το unknown του ερευνητή.",
+    "reason": "Ανάγνωση master §3 και multicodec table.csv."
+   },
+   {
+    "target": "draft point KT-22 / GAP-KSUB-03",
+    "change": "Προστέθηκε ότι το DP-2 είναι ένα site, άρα ο στόχος RPO 0 στηρίζεται στο σκέλος witness quorum.",
+    "reason": "Master §7.2 (τοπολογία DP-2) και §7.5."
+   },
+   {
+    "target": "draft point EP-03/REQ-ABS-001 / GAP-KSUB-05",
+    "change": "Το «κανένα EP δεν ασκείται» διορθώθηκε: το GP-9 ασκεί εφάπαξ τα EP-04, EP-05 και EP-06 (KT-09, KT-03) και δηλώνει «συνεχές TAP» χωρίς συχνότητα· κενό μένει η επανάληψη και τα EP-02/EP-03. Σημειώθηκε ότι η επίκληση του RFC 9170 γίνεται κατ' αναλογία. Η confidence έπεσε σε medium.",
+    "reason": "Ανάγνωση 26.md GP-9 και 24.md KT-09."
+   },
+   {
+    "target": "draft point ADR-0012",
+    "change": "Αφαιρέθηκε η απόδοση «Wasm packaging για τα Lisp organs» στο ADR-0012· το §7.1 βάζει ρητά το SBCL σε microVM, και μόνο το σκέλος Wasm του EXP-20 δεν στηρίζεται.",
+    "reason": "Ανάγνωση master §7.1 και 22.md ADR-0012."
+   },
+   {
+    "target": "draft point ADR-0025/REQ-INT-001 / DEC-KSUB-05",
+    "change": "Η απόφαση αναδιατυπώθηκε: η JSON Schema είναι ήδη η μία έδρα σχημάτων (§15.1)· το ανοιχτό ζήτημα είναι η κατεύθυνση παραγωγής των bindings.",
+    "reason": "Ανάγνωση 15.md §15.1 (γραμμή Data)."
+   },
+   {
+    "target": "draft point CMP-KRN-12 / GAP-KSUB-10 / DEC-KSUB-06",
+    "change": "Αφαιρέθηκε το Hyperlight ως σκέλος για SBCL· διορθώθηκαν τα transports του wRPC· προστέθηκαν WASI 0.3.1, Wasmtime 46+ και v48.0.2.",
+    "reason": "README του Hyperlight και του wRPC, WASI roadmap, Wasmtime releases."
+   },
+   {
+    "target": "draft point CMP-KRN-07 / GAP-KSUB-06 / SOTA-KSUB-09",
+    "change": "Προστέθηκε ως κενό η απουσία qualified TSA (eIDAS Art. 41) στο k-of-n, και η μέθοδος μέτρησης του ε (ClockBound, SOTA-KSUB-27).",
+    "reason": "Ο έλεγχος «holds» βρήκε συμπλήρωμα με νομική σημασία για το LAWMAX· το §2.5 ήδη επικαλείται το eIDAS."
+   },
+   {
+    "target": "GAP-KSUB-02 / DEC-KSUB-03 / SOTA-KSUB-28",
+    "change": "Αντικαταστάθηκε το «encrypt-then-address με ciphertext σε αμετάβλητη δομή» με τα μέτρα του EDPB: στο ledger μόνο keyed hash ή commitment, ciphertext μόνο σε διαγράψιμο CAS.",
+    "reason": "Το EDPB v1.1 κρίνει μη ενδεδειγμένη την εγγραφή encrypted ή hashed προσωπικών δεδομένων στην αλυσίδα."
+   },
+   {
+    "target": "GAP-KSUB-08",
+    "change": "Προστέθηκαν η ασυνέπεια 7 έναντι 8 ουσιών του πυρήνα και η δήλωση ΕΚΚΡΕΜΕΙ των machine artifacts στο Ω5. Διορθώθηκε το «κανένα .yaml στο repo»: υπάρχουν τα platform/docker-compose*.yml.",
+    "reason": "Ανάγνωση master §0, §3, Παραρτήματος Ω, 15.md §15.4, 28.md §28.1, και Glob στο repo."
+   },
+   {
+    "target": "draft point REQ-KRN-001/INV-C08 / GAP-KSUB-11",
+    "change": "Προστέθηκαν ως πηγές το Restate versioning (invocation pinning) και το DBOS architecture· αφαιρέθηκε η απόδοση καταγραφής έκδοσης στη σελίδα durable_execution του Restate.",
+    "reason": "Επαλήθευση σελίδων."
+   },
+   {
+    "target": "SOTA-KSUB-08",
+    "change": "Διορθώθηκε ο τίτλος της τεχνικής αναφοράς και η πηγή για τη χρήση HLC από το CockroachDB.",
+    "reason": "pdftotext και docs.cockroachlabs.com."
+   },
+   {
+    "target": "SOTA-KSUB-10 / unknowns",
+    "change": "Προστέθηκε GA του XTDB v2 στις 5/6/2025· αφαιρέθηκε το σχετικό unknown.",
+    "reason": "xtdb.com/blog."
+   },
+   {
+    "target": "SOTA-KSUB-07",
+    "change": "Το CDE περιγράφεται ως τελευταία αναθεώρηση -13 (13/10/2025), σήμερα Expired.",
+    "reason": "Datatracker."
+   },
+   {
+    "target": "SOTA-KSUB-22",
+    "change": "Προστέθηκε η πηγή SLSA v1.2 (Approved, Source track).",
+    "reason": "slsa.dev/spec/v1.2."
+   },
+   {
+    "target": "unknowns",
+    "change": "Αφαιρέθηκαν τα επιλυμένα unknowns (QLDB, διανομή Rekor v2, multicodec JCS, XTDB GA, διατύπωση EDPB)· προστέθηκαν νέα (Tessera ML-DSA, eIDAS αυτολεξεί, φυσική διαγραφή στο CAS).",
+    "reason": "Αποτελέσματα ελέγχου."
+   }
+  ],
+  "missed_superior_found": [
+   "C2SP tlog-cosignature v1.1.0-rc.1 (23/4/2026) με ML-DSA-44 cosignatures: μειώνει το PQ trade-off του DEC-KSUB-01 (https://github.com/C2SP/C2SP/blob/tlog-cosignature/v1.1.0-rc.1/tlog-cosignature.md).",
+   "eIDAS Art. 41 qualified electronic time stamps: συμπλήρωμα, όχι αντικατάσταση, του k-of-n RFC 3161 στο ICD-07· δίνει νομικό τεκμήριο ακρίβειας για το LAWMAX (https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32014R0910).",
+   "Restate immutable deployments με invocation pinning και DBOS app versioning: συγκεκριμένα πρότυπα για το GAP-KSUB-11 (https://docs.restate.dev/operate/versioning, https://docs.dbos.dev/architecture).",
+   "AWS ClockBound (earliest, latest Clock Error Bound): μέθοδος μέτρησης του ε του HLC (https://github.com/aws/clock-bound).",
+   "Για τα HLC, OTP, NATS/Kafka, Wasmtime, OTel, Nix και Cedar δεν βρέθηκε αυστηρά ανώτερη εναλλακτική. Ο έλεγχος περιορίστηκε σε απευθείας ανάγνωση γνωστών URLs χωρίς WebSearch."
+  ]
+ }
+}

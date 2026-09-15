@@ -1,0 +1,1796 @@
+{
+ "layer_key": "FRG",
+ "summary": "Ο σκελετός FRG του προχείρου στέκει: Forge ως όργανα R-A, ICD-20, INV-F01/F02, KT-10, EP-11. Ο έλεγχος άνοιξε κάθε πηγή· επειδή το WebSearch είχε εξαντληθεί, χρησιμοποιήθηκαν Crossref, arXiv και GitHub API. Τρία σημεία υστερούν τεκμηριωμένα. (1) Η αλυσίδα ADR-0024/OS-09 (Tree-sitter/ANTLR → Lisp → MLIR → LLVM/Wasm → TV). Το MLIR είναι «syntax-focused», χωρίς σημασιολογία στα dialects (PACMPL 2025). Το Alive2 είναι bounded, απαιτεί Z3 και δεν περιγράφει ελέγξιμο certificate. Δεν βρέθηκε TV μέχρι το Wasm. Το ANTLR δεν έχει target Common Lisp. Για νομικό DSL ανώτερη είναι μια semantics-first αλυσίδα: Catala (1.0 stable 11/2025, 1.2.1 07/2026) με formal semantics και core βήματα αποδεδειγμένα σε F*, concolic testing (CUTECat) και formal date arithmetic. (2) Το INV-F01 εξισώνει τη differential συμφωνία με «σημασιολογική διατήρηση». Ανώτερη είναι η βαθμονομημένη τεκμηρίωση: verified compiler (CompCert 3.18, με credits DO-178C από 03/2026· CakeML) > TV με ανεξάρτητα ελεγμένο certificate (bv_decide/LRAT, cvc5→Carcara) > solver-TV > differential. Η βαθμονόμηση πρέπει να αφορά τα artifacts του Forge, ώστε να μη μπλοκάρει τα R-C (rustc). (3) Το πρόχειρο ήδη εφαρμόζει VGD τύπου Cedar στον πυρήνα (31.md P2, VT-505, VT-501, VT-301…VT-307), γι' αυτό το KT-02 υποβιβάζεται σε holds. Στο Forge όμως η αναφορά είναι Lisp interpreter χωρίς αποδείξεις. Επιπλέον: η LexDSL δεν ορίζεται (η §17 δεν γράφτηκε)· το EXP-08 μετρά TV αντί για κωδικοποιησιμότητα και νομική πιστότητα· το Validate του ICD-20 δεν επιστρέφει Unknown, κατά παράβαση της §15.1 και του INV-C04· κώδικας από LLM παραβιάζει εμπειρικά την ανεξαρτησία του N-version (arXiv 2607.02808). Το Architecture Forge [X] στέκει: SysML 2.0 και API 1.0 είναι formal από 09/2025, και η P7 δίνει αξιολόγηση τύπου ATAM, όχι τυπικό χώρο σχεδιασμού. Οι ισχυρισμοί για as-built έδρες του άλλου repo δεν επαληθεύονται από εδώ.",
+ "sota": [
+  {
+   "id": "SOTA-FRG-01",
+   "name": "Catala (rules-as-code DSL, default logic)",
+   "kind": "system",
+   "maturity": "pilot",
+   "what": "DSL για νόμους πάνω σε default logic («definition-under-conditions», κατά Lawsky), με literate programming άρθρο-άρθρο πάνω στο κείμενο του νόμου. Formal semantics· τα core βήματα compilation αποδείχθηκαν σε F* (2021). Μεταγλωττίζει σε Python ή C (κατά το Catala book)· σύνταξη γαλλική και αγγλική· Apache-2.0. Εκδόσεις: v1.0.0 (10/11/2025, «first stable release»), 1.1.0 (29/01/2026), 1.2.0 (02/06/2026), 1.2.1 (06/07/2026)· nightly 22/08/2026.",
+   "relevance": "Άμεσος ανταγωνιστής και υποψήφια βάση της LexDSL, με ενεργή συντήρηση. Στην αξιολόγηση του 2021 αποκάλυψε bug στην επίσημη υλοποίηση των γαλλικών οικογενειακών επιδομάτων. Η παραγωγική χρήση από διοικήσεις (DGFiP/CNAF) δεν επαληθεύτηκε, γιατί η σελίδα της Inria μπλόκαρε την πρόσβαση.",
+   "sources": [
+    {
+     "title": "Catala: A Programming Language for the Law (arXiv 2103.03198)",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    },
+    {
+     "title": "Catala: a programming language for the law (PACMPL ICFP, Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3473582",
+     "year": "2021"
+    },
+    {
+     "title": "CatalaLang/catala releases (GitHub API, dates)",
+     "url": "https://api.github.com/repos/CatalaLang/catala/releases?per_page=15",
+     "year": "2026"
+    },
+    {
+     "title": "CatalaLang/catala README",
+     "url": "https://github.com/CatalaLang/catala",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "The Catala book — Introduction",
+     "url": "https://book.catala-lang.org/en/index.html",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-02",
+   "name": "L4 (Legalese, πρώην SMU CCLAW) και Blawx (s(CASP))",
+   "kind": "system",
+   "maturity": "research-prototype",
+   "what": "L4: DSL νόμου και συμβάσεων με Haskell core (parser, typechecker, evaluator), REST decision service, VS Code/LSP, REPL και ίχνη αξιολόγησης σε GraphViz. Το repo συνεχίζεται στο legalese/l4-ide, και το README αναφέρει pilots σε δημόσιο και ιδιωτικό τομέα. Blawx: rules-as-code σε SWI-Prolog/s(CASP) με εξηγήσεις και hypothetical reasoning· κατά το README, «not production-quality software», για εκπαιδευτική και πειραματική χρήση.",
+   "relevance": "Δείχνουν ότι explanation traces και LSP είναι πλέον βασικές ιδιότητες νομικού DSL. Η παραγωγική κλίμακα και των δύο δεν τεκμηριώθηκε· για το L4 υπάρχουν μόνο pilots.",
+   "sources": [
+    {
+     "title": "smucclaw/l4-ide (continued at legalese/l4-ide)",
+     "url": "https://github.com/smucclaw/l4-ide",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Lexpedite/blawx",
+     "url": "https://github.com/Lexpedite/blawx",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-03",
+   "name": "OpenFisca, Mlang (γλώσσα M της DGFiP) και MPS / Agile Law Execution Factory",
+   "kind": "system",
+   "maturity": "production",
+   "what": "OpenFisca: «the most widely adopted» open-source μηχανή rules-as-code σε Python. Χρησιμοποιείται στη Βαρκελώνη (Les meves ajudes), στο LexImpact της γαλλικής Εθνοσυνέλευσης και στην Ιαπωνία. Δεν δηλώνει formal semantics. Mlang: compiler της γλώσσας M του γαλλικού φόρου εισοδήματος, με formal semantics σε Coq. Περνά όλα τα ιδιωτικά tests της DGFiP (09/2022, φορολογικά έτη 2018–2021), αλλά δηλώνει «no legal guarantee of any kind». MPS: case study DSLs για την ολλανδική φορολογική νομοθεσία (Agile Law Execution Factory)· η παραγωγική κλίμακα δεν επαληθεύτηκε.",
+   "relevance": "Αποδεικνύουν ότι οι υπολογιστικές διατάξεις (φόροι, επιδόματα) κωδικοποιούνται σε κλίμακα· είναι baseline για το EXP-08. Το Mlang δείχνει ότι τα επίσημα test vectors μιας διοίκησης λειτουργούν ως μηχανικός oracle πιστότητας.",
+   "sources": [
+    {
+     "title": "OpenFisca",
+     "url": "https://openfisca.org/en/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "MLanguage/mlang",
+     "url": "https://github.com/MLanguage/mlang",
+     "year": "2022"
+    },
+    {
+     "title": "JetBrains MPS",
+     "url": "https://www.jetbrains.com/mps/",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-04",
+   "name": "LegalRuleML Core 1.0 (OASIS) και DMN 1.5 (OMG)",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "LegalRuleML: OASIS Standard (30/08/2021). Καλύπτει strict και defeasible κανόνες, defeaters με superiority, deontic τελεστές [OBL]/[PER]/[FOR], χρονική μεταβολή κανόνων (repealed, suspended κ.λπ.) και N:M σύνδεση κανόνα↔διάταξης. Είναι XML schema/RDFS, χωρίς εκτελέσιμη σημασιολογία. DMN 1.5: formal από 08/2024 (decision tables).",
+   "relevance": "Φορμά ανταλλαγής και εξαγωγής κανόνων LexDSL μέσω του EP-07. Χρησιμεύει και ως μέτρο εκφραστικότητας για deontic τελεστές, που δεν επαληθεύτηκε ότι καλύπτει το Catala (το Catala καλύπτει εξαιρέσεις μέσω default logic). Δεν είναι μηχανή εκτέλεσης.",
+   "sources": [
+    {
+     "title": "LegalRuleML Core Specification v1.0",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    },
+    {
+     "title": "OMG DMN specification",
+     "url": "https://www.omg.org/spec/DMN/",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-05",
+   "name": "Cedar Verification-Guided Development (Lean + DRT + PBT)",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Εκτελέσιμο μοντέλο σε Lean, περίπου 10× μικρότερο από τον κώδικα παραγωγής, με αποδείξεις ιδιοτήτων. DRT Lean↔Rust «six hours nightly», «on the order of 100 million total tests» (2023). PBT για ό,τι δεν μοντελοποιείται. Lean 5µs/test έναντι Rust 7µs. Πολιτική: «No new Cedar version is released unless its model, proofs, and differential tests are current». Βρέθηκαν 4 bugs από τις αποδείξεις και 21 από DRT/PBT.",
+   "relevance": "Το πρόχειρο ήδη υιοθετεί αυτό το πρότυπο για τον πυρήνα (31.md P2, VT-505, VT-501, VT-301…VT-307). Δεν το εφαρμόζει στο Forge (CMP-FRG-01, KT-10), όπου η αναφορά είναι Lisp interpreter χωρίς αποδείξεις. Τα νούμερα throughput αφορούν authorization, όχι νομικό DSL, οπότε το EXP-18 μένει ανοιχτό.",
+   "sources": [
+    {
+     "title": "How We Built Cedar: A Verification-Guided Approach (arXiv 2407.01688)",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    },
+    {
+     "title": "How we built Cedar with automated reasoning and differential testing",
+     "url": "https://www.amazon.science/blog/how-we-built-cedar-with-automated-reasoning-and-differential-testing",
+     "year": "2023"
+    },
+    {
+     "title": "Lean use case: Cedar",
+     "url": "https://lean-lang.org/use-cases/cedar/",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-06",
+   "name": "Verified compilers: CompCert 3.18 και CakeML",
+   "kind": "system",
+   "maturity": "production",
+   "what": "CompCert 3.18 (08/2026): verified C compiler για ARM, PowerPC, RISC-V και x86. Ο parser δηλώνεται formally-verified από την έκδοση 2.3 (2014), με επικύρωση του LR(1) automaton από Coq-verified validator (Jourdan–Pottier–Leroy, ESOP 2012). Qualified τον 03/2026 για το MFC_NG των ATR 42/72, με credits DO-178C/DO-333/DO-330. CakeML: bootstrapped μέσα στο HOL, verified PEG parser, sound και complete type inferencer, proof-producing synthesis από HOL. Το backend στοχεύει 6 αρχιτεκτονικές, που η σελίδα δεν κατονομάζει· Wasm δεν αναφέρεται.",
+   "relevance": "Κορυφή της κλίμακας τεκμηρίωσης του INV-F01: απόδειξη για όλα τα προγράμματα, χωρίς TV ανά μονάδα.",
+   "sources": [
+    {
+     "title": "CompCert",
+     "url": "https://compcert.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Validating LR(1) Parsers (ESOP, Crossref metadata)",
+     "url": "https://api.crossref.org/works?query.bibliographic=Validating+LR(1)+Parsers+Jourdan+Pottier+Leroy&rows=3",
+     "year": "2012"
+    },
+    {
+     "title": "CakeML",
+     "url": "https://cakeml.org/",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-07",
+   "name": "Alive2 (bounded translation validation για LLVM IR)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Αυτόματο SMT-based TV για LLVM IR, χωρίς false alarms. Είναι bounded: ξεδιπλώνει loops έως όριο. Βρήκε 47 νέα bugs και οδήγησε σε 8 διορθώσεις του LLVM LangRef. Απαιτεί Z3 και έχει ρυθμιζόμενο SMT timeout· το README δεν αναφέρει ελέγξιμα certificates.",
+   "relevance": "Το σημερινό ανώτερο TV για LLVM IR→IR. Δεν καλύπτει backend→Wasm/machine code και, κατά τις πηγές, δεν παράγει ανεξάρτητα ελέγξιμο certificate. Με timeout το αποτέλεσμα δεν είναι απόφαση. Άρα δεν στηρίζει ως έχει το «100% μονάδων» του KT-10.",
+   "sources": [
+    {
+     "title": "Alive2: bounded translation validation for LLVM (PLDI, Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3453483.3454030",
+     "year": "2021"
+    },
+    {
+     "title": "Alive2 paper PDF",
+     "url": "https://users.cs.utah.edu/~regehr/alive2-pldi21.pdf",
+     "year": "2021"
+    },
+    {
+     "title": "AliveToolkit/alive2 README",
+     "url": "https://github.com/AliveToolkit/alive2",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-08",
+   "name": "MLIR/LLVM με IRDL (dialects ως δεδομένα)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Επεκτάσιμα IR (dialects). Το IRDL ορίζει dialects ως MLIR προγράμματα και έχει σχεδιαστεί ώστε να φορτώνονται στο runtime (dynamic registration ή JIT). Dialects με C++ predicates (irdl.c_pred) δεν καταχωρούνται στο runtime.",
+   "relevance": "Σωστή υποδομή για γενικό Compiler Forge και μηχανισμός για το EP-11 («νέα γλώσσα ως δεδομένα»). Το MLIR όμως δεν κωδικοποιεί σημασιολογία.",
+   "sources": [
+    {
+     "title": "MLIR IRDL dialect",
+     "url": "https://mlir.llvm.org/docs/Dialects/IRDL/",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-09",
+   "name": "Σημασιολογία και TV για MLIR: verification dialects, SMT dialect, mlir-tv, Lean-MLIR",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "First-Class Verification Dialects (PACMPL/PLDI 06/2025): το MLIR είναι «syntax-focused» και δεν υποστηρίζει κωδικοποίηση σημασιολογίας. Η σημασιολογία ενός dialect ορίζεται ως lowering προς semantics dialects και από εκεί σε SMT. Δόθηκε σημασιολογία σε 5 dialects, φτιάχτηκαν 3 εργαλεία ανεξάρτητα από dialect και βρέθηκαν 5 miscompilations upstream. Upstream SMT dialect κατά SMT-LIB 2.7. mlir-tv (CAV 2022): SMT TV για ML dialects. Lean-MLIR (ITP 2024): αποδείξεις peephole rewrites σε SSA με regions, στο Lean.",
+   "relevance": "Δείχνει ότι TV για custom dialect απαιτεί πρώτα formal σημασιολογία του dialect. Το πρόχειρο δεν το προβλέπει.",
+   "sources": [
+    {
+     "title": "First-Class Verification Dialects for MLIR (PACMPL, Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3729309",
+     "year": "2025"
+    },
+    {
+     "title": "First-Class Verification Dialects for MLIR (abstract, Semantic Scholar)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1145/3729309?fields=title,abstract,venue,year",
+     "year": "2025"
+    },
+    {
+     "title": "MLIR SMT dialect",
+     "url": "https://mlir.llvm.org/docs/Dialects/SMT/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "aqjune/mlir-tv",
+     "url": "https://github.com/aqjune/mlir-tv",
+     "year": "2022"
+    },
+    {
+     "title": "Verifying Peephole Rewriting in SSA Compiler IRs (arXiv 2407.03685)",
+     "url": "https://arxiv.org/abs/2407.03685",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-10",
+   "name": "Cranelift: VeriISLE/Crocus και Arrival (επαληθευμένο instruction selection Wasm→native)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "SMT επαλήθευση κανόνων ISLE (ASPLOS 04/2024), που τρέχει στο CI με κοινό SMT query cache. Arrival (PACMPL 10/2025): επαληθεύει σχεδόν όλους τους κανόνες instruction selection AArch64 από Wasm core έναντι authoritative ISA semantics (ARM Machine Readable Specification, ASL). Μειώνει την προσπάθεια κατά 2.6× και βρήκε νέα bugs. Το x86-64 δεν έχει την ίδια κάλυψη. Η ισοδυναμία είναι ακριβής, με εξαίρεση τις διαφορές NaN payload.",
+   "relevance": "Ανώτερο πρότυπο για runtime Wasm (CMP-FRG-03): επαληθευμένο instruction selection έναντι authoritative ISA semantics, αντί για TV ανά μονάδα.",
+   "sources": [
+    {
+     "title": "Lightweight, Modular Verification for WebAssembly-to-Native Instruction Selection (ASPLOS, Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3617232.3624862",
+     "year": "2024"
+    },
+    {
+     "title": "wasmtime cranelift/isle/veri README",
+     "url": "https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/isle/veri/README.md",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Scaling Instruction-Selection Verification against Authoritative ISA Semantics (PACMPL, Crossref metadata with abstract)",
+     "url": "https://api.crossref.org/works/10.1145/3764383",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-11",
+   "name": "WebAssembly 3.0 (deterministic profile, SpecTec) και WasmCert-Coq",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "Wasm 3.0 (17/09/2025): GC, memory64, exceptions, tail calls, relaxed SIMD. Ορίζει ντετερμινιστική default συμπεριφορά για κάθε κατά τα άλλα μη ντετερμινιστική εντολή (floating point και NaN, relaxed vector). Είναι η πρώτη έκδοση του προτύπου που παρήχθη με το toolchain SpecTec. WasmCert-Coq: μηχανοποιεί το Wasm 2.0 μαζί με subtyping και tail-call, με soundness του interpreter WasmRef-Coq, type safety και soundness του module instantiation.",
+   "relevance": "Άμεση στήριξη για το INV-C08 και για τις «byte-identical roots» του KT-02, εφόσον το προφίλ απαιτηθεί ρητά.",
+   "sources": [
+    {
+     "title": "Wasm 3.0 Completed",
+     "url": "https://webassembly.org/news/2025-09-17-wasm-3.0/",
+     "year": "2025"
+    },
+    {
+     "title": "WasmCert/WasmCert-Coq",
+     "url": "https://github.com/WasmCert/WasmCert-Coq",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-12",
+   "name": "Wasm Component Model / WIT (WASI 0.2 → 0.3.x)",
+   "kind": "standard",
+   "maturity": "pilot",
+   "what": "Βρίσκεται ακόμη σε WASI Developer Preview, μέσα στο W3C WebAssembly Community Group· δεν είναι ολοκληρωμένο W3C standard. Η 0.3.0 έφερε native async (async functions, streams, futures)· η 0.3.1 προσθέτει map<K,V>.",
+   "relevance": "Στόχος πακεταρίσματος οργάνων Forge (ICD-10, EP-02). Χρειάζεται pinning έκδοσης.",
+   "sources": [
+    {
+     "title": "WebAssembly/component-model",
+     "url": "https://github.com/WebAssembly/component-model",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-13",
+   "name": "Semantics-first single-source frameworks: K, Sail, SpecTec, PLT Redex",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "K Framework Tools 7.0: από μία formal προδιαγραφή παράγει interpreters, model checkers, verifiers και τεκμηρίωση (LLVM και Haskell backends). Sail RISC-V: υιοθετημένο από τη RISC-V International· παράγει εκτελέσιμο emulator, ορισμούς Isabelle/Rocq/Lean και τεκμηρίωση. SpecTec: με αυτό παρήχθη για πρώτη φορά το πρότυπο Wasm (3.0). PLT Redex: DSL για reduction semantics με random testing.",
+   "relevance": "Ανώτερο πρότυπο για το Language Forge: μία έδρα σημασιολογίας από την οποία παράγονται interpreter, prover defs και docs. Το CMP-FRG-01 ορίζει grammar, typed semantics και Lisp interpreter ως χωριστά artifacts, χωρίς δηλωμένη παραγωγή από κοινή πηγή.",
+   "sources": [
+    {
+     "title": "runtimeverification/k",
+     "url": "https://github.com/runtimeverification/k",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "riscv/sail-riscv",
+     "url": "https://github.com/riscv/sail-riscv",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "PLT Redex",
+     "url": "https://docs.racket-lang.org/redex/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Wasm 3.0 Completed (SpecTec)",
+     "url": "https://webassembly.org/news/2025-09-17-wasm-3.0/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-14",
+   "name": "Language workbenches: Langium, Spoofax, Rascal, MPS, Racket #lang",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Langium: TypeScript με ενσωματωμένο LSP, «spiritual successor» του Xtext. Spoofax 2.5.23 (28/04/2025): SDF3, Statix (scope graphs), Stratego. Rascal: metaprogramming με VS Code/LSP. MPS: projectional workbench, με case study νομικών DSLs. Racket: #lang που πακετάρει reader και expander.",
+   "relevance": "Υπαρκτά εργαλεία για τη γραμματική, το type system και το LSP του CMP-FRG-01, αντί για custom Tree-sitter + ANTLR + Lisp.",
+   "sources": [
+    {
+     "title": "eclipse-langium/langium",
+     "url": "https://github.com/eclipse-langium/langium",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Spoofax",
+     "url": "https://spoofax.dev/",
+     "year": "2025"
+    },
+    {
+     "title": "Rascal",
+     "url": "https://www.rascal-mpl.org/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "JetBrains MPS",
+     "url": "https://www.jetbrains.com/mps/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Racket Guide: Creating Languages",
+     "url": "https://docs.racket-lang.org/guide/languages.html",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-15",
+   "name": "Parsing: Tree-sitter, ANTLR 4.13.2, verified/validated parsers",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Tree-sitter: «fast enough to parse on every keystroke» και robust σε syntax errors. ANTLR 4.13.2 (03/08/2024): 10 targets (Cpp, CSharp, Dart, Java, JavaScript, PHP, Python3, Swift, TypeScript, Go), κανένα Common Lisp. Verified/validated parsers: CoStar (ALL(*) verified σε Coq), parser του CompCert μέσω Coq-verified validator LR(1) automata (ESOP 2012), verified PEG parser του CakeML.",
+   "relevance": "Στο trusted path χρειάζεται μία κανονιστική γραμματική με validated parser· το Tree-sitter είναι μόνο παράγωγη προβολή για IDE. Το ANTLR δεν ταιριάζει με Lisp reference.",
+   "sources": [
+    {
+     "title": "Tree-sitter docs",
+     "url": "https://tree-sitter.github.io/tree-sitter/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "antlr/antlr4 releases (GitHub API)",
+     "url": "https://api.github.com/repos/antlr/antlr4/releases?per_page=5",
+     "year": "2024"
+    },
+    {
+     "title": "antlr/antlr4 README (targets)",
+     "url": "https://github.com/antlr/antlr4",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "slasser/CoStar",
+     "url": "https://github.com/slasser/CoStar",
+     "year": "2023"
+    },
+    {
+     "title": "Validating LR(1) Parsers (ESOP, Crossref metadata)",
+     "url": "https://api.crossref.org/works?query.bibliographic=Validating+LR(1)+Parsers+Jourdan+Pottier+Leroy&rows=3",
+     "year": "2012"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-16",
+   "name": "Ελέγξιμα certificates για SAT/SMT: Lean bv_decide (LRAT), cvc5 proofs, Carcara",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "bv_decide (LeanSAT): στέλνει τον στόχο σε SAT solver (προεπιλογή CaDiCaL) και ελέγχει το LRAT UNSAT proof με verified checker μέσα στο Lean. Ενσωματώθηκε στο Lean 4 core ως Std.Tactic.BVDecide (nightly 29/08/2024). Το cvc5 εξάγει proofs σε CPC, Alethe και LFSC. Το Carcara ελέγχει και επεξεργάζεται proofs Alethe (TACAS 2023).",
+   "relevance": "Κάνει το «translation-validation proof» του ICD-20 ανεξάρτητα ελέγξιμο αντικείμενο PCL, αντί για απλό «unsat» του Z3 (VT-404).",
+   "sources": [
+    {
+     "title": "leanprover/leansat",
+     "url": "https://github.com/leanprover/leansat",
+     "year": "2024"
+    },
+    {
+     "title": "cvc5 proof production",
+     "url": "https://cvc5.github.io/docs/latest/proofs/proofs.html",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "ufmg-smite/carcara",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2023"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-17",
+   "name": "E-graphs: egg και egglog",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "egg (POPL 2021): equality saturation με rebuilding και e-class analyses. egglog (PLDI 2023): Datalog μαζί με EqSat, με lattice-based reasoning και incremental εκτέλεση. Το repo είναι ενεργό, με Python bindings και crate 3.0.0.",
+   "relevance": "Μηχανή rewrites και ελέγχου ισοδυναμίας για optimizers του Compiler Forge. Δεν αναφέρεται στο πρόχειρο. Η παραγωγική χρήση δεν τεκμηριώθηκε.",
+   "sources": [
+    {
+     "title": "egg: Fast and Extensible Equality Saturation",
+     "url": "https://arxiv.org/abs/2004.03082",
+     "year": "2021"
+    },
+    {
+     "title": "Better Together: Unifying Datalog and Equality Saturation",
+     "url": "https://arxiv.org/abs/2304.04332",
+     "year": "2023"
+    },
+    {
+     "title": "egraphs-good/egglog",
+     "url": "https://github.com/egraphs-good/egglog",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-18",
+   "name": "Differential testing compilers και όρια του N-version (και για κώδικα από LLM)",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Csmith (PLDI 2011): τυχαία προγράμματα C χωρίς undefined behavior για differential testing. YARPGen (OOPSLA 2020, PLDI 2023): πάνω από 260 bugs σε gcc, clang, ispc, dpc++, sde και alive2. Knight & Leveson (1986): η υπόθεση ανεξαρτησίας αποτυχιών στο N-version «failed statistically». arXiv 2607.02808 (07/2026): σε 224 προβλήματα και 12 LLMs, ensembles 3 και 5 εκδόσεων πέτυχαν μόνο το 0.43 και το 0.44 του εφικτού κέρδους αξιοπιστίας, κάτω από 0.3 όταν προέρχονται από το ίδιο μοντέλο. Και διαφορετικά μοντέλα αποτυγχάνουν στα ίδια tests πολύ συχνότερα απ' ό,τι αναμένεται υπό ανεξαρτησία.",
+   "relevance": "Ο CMP-FRG-05 χρειάζεται generators χωρίς UB και μετρούμενη διαφορετικότητα. Η συμφωνία N εκδόσεων, ιδίως από LLM, δεν αποδεικνύει ορθότητα.",
+   "sources": [
+    {
+     "title": "csmith-project/csmith",
+     "url": "https://github.com/csmith-project/csmith",
+     "year": "2011"
+    },
+    {
+     "title": "intel/yarpgen",
+     "url": "https://github.com/intel/yarpgen",
+     "year": "2023"
+    },
+    {
+     "title": "N-version programming (Wikipedia; cites Knight & Leveson 1986)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "A Systematic Methodology for Evaluating Failure Independence in LLM-Generated Code (arXiv 2607.02808)",
+     "url": "https://arxiv.org/abs/2607.02808",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-19",
+   "name": "LLMs σε compilers/transpilation ως proposers με verifier (2023–2026)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "LLMLift (2024): LLM με verified lifting και proofs λειτουργικής ισοδυναμίας, για 4 DSLs. LLM-Vectorizer (2024): το Alive2 επαλήθευσε μόνο το 38.2% των vectorizations (TSVC). Foundation LLM για LLVM-IR/assembly (2024): 45% round-trip disassembly, 14% exact match. LLM 14B για GIMPLE→LLVM IR (05/2026): μόνο εμπειρική αξιολόγηση, χωρίς formal TV. DARPA TRACTOR: C→Rust με static/dynamic analysis και LLMs. Tenspiler (2024): verified-lifting compiler με program synthesis, όχι LLM. Grammar prompting (2023): LLM που παράγει προγράμματα σε υπάρχοντα DSL με BNF. Αναζήτηση arXiv (09/2026) βρήκε γλώσσες σχεδιασμένες για LLMs, όχι γλώσσες με formal semantics σχεδιασμένες από LLM.",
+   "relevance": "Επιβεβαιώνει το PVC για το Forge: τα LLMs προτείνουν, TV/proof αποφασίζει, και η απόδοση επαλήθευσης μετριέται.",
+   "sources": [
+    {
+     "title": "Verified Code Transpilation with LLMs",
+     "url": "https://arxiv.org/abs/2406.03003",
+     "year": "2024"
+    },
+    {
+     "title": "Tenspiler: A Verified Lifting-Based Compiler for Tensor Operations",
+     "url": "https://arxiv.org/abs/2404.18249",
+     "year": "2024"
+    },
+    {
+     "title": "LLM-Vectorizer: LLM-based Verified Loop Vectorizer",
+     "url": "https://arxiv.org/abs/2406.04693",
+     "year": "2024"
+    },
+    {
+     "title": "Foundation Models of Compiler Optimization (arXiv 2407.02524)",
+     "url": "https://arxiv.org/abs/2407.02524",
+     "year": "2024"
+    },
+    {
+     "title": "LLM Translation of Compiler Intermediate Representation",
+     "url": "https://arxiv.org/abs/2605.08247",
+     "year": "2026"
+    },
+    {
+     "title": "DARPA TRACTOR",
+     "url": "https://darpa.mil/research/programs/translating-all-c-to-rust",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Grammar Prompting for DSL Generation with LLMs",
+     "url": "https://arxiv.org/abs/2305.19234",
+     "year": "2023"
+    },
+    {
+     "title": "arXiv search: LLM design new programming language semantics",
+     "url": "https://arxiv.org/search/?query=LLM+design+new+programming+language+semantics&searchtype=all&order=-announced_date_first",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-20",
+   "name": "Design-space exploration πάνω σε SysML v2",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "SysML 2.0 formal (09/2025) και Systems Modeling API & Services 1.0 formal (09/2025). Solvers: MiniZinc 2.10.1 (31/08/2026, solver-independent), OR-Tools CP-SAT, Alloy 6.2.0 (09/01/2025, με mutable state και temporal logic). Clafer: η 0.5.1 (09/2023) αφαίρεσε το reasoning· instance generation και multi-objective optimization υπάρχουν μόνο στην παλαιά 0.4.5. LLMs πάνω σε SysML v2: υπάρχουν παραγωγή μοντέλων (SysTemp, 2025) και ευθυγράμμιση/fault localization (2025–2026)· δεν βρέθηκε DSE με LLM.",
+   "relevance": "Το «Python + SysML v2 API» του CMP-FRG-04 στηρίζεται πλέον σε formal πρότυπο. Η DSE χρειάζεται τυπικό μοντέλο μεταβλητών, περιορισμών και στόχων πάνω από solver· η 31.md P7 ορίζει μόνο τη μέθοδο αξιολόγησης.",
+   "sources": [
+    {
+     "title": "OMG SysML",
+     "url": "https://www.omg.org/spec/SysML/",
+     "year": "2025"
+    },
+    {
+     "title": "OMG Systems Modeling API and Services",
+     "url": "https://www.omg.org/spec/SystemsModelingAPI/",
+     "year": "2025"
+    },
+    {
+     "title": "MiniZinc",
+     "url": "https://www.minizinc.org/",
+     "year": "2026"
+    },
+    {
+     "title": "OR-Tools CP-SAT",
+     "url": "https://developers.google.com/optimization/cp/cp_solver",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Alloy",
+     "url": "https://alloytools.org/",
+     "year": "2025"
+    },
+    {
+     "title": "Clafer",
+     "url": "https://www.clafer.org/",
+     "year": "2023"
+    },
+    {
+     "title": "SysTemp: A Multi-Agent System for Template-Based Generation of SysML v2",
+     "url": "https://arxiv.org/abs/2506.21608",
+     "year": "2025"
+    },
+    {
+     "title": "arXiv API search: \"SysML v2\" (40 most recent)",
+     "url": "http://export.arxiv.org/api/query?search_query=all:%22SysML%20v2%22&max_results=40&sortBy=submittedDate&sortOrder=descending",
+     "year": "2026 (accessed)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-FRG-21",
+   "name": "Επαλήθευση και testing για κώδικα νόμου στο Catala: CUTECat, formal date arithmetic",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "CUTECat (arXiv 10/2024, αναθ. 01/2025): concolic execution που χειρίζεται default logic. Παράγει «hundreds of thousands of testcases covering all branches» σε γαλλικά επιδόματα στέγασης και στην §132 του US tax code, με test cases κατανοητά σε δικηγόρους. Formal date arithmetic (arXiv 03/2024): σημασιολογία πράξεων ημερομηνιών επαληθευμένη σε F*, με abstract interpretation για στατική ανίχνευση αμφισημιών, ενσωματωμένη στο Catala· βρήκε αμφισημίες στον κώδικα γαλλικών επιδομάτων στέγασης. Ένα preprint του 06/2026 χρησιμοποιεί το Catala ως ντετερμινιστικό verifier για legal AI, χωρίς ποσοτικά αποτελέσματα στο abstract.",
+   "relevance": "Generators για νομικό DSL με default logic, καταλληλότεροι από Csmith/YARPGen για το KT-10 και το EXP-08. Η date arithmetic αφορά άμεσα την εφεδρεία του EXP-08 (προθεσμίες, δικονομικοί κανόνες) και τον CMP-LAW-10.",
+   "sources": [
+    {
+     "title": "CUTECat: Concolic Execution for Computational Law (arXiv 2410.18212)",
+     "url": "https://arxiv.org/abs/2410.18212",
+     "year": "2024"
+    },
+    {
+     "title": "Formalizing Date Arithmetic and Statically Detecting Ambiguities for the Law (arXiv 2403.08935)",
+     "url": "https://arxiv.org/abs/2403.08935",
+     "year": "2024"
+    },
+    {
+     "title": "Closing the Loop: Formally Verified Law as a Reward Signal for Self-Improving Legal AI (arXiv 2606.23913)",
+     "url": "https://arxiv.org/abs/2606.23913",
+     "year": "2026"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-FRG-01"
+   ],
+   "draft_ref": "master §6.3 L6 γρ. 553· 22.md γρ. 18 (ADR-0012), γρ. 30 (ADR-0024)",
+   "draft_position": "Language Forge: grammar σε Tree-sitter/ANTLR, typed semantics, reference interpreter σε Lisp, language server. Αμφίσημη γραμματική → conflict reports (GLR/ALL(*))· κενά σημασιολογίας → spec conformance tests. Tech: Common Lisp, Tree-sitter, ANTLR· [T].",
+   "verdict": "superior-exists",
+   "reasoning": "Grammar, typed semantics και Lisp interpreter ορίζονται ως χωριστά artifacts, χωρίς δηλωμένη παραγωγή από κοινή πηγή. Αυτό δημιουργεί κίνδυνο απόκλισης, με δύο parser generators ως έδρα γραμματικής. Το ANTLR 4 έχει 10 targets χωρίς Common Lisp, άρα ο Lisp interpreter θέλει γέφυρα. Το Tree-sitter είναι σχεδιασμένο για editors. Στο trusted path λείπει validated parser. Ο interpreter δεν έχει αποδείξεις, ενώ το ίδιο το πρόχειρο εφαρμόζει VGD στον πυρήνα (31.md P2).",
+   "superior": "Semantics-first από μία έδρα. Κανονιστική εκτελέσιμη σημασιολογία (Lean 4 κατά Cedar VGD, ή K), από την οποία παράγονται ή ελέγχονται interpreter, prover defs και docs, όπως στα K, Sail και SpecTec. Μία κανονιστική γραμματική με validated/verified parser (Menhir με Coq validator, CoStar). Tree-sitter/Langium μόνο ως παράγωγη προβολή για IDE/LSP. Διατηρεί όλα όσα ζητά το CMP-FRG-01. Trade-off: χάνεται η συνέχεια με τις Lisp έδρες του ADR-0012 και χρειάζεται δεξιότητα Lean/K.",
+   "sota_refs": [
+    "SOTA-FRG-13",
+    "SOTA-FRG-14",
+    "SOTA-FRG-15",
+    "SOTA-FRG-05"
+   ],
+   "sources": [
+    {
+     "title": "antlr/antlr4 README (targets)",
+     "url": "https://github.com/antlr/antlr4",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Tree-sitter docs",
+     "url": "https://tree-sitter.github.io/tree-sitter/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "riscv/sail-riscv",
+     "url": "https://github.com/riscv/sail-riscv",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "runtimeverification/k",
+     "url": "https://github.com/runtimeverification/k",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "How We Built Cedar",
+     "url": "https://arxiv.org/abs/2407.01688",
+     "year": "2024"
+    },
+    {
+     "title": "Validating LR(1) Parsers (Crossref metadata)",
+     "url": "https://api.crossref.org/works?query.bibliographic=Validating+LR(1)+Parsers+Jourdan+Pottier+Leroy&rows=3",
+     "year": "2012"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-FRG-001"
+   ],
+   "draft_ref": "29.md §29.8 γρ. 132",
+   "draft_position": "«Το σύστημα δημιουργεί νέες γλώσσες προγραμματισμού με γραμματικές, σημασιολογία και reference interpreters»· T4, FRG-01, ICD-20, INV F01, KT-10, EXP-08· [T].",
+   "verdict": "gap",
+   "reasoning": "Δεν ορίζεται ποιος δημιουργεί. Αν είναι μηχανικοί με εργαλεία (K, Langium, Spoofax, Racket), η απαίτηση είναι [T]. Αν είναι το GRAIL αυτόνομα, δεν βρέθηκε τεκμήριο ότι LLMs σχεδιάζουν νέες γλώσσες με formal semantics. Τα papers αφορούν χρήση υπαρχουσών γλωσσών (grammar prompting) ή μετάφραση (LLMLift). Αναζήτηση arXiv (09/2026) βρήκε μόνο γλώσσες σχεδιασμένες για LLMs. Λείπει και κριτήριο αποδοχής της «γλώσσας», δηλαδή τι ακριβώς παραδίδεται.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-14",
+    "SOTA-FRG-19"
+   ],
+   "sources": [
+    {
+     "title": "Grammar Prompting for DSL Generation with LLMs",
+     "url": "https://arxiv.org/abs/2305.19234",
+     "year": "2023"
+    },
+    {
+     "title": "Verified Code Transpilation with LLMs",
+     "url": "https://arxiv.org/abs/2406.03003",
+     "year": "2024"
+    },
+    {
+     "title": "arXiv search: LLM design new programming language semantics",
+     "url": "https://arxiv.org/search/?query=LLM+design+new+programming+language+semantics&searchtype=all&order=-announced_date_first",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-FRG-02"
+   ],
+   "draft_ref": "master §6.3 γρ. 554",
+   "draft_position": "Compiler Forge: MLIR dialects, lowering pipelines, LLVM backends, Wasm targets· translation validation· C++ (MLIR/LLVM)· ICD-20 → ICD-30· [T].",
+   "verdict": "holds",
+   "reasoning": "Ως γενική υποδομή compilers, το MLIR/LLVM είναι σήμερα το ανώτερο διαθέσιμο. Προσφέρει επεκτάσιμα dialects (το IRDL είναι σχεδιασμένο για φόρτωση στο runtime) και οικοσύστημα επαλήθευσης (verification dialects, SMT dialect, Lean-MLIR, Alive2), καθώς και e-graphs για rewrites. Για το σκέλος Wasm→native το Cranelift δίνει ισχυρότερη εγγύηση (VeriISLE, Arrival), αλλά δεν είναι γενική υποδομή πολλών dialects, άρα δεν είναι αυστηρά ανώτερο. Το holds αφορά compilers με ανάγκες απόδοσης ή υλικού, όχι απαραίτητα τη LexDSL (βλ. ADR-0024).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-08",
+    "SOTA-FRG-09",
+    "SOTA-FRG-10",
+    "SOTA-FRG-17"
+   ],
+   "sources": [
+    {
+     "title": "MLIR IRDL dialect",
+     "url": "https://mlir.llvm.org/docs/Dialects/IRDL/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "First-Class Verification Dialects for MLIR (Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3729309",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "INV-F01",
+    "REQ-FRG-002",
+    "CMP-FRG-02"
+   ],
+   "draft_ref": "19.md §19.4 γρ. 79· 29.md γρ. 133· master γρ. 554",
+   "draft_position": "INV-F01 (Tier 1· επιβολή FRG-02, FRG-05, KRN-04· formal artifact VT-404· test KT-10): κάθε μεταγλωττισμένο artifact γίνεται δεκτό μόνο με translation validation ή differential συμφωνία έναντι reference interpreter. REQ-FRG-002 [T]. CMP-FRG-02: miscompilation → TV ανά μονάδα και differential έναντι reference.",
+   "verdict": "superior-exists",
+   "reasoning": "Η differential συμφωνία είναι στατιστικό τεκμήριο και δεν αποδεικνύει σημασιολογική διατήρηση. Το INV-F01 την ονομάζει έτσι, κάτι ασύμβατο με την τίμια άγνοια (INV-C04) και με τη δήλωση του VT-404 ως formal artifact. Το Alive2 είναι bounded, απαιτεί Z3 και δεν περιγράφει ελέγξιμο certificate. Για custom MLIR dialects, το TV προϋποθέτει σημασιολογία που το MLIR δεν έχει («syntax-focused», PACMPL 2025). Άρα το [T] για TV ανά μονάδα είναι υπερβολικό.",
+   "superior": "Βαθμονομημένο INV-F01: κάθε artifact φέρει δηλωμένο βαθμό τεκμηρίωσης. Σειρά: verified compiler (CompCert, CakeML) > TV με ανεξάρτητα ελεγμένο certificate (Lean bv_decide/LRAT, cvc5 Alethe→Carcara, αποδείξεις Lean-MLIR) > solver-trusted TV (Alive2) > differential (DRT). Κάθε κλάση έχει ελάχιστο βαθμό. Κρατά κάθε μονοπάτι admission του προχείρου και προσθέτει τίμια διαβάθμιση. Trade-off: περισσότερη μηχανική πολιτικής (DEC-FRG-04).",
+   "sota_refs": [
+    "SOTA-FRG-06",
+    "SOTA-FRG-07",
+    "SOTA-FRG-09",
+    "SOTA-FRG-16",
+    "SOTA-FRG-18"
+   ],
+   "sources": [
+    {
+     "title": "Alive2 (PLDI, Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3453483.3454030",
+     "year": "2021"
+    },
+    {
+     "title": "AliveToolkit/alive2 README (Z3, timeouts)",
+     "url": "https://github.com/AliveToolkit/alive2",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "CompCert",
+     "url": "https://compcert.org/",
+     "year": "2026"
+    },
+    {
+     "title": "leanprover/leansat",
+     "url": "https://github.com/leanprover/leansat",
+     "year": "2024"
+    },
+    {
+     "title": "ufmg-smite/carcara",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2023"
+    },
+    {
+     "title": "First-Class Verification Dialects for MLIR (abstract)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1145/3729309?fields=title,abstract,venue,year",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0024"
+   ],
+   "draft_ref": "22.md γρ. 30· master OS-09 γρ. 368",
+   "draft_position": "Forge pipeline: spec → Tree-sitter/ANTLR → Lisp reference interpreter → MLIR → LLVM/Wasm → translation validation· πρώτη γλώσσα LexDSL. Το OS-09 γράφει την ίδια αλυσίδα χωρίς LLVM.",
+   "verdict": "superior-exists",
+   "reasoning": "Για νομικό DSL τα κριτήρια είναι πιστότητα, ιχνηλασιμότητα και εξήγηση, όχι απόδοση υλικού. Το MLIR μαζί με το LLVM προσθέτει μεγάλο TCB χωρίς σημασιολογία στα dialects. Δεν βρέθηκε TV από άκρη σε άκρη μέχρι το Wasm, ούτε σε αναζήτηση arXiv 09/2026. Κατά τις πηγές τους, τα rules-as-code με σταθερή έκδοση ή παραγωγική χρήση (Catala σε Python/C, OpenFisca σε Python, Mlang) δεν περνούν από MLIR. Επιπλέον, η Lisp reference για τις γλώσσες του Forge διαφέρει από την πολιτική VGD σε Lean που το ίδιο το πρόχειρο ορίζει για τον πυρήνα (31.md P2, ADR-0028).",
+   "superior": "Semantics-first αλυσίδα σε πέντε σκέλη. (1) Εκτελέσιμη σημασιολογία σε Lean ως μόνη κανονιστική έδρα. (2) Validated parser. (3) Μικρή αλυσίδα compilation με αποδεδειγμένα βήματα (πρότυπο Catala/F*) ή με certificates, προς Wasm με deterministic profile. (4) DRT σε κλίμακα Cedar και concolic κάλυψη κλάδων τύπου CUTECat. (5) Certificates με ανεξάρτητο έλεγχο. Το MLIR/LLVM μένει για compilers με ανάγκες απόδοσης. Trade-off: λιγότερες βελτιστοποιήσεις (άσχετες για κανόνες) και απώλεια συνέχειας με τη Lisp. Η δέσμευση θέλει πείραμα throughput και εκφραστικότητας της Lean σημασιολογίας σε νομικό δείγμα, αντίστοιχο του EXP-18.",
+   "sota_refs": [
+    "SOTA-FRG-01",
+    "SOTA-FRG-05",
+    "SOTA-FRG-06",
+    "SOTA-FRG-09",
+    "SOTA-FRG-11",
+    "SOTA-FRG-16",
+    "SOTA-FRG-21"
+   ],
+   "sources": [
+    {
+     "title": "Catala (arXiv 2103.03198)",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    },
+    {
+     "title": "First-Class Verification Dialects for MLIR (abstract)",
+     "url": "https://api.semanticscholar.org/graph/v1/paper/DOI:10.1145/3729309?fields=title,abstract,venue,year",
+     "year": "2025"
+    },
+    {
+     "title": "Lean use case: Cedar",
+     "url": "https://lean-lang.org/use-cases/cedar/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "arXiv search: translation validation WebAssembly",
+     "url": "https://arxiv.org/search/?query=translation+validation+WebAssembly&searchtype=all",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ADR-0024",
+    "EXP-08"
+   ],
+   "draft_ref": "22.md γρ. 30· 26.md γρ. 35",
+   "draft_position": "Πρώτη γλώσσα LexDSL. EXP-08: «Πόσες διατάξεις κωδικοποιούνται σε LexDSL;» με δειγματοληψία διατάξεων και translation validation. Αν η κάλυψη είναι κάτω από c_min, περιορισμός σε προθεσμίες/δικονομικούς κανόνες (GP-8, FRG-01/02).",
+   "verdict": "superior-exists",
+   "reasoning": "Η LexDSL δεν έχει προδιαγραφή ούτε σημασιολογική οικογένεια, αφού η §17 δεν γράφτηκε. Το Catala ήδη προσφέρει formal semantics, compiler με αποδεδειγμένα core βήματα (F*), default logic, literate σύνδεση με διατάξεις και τεκμήριο εύρεσης bug. Έχει σταθερή, ενεργή έκδοση (1.0 11/2025, 1.2.1 07/2026) και formal date arithmetic με στατική ανίχνευση αμφισημιών, που είναι ακριβώς το πεδίο της εφεδρείας του EXP-08. Το EXP-08 μετρά λάθος πράγμα: το TV ελέγχει τον compiler, όχι αν μια διάταξη κωδικοποιείται ή αν κωδικοποιήθηκε πιστά.",
+   "superior": "Επανασχεδιασμός του EXP-08. Ίδιο δείγμα ελληνικών διατάξεων, με baseline Catala (και L4). Μέτρηση κωδικοποιησιμότητας και νομικής πιστότητας με επίσημα test cases όπου υπάρχουν (πρότυπο Mlang) και με τυφλή κρίση δικηγόρων, όχι με TV. Η LexDSL ξεκινά ως προφίλ ή επέκταση του Catala, εκτός αν το πείραμα δείξει το αντίθετο. Trade-off: η ελληνική literate σύνταξη και οι deontic τελεστές δεν επαληθεύτηκαν στο Catala.",
+   "sota_refs": [
+    "SOTA-FRG-01",
+    "SOTA-FRG-02",
+    "SOTA-FRG-03",
+    "SOTA-FRG-04",
+    "SOTA-FRG-21"
+   ],
+   "sources": [
+    {
+     "title": "Catala (PACMPL ICFP, Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3473582",
+     "year": "2021"
+    },
+    {
+     "title": "CatalaLang/catala releases (GitHub API)",
+     "url": "https://api.github.com/repos/CatalaLang/catala/releases?per_page=15",
+     "year": "2026"
+    },
+    {
+     "title": "Formalizing Date Arithmetic and Statically Detecting Ambiguities for the Law",
+     "url": "https://arxiv.org/abs/2403.08935",
+     "year": "2024"
+    },
+    {
+     "title": "LegalRuleML Core 1.0",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-10"
+   ],
+   "draft_ref": "24.md γρ. 25",
+   "draft_position": "LexDSL: translation validation στο 100% των μονάδων· differential έναντι Lisp reference, 0 αποκλίσεις σε ≥10⁵ εισόδους· admission μέσω ORP (GP-8, INV F01, O02, EXP-08).",
+   "verdict": "superior-exists",
+   "reasoning": "(α) Το 100% TV δεν είναι εφικτό με bounded ή solver TV, γιατί τα timeouts δίνουν Unknown (ICD-30). Χρειάζεται σχεδίαση που κάνει το TV αποφασίσιμο, ή verified compilation. (β) Οι 10⁵ είσοδοι είναι τρεις τάξεις κάτω από την πρακτική Cedar (~10⁸ tests συνολικά, με DRT 6 ώρες κάθε νύχτα), και δεν ορίζεται κριτήριο κάλυψης. (γ) Η αναφορά είναι Lisp χωρίς αποδείξεις, σε αντίθεση με την πολιτική VGD του πυρήνα (31.md P2). (δ) Κανένας άξονας δεν ελέγχει την πιστότητα προς το κείμενο του νόμου.",
+   "superior": "Κρατά όλα τα υπάρχοντα κριτήρια και προσθέτει: βαθμό τεκμηρίωσης ανά μονάδα με ελεγμένο certificate· DRT έναντι της κανονιστικής σημασιολογίας με προκαταχωρισμένη κλίμακα και κάλυψη κλάδων (concolic τύπου CUTECat για default logic)· άξονα νομικής πιστότητας με μηχανικό oracle (επίσημα test vectors, κατά Mlang) και τυφλή κρίση δικηγόρων· ρητή μεταχείριση του Unknown ως μη αποδοχής.",
+   "sota_refs": [
+    "SOTA-FRG-05",
+    "SOTA-FRG-07",
+    "SOTA-FRG-16",
+    "SOTA-FRG-18",
+    "SOTA-FRG-21",
+    "SOTA-FRG-03"
+   ],
+   "sources": [
+    {
+     "title": "How we built Cedar (DRT volume)",
+     "url": "https://www.amazon.science/blog/how-we-built-cedar-with-automated-reasoning-and-differential-testing",
+     "year": "2023"
+    },
+    {
+     "title": "Alive2 PDF",
+     "url": "https://users.cs.utah.edu/~regehr/alive2-pldi21.pdf",
+     "year": "2021"
+    },
+    {
+     "title": "CUTECat: Concolic Execution for Computational Law",
+     "url": "https://arxiv.org/abs/2410.18212",
+     "year": "2024"
+    },
+    {
+     "title": "MLanguage/mlang",
+     "url": "https://github.com/MLanguage/mlang",
+     "year": "2022"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-02"
+   ],
+   "draft_ref": "24.md γρ. 17· 26.md γρ. 13 (GP-2)· 31.md γρ. 24 (P2)",
+   "draft_position": "Αλλαγή γλώσσας οργάνου (Lisp→Rust, Rust→νέα): N-version dual-run με 0 διαφωνίες σε πλήρες replay και byte-identical roots (INV O02, I01, C08· EXP-18). Η έξοδος του GP-2 απαιτεί μαζί το KT-02 και το VT-505 (differential έναντι Lean).",
+   "verdict": "holds",
+   "reasoning": "Το KT-02 δεν στέκει μόνο του. Η έξοδος του GP-2 απαιτεί και το VT-505: differential έναντι Lean reference semantics με παραγόμενες εισόδους (31.md P2). Το πρόχειρο έχει επίσης VT-501 (PBT kernel) και αποδείξεις Lean (VT-301…VT-307). Αυτό είναι ήδη το τριπλό VGD της Cedar για τα kernel organs, οπότε δεν υπάρχει αυστηρά ανώτερο που να λείπει. Εκκρεμούν τρία σημεία. (α) Το κριτήριο του ίδιου του KT-02 δεν αναφέρει παραγόμενες εισόδους ούτε το VT-505. (β) Για «Rust→νέα γλώσσα» σε μη-kernel όργανα δεν υπάρχει κανονιστικό μοντέλο. (γ) Η σημασιολογία floats/NaN που χρειάζονται οι byte-identical roots μεταξύ runtimes δεν ορίζεται (GAP-FRG-06), παρότι υπάρχουν INV-C08 και JCS. Κατά Knight & Leveson και arXiv 2607.02808, η σκέτη συμφωνία εκδόσεων δεν αρκεί, γι' αυτό η σύνδεση με το VT-505 πρέπει να γραφτεί ρητά στο κριτήριο.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-05",
+    "SOTA-FRG-11",
+    "SOTA-FRG-18"
+   ],
+   "sources": [
+    {
+     "title": "Lean use case: Cedar",
+     "url": "https://lean-lang.org/use-cases/cedar/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Wasm 3.0 Completed",
+     "url": "https://webassembly.org/news/2025-09-17-wasm-3.0/",
+     "year": "2025"
+    },
+    {
+     "title": "A Systematic Methodology for Evaluating Failure Independence in LLM-Generated Code",
+     "url": "https://arxiv.org/abs/2607.02808",
+     "year": "2026"
+    },
+    {
+     "title": "N-version programming (Knight & Leveson)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-FRG-03",
+    "REQ-FRG-003"
+   ],
+   "draft_ref": "master γρ. 555· 29.md γρ. 134",
+   "draft_position": "Runtime & Substrate Forge: νέα runtimes/VMs/organ hosts και substrate adapters για νέο hardware. Μη ντετερμινισμός → deterministic replay tests· Rust/C++· [T] / [E] EP-03. REQ-FRG-003: γίνονται δεκτά ως όργανα (INV O02, VT-010).",
+   "verdict": "holds",
+   "reasoning": "Η έννοια και η κατάταξη [T]/[E] είναι σωστές. Για τα Wasm hosts υπάρχουν σήμερα: Wasm 3.0 με ντετερμινιστική default συμπεριφορά, WasmCert-Coq, Cranelift με επαληθευμένους κανόνες lowering στο CI, και Arrival, που επαληθεύει σχεδόν όλους τους κανόνες AArch64 από Wasm core. Για νέο υλικό, το σημερινό ανώτερο είναι authoritative machine-readable ISA semantics (Sail, ARM ASL) ως βάση για verified lowering. Λείπουν ρητά: απαίτηση deterministic profile, pinning του WASI (ακόμη Developer Preview) και βάση ISA semantics.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-10",
+    "SOTA-FRG-11",
+    "SOTA-FRG-12",
+    "SOTA-FRG-13"
+   ],
+   "sources": [
+    {
+     "title": "wasmtime VeriISLE README",
+     "url": "https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/isle/veri/README.md",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Scaling Instruction-Selection Verification against Authoritative ISA Semantics (Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3764383",
+     "year": "2025"
+    },
+    {
+     "title": "WebAssembly/component-model",
+     "url": "https://github.com/WebAssembly/component-model",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "riscv/sail-riscv",
+     "url": "https://github.com/riscv/sail-riscv",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-FRG-04",
+    "REQ-FRG-004"
+   ],
+   "draft_ref": "master γρ. 556· 29.md γρ. 135· 31.md γρ. 29 (P7)",
+   "draft_position": "Architecture Forge: γένεση και αξιολόγηση υποψήφιων αρχιτεκτονικών από το canonical model (DSE), Python + SysML v2 API, υποχρεωτικό gate + Court· [X] EXP-27. Κατά την P7: ποσοτική αξιολόγηση με utility tree τύπου ATAM, μετρικές προσομοίωσης και μοντέλα κόστους.",
+   "verdict": "holds",
+   "reasoning": "Η κατάταξη [X] είναι τίμια. Η βάση άλλαξε θετικά: SysML 2.0 και Systems Modeling API 1.0 είναι formal από 09/2025, και υπάρχουν ώριμοι solvers (MiniZinc 2.10.1, CP-SAT, Alloy 6.2.0). Η P7 δίνει μέθοδο αξιολόγησης, όχι τυπικό χώρο σχεδιασμού (μεταβλητές, περιορισμοί από τα INV, στόχοι, Pareto). Υπάρχει παραγωγή SysML v2 με LLM (SysTemp, 2025), αλλά δεν βρέθηκε DSE με LLM πάνω σε SysML v2 που να υπερέχει.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-20",
+    "SOTA-FRG-19"
+   ],
+   "sources": [
+    {
+     "title": "OMG Systems Modeling API and Services",
+     "url": "https://www.omg.org/spec/SystemsModelingAPI/",
+     "year": "2025"
+    },
+    {
+     "title": "MiniZinc",
+     "url": "https://www.minizinc.org/",
+     "year": "2026"
+    },
+    {
+     "title": "Alloy",
+     "url": "https://alloytools.org/",
+     "year": "2025"
+    },
+    {
+     "title": "SysTemp (arXiv 2506.21608)",
+     "url": "https://arxiv.org/abs/2506.21608",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-27"
+   ],
+   "draft_ref": "26.md γρ. 54",
+   "draft_position": "Απόδοση του Architecture Forge· μετρική: βελτιώσεις που επιβιώνουν του Court ανά κύκλο· χαμηλή απόδοση ⇒ μόνο έλεγχος συνέπειας (GP-8, FRG-04).",
+   "verdict": "gap",
+   "reasoning": "Δεν υπάρχει baseline: το KT-14 (null baseline) καλύπτει γενικά components, αλλά δεν συνδέεται με το EXP-27 ή τον FRG-04. Δεν υπάρχει τυπική αντικειμενική συνάρτηση ούτε προκαταχωρισμένο κατώφλι για το «χαμηλή». Επειδή η μετρική εξαρτάται από Court verdicts, είναι ευάλωτη ακριβώς στην «επιλογή αρχιτεκτονικής με βάση την ευγλωττία» που η P7 θέλει να εξαλείψει. Solvers για constrained optimization υπάρχουν (MiniZinc, CP-SAT)· το multi-objective του Clafer υπάρχει μόνο στην παλαιά 0.4.5.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-20"
+   ],
+   "sources": [
+    {
+     "title": "Clafer",
+     "url": "https://www.clafer.org/",
+     "year": "2023"
+    },
+    {
+     "title": "MiniZinc",
+     "url": "https://www.minizinc.org/",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "CMP-FRG-05",
+    "REQ-FRG-005"
+   ],
+   "draft_ref": "master γρ. 557· 29.md γρ. 136",
+   "draft_position": "Conformance & Differential Lab: conformance vectors, differential fuzzing, N-version agreement, mutation testing (κατώφλια mutation score, VT-504). Κρατά vectors για κάθε ICD και ελέγχει κάθε admission οργάνου (FRG-05, KRN-04, ICD-04, VT-504, VT-506)· [T].",
+   "verdict": "holds",
+   "reasoning": "Σωστή έννοια, σύμφωνη με την πρακτική Csmith, YARPGen και Cedar DRT. Κενά: (α) Υπάρχει διαφορετικότητα γλώσσας (VT-506: Lisp↔Rust↔Python), αλλά όχι απαίτηση ανεξαρτησίας ανάπτυξης (ομάδα, εργαλεία, γεννήτρια LLM). Και οι Knight & Leveson και το arXiv 2607.02808 δείχνουν συσχετισμένες αποτυχίες. (β) Δεν προδιαγράφονται generators χωρίς UB και type-aware. (γ) Η στήλη Provides γράφει «ICD-04 (conformance reports)», ενώ το ICD-04 έχει provider τον KRN-04 και τον FRG-05 ως consumer. Είναι ασάφεια ρόλου συντάκτη, όχι απαραίτητα δεύτερος provider.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-18",
+    "SOTA-FRG-05"
+   ],
+   "sources": [
+    {
+     "title": "intel/yarpgen",
+     "url": "https://github.com/intel/yarpgen",
+     "year": "2023"
+    },
+    {
+     "title": "csmith-project/csmith",
+     "url": "https://github.com/csmith-project/csmith",
+     "year": "2011"
+    },
+    {
+     "title": "A Systematic Methodology for Evaluating Failure Independence in LLM-Generated Code",
+     "url": "https://arxiv.org/abs/2607.02808",
+     "year": "2026"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ICD-20"
+   ],
+   "draft_ref": "15.md γρ. 50· 15.md γρ. 14 (§15.1 Errors)",
+   "draft_position": "ICD-20 Forge: providers FRG-01 language, FRG-02 compiler, FRG-03 runtime, FRG-04 architecture → CIV-03, MDL-01, AEO-06. Operations: DefineLanguage(spec), BuildCompiler, Validate(unit)→translation-validation proof, RegisterSubstrate, ProposeArchitecture. Κανόνες: INV-F01, INV-F02. Conformance: VT-020.",
+   "verdict": "gap",
+   "reasoning": "(α) Το Validate επιστρέφει μόνο «translation-validation proof» και λείπουν τα Refuted/Unknown. Η §15.1 όμως απαιτεί σε κάθε ICD το Unknown ως αποτέλεσμα επιτυχίας (INV-C04), και το ICD-30 ορίζει «Timeout ⇒ Unknown». Επιπλέον το Validate δεν μπορεί να επιστρέψει differential τεκμήριο, που το INV-F01 δέχεται. (β) Δεν ορίζονται φορμά spec, φορμά proof object ή ανεξάρτητος checker. (γ) Ο FRG-05 λείπει από τους providers, αν και το INV-F01 τον ορίζει σημείο επιβολής. (δ) Δεν υπάρχει machine contract: η §16 δεν γράφτηκε και το contracts/ δεν υπάρχει στο docs/architecture-draft.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-16",
+    "SOTA-FRG-13"
+   ],
+   "sources": [
+    {
+     "title": "cvc5 proof production",
+     "url": "https://cvc5.github.io/docs/latest/proofs/proofs.html",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Alive2 (bounded; Crossref metadata)",
+     "url": "https://api.crossref.org/works/10.1145/3453483.3454030",
+     "year": "2021"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "EP-11"
+   ],
+   "draft_ref": "28.md γρ. 21",
+   "draft_position": "EP-11 Language/Paradigm (ICD-20): νέα παραδείγματα προγραμματισμού, verified compilers, AI-native γλώσσες· προστασία μέσω INV-F01 και KT-10.",
+   "verdict": "holds",
+   "reasoning": "Σωστά μια νέα γλώσσα μπαίνει ως όργανο και όχι ως αλλαγή πυρήνα. Το στηρίζουν υπαρκτοί μηχανισμοί: MLIR IRDL (dialects ως δεδομένα), Racket #lang, SpecTec/K (γλώσσα ως προδιαγραφή). Λείπει το «πακέτο admission» που πρέπει να φέρει μια νέα γλώσσα: γραμματική, μηχανικά ελεγμένη σημασιολογία, conformance suite και ελάχιστος βαθμός τεκμηρίωσης κατά INV-F01.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-FRG-08",
+    "SOTA-FRG-13",
+    "SOTA-FRG-14"
+   ],
+   "sources": [
+    {
+     "title": "MLIR IRDL dialect",
+     "url": "https://mlir.llvm.org/docs/Dialects/IRDL/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "Racket Guide: Creating Languages",
+     "url": "https://docs.racket-lang.org/guide/languages.html",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "extension",
+   "confidence": "medium"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-FRG-01",
+   "title": "Δύο πολιτικές για εκτελέσιμη σημασιολογία αναφοράς",
+   "description": "Ο πυρήνας έχει εκτελέσιμη reference semantics σε Lean 4 ως oracle (31.md P2, ADR-0028, VT-505), με εφεδρεία εκτελέσιμη προδιαγραφή σε Lisp αν αποτύχει το EXP-18. Οι γλώσσες του Forge έχουν Common Lisp reference interpreter χωρίς αποδείξεις (ADR-0012, ADR-0024, CMP-FRG-01, KT-10). Το ADR-0012 αναθέτει γενικά τους «reference interpreters» στη Lisp.",
+   "why_it_matters": "Το VGD εφαρμόζεται μόνο εκεί όπου το ονομάζει το πρόχειρο (πυρήνας). Δεν εφαρμόζεται στη LexDSL, που κωδικοποιεί δίκαιο και κρίνεται με «0 λάθος». Η γενική ανάθεση του ADR-0012 αφήνει ανοιχτό ποια έδρα είναι κανονιστική όταν συνυπάρχουν Lisp και Lean, όπως στην εφεδρεία του EXP-18: κίνδυνος δύο εδρών για την ίδια έννοια.",
+   "sota_answer": "Cedar VGD: μία κανονιστική έδρα (εκτελέσιμο μοντέλο Lean με αποδείξεις), με τις υλοποιήσεις ελεγμένες μέσω DRT/PBT. Καμία release χωρίς ενημερωμένα model, proofs και DRT. Lean ~5µs/test έναντι Rust ~7µs, για authorization.",
+   "sota_refs": [
+    "SOTA-FRG-05"
+   ],
+   "sources": [
+    {
+     "title": "Lean use case: Cedar",
+     "url": "https://lean-lang.org/use-cases/cedar/",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "How we built Cedar with automated reasoning and differential testing",
+     "url": "https://www.amazon.science/blog/how-we-built-cedar-with-automated-reasoning-and-differential-testing",
+     "year": "2023"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-FRG-02",
+   "title": "Η LexDSL δεν ορίζεται",
+   "description": "Η LexDSL εμφανίζεται μόνο ως όνομα: OS-09, KT-10, EXP-08, VT-401, CMP-COG-09 (LexDSL rule-sets), CMP-LAW-04 («εκτελέσιμοι κανόνες LexDSL»). Δεν ορίζονται εμβέλεια, σημασιολογική οικογένεια, σύνταξη ή σχέση με τον «δεοντικό κύκλο», το WFS/JTMS και τις grounded έδρες του CMP-LAW-04. Η §17 δεν γράφτηκε ποτέ.",
+   "why_it_matters": "Τα KT-10, EXP-08, GP-8 και VT-401 δεν έχουν αντικείμενο. Υπάρχει και κίνδυνος σημασιολογικής σύγκρουσης ανάμεσα στη LexDSL και στη δεοντική συλλογιστική του CMP-LAW-04.",
+   "sota_answer": "Catala: default logic με formal semantics και literate σύνδεση με τις διατάξεις. LegalRuleML: defeasibility, deontic τελεστές, χρονική μεταβολή, N:M κανόνα↔διάταξη. L4: ίχνη αξιολόγησης.",
+   "sota_refs": [
+    "SOTA-FRG-01",
+    "SOTA-FRG-02",
+    "SOTA-FRG-04"
+   ],
+   "sources": [
+    {
+     "title": "Catala (arXiv 2103.03198)",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    },
+    {
+     "title": "LegalRuleML Core 1.0",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-FRG-03",
+   "title": "Το «proof» του TV δεν ελέγχεται ανεξάρτητα",
+   "description": "Το VT-404 δηλώνεται ως «Z3 translation validation (Forge)». Δεν ορίζεται φορμά certificate ούτε ανεξάρτητος checker, και δεν υπάρχει σύνδεση με την έδρα PCL-1 (proof-carrying).",
+   "why_it_matters": "Χωρίς certificate, η εμπιστοσύνη πηγαίνει σε έναν solver. Το INV-C03 απαιτεί proof object p που επαληθεύεται, όχι απλό «unsat».",
+   "sota_answer": "Lean bv_decide με verified LRAT checker (στο Lean core από 08/2024). Proofs του cvc5 σε Alethe/CPC/LFSC, με έλεγχο Alethe από το Carcara. Αποδείξεις rewrites στο Lean με Lean-MLIR.",
+   "sota_refs": [
+    "SOTA-FRG-16",
+    "SOTA-FRG-09"
+   ],
+   "sources": [
+    {
+     "title": "leanprover/leansat",
+     "url": "https://github.com/leanprover/leansat",
+     "year": "2024"
+    },
+    {
+     "title": "ufmg-smite/carcara",
+     "url": "https://github.com/ufmg-smite/carcara",
+     "year": "2023"
+    },
+    {
+     "title": "cvc5 proof production",
+     "url": "https://cvc5.github.io/docs/latest/proofs/proofs.html",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-FRG-04",
+   "title": "Λείπει άξονας νομικής πιστότητας",
+   "description": "Το Forge ελέγχει μόνο ότι ο compiler διατηρεί τη σημασιολογία. Δεν ελέγχει ότι η κωδικοποίηση αντιστοιχεί στο κείμενο της διάταξης (literate σύνδεση, ιχνηλασιμότητα, επίσημα test cases, κρίση δικηγόρων).",
+   "why_it_matters": "Το κυρίαρχο σφάλμα σε rules-as-code είναι η ερμηνεία της διάταξης, όχι η μεταγλώττιση. Αυτό αγγίζει το T7 και το «0 λάθος».",
+   "sota_answer": "Catala: literate programming πάνω στη διάταξη, με αλληλεπίδραση δικηγόρων και προγραμματιστών· αποκάλυψε bug σε επίσημη υλοποίηση. Mlang: έλεγχος έναντι των tests της DGFiP. CUTECat: test cases που καλύπτουν όλους τους κλάδους και διαβάζονται από δικηγόρους.",
+   "sota_refs": [
+    "SOTA-FRG-01",
+    "SOTA-FRG-03",
+    "SOTA-FRG-21"
+   ],
+   "sources": [
+    {
+     "title": "Catala (arXiv 2103.03198)",
+     "url": "https://arxiv.org/abs/2103.03198",
+     "year": "2021"
+    },
+    {
+     "title": "MLanguage/mlang",
+     "url": "https://github.com/MLanguage/mlang",
+     "year": "2022"
+    },
+    {
+     "title": "CUTECat (arXiv 2410.18212)",
+     "url": "https://arxiv.org/abs/2410.18212",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-FRG-05",
+   "title": "Ο ρόλος των LLMs στο Forge δεν ορίζεται",
+   "description": "Δεν ορίζεται πώς ένα LLM προτείνει grammar, rules, lowerings ή μεταφράσεις, ποια πύλη TV/proof τα δέχεται, ούτε πώς μετριέται η απόδοση επαλήθευσης.",
+   "why_it_matters": "Τα τεκμήρια 2024–2026 δείχνουν χαμηλά ποσοστά επαληθεύσιμης εξόδου (38.2% μέσω Alive2· 45% round-trip, 14% exact) και TV που συχνά λείπει (GIMPLE→LLVM IR, 2026). Χωρίς ρητό PVC στο Forge, κινδυνεύει να μπει μη επαληθευμένος κώδικας στο trusted path.",
+   "sota_answer": "LLM ως proposer και verifier ως αποφασίζων: LLMLift (proofs ισοδυναμίας), LLM-Vectorizer (Alive2), TRACTOR (LLM μαζί με static/dynamic analysis). Το Tenspiler δείχνει ότι verified lifting είναι εφικτό και χωρίς LLM.",
+   "sota_refs": [
+    "SOTA-FRG-19"
+   ],
+   "sources": [
+    {
+     "title": "LLM-Vectorizer",
+     "url": "https://arxiv.org/abs/2406.04693",
+     "year": "2024"
+    },
+    {
+     "title": "Verified Code Transpilation with LLMs",
+     "url": "https://arxiv.org/abs/2406.03003",
+     "year": "2024"
+    },
+    {
+     "title": "DARPA TRACTOR",
+     "url": "https://darpa.mil/research/programs/translating-all-c-to-rust",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-FRG-06",
+   "title": "Δεν ορίζεται η σημασιολογία floats/NaN που χρειάζονται οι byte-identical roots",
+   "description": "Το INV-C08 και το deterministic mode του ICD-10 δηλώνουν τον στόχο, και το JCS δίνει canonical serialization. Δεν ορίζεται όμως η σημασιολογία των μη ντετερμινιστικών εντολών (floats/NaN, relaxed SIMD) για τα artifacts του Forge, για τα hosts του CMP-FRG-03 ή για το KT-02.",
+   "why_it_matters": "Χωρίς αυτή, οι «byte-identical roots» του KT-02 μπορεί να αποτύχουν ανάμεσα σε runtimes, ακόμη και με σωστό κώδικα.",
+   "sota_answer": "Το Wasm 3.0 ορίζει ντετερμινιστική default συμπεριφορά για κάθε κατά τα άλλα μη ντετερμινιστική εντολή (floating point, NaN, relaxed vector).",
+   "sota_refs": [
+    "SOTA-FRG-11"
+   ],
+   "sources": [
+    {
+     "title": "Wasm 3.0 Completed",
+     "url": "https://webassembly.org/news/2025-09-17-wasm-3.0/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-FRG-07",
+   "title": "Δεν απαιτείται ανεξαρτησία ανάπτυξης στο N-version εκτός πυρήνα",
+   "description": "Για τον πυρήνα το πρόχειρο έχει κανονιστικό oracle (VT-505 έναντι Lean, 31.md P2). Για τα υπόλοιπα όργανα και για το «Rust→νέα γλώσσα» του KT-02, το τεκμήριο είναι μόνο η συμφωνία εκδόσεων (VT-506). Υπάρχει διαφορετικότητα γλώσσας, αλλά όχι απαίτηση ανεξαρτησίας ανάπτυξης (ομάδα, εργαλεία, γεννήτρια LLM).",
+   "why_it_matters": "Κατά Knight & Leveson, η ανεξαρτησία αποτυχιών δεν ισχύει. Για κώδικα από LLM, το arXiv 2607.02808 (2026) μέτρησε σε 224 προβλήματα και 12 μοντέλα ότι ensembles από το ίδιο μοντέλο πετυχαίνουν κάτω από 0.3 του εφικτού κέρδους αξιοπιστίας. Και διαφορετικά μοντέλα αποτυγχάνουν στα ίδια tests πολύ συχνότερα απ' ό,τι υπό ανεξαρτησία.",
+   "sota_answer": "Ανεξάρτητο κανονιστικό oracle (formal model) αντί για ψηφοφορία εκδόσεων. Διαφορετικότητα (ετερογένεια μοντέλων και εργαλείων) ως μετρούμενη ιδιότητα, που κατά το 2607.02808 μειώνει τη συσχέτιση μόνο εν μέρει.",
+   "sota_refs": [
+    "SOTA-FRG-18",
+    "SOTA-FRG-05"
+   ],
+   "sources": [
+    {
+     "title": "N-version programming (Knight & Leveson)",
+     "url": "https://en.wikipedia.org/wiki/N-version_programming",
+     "year": "2026 (accessed)"
+    },
+    {
+     "title": "A Systematic Methodology for Evaluating Failure Independence in LLM-Generated Code",
+     "url": "https://arxiv.org/abs/2607.02808",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-FRG-08",
+   "title": "Εσωτερικές ασυνέπειες και ανύπαρκτες αναφορές",
+   "description": "(α) Το spine δηλώνει «COMPONENTS (76)» και το master (γρ. 580) «76 … 17 εγκάρσια», αλλά απαριθμούνται 16 εγκάρσια, άρα 75 συνολικά· τα 5 FRG είναι συνεπή. (β) Το spine λέει «Tier-0 unless stated» χωρίς να δηλώνει κανένα tier. Αντίθετα, οι §19.2/§19.4 βάζουν Tier 1 σε K, E, O, X, S, F01, L01/L03/L04, και η παρένθεση της §19.2 για το Tier 1 δεν αναφέρει ρητά το F01. (γ) Η στήλη Provides του CMP-FRG-05 γράφει «ICD-04 (conformance reports)», ενώ το ICD-04 έχει provider τον KRN-04. Αλλού το ίδιο μοτίβο δηλώνεται ρητά στο ICD (LAW-09 στο ICD-05, CIV-05 στο ICD-11), εδώ όχι. (δ) Το OS-09 παραλείπει το LLVM σε σχέση με το ADR-0024. (ε) Το CMP-FRG-01 συνδυάζει Common Lisp με ANTLR, που δεν έχει target CL. (στ) Γίνονται αναφορές σε adrs/, contracts/ και verification/KILL-TESTS.md, που δεν υπάρχουν στο docs/architecture-draft. Το CLAUDE.md αναφέρει τα formal/, contracts/, adrs/, model/ ως ανεπαλήθευτο πρόχειρο εκεί, αλλά ούτε αυτά βρέθηκαν. Οι §16, §17 και §20 δεν γράφτηκαν.",
+   "why_it_matters": "Το VT-901 (0 ορφανά) δεν μπορεί να περάσει, και τα ICD-20/ADR-0024 δεν έχουν ούτε machine contract ούτε αναλυτικό κείμενο.",
+   "sota_answer": "Δεν αφορά state of the art. Διορθώνεται στο canonical model του SysON με μηχανικό έλεγχο ιχνηλασιμότητας.",
+   "sota_refs": [
+    "SOTA-FRG-15"
+   ],
+   "sources": [
+    {
+     "title": "antlr/antlr4 README (targets)",
+     "url": "https://github.com/antlr/antlr4",
+     "year": "2026 (accessed)"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-FRG-09",
+   "title": "Δεν ορίζεται εξαγωγή κανόνων LexDSL σε πρότυπο ανταλλαγής",
+   "description": "Το EP-07 προβλέπει γενικά «κανονιστικές γλώσσες κανόνων» (ICD-17/18), αλλά δεν συνδέει τους κανόνες της LexDSL ή του ICD-20 με πρότυπο ανταλλαγής όπως το LegalRuleML.",
+   "why_it_matters": "Χωρίς αυτή τη σύνδεση χάνονται η N:M ιχνηλασιμότητα κανόνα↔διάταξης, η ανταλλαγή με τρίτους και η ανεξαρτησία από τη γλώσσα που ζητά το T8.",
+   "sota_answer": "LegalRuleML 1.0 (OASIS 2021): defeasibility, deontic τελεστές, χρονική μεταβολή κανόνων, N:M σύνδεση κανόνα↔διάταξης.",
+   "sota_refs": [
+    "SOTA-FRG-04"
+   ],
+   "sources": [
+    {
+     "title": "LegalRuleML Core 1.0",
+     "url": "https://docs.oasis-open.org/legalruleml/legalruleml-core-spec/v1.0/legalruleml-core-spec-v1.0.html",
+     "year": "2021"
+    }
+   ],
+   "classification": "extension"
+  }
+ ],
+ "unknowns": [
+  "Η παραγωγική χρήση του Catala από διοικήσεις (DGFiP/CNAF) δεν επαληθεύτηκε. Η σελίδα της Inria μπλόκαρε την πρόσβαση (Anubis), γι' αυτό αφαιρέθηκε ο ισχυρισμός για PoC στον φόρο εισοδήματος.",
+  "Δεν ξέρω αν το Catala υποστηρίζει ελληνική literate σύνταξη ή πόσο κοστίζει να προστεθεί· επιβεβαιώθηκαν μόνο γαλλική και αγγλική. Δεν επαληθεύτηκαν ούτε deontic τελεστές ούτε η πλήρης λίστα backends (επιβεβαιώθηκαν μόνο Python και C).",
+  "Δεν βρέθηκε translation validator για το Wasm backend του LLVM, ούτε TV από άκρη σε άκρη MLIR→LLVM→Wasm. Η αναζήτηση arXiv 09/2026 έφερε μόνο fuzzing του Cranelift· δεν ξέρω αν υπάρχει κάτι εκτός arXiv.",
+  "Δεν ξέρω αν κάποιος verified compiler (CakeML ή άλλος) στοχεύει Wasm σε παραγωγή. Η σελίδα του CakeML δεν κατονομάζει τις 6 αρχιτεκτονικές και δεν αναφέρει Wasm, και η στοχευμένη αναζήτηση απέτυχε λόγω rate limit.",
+  "Δεν βρέθηκε DSE με LLM πάνω σε SysML v2. Στα 40 πιο πρόσφατα αποτελέσματα arXiv για «SysML v2» υπάρχουν μόνο παραγωγή, ευθυγράμμιση και fault localization μοντέλων· δεν ξέρω τι γίνεται στη βιομηχανία.",
+  "Δεν επαληθεύτηκε αν το MiniZinc υποστηρίζει εγγενώς multi-objective (Pareto) βελτιστοποίηση.",
+  "Η ωριμότητα των proof certificates του K framework δεν επαληθεύτηκε· το README δεν τα αναφέρει.",
+  "Δεν ξέρω αν το throughput του Lean αρκεί για τη LexDSL σε όγκο DRT τύπου Cedar. Τα 5µs/test αφορούν authorization, οπότε το EXP-18 μένει ανοιχτό.",
+  "Δεν ξέρω αν τα ευρήματα του arXiv 2607.02808 για την ανεξαρτησία αποτυχιών σε κώδικα LLM μεταφέρονται σε νομικό DSL· είναι preprint του 07/2026.",
+  "Το preprint arXiv 2606.23913 (Catala ως verified reward για legal AI) δεν δίνει ποσοτικά αποτελέσματα στο abstract· η ωριμότητά του είναι άγνωστη.",
+  "Οι ισχυρισμοί για as-built έδρες του STAVROPOULOSLAWCORPUS δεν επαληθεύονται από εδώ: deployment/verify (N-version vectors), turtle-dsl, DSLs των knowledge packs, understanding-learning, self-extension, NixOS substrate, PCL-1 (6.4.md γρ. 61, master γρ. 138).",
+  "Δεν εξετάστηκε αν τα εργαλεία constraint του mcp-syson μπορούν να στηρίξουν τον FRG-04, γιατί η χρήση εργαλείων syson απαγορεύεται σε αυτή τη φάση.",
+  "Το CLAUDE.md αναφέρει formal/, contracts/, adrs/ και model/ μέσα στο docs/architecture-draft, αλλά το Glob δεν τα βρίσκει εκεί. Δεν ξέρω αν χάθηκαν ή αν δεν αντιγράφηκαν ποτέ."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-FRG-01",
+   "question": "Ακολουθούν οι γλώσσες του Forge (LexDSL) την ίδια πολιτική VGD που το πρόχειρο ορίζει για τον πυρήνα (31.md P2, ADR-0028), ή κρατούν Lisp reference interpreter (ADR-0012, ADR-0024);",
+   "recommendation": "Μία πολιτική: εκτελέσιμη σημασιολογία σε Lean 4 ως κανονιστική έδρα και για τη LexDSL, κατά Cedar VGD. Οι υλοποιήσεις σε Lisp, Rust ή Wasm γίνονται όργανα, ελεγμένα με DRT/PBT. Η δέσμευση γίνεται αφού ένα πείραμα τύπου EXP-18 μετρήσει throughput και εκφραστικότητα σε νομικό δείγμα.",
+   "alternatives": [
+    {
+     "option": "Lean 4 κανονιστικό και για τη LexDSL, με Lisp/Rust ως όργανα",
+     "pros": "Ίδια πολιτική με τον πυρήνα· αποδείξεις ιδιοτήτων· πρότυπο σε παραγωγή (Cedar)· μία έδρα",
+     "cons": "Νέα δεξιότητα· γέφυρα προς τις Lisp έδρες· το throughput σε νομικό DSL δεν έχει μετρηθεί"
+    },
+    {
+     "option": "K framework ως έδρα σημασιολογίας της LexDSL",
+     "pros": "Μία προδιαγραφή που παράγει interpreter, model checker, verifier και docs· γενικής χρήσης",
+     "cons": "Διαφορετικό οικοσύστημα από τον πυρήνα (Lean)· η ωριμότητα των proof certificates του K δεν επαληθεύτηκε"
+    },
+    {
+     "option": "Common Lisp reference interpreter (ADR-0024)",
+     "pros": "Συνέχεια με τις υπάρχουσες έδρες· γρήγορη εκκίνηση",
+     "cons": "Καμία μηχανική απόδειξη· διαφορετική πολιτική από τον πυρήνα"
+    },
+    {
+     "option": "Και τα δύο, με ρητή ιεραρχία",
+     "pros": "Σταδιακή μετάβαση",
+     "cons": "Δύο αναφορές με κίνδυνο απόκλισης· αντίκειται στο «μία έδρα ανά έννοια»"
+    }
+   ],
+   "rationale": "Το «μία έδρα ανά έννοια» και το INV-F01 απαιτούν μία αναφορά. Το πρόχειρο έχει ήδη επιλέξει VGD για τον πυρήνα, και η LexDSL, ως κώδικας νόμου, έχει τουλάχιστον την ίδια ανάγκη τεκμηρίωσης.",
+   "affects_ids": [
+    "ADR-0024",
+    "ADR-0012",
+    "ADR-0028",
+    "KT-10",
+    "CMP-FRG-01",
+    "INV-F01",
+    "EXP-18",
+    "VT-505"
+   ]
+  },
+  {
+   "id": "DEC-FRG-02",
+   "question": "Η LexDSL γράφεται από το μηδέν ή βασίζεται στο Catala;",
+   "recommendation": "Να μη δεσμευτεί νέα γλώσσα πριν τρέξει επανασχεδιασμένο EXP-08 σε δείγμα ελληνικών διατάξεων, με baseline Catala (και L4). Προεπιλογή: η LexDSL ως προφίλ ή επέκταση του Catala για υπολογιστικές διατάξεις και προθεσμίες, με ελληνική σύνταξη, σύνδεση με τις νομικές έδρες και εξαγωγή σε LegalRuleML. Χωριστό deontic στρώμα μόνο αν το δείξει το πείραμα.",
+   "alternatives": [
+    {
+     "option": "Νέα LexDSL από το μηδέν",
+     "pros": "Πλήρης έλεγχος· προσαρμογή στο ελληνικό δίκαιο και στις υπάρχουσες έδρες",
+     "cons": "Μεγάλο κόστος για να φτάσει σε ισοδυναμία με ό,τι υπάρχει· καμία εμπειρική βάση"
+    },
+    {
+     "option": "Προφίλ ή επέκταση του Catala",
+     "pros": "Formal semantics και core βήματα αποδεδειγμένα σε F*· default logic· formal date arithmetic· εργαλεία testing (CUTECat)· σταθερή και ενεργή έκδοση (1.2.1 07/2026)· Apache-2.0",
+     "cons": "Εξάρτηση από εξωτερικό έργο· ελληνική σύνταξη και deontic τελεστές δεν επαληθεύτηκαν· η παραγωγική χρήση από διοικήσεις δεν επαληθεύτηκε"
+    },
+    {
+     "option": "Catala αυτούσιο για υπολογιστικές διατάξεις και ξεχωριστή γλώσσα για deontic",
+     "pros": "Χρήση του ώριμου εκεί όπου είναι ώριμο",
+     "cons": "Δύο γλώσσες και ένα όριο που πρέπει να οριστεί"
+    }
+   ],
+   "rationale": "Κατά την «αρχή υλοποιησιμότητας» και το «τίποτα μέτριο», δεν ξαναχτίζεται ό,τι υπάρχει ήδη ανώτερο· η επιλογή κρίνεται με πείραμα.",
+   "affects_ids": [
+    "ADR-0024",
+    "EXP-08",
+    "KT-10",
+    "CMP-FRG-01",
+    "REQ-FRG-001",
+    "CMP-LAW-04",
+    "CMP-LAW-10",
+    "EP-07"
+   ]
+  },
+  {
+   "id": "DEC-FRG-03",
+   "question": "Ποια αλυσίδα compilation ακολουθεί η LexDSL: MLIR→LLVM/Wasm με TV ανά μονάδα, ή μικρή αλυσίδα με αποδείξεις ή certificates;",
+   "recommendation": "Όχι MLIR/LLVM για τη LexDSL. Evaluator αποδεδειγμένος στο Lean ή/και compilation με αποδεδειγμένα βήματα (πρότυπο Catala) προς Wasm με ντετερμινιστική συμπεριφορά. Το MLIR/LLVM μένει υποδομή του γενικού Compiler Forge για γλώσσες που χρειάζονται απόδοση, με Alive2, verification dialects και Lean-MLIR.",
+   "alternatives": [
+    {
+     "option": "MLIR→LLVM/Wasm με TV (ADR-0024)",
+     "pros": "Ισχυρή υποδομή· επαναχρησιμοποιείται για μελλοντικές γλώσσες",
+     "cons": "Μεγάλο TCB· το MLIR δεν έχει σημασιολογία στα dialects· δεν βρέθηκε TV από άκρη σε άκρη· το 100% του KT-10 δεν είναι εφικτό με bounded TV"
+    },
+    {
+     "option": "Μικρή αλυσίδα με αποδείξεις ή certificates",
+     "pros": "Μικρό TCB· αποφασίσιμο ή αποδεδειγμένο· ταιριάζει στο «0 λάθος»",
+     "cons": "Λιγότερες βελτιστοποιήσεις (άσχετες για νομικούς κανόνες)· κόστος αποδείξεων"
+    },
+    {
+     "option": "Μόνο ερμηνεία με αποδεδειγμένο evaluator",
+     "pros": "Κανένας compiler στο TCB",
+     "cons": "Εξαρτάται από την απόδοση του Lean runtime· δεν ταιριάζει σε κάθε host"
+    }
+   ],
+   "rationale": "Τα κριτήρια της LexDSL είναι πιστότητα και ιχνηλασιμότητα, όχι απόδοση υλικού. Σε αυτά, η μικρή αποδεδειγμένη αλυσίδα κυριαρχεί.",
+   "affects_ids": [
+    "ADR-0024",
+    "ADR-0012",
+    "CMP-FRG-02",
+    "KT-10",
+    "INV-F01",
+    "REQ-FRG-002"
+   ]
+  },
+  {
+   "id": "DEC-FRG-04",
+   "question": "Πόσο αυστηρό γίνεται το INV-F01, σε ποιο Tier, και με ποια εμβέλεια;",
+   "recommendation": "Βαθμονομημένο INV-F01 για τα artifacts που παράγει το Forge (ICD-20). Κάθε admission δηλώνει βαθμό τεκμηρίωσης: proof > ελεγμένο certificate > solver-TV > differential. Ο κανόνας «δηλωμένος βαθμός ≥ ελάχιστου της κλάσης» μπαίνει στο Tier-0· τα ελάχιστα ανά κλάση είναι Tier-1 δεδομένα. Για τη LexDSL, ελάχιστο είναι proof ή ελεγμένο certificate. Τα R-C kernel organs μένουν στο καθεστώς N-version και VT-505, όπου σήμερα δεν υπάρχει verified compiler (π.χ. rustc), με ρητή δήλωση βαθμού «differential».",
+   "alternatives": [
+    {
+     "option": "Βαθμονομημένο, με κανόνα στο Tier-0 και κατώφλια στο Tier-1, εμβέλεια στα artifacts του Forge",
+     "pros": "Τίμιο (INV-C04)· αυστηρό όπου χρειάζεται· δεν μπλοκάρει το GP-2",
+     "cons": "Περισσότερη μηχανική πολιτικής· η αλλαγή Tier-0 θέλει την πλήρη διαδικασία της §19.3"
+    },
+    {
+     "option": "Όπως γράφτηκε (TV ή differential, Tier 1)",
+     "pros": "Απλό",
+     "cons": "Εξισώνει τη differential συμφωνία με σημασιολογική διατήρηση· δεν διακρίνει τεκμήρια"
+    },
+    {
+     "option": "Μόνο proof ή certificate για όλα",
+     "pros": "Μέγιστη αυστηρότητα",
+     "cons": "Δεν εφαρμόζεται σήμερα (rustc για R-C organs, custom MLIR dialects χωρίς σημασιολογία)· θα μπλόκαρε GP-2 και Forge"
+    }
+   ],
+   "rationale": "Κρατά το admission που ζητά το πρόχειρο, διορθώνει την υπερβολή του ισχυρισμού και δεν χάνει την ιδιότητα admission των R-C organs.",
+   "affects_ids": [
+    "INV-F01",
+    "REQ-FRG-002",
+    "KT-10",
+    "CMP-FRG-05",
+    "ICD-20",
+    "VT-404"
+   ]
+  },
+  {
+   "id": "DEC-FRG-05",
+   "question": "Τι σημαίνει ότι «το σύστημα δημιουργεί γλώσσες» (REQ-FRG-001, T4) στη Φάση Β;",
+   "recommendation": "GP-8: Forge που το κατευθύνει ο δημιουργός, με εργαλεία και με τα LLMs μόνο ως proposers πίσω από πύλη TV/proof. Η αυτόνομη γένεση γλωσσών γίνεται συμβόλαιο EP-11, με δικό της πείραμα και εντός του INV-F02.",
+   "alternatives": [
+    {
+     "option": "Κατευθυνόμενο Forge, LLM ως proposer",
+     "pros": "Υλοποιήσιμο σήμερα· σύμφωνο με το PVC· ελεγχόμενο",
+     "cons": "Περιορισμένη αυτονομία"
+    },
+    {
+     "option": "Αυτόνομη γένεση ως [T]",
+     "pros": "Πλήρες T4",
+     "cons": "Χωρίς τεκμήριο state of the art· κίνδυνος για το INV-F02 και για το trusted path"
+    }
+   ],
+   "rationale": "Τίμια άγνοια: δεν βρέθηκε τεκμήριο αυτόνομης σχεδίασης γλωσσών με formal semantics. Αυτό δεν την αποκλείει, αλλά την τοποθετεί στο EP.",
+   "affects_ids": [
+    "REQ-FRG-001",
+    "EP-11",
+    "ICD-20",
+    "CMP-FRG-01",
+    "INV-F02"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 89,
+  "sources_failed": [
+   {
+    "url": "https://github.com/CatalaLang/catala/releases",
+    "problem": "Η σελίδα δεν δείχνει έτη· ο ερευνητής απέδωσε λάθος ημερομηνίες (1.0.0 «11/2023», 1.2.1 «07/2024»). Το GitHub API δίνει 1.0.0 = 10/11/2025 και 1.2.1 = 06/07/2026, με nightly 22/08/2026.",
+    "action": "Διορθώθηκαν ημερομηνίες και κατάσταση σε SOTA-FRG-01 και DEC-FRG-02· η πηγή αντικαταστάθηκε με το GitHub API."
+   },
+   {
+    "url": "https://www.inria.fr/en/catala-software-dgfip-cnaf",
+    "problem": "Access denied (Anubis)· ο ισχυρισμός για PoC στην DGFiP στηριζόταν μόνο σε απόσπασμα αναζήτησης που δεν επαληθεύτηκε.",
+    "action": "Ο ισχυρισμός αφαιρέθηκε από το SOTA-FRG-01 και μεταφέρθηκε στα unknowns."
+   },
+   {
+    "url": "https://dl.acm.org/doi/10.1145/3473582",
+    "problem": "HTTP 403.",
+    "action": "Τα metadata επαληθεύτηκαν μέσω Crossref (PACMPL, 08/2021)· το URL αντικαταστάθηκε."
+   },
+   {
+    "url": "https://dl.acm.org/doi/10.1145/3453483.3454030",
+    "problem": "HTTP 403.",
+    "action": "Επαλήθευση μέσω Crossref (PLDI 2021) και του PDF· το URL αντικαταστάθηκε."
+   },
+   {
+    "url": "https://dl.acm.org/doi/10.1145/3729309",
+    "problem": "HTTP 403.",
+    "action": "Επαλήθευση μέσω Crossref (PACMPL 06/2025) και του abstract στο Semantic Scholar («syntax-focused», 5 dialects, 5 miscompilations)· το URL αντικαταστάθηκε."
+   },
+   {
+    "url": "https://users.cs.utah.edu/~regehr/papers/pldi25.pdf",
+    "problem": "Το PDF δεν αναγνώστηκε από το εργαλείο fetch (binary streams).",
+    "action": "Το περιεχόμενο επαληθεύτηκε από το abstract του Semantic Scholar· η πηγή αντικαταστάθηκε στο σημείο ADR-0024."
+   },
+   {
+    "url": "https://dl.acm.org/doi/abs/10.1145/3617232.3624862",
+    "problem": "HTTP 403.",
+    "action": "Επαλήθευση μέσω Crossref (ASPLOS, 04/2024)· το URL αντικαταστάθηκε."
+   },
+   {
+    "url": "https://dl.acm.org/doi/10.1145/3764383",
+    "problem": "HTTP 403· ο ερευνητής είχε δει μόνο τον τίτλο.",
+    "action": "Το Crossref έδωσε τίτλο, venue (PACMPL 10/2025) και abstract (Arrival)· το περιεχόμενο ενσωματώθηκε στα SOTA-FRG-10 και CMP-FRG-03."
+   },
+   {
+    "url": "https://www.darpa.mil/research/programs/translating-all-c-to-rust",
+    "problem": "DNS failure (ENOTFOUND) για το host με www· επιπλέον, το έτος 2024 δεν επαληθεύτηκε.",
+    "action": "Χρησιμοποιήθηκε το https://darpa.mil/research/programs/translating-all-c-to-rust (επιβεβαιώνει LLMs μαζί με static/dynamic analysis)· έτος «2026 (accessed)»."
+   },
+   {
+    "url": "https://www.jetbrains.com/mps/",
+    "problem": "Δεν στηρίζει τον ισχυρισμό «νομικά DSLs σε παραγωγή»· αναφέρει μόνο case study (Agile Law Execution Factory).",
+    "action": "Η διατύπωση άλλαξε σε «case study» στα SOTA-FRG-03 και SOTA-FRG-14."
+   },
+   {
+    "url": "https://www.clafer.org/",
+    "problem": "Το multi-objective optimization και το instance generation υπάρχουν μόνο στην παλαιά 0.4.5· η 0.5.x αφαίρεσε το reasoning.",
+    "action": "Διορθώθηκαν τα SOTA-FRG-20 και EXP-27."
+   },
+   {
+    "url": "https://github.com/bytecodealliance/wasmtime/blob/main/cranelift/isle/veri/README.md",
+    "problem": "Δεν αναφέρει «ASLp» ούτε «πλήρη κάλυψη aarch64»· γράφει ότι οι προδιαγραφές προέρχονται από το ARM ASL και ότι το x86-64 δεν έχει την ίδια κάλυψη.",
+    "action": "Αφαιρέθηκε το «ASLp»· η κάλυψη διατυπώθηκε με βάση το abstract του Arrival."
+   },
+   {
+    "url": "https://arxiv.org/abs/2404.18249",
+    "problem": "Το Tenspiler χρησιμοποιεί program synthesis, όχι LLM ως proposer.",
+    "action": "Επανακατατάχθηκε στα SOTA-FRG-19 και GAP-FRG-05."
+   },
+   {
+    "url": "https://en.wikipedia.org/wiki/N-version_programming",
+    "problem": "Στην πηγή Wikipedia είχε αποδοθεί έτος 1986.",
+    "action": "Έτος «2026 (accessed)», με σημείωση ότι παραθέτει Knight & Leveson 1986."
+   },
+   {
+    "url": "https://compcert.org/",
+    "problem": "Η σελίδα γράφει «formally-verified parser», ενώ ο ερευνητής έγραψε ότι «ο parser δεν αποδεικνύεται».",
+    "action": "Διατυπώθηκε ως formally-verified μέσω Coq-verified validator LR(1) (Jourdan–Pottier–Leroy, ESOP 2012, Crossref)."
+   },
+   {
+    "url": "https://www.amazon.science/blog/how-we-built-cedar-with-automated-reasoning-and-differential-testing",
+    "problem": "Η πηγή λέει «six hours nightly … on the order of 100 million total tests», όχι σαφώς «~10^8 ανά νύχτα».",
+    "action": "Η διατύπωση διορθώθηκε στα SOTA-FRG-05 και KT-10."
+   },
+   {
+    "url": "https://book.catala-lang.org/en/index.html",
+    "problem": "Αναφέρει backends μόνο «like Python or C»· τα OCaml/Java δεν επαληθεύτηκαν.",
+    "action": "Η λίστα backends περιορίστηκε σε Python και C."
+   },
+   {
+    "url": "https://github.com/eclipse-langium/langium",
+    "problem": "Η πηγή λέει «spiritual successor» του Xtext, όχι «διάδοχος».",
+    "action": "Η διατύπωση διορθώθηκε."
+   },
+   {
+    "url": "https://github.com/riscv/sail-riscv",
+    "problem": "Η φράση «golden model» δεν υπάρχει στην πηγή· υπάρχει το «adopted by RISC-V International».",
+    "action": "Η διατύπωση διορθώθηκε."
+   }
+  ],
+  "corrections": [
+   {
+    "target": "SOTA-FRG-01",
+    "change": "Ημερομηνίες 1.0.0 → 10/11/2025 και 1.2.1 → 06/07/2026 (nightly 08/2026)· backends μόνο Python/C· αφαιρέθηκε το PoC της DGFiP· «prioritized» default logic → default logic· URLs της ACM → Crossref.",
+    "reason": "Επαλήθευση μέσω GitHub API, Catala book/README και Crossref· η σελίδα της Inria ήταν μπλοκαρισμένη."
+   },
+   {
+    "target": "SOTA-FRG-02",
+    "change": "Προστέθηκαν η μεταφορά του L4 στο legalese/l4-ide και τα pilots κατά το README· παράθεση του Blawx «not production-quality».",
+    "reason": "README των αντίστοιχων repos."
+   },
+   {
+    "target": "SOTA-FRG-04",
+    "change": "Το «deontic/defeasible που το Catala δεν καλύπτει» έγινε «deontic τελεστές που δεν επαληθεύτηκαν στο Catala».",
+    "reason": "Το Catala καλύπτει εξαιρέσεις (defeasibility) μέσω default logic."
+   },
+   {
+    "target": "SOTA-FRG-05",
+    "change": "DRT: «~10^8 total tests, 6 ώρες/νύχτα» αντί για «10^8/νύχτα»· η relevance λέει πλέον ότι το πρόχειρο ήδη εφαρμόζει VGD στον πυρήνα (31.md P2, VT-505, VT-501, VT-301…VT-307).",
+    "reason": "Πηγή amazon.science και ανάγνωση των 31.md και 26.md."
+   },
+   {
+    "target": "SOTA-FRG-06 / SOTA-FRG-15",
+    "change": "Ο parser του CompCert: formally-verified μέσω verified validator (ESOP 2012)· CakeML: οι 6 αρχιτεκτονικές δεν κατονομάζονται, Wasm δεν αναφέρεται.",
+    "reason": "compcert.org, Crossref, cakeml.org."
+   },
+   {
+    "target": "SOTA-FRG-07",
+    "change": "Προστέθηκαν «απαιτεί Z3, το README δεν αναφέρει certificates, SMT timeout».",
+    "reason": "README του AliveToolkit/alive2."
+   },
+   {
+    "target": "SOTA-FRG-09",
+    "change": "Η σημασιολογία ορίζεται ως lowering προς semantics dialects και από εκεί σε SMT (όχι απευθείας «προς SMT dialects»)· venue PACMPL 06/2025.",
+    "reason": "Abstract από Semantic Scholar και Crossref."
+   },
+   {
+    "target": "SOTA-FRG-10",
+    "change": "Αφαιρέθηκαν το «ASLp» και η «πλήρης κάλυψη aarch64»· προστέθηκε το Arrival (σχεδόν όλοι οι κανόνες AArch64 από Wasm core, 2.6× λιγότερη προσπάθεια).",
+    "reason": "README του VeriISLE και abstract του Arrival μέσω Crossref."
+   },
+   {
+    "target": "SOTA-FRG-13 / SOTA-FRG-14",
+    "change": "Sail: «υιοθετημένο από τη RISC-V International»· το «τρεις χωριστές έδρες» έγινε «χωριστά artifacts χωρίς δηλωμένη κοινή πηγή»· Langium «spiritual successor»· MPS ως case study, με προσθήκη πηγής.",
+    "reason": "Διατύπωση των πηγών."
+   },
+   {
+    "target": "SOTA-FRG-17",
+    "change": "Η maturity άλλαξε από production σε research-prototype.",
+    "reason": "Δεν βρέθηκε πηγή για παραγωγική χρήση των egg/egglog."
+   },
+   {
+    "target": "SOTA-FRG-18",
+    "change": "Προστέθηκε το arXiv 2607.02808 (εμπειρική παραβίαση της ανεξαρτησίας σε κώδικα LLM)· διορθώθηκε το έτος της Wikipedia.",
+    "reason": "Κάλυψε ένα unknown του ερευνητή με πρωτογενή πηγή."
+   },
+   {
+    "target": "SOTA-FRG-19",
+    "change": "Το Tenspiler χαρακτηρίζεται μη-LLM (program synthesis)· URL του DARPA χωρίς www· προστέθηκε η αναζήτηση arXiv για γλώσσες σχεδιασμένες από LLM.",
+    "reason": "Abstract του arXiv 2404.18249, DNS failure στο host με www."
+   },
+   {
+    "target": "SOTA-FRG-20",
+    "change": "Clafer: το MOO υπάρχει μόνο στη 0.4.5· προστέθηκαν SysTemp και το εύρημα ότι δεν βρέθηκε DSE με LLM πάνω σε SysML v2.",
+    "reason": "clafer.org, arXiv 2506.21608 και αναζήτηση arXiv."
+   },
+   {
+    "target": "SOTA-FRG-21 (νέο)",
+    "change": "Προστέθηκαν CUTECat, formal date arithmetic του Catala και το preprint Catala-as-verifier.",
+    "reason": "Είναι πιο κατάλληλοι generators και verifiers για νομικό DSL από Csmith/YARPGen· αφορούν άμεσα KT-10, EXP-08 και CMP-LAW-10."
+   },
+   {
+    "target": "CMP-FRG-01 (draft point)",
+    "change": "Η confidence έπεσε από high σε medium· το «θα αποκλίνουν» έγινε «κίνδυνος απόκλισης»· δηλώθηκε ρητό trade-off (απώλεια συνέχειας Lisp, δεξιότητα Lean/K).",
+    "reason": "Κανόνας 3: αυστηρή ανωτερότητα μόνο με δηλωμένο trade-off."
+   },
+   {
+    "target": "INV-F01 / REQ-FRG-002 (draft point)",
+    "change": "Το επιχείρημα για το INV-C04 αναδιατυπώθηκε ως «ασύμβατο με την τίμια άγνοια και με το VT-404 ως formal artifact»· ο ισχυρισμός για τα certificates του Alive2 πήρε πηγή.",
+    "reason": "Το INV-C04 αφορά τύπους απάντησης και δεν διέπει ευθέως το admission."
+   },
+   {
+    "target": "ADR-0024 (draft point)",
+    "change": "Η classification άλλαξε από today σε experiment· η «σύγκρουση με το Lean του ADR-0028» έγινε «διαφορετική πολιτική από το VGD του πυρήνα (31.md P2)».",
+    "reason": "Ο Lean evaluator για τη LexDSL χρειάζεται μέτρηση τύπου EXP-18 πριν από τη δέσμευση· το Lean της P2 αφορά τον πυρήνα."
+   },
+   {
+    "target": "ADR-0024 / EXP-08 (draft point)",
+    "change": "Προστέθηκαν η τρέχουσα κατάσταση του Catala και η formal date arithmetic· οι ισχυρισμοί για interpreter/type system περιορίστηκαν σε ό,τι επαληθεύτηκε.",
+    "reason": "Πηγές GitHub API και arXiv 2403.08935."
+   },
+   {
+    "target": "KT-10 (draft point)",
+    "change": "Διορθώθηκε η διατύπωση για τον όγκο DRT· αφαιρέθηκε η «σύγκρουση με το VT-505»· προστέθηκαν CUTECat και επίσημα test vectors ως oracle πιστότητας.",
+    "reason": "Το VT-505 αφορά τον πυρήνα· η πηγή Cedar μιλά για συνολικά tests."
+   },
+   {
+    "target": "KT-02 (draft point)",
+    "change": "Το verdict άλλαξε από superior-exists σε holds.",
+    "reason": "Το πρόχειρο ήδη απαιτεί στην έξοδο του GP-2 το VT-505 (differential έναντι Lean με παραγόμενες εισόδους, 31.md P2), μαζί με VT-501 (PBT) και VT-301…VT-307 (αποδείξεις), δηλαδή το VGD της Cedar. Το JCS και το INV-C08 υπάρχουν ήδη· εκκρεμεί μόνο η σημασιολογία floats/NaN (GAP-FRG-06)."
+   },
+   {
+    "target": "CMP-FRG-04 / EXP-27 (draft points)",
+    "change": "Ενσωματώθηκε η 31.md P7 (utility tree τύπου ATAM, μετρικές, μοντέλα κόστους)· το «KT-14 δεν εφαρμόζεται» έγινε «δεν συνδέεται»· διορθώθηκε ο ισχυρισμός για το Clafer.",
+    "reason": "Ανάγνωση 31.md γρ. 29 και 24.md γρ. 29· clafer.org."
+   },
+   {
+    "target": "CMP-FRG-05 / REQ-FRG-005 (draft point)",
+    "change": "Το (γ) έγινε «ασάφεια ρόλου συντάκτη»· αναγνωρίστηκε η διαφορετικότητα γλώσσας του VT-506· προστέθηκε το 2607.02808.",
+    "reason": "Το πρόχειρο χρησιμοποιεί το ίδιο μοτίβο «Provides» για συντάκτες (LAW-09→ICD-05, CIV-05→ICD-11)."
+   },
+   {
+    "target": "ICD-20 (draft point)",
+    "change": "Προστέθηκε η §15.1 (το Unknown είναι υποχρεωτικό σε κάθε ICD) και το ότι το Validate δεν μπορεί να επιστρέψει differential τεκμήριο.",
+    "reason": "Ανάγνωση 15.md γρ. 14 και γρ. 50."
+   },
+   {
+    "target": "GAP-FRG-01",
+    "change": "Το «δύο έδρες για την ίδια έννοια» αναδιατυπώθηκε ως «δύο πολιτικές»: Lean για τον πυρήνα, Lisp για το Forge, με εφεδρεία Lisp μέσω EXP-18.",
+    "reason": "Κατά την 31.md P2, το Lean αφορά τον πυρήνα· η Lisp του ADR-0024 αφορά τις γλώσσες του Forge."
+   },
+   {
+    "target": "GAP-FRG-02",
+    "change": "Προστέθηκαν οι αναφορές του προχείρου στη LexDSL μέσα στα CMP-LAW-04 (δεοντικός κύκλος) και CMP-COG-09.",
+    "reason": "Grep στο master (γρ. 494, 528)."
+   },
+   {
+    "target": "GAP-FRG-03",
+    "change": "Αφαιρέθηκε ο ισχυρισμός ότι «αδυνατίζει τον όρο μη-LLM oracle».",
+    "reason": "Ο Z3 είναι μηχανικός, όχι LLM· το πρόβλημα είναι η εμπιστοσύνη σε έναν solver (INV-C03)."
+   },
+   {
+    "target": "GAP-FRG-06",
+    "change": "Το κενό περιορίστηκε στη σημασιολογία floats/NaN και relaxed SIMD.",
+    "reason": "INV-C08, το deterministic mode του ICD-10 και το JCS υπάρχουν ήδη στο πρόχειρο."
+   },
+   {
+    "target": "GAP-FRG-07",
+    "change": "Περιορίστηκε σε μη-kernel όργανα (ο πυρήνας έχει oracle μέσω VT-505)· προστέθηκε εμπειρικό τεκμήριο (2607.02808).",
+    "reason": "Ανάγνωση 26.md και 31.md· πρωτογενής πηγή."
+   },
+   {
+    "target": "GAP-FRG-08",
+    "change": "Το (β) γενικεύτηκε σε όλα τα Tier-1 invariants και προστέθηκε η παράλειψη του F01 στην §19.2· το (γ) μαλάκωσε· το (στ) επιβεβαιώθηκε με Glob και σημειώθηκε η απόκλιση από το CLAUDE.md.",
+    "reason": "Ανάγνωση 19.md, 15.md και Glob του docs/architecture-draft."
+   },
+   {
+    "target": "GAP-FRG-09",
+    "change": "Σημειώθηκε ότι το EP-07 ήδη προβλέπει «κανονιστικές γλώσσες κανόνων».",
+    "reason": "Ανάγνωση 28.md γρ. 17."
+   },
+   {
+    "target": "DEC-FRG-01",
+    "change": "Η ερώτηση αναδιατυπώθηκε (επέκταση του VGD του πυρήνα στο Forge)· προστέθηκε εναλλακτική K· αφαιρέθηκε το KT-02 από τα affects_ids και προστέθηκε το VT-505.",
+    "reason": "Δίκαιη παρουσίαση εναλλακτικών και σωστή ανάγνωση της P2."
+   },
+   {
+    "target": "DEC-FRG-02",
+    "change": "Διορθώθηκαν τα cons/pros του Catala (ενεργό έργο 07/2026, date arithmetic, CUTECat)· προστέθηκαν CMP-LAW-10 και EP-07 στα affects_ids.",
+    "reason": "GitHub API και arXiv."
+   },
+   {
+    "target": "DEC-FRG-04",
+    "change": "Η εμβέλεια περιορίστηκε στα artifacts του Forge· τα R-C organs (rustc) μένουν σε N-version και VT-505 με δηλωμένο βαθμό.",
+    "reason": "Η αρχική σύσταση «R-C απαιτεί proof/certificate» θα έχανε ιδιότητα που απαιτεί το πρόχειρο (admission των Rust kernel organs στο GP-2), γιατί σήμερα δεν υπάρχει verified rustc."
+   },
+   {
+    "target": "unknowns",
+    "change": "Αφαιρέθηκαν όσα λύθηκαν: releases του Catala μετά το 2024, συσχετισμένες αποτυχίες LLM, περιεχόμενο του Arrival. Προστέθηκαν MOO του MiniZinc, preprint 2606.23913, turtle-dsl (6.4.md γρ. 61) και η απόκλιση από το CLAUDE.md.",
+    "reason": "Νέα τεκμήρια από τον έλεγχο."
+   }
+  ],
+  "missed_superior_found": [
+   "CUTECat (arXiv 2410.18212, 2024): concolic generation για default logic με κάλυψη όλων των κλάδων σε κώδικα νόμου (Catala). Για το KT-10 και το EXP-08 ταιριάζει αυστηρά καλύτερα από τους generators C (Csmith/YARPGen) που πρότεινε ο ερευνητής· ενσωματώθηκε στα KT-10 και ADR-0024.",
+   "Formal date arithmetic με στατική ανίχνευση αμφισημιών στο Catala (arXiv 2403.08935, 2024, F*): καλύπτει ακριβώς την εφεδρεία του EXP-08 (προθεσμίες και δικονομικοί κανόνες) και ενισχύει το DEC-FRG-02.",
+   "arXiv 2607.02808 (2026): εμπειρική μέτρηση ότι N εκδόσεις από LLM παραβιάζουν την ανεξαρτησία αποτυχιών (ensembles από το ίδιο μοντέλο κάτω από 0.3 του εφικτού κέρδους). Μετατρέπει το GAP-FRG-07 από «δεν τεκμηριώθηκε» σε τεκμηριωμένο.",
+   "Arrival (PACMPL 10/2025): επαλήθευση σχεδόν όλων των κανόνων instruction selection AArch64 από Wasm core έναντι authoritative ISA semantics. Ο ερευνητής είχε μόνο τον τίτλο· τώρα στηρίζει το CMP-FRG-03."
+  ]
+ }
+}

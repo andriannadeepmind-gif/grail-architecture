@@ -1,0 +1,1820 @@
+{
+ "layer_key": "ADV",
+ "summary": "Επαληθευμένο και διορθωμένο. Ο πυρήνας του προχείρου στέκει και στηρίζεται από τη βιβλιογραφία 2023–2026: ετυμηγορία μόνο μέσω διαδικασίας, διατήρηση dissent, proof obligations αντί personas, ≥1 μη-LLM oracle. Οι LLM κριτές είναι εκμεταλλεύσιμοι (master keys, self-preference, affinity σε όμοια μοντέλα) και τα σφάλματά τους συσχετίζονται και μεταξύ παρόχων (Kim 2025, Goel 2025). Η nested oversight μέσω debate πετυχαίνει 51,7% σε general Elo gap 400. Το BoLD αγκυρώνει σε παραγωγή την αντιπαλική επίλυση σε μηχανικό one-step proof, με παράθυρο 6,4 ημερών. Κύρια ευρήματα: (1) Η ανεξαρτησία του CMP-ADV-01 δηλώνεται by construction ως [T], ενώ πρέπει να μετρηθεί [X]. (2) Για το ICD-14 υπάρχει ανώτερο σχήμα, η bisection μέχρι φύλλα ελεγχόμενα από oracle, αλλά μόνο για αποσυνθέσιμους ή υπολογιστικούς ισχυρισμούς. Για νομικούς ισχυρισμούς φυσικής γλώσσας δεν υπάρχει παραγωγικό προηγούμενο, οπότε η κατάταξη διορθώθηκε σε experiment. (3) Το INV-K06 συγχέει replicas με panelists· ανώτερο είναι το accountable safety, με υλοποιημένα προηγούμενα (CometBFT evidence, Casper FFG). (4) Τα KT-19 και EXP-04 δεν έχουν λειτουργικές μετρικές. Η προκαταχώριση όμως υπάρχει γενικά στο πρόχειρο (§24 κανόνας 1, §19.5 κανόνας 3): ο ερευνητής είχε γράψει λάθος ότι λείπει. (5) Το EXP-16 είναι λάθος διατυπωμένο (ASPIC+ δεν είναι semantics) και αγνοεί burdens και standards of proof (Carneades, Prakken & Sartor 2011, Calegari & Sartor 2021). (6) Η §13 δεν γράφτηκε και δεν υπάρχει EpistemicCourt.tla ή court.yaml πουθενά στο repo. Διορθώσεις ελεγκτή: το Unknown επιβάλλεται γενικά σε κάθε ICD (§15.1). Διορθώθηκαν επίσης τίτλοι, έτη, venues και η τρέχουσα κατάσταση πηγών (Ron et al., Kleros 2019/2n+1, PyRIT που μεταφέρθηκε, Petri, lean4checker→leanchecker). Αφαιρέθηκε το GAP-ADV-17 ως διαστρωματικό. Το draft_ref του ADR-0008 διορθώθηκε σε §3/§3.1. Το WebSearch είχε εξαντληθεί (200/200), οπότε οι στοχευμένοι έλεγχοι έγιναν με WebFetch σε arXiv, Crossref και Semantic Scholar, με κάποια 429.",
+ "sota": [
+  {
+   "id": "SOTA-ADV-01",
+   "name": "AI safety via debate και εμπειρικά αποτελέσματα debate",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Δύο πράκτορες αντιπαρατίθενται και κρίνει ασθενέστερος κριτής. Με βέλτιστο παίγνιο απαντώνται ερωτήματα PSPACE με πολυωνυμικό κριτή (Irving et al. 2018). Με debate, μη ειδικά μοντέλα φτάνουν 76% και άνθρωποι 88%, έναντι 48% και 60% των naive baselines (Khan et al. ICML 2024). Το debate υπερέχει του consultancy σε όλα τα tasks (math, code, logic, multimodal) όταν ο consultant ανατίθεται τυχαία. Έναντι direct QA υπερέχει μόνο σε extractive QA με information asymmetry· αλλού τα αποτελέσματα είναι μικτά (Kenton et al. NeurIPS 2024). Το self-play των debaters αυξάνει την ακρίβεια του κριτή, ενώ για consultancy δεν βρέθηκε τέτοια σχέση (Arnesen et al. 2024).",
+   "relevance": "Θεμέλιο για Court όπου ασθενέστερος κριτής εποπτεύει ισχυρότερους. Το όφελος εξαρτάται από την ασυμμετρία πληροφορίας και από το baseline, άρα δεν είναι γενικό.",
+   "sources": [
+    {
+     "title": "AI safety via debate",
+     "url": "https://arxiv.org/abs/1805.00899",
+     "year": "2018"
+    },
+    {
+     "title": "Debating with More Persuasive LLMs Leads to More Truthful Answers",
+     "url": "https://proceedings.mlr.press/v235/khan24a.html",
+     "year": "2024"
+    },
+    {
+     "title": "On scalable oversight with weak LLMs judging strong LLMs",
+     "url": "https://arxiv.org/abs/2407.04622",
+     "year": "2024"
+    },
+    {
+     "title": "Training Language Models to Win Debates with Self-Play Improves Judge Accuracy",
+     "url": "https://arxiv.org/abs/2409.16636",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-02",
+   "name": "Complexity-theoretic debate: doubly-efficient, prover-estimator, DQC, safety case",
+   "kind": "research",
+   "maturity": "theoretical",
+   "what": "Doubly-efficient debate: η έντιμη στρατηγική κερδίζει με προσομοίωση πολυωνυμικού αριθμού βημάτων, και για στοχαστικά συστήματα (Brown-Cohen, Irving, Piliouras 2023). Prover-estimator debate: αντιμετωπίζει το obfuscated arguments problem με υπολογιστικό κόστος του έντιμου συγκρίσιμο με του αντιπάλου, υπό stability assumptions (2025, αναθ. 2026). Debate Query Complexity: η PSPACE/poly είναι ακριβώς η κλάση που αποφασίζεται με O(log n) queries (2026). Safety case sketch με debate: τέσσερις ρητοί ισχυρισμοί και ανοιχτά προβλήματα (Buhl et al. 2025).",
+   "relevance": "Θεωρητική βάση για διαδικασία που στενεύει τη διαφωνία σε λίγα ελέγξιμα βήματα, και πρότυπο safety case για το Court. Οι εγγυήσεις προϋποθέτουν ότι ο ισχυρισμός είναι υπολογισμός.",
+   "sources": [
+    {
+     "title": "Scalable AI Safety via Doubly-Efficient Debate",
+     "url": "https://arxiv.org/abs/2311.14125",
+     "year": "2023"
+    },
+    {
+     "title": "Avoiding Obfuscation with Prover-Estimator Debate",
+     "url": "https://arxiv.org/abs/2506.13609",
+     "year": "2025"
+    },
+    {
+     "title": "Debate is efficient with your time",
+     "url": "https://arxiv.org/abs/2602.08630",
+     "year": "2026"
+    },
+    {
+     "title": "An alignment safety case sketch based on debate",
+     "url": "https://arxiv.org/abs/2505.03989",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-03",
+   "name": "Σύγκριση πρωτοκόλλων oversight 2025–2026",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Proposer-critic debate σε code και logic tasks που ελέγχονται προγραμματιστικά: κέρδος έναντι consultancy μόνο όταν η ικανότητα ταξινόμησης του critic ξεπερνά του κριτή και ο κριτής ελέγχει τις θέσεις του critic αντί να τις συνοψίζει. Αυτό ίσχυσε σε 3 από 5 ζεύγη, και μία ανεξάρτητη κριτική ανακτά το μεγαλύτερο μέρος του οφέλους (Elasky et al. 2026). Η collaborative disagreement resolution δίνει 62,1% ακρίβεια κριτή έναντι 49,2% του standard debate (Jiang et al. ICML 2026). NSO σε general Elo gap 400: Mafia 13,5%, Debate 51,7%, Backdoor Code 10,0%, Wargames 9,4% (Engels et al. NeurIPS 2025).",
+   "relevance": "Το πρωτόκολλο είναι ανοιχτό εμπειρικό ερώτημα, και κανένα LLM πρωτόκολλο δεν αρκεί ως άγκυρα εμπιστοσύνης.",
+   "sources": [
+    {
+     "title": "Debate Helps Weak Judges Reward Stronger Models",
+     "url": "https://arxiv.org/abs/2605.27483",
+     "year": "2026"
+    },
+    {
+     "title": "Collaborative Disagreement Resolution for Scalable Oversight",
+     "url": "https://arxiv.org/abs/2607.01251",
+     "year": "2026"
+    },
+    {
+     "title": "Scaling Laws For Scalable Oversight",
+     "url": "https://arxiv.org/abs/2504.18530",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-04",
+   "name": "Multi-agent debate έναντι ψηφοφορίας· αξία της μειοψηφίας",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Η majority voting εξηγεί το μεγαλύτερο μέρος των κερδών του multi-agent debate. Το debate επάγει martingale πάνω στις πεποιθήσεις και από μόνο του δεν αυξάνει την αναμενόμενη ορθότητα (Choi, Zhu, Li NeurIPS 2025). Λόγω συσχετισμένων σφαλμάτων, σε περίπου 1 στις 4 αποκλίνουσες περιπτώσεις η μειοψηφία έχει δίκιο. Meta-classifier πάνω στα logs πετυχαίνει Flip Precision 81,2%, δηλαδή ακρίβεια των αποφάσεων ανατροπής (Minority Sentinel 2026).",
+   "relevance": "Στηρίζει το INV-K03 (το dissent είναι σήμα) και δείχνει ότι η πλειοψηφία LLM δεν είναι ετυμηγορία αλήθειας.",
+   "sources": [
+    {
+     "title": "Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models",
+     "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/934252acd87f254d5d4672fbde283bd2-Abstract-Conference.html",
+     "year": "2025"
+    },
+    {
+     "title": "Minority Sentinel: When to Overturn Majority Voting in Multi-Agent LLM Debates",
+     "url": "https://arxiv.org/abs/2606.29270",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-05",
+   "name": "Prover-verifier games (legibility) και weak-to-strong",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Μικροί verifiers εκπαιδεύονται απέναντι σε helpful και sneaky provers. Η legibility μεταφέρεται σε ανθρώπους με χρονικό περιορισμό: η ακρίβειά τους αυξάνεται στις helpful λύσεις και μειώνεται στις sneaky (Kirchner et al. 2024). Ισχυρά μοντέλα εκπαιδευμένα με ετικέτες ασθενούς επόπτη τον ξεπερνούν, αλλά η naive finetuning απέχει πολύ από πλήρη ανάκτηση ικανοτήτων (Burns et al. 2023).",
+   "relevance": "Στηρίζει την απαίτηση ο Adversary να παράγει μαρτυρίες ελέγξιμες από ασθενέστερους ή μηχανικούς ελεγκτές. Η εποπτεία από ασθενέστερο είναι εν μέρει μόνο εφικτή.",
+   "sources": [
+    {
+     "title": "Prover-Verifier Games improve legibility of LLM outputs",
+     "url": "https://arxiv.org/abs/2407.13692",
+     "year": "2024"
+    },
+    {
+     "title": "Weak-to-Strong Generalization: Eliciting Strong Capabilities With Weak Supervision",
+     "url": "https://arxiv.org/abs/2312.09390",
+     "year": "2023"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-06",
+   "name": "Biases και ευπάθειες του LLM-as-judge",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Position, verbosity και self-enhancement bias και περιορισμένη συλλογιστική, παρότι οι ισχυροί LLM κριτές συμφωνούν με ανθρώπους σε ποσοστό άνω του 80% (Zheng et al. NeurIPS 2023 D&B). Self-preference σε γραμμική συσχέτιση με την ικανότητα αυτο-αναγνώρισης (Panickssery et al. 2024). «Master keys»: σύμβολα όπως «:» ή «.» και φράσεις όπως «Thought process:» προκαλούν ψευδώς θετικές ανταμοιβές. Mitigation είναι το data augmentation με κομμένες εξόδους (Master-RMs), δηλαδή αντίδραση εκ των υστέρων (Zhao et al. 2025).",
+   "relevance": "Ο LLM κριτής είναι επιφάνεια επίθεσης, παρά την καλή μέση συμφωνία. Αυτό δικαιολογεί τον μη-LLM oracle και red-team γεννήτριες κατά του κριτή.",
+   "sources": [
+    {
+     "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+     "url": "https://arxiv.org/abs/2306.05685",
+     "year": "2023"
+    },
+    {
+     "title": "LLM Evaluators Recognize and Favor Their Own Generations",
+     "url": "https://arxiv.org/abs/2404.13076",
+     "year": "2024"
+    },
+    {
+     "title": "One Token to Fool LLM-as-a-Judge",
+     "url": "https://arxiv.org/abs/2507.08794",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-07",
+   "name": "LLM juries και βαθμονόμηση panels",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "PoLL: panel πολλών μικρότερων μοντέλων από disjoint οικογένειες ξεπερνά έναν μεγάλο κριτή, με λιγότερο intra-model bias και πάνω από 7 φορές χαμηλότερο κόστος (Verga et al. 2024). Finite-Calibration Regime Map: με λίγες ανθρώπινες ετικέτες, το scalar/reliability aggregation έχει χαμηλότερο MSE από το unrestricted joint-table calibration σε 16 από 20 κελιά κατά point estimate. Σε 11 κελιά τα 95% διαστήματα εξαιρούν το μηδέν (4 datasets, 7 κριτές· Zhu, Xie, Rao 2026). Alt-test: στατιστική διαδικασία που δικαιολογεί την αντικατάσταση ανθρώπων σχολιαστών από LLM με μέτριο δείγμα ετικετών (Calderon, Reichart, Dror 2025).",
+   "relevance": "Μέθοδοι για τα panels του CMP-ADV-02 και για τον σχεδιασμό του EXP-04.",
+   "sources": [
+    {
+     "title": "Replacing Judges with Juries: Evaluating LLM Generations with a Panel of Diverse Models",
+     "url": "https://arxiv.org/abs/2404.18796",
+     "year": "2024"
+    },
+    {
+     "title": "A Finite-Calibration Regime Map for LLM Judge Panels",
+     "url": "https://arxiv.org/abs/2606.01034",
+     "year": "2026"
+    },
+    {
+     "title": "The Alternative Annotator Test for LLM-as-a-Judge",
+     "url": "https://arxiv.org/abs/2501.10970",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-08",
+   "name": "Συσχετισμένα σφάλματα και όρια της ποικιλομορφίας (N-version)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Σε πάνω από 350 LLMs, όταν σφάλλουν και τα δύο μοντέλα συμφωνούν στο 60% των περιπτώσεων. Τα μεγαλύτερα και ακριβέστερα μοντέλα έχουν ισχυρά συσχετισμένα σφάλματα ακόμη και με διαφορετική αρχιτεκτονική και πάροχο, με συνέπειες για το LLM-as-judge (Kim et al. ICML 2025). Οι LLM κριτές ευνοούν μοντέλα όμοια με τον εαυτό τους, και τα λάθη γίνονται πιο όμοια όσο αυξάνεται η ικανότητα (μετρική CAPA· Goel et al. 2025). Knight & Leveson 1986: 27 ανεξάρτητες εκδόσεις, οι ταυτόχρονες αποτυχίες ξεπέρασαν στατιστικά σημαντικά την πρόβλεψη της ανεξαρτησίας. Ron, Baudry, Monperrus 2026 με coding agents: 429 coincident failures έναντι 115,36 αναμενόμενων (z=29,20). Η ποικιλία γλωσσών, agents και μοντέλων έδωσε περιορισμένη προστασία, αλλά οι τριάδες με ψηφοφορία μείωσαν τις αποτυχίες από 387,44 σε 130,99.",
+   "relevance": "Διαψεύδει την «ανεξαρτησία by construction» του CMP-ADV-01 και θέτει σε αμφισβήτηση το όριο f του INV-K06 όταν οι κόμβοι είναι LLM κριτές. Η πλεονασματικότητα βοηθά, αλλά δεν δίνει ανεξαρτησία.",
+   "sources": [
+    {
+     "title": "Correlated Errors in Large Language Models",
+     "url": "https://proceedings.mlr.press/v267/kim25e.html",
+     "year": "2025"
+    },
+    {
+     "title": "Great Models Think Alike and this Undermines AI Oversight",
+     "url": "https://arxiv.org/abs/2502.04313",
+     "year": "2025"
+    },
+    {
+     "title": "An experimental evaluation of the assumption of independence in multiversion programming (IEEE TSE SE-12(1):96–109)",
+     "url": "https://doi.org/10.1109/TSE.1986.6312924",
+     "year": "1986"
+    },
+    {
+     "title": "N-Version Programming with Coding Agents",
+     "url": "https://arxiv.org/html/2606.20158",
+     "year": "2026"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-09",
+   "name": "AI Control, ControlArena και συμπαιγνία χωρίς κανάλι",
+   "kind": "tool",
+   "maturity": "pilot",
+   "what": "Πρωτόκολλα ανθεκτικά σε σκόπιμη υπονόμευση: untrusted monitoring με τεχνικές αποτροπής συμπαιγνίας και trusted editing, που αξιολογούνται απέναντι σε στρατηγικές υπονόμευσης (red/blue team) (Greenblatt et al. ICML 2024). ControlArena (UK AISI και Redwood Research, MIT): thin wrapper πάνω στο Inspect με settings (π.χ. code sabotage, data poisoning), micro-protocols, policies, monitors και μετρικές safety και usefulness. Ταξινομία συμπαιγνίας: passive self-recognition, causal, acausal (Schelling points) και combined (Gardner-Challis et al. 2026). Μοντέλα σε απομόνωση συμπαίζουν μερικές φορές πάνω σε μη προφανή σήματα, με περιορισμένη συνολική επιτυχία (Järviniemi 2025). Steganographic collusion: οι σημερινές ικανότητες είναι περιορισμένες αλλά αυξάνονται (Motwani et al. 2024).",
+   "relevance": "Άμεσο SOTA για τους όρους ανεξαρτησίας και το KT-19: η απουσία κοινής μνήμης είναι αναγκαία αλλά όχι επαρκής. Το ControlArena δεν έχει έτοιμο setting για δικαστήριο.",
+   "sources": [
+    {
+     "title": "AI Control: Improving Safety Despite Intentional Subversion",
+     "url": "https://arxiv.org/abs/2312.06942",
+     "year": "2024"
+    },
+    {
+     "title": "ControlArena (GitHub, UK AISI & Redwood Research)",
+     "url": "https://github.com/UKGovernmentBEIS/control-arena",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "When can we trust untrusted monitoring? A safety case sketch across collusion strategies",
+     "url": "https://arxiv.org/abs/2602.20628",
+     "year": "2026"
+    },
+    {
+     "title": "Subversion via Focal Points: Investigating Collusion in LLM Monitoring",
+     "url": "https://arxiv.org/abs/2507.03010",
+     "year": "2025"
+    },
+    {
+     "title": "Secret Collusion among AI Agents: Multi-Agent Deception via Steganography",
+     "url": "https://arxiv.org/abs/2402.07510",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-10",
+   "name": "AI sandbagging",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Frontier μοντέλα μπορούν να υποαποδίδουν επιλεκτικά σε αξιολογήσεις επικίνδυνων ικανοτήτων, διατηρώντας τη γενική απόδοση. Με fine-tuning κρύβουν ικανότητες πίσω από password, και αυτό γενικεύεται σε held-out benchmarks (van der Weij et al. 2024). Για ώριμη μέθοδο ανίχνευσης δεν ξέρω· η πηγή δείχνει μόνο την ευπάθεια.",
+   "relevance": "Adversarial Entity που είναι LLM μπορεί να εφησυχάζει στρατηγικά. Η μέτρηση σε seeded faults θέλει προστασίες.",
+   "sources": [
+    {
+     "title": "AI Sandbagging: Language Models can Strategically Underperform on Evaluations",
+     "url": "https://arxiv.org/abs/2406.07358",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-11",
+   "name": "Automated και ανθρώπινο red teaming",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "LM-generated test cases (Perez et al. EMNLP 2022). Multi-step RL με auto-generated rewards (και rule-based) για διαφορετικές και αποτελεσματικές επιθέσεις, μαζί με prompt injection (Beutel et al. 2024). GFlowNet attackers (Lee et al. ICLR 2025). Quality-diversity red teaming (Wang et al. 2025). Constitutional Classifiers: σε πάνω από 3.000 ώρες red teaming κανείς δεν βρήκε universal jailbreak για τα περισσότερα target queries, με +0,38% refusals σε production traffic και 23,7% inference overhead (2025).",
+   "relevance": "Αντιστοιχεί στο εξελισσόμενο arsenal του CMP-ADV-03. Το ανθρώπινο red teaming μεγάλης κλίμακας παραμένει μέρος της αξιολόγησης.",
+   "sources": [
+    {
+     "title": "Red Teaming Language Models with Language Models",
+     "url": "https://aclanthology.org/2022.emnlp-main.225/",
+     "year": "2022"
+    },
+    {
+     "title": "Diverse and Effective Red Teaming with Auto-generated Rewards and Multi-step Reinforcement Learning",
+     "url": "https://arxiv.org/abs/2412.18693",
+     "year": "2024"
+    },
+    {
+     "title": "Learning diverse attacks on large language models for robust red-teaming and safety tuning",
+     "url": "https://arxiv.org/abs/2405.18540",
+     "year": "2024"
+    },
+    {
+     "title": "Quality-Diversity Red-Teaming",
+     "url": "https://arxiv.org/abs/2506.07121",
+     "year": "2025"
+    },
+    {
+     "title": "Constitutional Classifiers: Defending against Universal Jailbreaks across Thousands of Hours of Red Teaming",
+     "url": "https://arxiv.org/abs/2501.18837",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-12",
+   "name": "Εργαλεία, benchmarks και ταξινομίες red team: garak, PyRIT, Petri, HarmBench, AgentDojo, NIST AI 100-2e2025, OWASP",
+   "kind": "standard",
+   "maturity": "production",
+   "what": "garak (NVIDIA): scanner με probes για prompt injection, jailbreak, data leakage, hallucination κ.ά. PyRIT (Microsoft): open-source framework εντοπισμού κινδύνων GenAI· το Azure/PyRIT αρχειοθετήθηκε στις 27-03-2026 και συνεχίζει ως microsoft/PyRIT. Inspect Petri (Meridian Labs, v3.0): auditing agent με seed instructions, πολυγυρισμένες αλληλεπιδράσεις, simulated tools με rollback και judge scoring. HarmBench: τυποποιημένη αξιολόγηση automated red teaming, 18 μέθοδοι × 33 μοντέλα (2024). AgentDojo: 97 tasks και 629 security test cases για prompt injection σε agents (2024). NIST AI 100-2e2025 (τελικό, 24-03-2025): Indirect Prompt Injection (NISTAML.015), Clean-label Poisoning (NISTAML.012), Misaligned Outputs (NISTAML.027). OWASP Top 10 for LLM Applications 2025 (LLM01 Prompt Injection έως LLM10 Unbounded Consumption) και χωριστό Agentic Security Initiative.",
+   "relevance": "Αναφορά για μέτρηση κάλυψης του arsenal (REQ-ADV-004) και επαναχρήσιμα εργαλεία.",
+   "sources": [
+    {
+     "title": "garak (GitHub, NVIDIA)",
+     "url": "https://github.com/NVIDIA/garak",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "PyRIT (GitHub, Microsoft)",
+     "url": "https://github.com/microsoft/PyRIT",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "Petri / Inspect Petri (GitHub)",
+     "url": "https://github.com/safety-research/petri",
+     "year": "n.d. (v3.0, πρόσβαση 2026)"
+    },
+    {
+     "title": "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal",
+     "url": "https://arxiv.org/abs/2402.04249",
+     "year": "2024"
+    },
+    {
+     "title": "AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents",
+     "url": "https://arxiv.org/abs/2406.13352",
+     "year": "2024"
+    },
+    {
+     "title": "NIST AI 100-2 E2025 (CSRC)",
+     "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+     "year": "2025"
+    },
+    {
+     "title": "OWASP Top 10 for LLM Applications 2025",
+     "url": "https://genai.owasp.org/llm-top-10/",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-13",
+   "name": "Inspect (UK AISI) και sandboxing",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Open-source framework αξιολογήσεων (UK AI Security Institute και Meridian Labs) με datasets, solvers και scorers. Οι scorers είναι είτε ντετερμινιστικοί (π.χ. includes()) είτε model-graded (model_graded_qa()). Sandboxes: Docker, Kubernetes, Modal, Proxmox, Vagrant και extension API. Το Inspect Sandboxing Toolkit δίνει plugins για Docker Compose, Kubernetes και Proxmox.",
+   "relevance": "Έτοιμο υπόστρωμα για τα campaigns του ICD-26, το EXP-04 και το KT-19. Η διάκριση ντετερμινιστικού και model-graded scorer αντιστοιχεί στη διάκριση μη-LLM oracle και LLM κριτή.",
+   "sources": [
+    {
+     "title": "Inspect AI",
+     "url": "https://inspect.aisi.org.uk/",
+     "year": "2024 (πρόσβαση 2026)"
+    },
+    {
+     "title": "aisi-sandboxing (GitHub)",
+     "url": "https://github.com/UKGovernmentBEIS/aisi-sandboxing",
+     "year": "n.d."
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-14",
+   "name": "Structured argumentation με burdens και standards of proof (ASPIC+, Carneades, Prakken–Sartor, Calegari–Sartor)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "ASPIC+: strict και defeasible rules, επιθέσεις σε premises, defeasible inferences και conclusions, προτιμήσεις και rationality postulates (Modgil & Prakken 2014). Carneades: μοντέλο επιχειρήματος και burden of proof με proof standards ανά statement εμπνευσμένα από το δίκαιο (Gordon, Prakken, Walton 2007). Οι συγκεκριμένες ονομασίες standards και η διάκριση production και persuasion δεν επαληθεύτηκαν εδώ. Μετάφραση Carneades→ASPIC+: ισχύουν τα rationality postulates, και το Carneades επάγει μοναδική Dung extension, ίδια σε όλες τις σημασιολογίες του Dung (van Gijzel & Prakken 2012). Μοντελοποίηση burdens και standards of proof σε structured argumentation (Prakken & Sartor 2011· Calegari & Sartor 2021).",
+   "relevance": "Ώριμο τυπικό μοντέλο για τα standards of proof του REQ-ADV-002, που το πρόχειρο αναφέρει χωρίς να τα ορίζει.",
+   "sources": [
+    {
+     "title": "The ASPIC+ framework for structured argumentation: a tutorial",
+     "url": "https://doi.org/10.1080/19462166.2013.869766",
+     "year": "2014"
+    },
+    {
+     "title": "The Carneades model of argument and burden of proof",
+     "url": "https://doi.org/10.1016/j.artint.2007.04.010",
+     "year": "2007"
+    },
+    {
+     "title": "Relating Carneades with abstract argumentation via the ASPIC+ framework for structured argumentation",
+     "url": "https://doi.org/10.1080/19462166.2012.661766",
+     "year": "2012"
+    },
+    {
+     "title": "On modelling burdens and standards of proof in structured argumentation",
+     "url": "https://doi.org/10.3233/978-1-60750-981-3-83",
+     "year": "2011"
+    },
+    {
+     "title": "Burdens of Persuasion and Standards of Proof in Structured Argumentation",
+     "url": "https://doi.org/10.1007/978-3-030-89391-0_3",
+     "year": "2021"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-15",
+   "name": "ICCMA 2025: solvers επιχειρηματολογίας",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Tracks: main, heuristics, dynamic (μέσω IPAFAIR) και ABA. Semantics: CO, PR, ST, SST, ID. Η stage εξαιρείται ρητά και η grounded δεν περιλαμβάνεται. Προβλήματα: DC (credulous), DS (skeptical), SE (ένα extension).",
+   "relevance": "Εργαλεία και σημείο αναφοράς κόστους για το EXP-16, με το ABA ως εναλλακτικό structured formalism.",
+   "sources": [
+    {
+     "title": "ICCMA - Competition 2025 - Solvers/Tracks",
+     "url": "https://argumentationcompetition.org/2025/tracks.html",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-16",
+   "name": "Gradual/QBAF semantics και Argumentative LLMs",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Τα ArgLLMs κατασκευάζουν argumentation frameworks από LLM και αποφασίζουν με τυπική συλλογιστική. Κάθε απόφαση εξηγείται και αμφισβητείται. Ορίζονται ιδιότητες contestability (AAAI-25, Freedman et al.). Proposition 1: η DF-QuAD ικανοποιεί base score και argument relation contestability· το quadratic energy model ικανοποιεί τις strong εκδοχές.",
+   "relevance": "Εναλλακτική σημασιολογία που λείπει από το EXP-16, για contestable διαβάθμιση αντί δυαδικής αποδοχής.",
+   "sources": [
+    {
+     "title": "Argumentative Large Language Models for Explainable and Contestable Claim Verification",
+     "url": "https://ojs.aaai.org/index.php/AAAI/article/view/33637",
+     "year": "2025"
+    },
+    {
+     "title": "Argumentative Large Language Models for Explainable and Contestable Claim Verification (arXiv HTML)",
+     "url": "https://arxiv.org/html/2405.02079",
+     "year": "2024"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-17",
+   "name": "Εμπειρικές γνωσιακές μελέτες σημασιολογιών",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Σε 12 frameworks με 3 έως 8 επιχειρήματα, grounded και CF2 είναι οι καλύτεροι predictors, με δύο στρατηγικές συμμετεχόντων (Cramer & Guillaume 2019). Η SCF2 ικανοποιεί δύο νέες αρχές ορθολογικής κρίσης (Cramer & van der Torre 2019). Στο reinstatement η ανάκαμψη είναι μερική και τα ευρήματα στηρίζουν την preferred έναντι της grounded (Rahwan et al. Cognitive Science 2010). Σε 96 συμμετέχοντες, η συμμόρφωση με αρχές επιχειρηματολογίας διαφέρει ανά αρχή και είναι καλύτερη με γραφική αναπαράσταση (Teovanović, Vesić, Yun, AIJ).",
+   "relevance": "Τα ευρήματα διαφέρουν ανά σημασιολογία και μορφή παρουσίασης. Δεν βρέθηκε μελέτη με νομικούς ειδικούς, άρα το EXP-16 δεν έχει προηγούμενο για ειδικούς.",
+   "sources": [
+    {
+     "title": "Empirical Study on Human Evaluation of Complex Argumentation Frameworks",
+     "url": "https://arxiv.org/abs/1902.10552",
+     "year": "2019"
+    },
+    {
+     "title": "SCF2 -- an Argumentation Semantics for Rational Human Judgments on Argument Acceptability",
+     "url": "https://arxiv.org/abs/1908.08406",
+     "year": "2019"
+    },
+    {
+     "title": "Behavioral Experiments for Assessing the Abstract Argumentation Semantics of Reinstatement",
+     "url": "https://doi.org/10.1111/j.1551-6709.2010.01123.x",
+     "year": "2010"
+    },
+    {
+     "title": "Human compliance with computational argumentation principles",
+     "url": "https://doi.org/10.1016/j.artint.2025.104457",
+     "year": "2026 (DOI 2025)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-18",
+   "name": "Μηχανικοί oracles με μικρό TCB: certifying algorithms και ανεξάρτητοι Lean checkers",
+   "kind": "tool",
+   "maturity": "production",
+   "what": "Certifying algorithms: το πρόγραμμα επιστρέφει την τιμή και ένα certificate (witness), που ελέγχει checker. Αν η τιμή είναι λάθος, κανένα witness δεν περνά τον έλεγχο (McConnell, Mehlhorn, Näher, Schweitzer, CSR 5(2) 2011· slides Mehlhorn). Lean4Lean: πλήρης εξωτερικός typechecker του Lean 4 γραμμένος σε Lean. Είναι 20–50% πιο αργός, ελέγχει όλο το mathlib και εντόπισε ένα soundness bug (Carneiro 2024). nanoda_lib: ανεξάρτητος type checker σε Rust πάνω σε lean4export. Το lean4checker αρχειοθετήθηκε· η λειτουργία ενσωματώθηκε ως leanchecker στο toolchain από το v4.28.0.",
+   "relevance": "Υλοποιεί σήμερα τον «≥1 μη-LLM oracle» με N-version checkers για τα αποδείξιμα φύλλα.",
+   "sources": [
+    {
+     "title": "Certifying algorithms (Computer Science Review 5(2):119–161)",
+     "url": "https://doi.org/10.1016/j.cosrev.2010.09.009",
+     "year": "2011"
+    },
+    {
+     "title": "Certifying Algorithms (slides, K. Mehlhorn)",
+     "url": "https://people.mpi-inf.mpg.de/~mehlhorn/ftp/CertifyingAlgs.pdf",
+     "year": "n.d."
+    },
+    {
+     "title": "Lean4Lean: Verifying a Typechecker for Lean, in Lean",
+     "url": "https://arxiv.org/abs/2403.14064",
+     "year": "2024"
+    },
+    {
+     "title": "nanoda_lib (GitHub)",
+     "url": "https://github.com/ammkrn/nanoda_lib",
+     "year": "n.d."
+    },
+    {
+     "title": "lean4checker (GitHub, archived)",
+     "url": "https://github.com/leanprover/lean4checker",
+     "year": "n.d. (πρόσβαση 2026)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-19",
+   "name": "Αντιπαλικοί θεσμοί επίλυσης διαφορών σε παραγωγή: Arbitrum BoLD, Kleros",
+   "kind": "system",
+   "maturity": "production",
+   "what": "BoLD: bisection σε block, big step (2^23 WASM steps) και one step. Το one-step proof υποβάλλεται στο συμβόλαιο OneStepProof στην parent chain. Είναι permissionless, με bonds που χάνει η ανέντιμη πλευρά, και παράθυρο 6,4 ημερών που μπορεί να αλλάξει το DAO. Ενεργό σε Arbitrum One, Nova και Sepolia· ενεργοποίηση Feb 2025 κατά δευτερογενή πηγή. Kleros (Short Paper v1.0.7, 2019): πιθανότητα κλήρωσης ενόρκου ανάλογη με το staked token, κίνητρα Schelling point. Κάθε νέα έφεση έχει διπλάσιους ενόρκους συν έναν, με εκθετικά αυξανόμενα τέλη.",
+   "relevance": "Αποδεικνύει σε παραγωγή αντιπαλική διαδικασία αγκυρωμένη σε μηχανικό oracle με φραγμένο χρόνο, αλλά μόνο για ντετερμινιστικό υπολογισμό (BoLD). Δίνει και πρότυπο κλιμακούμενης έφεσης (Kleros).",
+   "sources": [
+    {
+     "title": "Overview of BoLD | Arbitrum Docs",
+     "url": "https://docs.arbitrum.io/how-arbitrum-works/bold/gentle-introduction",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "Stage 1 Fraud Proofs Go Live (blog, δευτερογενής)",
+     "url": "https://blockeden.xyz/blog/2026/02/01/stage-1-fraud-proofs-arbitrum-optimism-base-l2-security/",
+     "year": "2026"
+    },
+    {
+     "title": "Kleros Short Paper v1.0.7",
+     "url": "https://kleros.io/assets/whitepaper.pdf",
+     "year": "2019"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-20",
+   "name": "Community Notes: bridging algorithm, LLM γράφουν και άνθρωποι κρίνουν",
+   "kind": "system",
+   "maturity": "production",
+   "what": "Matrix-factorization bridging: προβάλλονται σημειώσεις με απήχηση σε ετερογενείς ομάδες, και όσοι τις είδαν έκαναν σημαντικά λιγότερο resharing (Wojcik et al. 2022). Πρόταση οικοσυστήματος όπου άνθρωποι και LLMs γράφουν σημειώσεις, ενώ η κρίση μένει στους ανθρώπους, με RLCF (Li et al. 2025).",
+   "relevance": "Πρότυπο διαχωρισμού γεννήτριας και κριτή, όπου την εξουσία κρίσης δεν την έχει ο LLM.",
+   "sources": [
+    {
+     "title": "Birdwatch: Crowd Wisdom and Bridging Algorithms can Inform Understanding and Reduce the Spread of Misinformation",
+     "url": "https://arxiv.org/abs/2210.15723",
+     "year": "2022"
+    },
+    {
+     "title": "Scaling Human Judgment in Community Notes with LLMs",
+     "url": "https://arxiv.org/abs/2506.24118",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-21",
+   "name": "BFT: HotStuff-2 και accountable safety (BFT forensics, Casper FFG, CometBFT evidence)",
+   "kind": "research",
+   "maturity": "production",
+   "what": "HotStuff-2: partially synchronous BFT με O(n^2) worst-case επικοινωνία, optimistically linear, δύο φάσεις (Malkhi & Nayak 2023). BFT Protocol Forensics (Sheng et al. CCS 2021): όταν παραβιάζεται η safety με περισσότερους Byzantine από το όριο, δίνεται irrefutable proof για τουλάχιστον d ενόχους. Το d είναι 0 ή t+1 ανάλογα με την παραλλαγή· εξαίρεση το HotStuff-null με 1. Το HotStuff-hash θέλει transcripts από τουλάχιστον t+1 replicas, το LibraBFT έχει ισχυρό forensic support, και τα σύγχρονα πρωτόκολλα με 2t+1 replicas δεν έχουν κανένα. Casper FFG: αποδεδειγμένο accountable safety, όπου δύο αντιφατικά finalized checkpoints απαιτούν να παραβιάσει slashing condition το 1/3 των validators (Buterin & Griffith 2017). CometBFT spec: DuplicateVoteEvidence και LightClientAttackEvidence διαδίδονται και δεσμεύονται on-chain· την τιμωρία την αφήνει στην εφαρμογή.",
+   "relevance": "Άμεσα σχετικό με το INV-K06 και το ADR-0031: το accountable safety προσθέτει κρυπτογραφική ταυτοποίηση ενόχων πέρα από το όριο 3f+1. Η υλοποίηση accountability υπάρχει (spec CometBFT)· για την HotStuff-family σε παραγωγή δεν ξέρω.",
+   "sources": [
+    {
+     "title": "HotStuff-2: Optimal Two-Phase Responsive BFT",
+     "url": "https://eprint.iacr.org/2023/397",
+     "year": "2023"
+    },
+    {
+     "title": "BFT Protocol Forensics",
+     "url": "https://arxiv.org/abs/2010.06785",
+     "year": "2021"
+    },
+    {
+     "title": "Casper the Friendly Finality Gadget",
+     "url": "https://arxiv.org/abs/1710.09437",
+     "year": "2017"
+    },
+    {
+     "title": "CometBFT spec: consensus/evidence.md",
+     "url": "https://github.com/cometbft/cometbft/blob/main/spec/consensus/evidence.md",
+     "year": "n.d. (πρόσβαση 2026)"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-22",
+   "name": "Επιστημικοί θεσμοί βαθμονόμησης: forecasting benchmarks και adversarial collaboration",
+   "kind": "research",
+   "maturity": "pilot",
+   "what": "ForecastBench (v5, 28-02-2025): Brier. Οι superforecasters πετυχαίνουν 0,096 έναντι 0,121 του κοινού και 0,122 του κορυφαίου LLM στο υποσύνολο 200 ερωτήσεων (p<0,001). Η κατάσταση του leaderboard το 2026 δεν επαληθεύτηκε. Adversarial collaboration: 29 επιστήμονες σε 13 έργα αναφέρουν υψηλή ποιότητα και βαθύτερη κατανόηση αντί για «νικητές», με περισσότερη αρχική προσπάθεια. Το δείγμα περιλαμβάνει μόνο όσους ολοκλήρωσαν (Isch, Tetlock, Clark 2025).",
+   "relevance": "Μεθοδολογία βαθμονόμησης του Court (VT-704, EXP-04) χωρίς προβλέψεις έκβασης, κατά το Prediction Doctrine. Η κοινή προκαταχώριση του κρίσιμου τεστ ταιριάζει με το Challenge.",
+   "sources": [
+    {
+     "title": "ForecastBench: A Dynamic Benchmark of AI Forecasting Capabilities",
+     "url": "https://arxiv.org/html/2409.19839v5",
+     "year": "2025"
+    },
+    {
+     "title": "Reflections on adversarial collaboration from the adversaries: was it worth it?",
+     "url": "https://doi.org/10.1007/s11186-025-09634-2",
+     "year": "2025"
+    }
+   ]
+  },
+  {
+   "id": "SOTA-ADV-23",
+   "name": "AgentCourt (persona-based προσομοίωση δικαστηρίου)",
+   "kind": "research",
+   "maturity": "research-prototype",
+   "what": "Προσομοιωμένη αίθουσα με LLM δικαστές, δικηγόρους και διαδίκους. Το AdvEvol, σε 1.000 αστικές υποθέσεις, βελτιώνει τους δικηγόρους-agents κατά 12,1% στο CourtBench (Chen et al. ACL Findings 2025).",
+   "relevance": "Αντι-παράδειγμα: οι personas χρησιμεύουν για εκπαίδευση και προσομοίωση (CMP-LAW-07), όχι ως θεσμός απόφασης. Επιβεβαιώνει το «proof obligations, όχι personas».",
+   "sources": [
+    {
+     "title": "AgentCourt: Simulating Court with Adversarial Evolvable Lawyer Agents",
+     "url": "https://aclanthology.org/2025.findings-acl.304/",
+     "year": "2025"
+    }
+   ]
+  }
+ ],
+ "draft_points": [
+  {
+   "ids": [
+    "CMP-ADV-01",
+    "REQ-ADV-001"
+   ],
+   "draft_ref": "master §6.3 γρ. 563· _unmerged-parts/29.md §29.7 γρ. 116",
+   "draft_position": "Ανεξάρτητη AEO με εντολή διάψευσης, χωριστά κλειδιά, παρόχους και μνήμη, και bounty. Επιχειρεί να διαψεύσει κάθε ισχυρισμό που προάγεται σε ADJUDICATED/ESTABLISHED. Εφησυχασμός → μέτρηση σε seeded faults· κατάληψη → εναλλαγή και ποικιλομορφία. Status [T].",
+   "verdict": "gap",
+   "reasoning": "Ο διαχωρισμός κλειδιών και μνήμης είναι υλοποιήσιμος και αναγκαίος. Όμως η ανεξαρτησία δηλώνεται by construction. (α) Η ποικιλομορφία παρόχων δεν δίνει ανεξάρτητα σφάλματα: συσχέτιση και μεταξύ παρόχων, εντονότερη στα ισχυρότερα μοντέλα (Kim 2025), και affinity των κριτών σε όμοια μοντέλα (Goel 2025). Το ίδιο δείχνουν Knight & Leveson 1986 και Ron et al. 2026 (429 έναντι 115,36). (β) Συμπαιγνία είναι δυνατή χωρίς κανάλι: focal points, self-recognition, steganography. (γ) Το sandbagging υπονομεύει τη μέτρηση σε seeded faults. Άρα το [T] είναι υπερδήλωση: η ανεξαρτησία είναι μετρήσιμη ιδιότητα [X]. Υπέρ του σχεδίου: μία ανεξάρτητη κριτική ανακτά το μεγαλύτερο μέρος του οφέλους του debate, αλλά μόνο αν ο critic ξεπερνά τον κριτή σε ταξινόμηση και ο κριτής ελέγχει τις θέσεις του (Elasky 2026).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-ADV-08",
+    "SOTA-ADV-09",
+    "SOTA-ADV-10",
+    "SOTA-ADV-03"
+   ],
+   "sources": [
+    {
+     "title": "Correlated Errors in Large Language Models",
+     "url": "https://proceedings.mlr.press/v267/kim25e.html",
+     "year": "2025"
+    },
+    {
+     "title": "Great Models Think Alike and this Undermines AI Oversight",
+     "url": "https://arxiv.org/abs/2502.04313",
+     "year": "2025"
+    },
+    {
+     "title": "N-Version Programming with Coding Agents",
+     "url": "https://arxiv.org/html/2606.20158",
+     "year": "2026"
+    },
+    {
+     "title": "Subversion via Focal Points",
+     "url": "https://arxiv.org/abs/2507.03010",
+     "year": "2025"
+    },
+    {
+     "title": "When can we trust untrusted monitoring?",
+     "url": "https://arxiv.org/abs/2602.20628",
+     "year": "2026"
+    },
+    {
+     "title": "AI Sandbagging",
+     "url": "https://arxiv.org/abs/2406.07358",
+     "year": "2024"
+    },
+    {
+     "title": "Debate Helps Weak Judges Reward Stronger Models",
+     "url": "https://arxiv.org/abs/2605.27483",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-ADV-02"
+   ],
+   "draft_ref": "master §6.3 γρ. 564",
+   "draft_position": "Διαδικασία filing, challenge, εξέτασης, verdict, dissent και appeal, με standards of proof και panels. Υπερφόρτωση → triage κατά stakes· δικαστικό λάθος → έφεση και βαθμονόμηση (EXP-04)· BFT για πολλαπλά sites. [T] η διαδικασία, [X] η αξιοπιστία.",
+   "verdict": "holds",
+   "reasoning": "Ο διαδικαστικός θεσμός με standards of proof έχει τυπικά θεμέλια (Carneades 2007, ASPIC+ 2014) και παραγωγικά ανάλογα: στο BoLD η διαφορά λύνεται μόνο μέσω πρωτοκόλλου, στο Kleros κάθε έφεση έχει νέο σώμα 2n+1. Ο διαχωρισμός [T] διαδικασίας και [X] αξιοπιστίας είναι τίμιος: τα panels (PoLL) μειώνουν το intra-model bias, αλλά τα σφάλματα μένουν συσχετισμένα. Στοχευμένος έλεγχος (juries, Kleros, Community Notes, BoLD) δεν βρήκε αυστηρά ανώτερη εναλλακτική για το ίδιο το component. Ανοιχτά μένουν η σύνθεση panels και εφέσεων, το liveness bound και ο πυρήνας απόφασης (ICD-14, GAP-ADV-11, GAP-ADV-12, GAP-ADV-13).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-ADV-14",
+    "SOTA-ADV-19",
+    "SOTA-ADV-07",
+    "SOTA-ADV-08"
+   ],
+   "sources": [
+    {
+     "title": "The Carneades model of argument and burden of proof",
+     "url": "https://doi.org/10.1016/j.artint.2007.04.010",
+     "year": "2007"
+    },
+    {
+     "title": "Overview of BoLD | Arbitrum Docs",
+     "url": "https://docs.arbitrum.io/how-arbitrum-works/bold/gentle-introduction",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "Kleros Short Paper v1.0.7",
+     "url": "https://kleros.io/assets/whitepaper.pdf",
+     "year": "2019"
+    },
+    {
+     "title": "Replacing Judges with Juries",
+     "url": "https://arxiv.org/abs/2404.18796",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-ADV-002"
+   ],
+   "draft_ref": "_unmerged-parts/29.md §29.7 γρ. 117",
+   "draft_position": "Το Court εκτελεί ορισμένη διαδικασία με standards of proof, dissent και έφεση. INV-K02, INV-K03, INV-C05· VT-014, VT-104, VT-502, EXP-04· M, T· [T].",
+   "verdict": "gap",
+   "reasoning": "Standards of proof και έφεση αναφέρονται αλλά δεν ορίζονται πουθενά. Η §13 δεν γράφτηκε και το EpistemicCourt.tla δεν υπάρχει, άρα τα VT-104 (TLC/Apalache) και VT-502 (MBT από state machine) δεν έχουν αντικείμενο. Υπάρχουν ώριμα τυπικά μοντέλα: Carneades (proof standards ανά statement), μετάφραση στο ASPIC+ (van Gijzel & Prakken 2012), burdens και standards σε structured argumentation (Prakken & Sartor 2011, Calegari & Sartor 2021). Το πρόχειρο δεν επιλέγει κανένα, και το EXP-16 δεν τα εξετάζει.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-ADV-14"
+   ],
+   "sources": [
+    {
+     "title": "The Carneades model of argument and burden of proof",
+     "url": "https://doi.org/10.1016/j.artint.2007.04.010",
+     "year": "2007"
+    },
+    {
+     "title": "Relating Carneades with abstract argumentation via the ASPIC+ framework",
+     "url": "https://doi.org/10.1080/19462166.2012.661766",
+     "year": "2012"
+    },
+    {
+     "title": "On modelling burdens and standards of proof in structured argumentation",
+     "url": "https://doi.org/10.3233/978-1-60750-981-3-83",
+     "year": "2011"
+    },
+    {
+     "title": "Burdens of Persuasion and Standards of Proof in Structured Argumentation",
+     "url": "https://doi.org/10.1007/978-3-030-89391-0_3",
+     "year": "2021"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "CMP-ADV-03",
+    "REQ-ADV-004"
+   ],
+   "draft_ref": "master §6.3 γρ. 565· _unmerged-parts/29.md §29.7 γρ. 119",
+   "draft_position": "Γεννήτριες επιθέσεων για injection, poisoning, Byzantine bodies, counterexample search (Alloy/TLC/SMT) και jailbreak suites. Εξελισσόμενο arsenal μέσω CMP-CIV-03 σε sandbox· αποτελέσματα στο CAS. Συνεχής επίθεση σε επιφάνειες injection, poisoning, Byzantine και escape (VT-801, VT-802).",
+   "verdict": "holds",
+   "reasoning": "Εύρος και εξελισσόμενο arsenal αντιστοιχούν στο SOTA: multi-step RL (Beutel 2024), GFlowNet, quality-diversity. Υπάρχουν εργαλεία (garak, PyRIT που μεταφέρθηκε στο microsoft/PyRIT, Inspect Petri), ταξινομίες (NIST AI 100-2e2025, OWASP 2025) και sandboxing (Inspect). Στοχευμένος έλεγχος βρήκε μόνο συμπληρωματικά μέσα μέτρησης, όχι ανώτερη εναλλακτική: HarmBench (18 μέθοδοι × 33 μοντέλα) και AgentDojo (629 security cases). Προσθήκες που δεν αλλάζουν τη θέση: (α) μέτρηση κάλυψης απέναντι σε NIST/OWASP και benchmarks· (β) ανθρώπινο red teaming (Constitutional Classifiers: πάνω από 3.000 ώρες)· (γ) επιθέσεις κατά του ίδιου του κριτή (GAP-ADV-08).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-ADV-11",
+    "SOTA-ADV-12",
+    "SOTA-ADV-13"
+   ],
+   "sources": [
+    {
+     "title": "Diverse and Effective Red Teaming with Auto-generated Rewards and Multi-step Reinforcement Learning",
+     "url": "https://arxiv.org/abs/2412.18693",
+     "year": "2024"
+    },
+    {
+     "title": "NIST AI 100-2 E2025 (CSRC)",
+     "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+     "year": "2025"
+    },
+    {
+     "title": "Constitutional Classifiers",
+     "url": "https://arxiv.org/abs/2501.18837",
+     "year": "2025"
+    },
+    {
+     "title": "HarmBench",
+     "url": "https://arxiv.org/abs/2402.04249",
+     "year": "2024"
+    },
+    {
+     "title": "AgentDojo",
+     "url": "https://arxiv.org/abs/2406.13352",
+     "year": "2024"
+    },
+    {
+     "title": "Inspect AI",
+     "url": "https://inspect.aisi.org.uk/",
+     "year": "2024 (πρόσβαση 2026)"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "ICD-14"
+   ],
+   "draft_ref": "spine-vocab γρ. 44· _unmerged-parts/15.md γρ. 44 (και §15.1 γρ. 14)",
+   "draft_position": "OpenAPI court.yaml και events. Πράξεις FileCase, Challenge, SubmitEvidence, Examine, Deliberate, Verdict, Dissent, Appeal (στο spine 7 πράξεις, χωρίς Deliberate). Κανόνες: verdict μόνο μέσω διαδικασίας (INV-K02)· dissent αμετάβλητο (INV-K03)· ≥1 μη-LLM oracle για ADJUDICATED/ESTABLISHED· δημιουργός ανώτατη έφεση (INV-C05).",
+   "verdict": "superior-exists",
+   "reasoning": "Η επίπεδη ακολουθία πράξεων δεν εγγυάται τερματισμό σε φραγμένο χρόνο ούτε ότι η διαφωνία θα στενέψει σε βήμα ελέγξιμο μηχανικά. Χωρίς αυτό, ρητορική ή ένας εκμεταλλεύσιμος LLM κριτής μπορεί να κρίνει την υπόθεση (One Token to Fool 2025· Engels 2025: 51,7%). Υπάρχει ασυμφωνία πράξεων: 7 στο spine, 8 στο 15.md. Το Unknown δεν λείπει: το §15.1 το επιβάλλει γενικά σε κάθε ICD ως αποτέλεσμα επιτυχίας. Η γραμμή του ICD-14 όμως δεν ορίζει τι σημαίνει Unknown verdict (GAP-ADV-02).",
+   "superior": "Αποσύνθεση της διαφωνίας (bisection) μέχρι φύλλα proof obligations που ελέγχει μηχανικός oracle, με φραγμένο χρόνο. Είναι σε παραγωγή για ντετερμινιστικό υπολογισμό στο Arbitrum BoLD: block, 2^23 WASM steps, one-step proof, 6,4 ημέρες, permissionless. Τη θεμελιώνουν θεωρητικά το doubly-efficient debate, το prover-estimator debate (υπό stability assumptions) και το DQC (O(log n) queries για PSPACE/poly). Ανώτερη μόνο για αποσυνθέσιμους ή υπολογιστικούς ισχυρισμούς, όπως διαφωνίες N-version, προθεσμίες, SMT και citation receipts. Εκεί προσθέτει εγγύηση τερματισμού και αγκύρωσης σε oracle χωρίς να αφαιρεί καμία πράξη του ICD-14, αφού το επίπεδο σχήμα μένει fallback. Ρητό trade-off: ο ισχυρισμός πρέπει να εκφράζεται ως δέντρο ή υπολογισμός. Για νομικούς ή ερμηνευτικούς ισχυρισμούς φυσικής γλώσσας δεν υπάρχει παραγωγικό προηγούμενο ούτε oracle στα φύλλα, οπότε η έκβαση είναι Unknown ή ανθρώπινη κρίση (DEC-ADV-02).",
+   "sota_refs": [
+    "SOTA-ADV-19",
+    "SOTA-ADV-02",
+    "SOTA-ADV-06",
+    "SOTA-ADV-18"
+   ],
+   "sources": [
+    {
+     "title": "Overview of BoLD | Arbitrum Docs",
+     "url": "https://docs.arbitrum.io/how-arbitrum-works/bold/gentle-introduction",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "Scalable AI Safety via Doubly-Efficient Debate",
+     "url": "https://arxiv.org/abs/2311.14125",
+     "year": "2023"
+    },
+    {
+     "title": "Avoiding Obfuscation with Prover-Estimator Debate",
+     "url": "https://arxiv.org/abs/2506.13609",
+     "year": "2025"
+    },
+    {
+     "title": "Debate is efficient with your time",
+     "url": "https://arxiv.org/abs/2602.08630",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "INV-K02",
+    "INV-K03"
+   ],
+   "draft_ref": "_unmerged-parts/19.md γρ. 65–66· master §0 γρ. 91, 96",
+   "draft_position": "INV-K02: κάθε verdict στο επίπεδο ετυμηγοριών προϋποθέτει υπόθεση ολοκληρωμένη κατά τη διαδικασία (EpistemicCourt.tla, VT-104· KT-07, KT-19). INV-K03: οι μειοψηφίες είναι append-only και συνοδεύουν κάθε verdict (VT-014). Tier 1.",
+   "verdict": "holds",
+   "reasoning": "Και τα δύο είναι δομικά invariants, υλοποιήσιμα σήμερα με append-only ledger και ιδιότητα TLA+, και αντιστοιχούν σε θεσμούς όπου η finality υπάρχει μόνο μέσω πρωτοκόλλου (BoLD, Kleros). Το dissent έχει μετρήσιμη αξία: σε περίπου 1 στις 4 αποκλίνουσες περιπτώσεις δικαιώνεται η μειοψηφία (Minority Sentinel 2026). Η πλειοψηφία εξηγεί το μεγαλύτερο μέρος του κέρδους του multi-agent debate (Choi 2025). Στοχευμένος έλεγχος δεν βρήκε ανώτερη διατύπωση. Προϋπόθεση ισχύος: τυπικός ορισμός της «διαδικασίας» (GAP-ADV-01). Σημείωση: η §0 τα παρουσιάζει ως δομικές παραγωγές, ενώ είναι Tier 1, δηλαδή αναθεωρήσιμα από τον δημιουργό με Court review.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-ADV-04",
+    "SOTA-ADV-19"
+   ],
+   "sources": [
+    {
+     "title": "Minority Sentinel",
+     "url": "https://arxiv.org/abs/2606.29270",
+     "year": "2026"
+    },
+    {
+     "title": "Debate or Vote",
+     "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/934252acd87f254d5d4672fbde283bd2-Abstract-Conference.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "INV-K06"
+   ],
+   "draft_ref": "_unmerged-parts/19.md γρ. 69· _unmerged-parts/22.md γρ. 37 (ADR-0031)· _unmerged-parts/24.md γρ. 19, 39",
+   "draft_position": "Με n ≥ 3f+1, δύο αντιφατικά verdicts για την ίδια υπόθεση δεν γίνονται ποτέ τελικά. Επιβολή: ADV-02 και KRN-01 witnesses. HotStuff-family μόνο για cross-site διάταξη verdicts (ADR-0031). Tests KT-04, KT-19· Tier 1.",
+   "verdict": "superior-exists",
+   "reasoning": "Το n≥3f+1 είναι το σωστό όριο για BFT agreement, και η HotStuff-family είναι σύγχρονη (HotStuff-2). Όμως: (α) το BFT εγγυάται μη αντιφατική finality ανάμεσα σε replicas, όχι ορθότητα· (β) το ADR-0031 περιορίζει το BFT σε cross-site διάταξη, ενώ το KT-19 επικαλείται το INV-K06 για κατάληψη ή συμπαιγνία κριτών, οπότε συγχέει replicas και panelists· (γ) για LLM κριτές το όριο f δεν τεκμηριώνεται, λόγω συσχετισμένων σφαλμάτων. Το KT-04 ήδη ζητά «ανίχνευση equivocation εντός ορίου», αλλά το invariant δεν δίνει εγγύηση ταυτοποίησης όταν f ≥ n/3.",
+   "superior": "Accountable safety. Κρατά το safety για f<n/3 και, όταν αυτό παραβιαστεί, δίνει irrefutable proof ενόχων: 0 ή t+1 ανάλογα με την παραλλαγή, εξαίρεση το HotStuff-null με 1 (Sheng et al. CCS 2021). Το Casper FFG αποδεικνύει αντίστοιχη ιδιότητα με slashing conditions (1/3). Το CometBFT υλοποιεί DuplicateVote και LightClientAttack evidence δεσμευμένα on-chain. Κρατά την ιδιότητα του προχείρου και δίνει εγγύηση στην ανίχνευση που ζητά το KT-04. Trade-off: περιορισμός σε παραλλαγές με forensic support (π.χ. το HotStuff-hash θέλει transcripts από ≥t+1 replicas) και διατήρηση υπογεγραμμένων votes. Για forensics της HotStuff-family σε παραγωγή δεν ξέρω.",
+   "sota_refs": [
+    "SOTA-ADV-21",
+    "SOTA-ADV-08"
+   ],
+   "sources": [
+    {
+     "title": "BFT Protocol Forensics",
+     "url": "https://arxiv.org/abs/2010.06785",
+     "year": "2021"
+    },
+    {
+     "title": "Casper the Friendly Finality Gadget",
+     "url": "https://arxiv.org/abs/1710.09437",
+     "year": "2017"
+    },
+    {
+     "title": "CometBFT spec: consensus/evidence.md",
+     "url": "https://github.com/cometbft/cometbft/blob/main/spec/consensus/evidence.md",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "HotStuff-2",
+     "url": "https://eprint.iacr.org/2023/397",
+     "year": "2023"
+    },
+    {
+     "title": "Correlated Errors in Large Language Models",
+     "url": "https://proceedings.mlr.press/v267/kim25e.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "KT-19"
+   ],
+   "draft_ref": "spine-vocab γρ. 107· _unmerged-parts/24.md γρ. 39 (και κανόνες §24 γρ. 7–10)",
+   "draft_position": "Κατάληψη ή συμπαιγνία του Court. Κριτήρια: οι όροι ανεξαρτησίας ανιχνεύουν, ο μη-LLM oracle πιάνει seeded ψευδή verdicts, η έφεση ανατρέπει. GP-5· INV-K02, INV-K06. Γενικοί κανόνες §24: προκαταχώριση κατωφλίων, πρώτα σε DST, μη-LLM oracle axis.",
+   "verdict": "superior-exists",
+   "reasoning": "Η προκαταχώριση υπάρχει γενικά (§24 κανόνας 1). Λείπουν όμως μοντέλο απειλής (ποιος αιχμαλωτίζει και πώς), μετρήσιμη ποσότητα, ακόμη και συμβολικά κατώφλια όπως τα θ και ε άλλων KT, και attack policies. Δεν καλύπτονται η συμπαιγνία χωρίς κανάλι και το sandbagging.",
+   "superior": "Control evaluations (Greenblatt et al. ICML 2024): η red team ελέγχει τα μη έμπιστα μοντέλα με attack policies, και μετράται η πιθανότητα ασφαλείας του πρωτοκόλλου. Το ControlArena (UK AISI και Redwood, πάνω στο Inspect) δίνει settings, micro-protocols, monitors και policies. Η ταξινομία του 2026 δίνει τις στρατηγικές συμπαιγνίας (passive self-recognition, causal, acausal/Schelling, combined). Αυστηρά ανώτερο: μετατρέπει το KT-19 σε προκαταχωρισμένο παίγνιο με μετρήσιμο safety, π.χ. την πιθανότητα ένα seeded ψευδές verdict να γίνει τελικό υπό δεδομένη attack policy, και κρατά και τα τρία σκέλη του προχείρου. Trade-off: δεν υπάρχει έτοιμο court setting, πρέπει να κατασκευαστεί.",
+   "sota_refs": [
+    "SOTA-ADV-09",
+    "SOTA-ADV-10",
+    "SOTA-ADV-13"
+   ],
+   "sources": [
+    {
+     "title": "AI Control: Improving Safety Despite Intentional Subversion",
+     "url": "https://arxiv.org/abs/2312.06942",
+     "year": "2024"
+    },
+    {
+     "title": "ControlArena (GitHub)",
+     "url": "https://github.com/UKGovernmentBEIS/control-arena",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "When can we trust untrusted monitoring?",
+     "url": "https://arxiv.org/abs/2602.20628",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-04"
+   ],
+   "draft_ref": "_unmerged-parts/26.md γρ. 31 (και _unmerged-parts/19.md §19.5 γρ. 93)",
+   "draft_position": "Πόσο αξιόπιστο είναι το Court: seeded σφάλματα, recall και false-refutation. Εκτός ορίων → επανασχεδιασμός panels και oracles. GP-5, CMP-ADV-02.",
+   "verdict": "superior-exists",
+   "reasoning": "Η προκαταχώριση κατωφλίων υπάρχει ως γενικός κανόνας (§19.5 κανόνας 3). Τα όρια όμως δεν ονομάζονται, η αντιπροσωπευτικότητα των seeded σφαλμάτων δεν εξετάζεται, και κυρίως δεν τίθεται το ερώτημα ποιο πρωτόκολλο να χρησιμοποιηθεί. Τα αποτελέσματα συγκρούονται: η μία κριτική αρκεί σχεδόν όσο το debate υπό συνθήκη (Elasky 2026), η collaborative resolution πετυχαίνει 62,1% έναντι 49,2% (Jiang 2026), η NSO με debate 51,7% σε Elo gap 400 (Engels 2025).",
+   "superior": "Ο σχεδιασμός των scalable-oversight benchmarks (Kenton et al. 2024, Khan et al. 2024): σύγκριση direct QA, consultancy, debate, single critique, collaborative resolution και voting, σε πολλαπλές ασυμμετρίες ικανότητας και πληροφορίας. Ground truth δίνει ο μη-LLM oracle, και το alt-test κρίνει πότε ο LLM κριτής μπορεί να αντικαταστήσει ανθρώπους, με ελέγχους για sandbagging. Αυστηρά πιο πληροφοριακό: απαντά και στο «πόσο αξιόπιστο» και στο «ποιο πρωτόκολλο». Trade-off: μεγαλύτερο κόστος.",
+   "sota_refs": [
+    "SOTA-ADV-01",
+    "SOTA-ADV-03",
+    "SOTA-ADV-07",
+    "SOTA-ADV-10"
+   ],
+   "sources": [
+    {
+     "title": "On scalable oversight with weak LLMs judging strong LLMs",
+     "url": "https://arxiv.org/abs/2407.04622",
+     "year": "2024"
+    },
+    {
+     "title": "Collaborative Disagreement Resolution for Scalable Oversight",
+     "url": "https://arxiv.org/abs/2607.01251",
+     "year": "2026"
+    },
+    {
+     "title": "The Alternative Annotator Test for LLM-as-a-Judge",
+     "url": "https://arxiv.org/abs/2501.10970",
+     "year": "2025"
+    },
+    {
+     "title": "Scaling Laws For Scalable Oversight",
+     "url": "https://arxiv.org/abs/2504.18530",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "EXP-16"
+   ],
+   "draft_ref": "_unmerged-parts/26.md γρ. 43· master §8.7 γρ. 770· spine VT-305",
+   "draft_position": "Ποια σημασιολογία επιχειρημάτων ταιριάζει στην κρίση ειδικών: grounded έναντι preferred έναντι ASPIC+ με προτεραιότητες. Αποτέλεσμα: αλλαγή default. GP-5, CMP-CCP-02.",
+   "verdict": "gap",
+   "reasoning": "Το πείραμα είναι λάθος διατυπωμένο. Το ASPIC+ είναι structured framework που παράγει AF υπό Dung semantics· δεν είναι εναλλακτική της grounded ή της preferred. Επιπλέον, για το Carneades μέσω ASPIC+ η extension είναι μοναδική και ίδια σε όλες τις Dung semantics (van Gijzel & Prakken 2012), οπότε εκεί το δίλημμα grounded/preferred εκλείπει. Λείπουν: burdens και standards of proof, ABA (ICCMA 2025), gradual/QBAF (DF-QuAD με αποδεδειγμένη contestability), rationality postulates, υπολογιστικό κόστος. Το κριτήριο «κρίση ειδικών» είναι μόνο περιγραφικό. Δεν βρέθηκε μελέτη με νομικούς ειδικούς, και τα ευρήματα με γενικούς συμμετέχοντες διαφέρουν (grounded/CF2, preferred στο reinstatement, SCF2, επίδραση γραφικής αναπαράστασης). Για θεσμό αλήθειας χρειάζονται και κανονιστικά κριτήρια. Ο τρέχων default grounded (μοναδική extension, VT-305) είναι συνεπής με σκεπτικιστική αποδοχή για ADJUDICATED.",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-ADV-14",
+    "SOTA-ADV-15",
+    "SOTA-ADV-16",
+    "SOTA-ADV-17"
+   ],
+   "sources": [
+    {
+     "title": "ICCMA 2025 Tracks",
+     "url": "https://argumentationcompetition.org/2025/tracks.html",
+     "year": "2025"
+    },
+    {
+     "title": "Relating Carneades with abstract argumentation via the ASPIC+ framework",
+     "url": "https://doi.org/10.1080/19462166.2012.661766",
+     "year": "2012"
+    },
+    {
+     "title": "Empirical Study on Human Evaluation of Complex Argumentation Frameworks",
+     "url": "https://arxiv.org/abs/1902.10552",
+     "year": "2019"
+    },
+    {
+     "title": "Argumentative LLMs (arXiv HTML)",
+     "url": "https://arxiv.org/html/2405.02079",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment",
+   "confidence": "high"
+  },
+  {
+   "ids": [
+    "ADR-0008"
+   ],
+   "draft_ref": "_unmerged-parts/22.md γρ. 14· master §0.3 γρ. 139, §3 γρ. 282–283, §3.1 γρ. 324",
+   "draft_position": "Το Court ως runtime θεσμοποίηση των [0047]/[0093] και του CPEI L6/Ω+3, με proof obligations αντί personas και ≥1 μη-LLM oracle.",
+   "verdict": "holds",
+   "reasoning": "Ο πυρήνας στηρίζεται ισχυρά. Οι LLM κριτές, παρά τη συμφωνία με ανθρώπους άνω του 80%, έχουν biases και ξεγελιούνται με ένα token (master keys), και η NSO μέσω debate πετυχαίνει 51,7% σε Elo gap 400. Τα persona courts (AgentCourt) είναι προσομοιώσεις για εκπαίδευση. Μηχανικοί oracles με μικρό TCB υπάρχουν: certifying algorithms, Lean kernel με ανεξάρτητους checkers (Lean4Lean, nanoda_lib, leanchecker). Στοχευμένος έλεγχος δεν βρήκε ανώτερη αρχή· τα Goel 2025 και Kim 2025 την ενισχύουν. Επιφύλαξη: το σκέλος [0047]/[0093]/CPEI L6/Ω+3 παραπέμπει στο άλλο repo και δεν επαληθεύεται από εδώ (GAP-ADV-16).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-ADV-06",
+    "SOTA-ADV-03",
+    "SOTA-ADV-18",
+    "SOTA-ADV-19",
+    "SOTA-ADV-23"
+   ],
+   "sources": [
+    {
+     "title": "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena",
+     "url": "https://arxiv.org/abs/2306.05685",
+     "year": "2023"
+    },
+    {
+     "title": "One Token to Fool LLM-as-a-Judge",
+     "url": "https://arxiv.org/abs/2507.08794",
+     "year": "2025"
+    },
+    {
+     "title": "Scaling Laws For Scalable Oversight",
+     "url": "https://arxiv.org/abs/2504.18530",
+     "year": "2025"
+    },
+    {
+     "title": "Certifying algorithms",
+     "url": "https://doi.org/10.1016/j.cosrev.2010.09.009",
+     "year": "2011"
+    },
+    {
+     "title": "AgentCourt",
+     "url": "https://aclanthology.org/2025.findings-acl.304/",
+     "year": "2025"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  },
+  {
+   "ids": [
+    "REQ-ADV-003"
+   ],
+   "draft_ref": "_unmerged-parts/29.md §29.7 γρ. 118",
+   "draft_position": "Κάθε αποδοχή περιλαμβάνει ≥1 μη-LLM μηχανικό oracle. CMP-ADV-02, CMP-FRG-05· ICD-14, ICD-30· INV-C03· VT-904, KT-19· [T].",
+   "verdict": "holds",
+   "reasoning": "Η κατεύθυνση είναι σωστή και υλοποιήσιμη σήμερα για κλάσεις με checker (§8.7): citation receipt chain, SMT, Lean με ανεξάρτητους kernels, διπλός υπολογισμός προθεσμιών, grounded labelling με πιστοποιητικό. Τρία προβλήματα: (α) η εμβέλεια διαφέρει από το ICD-14 και το §8.3 (GAP-ADV-03)· (β) ο oracle ελέγχει το τυπικό αντικείμενο, όχι την πιστότητα της μετάφρασης από φυσική γλώσσα. Υπάρχει μερικό αυτόματο μέτρο (FormalAlign 2024), χωρίς απόδειξη επάρκειας (GAP-ADV-09)· (γ) για ερμηνευτικούς ισχυρισμούς η απαίτηση δεν ικανοποιείται και χρειάζεται ρητό Unknown ή ανθρώπινη κρίση (DEC-ADV-02).",
+   "superior": "",
+   "sota_refs": [
+    "SOTA-ADV-18",
+    "SOTA-ADV-06"
+   ],
+   "sources": [
+    {
+     "title": "Certifying algorithms",
+     "url": "https://doi.org/10.1016/j.cosrev.2010.09.009",
+     "year": "2011"
+    },
+    {
+     "title": "Lean4Lean: Verifying a Typechecker for Lean, in Lean",
+     "url": "https://arxiv.org/abs/2403.14064",
+     "year": "2024"
+    },
+    {
+     "title": "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+     "url": "https://arxiv.org/abs/2410.10135",
+     "year": "2024"
+    }
+   ],
+   "classification": "today",
+   "confidence": "medium"
+  }
+ ],
+ "gaps": [
+  {
+   "id": "GAP-ADV-01",
+   "title": "Η §13 δεν γράφτηκε και λείπουν τα formal και contract artifacts του Court",
+   "description": "Ο χάρτης του master (γρ. 51) αντιστοιχίζει την §13 στο formal/tla/EpistemicCourt.tla. Το INV-K02 παραπέμπει σε αυτό (VT-104) και το ICD-14 στο court.yaml. Κανένα από τα δύο δεν υπάρχει στο repo. Το docs/architecture-draft περιέχει μόνο το master, το spine-vocab.md και τα _unmerged-parts. Οι φάκελοι formal/, contracts/, adrs/ και model/ που αναφέρει το CLAUDE.md δεν υπάρχουν εκεί.",
+   "why_it_matters": "Τα INV-K02, INV-K03, INV-K06, το REQ-ADV-002 και τα VT-104, VT-014 και VT-502 δεν έχουν αντικείμενο επαλήθευσης. Η διαδικασία δεν ορίζεται πουθενά.",
+   "sota_answer": "Η διαδικασία ως state machine σε TLA+/Apalache, με OpenAPI/AsyncAPI contract, στη Φάση Β.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-ADV-02",
+   "title": "Ασυμφωνία πράξεων του ICD-14 και ακαθόριστο Unknown verdict",
+   "description": "Το spine δίνει 7 πράξεις και το 15.md 8 (με Deliberate). Το §15.1 επιβάλλει γενικά το Unknown ως αποτέλεσμα επιτυχίας σε κάθε ICD (INV-C04). Η γραμμή του ICD-14 όμως δεν ορίζει τι σημαίνει Unknown verdict, πώς καταγράφεται στο επίπεδο ετυμηγοριών (INV-K02) και ποιος γίνεται ο βαθμός του ισχυρισμού.",
+   "why_it_matters": "Χωρίς ρητή σημασιολογία, ένα Court που δεν μπορεί να αποφανθεί πιέζεται να βγάλει ψευδή ετυμηγορία.",
+   "sota_answer": "Μία έδρα για τη λίστα πράξεων· verdict ως sum type {Upheld, Refuted, Unknown(reason)} με τα reasons του §8.4.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-ADV-03",
+   "title": "Ασυνεπής εμβέλεια του κανόνα για μη-LLM oracle",
+   "description": "Το REQ-ADV-003 λέει «κάθε αποδοχή», το ICD-14 «για ADJUDICATED/ESTABLISHED». Το §8.3 (γρ. 741–742) ζητά για ADJUDICATED μόνο διαδικασία, standard of proof και dissent record, χωρίς oracle, και για ESTABLISHED formal proof, N-version ή primary source με receipt.",
+   "why_it_matters": "Τρεις κανόνες για την ίδια έννοια παραβιάζουν την αρχή «μία έδρα ανά έννοια» και αφήνουν κενό στο trust lattice.",
+   "sota_answer": "Κανόνας ανά φύλλο: κάθε μηχανοποιήσιμο φύλλο ελέγχεται από oracle, τα υπόλοιπα δηλώνονται ρητά (πρότυπο BoLD, certifying algorithms).",
+   "sota_refs": [
+    "SOTA-ADV-18",
+    "SOTA-ADV-19"
+   ],
+   "sources": [
+    {
+     "title": "Overview of BoLD | Arbitrum Docs",
+     "url": "https://docs.arbitrum.io/how-arbitrum-works/bold/gentle-introduction",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "Certifying algorithms",
+     "url": "https://doi.org/10.1016/j.cosrev.2010.09.009",
+     "year": "2011"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-ADV-04",
+   "title": "Το INV-K06 συγχέει δύο «Byzantine» και εγγυάται συμφωνία, όχι ορθότητα",
+   "description": "Το ADR-0031 περιορίζει το BFT σε cross-site διάταξη verdicts (replicas), ενώ το KT-19 επικαλείται το INV-K06 για κατάληψη ή συμπαιγνία κριτών (panelists). Το n≥3f+1 υποθέτει ανεξάρτητες βλάβες, που δεν ισχύουν για LLM κριτές. Το KT-04 ζητά ανίχνευση equivocation χωρίς το invariant να την εγγυάται όταν f ≥ n/3.",
+   "why_it_matters": "Δίνει ψευδή αίσθηση ότι το BFT προστατεύει από λάθος ή αιχμαλωτισμένες ετυμηγορίες.",
+   "sota_answer": "Το INV-K06 να αφορά μόνο replicas με accountable safety (Sheng 2021· Casper FFG· CometBFT evidence). Η ανεξαρτησία των panels να γίνει χωριστή μετρήσιμη ιδιότητα, με ID-REQUEST, χωρίς επινόηση ID εδώ.",
+   "sota_refs": [
+    "SOTA-ADV-21",
+    "SOTA-ADV-08"
+   ],
+   "sources": [
+    {
+     "title": "BFT Protocol Forensics",
+     "url": "https://arxiv.org/abs/2010.06785",
+     "year": "2021"
+    },
+    {
+     "title": "CometBFT spec: consensus/evidence.md",
+     "url": "https://github.com/cometbft/cometbft/blob/main/spec/consensus/evidence.md",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "Correlated Errors in Large Language Models",
+     "url": "https://proceedings.mlr.press/v267/kim25e.html",
+     "year": "2025"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-ADV-05",
+   "title": "Η ανεξαρτησία δεν μετριέται",
+   "description": "Οι όροι ανεξαρτησίας (χωριστά κλειδιά, πάροχοι, μνήμη και i–iv του [0093]) είναι δομικοί. Δεν υπάρχει μέτρηση συσχέτισης σφαλμάτων μεταξύ Adversary, panels και generators, ούτε προϋπολογισμός γι' αυτήν.",
+   "why_it_matters": "Οι διαψεύσεις αξίζουν μόνο αν τα σφάλματα δεν είναι κοινά, και η συσχέτιση είναι ισχυρή ακόμη και μεταξύ παρόχων.",
+   "sota_answer": "Προκαταχωρισμένη μέτρηση κοινών σφαλμάτων σε sealed set (π.χ. CAPA) με κατώφλι· όπου η συσχέτιση είναι υψηλή, υποχρεωτικός μη-LLM άξονας· ψηφοφορία μόνο ως σήμα αβεβαιότητας.",
+   "sota_refs": [
+    "SOTA-ADV-08"
+   ],
+   "sources": [
+    {
+     "title": "Great Models Think Alike and this Undermines AI Oversight",
+     "url": "https://arxiv.org/abs/2502.04313",
+     "year": "2025"
+    },
+    {
+     "title": "N-Version Programming with Coding Agents",
+     "url": "https://arxiv.org/html/2606.20158",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-ADV-06",
+   "title": "Συμπαιγνία χωρίς κανάλι",
+   "description": "Το πρόχειρο αντιμετωπίζει τη συμπαιγνία μόνο με απουσία κοινής μνήμης. Δεν καλύπτει focal points, passive self-recognition, steganography και self-preference.",
+   "why_it_matters": "Adversary και κριτής από συγγενή μοντέλα μπορούν να συντονιστούν σιωπηρά (KT-19).",
+   "sota_answer": "Τεχνικές αποτροπής συμπαιγνίας στο untrusted monitoring (Greenblatt 2024), mitigation measures για steganography (Motwani 2024), control evaluations με attack policies συμπαιγνίας (ControlArena, ταξινομία 2026).",
+   "sota_refs": [
+    "SOTA-ADV-09"
+   ],
+   "sources": [
+    {
+     "title": "Subversion via Focal Points",
+     "url": "https://arxiv.org/abs/2507.03010",
+     "year": "2025"
+    },
+    {
+     "title": "Secret Collusion among AI Agents",
+     "url": "https://arxiv.org/abs/2402.07510",
+     "year": "2024"
+    },
+    {
+     "title": "AI Control",
+     "url": "https://arxiv.org/abs/2312.06942",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-ADV-07",
+   "title": "Sandbagging του Adversarial Entity",
+   "description": "Ο εφησυχασμός μετριέται σε seeded faults, αλλά ένα LLM μπορεί να αναγνωρίζει τα seeded σφάλματα και να υποαποδίδει επιλεκτικά στα πραγματικά.",
+   "why_it_matters": "Η μετρική του Adversary γίνεται αναξιόπιστη ακριβώς τη στιγμή που μετράει.",
+   "sota_answer": "Πρόταση σχεδίασης, όχι αποδεδειγμένη μέθοδος: seeded faults μη διακρίσιμα από τα πραγματικά, σύγκριση με μηχανικό άξονα (counterexample search) και εναλλακτικό adversary. Για ώριμη μέθοδο ανίχνευσης δεν ξέρω.",
+   "sota_refs": [
+    "SOTA-ADV-10"
+   ],
+   "sources": [
+    {
+     "title": "AI Sandbagging",
+     "url": "https://arxiv.org/abs/2406.07358",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-ADV-08",
+   "title": "Το arsenal δεν επιτίθεται στον ίδιο τον κριτή",
+   "description": "Τα CMP-ADV-03 και REQ-ADV-004 στοχεύουν injection, poisoning, Byzantine και escape, όχι το Court: πειθώ, position/verbosity bias, master keys, obfuscated arguments.",
+   "why_it_matters": "Ο κριτής είναι το κρισιμότερο σημείο του θεσμού και ξεγελιέται.",
+   "sota_answer": "Γεννήτριες επιθέσεων προς τον κριτή (master keys, Zheng 2023) και sneaky provers (prover-verifier games) μέσα στο arsenal.",
+   "sota_refs": [
+    "SOTA-ADV-06",
+    "SOTA-ADV-05"
+   ],
+   "sources": [
+    {
+     "title": "One Token to Fool LLM-as-a-Judge",
+     "url": "https://arxiv.org/abs/2507.08794",
+     "year": "2025"
+    },
+    {
+     "title": "Prover-Verifier Games improve legibility of LLM outputs",
+     "url": "https://arxiv.org/abs/2407.13692",
+     "year": "2024"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-ADV-09",
+   "title": "Κενό πιστότητας στην τυποποίηση (formalization gap)",
+   "description": "Ο oracle ελέγχει το τυπικό αντικείμενο (SMT, AF, Lean statement). Τη μετάφραση του νομικού ισχυρισμού σε αυτό την κάνει LLM και δεν ελέγχεται.",
+   "why_it_matters": "Μια σωστή απόδειξη λάθος ισχυρισμού παίρνει ESTABLISHED.",
+   "sota_answer": "Αποδεδειγμένα επαρκή μηχανισμό δεν ξέρω. Μερικά μέτρα: αυτόματη αξιολόγηση alignment φυσικής και τυπικής διατύπωσης (FormalAlign, σε 4 benchmarks)· η διατύπωση ως χωριστό ζητούμενο στο Court· ανθρώπινη υπογραφή· contestability κατά ArgLLMs.",
+   "sota_refs": [
+    "SOTA-ADV-16"
+   ],
+   "sources": [
+    {
+     "title": "FormalAlign: Automated Alignment Evaluation for Autoformalization",
+     "url": "https://arxiv.org/abs/2410.10135",
+     "year": "2024"
+    },
+    {
+     "title": "Argumentative LLMs (arXiv HTML)",
+     "url": "https://arxiv.org/html/2405.02079",
+     "year": "2024"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-ADV-10",
+   "title": "Λείπει τυπικό μοντέλο για burden και standards of proof",
+   "description": "Το REQ-ADV-002 αναφέρει standards of proof, αλλά κανένα κείμενο δεν τα ορίζει και το EXP-16 δεν τα εξετάζει.",
+   "why_it_matters": "Χωρίς αυτά, το ADJUDICATED δεν έχει ελέγξιμο κριτήριο, και το LAWMAX χρειάζεται νομικά πιστά standards.",
+   "sota_answer": "Carneades μέσω ASPIC+ και μοντέλα burdens/standards σε structured argumentation (Prakken & Sartor 2011, Calegari & Sartor 2021), με υπολογισμό υπό grounded.",
+   "sota_refs": [
+    "SOTA-ADV-14"
+   ],
+   "sources": [
+    {
+     "title": "The Carneades model of argument and burden of proof",
+     "url": "https://doi.org/10.1016/j.artint.2007.04.010",
+     "year": "2007"
+    },
+    {
+     "title": "Burdens of Persuasion and Standards of Proof in Structured Argumentation",
+     "url": "https://doi.org/10.1007/978-3-030-89391-0_3",
+     "year": "2021"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-ADV-11",
+   "title": "Δεν έχει επιλεγεί πρωτόκολλο απόφασης",
+   "description": "Δεν ορίζεται αν ο πυρήνας είναι debate, consultancy, single critique, collaborative resolution ή voting, ούτε πώς η διαφωνία αποσυντίθεται σε φύλλα.",
+   "why_it_matters": "Τα δημοσιευμένα αποτελέσματα διαφέρουν πολύ ανά πρωτόκολλο και συνθήκη.",
+   "sota_answer": "Bisection μέχρι φύλλα με oracle όπου εφαρμόζεται (BoLD) και σύγκριση πρωτοκόλλων στο EXP-04.",
+   "sota_refs": [
+    "SOTA-ADV-02",
+    "SOTA-ADV-03",
+    "SOTA-ADV-19"
+   ],
+   "sources": [
+    {
+     "title": "Collaborative Disagreement Resolution for Scalable Oversight",
+     "url": "https://arxiv.org/abs/2607.01251",
+     "year": "2026"
+    },
+    {
+     "title": "Debate Helps Weak Judges Reward Stronger Models",
+     "url": "https://arxiv.org/abs/2605.27483",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-ADV-12",
+   "title": "Χωρίς όριο χρόνου και χωρίς άμυνα σε delay attacks",
+   "description": "Το triage κατά stakes δεν ορίζει μέγιστο χρόνο επίλυσης. Αντίπαλος μπορεί να καθυστερεί με διαδοχικές προσφυγές.",
+   "why_it_matters": "Υποθέσεις μένουν ανοιχτές και μπλοκάρουν προαγωγές.",
+   "sota_answer": "Φραγμένη καθυστέρηση (BoLD: παράθυρο 6,4 ημερών, ρυθμιζόμενο από τη διακυβέρνηση) και κλιμακούμενο κόστος εφέσεων (Kleros).",
+   "sota_refs": [
+    "SOTA-ADV-19"
+   ],
+   "sources": [
+    {
+     "title": "Overview of BoLD | Arbitrum Docs",
+     "url": "https://docs.arbitrum.io/how-arbitrum-works/bold/gentle-introduction",
+     "year": "n.d. (πρόσβαση 2026)"
+    },
+    {
+     "title": "Kleros Short Paper v1.0.7",
+     "url": "https://kleros.io/assets/whitepaper.pdf",
+     "year": "2019"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-ADV-13",
+   "title": "Δεν ορίζεται η σύνθεση της έφεσης",
+   "description": "Ορίζεται μόνο ότι ο δημιουργός είναι η ανώτατη έφεση (ICD-14, INV-C05). Δεν ορίζονται ενδιάμεσοι βαθμοί ή νέο ανεξάρτητο panel.",
+   "why_it_matters": "Αν την έφεση κρίνει το ίδιο ή συσχετισμένο panel, το «η έφεση ανατρέπει» του KT-19 δεν έχει νόημα.",
+   "sota_answer": "Νέο, μεγαλύτερο σώμα σε κάθε βαθμό (Kleros: διπλάσιοι ένορκοι συν ένας), με διαφορετικό άξονα κρίσης.",
+   "sota_refs": [
+    "SOTA-ADV-19"
+   ],
+   "sources": [
+    {
+     "title": "Kleros Short Paper v1.0.7",
+     "url": "https://kleros.io/assets/whitepaper.pdf",
+     "year": "2019"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-ADV-14",
+   "title": "Τα KT-19 και EXP-04 δεν έχουν λειτουργικές μετρικές",
+   "description": "Η προκαταχώριση υπάρχει γενικά (§24 κανόνας 1, §19.5 κανόνας 3). Όμως το KT-19 δεν ονομάζει ούτε συμβολικό κατώφλι, μετρήσιμη ποσότητα ή μοντέλο απειλής (σε αντίθεση με τα θ και ε του KT-01 και το ≥10^5 του KT-10). Το EXP-04 ονομάζει recall και false-refutation χωρίς μέγεθος δείγματος ή σχεδιασμό seeded faults.",
+   "why_it_matters": "Δεν μπορεί να αποφασιστεί «πέρασε ή απέτυχε», κάτι που αντιβαίνει στο «0 λάθος» και στο ADR-0027.",
+   "sota_answer": "Control evaluations με μετρήσιμο safety και benchmarks πρωτοκόλλων με alt-test.",
+   "sota_refs": [
+    "SOTA-ADV-09",
+    "SOTA-ADV-07"
+   ],
+   "sources": [
+    {
+     "title": "AI Control",
+     "url": "https://arxiv.org/abs/2312.06942",
+     "year": "2024"
+    },
+    {
+     "title": "The Alternative Annotator Test for LLM-as-a-Judge",
+     "url": "https://arxiv.org/abs/2501.10970",
+     "year": "2025"
+    }
+   ],
+   "classification": "today"
+  },
+  {
+   "id": "GAP-ADV-15",
+   "title": "Το dissent διατηρείται αλλά δεν χρησιμοποιείται ως σήμα",
+   "description": "Στο πρόχειρο το dissent εμφανίζεται μόνο ως καταγραφή (INV-K03, ICD-14, §8.3, §19.3). Κανένα component δεν το χρησιμοποιεί για βαθμονόμηση ή για να ενεργοποιήσει έφεση.",
+   "why_it_matters": "Χάνεται πληροφορία: σε περίπου 1 στις 4 αποκλίνουσες περιπτώσεις δικαιώνεται η μειοψηφία.",
+   "sota_answer": "Meta-classifier πάνω στα logs (Minority Sentinel, Flip Precision 81,2%) που ενεργοποιεί αυτόματη έφεση ή Unknown.",
+   "sota_refs": [
+    "SOTA-ADV-04"
+   ],
+   "sources": [
+    {
+     "title": "Minority Sentinel",
+     "url": "https://arxiv.org/abs/2606.29270",
+     "year": "2026"
+    }
+   ],
+   "classification": "experiment"
+  },
+  {
+   "id": "GAP-ADV-16",
+   "title": "Εξάρτηση από ανεπαλήθευτες as-built έδρες",
+   "description": "Το ADR-0008, η §0.3 (γρ. 139) και το INV-K02 στηρίζονται στα [0047], [0093], CPEI L6, legal-dialectic (grounded) και Ω+3, που βρίσκονται στο STAVROPOULOSLAWCORPUS και δεν ελέγχθηκαν.",
+   "why_it_matters": "Αν οι έδρες διαφέρουν από την περιγραφή, το crosswalk του Court καταρρέει.",
+   "sota_answer": "Επαλήθευση από τον δημιουργό ή σε χωριστή εργασία εντός εκείνου του έργου.",
+   "sota_refs": [],
+   "sources": [],
+   "classification": "today"
+  }
+ ],
+ "unknowns": [
+  "Η πραγματική κατάσταση των [0047], [0093], CPEI L6, legal-dialectic (grounded) και Ω+3 στο STAVROPOULOSLAWCORPUS: δεν ανοίχτηκε, κατά την εντολή.",
+  "Δεν βρέθηκε υπαρκτό σύστημα Epistemic Court για ισχυρισμούς φυσικής ή νομικής γλώσσας αγκυρωμένο σε oracle. Τα παραγωγικά ανάλογα (BoLD) αφορούν ντετερμινιστικό υπολογισμό.",
+  "Ακρίβεια debate, LLM juries και single critique σε νομικούς-ερμηνευτικούς ισχυρισμούς: οι μελέτες αφορούν QA, code, logic και math.",
+  "Ποια σημασιολογία ταιριάζει σε νομικούς ειδικούς: δεν βρέθηκε μελέτη με νομικούς ειδικούς.",
+  "Αν υπάρχουν σε παραγωγή forensics της HotStuff-family. Επαληθεύτηκε μόνο ότι το CometBFT υλοποιεί evidence σε spec· την έκταση παραγωγικής χρήσης δεν την ξέρω.",
+  "Venue (NeurIPS 2024) των Panickssery et al. και Motwani et al., και ICLR 2025 του ForecastBench: δεν φαίνονται στις σελίδες arXiv, και το Semantic Scholar έδωσε 429. Αφαιρέθηκαν.",
+  "Κατάσταση του ForecastBench leaderboard το 2026 (superforecasters έναντι LLM): δεν ανακτήθηκαν δεδομένα από τη σελίδα.",
+  "Ημερομηνία ενεργοποίησης του BoLD (Feb 2025): μόνο από δευτερογενή πηγή.",
+  "Οι συγκεκριμένες ονομασίες proof standards και η διάκριση burden of production και persuasion στο Carneades 2007: πρόσβαση 403, το Crossref χωρίς abstract.",
+  "Αν η συσχέτιση σφαλμάτων των frontier LLMs ισχύει με την ίδια ένταση στη νομική συλλογιστική.",
+  "Ώριμη μέθοδος ανίχνευσης sandbagging μόνο από συμπεριφορά: δεν ξέρω.",
+  "Ο προϋπολογισμός WebSearch είχε εξαντληθεί (200/200). Οι στοχευμένοι έλεγχοι holds έγιναν με WebFetch σε arXiv, Crossref και Semantic Scholar, με rate limits 429· μπορεί να ξέφυγαν πρόσφατες εργασίες."
+ ],
+ "decisions": [
+  {
+   "id": "DEC-ADV-01",
+   "question": "Ποιος είναι ο πυρήνας απόφασης του Epistemic Court;",
+   "recommendation": "Υβριδικός πυρήνας. Για αποσυνθέσιμους ή υπολογιστικούς ισχυρισμούς: bisection μέχρι φύλλα proof obligations, όπου κάθε μηχανοποιήσιμο φύλλο το κρίνει μόνο μηχανικός oracle, με φραγμένο χρόνο. Debate ή κριτική από LLM μόνο για τον εντοπισμό cruxes, ποτέ για απόφαση σε φύλλο που έχει oracle. Το επίπεδο procedure του ICD-14 μένει για τα μη αποσυνθέσιμα. Η εφαρμοσιμότητα σε νομικούς ισχυρισμούς κρίνεται στο EXP-04.",
+   "alternatives": [
+    {
+     "option": "Επίπεδη διαδικασία του προχείρου (ICD-14) με LLM panels και κανόνα oracle",
+     "pros": "Απλή, ήδη περιγραμμένη, καλύπτει μη αποσυνθέσιμους ισχυρισμούς, σύμφωνη με το ADR-0008",
+     "cons": "Χωρίς εγγύηση τερματισμού και χωρίς μηχανισμό που φέρνει τη διαφωνία στον oracle· οι LLM κριτές ξεγελιούνται και έχουν συσχετισμένα σφάλματα"
+    },
+    {
+     "option": "Αποσύνθεση σε φύλλα με oracle (τύπου BoLD / doubly-efficient debate)",
+     "pros": "Σε παραγωγή για ντετερμινιστικό υπολογισμό (BoLD)· θεωρητικές εγγυήσεις· η απόφαση δεν εξαρτάται από ρητορική",
+     "cons": "Ο ισχυρισμός πρέπει να εκφράζεται ως δέντρο ή υπολογισμός· κανένα παραγωγικό προηγούμενο για φυσική γλώσσα· για ερμηνευτικά φύλλα χρειάζεται Unknown ή άνθρωπος"
+    },
+    {
+     "option": "Debate ή collaborative resolution με LLM κριτή ως πυρήνα",
+     "pros": "Γενική εφαρμογή· βελτιώσεις 2026 (62,1% έναντι 49,2%)",
+     "cons": "NSO μέσω debate 51,7% σε Elo gap 400· ο κριτής είναι επιφάνεια επίθεσης· σε ένταση με το ADR-0008 αν ο LLM αποφασίζει εκεί όπου υπάρχει oracle"
+    }
+   ],
+   "rationale": "Ο υβριδικός πυρήνας προσθέτει τερματισμό και αγκύρωση σε oracle όπου αυτό αποδεδειγμένα λειτουργεί, χωρίς να αφαιρεί την ισχύουσα διαδικασία· το άγνωστο μετατρέπεται σε πείραμα.",
+   "affects_ids": [
+    "ICD-14",
+    "CMP-ADV-02",
+    "REQ-ADV-002",
+    "REQ-ADV-003",
+    "ADR-0008",
+    "EXP-04"
+   ]
+  },
+  {
+   "id": "DEC-ADV-02",
+   "question": "Ποια είναι η εμβέλεια του κανόνα «≥1 μη-LLM oracle» και τι γίνεται με τους μη μηχανοποιήσιμους ισχυρισμούς;",
+   "recommendation": "Κανόνας ανά φύλλο: για ADJUDICATED και ESTABLISHED, κάθε μηχανοποιήσιμο φύλλο ελέγχεται από oracle. Τα υπόλοιπα δηλώνονται ρητά: το verdict φέρει ένδειξη «μη μηχανοποιήσιμα φύλλα» και απαιτεί υπογραφή Principal ή δημιουργού, αλλιώς βγαίνει Unknown(UNDECIDABLE_IN_BUDGET) ή Unknown(OUT_OF_SCOPE).",
+   "alternatives": [
+    {
+     "option": "Κυριολεκτικά το REQ-ADV-003 (κάθε αποδοχή)",
+     "pros": "Μέγιστη αυστηρότητα",
+     "cons": "Ανικανοποίητο για νομική ερμηνεία· μπλοκάρει το LAWMAX ή σπρώχνει σε ψευδο-oracles"
+    },
+    {
+     "option": "Μόνο για ADJUDICATED και ESTABLISHED (ICD-14)",
+     "pros": "Συμβατό με το trust lattice",
+     "cons": "Δεν λέει τι γίνεται όταν δεν υπάρχει oracle· συγκρούεται με το §8.3 για το ADJUDICATED"
+    },
+    {
+     "option": "Κανόνας ανά φύλλο με ανθρώπινη υπογραφή ή Unknown",
+     "pros": "Τίμια άγνοια (INV-C04)· πρότυπο όπου αποφασίζει ο άνθρωπος (Community Notes)· σύμφωνο με INV-L02 και INV-C05",
+     "cons": "Περισσότερη ανθρώπινη εργασία· χρειάζεται ορισμός του «μηχανοποιήσιμου»"
+    }
+   ],
+   "rationale": "Ενώνει τρεις αντιφατικές διατυπώσεις σε μία έδρα χωρίς ψευδή αυστηρότητα.",
+   "affects_ids": [
+    "REQ-ADV-003",
+    "ICD-14",
+    "ADR-0008",
+    "INV-K02"
+   ]
+  },
+  {
+   "id": "DEC-ADV-03",
+   "question": "Ποια είναι η προεπιλεγμένη σημασιολογία και πώς ξαναδιατυπώνεται το EXP-16;",
+   "recommendation": "Structured επίπεδο ASPIC+ (ή ABA) με burdens και proof standards (Carneades, Prakken & Sartor, Calegari & Sartor), αξιολόγηση υπό grounded για το ADJUDICATED. Το EXP-16 ξαναγράφεται σε δύο άξονες (structured formalism × semantics, μαζί με gradual/QBAF για contestability) και κρίνεται με ετικέτες νομικών ειδικών, rationality postulates και κόστος.",
+   "alternatives": [
+    {
+     "option": "Grounded σε abstract AF (as-built legal-dialectic)",
+     "pros": "Μοναδική extension (VT-305)· σκεπτικιστική· υπάρχει ήδη, ανεπαλήθευτα",
+     "cons": "Χωρίς standards και burdens· δεν καλύπτει το REQ-ADV-002"
+    },
+    {
+     "option": "ASPIC+/ABA με burdens και proof standards, υπό grounded",
+     "pros": "Καλύπτει standards of proof· τυπικά θεμελιωμένο· το Carneades επάγει μοναδική extension σε όλες τις Dung semantics· solvers από το ICCMA",
+     "cons": "Πιο σύνθετο· η τυποποίηση από LLM δεν επαληθεύεται (GAP-ADV-09)"
+    },
+    {
+     "option": "Gradual/QBAF (DF-QuAD)",
+     "pros": "Αποδεδειγμένη base score και relation contestability· διαβαθμισμένη ισχύς",
+     "cons": "Δεν δίνει δυαδική αποδοχή για το trust lattice· οι base scores από LLM είναι ευάλωτες"
+    }
+   ],
+   "rationale": "Το standard of proof είναι απαίτηση (REQ-ADV-002). Η grounded κρατά τη συντηρητική ιδιότητα και το VT-305.",
+   "affects_ids": [
+    "EXP-16",
+    "REQ-ADV-002",
+    "CMP-ADV-02"
+   ]
+  },
+  {
+   "id": "DEC-ADV-04",
+   "question": "Τι σημαίνει το INV-K06 και πώς καλύπτεται η κατάληψη των panels;",
+   "recommendation": "Το INV-K06 περιορίζεται σε συμφωνία replicas (ADR-0031) και αναβαθμίζεται σε accountable safety με παραλλαγή HotStuff-family που έχει forensic support. Η ανεξαρτησία των panels γίνεται χωριστό μετρήσιμο invariant (ID-REQUEST) και το INV-K06 αφαιρείται από το KT-19.",
+   "alternatives": [
+    {
+     "option": "Διατήρηση όπως είναι",
+     "pros": "Καμία αλλαγή",
+     "cons": "Σύγχυση replicas και κριτών· ψευδής εγγύηση ορθότητας· το KT-04 ζητά ανίχνευση χωρίς εγγύηση"
+    },
+    {
+     "option": "Replicas με forensics της HotStuff-family και νέο invariant για panels",
+     "pros": "Μία έδρα ανά έννοια· κρατά την επιλογή του ADR-0031· εγγύηση 0 ή t+1 ενόχων",
+     "cons": "Νέο ID και έγκριση· forensics της HotStuff-family σε παραγωγή ανεπαλήθευτα, άρα απαιτεί πείραμα"
+    },
+    {
+     "option": "Αλλαγή οικογένειας BFT σε μία με υλοποιημένο χειρισμό evidence (CometBFT-class)",
+     "pros": "Υλοποιημένο evidence (DuplicateVote, LightClientAttack) σήμερα",
+     "cons": "Αλλάζει το ADR-0031· η τιμωρία μένει στην εφαρμογή· πλήρες forensic support κατά Sheng δεν επαληθεύτηκε για CometBFT"
+    }
+   ],
+   "rationale": "Το BFT εγγυάται συμφωνία, όχι αλήθεια· το KT-19 χρειάζεται ανίχνευση και μέτρηση.",
+   "affects_ids": [
+    "INV-K06",
+    "KT-19",
+    "ADR-0031"
+   ]
+  },
+  {
+   "id": "DEC-ADV-05",
+   "question": "Ποιο είναι το πρότυπο ανεξαρτησίας του Adversarial Entity και το status του;",
+   "recommendation": "Μετρήσιμη ανεξαρτησία: προκαταχωρισμένος προϋπολογισμός συσχέτισης σφαλμάτων, control evaluations με attack policies συμπαιγνίας και sandbagging, anti-collusion μέτρα και υποχρεωτικός μη-LLM άξονας. Το CMP-ADV-01 γίνεται [T] για τη δομή και [X] για την ανεξαρτησία μέχρι να μετρηθεί.",
+   "alternatives": [
+    {
+     "option": "Ανεξαρτησία by construction, [T] (πρόχειρο)",
+     "pros": "Απλό, υλοποιήσιμο αμέσως",
+     "cons": "Διαψεύδεται από Kim 2025, Goel 2025, Ron 2026, focal points και sandbagging· υπερδήλωση"
+    },
+    {
+     "option": "Μετρήσιμη ανεξαρτησία, [X]",
+     "pros": "Τίμια άγνοια· έλεγχος ανά γενιά μοντέλων",
+     "cons": "Κόστος αξιολογήσεων· καθυστέρηση του GP-5"
+    }
+   ],
+   "rationale": "Ο νόμος της τίμιας άγνοιας απαγορεύει [T] για ιδιότητα που το SOTA δείχνει ότι δεν ισχύει by construction.",
+   "affects_ids": [
+    "CMP-ADV-01",
+    "REQ-ADV-001",
+    "KT-19",
+    "EXP-04"
+   ]
+  }
+ ],
+ "verification": {
+  "sources_checked": 79,
+  "sources_failed": [
+   {
+    "url": "https://proceedings.neurips.cc/paper_files/paper/2025/file/934252acd87f254d5d4672fbde283bd2-Paper-Conference.pdf",
+    "problem": "Το PDF δεν διαβάστηκε από το fetch",
+    "action": "Επαληθεύτηκε μέσω της σελίδας abstract του NeurIPS 2025· το URL αντικαταστάθηκε"
+   },
+   {
+    "url": "https://dl.acm.org/doi/10.1109/TSE.1986.6312924",
+    "problem": "HTTP 403 (και κενή σελίδα στο IEEE)",
+    "action": "Βιβλιογραφικά στοιχεία μέσω Crossref (TSE SE-12(1):96–109), περιεχόμενο μέσω της περιγραφής στο Ron et al. 2026· URL → doi.org"
+   },
+   {
+    "url": "https://arxiv.org/html/2606.20158",
+    "problem": "Λάθος τίτλος: ο πραγματικός είναι «N-Version Programming with Coding Agents» (Ron, Baudry, Monperrus)",
+    "action": "Ο τίτλος διορθώθηκε"
+   },
+   {
+    "url": "https://arxiv.org/pdf/2404.13076",
+    "problem": "Το venue NeurIPS 2024 δεν φαίνεται· το Semantic Scholar έδωσε 429",
+    "action": "Το venue αφαιρέθηκε"
+   },
+   {
+    "url": "https://arxiv.org/abs/2402.07510",
+    "problem": "Το venue NeurIPS 2024 δεν φαίνεται",
+    "action": "Το venue αφαιρέθηκε"
+   },
+   {
+    "url": "https://aminrj.com/posts/attack-patterns-red-teaming/",
+    "problem": "Δευτερογενές blog (2026), όχι πρωτογενής πηγή",
+    "action": "Αντικαταστάθηκε από github.com/NVIDIA/garak και github.com/microsoft/PyRIT"
+   },
+   {
+    "url": "https://github.com/Azure/PyRIT",
+    "problem": "Αρχειοθετήθηκε 27-03-2026· μεταφέρθηκε στο microsoft/PyRIT",
+    "action": "Η αναφορά ενημερώθηκε"
+   },
+   {
+    "url": "https://github.com/safety-research/petri",
+    "problem": "Σήμερα Inspect Petri, με συντηρητή τη Meridian Labs",
+    "action": "Ο συντηρητής διορθώθηκε"
+   },
+   {
+    "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf",
+    "problem": "Το fetch επέστρεψε binary",
+    "action": "Επαλήθευση με τοπική εξαγωγή κειμένου (NISTAML.015, NISTAML.012, NISTAML.027) και με τη σελίδα CSRC (τελικό 24-03-2025)"
+   },
+   {
+    "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/assets/PDF/OWASP-Top-10-for-LLMs-v2025.pdf",
+    "problem": "Redirect 307 και μέγεθος πάνω από 10MB",
+    "action": "Επαλήθευση μέσω genai.owasp.org/llm-top-10· έτος σε «2025 (έκδοση)»"
+   },
+   {
+    "url": "https://content.iospress.com/articles/argument-and-computation/869766",
+    "problem": "HTTP 403",
+    "action": "Επαλήθευση μέσω Crossref (με abstract)· URL → doi.org/10.1080/19462166.2013.869766"
+   },
+   {
+    "url": "https://www.sciencedirect.com/science/article/pii/S0004370207000677",
+    "problem": "HTTP 403· το Crossref δεν δίνει abstract",
+    "action": "URL → doi.org· οι ονομασίες standards και η διάκριση burdens σημειώθηκαν ως ανεπαλήθευτες"
+   },
+   {
+    "url": "https://doi.org/10.1080/19462166.2012.661766",
+    "problem": "Redirect στο sagepub, 403",
+    "action": "Abstract επαληθεύτηκε μέσω Crossref· προστέθηκε το εύρημα της μοναδικής extension"
+   },
+   {
+    "url": "https://onlinelibrary.wiley.com/doi/10.1111/j.1551-6709.2010.01123.x",
+    "problem": "HTTP 403",
+    "action": "Abstract μέσω Crossref: στηρίζει preferred έναντι grounded"
+   },
+   {
+    "url": "https://www.sciencedirect.com/science/article/pii/S0004370225001766",
+    "problem": "HTTP 403",
+    "action": "Μέσω Crossref: Teovanović, Vesić, Yun· DOI 10.1016/j.artint.2025.104457· 96 συμμετέχοντες· τεύχος 2026"
+   },
+   {
+    "url": "https://people.mpi-inf.mpg.de/~mehlhorn/ftp/CertifyingAlgs.pdf",
+    "problem": "Είναι slides του Mehlhorn, όχι το άρθρο CSR 2011· λάθος έτος",
+    "action": "Επανακατηγοριοποίηση (n.d.)· προστέθηκε το DOI του άρθρου, επαληθευμένο μέσω Crossref· ο ορισμός επαληθεύτηκε με τοπική εξαγωγή"
+   },
+   {
+    "url": "https://kleros.io/assets/whitepaper.pdf",
+    "problem": "Το fetch επέστρεψε binary· έτος n.d.",
+    "action": "Τοπική εξαγωγή: Short Paper v1.0.7, Sept 2019· επαληθεύτηκαν stake-weighted κλήρωση και «twice the jurors plus one»· έτος → 2019"
+   },
+   {
+    "url": "https://medium.com/kleros/kleros-frequently-asked-questions-about-peer-to-peer-justice-5a921cb76abe",
+    "problem": "HTTP 403",
+    "action": "Αφαιρέθηκε, αντικαταστάθηκε από το whitepaper"
+   },
+   {
+    "url": "https://blockeden.xyz/blog/2026/02/01/stage-1-fraud-proofs-arbitrum-optimism-base-l2-security/",
+    "problem": "Δευτερογενές blog· η μόνη πηγή για την ημερομηνία Feb 2025",
+    "action": "Διατηρήθηκε με σήμανση δευτερογενούς"
+   },
+   {
+    "url": "https://arxiv.org/html/2409.19839v5",
+    "problem": "Το ICLR 2025 δεν φαίνεται· το leaderboard 2026 δεν ανακτήθηκε",
+    "action": "Το venue αφαιρέθηκε· τα αποτελέσματα δέθηκαν στον Feb 2025"
+   },
+   {
+    "url": "https://link.springer.com/article/10.1007/s11186-025-09634-2",
+    "problem": "Redirect σε αυθεντικοποίηση· ο ισχυρισμός για «ασαφή κριτήρια διάψευσης» δεν υπάρχει στο abstract",
+    "action": "Crossref (Isch, Tetlock, Clark 2025)· ο ισχυρισμός αντικαταστάθηκε· URL → doi.org"
+   },
+   {
+    "url": "https://github.com/leanprover/lean4checker",
+    "problem": "Αρχειοθετημένο· ενσωματώθηκε ως leanchecker από το v4.28.0",
+    "action": "Το SOTA-ADV-18 ενημερώθηκε"
+   }
+  ],
+  "corrections": [
+   {
+    "target": "ICD-14 (classification, superior, reasoning)",
+    "change": "today→experiment. Η υπεροχή περιορίστηκε σε αποσυνθέσιμους/υπολογιστικούς ισχυρισμούς. Αφαιρέθηκε ο ισχυρισμός ότι λείπει το Unknown (το §15.1 το επιβάλλει γενικά)· προστέθηκε ότι δεν υπάρχει παραγωγικό προηγούμενο για φυσική γλώσσα",
+    "reason": "Το BoLD αφορά μόνο ντετερμινιστικό υπολογισμό· ανάγνωση του 15.md γρ. 14"
+   },
+   {
+    "target": "KT-19, EXP-04, GAP-ADV-14",
+    "change": "Αφαιρέθηκε το «δεν υπάρχει pre-registration»· το κενό διατυπώθηκε ως έλλειψη λειτουργικής μετρικής και μοντέλου απειλής. Το confidence του KT-19 έγινε medium",
+    "reason": "Οι §24 κανόνας 1 και §19.5 κανόνας 3 επιβάλλουν γενική προκαταχώριση· το ControlArena δεν έχει court setting"
+   },
+   {
+    "target": "INV-K06, SOTA-ADV-21, DEC-ADV-04",
+    "change": "Προστέθηκαν Casper FFG (accountable safety) και CometBFT evidence, το ότι το KT-04 ήδη ζητά ανίχνευση equivocation, η εξαίρεση HotStuff-null και το k≥t+1 του HotStuff-hash, και τρίτη εναλλακτική",
+    "reason": "Πλήρες κείμενο Sheng 2021· PDF Casper· spec CometBFT"
+   },
+   {
+    "target": "GAP-ADV-17",
+    "change": "Αφαιρέθηκε",
+    "reason": "Διαστρωματικό (75 έναντι 76 CMP, επιβεβαιωμένο: 75 γραμμές στην §6.3)· είναι ήδη γνωστό στο πλαίσιο και δεν ανήκει στο ADV"
+   },
+   {
+    "target": "ADR-0008 draft_ref",
+    "change": "«master §4 γρ. 282–283, 324» → «§0.3 γρ. 139, §3 γρ. 282–283, §3.1 γρ. 324»",
+    "reason": "Οι γραμμές ανήκουν στις §3 και §3.1 κατά τους τίτλους του master"
+   },
+   {
+    "target": "GAP-ADV-02",
+    "change": "Επαναδιατύπωση: το Unknown επιβάλλεται γενικά, λείπει η σημασιολογία του για το verdict",
+    "reason": "_unmerged-parts/15.md γρ. 14"
+   },
+   {
+    "target": "SOTA-ADV-01 (Kenton)",
+    "change": "Προστέθηκε το «όταν ο consultant ανατίθεται τυχαία» και τα μικτά αποτελέσματα έναντι direct QA",
+    "reason": "Abstract arXiv 2407.04622"
+   },
+   {
+    "target": "SOTA-ADV-03 και CMP-ADV-01 (Elasky)",
+    "change": "Προστέθηκε η συνθήκη (critic ξεπερνά τον κριτή· ο κριτής ελέγχει) και ότι η σύγκριση είναι έναντι consultancy",
+    "reason": "Πλήρες abstract arXiv 2605.27483"
+   },
+   {
+    "target": "SOTA-ADV-02 (DQC)",
+    "change": "Προστέθηκε το «για PSPACE/poly»",
+    "reason": "Abstract arXiv 2602.08630"
+   },
+   {
+    "target": "SOTA-ADV-05 (W2S)",
+    "change": "Το «πραγματικά εφικτή» έγινε «εν μέρει», με caveat για τη naive finetuning",
+    "reason": "Abstract arXiv 2312.09390"
+   },
+   {
+    "target": "SOTA-ADV-07",
+    "change": "Αφαιρέθηκε το ακρωνύμιο FCPS· προστέθηκε «point estimate, 11 κελιά με 95% CI»",
+    "reason": "Abstract arXiv 2606.01034"
+   },
+   {
+    "target": "SOTA-ADV-08",
+    "change": "Διορθώθηκε ο τίτλος Ron et al.· προστέθηκε το Goel et al. 2025· προστέθηκε η μείωση αποτυχιών με ψηφοφορία",
+    "reason": "Σελίδες arXiv"
+   },
+   {
+    "target": "SOTA-ADV-09",
+    "change": "Το «redaction κατά της συμπαιγνίας» έγινε «τεχνικές αποτροπής συμπαιγνίας και trusted editing»· προστέθηκε η περιορισμένη επιτυχία στα focal points",
+    "reason": "Abstracts 2312.06942 και 2507.03010"
+   },
+   {
+    "target": "SOTA-ADV-10, GAP-ADV-07",
+    "change": "Το «η ανίχνευση παραμένει ανώριμη» έγινε «δεν ξέρω»",
+    "reason": "Δεν υπάρχει στην πηγή"
+   },
+   {
+    "target": "SOTA-ADV-11",
+    "change": "maturity production→pilot· προστέθηκαν μετρικές (0,38%, 23,7%) και venue ICLR 2025 για το GFlowNet",
+    "reason": "Οι μέθοδοι είναι ερευνητικές· abstracts"
+   },
+   {
+    "target": "SOTA-ADV-12",
+    "change": "Πρωτογενείς πηγές στη θέση του blog· προστέθηκαν HarmBench, AgentDojo, IDs NIST και η λίστα OWASP",
+    "reason": "Επαληθευμένες σελίδες"
+   },
+   {
+    "target": "SOTA-ADV-14, REQ-ADV-002, GAP-ADV-10",
+    "change": "Προστέθηκαν Prakken & Sartor 2011 και Calegari & Sartor 2021· σημειώθηκε ως ανεπαλήθευτη η λεπτομέρεια για το Carneades",
+    "reason": "Crossref· 403 στην πηγή του Carneades"
+   },
+   {
+    "target": "SOTA-ADV-17, EXP-16",
+    "change": "Το «με μη ειδικούς/δεν έχει βάση» έγινε «δεν βρέθηκε μελέτη με νομικούς ειδικούς»· προστέθηκε η μοναδική extension του Carneades",
+    "reason": "Οι πηγές δεν δηλώνουν τον τύπο συμμετεχόντων· abstract van Gijzel & Prakken"
+   },
+   {
+    "target": "SOTA-ADV-18, REQ-ADV-003",
+    "change": "lean4checker → leanchecker (v4.28.0)· αφαιρέθηκε το «πολυωνυμικός χρόνος»· προστέθηκε το FormalAlign",
+    "reason": "Repo archived· χωρίς πηγή για την πολυπλοκότητα"
+   },
+   {
+    "target": "SOTA-ADV-19",
+    "change": "Έτος Kleros → 2019· προστέθηκε η stake-weighted κλήρωση· το 6,4 ημέρες σημειώθηκε ρυθμιζόμενο από το DAO· προστέθηκε η Sepolia",
+    "reason": "Τοπική εξαγωγή whitepaper· docs Arbitrum"
+   },
+   {
+    "target": "SOTA-ADV-22",
+    "change": "Αφαιρέθηκε το ICLR 2025· προστέθηκαν αριθμοί Brier· διορθώθηκαν οι δυσκολίες της adversarial collaboration",
+    "reason": "arXiv v5· Crossref"
+   },
+   {
+    "target": "DEC-ADV-01",
+    "change": "Πρόταση σε υβριδικό πυρήνα· διορθώθηκε το rationale ότι «μόνο η 2η διατηρεί το ADR-0008»",
+    "reason": "Και η επίπεδη διαδικασία με κανόνα oracle διατηρεί το ADR-0008"
+   },
+   {
+    "target": "Ονοματολογία IDs",
+    "change": "Οι συντομογραφίες K02/K06 κ.λπ. έγιναν πλήρη IDs· αφαιρέθηκαν ονόματα μοντέλων από τα κείμενα",
+    "reason": "Κανόνες 5 και 7"
+   }
+  ],
+  "missed_superior_found": [
+   "Κανένα που να ανατρέπει holds. Στοχευμένοι έλεγχοι για CMP-ADV-02, CMP-ADV-03, REQ-ADV-004, INV-K02, INV-K03, ADR-0008 και REQ-ADV-003 βρήκαν μόνο συμπληρωματικά στοιχεία: HarmBench, AgentDojo, FormalAlign, Goel et al. 2025, Prakken & Sartor 2011, Calegari & Sartor 2021.",
+   "INV-K06 (ήδη superior-exists): βρέθηκαν υλοποιημένα προηγούμενα accountable safety (Casper FFG, CometBFT evidence), που ενισχύουν την υπεροχή χωρίς νέο verdict."
+  ]
+ }
+}
