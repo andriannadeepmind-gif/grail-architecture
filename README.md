@@ -12,6 +12,7 @@ The architecture is modelled in **SysON** (SysML v2), running locally, and edite
 | Earlier draft (unverified, pre-platform) | `docs/architecture-draft/` — `spine-vocab.md` holds the ID set (114 REQ, 75 CMP — its heading says 76, 32 ICD, 40 INV, 24 KT) to be modelled |
 | The creator's law that governs the work | `docs/NOMOS-MI-YPOVATHMISIS.md` — the absolute law of non-degradation, verbatim; three of its articles are gates in `DECISIONS-FOR-CREATOR.md` Δ-8(ια) |
 | Phase A discovery (state of the art, gaps, decisions) | `docs/discovery/` |
+| The material against the corpus | `docs/discovery/MATERIAL-SYNTHESIS.md` — 35 downgrades to reverse, ~130 points where the material is superior, 26 clashes of seat, 5 paradigm conflicts |
 | Raw material of the creator (verbatim, with SHA-256 manifest) | `docs/ideas-raw/` — imported by `pwsh -File platform/import-ideas.ps1 -Source '<folder>' -Push` |
 | OneDrive not delivering a file | `pwsh -File platform/repair-onedrive.ps1 -Source '<OneDrive folder>'` — starts the client de-elevated (it refuses to run as administrator), pins what is missing and waits for it; `-Reset` runs Microsoft's own repair first |
 | When it still will not deliver | `pwsh -File platform/stage-local-copy.ps1 -Source '<OneDrive folder>' -Destination C:\IDEES` — copies what is really on the disk and names what must be fetched from onedrive.com. Import a staged copy with `-CompareWith '<the original folder>'`, which refuses to import while a file of the original is absent or renamed. |
