@@ -93,11 +93,9 @@ package GRAIL_Perception {
 
 	// ------------------------------------------------------- authorization as a field
 
-	// Not a wall: a field that opens. The bound is unauthorized access to third-party systems —
-	// source: law on unlawful access to information systems; scope: systems the Principal holds no
-	// authorization for, and nothing else (article 9: the bound does not spread). Where
-	// authorization exists it is recorded here and the scanner works at full strength, with no
-	// redesign, no rebuild and no restart (Δ-12).
+	// The record itself is data the PDP reads. Where authorization exists the scanner works at
+	// full strength, with no redesign, no rebuild and no restart, and with NO second check inside
+	// the core to overrule it (Δ-12).
 	part def <'POL-05'> AccessAuthorization {
 		attribute target : String;
 		attribute basis : String;             // ownership, contract, discovery order, client mandate
@@ -110,10 +108,11 @@ package GRAIL_Perception {
 		assert constraint { adjustableWithoutRebuild == true }
 	}
 
-	constraint def <'PER-02'> ReachRequiresAuthorization {
-		in sourceClass : SourceClass;
-		in authorizationOnRecord : Boolean;
-		sourceClass != SourceClass::authorizedThirdParty or authorizationOnRecord == true
+	// The DECISION does not live here. The scanner asks at the mediated point and obeys the
+	// answer; it holds no rule of its own about what it may reach. See GRAIL_Policy::PDP-02.
+	constraint def <'PER-02'> ReachIsAsked {
+		in reachesWithoutAskingThePdp : Integer;
+		reachesWithoutAskingThePdp == 0
 	}
 
 	// ------------------------------------------------- what scraping must not become

@@ -26,7 +26,9 @@ package GRAIL_Autonomy {
 		attribute grade : AutonomyGrade;
 	}
 
-	// Autonomy is granted only on the conjunction. No weighting, nothing pays for anything.
+	// EVALUATED OUTSIDE THE CORE. This is the contract the PDP applies (GRAIL_Policy::PDP-01);
+	// it is written here as the shape of the question, not as a gate welded into the kernel. The
+	// core's only obligation is AUT-00: it does not act without an answer.
 	constraint def <'AUT-01'> AutonomyAdmissible {
 		in fullyReversible : Boolean;
 		in freeEnergy : Real;
@@ -41,7 +43,14 @@ package GRAIL_Autonomy {
 			and verdictSignedByCourt == true
 	}
 
-	// The classifier is conservative BY CONSTRUCTION: an act whose reversibility is not proven is
+	// The core's whole rule. Everything else about autonomy is decided outside it.
+	constraint def <'AUT-00'> NoActWithoutAnswer {
+		in actsTakenWithoutPdpAnswer : Integer;
+		actsTakenWithoutPdpAnswer == 0
+	}
+
+	// A POLICY DEFAULT, not a kernel rule — the creator may change it. It is set this way because
+	// the classifier is conservative BY CONSTRUCTION: an act whose reversibility is not proven is
 	// irreversible. Otherwise the fastest path to full autonomy is to leave reversibility unknown,
 	// and the contract becomes a formality that always passes.
 	constraint def <'AUT-02'> UnprovenReversibilityIsIrreversible {

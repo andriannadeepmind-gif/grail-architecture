@@ -39,5 +39,54 @@ package GRAIL_Policy {
 		attribute changeTakesEffectWithoutRestart : Boolean = true;
 	}
 
+	// --------------------------------------------------------------- the one decision point
+	// Δ-12(α): the core knows nothing about what is forbidden. It knows only that every effect
+	// passes through a permission. Every rule that DECIDES lives here, is read as data, and
+	// changes without redesign, rebuild or restart. There is no second check inside the kernel to
+	// overrule this one — a core that carries its own rule is a limit baked into the mechanism,
+	// which is what Δ-12 exists to remove.
+
+	part def <'PDP-00'> PolicyDecisionSeat {
+		attribute rulesInsideCore : Integer = 0;
+		attribute rulesReadAsData : Boolean = true;
+		attribute changeWithoutRebuild : Boolean = true;
+
+		assert constraint { rulesInsideCore == 0 }
+		assert constraint { rulesReadAsData == true }
+	}
+
+	// Autonomy. The five conditions of the epistemic contract, applied here and not in the kernel.
+	part def <'PDP-01'> AutonomyRule {
+		attribute thetaSafe : Real;
+		attribute requireFullyReversible : Boolean = true;
+		attribute requireCourtVerdict : Boolean = true;
+		attribute requireNoInvariantViolation : Boolean = true;
+		attribute requireRootUntouched : Boolean = true;
+		// Policy default, the creator's to change: an act whose reversibility is not proven counts
+		// as irreversible, and the inverse is staged before the act.
+		attribute unprovenReversibilityCountsAsIrreversible : Boolean = true;
+		attribute inverseMustBePreStaged : Boolean = true;
+	}
+
+	// Reach. Where authorization exists, the scanner is admitted at full strength. The bound is
+	// unauthorized access to third-party systems — source: law on unlawful access to information
+	// systems; scope: systems the Principal holds no authorization for, and nothing else (article
+	// 9: the bound does not spread). It is evaluated HERE, as data, and opens the moment the
+	// authorization record exists.
+	part def <'PDP-02'> ReachRule {
+		attribute authorizationOnRecord : Boolean;
+		attribute admitsAtFullStrength : Boolean = true;
+		attribute secondCheckInsideCore : Boolean = false;
+
+		assert constraint { secondCheckInsideCore == false }
+	}
+
+	// Crossing a policy boundary. Also a decision, also here.
+	part def <'PDP-03'> CrossingRule {
+		attribute requireAdversaryProof : Boolean = true;
+		attribute requireCostOfCrossingLower : Boolean = true;
+		attribute grantExpires : Boolean = true;
+	}
+
 	part def Sentinel;
 }
