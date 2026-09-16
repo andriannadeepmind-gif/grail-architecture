@@ -11,4 +11,5 @@ The architecture is modelled in **SysON** (SysML v2), running locally, and edite
 | MCP connection (this project only) | `.mcp.json` — mcp-syson 0.8.7, network limited to the local SysON |
 | Earlier draft (unverified, pre-platform) | `docs/architecture-draft/` — `spine-vocab.md` holds the ID set (114 REQ, 75 CMP — its heading says 76, 32 ICD, 40 INV, 24 KT) to be modelled |
 | Phase A discovery (state of the art, gaps, decisions) | `docs/discovery/` |
+| Raw material of the creator (verbatim, with SHA-256 manifest) | `docs/ideas-raw/` — imported by `pwsh -File platform/import-ideas.ps1 -Source '<folder>' -Push` |
 | Model exports (SysML v2 text) | `model/` — committed at every milestone; produced by `pwsh -File platform/export-model.ps1 -Project GRAIL-World-OS` (one `.sysml` per SysON document + byte-exact SysON JSON in `model/.syson/`) |

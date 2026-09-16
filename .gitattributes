@@ -1,3 +1,6 @@
 # Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 # Model exports are stored byte-for-byte as SysON produced them (no line-ending conversion).
 model/** -text
+
+# The creator's raw material is stored exactly as it is on disk (no line-ending conversion).
+docs/ideas-raw/** -text

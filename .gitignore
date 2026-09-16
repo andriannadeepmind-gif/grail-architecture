@@ -1,2 +1,5 @@
-node_modules/
+/node_modules/
 *.stderr
+
+# The creator's raw material is committed in full: nothing under docs/ideas-raw/ is ignored.
+!docs/ideas-raw/**
