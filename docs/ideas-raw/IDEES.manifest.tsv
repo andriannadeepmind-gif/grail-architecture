@@ -1,14 +1,17 @@
 # Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
-# source: C:\IDEES
-# files: 46  bytes: 2584315
+# source: C:\Users\David Spiridon\OneDrive\Desktop\IDEES
+# files: 52  bytes: 2992864
 path	bytes	sha256
 1.txt	156888	0a82079366bcf8fdd843d345bd6d863de0aaf31a9a0ff06ce6d09600f4c3083d
 2.txt	366793	1c84646cfaffd20da3d40eeb056fb9c3ea36b7faed11141d6c2d4c9f7a5c4233
 AEO_Apex_Master_Architecture_GR.docx	961710	dae449ad7e2d992a0f780dac5cfe7f654a1c568f326a86cab3dcbc1ae12435e5
 Apo_ti_Metropolis_sto_LAWMAX.docx	302566	d92147663bc27b65ec822d89464e9fce6216b814f5992ae4b39afb7dabf4eb4a
 STATE-OF-THE-ART-COMPLETE.md	382392	8b71f30c0073a33fc2ddf2ba7d3cbd3ef8caf4a18be0c6c793d9476d6b17db42
+ULTIMA_LEX_v4.1_NOMOS_AIONIOS_COMPLETE_BLUEPRINT (1).md	96845	b45bdec4ba1bb3482aa52822cfe80a4b85dff86ed4a6700e587dabe99a05639c
+answers	117829	0fc1efb51382580a7ffa6a574726b42677ed6ed678102a1f93a5a76ebf8ad560
 answers.txt	117829	0fc1efb51382580a7ffa6a574726b42677ed6ed678102a1f93a5a76ebf8ad560
 exousia.txt	48030	6c004944f24ca27fc1cc8c1dcdfc65c0995d8e2a272e7f9dc47ea8ea8bb1896f
+implementation-guide-CORRECTED.md	16762	5f4f5b671c1f8e49f5ff9ac7ea4e48baa2c3bdd9366a498109c3d11facf3a202
 omega-core-fixed/CHANGELOG.md	5215	dfd2209b5cac9e3e090d45f3a5a0ba55f989bab3c948643b30b39cb41206d391
 omega-core-fixed/CORE-SPEC.md	1537	14c87ad32223b8e22b41645fba50c46671cb70dfcccbd43115ecba84f11beac7
 omega-core-fixed/IMPLEMENTATION.md	3806	8b0c919deb2470d17bb15a5d2b5c9a47a22634caa48d577c98c7a5a49e6f6781
@@ -48,3 +51,6 @@ omega-core-fixed/tests/test-loop.lisp	5981	27431748a8c353980662eb4d06ca5e765f2a5
 omega-core-fixed/tests/test-memory.lisp	2728	377f3fba74528dc1eef73b5871a9bedca0a0ed6e9fd3bd2ffdb5c0efdba0b417
 omega-core-fixed/tests/test-reflection.lisp	3012	cf929237b749aa4350455de7ac450fbd7bb271ce4aca12e97b89dc9f405118c7
 omega-core-fixed/tests/test-truth.lisp	1906	138685b9c45d8f3654ebc5b5c68f9c6d3cd8a95fe0a53ffce54858774c1925ce
+omega-evaluator-v13-theta-CORRECTED.md	24145	bdeae4fbd25a920d8a7d7886c2eedddaf374e96e9f5d81b17fe90bee5ffe8b3a
+sos.txt	18633	36a2284ae7378b75b3933636b4a78487dcec92bf591d75dcce00dc2f114df00c
+Τελευταια συνομιλια 2.docx	134335	43b2a947d18d07740fc81c2128426db720b075d347f93aac61901532589be91a
