@@ -1,0 +1,30 @@
+%% id: MFA-DIA-12 · Evidence/provenance flow · question: πώς μια πηγή γίνεται trusted γνώση, πού μπορεί να αποτύχει ονομαστικά, και πώς διαδίδεται το taint;
+%% elements: MFA-ELM-082/059/079/080/021/028/048, MFA-MECH-016, MFA-INV-006/018/020/036 · source: mechanisms/MFA-MECH-016.md
+flowchart TD
+  SRC["Πηγή (ΦΕΚ, απόφαση, έγγραφο)"]
+  S0["S0 Λήψη + attestation (TSR/υπογραφή)<br/>MFA-ELM-082 · MFA-INV-020"]
+  S1["S1 Layout/OCR με provenance-confidence"]
+  S2["S2 Segmentation · CID ανά span"]
+  S3["S3 Front-end P1 → IR υποψήφιο<br/>(LLM ή rule-based, untrusted)"]
+  S4["S4 Validation D1<br/>LinkML + SHACL + διτεμπορική συνέπεια"]
+  ERR["CompilationError με locus<br/>→ MFA-ELM-028 Void (reason, plan)"]
+  S5["S5 Back-end D2 → LexDSL / KG triples"]
+  S6["S6 Differential: δεύτερος front-end (EIM PASS)"]
+  CT["CONTESTED → MFA-ELM-048 Court /<br/>δειγματοληπτικός άνθρωπος"]
+  S7["S7 Admission: δεσμεύσεις με lineage μέχρι raw bytes<br/>MFA-ELM-079 · MFA-INV-006"]
+  KG["MFA-ELM-080 Temporal KG (παράγωγο, rebuildable)"]
+  ATMS["MFA-ELM-021 ATMS"]
+  TAINT["Taint: αντίστροφη διάσχιση PROV<br/>100% εξαρτώμενων εντός Δ (MFA-INV-018)"]
+  SRC --> S0 --> S1 --> S2 --> S3 --> S4
+  S4 -->|"αποτυχία"| ERR
+  S4 -->|"PASS"| S5 --> S6
+  S6 -->|"διαφωνία"| CT
+  S6 -->|"συμφωνία"| S7 --> KG
+  CT --> S7
+  S7 --> ATMS
+  S0 -.->|"δηλητηριασμένη πηγή ανακαλύπτεται"| TAINT
+  TAINT --> ATMS
+  classDef p1 fill:#5c2a00,color:#fff
+  classDef d1 fill:#1b4332,color:#fff
+  class S3 p1
+  class S4,S5,S7 d1

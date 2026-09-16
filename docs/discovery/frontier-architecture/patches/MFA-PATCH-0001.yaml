@@ -1,0 +1,110 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0001
+title: Το Telos ως ζεύγος (επιδιώξεις, διάταξη στις αντιφάσεις)· falsifier για το TEL-08 (MFA-ATK-01)
+operation: MODIFY
+targets:
+- MFA-TEL-08
+base:
+  package_version: 0.1.0
+  file_hashes:
+    OBJECTIVE-SPACE.yaml: fbb6d2a1de3018fcce373d8634c528c0396a2186087cb484a10c4d8c9b749e47
+preconditions: []
+change:
+  MFA-TEL-08:
+    contradiction_order:
+    - conflict: MFA-CFL-001
+      mechanism: AUT-00 «καμία πράξη χωρίς απάντηση» (MFA-INV-042) + MFA-INV-067 (καμία μη αναστρέψιμη πράξη χωρίς ζωντανό envelope ή φρέσκο H1)
+      policy: κατώφλια αυτονομίας, περιεχόμενο των AutonomyEnvelopes
+      decision: MFA-DEC-004
+    - conflict: MFA-CFL-002
+      mechanism: δύο planes· Controls μόνο στο Effect plane (MFA-INV-002)· η πύλη έχει advisory όψη στο Genesis (MFA-ATK-16)
+      policy: ποια Controls
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-003
+      mechanism: MFA-INV-031 επίπεδα· ο διάδοχος = πράξη L3 από εξωτερική αρχή (MFA-INV-049)
+      policy: πότε ζητείται διάδοχος
+      decision: MFA-DEC-001
+    - conflict: MFA-CFL-004
+      mechanism: δύο τύποι ισχυρισμού με claim_type ανά πρόταση (MFA-ELM-072, MFA-INV-046)
+      policy: καμία
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-005
+      mechanism: TED ανά πράξη με 4 επίπεδα (MFA-INV-008/061)· μάθηση εκτός evaluator closure (MFA-INV-048)
+      policy: ποιο επίπεδο αναπαραγωγιμότητας ανά κλάση πράξης
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-006
+      mechanism: 4 επίπεδα συλλογικού (MFA-INV-021/023)
+      policy: καμία
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-007
+      mechanism: το lattice μετρά ικανότητες, όχι όργανα (MFA-INV-001)· ablation μόνο με KT (MFA-VO-024)
+      policy: ρυθμός ablation
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-008
+      mechanism: μία αρχιτεκτονική, προφίλ από OAP με veto κλάσης απόδειξης (MFA-MECH-013)
+      policy: αντικειμενική συνάρτηση OAP, φράγμα κόστους αξιολόγησης ανά προφίλ (MFA-INV-065)
+      decision: MFA-DEC-007
+    - conflict: MFA-CFL-009
+      mechanism: 4 κλάσεις εξόδου· Unknown μόνο με reason+plan (MFA-INV-004/056)
+      policy: reason codes
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-010
+      mechanism: LLM = γεννήτρια P1· verifier έξω· φράγμα sampler· IR→D2 (MFA-INV-036, TED)
+      policy: ποιοι πάροχοι, DisclosureGrants
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-011
+      mechanism: Preference Recorder πριν από κάθε rollback/ORP/GCP (MFA-ELM-040)
+      policy: ηθική θέση οντοτήτων (MFA-UNK-023)
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-012
+      mechanism: trust domains + import gate (MFA-ELM-057, MFA-INV-034)
+      policy: αν υπάρχει δημόσια εγκατάσταση (TEL-07)
+      decision: MFA-DEC-002
+    - conflict: MFA-CFL-013
+      mechanism: crypto-shredding με residue commitment· ολότητα γενεαλογίας όχι περιεχομένου (MFA-CFL-035, MFA-INV-006/011)
+      policy: ποια metadata μένουν στο residue ανά confidentiality domain
+      decision: MFA-DEC-009
+    - conflict: MFA-CFL-014
+      mechanism: Telos L3 read-only από μέσα· κώνος που μεγαλώνει μόνο με ADD (MFA-INV-031)
+      policy: καμία
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-015
+      mechanism: φράγμα διά κατασκευής· typed degraded mode· ποτέ κλάση απόδειξης (MFA-MECH-013)
+      policy: προϋπολογισμοί ανά προφίλ
+      decision: MFA-DEC-007
+    - conflict: MFA-CFL-016
+      mechanism: μία Γ, 7 προβολές· Galois connection (MFA-INV-059)
+      policy: ποια προβολή ανά προφίλ
+      decision: MFA-DEC-006
+    - conflict: MFA-CFL-017
+      mechanism: κλιμακωτή παύση με k-of-n δηλωμένων από τον δημιουργό κατόχων (MFA-ELM-016)
+      policy: ποιοι, πόσοι, μη-διαθεσιμότητα
+      decision: MFA-DEC-012
+    falsifier: 'Επιδίωξη του TEL-08 που μετά τη Δόση 3 δεν εξυπηρετείται από κανένα στοιχείο με KT που αποτυγχάνει χωρίς αυτό (MFA-VO-024) είναι διακοσμητική → RECLASSIFY
+      σε ερευνητικό μέτωπο με patch, ποτέ σιωπηλή διαγραφή· ΚΑΙ: matter όπου ούτε το lean ούτε το πλήρες προφίλ κερδίζει τον απλό αντίπαλο (MFA-ALT-6/7) → η αρχιτεκτονική
+      επανασχεδιάζεται, όχι το κριτήριο'
+    statement: 'TEL-05 ∪ {βέλτιστη απλότητα ως ΣΚΛΗΡΗ απαίτηση (MFA-OBJ-022), λειτουργία υπό φραγμένους πόρους (MFA-OBJ-030), ερμηνευτική επάρκεια (MFA-OBJ-040)}
+      με TEL-07 ως ΠΡΟΑΙΡΕΤΙΚΟ προφίλ εγκατάστασης — ΚΑΙ με ρητή διάταξη πάνω στις 17 αντιφάσεις του (contradiction_order: τι υποχωρεί σε επίπεδο μηχανισμού, τι είναι
+      πολιτική, ποια απόφαση το κυρώνει). Ένα Telos είναι ζεύγος (επιδιώξεις, διάταξη), όχι σύνολο επιδιώξεων (MFA-ATK-01). Μία αρχιτεκτονική στο ταβάνι που περιέχει
+      τη δυνατότητα να γίνεται βέλτιστα απλή· το Telos ως επίπεδο 3, αναγνώσιμο από όλα, εγγράψιμο μόνο από τον δημιουργό με patch.'
+rationale: 'MFA-ATK-01: η ένωση του πλέγματος χωρίς διάταξη στις αντιφάσεις της είναι μέτωπο Pareto, όχι Telos· το «συνιστώμενο» χωρίς κόστος επιλογής ήταν πρόωρο
+  κλείσιμο μεταμφιεσμένο σε άνοιγμα.'
+evidence:
+- adversarial/MFA-ATK-01.md
+- CONFLICTS.yaml MFA-CFL-001…017
+affected_dependencies:
+- MFA-ELM-008
+- MFA-ELM-051
+- MFA-ELM-096
+capability_impact:
+  gained:
+  - MFA-CAP-001 (Telos διαιτητεύσιμο)
+  - MFA-CAP-049 (LPA με προεπιλεγμένο ORDER)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#telos
+migration: 'Καμία μετανάστευση: το TEL-08 κρατά το ίδιο ID και τα ίδια includes· τα νέα πεδία διαβάζονται από DECISION-LOG.md (MFA-DEC-001…013).'
+verification: 'tools/check-package.py (R1: όλες οι MFA-DEC-* αναφορές επιλύονται στο DECISION-LOG.md)'
+rollback: MFA-PATCH-0001-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

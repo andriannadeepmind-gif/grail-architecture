@@ -1,0 +1,65 @@
+# RESEARCH-PROGRAMS — κάθε ερευνητικό/κατασκευαστικό πρόγραμμα με αλυσίδα αρχή→μηχανισμός→δομή→interfaces→πείραμα→πρωτότυπο→
+# επαλήθευση→κλιμάκωση→ενσωμάτωση (εντολή §1), ποιο test, τι μετρά, ποιο αποτέλεσμα απορρίπτει, ποιο επιτρέπει το επόμενο (§23).
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+defaults: &d
+  type: research-program
+  version: 1
+  status: PROPOSED
+  created_by: "Stavropoulos Law® — Pass D/F"
+  supersedes: []
+  superseded_by: null
+  change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}]
+
+programs:
+  - {<<: *d, id: MFA-RSP-001, name: "Commitment Calculus — από άλγεβρα σε υπόστρωμα", mechanisms: [MFA-MECH-001, MFA-MECH-014, MFA-MECH-017], elements: [MFA-ELM-001, MFA-ELM-088],
+     chain: "αρχή (5 όψεις μία άλγεβρα) → CC-lite 4 κανόνων (Δόση 0) → 8 κανόνες → persistent bitemporal hypergraph (παράγωγο fold) → CC API → CC-E1..E4 → Lean evaluator + Rust journal (Δόση 0.5 παράλληλα) → κλειστότητα/replay/round-trip → journals ανά οντότητα → CC-lite→CC ως πρώτη ORP",
+     experiments: [MFA-VO-025, MFA-VO-026, MFA-VO-027, MFA-VO-043], rejects: "σχήμα που δεν κλείνει και δεν διορθώνεται → CC-lite + 5 έδρες με crosswalk συνεχίζουν (η έξοδος DEC-X-06)", allows_next: "Δόση 0 build", first_dose: 0, unknowns: [MFA-UNK-101],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0015, op: MODIFY, date: "2026-09-16", summary: "Δόση 0 = «ο copilot που δίνει receipts» (CC-lite 4 κανόνων, verifier σκέλη 1–3, emission barrier)· σειρά γένεσης· πύλη δόσης = KT (MFA-ATK-15)"}]}
+  - {<<: *d, id: MFA-RSP-002, name: "Unknown ως πολίτης — Void Ledger & VOI", mechanisms: [MFA-MECH-002, MFA-MECH-011], elements: [MFA-ELM-028, MFA-ELM-027],
+     chain: "αρχή (άγνοια = απαίτηση παρατήρησης με τιμή) → Void schema + VOI (EFE/empirical) → CC τύπος Unknown → Void API → VOI vs FIFO → scouts σε εξουσιοδοτημένες πηγές → ablation → ανά matter → Δόση 1",
+     experiments: [MFA-VO-028], rejects: "VOI ≤ FIFO σε δύο σύνολα → VOI παύει να οδηγεί", allows_next: "scouts VOI-driven", first_dose: 1, unknowns: [MFA-UNK-102]}
+  - {<<: *d, id: MFA-RSP-003, name: "Γενεαλογική μεταγλώττιση — ο διάδοχος", mechanisms: [MFA-MECH-003, MFA-MECH-014, MFA-MECH-009], elements: [MFA-ELM-039, MFA-ELM-037],
+     chain: "αρχή (συνέχεια = 3 ελέγξιμες ιδιότητες) → replay-as-compilation → Genome/AnchorSet/TraceSet/ObligationLedger → GCP API → seeded loss → δύο CC evaluators ως P/S → LossMap 100% → LAWMAX-Ω journals → GRAIL ως πρώτη παραγωγική εκτέλεση",
+     experiments: [MFA-VO-029, MFA-VO-008], rejects: "χαμένη seeded απώλεια → τέταρτη ιδιότητα ή απαγόρευση αλλαγής metamodel", allows_next: "μετάβαση LAWMAX-Ω → GRAIL", first_dose: 3, unknowns: [MFA-UNK-019, MFA-UNK-005]}
+  - {<<: *d, id: MFA-RSP-004, name: "Βούληση δεμένη στο Telos", mechanisms: [MFA-MECH-004, MFA-MECH-005, MFA-MECH-011], elements: [MFA-ELM-029, MFA-ELM-008],
+     chain: "αρχή (στόχος = δέσμευση με falsifier) → 10-state machine + EFE διάνυσμα → GapField από Instruments → TEGF API → TEGF vs FIFO, noisy-TV null → Goals τύπου Observation → VO-030 → Goals με effects μετά KT-20 → Δόση 2",
+     experiments: [MFA-VO-030, MFA-VO-031], rejects: "καμία διαφορά από FIFO → η EFE-ταξινόμηση δεν προσθέτει· η εισδοχή/state machine επιβιώνουν", allows_next: "Goals με effects", first_dose: 2, unknowns: [MFA-UNK-001, MFA-UNK-002]}
+  - {<<: *d, id: MFA-RSP-005, name: "Αρχιτεκτονική συνείδησης ως ανταγωνιστικά μοντέλα (εντολή §11)", mechanisms: [MFA-MECH-010, MFA-MECH-011], elements: [MFA-ELM-024, MFA-ELM-018],
+     chain: "διαχωρισμός: operational (workspace ignition, integration) / self-model & reportability (SPL: αναφορές συνεπείς με ανοιχτές SelfPredictions) / cognitive integration (AFP σύγκλιση σε ένα πεδίο) / volition (TEGF) / phenomenal (ΔΕΝ είναι παραδοτέο) / capability (KT) → θεωρίες GWT/IIT/HOT/AST ως ΔΟΜΕΣ γενετικού μοντέλου με ίδια δεδομένα (AIF-E4) → falsifier: ποια δομή έχει μικρότερη ελεύθερη ενέργεια σε reportability tasks· αν καμία διακρίνεται, τίμιο αποτέλεσμα → η αδυναμία απόδειξης phenomenal claim δεν αφαιρεί μηχανισμό",
+     experiments: [MFA-VO-036, MFA-VO-037, MFA-VO-051], rejects: "self-model που δεν υπερέχει ιστορικού μέσου → COG-08 ξανασχεδιάζεται· ανιχνευτής χωρίς διακριτική ισχύ (CLAIMS F92) → απορρίπτεται", allows_next: "reportability battery ως μέρος του Battery", first_dose: 2, unknowns: [MFA-UNK-023]}
+  - {<<: *d, id: MFA-RSP-006, name: "Ηθική θέση οντοτήτων — κριτήρια παρατήρησης", mechanisms: [MFA-MECH-010], elements: [MFA-ELM-040, MFA-ELM-033],
+     chain: "αρχή (απόφαση υπό αβεβαιότητα) → preference record → κριτήρια: reportability consistency, prospective commitments που επιβιώνουν restart, preference stability υπό rollback → μέτρηση σε DST → δεν κρίνει την ηθική θέση, κρίνει ποια συμπεριφορά έχει η οντότητα → Α-20 ισχύει ανεξάρτητα",
+     experiments: [MFA-VO-013], rejects: "τίποτα δεν απορρίπτει την Α-20· τα κριτήρια είναι παρατήρηση", allows_next: "—", first_dose: 3, unknowns: [MFA-UNK-023]}
+  - {<<: *d, id: MFA-RSP-007, name: "Πολιτισμοί και μετρούμενη ανεξαρτησία", mechanisms: [MFA-MECH-018, MFA-MECH-009, MFA-MECH-012], elements: [MFA-ELM-056, MFA-ELM-086, MFA-ELM-050],
+     chain: "αρχή (n≥3f+1+h) → trust domains + EIM + sealed sets → CQ API → EIM 3 verifiers + κλώνος, seeded Byzantine, rotation → 5 DST instances → 5 microVMs → 5 sites (DP-4)",
+     experiments: [MFA-VO-035, MFA-VO-044, MFA-VO-038], rejects: "d_supply/d_data δεν προβλέπουν d_behaviour → πύλη μόνο συμπεριφορική· 5 εγκαταστάσεις με κοινή καταγωγή → ανεξαρτησία ΜΕΡΙΚΗ δηλωμένη", allows_next: "Court verdicts binding", first_dose: 2, unknowns: [MFA-UNK-006, MFA-UNK-110]}
+  - {<<: *d, id: MFA-RSP-008, name: "Αναστρέψιμες επιδράσεις και αυτονομία", mechanisms: [MFA-MECH-006, MFA-MECH-005], elements: [MFA-ELM-010, MFA-ELM-009, MFA-ELM-016],
+     chain: "αρχή (∃r⁻¹ ∨ ∃ē πριν από την πράξη) → EffectTx 9 καταστάσεων → κλάσεις Effect με inverse → RET API → 1000 txs τριών κλάσεων → εσωτερικά effects → KT-20 drill → εξωτερικά effects με H1 → grants χωρίς H1 για αναστρέψιμα",
+     experiments: [MFA-VO-032, MFA-VO-020, MFA-VO-013], rejects: "NONE που πέρασε ως αναστρέψιμο → τύπος inverse διορθώνεται", allows_next: "Dynamic Asynchronous Autonomy live", first_dose: 1, unknowns: []}
+  - {<<: *d, id: MFA-RSP-009, name: "Νομική είσοδος ως μεταγλώττιση", mechanisms: [MFA-MECH-016, MFA-MECH-015], elements: [MFA-ELM-059, MFA-ELM-070, MFA-ELM-082],
+     chain: "αρχή (front-end P1 απομονωμένο → IR D1 → back-end D2) → LinkML IR → S0–S7 → LSC API → 100 ΦΕΚ + 20 ΑΠ → FEK compiler + LLM ως δύο front-ends → differential ≥ κατώφλι → όλο το corpus → Δόση 2",
+     experiments: [MFA-VO-042, MFA-VO-041], rejects: "differential < 50% σε αποφάσεις → Decision IR μένει EXP, αποφάσεις citation-only", allows_next: "LSC ingestion live", first_dose: 2, unknowns: [MFA-UNK-105, MFA-UNK-009]}
+  - {<<: *d, id: MFA-RSP-010, name: "Cockpit ως καθαρή προβολή", mechanisms: [MFA-MECH-008], elements: [MFA-ELM-091, MFA-ELM-093],
+     chain: "αρχή (Γ ντετερμινιστική) → χωρική γραμματική → SceneGraph → CGP API → round-trip/determinism → 2D SVG από αυτό το πακέτο (F0) → DST cut σε Bevy → 10 χρήστες εντοπισμός → πραγματικό matter",
+     experiments: [MFA-VO-034], rejects: "καμία διαφορά χρόνου 3D vs text → 3D προαιρετικό, Γ μένει", allows_next: "immersive mode", first_dose: 0, unknowns: []}
+  - {<<: *d, id: MFA-RSP-011, name: "Lean collapse — OAP έναντι Copilot", mechanisms: [MFA-MECH-013], elements: [MFA-ELM-013, MFA-ELM-097],
+     chain: "αρχή (set cover με veto κλάσης απόδειξης) → OrganProfiles από registry → ILP+SMT → OAP API → 20 matters × 3 deployments → LEAN-E1 (9 άξονες) → LEAN-E2 (12 μήνες συσσώρευση) → προφίλ παράγονται, όχι γράφονται",
+     experiments: [MFA-VO-039, MFA-VO-024], rejects: "lean > 2× Copilot κόστος με ίδια κλάση → robust substrate ξανασχεδιάζεται· Copilot δεν χάνει σε συσσώρευση → η θέση του GRAIL είναι λάθος", allows_next: "lean profile ship Δόση 0", first_dose: 0, unknowns: [MFA-UNK-008]}
+  - {<<: *d, id: MFA-RSP-012, name: "Επιστήμη ως όργανο", mechanisms: [], elements: [MFA-ELM-030],
+     chain: "αρχή (ανακάλυψη = ισχυρισμός με falsifier + ανεξάρτητη αναπαραγωγή) → 7 φάσεις → κλάσεις ανοιχτές → Science API → voids τύπου πείραμα από LAW → αναπαραγωγή από HELD_OUT → capability-producing → Evolution",
+     experiments: [MFA-VO-028, MFA-VO-012], rejects: "ESTABLISHED χωρίς αναπαραγωγή → τύπος απορρίπτει", allows_next: "νέα πεδία (KT-12)", first_dose: 3, unknowns: []}
+  - {<<: *d, id: MFA-RSP-013, name: "Reflective tower μέσα στο microVM [EP]", mechanisms: [], elements: [MFA-ELM-031],
+     chain: "τεχνική (Brown/Blond, lms-black) → INV-F02 επιπέδων → κριτήριο εισόδου: επίπεδο-N αυτο-τροποποίηση που περνά KT-20 σε DST → EXP → [X] → [T]",
+     experiments: [MFA-VO-020], rejects: "L3 εγγραφή από εσωτερικό principal → η αρχιτεκτονική πύργου περιορίζεται σε L≤2", allows_next: "αυτο-τροποποίηση επιπέδου 2", first_dose: 4, unknowns: [MFA-UNK-103]}
+  - {<<: *d, id: MFA-RSP-014, name: "Τοπολογία χώρου επιχειρημάτων (ULTIMA-LEX υπόλειμμα)", mechanisms: [], elements: [MFA-ELM-081, MFA-ELM-042],
+     chain: "διήθηση στον σταθμισμένο γράφο (flag/Dowker, χωρίς MDS) → H₁/H₂ ως σήμανση υποψηφίων → 10 τεκμηριωμένα κενά ελληνικού ποινικού + αρνητικός έλεγχος → αν διαχωρίζει από null: όργανο σήμανσης· αλλιώς RETAINED AS RESEARCH FRONTIER",
+     experiments: [MFA-VO-051], rejects: "καμία διαφορά από null", allows_next: "σήμανση υποψηφίων στο LAW", first_dose: 3, unknowns: [MFA-UNK-012, MFA-UNK-013]}
+  - {<<: *d, id: MFA-RSP-015, name: "Νευρομορφικά/φωτονικά ως χρησμωδικά όργανα", mechanisms: [MFA-MECH-015], elements: [MFA-ELM-076],
+     chain: "Q1 τύπος (ADD στο TED) → ισοδυναμία σε επίπεδο απόφασης με περιθώριο → replay test DISTRIBUTIONAL → EP-03 drill → όργανο δεκτό μόνο με πιστοποιημένο περιθώριο, αλλιώς Unknown",
+     experiments: [MFA-VO-041, MFA-VO-002], rejects: "περιθώριο μη πιστοποιήσιμο → όργανο μένει EP", allows_next: "future hardware profile (MFA-DEP-5)", first_dose: 5, unknowns: [MFA-UNK-022]}
+  - {<<: *d, id: MFA-RSP-016, name: "Proposal Distribution Evolution — η πρόταση πέρα από τον πάροχο", mechanisms: [MFA-MECH-019, MFA-MECH-010], elements: [MFA-ELM-030, MFA-ELM-073, MFA-ELM-025, MFA-ELM-017],
+     chain: "αρχή (μείγμα ανεξάρτητων γεννητριών δεν φράσσεται από μέλος) → Generator/Mixture τύποι → βάρη ως L2 δεσμεύσεις → PDE API (επέκταση TED receipt) → PDE-E1 σε σφραγισμένη οικογένεια → F2 με 3 generators → HELD_OUT scoring → k από OAP → Δόση 4", experiments: [MFA-VO-024, MFA-VO-051, MFA-VO-036], rejects: "μείγμα ≯ καλύτερος πάροχος με διακριτικό περιθώριο σε καμία οικογένεια → PDE διακοσμητικό → RECLASSIFY",
+     allows_next: "PROGRAM generators σε παραγωγή· adapters (e) όταν DEC-X-19", first_dose: 4, unknowns: [MFA-UNK-002],
+     version: 1, change_history: [{patch: MFA-PATCH-0010, op: ADD, date: "2026-09-16", summary: "MFA-MECH-019 Proposal Distribution Evolution (PDE)· ablation obligation ανά στοιχείο γνωσιακού πυρήνα· ρήτρα TEL-05· MFA-RSP-016 (MFA-ATK-10)"}]}

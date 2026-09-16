@@ -1,0 +1,90 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0004-R
+title: 'Rollback of MFA-PATCH-0004: AFP δίπλευρος νόμος κ_min ≤ κ < 1/λ_max· αρνητικά anchors στο SLM/GCP· αποφασίσιμο τμήμα CPEG (MFA-ATK-04)'
+operation: RESTORE
+targets:
+- MFA-MECH-011
+- MFA-ELM-018
+- MFA-INV-006
+- MFA-INV-051
+- MFA-INV-052
+- MFA-VO-040
+- MFA-VO-029
+- MFA-VO-037
+- MFA-MECH-017
+- MFA-ELM-038
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 07ed1d765b745afe1e9aafc60a175175337934f7206ffcc90d6775805a648ae0
+    INVARIANTS.yaml: d1b44948490d29f23308594f9d7132f7e7a08eaa94835d25d455a73cdbfa207c
+    INVENTIONS.yaml: bb3d31ad1a81b20d653c9d863eb8f456123760e6603f88e98c5dcaf4a17beaf7
+    VERIFICATION-OBLIGATIONS.yaml: 17e87856025ee0b42a18e98cfe9ea834dde3f113421826e8ceaff077a51fd35f
+preconditions:
+- MFA-PATCH-0004.status == APPLIED
+change:
+  MFA-MECH-011:
+    statement:
+      __raw: '"a(t+1)=(I−κA)a(t)+b· σύγκλιση iff κ·λ_max<2 (χρησιμοποιείται <1)· N όριο· Interrupt· decay ανά kind· KL ως VOI."'
+    assumptions:
+      __raw: '["Γραμμικοποίηση ισχύει"]'
+  MFA-ELM-018:
+    statement:
+      __raw: '"Περιορισμένης χωρητικότητας workspace με salience από AFP (MFA-MECH-011: a(t+1)=(I−κA)a+b, κ·λ_max<1, Interrupt στο N), broadcast, cycle traces· κάθε
+        σκέψη ορατή κατά τη γέννηση."'
+    falsifier:
+      __raw: '"διάδοση με κ·λ≥1"'
+  MFA-INV-006:
+    statement:
+      __raw: '"Κάθε trusted ισχυρισμός με PROV μέχρι raw bytes· ΚΑΙ κάθε διάδοση ενεργοποίησης συγκλίνει εξαρτώμενη από αφετηρία μόνο αν α·λ_max < 1 (Perron–Frobenius,
+        CLAIMS F96/H3) — ελέγχεται σε κάθε αλλαγή γράφου."'
+    falsifier:
+      __raw: '"διάδοση με α·λ ≥ 1 που δεν προκάλεσε Interrupt"'
+  MFA-INV-051:
+    statement:
+      __raw: '"|AnchorSet(t+1)| ≥ |AnchorSet(t)|· η πληρότητα του loss map δηλώνεται ως κάτω φράγμα."'
+    falsifier:
+      __raw: '"anchor που αφαιρέθηκε"'
+  MFA-INV-052:
+    statement:
+      __raw: '"Cutover/merge/adopt μόνο με κενό LossMap ή accept record με τύχη στο Capability Conservation Ledger· «strictly superior» απαιτεί κενό."'
+  MFA-VO-040:
+    measures:
+      __raw: '"δομικές συγκρούσεις 100%, anchors μονότονα, 0 cutover με SEMANTIC-LOSS"'
+  MFA-VO-029:
+    methods:
+      __raw: '["mutation (αφαίρεση κανόνα)", "shadow"]'
+    measures:
+      __raw: '"100% seeded απώλειες στη LossMap, <1% ψευδώς θετικά"'
+  MFA-VO-037:
+    measures:
+      __raw: '"κ·λ_max < 1 ανά κύκλο, σύγκλιση ≤ N, εξάρτηση από αφετηρία"'
+  MFA-MECH-017:
+    statement:
+      __raw: '"Κρίσιμα ζεύγη νέου κανόνα/οργάνου/patch με υπάρχοντες· μη ενώσιμο ⇒ PRIORITY/PARTITION/REJECT· fail-closed σε Tier-0/1."'
+    assumptions:
+      __raw: '["Κανόνες ως DPO με μικρά L"]'
+  MFA-ELM-038:
+    statement:
+      __raw: '"ORP: Propose → CPEG στατικός έλεγχος (MFA-MECH-017) → shadow → SLM loss map (MFA-MECH-014) → ND → canary → cutover → rollback window· προκάτοχος ενεργός·
+        SEMANTIC-LOSS μπλοκάρει· εφαρμόζεται και στην πλατφόρμα σχεδιασμού και στον κριτή (από άλλον Πολιτισμό)."'
+rationale: Αντίστροφο του MFA-PATCH-0004, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-039
+- MFA-ELM-090
+- MFA-ELM-028
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-073 (μη κενή)
+  - MFA-CAP-080 (δύο πρόσημα)
+  - MFA-CAP-026 (CPEG με δηλωμένο όριο)
+  ledger_entry: CAPABILITY-CONSERVATION.md#mechanisms
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0004
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

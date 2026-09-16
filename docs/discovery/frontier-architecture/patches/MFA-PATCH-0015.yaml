@@ -1,0 +1,83 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0015
+title: Δόση 0 = «ο copilot που δίνει receipts» (CC-lite 4 κανόνων, verifier σκέλη 1–3, emission barrier)· σειρά γένεσης· πύλη δόσης = KT (MFA-ATK-15)
+operation: MODIFY
+targets:
+- MFA-ELM-097
+- MFA-ELM-001
+- MFA-MECH-001
+- MFA-ELM-003
+- MFA-ELM-004
+- MFA-RSP-001
+- MFA-VO-014
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 1131ef109a6c0960324d7343802d4b168c656089fd0ac6d6157553b8e08e7730
+    INVENTIONS.yaml: 79fdc3f95bca6f9f4b7452b9bd72d87dee5b2a72d2c38052df01f569839c6bc7
+    RESEARCH-PROGRAMS.yaml: 99b6239aaad803c2fcbcfbb7bf108b5dcc6bfd72dcf71d18ecdea2e0afafde26
+    VERIFICATION-OBLIGATIONS.yaml: 96bb32388b84dea6d89856847d76c11db7c5aef357e39b01a27243a35b7ae644
+preconditions: []
+change:
+  MFA-ELM-097:
+    dose: 0
+    statement: 'MFA-ALT-6 ενσωματωμένος: robust substrate + 017 (ένας πάροχος, TED) + 059/062/065 (corpus, retrieval, 5-σκελής verifier) + 058 + 069 + 091 (2D/text)
+      — το ελάχιστο σύνολο που ο OAP επιλέγει για matter τυπικού γραφείου· ίδιοι τύποι εξόδου, 13ος νόμος, receipts από την πρώτη εβδομάδα. · ΔΟΣΗ 0 (MFA-ATK-15/17):
+      «ο copilot που δίνει receipts» — CC-lite (ASSERT/OBSERVE/DERIVE/REVOKE), ingestion με attestation, verifier παραπομπών σκέλη 1–3, emission barrier 4 κλάσεων,
+      receipts στον Principal, ένας πάροχος (TED D2), ένα πραγματικό matter· 8 εβδομάδες· μετράται πρώτα έναντι του competitor baseline (MFA-VO-014).'
+  MFA-ELM-001:
+    cc_lite:
+    - ASSERT
+    - OBSERVE
+    - DERIVE
+    - REVOKE
+    statement: 'Το CC store (MFA-MECH-001) ως ΜΟΝΟΤΟΝΟ append-only σύνολο δεσμεύσεων (tombstones για REVOKE/FORGET, residue για shredded) πάνω σε persistent διτεμπορικό
+      υπεργράφημα ως ΠΑΡΑΓΩΓΟ fold (MFA-ALT-5: η αναστρεψιμότητα/DPO είναι η σημασιολογία των κανόνων, όχι της αποθήκης — MFA-ATK-08): journals ανά συγγραφέα, Merkle
+      inclusion/consistency (RFC 6962/9162, C2SP), witness cosignatures, HLC, fold ντετερμινιστικό. · Δόση 0 = CC-lite (4 κανόνες: ASSERT/OBSERVE/DERIVE/REVOKE) πάνω
+      σε append-only Merkle log· οι 8 κανόνες μετά το MFA-VO-025 (Δόση 0.5 παράλληλα)· η μετάβαση CC-lite → CC είναι η πρώτη ORP του έργου (δοκιμή του μηχανισμού
+      αντικατάστασης πάνω στον εαυτό του) (MFA-ATK-15).'
+    evolution_path: R-C· CC-lite → CC μέσω ORP (η πρώτη ORP)· διάδοχος μέσω GCP· κανόνας νέος με CPEG
+  MFA-MECH-001:
+    statement: Άλγεβρα υπογεγραμμένων τυποποιημένων δεσμεύσεων με 8 κανόνες· ledger/τύποι/αποδείξεις/εξουσία/σχέδιο ως όψεις· κλειστότητες ως θεωρήματα. · Κάθε δέσμευση
+      φέρει status_axes (10 άξονες) με τυποποιημένη απουσία ανά άξονα (MFA-ATK-07). · Το ledger μονότονο· DPO = σημασιολογία κανόνων· FORGET = tombstone + shred +
+      residue (MFA-CFL-035). · CC-lite (4 κανόνες) στη Δόση 0· κλειστότητα (Lean) παράλληλα (MFA-ATK-15).
+  MFA-ELM-003:
+    genesis: κλειδιά γένεσης σε offline ceremony ΧΩΡΙΣ ledger· το ledger γένεσης (κενό) υπογράφεται από αυτά· η πρώτη βεβαίωση χρόνου έρχεται μετά· οι πρώτες εγγραφές
+      βεβαιώνονται αναδρομικά (σπάσιμο του κύκλου Identity↔Time, MFA-ATK-15)
+  MFA-ELM-004:
+    genesis: 'χρόνος γένεσης μη βεβαιωμένος: t_recorded των πρώτων εγγραφών = Absent(NOT_OBSERVED) στον άξονα freshness μέχρι την πρώτη TSA βεβαίωση· κατόπιν αναδρομική
+      βεβαίωση με receipt (MFA-ATK-15)'
+  MFA-RSP-001:
+    chain: αρχή (5 όψεις μία άλγεβρα) → CC-lite 4 κανόνων (Δόση 0) → 8 κανόνες → persistent bitemporal hypergraph (παράγωγο fold) → CC API → CC-E1..E4 → Lean evaluator
+      + Rust journal (Δόση 0.5 παράλληλα) → κλειστότητα/replay/round-trip → journals ανά οντότητα → CC-lite→CC ως πρώτη ORP
+    rejects: σχήμα που δεν κλείνει και δεν διορθώνεται → CC-lite + 5 έδρες με crosswalk συνεχίζουν (η έξοδος DEC-X-06)
+  MFA-VO-014:
+    name: Null & competitor baseline
+    methods:
+    - pre-registered superiority test
+    - 'competitor baseline: ALT-6/7 υβρίδιο ως script στο harness (MFA-ATK-17)'
+    measures: υπεροχή έναντι μηδενικής εναλλακτικής ΚΑΙ έναντι του competitor baseline υπό ίσα δεδομένα/budget, σε σφραγισμένα έργα, ΠΡΙΝ τη Δόση 1 και ανά δόση —
+      συμπεριλαμβανομένων των έργων όπου ο ανταγωνιστής νικά, ρητά
+    first_level: F2
+rationale: 'MFA-ATK-15: παγίδα πλατφόρμας (υπόστρωμα χωρίς αξία πρώτα)· «acyclic by dose» ισχυρισμός χωρίς σειρά γένεσης· το ριψοκινδυνότερο (κλειστότητα CC) πρώτο
+  χωρίς fallback.'
+evidence:
+- adversarial/MFA-ATK-15.md
+- 'CLAIMS (omega-core-fixed: γραμμή 228, sxhash, *read-eval*)'
+affected_dependencies:
+- MFA-ELM-065
+- MFA-ELM-032
+- MFA-ELM-082
+- MFA-ELM-017
+capability_impact:
+  gained:
+  - MFA-CAP-043 (αξία από την πρώτη εβδομάδα)
+  - MFA-CAP-002 (baseline πριν τη Δόση 1)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#roadmap
+migration: IMPLEMENTATION-ROADMAP.md γράφεται με Δόση 0 όπως εδώ· TECHNICAL-ARCHITECTURE.md §Bootstrap με τη σειρά γένεσης των 16 κύκλων.
+verification: tools/check-package.py R11 (κάθε στοιχείο έχει δόση)
+rollback: MFA-PATCH-0015-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

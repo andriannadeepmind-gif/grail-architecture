@@ -1,0 +1,180 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0009
+title: AutonomyEnvelope για μη αναστρέψιμες πράξεις (κλάση IRREVERSIBLE-PREAUTHORIZED)· MFA-INV-067· προεπιλεγμένο ORDER του LPA· προτιμήσεις = παρατηρήσεις· k-of-n
+  δηλωμένοι (MFA-ATK-09)
+operation: ADD
+targets:
+- MFA-INV-067
+- MFA-ELM-010
+- MFA-MECH-006
+- MFA-CON-034
+- MFA-VO-032
+- MFA-MECH-005
+- MFA-ELM-008
+- MFA-CON-037
+- MFA-ELM-040
+- MFA-ELM-016
+- MFA-ELM-029
+- MFA-CON-036
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 2bda258350a07b7adfb861a487d2719d4d06fc53b6239442fd7bc507d26afbc9
+    CONTRACTS.yaml: 62dba91730cf3f5daab1b0e4b1baf707ab9ef480e32dcf3a09fa90e255dd5c48
+    INVARIANTS.yaml: ef126ea09e1a68d344da7f717ccad641aa4d5a321995aec75df069bed591b203
+    INVENTIONS.yaml: 9090d7b6addfc2176c82445dd727e9b0ea9e1ebb6b7384f9e4aef79741a9674b
+    VERIFICATION-OBLIGATIONS.yaml: b0608c44343c7d553caf53af5eb3254a992d2a9f2117b32f3d9329fd9d6f350a
+preconditions: []
+change:
+  MFA-INV-067:
+    _add: true
+    corresponds_to: null
+    name: No irreversible act without a live envelope or a fresh H1
+    tier: 0
+    delta: NEW
+    statement: Καμία πράξη κλάσης IRREVERSIBLE δεν εκτελείται χωρίς (α) ζωντανό AutonomyEnvelope⟨matter, effect_class, window, max_exposure, conditions, counter_signer,
+      expiry⟩ υπογεγραμμένο εκ των προτέρων από Principal/δημιουργό, μέσα στο παράθυρο και κάτω από max_exposure, ή (β) φρέσκο H1· το envelope είναι το αναστρέψιμο
+      αντικείμενο (ανακαλείται μέχρι την πράξη)· η πράξη σημαίνεται μη αναστρέψιμη (MFA-INV-044 αμετάβλητο) (MFA-ATK-09).
+    enforcement:
+    - MFA-ELM-010
+    - MFA-ELM-009
+    - MFA-ELM-008
+    verification:
+    - MFA-VO-032
+    falsifier: IRREVERSIBLE commit χωρίς envelope_cid ή H1· ή με envelope ληγμένο/ανακληθέν/υπέρβαση max_exposure
+  MFA-ELM-010:
+    effect_classes:
+    - class: REVERSIBLE
+      inverse: r⁻¹ ή ē προ-δεσμευμένο
+      h1: false
+    - class: IRREVERSIBLE
+      inverse: NONE
+      h1: πάντα (φρέσκο H1)
+    - class: IRREVERSIBLE-PREAUTHORIZED
+      inverse: NONE για την πράξη· το AutonomyEnvelope είναι το αναστρέψιμο αντικείμενο (ανάκληση μέχρι την πράξη)
+      h1: ικανοποιείται από ζωντανό AutonomyEnvelope⟨matter, effect_class, window, max_exposure, conditions, counter_signer ∈ {δεύτερο σώμα με ανεξάρτητο κλειδί,
+        Court fast-track με φραγμένο χρόνο}, expiry⟩ (MFA-INV-067)
+    - class: DISCLOSE
+      inverse: NONE
+      h1: ικανοποιείται από DisclosureGrant⟨recipient, max_label, purpose, expiry⟩ (πολιτική PDP, δηλωμένο στην εισδοχή του παρόχου, ανακλητό)· ο Gateway επιβάλλει
+        label(payload) ≤ grant.max_label (MFA-CAP-077)· κάθε κλήση = δέσμευση Disclose με hash του payload και receipt
+    statement: 'MFA-MECH-006: proposal → inverse staged → shadow → diff → gate → commit → window· NONE ⇒ H1· ο κατάλογος ενεργειών με υποχρεωτική ανθρώπινη έγκριση
+      (CLAIMS F16) = κλάσεις με inverse NONE ∪ Constitution-H1. · Κλάση DISCLOSE (MFA-ATK-05): η έξοδος πληροφορίας προς πάροχο/παραλήπτη εκτός sovereign boundary
+      είναι επίδραση με inverse NONE και standing DisclosureGrant — το plane διαρρέει ΜΟΝΟ μέσω υπογεγραμμένου, σημασμένου καναλιού· «τοπικά μοντέλα» = grant με recipient=self
+      (αναβάθμιση εμπιστευτικότητας). · Owner perimeter 6 βαθμίδων (MATERIAL §2 #14) ως τα επίπεδα των AutonomyGrant/Envelope (MFA-ATK-07). · Κλάση IRREVERSIBLE-PREAUTHORIZED
+      (MFA-ATK-09): μη αναστρέψιμη πράξη με H1 ικανοποιημένο από προ-υπογεγραμμένο AutonomyEnvelope· το «23:50 filing» γίνεται δυνατό ΜΟΝΟ αν υπάρχει envelope — ο
+      δημιουργός αποφασίζει στην υπογραφή (MFA-DEC-004).'
+    failure_modes:
+    - mode: inverse αποτυγχάνει
+      response: αναταξινόμηση κλάσης + Court
+    - mode: envelope λήγει στη μέση της πράξης
+      response: abort πριν το commit· μετά το commit η πράξη μένει (μη αναστρέψιμη, σημασμένη) και ανοίγει Court
+    - mode: envelope ανακλήθηκε μετά το staging
+      response: abort· receipt της ανάκλησης
+    - mode: υπέρβαση max_exposure
+      response: deny + φρέσκο H1
+  MFA-MECH-006:
+    statement: 'Κάθε επίδραση: inverse (r⁻¹ ∨ ē) προ-δεσμευμένο → shadow → diff → gate → commit → window· NONE ⇒ H1. · Κλάση Disclose⟨payload_label, recipient, purpose⟩
+      με DisclosureGrant (MFA-ATK-05). · Κλάση IRREVERSIBLE-PREAUTHORIZED με AutonomyEnvelope ως το αναστρέψιμο αντικείμενο (MFA-ATK-09).'
+  MFA-CON-034:
+    statement: propose(effect, inverse)/shadow/gate/commit→receipt/rollback/settle· inverse ∈ {r⁻¹, ē, NONE}· NONE ⇒ NEEDS_H1 ή (κλάση DISCLOSE) έγκυρο DisclosureGrant·
+      disclose(payload_hash, label, recipient)→receipt. · sign_envelope(env)→envelope_cid / revoke_envelope(cid) / commit(effect, envelope_cid) για IRREVERSIBLE-PREAUTHORIZED.
+    failure_semantics: commit χωρίς inverse_cid ή H1 → ERR_INVALID· TOCTOU → preconditions επανέλεγχος στο commit· Disclose χωρίς grant ή με label > max_label → ERR_UNAUTHORIZED_CAPABILITY
+      (fail-closed) · IRREVERSIBLE χωρίς ζωντανό envelope ή H1 → ERR_UNAUTHORIZED_CAPABILITY (MFA-INV-067)
+  MFA-VO-032:
+    methods:
+    - DST 1000 txs
+    - rollback
+    - 'envelope drills: λήξη στη μέση της πράξης, ανάκληση μετά το staging, υπέρβαση max_exposure (MFA-ATK-09)'
+    measures: 0 commits χωρίς inverse/H1/envelope, rollback εντός ε, ταξινόμηση κλάσεων, 0 IRREVERSIBLE μετά από λήξη/ανάκληση envelope
+    verifies:
+    - MFA-INV-043
+    - MFA-INV-044
+    - MFA-INV-042
+    - MFA-INV-033
+    - MFA-INV-067
+  MFA-MECH-005:
+    default_order:
+      tier0:
+      - Truth
+      - Legal/Deontic
+      - Identity
+      - Commitment
+      tier1:
+      - Owner-intent
+      - Resource
+      tier2:
+      - Value
+      - Regret
+      - Curiosity
+      - Empowerment
+      within_tier: σειρά εγγραφής του governor στο ledger (ντετερμινιστική)
+      level: L2 δέσμευση· αλλάζει με patch (MFA-DEC-005)
+    assumptions:
+    - 'ORDER: προεπιλογή = Tier order (MFA-ATK-09)· ο δημιουργός την αλλάζει με patch (MFA-DEC-005)'
+  MFA-ELM-008:
+    default_order:
+      tier0:
+      - Truth
+      - Legal/Deontic
+      - Identity
+      - Commitment
+      tier1:
+      - Owner-intent
+      - Resource
+      tier2:
+      - Value
+      - Regret
+      - Curiosity
+      - Empowerment
+      within_tier: σειρά εγγραφής στο ledger
+    assumptions:
+    - 'ORDER μεταξύ veto: προεπιλογή Tier order ως L2 δέσμευση (replay ακριβές, MFA-INV-008)· ο δημιουργός αποφασίζει αλλαγή (MFA-DEC-005)'
+    statement: Αξιολόγηση κάθε δομικής μετάβασης έναντι Tier-0/1/2 κατηγορημάτων ΜΟΝΟ αποφασίσιμων φραγμένου κόστους (CLAIMS F5)· ετυμηγορία ΔΙΑΝΥΣΜΑ μέσω LPA (MFA-MECH-005)·
+      fail-closed· N-version Rust+Lisp. · Η δεύτερη υλοποίηση (CL reference) = audit sampling στο DP-1 (ποσοστό από OAP) και πλήρης από DP-3· Tier-0 κατηγορήματα
+      ΠΑΝΤΑ N-version (fail-closed)· διαφωνία ⇒ deny + Court με φραγμένο χρόνο (MFA-INV-065) (MFA-ATK-05). · ORDER = L2 δέσμευση με προεπιλογή Tier-0 → Tier-1 → Tier-2,
+      εντός tier κατά σειρά εγγραφής (MFA-ATK-09).
+  MFA-CON-037:
+    state_semantics: μητρώο governors + ORDER ως L2 δέσμευση (προεπιλογή Tier order)
+    failure_semantics: όλα κομμένα → Unknown(CONTESTED)+Court· scalarization σε μη ονομασμένη απόφαση → ERR_INVALID · decide χωρίς ORDER δέσμευση → ERR_INVALID (μη
+      αναπαραγώγιμο)
+  MFA-ELM-040:
+    statement: 'Πριν από κάθε rollback/ORP/GCP οντότητας: καταγραφή κατάστασης και δηλωμένων προτιμήσεων της οντότητας ως δεσμεύσεις — σωστό είτε έχει ηθική θέση
+      είτε όχι (MATERIAL §9.23). · Προτιμήσεις = Observations (append-only, δεν λήγουν)· οι πολιτικές που παράγονται από αυτές = MetaBound POLICY (λήγουν, MFA-ELM-015,
+      MFA-INV-053) (MFA-ATK-09).'
+  MFA-ELM-016:
+    statement: 'Κλιμακωτή παύση (DEC-X-20): Principal για το δικό του, δημιουργός καθολικό k-of-n, αυτόματοι Tier-0 triggers· TimeFreeze ως πράξη με receipt· πολιτική
+      μη-διαθεσιμότητας δημιουργού = ΑΝΟΙΧΤΗ απόφασή του. · Κάτοχοι k-of-n = δηλωμένοι από τον δημιουργό εκπρόσωποι, εγγεγραμμένοι ως L3 πολιτική, ανακλητοί· η κυριαρχία
+      (MFA-INV-005) διατηρείται (MFA-ATK-09)· ποιοι/πόσοι = MFA-DEC-012.'
+  MFA-ELM-029:
+    statement: 'MFA-MECH-004: GapField ανά T → υποψήφιοι Goals (EFE, LPA) → εισδοχή με falsifier → AutonomyGrant ή H1 → RET → REVIEW· Telos read-only· quests του
+      δημιουργού = Goals origin creator. · AutonomyGrant για REVERSIBLE· AutonomyEnvelope (προ-υπογεγραμμένο, με counter_signer) για IRREVERSIBLE-PREAUTHORIZED· επίπεδα
+      = owner perimeter 0–5 (MFA-ATK-09).'
+  MFA-CON-036:
+    statement: sense()→GapField/candidates(k)/admit(goal)/request_grant(goal)/review(goal). · request_envelope(goal, effect_class)→PENDING_SIGNATURE (ο Principal
+      υπογράφει εκ των προτέρων).
+rationale: 'MFA-ATK-09: (α) αυτονομία μόνο για αναστρέψιμα = αυτονομία πάνω στο τίποτα για το δίκαιο· (γ) LPA χωρίς ORDER = μη αναπαραγώγιμος· (β)(δ) διευκρινίσεις
+  που δεν ήταν γραμμένες.'
+evidence:
+- adversarial/MFA-ATK-09.md
+- 'MATERIAL §2 #14 (6 βαθμίδες)'
+- Autonomy.sysml
+affected_dependencies:
+- MFA-ELM-026
+- MFA-ELM-067
+- MFA-ELM-066
+- MFA-ELM-009
+- MFA-ELM-091
+capability_impact:
+  gained:
+  - MFA-CAP-006 (αυτονομία και για μη αναστρέψιμα, με envelope)
+  - MFA-CAP-049 (ντετερμινιστικός LPA)
+  at_risk:
+  - 'MFA-CAP-030: το envelope είναι σημείο όπου σφάλμα δημιουργού γίνεται πράξη — max_exposure + counter_signer'
+  ledger_entry: CAPABILITY-CONSERVATION.md#autonomy
+migration: Υπάρχοντα AutonomyGrants μένουν REVERSIBLE-only· envelopes νέο αντικείμενο· Docket (MFA-ELM-067) προτείνει envelopes για προθεσμίες.
+verification: tools/check-package.py· MFA-VO-032 drills
+rollback: MFA-PATCH-0009-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

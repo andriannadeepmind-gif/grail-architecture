@@ -1,0 +1,120 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0016-R
+title: 'Rollback of MFA-PATCH-0016: MFA-INV-068 παγωμένος Tier-0 kernel· SPLIT MFA-ELM-020 → 020 (Suite) + MFA-ELM-099 (Tier-0 Kernel)· δύο όψεις της πύλης (advisory/effective)·
+  EIM μετρά εξάρτηση oracle από ετυμηγορίες (MFA-ATK-16)'
+operation: RESTORE
+targets:
+- MFA-INV-068
+- MFA-ELM-099
+- MFA-ELM-020
+- MFA-CON-030
+- MFA-ELM-008
+- MFA-CON-006
+- MFA-CON-037
+- MFA-INV-002
+- MFA-MECH-009
+- MFA-ELM-096
+- MFA-ELM-094
+- MFA-ELM-049
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 3e045e11fd703d455f1a5c0b696ba53428827b2a76299735320bde24778cac32
+    CONTRACTS.yaml: 7976f22bfe3430cfb661baf3db3feb8c0047e53965d7c41827a3fd4f56d69fdf
+    INVARIANTS.yaml: a140107267f72d5f9aed98c2aaba0b68a52e8ed696168b4db3d3ceaa1c8d59a3
+    INVENTIONS.yaml: a4aa1882a84ab4047f5a1c6511c555e33ea532dae2859f1b32b964648c5663d1
+    diagrams/MFA-DIA-16.mmd: 0a46f39b93445a19fba3243e90700a0dd6c9503e91096df574b92bae2af4cd98
+preconditions:
+- MFA-PATCH-0016.status == APPLIED
+change:
+  MFA-INV-068:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-099:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-020:
+    delta:
+      __raw: STRENGTHEN
+    superseded_by:
+      __raw: 'null'
+    statement:
+      __raw: '"Μητρώο verifiers με ΜΙΑ κλίμακα βαθμών (DEC-X-08), N-version με EIM PASS, mutation-tested, proof objects· timeout⇒UNKNOWN· verifier set μέσα στην ταυτότητα·
+        #print axioms για Lean, refinement/machine-closure/level-correctness για TLA+. · Κανένας εξαχθείς από Lean κώδικας στο TCB· Tier-0 = απόδειξη ιδιοτήτων του
+        μοντέλου (TLA+/Lean)· η δέσμευση μοντέλου↔κώδικα είναι Tier-1 (DRT, MFA-VO-054)· MFA-UNK-014 παραμένει RSP (MFA-ATK-05)."'
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-086]'
+  MFA-CON-030:
+    statement:
+      __raw: '"Verify(claim, class)→ProofObject(grade) ∣ Refuted ∣ Unknown(reason)· grade από τη μία κλίμακα· independence attestation (EIM)."'
+    provider:
+      __raw: '"MFA-ELM-020 (εγγεγραμμένοι: 061, 065, 067, 022, 024, 075)"'
+    failure_semantics:
+      __raw: '"timeout ⇒ Unknown ποτέ pass· verifier χωρίς EIM PASS δεν εγγράφεται"'
+  MFA-ELM-008:
+    faces:
+      __raw: 'null'
+    statement:
+      __raw: '"Αξιολόγηση κάθε δομικής μετάβασης έναντι Tier-0/1/2 κατηγορημάτων ΜΟΝΟ αποφασίσιμων φραγμένου κόστους (CLAIMS F5)· ετυμηγορία ΔΙΑΝΥΣΜΑ μέσω LPA (MFA-MECH-005)·
+        fail-closed· N-version Rust+Lisp. · Η δεύτερη υλοποίηση (CL reference) = audit sampling στο DP-1 (ποσοστό από OAP) και πλήρης από DP-3· Tier-0 κατηγορήματα
+        ΠΑΝΤΑ N-version (fail-closed)· διαφωνία ⇒ deny + Court με φραγμένο χρόνο (MFA-INV-065) (MFA-ATK-05). · ORDER = L2 δέσμευση με προεπιλογή Tier-0 → Tier-1 →
+        Tier-2, εντός tier κατά σειρά εγγραφής (MFA-ATK-09)."'
+  MFA-CON-006:
+    statement:
+      __raw: '"Evaluate(transition)→Decision (ΔΙΑΝΥΣΜΑ: options, vectors, pruning_trace, chosen, regret — όχι allow/deny bit)· ProposeAmendment/Ratify."'
+  MFA-CON-037:
+    statement:
+      __raw: '"decide(options, vectors, decision_type)→Decision · register(governor) · explain(decision)→pruning_trace."'
+  MFA-INV-002:
+    statement:
+      __raw: '"Κάθε Control ορατό (CONTROL_RESTRICTED)· ποτέ αλλαγή του capability set· ΚΑΙ policyDecisionsInsideCore == 0 με τις 5 απαριθμημένες σταθερές πυρήνα."'
+  MFA-MECH-009:
+    statement:
+      __raw: '"Ανεξαρτησία = διάνυσμα (supply, data, behaviour[, genetic]) με veto ανά διάσταση και worst-case για μη παρατηρήσιμα."'
+  MFA-ELM-096:
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-002, MFA-ELM-003, MFA-ELM-004, MFA-ELM-005, MFA-ELM-007, MFA-ELM-009, MFA-ELM-010, MFA-ELM-028, MFA-ELM-032, MFA-ELM-051, MFA-ELM-084,
+        MFA-ELM-088, MFA-ELM-090, MFA-ELM-093]'
+    statement:
+      __raw: '"Η τομή του Telos lattice (OBJECTIVE-SPACE §6): 001–005, 007, 009, 010, 028, 032, 051, 084, 088, 090, 093 — ό,τι χτίζεται πρώτο και δεν αλλάζει αν αλλάξει
+        το Telos."'
+  MFA-ELM-094:
+    statement:
+      __raw: '"Το σύνολο S2 (+ τμήματα S3/S6/S7 σημασμένα genesis) μέσα σε ΕΝΑ trust boundary με ετικέτα plane — ένα microVM στο DP-1, ομάδα microVMs με κοινή ετικέτα
+        από DP-3 (MFA-ATK-05)· raw eval, μετα-επίπεδα, αυτο-τροποποίηση, απεριόριστη προσομοίωση, αντιπαλικοί κόσμοι· τοπικός inference server ΜΕΣΑ στο boundary (GPU
+        passthrough ή host-side server με το plane ως μόνο πελάτη)· ΚΑΝΕΝΑ Control μέσα (η πύλη έχει μόνο advisory όψη εδώ, MFA-ATK-16)· μόνες έξοδοι: EffectTx μέσω
+        Gateway, συμπεριλαμβανομένης της κλάσης DISCLOSE."'
+  MFA-ELM-049:
+    statement:
+      __raw: '"Ανεξάρτητη AEO με εντολή διάψευσης σε ΧΩΡΙΣΤΟ Πολιτισμό (trust domain), δικά της κλειδιά/πάροχοι/μνήμη, bounty· μετρούμενη απόδοση διάψευσης."'
+  diagrams/MFA-DIA-16.mmd:
+    replace:
+    - - ELM["99 elements<br/>κάθε ένα verified-by ≥1 VO"]
+      - ELM["97 elements<br/>κάθε ένα verified-by ≥1 VO"]
+    - - 'VO["56 obligations (VERIFICATION-OBLIGATIONS.yaml)<br/>κάθε μία: method · measures · rejects · allows_next"]'
+      - 'VO["55 obligations (VERIFICATION-OBLIGATIONS.yaml)<br/>κάθε μία: method · measures · rejects · allows_next"]'
+    - - INV["68 invariants (INVARIANTS.yaml)<br/>κάθε ένα με ≥1 VO"]
+      - INV["65 invariants (INVARIANTS.yaml)<br/>κάθε ένα με ≥1 VO"]
+    - - 'T0["Tier-0: proof ανεξάρτητου kernel (Lean #print axioms · TLA+ refinement)<br/>MFA-ELM-099 παγωμένος kernel · MFA-INV-068"]'
+      - 'T0["Tier-0: proof ανεξάρτητου kernel (Lean #print axioms · TLA+ refinement)"]'
+rationale: Αντίστροφο του MFA-PATCH-0016, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-038
+- MFA-ELM-029
+- MFA-ELM-048
+- MFA-ELM-061
+- MFA-ELM-065
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-022 (σταθερό σημείο επαλήθευσης)
+  - MFA-CAP-052 (το plane κλείνει και για την πύλη)
+  ledger_entry: CAPABILITY-CONSERVATION.md#verification-bootstrap
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0016
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

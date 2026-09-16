@@ -1,0 +1,101 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0005-R
+title: 'Rollback of MFA-PATCH-0005: Κλάση επίδρασης Disclose + DisclosureGrant· TED προεπιλογή D2 για LLM· Genesis plane = trust boundary· N-version ως audit sampling
+  στο DP-1 (MFA-ATK-05)'
+operation: RESTORE
+targets:
+- MFA-ELM-010
+- MFA-MECH-006
+- MFA-CON-034
+- MFA-ELM-017
+- MFA-CON-022
+- MFA-ELM-009
+- MFA-ELM-006
+- MFA-ELM-008
+- MFA-ELM-020
+- MFA-ELM-094
+- MFA-VO-041
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 8e32ac07d7a53b96ef71adf364fc5b4c7dc96663ef78ba2d94de9acb45350bbb
+    CONTRACTS.yaml: 28fb60ed13c36e2a18447e85f0aa7803907f902710bc2bf2ae47154a33dd3092
+    INVENTIONS.yaml: 34fb32a8613df41fc476d1f67d01d757ae304c4785aef89ef73185ebe305a741
+    VERIFICATION-OBLIGATIONS.yaml: ca3469c51beba957a5709b7e2dc268c51bc28249c73985e8b772e94459bfe445
+preconditions:
+- MFA-PATCH-0005.status == APPLIED
+change:
+  MFA-ELM-010:
+    effect_classes:
+      __raw: 'null'
+    statement:
+      __raw: '"MFA-MECH-006: proposal → inverse staged → shadow → diff → gate → commit → window· NONE ⇒ H1· ο κατάλογος ενεργειών με υποχρεωτική ανθρώπινη έγκριση
+        (CLAIMS F16) = κλάσεις με inverse NONE ∪ Constitution-H1."'
+  MFA-MECH-006:
+    statement:
+      __raw: '"Κάθε επίδραση: inverse (r⁻¹ ∨ ē) προ-δεσμευμένο → shadow → diff → gate → commit → window· NONE ⇒ H1."'
+  MFA-CON-034:
+    statement:
+      __raw: '"propose(effect, inverse)/shadow/gate/commit→receipt/rollback/settle· inverse ∈ {r⁻¹, ē, NONE}· NONE ⇒ NEEDS_H1."'
+    failure_semantics:
+      __raw: '"commit χωρίς inverse_cid ή H1 → ERR_INVALID· TOCTOU → preconditions επανέλεγχος στο commit"'
+  MFA-ELM-017:
+    statement:
+      __raw: '"Provider-agnostic μοντέλα με model contracts, routing, N-model, redaction, Inference Receipts + Typed Execution (MFA-MECH-015): D1 exact-match με grammar
+        στον sampler (logit=−∞ πριν softmax), P1 ερμηνεία TRACE_REPLAYABLE· μία πόρτα εξόδου (PROPOSED)."'
+  MFA-CON-022:
+    statement:
+      __raw: '"Generate/Embed/Score/Route/Agree + exec_type ανά κλήση (D1 grammar exact-match ∣ P1) + seed/version στο receipt."'
+    failure_semantics:
+      __raw: '"P1 έξοδος σημασμένη VERIFIED → ERR_INVALID· πάροχος χωρίς version → repro TRACE μόνο, δηλωμένο"'
+  MFA-ELM-009:
+    statement:
+      __raw: '"Το μόνο μονοπάτι επιδράσεων: tokens (attenuation-only, Biscuit-class — CLAIMS F56), controls, confidentiality domains, budgets, EffectReceipts· όργανα
+        χωρίς ambient authority."'
+  MFA-ELM-006:
+    statement:
+      __raw: '"Organ contracts (17 πεδία + 16 άδεια δωμάτια με fill_policy/compat_rule — CLAIMS F1/F2), conformance vectors, μονότονο lattice ΜΟΝΟ με evidence από
+        τον held-out, TTL, SLSA admission, ND ledger."'
+  MFA-ELM-008:
+    statement:
+      __raw: '"Αξιολόγηση κάθε δομικής μετάβασης έναντι Tier-0/1/2 κατηγορημάτων ΜΟΝΟ αποφασίσιμων φραγμένου κόστους (CLAIMS F5)· ετυμηγορία ΔΙΑΝΥΣΜΑ μέσω LPA (MFA-MECH-005)·
+        fail-closed· N-version Rust+Lisp."'
+    resource_model:
+      __raw: '"Rust + CL reference"'
+  MFA-ELM-020:
+    statement:
+      __raw: '"Μητρώο verifiers με ΜΙΑ κλίμακα βαθμών (DEC-X-08), N-version με EIM PASS, mutation-tested, proof objects· timeout⇒UNKNOWN· verifier set μέσα στην ταυτότητα·
+        #print axioms για Lean, refinement/machine-closure/level-correctness για TLA+."'
+  MFA-ELM-094:
+    statement:
+      __raw: '"Το σύνολο S2 (+ τμήματα S3/S6/S7 σημασμένα genesis) μέσα σε ΕΝΑ microVM: raw eval, μετα-επίπεδα, αυτο-τροποποίηση, απεριόριστη προσομοίωση, αντιπαλικοί
+        κόσμοι· ΚΑΝΕΝΑ Control μέσα· μόνη έξοδος: EffectTx μέσω Gateway."'
+    resource_model:
+      __raw: '"microVM"'
+  MFA-VO-041:
+    measures:
+      __raw: '"100% Acts typed, 0 P1→VERIFIED, D1 exact-match 100% byte-identical"'
+    rejects:
+      __raw: '"D1 μη byte-identical → D1 μόνο συμβολικά όργανα"'
+rationale: Αντίστροφο του MFA-PATCH-0005, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-019
+- MFA-ELM-029
+- MFA-ELM-059
+- MFA-ELM-065
+- MFA-ELM-097
+capability_impact:
+  gained:
+  - 'MFA-CAP-050/051: D1 για LLM περιορίζεται σε τοπική εξαγωγή — δεν χάνεται, δηλώνεται (ήταν Unknown)'
+  at_risk:
+  - MFA-CAP-077 (ετικέτες ροής επιβάλλονται στην έξοδο προς πάροχο)
+  - MFA-CAP-052 (το plane κλείνει)
+  ledger_entry: CAPABILITY-CONSERVATION.md#effects
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0005
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

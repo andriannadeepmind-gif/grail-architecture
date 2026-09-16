@@ -1,0 +1,14 @@
+%% id: MFA-DIA-08 · Digital Twin fidelity ladder · question: σε κάθε σκαλί, τι εκτελείται, τι προσομοιώνεται, τι αποδεικνύεται, τι μένει άγνωστο — με τα ΙΔΙΑ IDs;
+%% elements: MFA-MECH-007, MFA-ELM-085, MFA-INV-060 · source: mechanisms/MFA-MECH-007.md
+flowchart LR
+  F0["F0 Δηλωτικό<br/>YAML/SysML<br/>εκτελείται: check-package<br/>αποδεικνύεται: συνέπεια σχήματος<br/>άγνωστο: όλα τα δυναμικά"]
+  F1["F1 Εκτελέσιμη προδιαγραφή<br/>Lean/TLA+/Alloy<br/>εκτελείται: CC eval, TLC, Alloy<br/>αποδεικνύεται: κλειστότητα, refinement<br/>άγνωστο: επίδοση"]
+  F2["F2 DST με stubs<br/>εκτελείται: όλοι οι κανόνες, 24 KT, faults<br/>stubs: Unknown(NOT_IMPLEMENTED)<br/>άγνωστο: πραγματικοί πάροχοι"]
+  F3["F3 Shadow organs<br/>εκτελείται: πραγματικά όργανα χωρίς effects<br/>differential vs stubs<br/>άγνωστο: πραγματικό φορτίο"]
+  F4["F4 Παραγωγή<br/>effects με RET window"]
+  F5["F5 Multi-site sovereign<br/>witnesses ≥2 sites · DR (KT-22)"]
+  F0 -->|"MFA-VO-033 identity test<br/>IDs = · contracts ≡ · INV ⊆ · replay"| F1 -->|"identity test"| F2 -->|"ORP ανά element"| F3 -->|"ORP + KT-20 drill"| F4 -->|"KT-22"| F5
+  F5 -.->|"rollback = επαναφορά ImplMap<br/>stubs ποτέ δεν σβήνονται"| F2
+  WM["WhatMatrix ανά element<br/>MFA-ELM-085 · MFA-INV-060"]
+  WM -.-> F0
+  WM -.-> F5

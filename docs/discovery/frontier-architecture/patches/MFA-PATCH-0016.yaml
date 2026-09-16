@@ -1,0 +1,189 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0016
+title: MFA-INV-068 παγωμένος Tier-0 kernel· SPLIT MFA-ELM-020 → 020 (Suite) + MFA-ELM-099 (Tier-0 Kernel)· δύο όψεις της πύλης (advisory/effective)· EIM μετρά εξάρτηση
+  oracle από ετυμηγορίες (MFA-ATK-16)
+operation: ADD
+targets:
+- MFA-INV-068
+- MFA-ELM-099
+- MFA-ELM-020
+- MFA-CON-030
+- MFA-ELM-008
+- MFA-CON-006
+- MFA-CON-037
+- MFA-INV-002
+- MFA-MECH-009
+- MFA-ELM-096
+- MFA-ELM-094
+- MFA-ELM-049
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: f7611d26a343808fde9e9befeada38d52f24544c4f6f02dcafa9d270e5bc7820
+    CONTRACTS.yaml: 5e7ca2cb9e4ddeae2de35f4e871741f9b8cbf7ecd057e798c727141f83f93c9f
+    INVARIANTS.yaml: ea2eb8216ca564792166106ed4d10a4145dfdbf9d7853ff4f6d9add89215b8da
+    INVENTIONS.yaml: 9f3dc9b7bb0d4a3f9cc8d75fe308c31bc6a479ad6ecd23419b3b8e974a5b6160
+    diagrams/MFA-DIA-16.mmd: 9d86490d3b2378dddd70c9d11fd2253c0b41f0f24c078eee8291967bfb4587f0
+preconditions: []
+change:
+  MFA-INV-068:
+    _add: true
+    corresponds_to: null
+    name: Frozen Tier-0 kernel
+    tier: 0
+    delta: NEW
+    statement: 'Ο Tier-0 kernel (MFA-ELM-099: Lean/TLA+ checker + CC-lite reference σε CL) δεν είναι ΠΟΤΕ υπό ORP· αλλάζει μόνο με πράξη L3 του δημιουργού μέσω GCP-style
+      replay (MFA-MECH-003) του σφραγισμένου proof-object corpus· κάθε διάδοχος Tier-1/2 επαληθευτή περνά το σφραγισμένο corpus ελεγμένο από τον παγωμένο kernel —
+      παλινδρόμηση στο σφραγισμένο σύνολο αδύνατη εξ ορισμού (MFA-ATK-16).'
+    enforcement:
+    - MFA-ELM-099
+    - MFA-ELM-008
+    - MFA-ELM-038
+    verification:
+    - MFA-VO-053
+    - MFA-VO-035
+    falsifier: αλλαγή του kernel μέσω ORP· ή Tier-1/2 verifier προαγόμενος χωρίς πέρασμα του σφραγισμένου corpus από τον kernel
+  MFA-ELM-099:
+    _add: true
+    name: Tier-0 Kernel (frozen)
+    stratum: S0
+    plane: both
+    corresponds_to: []
+    delta: SPLIT (από MFA-ELM-020 / CMP-COG-04)
+    maturity: T
+    statement: 'Ο παγωμένος πυρήνας επαλήθευσης (MFA-ATK-16): Lean 4 kernel (#print axioms audit, MFA-VO-053) + TLA+ model checker (refinement/machine closure, MFA-VO-054)
+      + CC-lite reference interpreter σε Common Lisp (N-version με το Rust journal)· κρατά το ΣΦΡΑΓΙΣΜΕΝΟ proof-object corpus· δεν είναι όργανο υπό ORP· αλλάζει μόνο
+      με L3 πράξη + GCP replay· μέρος του robust substrate (MFA-ELM-096).'
+    purpose: 'Το σταθερό σημείο της επαλήθευσης: ο μόνος επαληθευτής που δεν επαληθεύει τον διάδοχό του.'
+    capabilities:
+    - MFA-CAP-022
+    - MFA-CAP-059
+    source_provenance:
+    - MFA-ATK-16
+    - SPLIT από MFA-ELM-020 (CMP-COG-04)
+    - CLAIMS F83/F84 (#print axioms, TLA+ refinement)
+    assumptions:
+    - δύο ανεξάρτητοι ελεγκτές (Lean + TLA+/CL) — bugs του ενός δεν συμπίπτουν με του άλλου
+    dependencies:
+    - MFA-ELM-002
+    - MFA-ELM-003
+    interfaces:
+    - MFA-CON-030
+    authority: L3 μόνο δημιουργός· ΠΟΤΕ ORP
+    state_model: σφραγισμένο proof-object corpus (CAS) + kernel versions ως L3 δεσμεύσεις
+    failure_modes:
+    - mode: bug του kernel
+      response: 'N-version: Lean + TLA+ + CL reference· διαφωνία ⇒ deny + δημιουργός'
+    - mode: σφραγισμένο corpus ελλιπές
+      response: προσθήκη μόνο με ADD (μονότονο, όπως anchors)
+    alternatives:
+    - 'Suite που επαληθεύει τον διάδοχό της (η κατάσταση πριν — απορρίφθηκε: κυκλική επαλήθευση)'
+    conflicts: []
+    unknowns:
+    - MFA-UNK-014
+    verification:
+    - MFA-VO-053
+    - MFA-VO-054
+    - MFA-VO-035
+    falsifier: kernel που άλλαξε χωρίς L3 πράξη + replay· ή verifier διάδοχος που πέρασε χωρίς τον kernel
+    resource_model: Lean + TLA+ toolchain (CPU-only)· CL reference
+    evolution_path: ΜΟΝΟ L3 + GCP replay του corpus (ποτέ R-A/R-B/R-C)
+    affected_by: []
+  MFA-ELM-020:
+    delta: SPLIT
+    superseded_by: null
+    statement: 'Μητρώο verifiers με ΜΙΑ κλίμακα βαθμών (DEC-X-08), N-version με EIM PASS, mutation-tested, proof objects· timeout⇒UNKNOWN· verifier set μέσα στην
+      ταυτότητα· #print axioms για Lean, refinement/machine-closure/level-correctness για TLA+. · Κανένας εξαχθείς από Lean κώδικας στο TCB· Tier-0 = απόδειξη ιδιοτήτων
+      του μοντέλου (TLA+/Lean)· η δέσμευση μοντέλου↔κώδικα είναι Tier-1 (DRT, MFA-VO-054)· MFA-UNK-014 παραμένει RSP (MFA-ATK-05). · SPLIT (MFA-ATK-16): το 020 =
+      Verification Suite Tier-1/2 (όργανα υπό ORP)· ο παγωμένος Tier-0 kernel = MFA-ELM-099· κάθε διάδοχος verifier περνά το σφραγισμένο corpus από τον kernel (MFA-INV-068).'
+    dependencies:
+    - MFA-ELM-001
+    - MFA-ELM-086
+    - MFA-ELM-099
+  MFA-CON-030:
+    statement: 'Verify(claim, class)→ProofObject(grade) ∣ Refuted ∣ Unknown(reason)· grade από τη μία κλίμακα· independence attestation (EIM). · tier ανά verifier·
+      kernel_checked: bool (ο verifier πέρασε το σφραγισμένο corpus από MFA-ELM-099)· Tier-0 = μόνο kernel.'
+    provider: 'MFA-ELM-020 (Tier-1/2· εγγεγραμμένοι: 061, 065, 067, 022, 024, 075) · MFA-ELM-099 (Tier-0, παγωμένος)'
+    failure_semantics: timeout ⇒ Unknown ποτέ pass· verifier χωρίς EIM PASS δεν εγγράφεται · Tier-1/2 verifier χωρίς kernel_checked → δεν εγγράφεται (MFA-INV-068)
+  MFA-ELM-008:
+    faces:
+      advisory: καθαρή συνάρτηση πάνω στα κατηγορήματα, καλείται από Genesis ως προσομοίωση της πύλης — καμία εξουσία, καμία δέσμευση
+      effective: στο Effect plane, με εξουσία· μόνο η ετυμηγορία της είναι δέσμευση
+    statement: 'Αξιολόγηση κάθε δομικής μετάβασης έναντι Tier-0/1/2 κατηγορημάτων ΜΟΝΟ αποφασίσιμων φραγμένου κόστους (CLAIMS F5)· ετυμηγορία ΔΙΑΝΥΣΜΑ μέσω LPA (MFA-MECH-005)·
+      fail-closed· N-version Rust+Lisp. · Η δεύτερη υλοποίηση (CL reference) = audit sampling στο DP-1 (ποσοστό από OAP) και πλήρης από DP-3· Tier-0 κατηγορήματα
+      ΠΑΝΤΑ N-version (fail-closed)· διαφωνία ⇒ deny + Court με φραγμένο χρόνο (MFA-INV-065) (MFA-ATK-05). · ORDER = L2 δέσμευση με προεπιλογή Tier-0 → Tier-1 → Tier-2,
+      εντός tier κατά σειρά εγγραφής (MFA-ATK-09). · ΔΥΟ ΟΨΕΙΣ (MFA-ATK-16): advisory (Genesis, καθαρή, χωρίς εξουσία — ο TEGF την καλεί για κατάταξη) και effective
+      (Effect plane, δέσμευση)· η διάσχιση ορίου γίνεται μία φορά, στην πρόταση RET.'
+  MFA-CON-006:
+    statement: 'Evaluate(transition)→Decision (ΔΙΑΝΥΣΜΑ: options, vectors, pruning_trace, chosen, regret — όχι allow/deny bit)· ProposeAmendment/Ratify. · Δύο όψεις:
+      Evaluate.advisory(transition)→Decision (καμία δέσμευση) · Evaluate.effective(transition)→Decision + ledger (MFA-ATK-16).'
+  MFA-CON-037:
+    statement: decide(options, vectors, decision_type)→Decision · register(governor) · explain(decision)→pruning_trace. · decide.advisory από Genesis (καμία δέσμευση)·
+      decide.effective από Effect plane.
+  MFA-INV-002:
+    statement: Κάθε Control ορατό (CONTROL_RESTRICTED)· ποτέ αλλαγή του capability set· ΚΑΙ policyDecisionsInsideCore == 0 με τις 5 απαριθμημένες σταθερές πυρήνα.
+      · Η advisory όψη της πύλης μέσα στο Genesis δεν είναι Control (καμία εξουσία, καμία δέσμευση) (MFA-ATK-16).
+  MFA-MECH-009:
+    statement: Ανεξαρτησία = διάνυσμα (supply, data, behaviour[, genetic]) με veto ανά διάσταση και worst-case για μη παρατηρήσιμα. · Η data-independence μετρά ΚΑΙ
+      «κανόνες του oracle που προέρχονται από ετυμηγορίες του κρινόμενου Court» ως συσχέτιση με κατώφλι ανά Tier (MFA-ATK-16).
+  MFA-ELM-096:
+    dependencies:
+    - MFA-ELM-001
+    - MFA-ELM-002
+    - MFA-ELM-003
+    - MFA-ELM-004
+    - MFA-ELM-005
+    - MFA-ELM-007
+    - MFA-ELM-009
+    - MFA-ELM-010
+    - MFA-ELM-028
+    - MFA-ELM-032
+    - MFA-ELM-051
+    - MFA-ELM-084
+    - MFA-ELM-088
+    - MFA-ELM-090
+    - MFA-ELM-093
+    - MFA-ELM-099
+    statement: 'Η τομή του Telos lattice (OBJECTIVE-SPACE §6): 001–005, 007, 009, 010, 028, 032, 051, 084, 088, 090, 093 — ό,τι χτίζεται πρώτο και δεν αλλάζει αν
+      αλλάξει το Telos. · + 099 Tier-0 Kernel (παγωμένος) (MFA-ATK-16).'
+  MFA-ELM-094:
+    statement: 'Το σύνολο S2 (+ τμήματα S3/S6/S7 σημασμένα genesis) μέσα σε ΕΝΑ trust boundary με ετικέτα plane — ένα microVM στο DP-1, ομάδα microVMs με κοινή ετικέτα
+      από DP-3 (MFA-ATK-05)· raw eval, μετα-επίπεδα, αυτο-τροποποίηση, απεριόριστη προσομοίωση, αντιπαλικοί κόσμοι· τοπικός inference server ΜΕΣΑ στο boundary (GPU
+      passthrough ή host-side server με το plane ως μόνο πελάτη)· ΚΑΝΕΝΑ Control μέσα (η πύλη έχει μόνο advisory όψη εδώ, MFA-ATK-16)· μόνες έξοδοι: EffectTx μέσω
+      Gateway, συμπεριλαμβανομένης της κλάσης DISCLOSE. · Η advisory όψη της πύλης (MFA-ELM-008) καλείται από μέσα ως καθαρή συνάρτηση.'
+  MFA-ELM-049:
+    statement: Ανεξάρτητη AEO με εντολή διάψευσης σε ΧΩΡΙΣΤΟ Πολιτισμό (trust domain), δικά της κλειδιά/πάροχοι/μνήμη, bounty· μετρούμενη απόδοση διάψευσης. · Ο μη-LLM
+      oracle του Court δηλώνει τη γενεαλογία των κανόνων του· κανόνες που προέρχονται από ετυμηγορίες του ίδιου Court μετρούν στο EIM ως συσχέτιση (MFA-ATK-16).
+  diagrams/MFA-DIA-16.mmd:
+    replace:
+    - - 'T0["Tier-0: proof ανεξάρτητου kernel (Lean #print axioms · TLA+ refinement)"]'
+      - 'T0["Tier-0: proof ανεξάρτητου kernel (Lean #print axioms · TLA+ refinement)<br/>MFA-ELM-099 παγωμένος kernel · MFA-INV-068"]'
+    - - INV["65 invariants (INVARIANTS.yaml)<br/>κάθε ένα με ≥1 VO"]
+      - INV["68 invariants (INVARIANTS.yaml)<br/>κάθε ένα με ≥1 VO"]
+    - - 'VO["55 obligations (VERIFICATION-OBLIGATIONS.yaml)<br/>κάθε μία: method · measures · rejects · allows_next"]'
+      - 'VO["56 obligations (VERIFICATION-OBLIGATIONS.yaml)<br/>κάθε μία: method · measures · rejects · allows_next"]'
+    - - ELM["97 elements<br/>κάθε ένα verified-by ≥1 VO"]
+      - ELM["99 elements<br/>κάθε ένα verified-by ≥1 VO"]
+rationale: 'MFA-ATK-16: η Suite επαλήθευε τον διάδοχό της (κυκλική επαλήθευση)· ο TEGF καλούσε την πύλη μέσα από το Genesis (Control μέσα)· ο oracle μπορούσε να εξαρτάται
+  από ετυμηγορίες του Court που κρίνει.'
+evidence:
+- adversarial/MFA-ATK-16.md
+- CLAIMS F83/F84
+affected_dependencies:
+- MFA-ELM-038
+- MFA-ELM-029
+- MFA-ELM-048
+- MFA-ELM-061
+- MFA-ELM-065
+capability_impact:
+  gained:
+  - MFA-CAP-022 (σταθερό σημείο επαλήθευσης)
+  - MFA-CAP-052 (το plane κλείνει και για την πύλη)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#verification-bootstrap
+migration: Οι εγγεγραμμένοι verifiers του 020 αποκτούν kernel_checked μετά το πρώτο πέρασμα του σφραγισμένου corpus (Δόση 1).
+verification: tools/check-package.py· MFA-VO-053/054/035
+rollback: MFA-PATCH-0016-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

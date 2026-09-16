@@ -1,0 +1,28 @@
+%% id: MFA-DIA-13 · Legal matter processing · question: από την εντολή του πελάτη μέχρι το παραδοτέο, πού μπαίνουν οι δύο τύποι ισχυρισμού, η πύλη εκπομπής και η υπογραφή;
+%% elements: MFA-ELM-058/060/061/062/063/064/065/072/032/067/069, MFA-INV-032/033/047 · source: ARCHITECTURE-ELEMENTS S6
+flowchart LR
+  IN["Εντολή πελάτη<br/>MFA-ELM-069 Portal"]
+  MM["MFA-ELM-058 Matter<br/>conflict check · confidentiality domain"]
+  FE["MFA-ELM-060 Facts & Evidence<br/>claims με μαρτυρία · ASSUMED · StrategicSilence"]
+  RS["MFA-ELM-062 Research<br/>υποψήφιες παραπομπές"]
+  LR["MFA-ELM-061 Reasoning<br/>υπαγωγή D1/D2 · DDL · LexDSL"]
+  ST["MFA-ELM-063 Strategy<br/>MCTS · εσωτερική πιθανότητα"]
+  AD["MFA-ELM-064 Adversary/Judge sim<br/>+ CAM-NS rebuttal"]
+  DK["MFA-ELM-067 Docket<br/>διπλός υπολογισμός"]
+  subgraph CLAIMS["Δύο τύποι ισχυρισμού"]
+    EPI["Επιστημικός: «τι ισχύει»<br/>INV-C04 · 5-σκελής verifier"]
+    ADV["MFA-ELM-072 Συνηγορικός: «τι θα επικαλεστώ»<br/>rebuttal · witness · adverse admission"]
+  end
+  DR["MFA-ELM-065 Drafting & Citation Authority<br/>receipts as-of · σκέλη 1–5 (MFA-INV-032)"]
+  BAR["MFA-ELM-032 Emission Barrier<br/>OutputClass · claim_type ανά πρόταση<br/>0 βαθμωτό · 0 έκβαση % (MFA-INV-047)"]
+  SIGN["Principal H1 (MFA-INV-033)"]
+  OUT["Παραδοτέο = InstitutionalAct<br/>receipts · contest_path"]
+  IN --> MM --> FE --> LR
+  FE --> RS --> LR
+  LR --> ST --> AD --> ST
+  LR --> EPI
+  ST --> ADV
+  DK -.-> MM
+  EPI --> DR
+  ADV --> DR
+  DR --> BAR --> SIGN --> OUT --> IN

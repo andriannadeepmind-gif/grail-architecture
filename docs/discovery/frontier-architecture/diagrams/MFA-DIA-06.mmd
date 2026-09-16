@@ -1,0 +1,33 @@
+%% id: MFA-DIA-06 · Cognitive architecture · question: πώς ρέει μια σκέψη από αντίληψη σε δέσμευση, και πού μπαίνουν άγνοια, βούληση, αυτο-πρόβλεψη;
+%% elements: MFA-ELM-017…032 · source: ARCHITECTURE-ELEMENTS S2, MFA-MECH-002/004/010/011/015
+flowchart TD
+  PER["MFA-ELM-027 Perception & Scouts<br/>untrusted από τη γέννηση"]
+  WS["MFA-ELM-018 Workspace<br/>AFP: a(t+1)=(I−κA)a+b · κ·λ_max<1"]
+  IG["MFA-ELM-017 Inference Gateway<br/>D1 exact-match · P1 ερμηνεία"]
+  DEL["MFA-ELM-019 Deliberation<br/>MCTS με budgets"]
+  CAU["MFA-ELM-022 Causal"]
+  WM["MFA-ELM-023 Forks / Ghost worlds"]
+  ATMS["MFA-ELM-021 ATMS · Both"]
+  VER["MFA-ELM-020 Verification Suite<br/>μία κλίμακα βαθμών"]
+  VOID["MFA-ELM-028 Void Ledger<br/>reason · plan · VOI"]
+  VOL["MFA-ELM-029 Volition TEGF<br/>Goal = δέσμευση με falsifier"]
+  SPL["MFA-ELM-024 Metacognition / SPL<br/>προβλέψεις για τον εαυτό"]
+  SCI["MFA-ELM-030 Science Organ"]
+  BAR["MFA-ELM-032 Emission Barrier<br/>4 κλάσεις εξόδου"]
+  CC["MFA-ELM-001 Commitment Store"]
+  PER -->|"OBSERVE"| WS
+  IG --> WS
+  WS --> DEL --> VER
+  WS --> CAU --> WM
+  WM -->|"pushout compare"| WS
+  VER -->|"Proof / Refuted / Unknown"| ATMS
+  VER -->|"Unknown(reason)"| VOID
+  ATMS -->|"Both → Court"| CC
+  VOID -->|"top-k VOI"| PER
+  VOID -->|"KL → gap"| VOL
+  VOL -->|"Goal ASSERT"| CC
+  VOL -->|"πείραμα"| SCI --> VER
+  SPL -.->|"FidelityIndex / drift"| VOL
+  SPL -.-> WS
+  VER --> BAR -->|"DERIVE"| CC
+  CC -.->|"read at cut"| WS

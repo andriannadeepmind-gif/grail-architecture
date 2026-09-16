@@ -1,0 +1,94 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0004
+title: AFP δίπλευρος νόμος κ_min ≤ κ < 1/λ_max· αρνητικά anchors στο SLM/GCP· αποφασίσιμο τμήμα CPEG (MFA-ATK-04)
+operation: MODIFY
+targets:
+- MFA-MECH-011
+- MFA-ELM-018
+- MFA-INV-006
+- MFA-INV-051
+- MFA-INV-052
+- MFA-VO-040
+- MFA-VO-029
+- MFA-VO-037
+- MFA-MECH-017
+- MFA-ELM-038
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 8c52fb743f3b63c2bc42c7cedc4847c0c1bf153e4282990dd129392a2a9770f0
+    INVARIANTS.yaml: a533243f4bca16b7eb56ada684fad4c64c309e05b6578bc20382398b2eff7fb8
+    INVENTIONS.yaml: c212e9284ef43fd4e14e5a8cbba3f80f19c2165a635234a86a4393d5a64d581e
+    VERIFICATION-OBLIGATIONS.yaml: ce1e3129c060ace08001674c57d8e4163b119243c15458abb701bb38151df1e3
+preconditions: []
+change:
+  MFA-MECH-011:
+    statement: 'a(t+1)=(I−κA)a(t)+b· ΔΙΠΛΕΥΡΟΣ νόμος (MFA-ATK-04): κ_min ≤ κ < 1/λ_max — το άνω φράγμα δίνει σύγκλιση (Perron–Frobenius), το ΚΑΤΩ φράγμα δίνει μη-κενότητα:
+      κ_min = ελάχιστο κ για το οποίο η κατάταξη salience από a* διαφέρει από την κατάταξη από b με διακριτική ισχύ (MFA-VO-051) σε σφραγισμένο σύνολο· N όριο· Interrupt·
+      decay ανά kind· KL ως VOI. κ=0 (καμία διάδοση) περνά τον παλιό νόμο και είναι διακοσμητικό — απορρίπτεται.'
+    assumptions:
+    - Γραμμικοποίηση ισχύει
+    - κ_min εμπειρική σταθερά ανά workspace (MFA-UNK-002)
+  MFA-ELM-018:
+    statement: 'Περιορισμένης χωρητικότητας workspace με salience από AFP (MFA-MECH-011: a(t+1)=(I−κA)a+b, κ·λ_max<1, Interrupt στο N), broadcast, cycle traces· κάθε
+      σκέψη ορατή κατά τη γέννηση. · Δίπλευρος νόμος κ_min ≤ κ < 1/λ_max (MFA-ATK-04)· ablation obligation: χωρίς AFP interrupt η διαβούλευση σε αντιφατικό σύνολο
+      δεσμεύσεων δεν τερματίζει εντός budget (MFA-INV-065) — το KT που πρέπει να αποτύχει χωρίς το 018.'
+    falsifier: διάδοση με κ·λ_max ≥ 1 χωρίς Interrupt· Ή κ=0 που περνά κάθε KT (⇒ workspace διακοσμητικός ⇒ RECLASSIFY)
+  MFA-INV-006:
+    statement: 'Κάθε trusted ισχυρισμός με PROV γενεαλογίας (lineage) μέχρι raw bytes ή residue commitment (MFA-CFL-035)· ΚΑΙ κάθε διάδοση ενεργοποίησης συγκλίνει
+      εξαρτώμενη από αφετηρία μόνο αν κ·λ_max < 1 (Perron–Frobenius, CLAIMS F96/H3) ΚΑΙ δεν είναι κενή: κ ≥ κ_min με διακριτική ισχύ (MFA-ATK-04) — ελέγχεται σε κάθε
+      αλλαγή γράφου.'
+    falsifier: διάδοση με κ·λ ≥ 1 που δεν προκάλεσε Interrupt· ή κ < κ_min χωρίς σήμανση
+  MFA-INV-051:
+    statement: '|AnchorSet(t+1)| ≥ |AnchorSet(t)|· η πληρότητα του loss map δηλώνεται ως κάτω φράγμα· ΚΑΙ ≥ 1/3 των anchors είναι ΑΡΝΗΤΙΚΑ (αναμενόμενη απάντηση REFUTED
+      ή UNKNOWN(reason)) ώστε ένας διάδοχος που απαντά ⊤ σε όλα να μην περνά (MFA-ATK-04).'
+    falsifier: anchor που αφαιρέθηκε· ή anchor set με < 1/3 αρνητικά
+  MFA-INV-052:
+    statement: Cutover/merge/adopt μόνο με κενό LossMap ή accept record με τύχη στο Capability Conservation Ledger· «strictly superior» απαιτεί κενό· «⊤ όπου αναμενόταν
+      ⊥/UNKNOWN» (αρνητικό anchor) = SEMANTIC-LOSS (MFA-ATK-04).
+  MFA-VO-040:
+    measures: δομικές συγκρούσεις 100%, anchors μονότονα με ≥1/3 αρνητικά, 0 cutover με SEMANTIC-LOSS και στα δύο πρόσημα (⊥ όπου ⊤, ⊤ όπου ⊥)
+  MFA-VO-029:
+    methods:
+    - mutation (αφαίρεση κανόνα)
+    - seeded fault apply_S := ASSERT(⊤) για κάθε δέσμευση (MFA-ATK-04)
+    - shadow
+    measures: 100% seeded απώλειες στη LossMap συμπεριλαμβανομένου του ⊤-διαδόχου (πιάνεται μόνο από αρνητικά anchors), <1% ψευδώς θετικά
+  MFA-VO-037:
+    measures: 'κ·λ_max < 1 ανά κύκλο, σύγκλιση ≤ N, εξάρτηση από αφετηρία · ΚΑΙ κ ≥ κ_min: κατάταξη από a* ≠ κατάταξη από b με διακριτική ισχύ (MFA-VO-051) σε σφραγισμένο
+      σύνολο (MFA-ATK-04)'
+  MFA-MECH-017:
+    statement: 'Κρίσιμα ζεύγη νέου κανόνα/οργάνου/patch με υπάρχοντες· μη ενώσιμο ⇒ PRIORITY/PARTITION/REJECT· fail-closed σε Tier-0/1. ΑΠΟΦΑΣΙΣΙΜΟ ΤΜΗΜΑ δηλωμένο
+      (MFA-ATK-04): κανόνες των οποίων το LHS matching φράσσεται από δηλωμένο παράθυρο (ίδιο κριτήριο με MFA-INV-054)· κανόνες εκτός τμήματος ⇒ CPEG-UNKNOWN ⇒ υποχρεωτικό
+      shadow run (MFA-INV-015) + PARTITION/PRIORITY από δημιουργό· ο λόγος κανόνων εκτός τμήματος είναι μετρική με διακριτική ισχύ (> 50 % στη Δόση 2 ⇒ CPEG διακοσμητικό
+      ⇒ RECLASSIFY).'
+    assumptions:
+    - Κανόνες ως DPO με μικρά L
+    - το αποφασίσιμο τμήμα καλύπτει τους περισσότερους κανόνες Tier-0/1 — μετράται στη Δόση 2
+  MFA-ELM-038:
+    statement: 'ORP: Propose → CPEG στατικός έλεγχος (MFA-MECH-017) → shadow → SLM loss map (MFA-MECH-014) → ND → canary → cutover → rollback window· προκάτοχος ενεργός·
+      SEMANTIC-LOSS μπλοκάρει· εφαρμόζεται και στην πλατφόρμα σχεδιασμού και στον κριτή (από άλλον Πολιτισμό). · CPEG με δηλωμένο αποφασίσιμο τμήμα· CPEG-UNKNOWN
+      ⇒ shadow υποχρεωτικό (MFA-ATK-04)· SLM anchors με ≥1/3 αρνητικά.'
+rationale: 'MFA-ATK-04: (1) ο νόμος κ·λ_max<1 ικανοποιείται με κ=0 = καμία διάδοση — κενό invariant· (2) loss map χωρίς αρνητικά anchors δεν πιάνει διάδοχο που απαντά
+  ⊤ σε όλα· (3) CPEG μη αποφασίσιμο για κατηγορήματα μη φραγμένων ιστοριών.'
+evidence:
+- adversarial/MFA-ATK-04.md
+- CLAIMS F96 (Perron–Frobenius)
+- MATERIAL §9.2
+affected_dependencies:
+- MFA-ELM-039
+- MFA-ELM-090
+- MFA-ELM-028
+capability_impact:
+  gained:
+  - MFA-CAP-073 (μη κενή)
+  - MFA-CAP-080 (δύο πρόσημα)
+  - MFA-CAP-026 (CPEG με δηλωμένο όριο)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#mechanisms
+migration: Υπάρχοντα anchor sets (κανένα ακόμη) συμπληρώνονται με αρνητικά πριν από την πρώτη ORP.
+verification: tools/check-package.py· MFA-VO-029/037/040/051
+rollback: MFA-PATCH-0004-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,173 @@
+# INVENTIONS — ευρετήριο των Mechanism Dossiers (Pass D). Το πλήρες 22-πεδίο δοσιέ κάθε μηχανισμού ζει στο
+# mechanisms/MFA-MECH-nnn.md· εδώ τα 28 πεδία της εντολής §19 σε συμπαγή μορφή, ώστε κάθε patch να δείχνει σε ID.
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+#
+# contribution: κατηγορία του AI Contribution Ledger (εντολή §21). Η βαθμολόγηση της αξίας ΔΕΝ γίνεται εδώ (§21: «δεν
+# αυτοβαθμολογείσαι») — καταγράφεται μόνο η κατηγορία και οι συγγενείς προηγούμενοι, ώστε ο δημιουργός να κρίνει.
+
+defaults: &d
+  type: mechanism
+  version: 1
+  status: PROPOSED
+  created_by: "Stavropoulos Law® — Pass D, 2026-09-16"
+  interfaces: "βλ. δοσιέ πεδίο 10"
+  state_model: "βλ. δοσιέ πεδίο 7"
+  failure_modes: "βλ. δοσιέ πεδία 14–15"
+  verification: "βλ. δοσιέ πεδίο 16"
+  falsifier: "βλ. δοσιέ πεδίο 19"
+  resource_model: "βλ. δοσιέ πεδίο 12"
+  evolution_path: "βλ. δοσιέ πεδίο 21"
+  supersedes: []
+  superseded_by: null
+  change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}]
+
+mechanisms:
+  - {<<: *d, id: MFA-MECH-001, name: "Commitment Calculus (CC)", maturity: R, dossier: mechanisms/MFA-MECH-001.md,
+     statement: "Άλγεβρα υπογεγραμμένων τυποποιημένων δεσμεύσεων με 8 κανόνες· ledger/τύποι/αποδείξεις/εξουσία/σχέδιο ως όψεις· κλειστότητες ως θεωρήματα. · Κάθε δέσμευση φέρει status_axes (10 άξονες) με τυποποιημένη απουσία ανά άξονα (MFA-ATK-07). · Το ledger μονότονο· DPO = σημασιολογία κανόνων· FORGET = tombstone + shred + residue (MFA-CFL-035). · CC-lite (4 κανόνες) στη Δόση 0· κλειστότητα (Lean) παράλληλα (MFA-ATK-15).",
+     purpose: "Μία έδρα αλήθειας ανεξάρτητη σειριοποίησης.", capabilities: [MFA-CAP-003, MFA-CAP-007, MFA-CAP-008, MFA-CAP-039, MFA-CAP-040, MFA-CAP-050, MFA-CAP-055],
+     source_provenance: ["MFA-ALT-1", "master §0 τρεις ουσίες", "DEC-X-06", "CLAIMS F26/F87/F94"], contribution: "NEW FORMALISM",
+     assumptions: ["Τα 8 σχήματα κλείνουν (Lean)"], dependencies: [MFA-ALT-5], authority: "Schemas επιπέδου 3 μόνο δημιουργός",
+     alternatives: ["5 έδρες με crosswalk (DEC-X-06) — η δηλωμένη έξοδος αν η άλγεβρα δεν κλείσει"], conflicts: [], unknowns: [MFA-UNK-101],
+     affected_by: [MFA-TEL-01],
+     version: 4,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0007, op: MODIFY, date: "2026-09-16", summary: "10 άξονες κατάστασης ανά δέσμευση· 5 χρόνοι/2 ιστορίες· 10 τύποι μνήμης + 4 μηχανισμοί λήθης· 10 ονομασμένοι governors· 6 βαθμίδες owner perimeter (MFA-ATK-07)"}, {patch: MFA-PATCH-0008, op: ADD, date: "2026-09-16", summary: "MFA-CFL-035 ολότητα προέλευσης vs διαγραφή (residue commitment)· ledger μονότονο, DPO = σημασιολογία κανόνων· κωδικοποίηση στο epoch allowlist· VO για MFA-INV-066 (MFA-ATK-08)"}, {patch: MFA-PATCH-0015, op: MODIFY, date: "2026-09-16", summary: "Δόση 0 = «ο copilot που δίνει receipts» (CC-lite 4 κανόνων, verifier σκέλη 1–3, emission barrier)· σειρά γένεσης· πύλη δόσης = KT (MFA-ATK-15)"}]}
+  - {<<: *d, id: MFA-MECH-002, name: "Void Ledger", maturity: R, dossier: mechanisms/MFA-MECH-002.md,
+     statement: "Η άγνοια ως εγγραφή με reason/plan/VOI/dependents/λήξη· τροφοδοτεί scouts, quests, βούληση.",
+     purpose: "Unknown ως πρώτης τάξεως πολίτης.", capabilities: [MFA-CAP-039, MFA-CAP-011, MFA-CAP-018],
+     source_provenance: ["Δ-8(ι)", "Contracts.sysml Absence", "Perception.sysml UnknownRegion", "MFA-ALT-3 EFE"], contribution: "NEW ARCHITECTURAL INVENTION",
+     assumptions: ["VOI βαθμονομήσιμη έναντι επιλύσεων"], dependencies: [MFA-MECH-001, MFA-MECH-011], authority: "reason codes πολιτική",
+     alternatives: ["Unknown ως τιμή μόνο (corpus σήμερα)"], conflicts: [], unknowns: [MFA-UNK-102], affected_by: []}
+  - {<<: *d, id: MFA-MECH-003, name: "Genealogical Compilation Protocol (GCP)", maturity: R, dossier: mechanisms/MFA-MECH-003.md,
+     statement: "Ο διάδοχος ξαναπαράγει την ιστορία με τους δικούς του κανόνες· loss map = ό,τι δεν ξαναπαράγεται· ετυμηγορία εκτός γενεαλογίας.",
+     purpose: "Moving Horizon χωρίς τα FAILS του §7 #6.", capabilities: [MFA-CAP-027, MFA-CAP-080, MFA-CAP-004],
+     source_provenance: ["AEO-APEX Moving Horizon", "MATERIAL §5 #7, §7 #6, §9.19", "Telos.sysml T8"], contribution: "NEW PROTOCOL",
+     assumptions: ["3 ελέγξιμες ιδιότητες ⇒ συνέχεια"], dependencies: [MFA-MECH-001, MFA-MECH-014, MFA-MECH-009, MFA-MECH-018], authority: "verdict: δημιουργός + ανεξάρτητος Πολιτισμός",
+     alternatives: ["ORP μόνο (ίδιο metamodel)"], conflicts: [MFA-CFL-003], unknowns: [MFA-UNK-005], affected_by: [MFA-TEL-04]}
+  - {<<: *d, id: MFA-MECH-004, name: "Telos-Bounded Endogenous Goal Formation (TEGF)", maturity: R, dossier: mechanisms/MFA-MECH-004.md,
+     statement: "Στόχος = δέσμευση υπό εισδοχή με falsifier· διανυσματικό χάσμα από EFE· grant ως προϋπόθεση δράσης· Telos read-only.",
+     purpose: "Ενδογενής βούληση χωρίς χακαρόμενο βαθμωτό.", capabilities: [MFA-CAP-018, MFA-CAP-039, MFA-CAP-006],
+     source_provenance: ["MATERIAL §4 βούληση", "CLAIMS OMEGA-DOCS ΕΙΜΙ→ΘΕΛΩ FAILS", "MFA-ALT-3"], contribution: "NEW ARCHITECTURAL INVENTION",
+     assumptions: ["Noisy-TV μένει EXP"], dependencies: [MFA-MECH-001, MFA-MECH-002, MFA-MECH-005, MFA-MECH-006, MFA-MECH-011], authority: "κατώφλια PDP· L3 απρόσιτο",
+     alternatives: ["Μόνο εξωγενή quests"], conflicts: [MFA-CFL-001], unknowns: [MFA-UNK-002], affected_by: [MFA-TEL-04]}
+  - {<<: *d, id: MFA-MECH-005, name: "Lexicographic Polycentric Arbitration (LPA)", maturity: X, dossier: mechanisms/MFA-MECH-005.md,
+     statement: "ΔΕΚΑ ΟΝΟΜΑΣΜΕΝΟΙ governors (MATERIAL §2 #11, MFA-ATK-07): Truth, Legal/Deontic, Owner-intent, Value, Regret, Curiosity, Empowerment, Commitment, Identity, Resource — καθένας με bid, veto (stops/cannot), evidence, counterfactual cost· veto περικοπή → Pareto → ονομασμένη scalarization → regret tie-break· διανυσματική ετυμηγορία· ORDER = δέσμευση L2 με προεπιλογή (MFA-ATK-09).",
+     purpose: "Ο κανόνας επιλογής που έλειπε από το Pareto μέτωπο.", capabilities: [MFA-CAP-049, MFA-CAP-021],
+     source_provenance: ["AEO-APEX L1", "MATERIAL §4, §5 #8, §9.1, §7 #2"], contribution: "NEW ALGORITHM",
+     assumptions: ["ORDER: προεπιλογή = Tier order (MFA-ATK-09)· ο δημιουργός την αλλάζει με patch (MFA-DEC-005)"], dependencies: [MFA-MECH-009], authority: "governors επίπεδο 2 (Court)",
+     alternatives: ["Σταθμισμένο άθροισμα (απορρίπτεται)"], conflicts: [MFA-CFL-005], unknowns: [MFA-UNK-001, MFA-UNK-008], affected_by: [],
+     governors: [Truth, Legal/Deontic, Owner-intent, Value, Regret, Curiosity, Empowerment, Commitment, Identity, Resource],
+     version: 3,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0007, op: MODIFY, date: "2026-09-16", summary: "10 άξονες κατάστασης ανά δέσμευση· 5 χρόνοι/2 ιστορίες· 10 τύποι μνήμης + 4 μηχανισμοί λήθης· 10 ονομασμένοι governors· 6 βαθμίδες owner perimeter (MFA-ATK-07)"}, {patch: MFA-PATCH-0009, op: ADD, date: "2026-09-16", summary: "AutonomyEnvelope για μη αναστρέψιμες πράξεις (κλάση IRREVERSIBLE-PREAUTHORIZED)· MFA-INV-067· προεπιλεγμένο ORDER του LPA· προτιμήσεις = παρατηρήσεις· k-of-n δηλωμένοι (MFA-ATK-09)"}],
+     default_order: {tier0: [Truth, Legal/Deontic, Identity, Commitment], tier1: [Owner-intent, Resource], tier2: [Value, Regret, Curiosity, Empowerment], within_tier: "σειρά εγγραφής του governor στο ledger (ντετερμινιστική)", level: "L2 δέσμευση· αλλάζει με patch (MFA-DEC-005)"}}
+  - {<<: *d, id: MFA-MECH-006, name: "Reversible Effect Transactions (RET)", maturity: R, dossier: mechanisms/MFA-MECH-006.md,
+     statement: "Κάθε επίδραση: inverse (r⁻¹ ∨ ē) προ-δεσμευμένο → shadow → diff → gate → commit → window· NONE ⇒ H1. · Κλάση Disclose⟨payload_label, recipient, purpose⟩ με DisclosureGrant (MFA-ATK-05). · Κλάση IRREVERSIBLE-PREAUTHORIZED με AutonomyEnvelope ως το αναστρέψιμο αντικείμενο (MFA-ATK-09).",
+     purpose: "Η ανώτερη transactional ακολουθία της εντολής §13.", capabilities: [MFA-CAP-052, MFA-CAP-006, MFA-CAP-005],
+     source_provenance: ["εντολή §12–13", "Autonomy.sysml", "MATERIAL §5 #5", "MFA-ALT-5"], contribution: "NEW PROTOCOL",
+     assumptions: ["Κλάσεις Effect με δηλωμένο inverse — κλειστή απαρίθμηση με ADD"], dependencies: [MFA-MECH-001, MFA-MECH-005], authority: "gateway KRN-11· H1 δημιουργός/Principal",
+     alternatives: ["Sagas χωρίς απόδειξη αντιστρόφου"], conflicts: [MFA-CFL-002], unknowns: [], affected_by: [],
+     version: 3,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0005, op: MODIFY, date: "2026-09-16", summary: "Κλάση επίδρασης Disclose + DisclosureGrant· TED προεπιλογή D2 για LLM· Genesis plane = trust boundary· N-version ως audit sampling στο DP-1 (MFA-ATK-05)"}, {patch: MFA-PATCH-0009, op: ADD, date: "2026-09-16", summary: "AutonomyEnvelope για μη αναστρέψιμες πράξεις (κλάση IRREVERSIBLE-PREAUTHORIZED)· MFA-INV-067· προεπιλεγμένο ORDER του LPA· προτιμήσεις = παρατηρήσεις· k-of-n δηλωμένοι (MFA-ATK-09)"}]}
+  - {<<: *d, id: MFA-MECH-007, name: "Fidelity Continuum Protocol (FCP)", maturity: R, dossier: mechanisms/MFA-MECH-007.md,
+     statement: "F0–F5 με ImplMap ανά element, identity test (IDs/contracts/INV/replay) και WhatMatrix.",
+     purpose: "Το δίδυμο ως το ίδιο σύστημα, ποτέ throwaway.", capabilities: [MFA-CAP-053, MFA-CAP-033, MFA-CAP-023],
+     source_provenance: ["εντολή §13", "προοίμιο"], contribution: "NEW PROTOCOL",
+     assumptions: ["Contracts που δεν εκθέτουν υλοποίηση"], dependencies: [MFA-MECH-001, MFA-MECH-006], authority: "promote μέσω ORP",
+     alternatives: ["Χωριστό δίδυμο (απαγορεύεται)"], conflicts: [MFA-CFL-016], unknowns: [], affected_by: [MFA-TEL-06]}
+  - {<<: *d, id: MFA-MECH-008, name: "Canonical Geometry Projection (CGP)", maturity: R, dossier: mechanisms/MFA-MECH-008.md,
+     statement: "Σκηνή = Γ(store_at_cut, policy, seed)· χωρική γραμματική (stratum/node/edge/rift/fog/sheet/boundary/envelope)· RTS εντολές = CC.apply. · Γ είναι σύνδεση Galois (α, γ), όχι ταυτότητα· command → RET.propose (MFA-ATK-12).",
+     purpose: "Cockpit χωρίς δεύτερη αλήθεια, 7 προβολές από μία συνάρτηση.", capabilities: [MFA-CAP-031, MFA-CAP-069, MFA-CAP-024],
+     source_provenance: ["εντολή §14", "ADR-0033"], contribution: "NEW INTERACTION PARADIGM",
+     assumptions: ["Ντετερμινιστικό layout με seed"], dependencies: [MFA-MECH-001, MFA-MECH-002, MFA-MECH-014, MFA-MECH-006, MFA-MECH-007], authority: "viewer policy",
+     alternatives: ["Dashboard (απορρίπτεται από εντολή)"], conflicts: [MFA-CFL-016], unknowns: [], affected_by: [],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0012, op: ADD, date: "2026-09-16", summary: "MFA-INV-059 από ταυτότητα σε Galois connection (πιστότητα υπό zoom)· εντολές cockpit = προτάσεις RET· MFA-VO-056 διακριτική ισχύς cockpit· omitted_count στις εξηγήσεις (MFA-ATK-12)"}]}
+  - {<<: *d, id: MFA-MECH-009, name: "Evaluator Independence Meter (EIM)", maturity: R, dossier: mechanisms/MFA-MECH-009.md,
+     statement: "Ανεξαρτησία = διάνυσμα (supply, data, behaviour[, genetic]) με veto ανά διάσταση και worst-case για μη παρατηρήσιμα. · Η data-independence μετρά ΚΑΙ «κανόνες του oracle που προέρχονται από ετυμηγορίες του κρινόμενου Court» ως συσχέτιση με κατώφλι ανά Tier (MFA-ATK-16).",
+     purpose: "Η ανεξαρτησία ως μετρούμενο μέγεθος με κατώφλι.", capabilities: [MFA-CAP-075, MFA-CAP-022, MFA-CAP-029],
+     source_provenance: ["MATERIAL §9.18, §7 #2", "DEC-X-02, DEC-X-15", "Knight–Leveson"], contribution: "NEW ALGORITHM",
+     assumptions: ["Στατικές διαστάσεις προβλέπουν συμπεριφορική"], dependencies: [MFA-MECH-012, MFA-MECH-018], authority: "κατώφλια ανά Tier (Constitution)",
+     alternatives: ["Μόνο συμπεριφορική (ακριβότερη)"], conflicts: [], unknowns: [MFA-UNK-006], affected_by: [],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0016, op: ADD, date: "2026-09-16", summary: "MFA-INV-068 παγωμένος Tier-0 kernel· SPLIT MFA-ELM-020 → 020 (Suite) + MFA-ELM-099 (Tier-0 Kernel)· δύο όψεις της πύλης (advisory/effective)· EIM μετρά εξάρτηση oracle από ετυμηγορίες (MFA-ATK-16)"}]}
+  - {<<: *d, id: MFA-MECH-010, name: "Self-Prediction Ledger (SPL)", maturity: R, dossier: mechanisms/MFA-MECH-010.md,
+     statement: "Self-model = προ-γεγονότος κατανομές για τον εαυτό, βαθμολογούμενες με proper scoring rule εκτός microVM· drift alarm. · MERGE (MFA-ATK-03): συνυπάρχει με δηλωμένο CompetenceProfile (3 έδρες CAPABILITY/COMPETENCE/AUTHORITY)· cold start = Unknown μέχρι FidelityIndex.",
+     purpose: "Αυτογνωσία ως προβλεπτική ακρίβεια.", capabilities: [MFA-CAP-017, MFA-CAP-016, MFA-CAP-065],
+     source_provenance: ["MFA-OBJ-038", "CLAIMS F92/F93", "MATERIAL §7 #10"], contribution: "NEW ARCHITECTURAL INVENTION",
+     assumptions: ["Υπάρχει ρεύμα outcomes εκτός προσομοίωσης"], dependencies: [MFA-MECH-001, MFA-MECH-004, MFA-MECH-006, MFA-MECH-018], authority: "scorer στον HELD_OUT",
+     alternatives: ["Self-model ως στατική περιγραφή"], conflicts: [], unknowns: [], affected_by: [MFA-TEL-05],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0003, op: MODIFY, date: "2026-09-16", summary: "ELM-024 REPLACE→MERGE (CompetenceProfile + SPL, cold start ως Unknown)· ELM-088 REPLACE→SPLIT (SysON ως Tier-1 verifier προβολών) (MFA-ATK-03)"}]}
+  - {<<: *d, id: MFA-MECH-011, name: "Attention Fixed-Point Propagation (AFP)", maturity: R, dossier: mechanisms/MFA-MECH-011.md,
+     statement: "a(t+1)=(I−κA)a(t)+b· ΔΙΠΛΕΥΡΟΣ νόμος (MFA-ATK-04): κ_min ≤ κ < 1/λ_max — το άνω φράγμα δίνει σύγκλιση (Perron–Frobenius), το ΚΑΤΩ φράγμα δίνει μη-κενότητα: κ_min = ελάχιστο κ για το οποίο η κατάταξη salience από a* διαφέρει από την κατάταξη από b με διακριτική ισχύ (MFA-VO-051) σε σφραγισμένο σύνολο· N όριο· Interrupt· decay ανά kind· KL ως VOI. κ=0 (καμία διάδοση) περνά τον παλιό νόμο και είναι διακοσμητικό — απορρίπτεται.",
+     purpose: "Ο νόμος διάδοσης προσοχής που έλειπε (MATERIAL §9.2).", capabilities: [MFA-CAP-073, MFA-CAP-015, MFA-CAP-016],
+     source_provenance: ["MATERIAL §9.2", "CLAIMS F96 (Perron–Frobenius)", "MFA-ALT-3"], contribution: "NEW ALGORITHM",
+     assumptions: ["Γραμμικοποίηση ισχύει", "κ_min εμπειρική σταθερά ανά workspace (MFA-UNK-002)"], dependencies: [], authority: "κ, kernels πολιτική",
+     alternatives: ["Χωρίς νόμο (ICD-28 φέρει διάνυσμα μόνο)"], conflicts: [], unknowns: [MFA-UNK-002], affected_by: [],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0004, op: MODIFY, date: "2026-09-16", summary: "AFP δίπλευρος νόμος κ_min ≤ κ < 1/λ_max· αρνητικά anchors στο SLM/GCP· αποφασίσιμο τμήμα CPEG (MFA-ATK-04)"}]}
+  - {<<: *d, id: MFA-MECH-012, name: "Clonal Argument Maturation with Negative Selection (CAM-NS)", maturity: R, dossier: mechanisms/MFA-MECH-012.md,
+     statement: "Πληθυσμός επιχειρημάτων/επιθέσεων με μετάλλαξη, affinity σε sealed sets, αρνητική επιλογή κατά Telos, memory cells.",
+     purpose: "Αντιπαλότητα που εξελίσσεται και δεν στρέφεται κατά του Telos.", capabilities: [MFA-CAP-020, MFA-CAP-029, MFA-CAP-041],
+     source_provenance: ["MFA-ALT-2", "CMP-ADV-01/03", "MATERIAL §7 #7"], contribution: "NEW ALGORITHM",
+     assumptions: ["Μετάλλαξη εξερευνά"], dependencies: [MFA-MECH-018, MFA-MECH-009], authority: "held-out κατέχει sealed sets",
+     alternatives: ["Στατικό arsenal"], conflicts: [], unknowns: [], affected_by: []}
+  - {<<: *d, id: MFA-MECH-013, name: "Organ Activation Planner (OAP)", maturity: X, dossier: mechanisms/MFA-MECH-013.md,
+     statement: "Weighted set cover πάνω σε evidence-backed lattice με veto στην κλάση απόδειξης· typed degraded mode. · Το F-επίπεδο είναι διάνυσμα ανά όργανο/δρώντα, είσοδος του set cover (MFA-ATK-11)· η αντικειμενική συνάρτηση περιλαμβάνει ενέργεια (Wh/matter) με envelope ανά προφίλ (MFA-ATK-13).",
+     purpose: "Lean collapse ως υπολογισμός.", capabilities: [MFA-CAP-054, MFA-CAP-032, MFA-CAP-033],
+     source_provenance: ["εντολή §15, §22", "MATERIAL §9.7–9.8", "KT-24"], contribution: "NEW ALGORITHM",
+     assumptions: ["≤100 όργανα (ILP ακριβής)"], dependencies: [MFA-MECH-005, MFA-MECH-010], authority: "αντικειμενική συνάρτηση πολιτική",
+     alternatives: ["Χειροκίνητα προφίλ"], conflicts: [MFA-CFL-008], unknowns: [], affected_by: [MFA-TEL-08],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0011, op: ADD, date: "2026-09-16", summary: "Ταυτότητα F-επιπέδων συμπεριφορική (fidelity-gap δεσμεύσεις)· MFA-ELM-098 Environment Model (World Twin)· F-επίπεδο ως διάνυσμα ανά όργανο/δρώντα (MFA-ATK-11)"}]}
+  - {<<: *d, id: MFA-MECH-014, name: "Semantic Loss Map via Pushout Conflicts (SLM)", maturity: R, dossier: mechanisms/MFA-MECH-014.md,
+     statement: "Δομική απώλεια = pushout conflicts (θεώρημα)· σημασιολογική = μονότονο κάτω φράγμα anchors· SEMANTIC-LOSS μπλοκάρει.",
+     purpose: "Ο χάρτης απώλειας με δηλωμένη πληρότητα.", capabilities: [MFA-CAP-080, MFA-CAP-024, MFA-CAP-026],
+     source_provenance: ["MATERIAL §9.4", "MFA-ALT-5"], contribution: "NEW FORMALISM",
+     assumptions: ["Το K ρητό στους κανόνες"], dependencies: [MFA-MECH-001], authority: "accept μόνο με ledger entry (Court/δημιουργός)",
+     alternatives: ["Differential χωρίς ορισμό απώλειας"], conflicts: [], unknowns: [MFA-UNK-004], affected_by: []}
+  - {<<: *d, id: MFA-MECH-015, name: "Typed Execution Discipline (TED)", maturity: T, dossier: mechanisms/MFA-MECH-015.md,
+     statement: "D1/D2/P1/H1 ανά πράξη· 4 επίπεδα αναπαραγωγιμότητας· φράγμα εκπομπής fail-closed στον τύπο του σχήματος εξόδου. · Ταυτότητα F-επιπέδων συμπεριφορική (MFA-INV-060 επαναδιατύπωση, MFA-ATK-11).",
+     purpose: "Λύνει τις 3 έδρες ντετερμινισμού και τα 4 παραδείγματα νόησης.", capabilities: [MFA-CAP-050, MFA-CAP-051, MFA-CAP-040, MFA-CAP-072],
+     source_provenance: ["MATERIAL §5 #1/#3/#11", "ULTIMA-LEX", "MERCURY H9", "CLAIMS F26"], contribution: "CROSS-SOURCE SYNTHESIS + CORRECTED",
+     assumptions: ["LLM D1 byte-identical με grammar (EXP)"], dependencies: [MFA-MECH-001, MFA-MECH-009], authority: "τύποι στο συμβόλαιο κλήσης",
+     alternatives: ["Ντετερμινισμός όλου του συστήματος (απορρίπτεται)"], conflicts: [MFA-CFL-005, MFA-CFL-010], unknowns: [], affected_by: [],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0011, op: ADD, date: "2026-09-16", summary: "Ταυτότητα F-επιπέδων συμπεριφορική (fidelity-gap δεσμεύσεις)· MFA-ELM-098 Environment Model (World Twin)· F-επίπεδο ως διάνυσμα ανά όργανο/δρώντα (MFA-ATK-11)"}]}
+  - {<<: *d, id: MFA-MECH-016, name: "Legal Source Compilation with Named Failure (LSC)", maturity: X, dossier: mechanisms/MFA-MECH-016.md,
+     statement: "S0–S7: attestation → OCR → segmentation → P1 IR → D1 validation → D2 back-end → differential → admission· CompilationError με locus ως void.",
+     purpose: "Ingestion ως «τι απέτυχε και πού».", capabilities: [MFA-CAP-012, MFA-CAP-042, MFA-CAP-043],
+     source_provenance: ["MERCURY", "ULTIMA-LEX", "EXOUSIA", "MATERIAL §5 #2", "CLAIMS F18/F19/F67/F70/F77"], contribution: "CROSS-SOURCE SYNTHESIS + NEW (locus-as-void, S0–S2)",
+     assumptions: ["LinkML έδρα IR"], dependencies: [MFA-MECH-015, MFA-MECH-009, MFA-MECH-002], authority: "admission fail-closed",
+     alternatives: ["Text-to-ratio απευθείας (απορρίπτεται)"], conflicts: [MFA-CFL-010], unknowns: [MFA-UNK-009], affected_by: [MFA-TEL-01]}
+  - {<<: *d, id: MFA-MECH-017, name: "Critical-Pair Evolution Gate (CPEG)", maturity: R, dossier: mechanisms/MFA-MECH-017.md,
+     statement: "Κρίσιμα ζεύγη νέου κανόνα/οργάνου/patch με υπάρχοντες· μη ενώσιμο ⇒ PRIORITY/PARTITION/REJECT· fail-closed σε Tier-0/1. ΑΠΟΦΑΣΙΣΙΜΟ ΤΜΗΜΑ δηλωμένο (MFA-ATK-04): κανόνες των οποίων το LHS matching φράσσεται από δηλωμένο παράθυρο (ίδιο κριτήριο με MFA-INV-054)· κανόνες εκτός τμήματος ⇒ CPEG-UNKNOWN ⇒ υποχρεωτικό shadow run (MFA-INV-015) + PARTITION/PRIORITY από δημιουργό· ο λόγος κανόνων εκτός τμήματος είναι μετρική με διακριτική ισχύ (> 50 % στη Δόση 2 ⇒ CPEG διακοσμητικό ⇒ RECLASSIFY).",
+     purpose: "Στατικός έλεγχος αμφισημίας πριν από κάθε προαγωγή.", capabilities: [MFA-CAP-025, MFA-CAP-026, MFA-CAP-055],
+     source_provenance: ["MFA-ALT-5", "MATERIAL §9.6", "CLAIMS F46"], contribution: "NEW ALGORITHM (μεταφορά)",
+     assumptions: ["Κανόνες ως DPO με μικρά L", "το αποφασίσιμο τμήμα καλύπτει τους περισσότερους κανόνες Tier-0/1 — μετράται στη Δόση 2"], dependencies: [MFA-MECH-001, MFA-MECH-002], authority: "PRIORITY μόνο Court/δημιουργός",
+     alternatives: ["Μόνο δυναμικός έλεγχος (ORP)"], conflicts: [], unknowns: [], affected_by: [],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0004, op: MODIFY, date: "2026-09-16", summary: "AFP δίπλευρος νόμος κ_min ≤ κ < 1/λ_max· αρνητικά anchors στο SLM/GCP· αποφασίσιμο τμήμα CPEG (MFA-ATK-04)"}]}
+  - {<<: *d, id: MFA-MECH-018, name: "Civilization Quorum (CQ)", maturity: X, dossier: mechanisms/MFA-MECH-018.md,
+     statement: "N = 3f+1 ψηφίζοντες + h ≥ 1 held-out Πολιτισμοί ως trust domains με EIM πύλη, sealed sets στον held-out, rotation. · Σχήμα ανά προφίλ (MFA-ATK-13): HELD_OUT πάντα σε ξεχωριστή φυσική συσκευή, αλλιώς EIM-UNVERIFIED/canary-only.",
+     purpose: "Ο λόγος του «5» και ο μηχανισμός της ανεξαρτησίας.", capabilities: [MFA-CAP-075, MFA-CAP-035, MFA-CAP-056, MFA-CAP-029],
+     source_provenance: ["προοίμιο (5 Πολιτισμοί)", "ADR-0031", "MATERIAL §9.18"], contribution: "FIRST-PRINCIPLES DERIVATION",
+     assumptions: ["f=1, h=1 ⇒ 5 (DP-3+)· DP-1/2: 1+1 με HELD_OUT remote· παράμετροι επιπέδου 3"], dependencies: [MFA-MECH-009, MFA-MECH-012], authority: "f, h δημιουργός",
+     alternatives: ["Ένας Πολιτισμός με N-version"], conflicts: [], unknowns: [MFA-UNK-006], affected_by: [MFA-TEL-03],
+     version: 2,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0013, op: MODIFY, date: "2026-09-16", summary: "HELD_OUT σε ξεχωριστή φυσική συσκευή ή προαγωγές EIM-UNVERIFIED· MFA-INV-065 με αριθμό ανά προφίλ· OAP με ενέργεια· σχήμα Πολιτισμών ανά προφίλ (MFA-ATK-13)"}]}
+  - {<<: *d, id: MFA-MECH-019, name: "Proposal Distribution Evolution (PDE)", maturity: R, dossier: mechanisms/MFA-MECH-019.md,
+     statement: "Η κυρίαρχη κατανομή προτάσεων = μείγμα {πάροχοι (TED), προγράμματα Skill Library με lineage, εξελιγμένα όργανα (QD), υποθέσεις Science, adapters (EP)} με βάρη-δεσμεύσεις που μαθαίνονται με proper scoring από HELD_OUT scorer· falsifier: μείγμα ≯ καλύτερος πάροχος.", purpose: "Η πρόταση δεν φράσσεται από έναν πάροχο — ενδογενής βελτίωση εντός του κυρίαρχου ορίου χωρίς εκπαίδευση βαρών (MFA-ATK-10).", capabilities: [MFA-CAP-067, MFA-CAP-066, MFA-CAP-068, MFA-CAP-015, MFA-CAP-025],
+     source_provenance: [MFA-ATK-10, "MFA-ALT-7 (δότης)", "mixture-of-experts / BMA", "AlphaEvolve/DGM archives"], contribution: "NEW ARCHITECTURAL INVENTION", assumptions: ["ο verifier είναι ο μόνος κριτής· scorer HELD_OUT"],
+     dependencies: [MFA-MECH-007, MFA-MECH-010, MFA-MECH-009, MFA-MECH-012], authority: "k, budget από OAP· adapters μόνο με DEC-X-19", alternatives: ["ένας πάροχος + επαλήθευση (η κατάσταση πριν το patch)", "εκπαίδευση βαρών (ALT-7, EP)"],
+     conflicts: [MFA-CFL-010], unknowns: [MFA-UNK-002], affected_by: [MFA-TEL-05],
+     version: 1, change_history: [{patch: MFA-PATCH-0010, op: ADD, date: "2026-09-16", summary: "MFA-MECH-019 Proposal Distribution Evolution (PDE)· ablation obligation ανά στοιχείο γνωσιακού πυρήνα· ρήτρα TEL-05· MFA-RSP-016 (MFA-ATK-10)"}]}
+
+contribution_summary:
+  NEW FORMALISM: [MFA-MECH-001, MFA-MECH-014]
+  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010, MFA-MECH-019]
+  NEW PROTOCOL: [MFA-MECH-003, MFA-MECH-006, MFA-MECH-007]
+  NEW ALGORITHM: [MFA-MECH-005, MFA-MECH-009, MFA-MECH-011, MFA-MECH-012, MFA-MECH-013, MFA-MECH-017]
+  NEW INTERACTION PARADIGM: [MFA-MECH-008]
+  FIRST-PRINCIPLES DERIVATION: [MFA-MECH-018]
+  CROSS-SOURCE SYNTHESIS: [MFA-MECH-015, MFA-MECH-016]
+  note: "Οι κατηγορίες είναι δήλωση προέλευσης, όχι βαθμός. Συγγενή προηγούμενα ανά μηχανισμό στο τέλος κάθε δοσιέ."

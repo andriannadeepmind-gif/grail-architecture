@@ -1,0 +1,32 @@
+%% id: MFA-DIA-05 · Authority & effect boundaries · question: από πού περνά μια επίδραση, ποιος αποφασίζει, και πού είναι τα PEPs;
+%% elements: MFA-ELM-094/011/010/008/007/009/015/016, MFA-INV-002/007/043 · source: MFA-MECH-006, CONFLICTS MFA-CFL-033
+flowchart LR
+  subgraph GP["MFA-ELM-094 Genesis Plane (microVM · raw eval · ΚΑΝΕΝΑ Control)"]
+    THINK["σκέψη · προσομοίωση · αυτο-τροποποίηση<br/>MFA-ELM-018/019/023/029"]
+    PROP["πρόταση Effect + inverse"]
+    THINK --> PROP
+  end
+  subgraph EP["MFA-ELM-095 Effect Plane"]
+    RET["MFA-ELM-010 RET<br/>inverse staged → shadow → diff → gate → commit → window"]
+    GATE["MFA-ELM-008 Gate (LPA)<br/>διανυσματική ετυμηγορία"]
+    PDP["MFA-ELM-007 PDP<br/>Controls με πηγή/εμβέλεια/λήξη"]
+    MB["MFA-ELM-015 MetaBounds<br/>MECHANISM δεν λυγίζει · POLICY λήγει"]
+    GW["MFA-ELM-009 Gateway = PEP<br/>tokens attenuation-only"]
+    HALT["MFA-ELM-016 Safe-Halt"]
+  end
+  subgraph PEPS["Δηλωμένα PEPs (MFA-CFL-033)"]
+    P1["KRN-11 effects"]; P2["COG-01 inference egress"]; P3["KRN-08 memory/erase"]; P4["ICD-29 memory ops"]
+  end
+  WORLD["Κόσμος<br/>receipt · H1 όπου inverse = NONE"]
+  PROP -->|"μόνη έξοδος (MFA-INV-007)"| RET
+  RET --> GATE
+  GATE <--> PDP
+  PDP <--> MB
+  GATE -->|"allow-vector"| GW
+  GW --> WORLD
+  PDP -.-> PEPS
+  HALT -.->|"TimeFreeze"| RET
+  classDef gen fill:#0b3d91,color:#fff
+  classDef eff fill:#5c2a00,color:#fff
+  class THINK,PROP gen
+  class RET,GATE,PDP,MB,GW,HALT eff

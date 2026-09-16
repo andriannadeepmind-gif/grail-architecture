@@ -1,0 +1,94 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0013-R
+title: 'Rollback of MFA-PATCH-0013: HELD_OUT σε ξεχωριστή φυσική συσκευή ή προαγωγές EIM-UNVERIFIED· MFA-INV-065 με αριθμό ανά προφίλ· OAP με ενέργεια· σχήμα Πολιτισμών
+  ανά προφίλ (MFA-ATK-13)'
+operation: RESTORE
+targets:
+- MFA-ELM-056
+- MFA-MECH-018
+- MFA-INV-065
+- MFA-VO-050
+- MFA-INV-048
+- MFA-CON-041
+- MFA-ELM-013
+- MFA-ELM-086
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 398092c605826e1cb937dc150cf5969b507f0f7ebf452dd3b881dbcf992d6f4e
+    CONTRACTS.yaml: 5e7ca2cb9e4ddeae2de35f4e871741f9b8cbf7ecd057e798c727141f83f93c9f
+    INVARIANTS.yaml: 73fcb7ab9bcb1f3f9568ea2814062ead4cc3c7652934027936cd1be2587b9dc8
+    INVENTIONS.yaml: 79fdc3f95bca6f9f4b7452b9bd72d87dee5b2a72d2c38052df01f569839c6bc7
+    OBJECTIVE-SPACE.yaml: 048891df6d7ced0ad1f84cee6e6c05bbb92985630c38448b30a45a909f38d8ed
+    VERIFICATION-OBLIGATIONS.yaml: 96bb32388b84dea6d89856847d76c11db7c5aef357e39b01a27243a35b7ae644
+    diagrams/MFA-DIA-14.mmd: 7d6d9110d85c2ed8925a00975bcfe43d27709f72c4f3c6c32399f0332a72bca4
+preconditions:
+- MFA-PATCH-0013.status == APPLIED
+change:
+  MFA-ELM-056:
+    statement:
+      __raw: '"MFA-MECH-018: N=3f+1 VOTING + h HELD_OUT Πολιτισμοί ως trust domains με ίδιο σύνταγμα, δική τους supply chain/κλειδιά/evaluators· EIM πύλη ανά ζεύγος·
+        sealed sets (Battery, AnchorSet, AffinityTest, SeededFaults) μόνο στον HELD_OUT· rotation· BFT μόνο για Verdicts."'
+    resource_model:
+      __raw: '"5 microVMs (DP-1) → 5 sites (DP-4)"'
+    assumptions:
+      __raw: '["f=1,h=1 default"]'
+  MFA-MECH-018:
+    statement:
+      __raw: '"N = 3f+1 ψηφίζοντες + h ≥ 1 held-out Πολιτισμοί ως trust domains με EIM πύλη, sealed sets στον held-out, rotation."'
+    assumptions:
+      __raw: '["f=1, h=1 ⇒ 5· παράμετροι επιπέδου 3"]'
+  MFA-INV-065:
+    statement:
+      __raw: '"Κόστος αξιολόγησης ≤ δηλωμένο κλάσμα του κόστους εκτέλεσης ανά Tier (CLAIMS F35)· το κλάσμα είναι πολιτική, η μέτρηση μηχανισμός."'
+    falsifier:
+      __raw: '"λόγος πάνω από κλάσμα χωρίς σήμανση"'
+  MFA-VO-050:
+    measures:
+      __raw: '"cost(eval)/cost(exec) ≤ κλάσμα ανά Tier"'
+  MFA-INV-048:
+    statement:
+      __raw: '"Evaluator/harness/Battery/scorer/anchors εκτός microVM του κρινόμενου και εκτός του μεταβατικού κλεισίματος εξαρτήσεών του· EIM PASS ανά ζεύγος."'
+  MFA-CON-041:
+    failure_semantics:
+      __raw: '"lineage ελλιπής → d=0 worst case (ορατό)"'
+  MFA-ELM-013:
+    statement:
+      __raw: '"Namespaces, placement, residency, typed budgets (χρόνος/tokens/ενέργεια/χρήμα), accounting + Organ Activation Planner (MFA-MECH-013): ελάχιστο σύνολο
+        οργάνων ανά matter/deployment με veto κλάσης απόδειξης."'
+    resource_model:
+      __raw: '"ILP ms"'
+  MFA-ELM-086:
+    statement:
+      __raw: '"Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+        τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+        δεν ανήκουν εδώ (CLAIMS H4)."'
+  OBJECTIVE-SPACE.yaml:
+    replace:
+    - - fault model ως πεδίο κάθε προφίλ MFA-DEP-1…5
+      - fault model ως πεδίο κάθε MFA-DEP-n
+  diagrams/MFA-DIA-14.mmd:
+    replace:
+    - - '1 VOTING + 1 HELD_OUT σε ξεχωριστή συσκευή (MFA-ATK-13)<br/>υποχωρεί: shadow runs, ghost worlds deferred· χωρίς 2η συσκευή: canary-only'
+      - '5 Πολιτισμοί = 5 microVMs (DST μόνο)<br/>υποχωρεί: shadow runs, ghost worlds deferred'
+rationale: Αντίστροφο του MFA-PATCH-0013, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-097
+- MFA-ELM-050
+- MFA-ELM-073
+- MFA-ELM-048
+capability_impact:
+  gained:
+  - 'MFA-CAP-033: DP-1 χωρίς 2η συσκευή = παγωμένα όργανα — δηλωμένο, όχι κρυμμένο'
+  at_risk:
+  - MFA-CAP-075 (ανεξαρτησία μετρήσιμη και στο DP-1)
+  - MFA-CAP-032 (ενέργεια στο set cover)
+  ledger_entry: CAPABILITY-CONSERVATION.md#profiles
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0013
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

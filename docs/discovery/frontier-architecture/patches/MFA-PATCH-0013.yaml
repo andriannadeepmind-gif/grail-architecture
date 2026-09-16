@@ -1,0 +1,93 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0013
+title: HELD_OUT σε ξεχωριστή φυσική συσκευή ή προαγωγές EIM-UNVERIFIED· MFA-INV-065 με αριθμό ανά προφίλ· OAP με ενέργεια· σχήμα Πολιτισμών ανά προφίλ (MFA-ATK-13)
+operation: MODIFY
+targets:
+- MFA-ELM-056
+- MFA-MECH-018
+- MFA-INV-065
+- MFA-VO-050
+- MFA-INV-048
+- MFA-CON-041
+- MFA-ELM-013
+- MFA-ELM-086
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 7184fc2d91296d588bb6a5ccbb1c5059c90638a9b53449324dd27898e695d4a8
+    CONTRACTS.yaml: 787cf452c5a7372eb88f83ff3d7c9077cf7a85d3d3e9dfc7a3f7060128d1f31b
+    INVARIANTS.yaml: 1fd6ba912a04a5adfc6bbde7674a93633ed05e0e32cf71765c3c5f10cec33fac
+    INVENTIONS.yaml: f4b8b1ac993015f544acf855207c2fa939fac383d0db3520a86656535316a943
+    OBJECTIVE-SPACE.yaml: e0a29c817ad2a2138d39eb26a3a7f5dd8cdc2b086a3877230cbfdc9928528847
+    VERIFICATION-OBLIGATIONS.yaml: dc6cc5ccfd839de8a6593e56964267d92bec1a490a0389146ae79f2f1582a164
+    diagrams/MFA-DIA-14.mmd: 5f44c952134edf6ef3797e63faadf020c8cd9eb31b2b3713dedc896042f4da75
+preconditions: []
+change:
+  MFA-ELM-056:
+    statement: 'MFA-MECH-018: N=3f+1 VOTING + h HELD_OUT Πολιτισμοί ως trust domains με ίδιο σύνταγμα, δική τους supply chain/κλειδιά/evaluators· EIM πύλη ανά ζεύγος·
+      sealed sets (Battery, AnchorSet ±, AffinityTest, SeededFaults) μόνο στον HELD_OUT· rotation· BFT μόνο για Verdicts. ΣΧΗΜΑ ΑΝΑ ΠΡΟΦΙΛ (MFA-ATK-13): DP-1/2 =
+      {1 VOTING, 1 HELD_OUT σε ΞΕΧΩΡΙΣΤΗ ΦΥΣΙΚΗ ΣΥΣΚΕΥΗ υπό κλειδιά δημιουργού (phone-class αρκεί: scorer + sealed sets, κανένα μοντέλο, MFA-INV-050)}· DP-3 = {4
+      VOTING σε ≥2 hosts, 1 HELD_OUT remote}· DP-4 = 5 sites (πλήρες)· χωρίς ξεχωριστή συσκευή: promotion = EIM-UNVERIFIED → canary-only, ποτέ cutover (MFA-INV-048
+      απόλυτη).'
+    resource_model: 'DP-1/2: 1 VOTING + 1 HELD_OUT remote (scorer-only)· DP-3: 4 VOTING σε ≥2 hosts + 1 HELD_OUT remote· DP-4: 5 sites· «5 microVMs στο laptop» απορρίφθηκε
+      ως μυθοπλασία ανεξαρτησίας (MFA-ATK-13)'
+    assumptions:
+    - f=1, h=1 πλήρες σχήμα μόνο DP-3+
+    - ο HELD_OUT χρειάζεται scorer + sealed sets, όχι μοντέλο — γι' αυτό χωρά σε φθηνή δεύτερη συσκευή
+  MFA-MECH-018:
+    statement: 'N = 3f+1 ψηφίζοντες + h ≥ 1 held-out Πολιτισμοί ως trust domains με EIM πύλη, sealed sets στον held-out, rotation. · Σχήμα ανά προφίλ (MFA-ATK-13):
+      HELD_OUT πάντα σε ξεχωριστή φυσική συσκευή, αλλιώς EIM-UNVERIFIED/canary-only.'
+    assumptions:
+    - 'f=1, h=1 ⇒ 5 (DP-3+)· DP-1/2: 1+1 με HELD_OUT remote· παράμετροι επιπέδου 3'
+  MFA-INV-065:
+    statement: 'Κόστος αξιολόγησης ≤ δηλωμένο κλάσμα του κόστους εκτέλεσης· ΤΟ ΚΛΑΣΜΑ ΔΗΛΩΝΕΤΑΙ ΑΝΑ ΠΡΟΦΙΛ (MFA-ATK-13): ≤ 3 (MFA-DEP-1), ≤ 5 (MFA-DEP-2/3), ≤ 10
+      (MFA-DEP-4)· ο OAP το χειρίζεται ως περιορισμό: υποχωρεί το ΕΥΡΟΣ (audit sampling N-version, δειγματοληψία δεύτερου front-end LSC S6, μικρότερος CAM-NS πληθυσμός)
+      και ΠΟΤΕ η κλάση απόδειξης (Tier-0 κατηγορήματα πάντα πλήρη)· το κλάσμα είναι πολιτική, η μέτρηση μηχανισμός (CLAIMS F35).'
+    falsifier: λόγος πάνω από το κλάσμα του προφίλ χωρίς σήμανση· ή υποχώρηση κλάσης απόδειξης για να χωρέσει
+  MFA-VO-050:
+    measures: cost(eval)/cost(exec) ≤ 3 (DP-1), ≤ 5 (DP-2/3), ≤ 10 (DP-4), μετρημένο ανά δόση από receipts· Tier-0 κατηγορήματα 100% πλήρη σε κάθε προφίλ (MFA-ATK-13)
+  MFA-INV-048:
+    statement: 'Evaluator/harness/Battery/scorer/anchors εκτός microVM του κρινόμενου και εκτός του μεταβατικού κλεισίματος εξαρτήσεών του· EIM PASS ανά ζεύγος. ·
+      Απόλυτη σε κάθε προφίλ: held-out στην ίδια φυσική μηχανή με το κρινόμενο ΔΕΝ είναι held-out (MFA-ATK-13).'
+  MFA-CON-041:
+    failure_semantics: lineage ελλιπής → d=0 worst case (ορατό) · HELD_OUT στην ίδια συσκευή ⇒ gate = EIM-UNVERIFIED (canary-only), ποτέ PASS
+  MFA-ELM-013:
+    statement: 'Namespaces, placement, residency, typed budgets (χρόνος/tokens/ενέργεια/χρήμα), accounting + Organ Activation Planner (MFA-MECH-013): ελάχιστο σύνολο
+      οργάνων ανά matter/deployment με veto κλάσης απόδειξης. · Περιορισμοί ανά προφίλ: λόγος κόστους αξιολόγησης (MFA-INV-065) και energy_envelope (Wh/matter)· υποχωρεί
+      εύρος, ποτέ κλάση απόδειξης (MFA-ATK-13).'
+    resource_model: ILP ms · ILP με περιορισμούς eval-ratio και energy ανά MFA-DEP-n
+  MFA-ELM-086:
+    statement: Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+      τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+      δεν ανήκουν εδώ (CLAIMS H4). · Στο DP-1/2 ο HELD_OUT ρόλος του harness τρέχει σε ξεχωριστή συσκευή (scorer + sealed sets) (MFA-ATK-13).
+  OBJECTIVE-SPACE.yaml:
+    replace:
+    - - fault model ως πεδίο κάθε MFA-DEP-n
+      - fault model ως πεδίο κάθε προφίλ MFA-DEP-1…5
+  diagrams/MFA-DIA-14.mmd:
+    replace:
+    - - '5 Πολιτισμοί = 5 microVMs (DST μόνο)<br/>υποχωρεί: shadow runs, ghost worlds deferred'
+      - '1 VOTING + 1 HELD_OUT σε ξεχωριστή συσκευή (MFA-ATK-13)<br/>υποχωρεί: shadow runs, ghost worlds deferred· χωρίς 2η συσκευή: canary-only'
+rationale: 'MFA-ATK-13: «5 Πολιτισμοί = 5 microVMs» στο laptop = ανεξαρτησία 0· η MFA-INV-048 παραβιαζόταν από το ίδιο το DP-1· «φραγμένο» χωρίς αριθμό δεν είναι
+  φράγμα.'
+evidence:
+- adversarial/MFA-ATK-13.md
+- CLAIMS F35
+affected_dependencies:
+- MFA-ELM-097
+- MFA-ELM-050
+- MFA-ELM-073
+- MFA-ELM-048
+capability_impact:
+  gained:
+  - MFA-CAP-075 (ανεξαρτησία μετρήσιμη και στο DP-1)
+  - MFA-CAP-032 (ενέργεια στο set cover)
+  at_risk:
+  - 'MFA-CAP-033: DP-1 χωρίς 2η συσκευή = παγωμένα όργανα — δηλωμένο, όχι κρυμμένο'
+  ledger_entry: CAPABILITY-CONSERVATION.md#profiles
+migration: 'TECHNICAL-ARCHITECTURE.md §Deployment: κάθε MFA-DEP-n αποκτά held_out_site, eval_cost_ratio, energy_envelope.'
+verification: tools/check-package.py· MFA-VO-050· MFA-VO-035
+rollback: MFA-PATCH-0013-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

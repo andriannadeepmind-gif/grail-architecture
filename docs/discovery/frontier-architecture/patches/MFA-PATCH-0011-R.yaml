@@ -1,0 +1,87 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0011-R
+title: 'Rollback of MFA-PATCH-0011: Ταυτότητα F-επιπέδων συμπεριφορική (fidelity-gap δεσμεύσεις)· MFA-ELM-098 Environment Model (World Twin)· F-επίπεδο ως διάνυσμα
+  ανά όργανο/δρώντα (MFA-ATK-11)'
+operation: RESTORE
+targets:
+- MFA-ELM-098
+- MFA-INV-060
+- MFA-VO-033
+- MFA-CON-026
+- MFA-ELM-023
+- MFA-ELM-064
+- MFA-MECH-013
+- MFA-ELM-085
+- MFA-MECH-015
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 1e3d4f8dd1d5665ca5136ea8ee059652f2fd73378edf3e6858a967313edf6749
+    CONTRACTS.yaml: e4bcd7e21bdbeef7abf6008ef4d0b04f119cce7c99f48ce922735f856dbe688f
+    INVARIANTS.yaml: bd82fa99a4361a2d308e136258f8c9c0eaa02b7362c9f543af659f81ece11683
+    INVENTIONS.yaml: 19c2e5b06a544bdd95bb18c631226352b206ae2c62391046719ccc170a16998d
+    VERIFICATION-OBLIGATIONS.yaml: 87b19b1428eb00811706a79cc06479b1aacc7e79185ddda6b24914a752295868
+preconditions:
+- MFA-PATCH-0011.status == APPLIED
+change:
+  MFA-ELM-098:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-060:
+    name:
+      __raw: '"Fidelity identity across F-levels"'
+    statement:
+      __raw: '"IDs(F_n) = IDs(F_{n+1}), contracts ≡, INV ⊆, replay byte-identical για D1/D2· stubs επιστρέφουν μόνο Unknown(NOT_IMPLEMENTED)."'
+    falsifier:
+      __raw: '"ID/contract που διαφέρει μεταξύ σκαλιών"'
+  MFA-VO-033:
+    methods:
+      __raw: '["hash compare", replay]'
+    measures:
+      __raw: '"IDs/contracts/INV ίδια, replay byte-identical, WhatMatrix χωρίς κενά"'
+    rejects:
+      __raw: '"διαφορά"'
+  MFA-CON-026:
+    statement:
+      __raw: '"Scenario(seed)/InjectFault/GhostWorld(cut)/Campaign/TraceValidate + FCP ImplMap/promote/identity_test."'
+    provider:
+      __raw: '"MFA-ELM-085 (+ ghost 023, campaigns 050, Science 030)"'
+  MFA-ELM-023:
+    statement:
+      __raw: '"O(1) forks (persistent γράφος, MFA-ALT-5), ghost worlds χωρίς commit capability (τύπος), pushout compare/merge με loss map (MFA-MECH-014), learned
+        world models ως P1."'
+  MFA-ELM-064:
+    statement:
+      __raw: '"Προσομοίωση αντιδίκου/δικαστηρίων από μοντέλα νομολογίας με backtest σε leakage-free splits· ΧΩΡΙΣ ψυχολογικό προφίλ φυσικού προσώπου (CLAIMS F70)·
+        πεδίο δικαστή στο σχήμα αλλά Control Record ανά δικαιοδοσία, προεπιλογή κλειστή (MATERIAL §9.11)· ισχυρότερο rebuttal από CAM-NS («ισχυρότερο στον πληθυσμό»)."'
+  MFA-MECH-013:
+    statement:
+      __raw: '"Weighted set cover πάνω σε evidence-backed lattice με veto στην κλάση απόδειξης· typed degraded mode."'
+  MFA-ELM-085:
+    statement:
+      __raw: '"DST με seeds, stubs, fault injection, ghost worlds, campaigns· ο φορέας του Fidelity Continuum (MFA-MECH-007): ImplMap, identity test, WhatMatrix·
+        24/24 KT με καμπάνια (σήμερα 4 — GAP κλείνει εδώ)· trace validation sim/real."'
+  MFA-MECH-015:
+    statement:
+      __raw: '"D1/D2/P1/H1 ανά πράξη· 4 επίπεδα αναπαραγωγιμότητας· φράγμα εκπομπής fail-closed στον τύπο του σχήματος εξόδου."'
+rationale: Αντίστροφο του MFA-PATCH-0011, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-063
+- MFA-ELM-050
+- MFA-ELM-089
+- MFA-ELM-022
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-024 (κόσμοι που δεν έγραψε ο οργανισμός)
+  - MFA-CAP-053 (κλίμακα με συμπεριφορικό νόημα)
+  - MFA-CAP-014 (αιτιακή συλλογιστική με περιβάλλον)
+  ledger_entry: CAPABILITY-CONSERVATION.md#twin
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0011
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

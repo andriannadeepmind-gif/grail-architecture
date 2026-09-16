@@ -1,0 +1,55 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0017
+title: Ο ανταγωνιστής (ALT-6/7) ως baseline μέσα στο harness· MFA-VO-015 τρίτο σκέλος· lean profile πρώτο (MFA-ATK-17)
+operation: MODIFY
+targets:
+- MFA-ELM-086
+- MFA-VO-015
+- MFA-ELM-097
+- MFA-ELM-089
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 3e045e11fd703d455f1a5c0b696ba53428827b2a76299735320bde24778cac32
+    VERIFICATION-OBLIGATIONS.yaml: ed27727fc17c48342bdb50b781a50309caa7b478c673874164803d55d525a450
+preconditions: []
+change:
+  MFA-ELM-086:
+    statement: 'Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+      τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+      δεν ανήκουν εδώ (CLAIMS H4). · Στο DP-1/2 ο HELD_OUT ρόλος του harness τρέχει σε ξεχωριστή συσκευή (scorer + sealed sets) (MFA-ATK-13). · Φιλοξενεί τον COMPETITOR
+      BASELINE (MFA-ATK-17): το υβρίδιο MFA-ALT-6/7 ως script (πάροχος + document store + prompt)· κάθε δόση αναφέρει GRAIL vs competitor σε σφραγισμένα έργα (HELD_OUT),
+      συμπεριλαμβανομένων των έργων όπου ο ανταγωνιστής νικά.'
+  MFA-VO-015:
+    methods:
+    - blind pre-registered panel
+    - superiority vs max of pool (DEC-X-17)
+    - 'τρίτο σκέλος: competitor baseline ALT-6/7 (MFA-ATK-17)'
+    measures: υπεροχή ποιότητας έναντι κορυφαίας ομάδας, frontier model, Harvey-class ΚΑΙ competitor baseline· μη-κατωτερότητα ασφάλειας· 0 Prediction Doctrine παραβιάσεις·
+      το περιθώριο ανά κλάση έργου δημοσιεύεται (και όπου χάνει)
+  MFA-ELM-097:
+    falsifier: lean profile που χάνει από τον competitor baseline (ALT-6/7) σε LEAN-E1 ή σε MFA-VO-014 — τότε η αρχιτεκτονική επανασχεδιάζεται, όχι το κριτήριο· και
+      ο failure mode του TEL-08 (lean = το μόνο που χτίζεται) καταγράφεται σε κάθε δόση αντί να κρύβεται
+  MFA-ELM-089:
+    statement: Τα 24 KT + νέα VO ως στοιχεία με προκαταχωρισμένα κατώφλια, DST-first, μη-LLM oracle, «αποτυχία σκοτώνει», περιοδικά drills για EP (DEC-X-19), SAP
+      ενιαίο (DEC-X-09)· ratchet KT-15 σε κάθε φάση. · Το μητρώο περιλαμβάνει τον competitor baseline ως μόνιμο συγκριτικό drill (MFA-VO-014/015) (MFA-ATK-17).
+rationale: 'MFA-ATK-17: καμία Pareto κυριαρχία προς καμία κατεύθυνση· το πλεονέκτημα έτους 1 = receipts + taint + συνέχεια + κλάσεις εξόδου + διαγραφή, όχι νοημοσύνη·
+  χωρίς μετρήσιμο περιθώριο το GRAIL δεν έχει γέφυρα προς το μέλλον του.'
+evidence:
+- adversarial/MFA-ATK-17.md
+- MFA-ALT-6
+- MFA-ALT-7
+affected_dependencies:
+- MFA-ELM-013
+- MFA-ELM-056
+capability_impact:
+  gained:
+  - MFA-CAP-029 (ο ανταγωνιστής ως μόνιμο μέτρο)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#competitor
+migration: Καμία· ο baseline είναι script στο harness.
+verification: tools/check-package.py· MFA-VO-014/015
+rollback: MFA-PATCH-0017-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,75 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0003-R
+title: 'Rollback of MFA-PATCH-0003: ELM-024 REPLACE→MERGE (CompetenceProfile + SPL, cold start ως Unknown)· ELM-088 REPLACE→SPLIT (SysON ως Tier-1 verifier προβολών)
+  (MFA-ATK-03)'
+operation: RESTORE
+targets:
+- MFA-ELM-024
+- MFA-ELM-088
+- MFA-VO-026
+- MFA-MECH-010
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 8c52fb743f3b63c2bc42c7cedc4847c0c1bf153e4282990dd129392a2a9770f0
+    INVENTIONS.yaml: c212e9284ef43fd4e14e5a8cbba3f80f19c2165a635234a86a4393d5a64d581e
+    VERIFICATION-OBLIGATIONS.yaml: ce1e3129c060ace08001674c57d8e4163b119243c15458abb701bb38151df1e3
+preconditions:
+- MFA-PATCH-0003.status == APPLIED
+change:
+  MFA-ELM-024:
+    delta:
+      __raw: REPLACE
+    statement:
+      __raw: '"Το self-model ΑΝΤΙΚΑΘΙΣΤΑΤΑΙ: από περιγραφή ικανοτήτων σε Self-Prediction Ledger (MFA-MECH-010) με proper scoring εκτός microVM, FidelityIndex, DriftAlarm→Battery·
+        calibration gates με ρεύμα outcomes εκτός προσομοίωσης."'
+    state_model:
+      __raw: '"open predictions, scores, alarms"'
+    failure_modes:
+      __raw: '"unresolved→EXPIRED μετρά ως αποτυχία"'
+    assumptions:
+      __raw: '[]'
+    alternatives:
+      __raw: '["στατικό self-model (corpus)"]'
+  MFA-ELM-088:
+    delta:
+      __raw: REPLACE
+    statement:
+      __raw: '"ΑΝΤΙΚΑΘΙΣΤΑ την «SysML v2 έδρα + SysON»: έδρα = το serialization-independent υπόστρωμα (αυτό το πακέτο → CC Schemas), SysML/SysON/YAML/Mermaid = παραγόμενες
+        προβολές με round-trip VO· τα εργαλεία (SysON, checkers) όργανα υπό ORP· η αλλαγή σχεδίου = InstitutionalAct· DEC-X-01 (κείμενο στο git, εργαλεία φακοί) εφαρμοσμένο."'
+    alternatives:
+      __raw: '["SysON ως έδρα (DEC-PLT-01 — superseded κατά DEC-X-01)"]'
+  MFA-VO-026:
+    methods:
+      __raw: '["executable spec", "property test"]'
+    measures:
+      __raw: '"substrate→YAML/SysML/Mermaid→substrate = ταυτότητα (hash)"'
+    rejects:
+      __raw: '"απώλεια/πρόσθεση"'
+    allows_next:
+      __raw: '"SysON ως viewer"'
+    status_note:
+      __raw: 'null'
+  MFA-MECH-010:
+    statement:
+      __raw: '"Self-model = προ-γεγονότος κατανομές για τον εαυτό, βαθμολογούμενες με proper scoring rule εκτός microVM· drift alarm."'
+rationale: Αντίστροφο του MFA-PATCH-0003, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-013
+- MFA-ELM-029
+- MFA-ELM-090
+- MFA-ELM-091
+capability_impact:
+  gained: []
+  at_risk:
+  - 'MFA-CAP-017 (self-model: δηλωμένο + μετρημένο)'
+  - MFA-CAP-055 (προβολές με έλεγχο τύπων)
+  ledger_entry: CAPABILITY-CONSERVATION.md#replace-register
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0003
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

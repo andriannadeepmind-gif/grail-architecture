@@ -1,0 +1,74 @@
+%% id: MFA-DIA-17 · 3D cockpit spatial ontology · question: ποιο είδος δέσμευσης/σχέσης/κατάστασης γίνεται ποιο γεωμετρικό αντικείμενο, και από ποια συνάρτηση;
+%% elements: MFA-ELM-091/093, MFA-MECH-008, MFA-INV-059 · source: mechanisms/MFA-MECH-008.md
+classDiagram
+  class Gamma_CGP {
+    +scene(cut, policy, seed) SceneGraph
+    +pick(scene, ray) CID
+    +replay(cut_a, cut_b)
+    +compare(sheet_a, sheet_b)
+    +command(cmd) CC_apply
+  }
+  class Stratum {
+    S0..S10 → οριζόντιο επίπεδο z
+  }
+  class Node {
+    δέσμευση / όργανο → όγκος
+    στερεότητα = ImplMap (stub διάφανο)
+    χρώμα = κλάση τεκμηρίου
+  }
+  class Edge {
+    contract / lineage / satisfies / verifies → σωλήνας
+    πάχος = receipts
+  }
+  class Rift {
+    Both / Conflict → ρήγμα
+  }
+  class Fog {
+    Unknown region → ομίχλη
+    πυκνότητα ∝ VOI
+  }
+  class Sheet {
+    fork / ghost world → παράλληλο φύλλο
+  }
+  class Boundary {
+    MetaBound MECHANISM → αδιαφανές τείχος
+    MetaBound POLICY → ημιδιαφανές, με λήξη
+  }
+  class AutonomyEnvelope {
+    AutonomyGrant → φωτεινό περίβλημα
+  }
+  class TimeAxis {
+    t_known → τρίτος άξονας · time travel = ολίσθηση cut
+  }
+  class Matter {
+    νομική υπόθεση → κόσμος με δικά του strata
+  }
+  class Institution {
+    Court / Πολιτισμός → περιοχή με σύνορα trust domain
+  }
+  class Agent {
+    body → κινούμενο σημείο με lease-λάμψη
+  }
+  class Modes {
+    <<enumeration>>
+    immersive
+    workstation
+    laptop
+    2d
+    text
+    headless
+    a11y
+  }
+  Gamma_CGP --> Stratum
+  Gamma_CGP --> Node
+  Gamma_CGP --> Edge
+  Gamma_CGP --> Rift
+  Gamma_CGP --> Fog
+  Gamma_CGP --> Sheet
+  Gamma_CGP --> Boundary
+  Gamma_CGP --> AutonomyEnvelope
+  Gamma_CGP --> TimeAxis
+  Gamma_CGP --> Matter
+  Gamma_CGP --> Institution
+  Gamma_CGP --> Agent
+  Modes ..> Gamma_CGP : R_mode ∘ Γ (ίδια Γ, MFA-INV-059)

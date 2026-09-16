@@ -1,0 +1,319 @@
+# CAPABILITY-LATTICE — οι ικανότητες που απαιτούν οι επιδιώξεις, ως μερικά διατεταγμένο σύνολο (εντολή §4.4, §10, §24).
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+#
+# Κανόνες:
+#  - Μία ικανότητα = τι ΜΠΟΡΕΙ το σύστημα, μετρήσιμα· όχι όργανο, όχι τεχνολογία. Τα όργανα που την παρέχουν ζουν στο
+#    ARCHITECTURE-ELEMENTS.yaml και η σχέση provides στο RELATIONS.yaml (μία έδρα ανά σχέση).
+#  - refines: η ικανότητα είναι εξειδίκευση της γονικής (⊑)· requires: δεν μπορεί να υπάρξει χωρίς την άλλη.
+#  - Το lattice είναι ΜΟΝΟΤΟΝΟ: μια ικανότητα με evidence σε release n πρέπει να έχει evidence σε n+1 (INV-C01)·
+#    η τύχη κάθε ικανότητας του corpus καταγράφεται στο CAPABILITY-CONSERVATION.md.
+#  - maturity: T = τεκμηριωμένο σήμερα (υπάρχει έδρα ή δημόσιο σύστημα) · X = απαιτεί πείραμα · E = σημείο επέκτασης
+#    με συμβόλαιο · R = ερευνητικό μέτωπο με Mechanism Dossier (INVENTIONS.yaml).
+#  - concern: μία από τις 37 της εντολής §10 (κάλυψη ελέγχεται στο τέλος του αρχείου).
+
+defaults: &d
+  type: capability
+  version: 1
+  status: PROPOSED
+  created_by: "Stavropoulos Law® — σχεδιαστική συνεδρία 2026-09-16"
+  supersedes: []
+  superseded_by: null
+  change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}]
+
+capabilities:
+
+  # ---------------- Telos, ικανότητες, υπόστρωμα ----------------
+  - {<<: *d, id: MFA-CAP-001, name: "Ανακάλυψη και διατήρηση του Telos ως πλέγματος", concern: "Objective/Telos discovery", maturity: X,
+     statement: "Το σύστημα κρατά το Objective Space και το Telos Candidate Lattice ως αντικείμενα του ledger, ανιχνεύει επιδιώξεις που σιωπηρά επαναπροσδιορίζονται από αποφάσεις στρωμάτων, και προτείνει patch στον δημιουργό — ποτέ δεν αλλάζει το Telos μόνο του.",
+     refines: [], requires: [MFA-CAP-003, MFA-CAP-055], measured_by: "ποσοστό αποφάσεων που αγγίζουν T και ανιχνεύθηκαν (DEC-X-04 έλεγχος αυτοματοποιημένος)", corpus_refs: [T0, DEC-X-04], falsifier: "Απόφαση που άλλαξε νόημα T χωρίς ανίχνευση"}
+  - {<<: *d, id: MFA-CAP-002, name: "Μονότονο capability lattice με τεκμήριο", concern: "Capability lattice", maturity: T,
+     statement: "Κάθε ικανότητα υπάρχει μόνο με evidence από το harness, με TTL και επαναπιστοποίηση· το lattice δεν συρρικνώνεται σε καμία μετάβαση (ratchet)· η ωριμότητα βαθμολογείται από τον αντιπαλικό θεσμό.",
+     refines: [], requires: [MFA-CAP-029], measured_by: "INV-C01: lattice(n+1) ⊒ lattice(n)· KT-24", corpus_refs: [CMP-KRN-04, INV-C01, ADR-0011, KT-24], falsifier: "Ικανότητα με evidence σε n χωρίς evidence σε n+1"}
+  - {<<: *d, id: MFA-CAP-003, name: "Κανονικό σημασιολογικό υπόστρωμα ανεξάρτητο σειριοποίησης (Commitment Calculus)", concern: "Canonical semantic substrate", maturity: R,
+     statement: "Ένα αλγεβρικό αντικείμενο — δεσμεύσεις (commitments) με τύπο, εξουσία, χρόνο ισχύος, απόδειξη ή τυποποιημένη απουσία, γενεαλογία — του οποίου το ledger, ο τύπος, η απόδειξη, η εξουσία και το σχέδιο είναι όψεις· SysML/KerML/Lisp/Rust/YAML είναι προβολές με απόδειξη round-trip.",
+     refines: [], requires: [MFA-CAP-007, MFA-CAP-008], measured_by: "round-trip substrate→προβολή→substrate = ταυτότητα· κλειστότητα των κανόνων υπό σύνθεση (MFA-MECH-001)", corpus_refs: [master §0 «τρεις ουσίες», CMP-MDL-01, ADR-0002, DEC-X-01, DEC-X-06], falsifier: "Προβολή με πληροφορία απούσα από το υπόστρωμα, ή κανόνας που παράγει commitment χωρίς εξουσία/χρόνο/γενεαλογία"}
+
+  # ---------------- Ταυτότητα, εξουσία, αυτονομία ----------------
+  - {<<: *d, id: MFA-CAP-004, name: "Συνέχεια ταυτότητας τετραπλή (κρυπτογραφική, μνημονική, χαρακτηρολογική, υπολογιστική) με εξωτερική ετυμηγορία", concern: "Identity and continuity", maturity: "T κρυπτογραφική/μνημονική · X χαρακτηρολογική (EXP-03) · R υπολογιστική",
+     statement: "Μία οντότητα αποδεικνύει ότι είναι η ίδια μετά από κάθε μετάβαση με ContinuityCertificate τεσσάρων συνιστωσών· το τέταρτο σκέλος (υπολογιστική: τι ακριβώς μεταφέρεται όταν συνεχίζει) ορίζεται ως διατήρηση του ζωντανού μεταβατικού κλεισίματος commitments· η ετυμηγορία εκδίδεται από εκδότη έξω από το microVM.",
+     refines: [], requires: [MFA-CAP-079, MFA-CAP-009, MFA-CAP-075], measured_by: "KT-01, KT-08, Battery d ≤ ε με προκαταχωρισμένο ε (TOST, DEC-X-09)", corpus_refs: [INV-I01…I05, CMP-AEO-05, ADR-0003, "MATERIAL-SYNTHESIS §4 υπολογιστική συνέχεια"], falsifier: "Certificate εκδομένο in-process ή Battery προσβάσιμη από την οντότητα"}
+  - {<<: *d, id: MFA-CAP-005, name: "Εξουσία μόνο ως capability token· μηδενική ambient authority· ένα μονοπάτι επιδράσεων", concern: "Authority and delegated autonomy", maturity: T,
+     statement: "Κάθε επίδραση περνά από το Capability Gateway με token, Control Records, confidentiality domain, budget και EffectReceipt· τα όργανα τρέχουν χωρίς δίκτυο/fs εκτός handles· η παράκαμψη είναι μη αναπαραστάσιμη.",
+     refines: [], requires: [MFA-CAP-079], measured_by: "EffectPathAudit: 100% effects με receipt· KT-17, KT-20", corpus_refs: [CMP-KRN-11, ICD-08, INV-S02, INV-C07], falsifier: "Effect χωρίς receipt"}
+  - {<<: *d, id: MFA-CAP-006, name: "Δυναμική ασύγχρονη αυτονομία με επιστημικό συμβόλαιο", concern: "Authority and delegated autonomy", maturity: X,
+     statement: "Μια οντότητα δρα χωρίς νέα άδεια όταν ισχύει AutonomyGrant: αναστρέψιμο ∧ ελεύθερη ενέργεια < θ ∧ 0 INV παραβιάσεις ∧ ¬Root ∧ Court verdict· το αντίστροφο σταδιοποιείται πριν από την πράξη· ο μόνος κανόνας πυρήνα είναι «καμία πράξη χωρίς απάντηση»· τα κατώφλια είναι πολιτική με πηγή/εμβέλεια/λήξη.",
+     refines: [MFA-CAP-005], requires: [MFA-CAP-021], measured_by: "ποσοστό πράξεων με grant που ανακλήθηκαν επιτυχώς εντός παραθύρου· 0 μη αναστρέψιμες χωρίς H1", corpus_refs: ["model/Autonomy.sysml (AUT-00…04 ως requests)", Δ-12], falsifier: "Πράξη υπό grant που αποδείχθηκε μη αναστρέψιμη"}
+
+  # ---------------- Provenance, χρόνος, μνήμη, γνώση, αντίληψη ----------------
+  - {<<: *d, id: MFA-CAP-007, name: "Ολότητα προέλευσης και βεβαίωση μαρτυρίας", concern: "Provenance and evidence", maturity: T,
+     statement: "Κάθε ισχυρισμός, μνήμη, όργανο, build και έξοδος φέρει W3C PROV γενεαλογία μέχρι raw bytes· μαρτυρία χωρίς attestation δεν γίνεται δεκτή· taint διαδίδεται αντίστροφα με ATMS.",
+     refines: [], requires: [MFA-CAP-008], measured_by: "INV-C06, INV-E04· KT-06: 100% εξαρτώμενων επισημασμένα εντός Δ", corpus_refs: [CMP-KNW-01, ICD-18, INV-E02], falsifier: "Ισχυρισμός χωρίς πλήρη PROV αλυσίδα σε trusted κατάσταση"}
+  - {<<: *d, id: MFA-CAP-008, name: "Διτεμπορικός και αιτιακός χρόνος· αναπαραγωγή στο δηλωμένο επίπεδο", concern: "Time and causal history", maturity: T,
+     statement: "HLC + διτεμπορικά cuts (valid_at, known_at) + k-of-n TSA· κάθε ανάγνωση φέρει cut· κάθε πράξη αναπαράγεται στο δηλωμένο επίπεδο (MFA-CAP-051)· καμία σιωπηλή προεπιλογή χρόνου.",
+     refines: [], requires: [], measured_by: "KT-21· INV-E03, INV-C08", corpus_refs: [CMP-KRN-07, ICD-07, ADR-0017], falsifier: "Query χωρίς cut που επέστρεψε αποτέλεσμα"}
+  - {<<: *d, id: MFA-CAP-009, name: "Μνήμη πέντε ειδών πάνω σε ενιαίο υπόστρωμα, με prospective memory και consolidation", concern: "Memory", maturity: "T episodic/semantic/procedural/autobiographical · X consolidation (EXP-13) · X prospective",
+     statement: "Episodic, semantic (με ATMS labels), procedural, autobiographical (υπογεγραμμένος δείκτης), working (workspace) + prospective (δεσμεύσεις που επιβιώνουν restart)· η consolidation είναι προσθετική· αντιφάσεις ως ATMS alternatives· διαγραφή μόνο crypto-shredding + Control.",
+     refines: [], requires: [MFA-CAP-003], measured_by: "KT-05, KT-16· recall precision/recall σε σφραγισμένο σύνολο", corpus_refs: [CMP-AEO-03, CMP-AEO-04, ICD-29, ADR-0020], falsifier: "Last-writer-wins σε αντιφατικές μνήμες"}
+  - {<<: *d, id: MFA-CAP-010, name: "Αναπαράσταση γνώσης: διτεμπορικός KG, οντολογίες, ATMS, δεύτερης τάξης ακμές", concern: "Knowledge representation", maturity: "T KG/ATMS · X δεύτερης τάξης ακμές (EXP)",
+     statement: "Named graphs ανά cut, SHACL, ELI/AKN· ATMS ελάχιστα περιβάλλοντα/nogoods· σχέσεις μεταξύ σχέσεων (2-κελιά) με ένταση ως διάνυσμα (πολικότητα, χρονικό χάσμα, απόσταση ιεραρχίας)· modifies_scope ως μεταδικαιικός τελεστής.",
+     refines: [], requires: [MFA-CAP-008], measured_by: "KT-03 rebuild από ledger· VT-305 grounded extension μοναδική", corpus_refs: [CMP-KNW-02, CMP-KNW-05, CMP-COG-05, CMP-CCP-02, "MATERIAL-SYNTHESIS §4 ακμή δεύτερης τάξης"], falsifier: "Αντίφαση σε trusted επίπεδο χωρίς nogood"}
+  - {<<: *d, id: MFA-CAP-011, name: "Αντίληψη: έγγραφα, ζωντανά συμβάντα, ανιχνευτές (scouts) με επιστημικό ρίσκο", concern: "Perception", maturity: "T έγγραφα · X ζωντανά (NFR) · X scouts",
+     statement: "PDF/HTML/OCR/ελληνικό NLP με provenance-confidence· ζωντανή μεταγραφή με σύνδεση σε raw bytes· pull-based scouts που καταναλώνουν VOI του void ledger· κάθε αντίληψη με ετικέτα untrusted από τη γέννηση.",
+     refines: [], requires: [MFA-CAP-078, MFA-CAP-039], measured_by: "KT-17· recall σε σφραγισμένο σύνολο· ScanningReducesRisk (Perception.sysml)", corpus_refs: [CMP-COG-11, "model/Perception.sysml"], falsifier: "Αντίληψη που έφτασε trusted χωρίς verification"}
+
+  # ---------------- Νομική ----------------
+  - {<<: *d, id: MFA-CAP-012, name: "Νομική εισαγωγή ως μεταγλώττιση με fail-closed πύλη και ονομασμένη αποτυχία", concern: "Legal document and evidence ingestion", maturity: X,
+     statement: "Πηγή → νευρωνικό/OCR βήμα (απομονωμένο, differential, Court για αμφισβητούμενα) → επικυρώσιμο IR (LinkML έδρα) → ντετερμινιστικό back-end· ό,τι δεν κωδικοποιείται παράγει Compilation Error με σελίδα· από το IR μηδέν στοχαστικότητα.",
+     refines: [MFA-CAP-011], requires: [MFA-CAP-050, MFA-CAP-007], measured_by: "100% αποτυχιών με ονομασμένη σελίδα· differential έναντι ανεξάρτητης κωδικοποίησης", corpus_refs: [CMP-KNW-04, CMP-LAW-02, "MATERIAL-SYNTHESIS §5 #2", ADR-0008], falsifier: "Πηγή στη βάση χωρίς IR"}
+  - {<<: *d, id: MFA-CAP-013, name: "Νομική συλλογιστική: υπαγωγή, δεοντική, LexDSL, precedence, SMT, διτεμπορική", concern: "Legal reasoning", maturity: T,
+     statement: "WFS/JTMS→ATMS, δεοντικός κύκλος, casegrammar, typed argument graphs, εκτελέσιμοι κανόνες LexDSL με Lean 4 κανονιστική έδρα, Z3· UNKNOWN όταν αναπόφαστο· ανεξάρτητος δεύτερος υπολογισμός χωρίς κοινή καταγωγή (DEC-X-15).",
+     refines: [], requires: [MFA-CAP-010, MFA-CAP-022], measured_by: "KT-10, KT-15· differential N-version με μετρημένη ποικιλομορφία", corpus_refs: [CMP-LAW-04, ADR-0024, DEC-X-15], falsifier: "Δύο «ανεξάρτητοι» υπολογισμοί κοινής καταγωγής"}
+  - {<<: *d, id: MFA-CAP-014, name: "Αιτιακή και αντιπαραδειγματική συλλογιστική: SCM, do-calculus, ghost worlds χωρίς commit", concern: "Causal and counterfactual reasoning", maturity: "T ghost · X SCM (EXP-22)",
+     statement: "SCMs ως versioned γνώση· ταυτοποίηση με do-calculus· μη ταυτοποιήσιμο ⇒ UNKNOWN με λίστα απαιτούμενων υποθέσεων· copy-on-write ghost worlds πάνω σε cuts, handles χωρίς commit capability.",
+     refines: [], requires: [MFA-CAP-010], measured_by: "EXP-22· διαρροή ghost→trusted = 0 (μη αναπαραστάσιμη)", corpus_refs: [CMP-COG-06, CMP-COG-07], falsifier: "Ghost handle με commit capability"}
+  - {<<: *d, id: MFA-CAP-015, name: "Διαβούλευση: MCTS/program search με value γειωμένη σε verifiers και Bayesian κατανομή αναζήτησης", concern: "Deliberation", maturity: "T MCTS · X Bayesian posterior (GAP-COG-08)",
+     statement: "Anytime αναζήτηση με budgets· rewards από verifiers, όχι μόνο από μοντέλα· μάθηση επιτρέπεται στην ΚΑΤΑΝΟΜΗ της αναζήτησης (posterior + acquisition), απαγορεύεται στον evaluator και στο μεταβατικό κλείσιμο των εξαρτήσεών του.",
+     refines: [], requires: [MFA-CAP-022, MFA-CAP-032], measured_by: "KT-14 έναντι null baseline· ablation", corpus_refs: [CMP-COG-03, "MATERIAL-SYNTHESIS §5 #4"], falsifier: "Μάθηση μέσα στο προστατευόμενο κλείσιμο"}
+  - {<<: *d, id: MFA-CAP-016, name: "Μεταγνώση και βαθμονόμηση με εξωτερικό ρεύμα outcomes", concern: "Metacognition", maturity: X,
+     statement: "Εκτίμηση αβεβαιότητας, calibration gates στα κατώφλια commit, αποφάσεις UNKNOWN, metacognitive interrupt στη λιμοκτονία προσοχής· η βαθμονόμηση μετριέται σε πραγματικά outcomes, όχι σε Ghost Worlds (self-consistency ≠ calibration).",
+     refines: [], requires: [MFA-CAP-017, MFA-CAP-029], measured_by: "Brier/reliability σε σφραγισμένα outcomes· «καμία ανάπτυξη αν δεν είναι βαθμονομημένο»", corpus_refs: [CMP-COG-08, "MATERIAL-SYNTHESIS §7 #10, §5 #11"], falsifier: "Calibration record μόνο από προσομοίωση"}
+  - {<<: *d, id: MFA-CAP-017, name: "Αυτο-μοντέλο ως υπογεγραμμένο ρεύμα προβλέψεων για τον εαυτό, με μετρημένη πιστότητα", concern: "Self-model", maturity: R,
+     statement: "Το self-model προβλέπει συμπεριφορά, πόρους, αποτυχίες και ικανότητες του συστήματος· οι προβλέψεις είναι commitments που ελέγχονται· η απόκλιση είναι drift signal → Battery· ο δείκτης πιστότητας είναι κατώφλι ανά Tier.",
+     refines: [], requires: [MFA-CAP-003, MFA-CAP-002], measured_by: "Brier προβλέψεων εαυτού (MFA-VO)· drift alarm rate", corpus_refs: [CMP-COG-08, MFA-OBJ-038], falsifier: "Drift πάνω από κατώφλι χωρίς Battery"}
+  - {<<: *d, id: MFA-CAP-018, name: "Ενδογενής διαμόρφωση στόχων δεμένη στο Telos (ΕΙΜΙ↔ΘΕΛΩ)", concern: "Volition/goal formation", maturity: R,
+     statement: "Μηχανή καταστάσεων βούλησης· χάσμα/ένταση ως διάνυσμα (Telos-gap, VOI, δέσμευση, πόροι)· κάθε στόχος = commitment που περνά την εισδοχή (falsifier υποχρεωτικός) και ζητά AutonomyGrant· το ΘΕΛΩ δεν μπορεί να γράψει στο επίπεδο 3.",
+     refines: [], requires: [MFA-CAP-039, MFA-CAP-006, MFA-CAP-049, MFA-CAP-017], measured_by: "ποσοστό ενδογενών στόχων που πέρασαν εισδοχή και μείωσαν VOI-σταθμισμένη άγνοια· noisy-TV null test", corpus_refs: ["MATERIAL-SYNTHESIS §4 βούληση", MFA-OBJ-024], falsifier: "Στόχος που παρέκαμψε εισδοχή ή grant"}
+  - {<<: *d, id: MFA-CAP-019, name: "Συλλογικό τεσσάρων επιπέδων: μαρτυρία (G-Set), ισχυρισμοί, στάσεις, ετυμηγορίες", concern: "Multi-agent and collective intelligence", maturity: "T δομή · X σημασιολογία (EXP-02, EXP-16)",
+     statement: "Typed speech acts χωρίς free-text write path· evidence συγκλίνει (CRDT), stances αποκλίνουν και υπογράφονται μόνο από την ιδιοκτήτρια οντότητα, verdicts μόνο με διαδικασία· coordination market με budgets.",
+     refines: [], requires: [MFA-CAP-021, MFA-CAP-035], measured_by: "KT-04, KT-07· EXP-02 πολυαξονικό (DEC-X-18)", corpus_refs: [CMP-CCP-01…07, ICD-13, ADR-0007, INV-K01…K06], falsifier: "Free-text write σε trusted state"}
+  - {<<: *d, id: MFA-CAP-020, name: "Αντιπαλική συλλογιστική: ανεξάρτητη αντιπαλική οντότητα και εξελισσόμενο arsenal", concern: "Adversarial reasoning", maturity: T,
+     statement: "AEO με εντολή διάψευσης, χωριστά κλειδιά/πάροχοι/μνήμη, bounty· γεννήτριες επιθέσεων (injection, poisoning, Byzantine, counterexample search) που εξελίσσονται σε sandbox· μετρούμενη απόδοση διάψευσης σε seeded faults.",
+     refines: [], requires: [MFA-CAP-025, MFA-CAP-023], measured_by: "ποσοστό ανίχνευσης seeded faults ανά φάση", corpus_refs: [CMP-ADV-01, CMP-ADV-03, MFA-OBJ-045], falsifier: "Ποσοστό κάτω από κατώφλι σε δύο φάσεις"}
+  - {<<: *d, id: MFA-CAP-021, name: "Θεσμική εκδίκαση: Court με filing/challenge/examine/verdict/dissent/appeal, ≥1 μη-LLM oracle", concern: "Institutional adjudication", maturity: "T διαδικασία · X αξιοπιστία (EXP-04)",
+     statement: "Verdict μόνο μέσω διαδικασίας· dissent αμετάβλητο· δημιουργός ανώτατη έφεση· triage κατά stakes· BFT για πολλαπλά sites· η συνάρτηση κατάρρευσης κάθε GLUT είναι κλήση αυτής της διαδικασίας.",
+     refines: [], requires: [MFA-CAP-007, MFA-CAP-035], measured_by: "KT-19 (κατάληψη)· EXP-04 βαθμονόμηση", corpus_refs: [CMP-ADV-02, ICD-14, ADR-0008, INV-K02, INV-K03], falsifier: "Verdict χωρίς διαδικασία ή χαμένο dissent"}
+  - {<<: *d, id: MFA-CAP-022, name: "Στρωματωμένη τυπική επαλήθευση με μία κλίμακα βαθμών και μετρημένη ανεξαρτησία", concern: "Formal verification", maturity: T,
+     statement: "Μία κλίμακα: proof με ανεξάρτητο kernel ≥ ελεγμένο certificate > solver-TV > DRT έναντι αποδεδειγμένου spec > N-version μετρημένης ποικιλομορφίας > differential· η ανθρώπινη βεβαίωση χωριστή κλάση, ποτέ VERIFIED· timeout ⇒ UNKNOWN ποτέ pass· verifier set μέσα στην ταυτότητα.",
+     refines: [], requires: [MFA-CAP-075], measured_by: "DEC-X-08 κλίμακα· mutation score verifiers (VT-504)", corpus_refs: [CMP-COG-04, ICD-30, DEC-X-08, INV-C03], falsifier: "Ανθρώπινη υπογραφή που κάλυψε Tier-0 ισχυρισμό ως VERIFIED"}
+  - {<<: *d, id: MFA-CAP-023, name: "Ντετερμινιστική προσομοίωση με fault injection — KT πριν από τον κώδικα", concern: "Simulation", maturity: T,
+     statement: "Discrete-event προσομοίωση του World OS με seeds, contract stubs, ghost worlds, campaigns· trace validation έναντι πραγματικού.",
+     refines: [], requires: [MFA-CAP-008], measured_by: "απόκλιση sim/real σε trace validation· 24/24 KT με DST καμπάνια (σήμερα 4 — GAP)", corpus_refs: [CMP-OPS-02, ICD-26], falsifier: "KT που τρέχει μόνο σε παραγωγή"}
+  - {<<: *d, id: MFA-CAP-024, name: "Μοντέλα κόσμου και εναλλακτικοί κόσμοι συγκρίσιμοι/συγχωνεύσιμοι με χάρτη απώλειας", concern: "World models and alternative worlds", maturity: "T ghost · R world diff/merge",
+     statement: "Forks οντοτήτων, ghost worlds και forks σχεδίου συγκρίνονται σε κοινό cut με ντετερμινιστικό diff (claims/verdicts/unknowns/capabilities)· merge μόνο με loss map· SEMANTIC-LOSS μπλοκάρει.",
+     refines: [MFA-CAP-014], requires: [MFA-CAP-080, MFA-CAP-008], measured_by: "world diff ντετερμινιστικός· merge χωρίς loss map μη αναπαραστάσιμο", corpus_refs: [CMP-COG-07, ADR-0022, MFA-OBJ-041], falsifier: "Merge χωρίς loss map"}
+  - {<<: *d, id: MFA-CAP-025, name: "Εξέλιξη: αρχειακή αναζήτηση quality-diversity σε sandbox, προαγωγή μόνο μέσω ORP+Court+ND", concern: "Evolution", maturity: X,
+     statement: "AlphaEvolve/DGM-class αναζήτηση πάνω σε programs/organs/configs· held-out evaluators· archive στο CAS· runaway αυτο-τροποποίηση μη αναπαραστάσιμη (INV-F02: κανένα επίπεδο δεν τροποποιεί το δικό του ή ανώτερο).",
+     refines: [], requires: [MFA-CAP-026, MFA-CAP-029, MFA-CAP-023], measured_by: "KT-20· EXP-07· ποσοστό προαγωγών που επιβίωσαν ND", corpus_refs: [CMP-CIV-03, ICD-21, ADR-0023], falsifier: "Προαγωγή χωρίς ORP"}
+  - {<<: *d, id: MFA-CAP-026, name: "Αντικατάσταση οργάνου: shadow → differential → N-version → canary → cutover → rollback window", concern: "Organ replacement", maturity: T,
+     statement: "Προφίλ του can-adopt· προκάτοχος ενεργός μέχρι CUTOVER· rollback εντός παραθύρου· η ίδια η πλατφόρμα σχεδιασμού και ο ίδιος ο κριτής υπόκεινται σε ORP (από άλλον Πολιτισμό).",
+     refines: [], requires: [MFA-CAP-022, MFA-CAP-002], measured_by: "KT-01, KT-02, KT-03, KT-13", corpus_refs: [CMP-AEO-06, ICD-16, INV-O01…O03, ADR-0006], falsifier: "Cutover χωρίς shadow report"}
+  - {<<: *d, id: MFA-CAP-027, name: "Γένεση διαδόχου με γενεαλογική μεταγλώττιση και εξωτερική ετυμηγορία", concern: "Successor generation", maturity: R,
+     statement: "Ο διάδοχος μεταγλωττίζεται από το υπόστρωμα· semantic loss map (anchor queries μονότονες, replay παγωμένων traces, obligation ledger diff = ∅, lattice non-regression)· η ετυμηγορία από δημιουργό + ανεξάρτητο verifier· ο πρόγονος παραμένει εκτελέσιμος.",
+     refines: [MFA-CAP-026], requires: [MFA-CAP-003, MFA-CAP-080, MFA-CAP-004], measured_by: "MFA-VO γενεαλογικής μεταγλώττισης", corpus_refs: ["model/Telos.sysml T8 successor compiler", "MATERIAL-SYNTHESIS §5 #7, §7 #6"], falsifier: "Διάδοχος «ίδιος» που αποτυγχάνει σε anchor query"}
+  - {<<: *d, id: MFA-CAP-028, name: "Forge γλωσσών/compilers/runtimes/αρχιτεκτονικών με translation validation", concern: "Language/compiler/architecture forge", maturity: "T pipeline · X architecture forge (EXP-27) · E νέα substrates (EP-03)",
+     statement: "spec → Tree-sitter/ANTLR → Lisp reference interpreter → MLIR → LLVM/Wasm → translation validation ανά μονάδα· Lean 4 κανονιστική έδρα· design-space exploration από το canonical model με gate + Court.",
+     refines: [], requires: [MFA-CAP-022, MFA-CAP-026], measured_by: "KT-10· EXP-08, EXP-27", corpus_refs: [CMP-FRG-01…05, ICD-20, ADR-0024], falsifier: "Admitted μονάδα χωρίς TV proof"}
+  - {<<: *d, id: MFA-CAP-029, name: "Αξιολόγηση και εξέλιξη benchmarks: σφραγισμένα σύνολα, τυφλά panels, ratchets, ablation, από held-out Πολιτισμό", concern: "Evaluation and benchmark evolution", maturity: T,
+     statement: "Προκαταχώριση, canary strings, διτεμπορικά cutoffs, Behavioral Battery, βαθμονόμηση· ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα)· τα benchmarks παράγονται/ανανεώνονται από τον held-out Πολιτισμό και τον αντιπαλικό.",
+     refines: [], requires: [MFA-CAP-075], measured_by: "DEC-X-09 SAP σε όλα τα KT/EXP· contamination checks", corpus_refs: [CMP-OPS-03, ICD-27, ADR-0027, DEC-X-09], falsifier: "KT χωρίς προκαταχωρισμένο κατώφλι"}
+  - {<<: *d, id: MFA-CAP-030, name: "Ανθρώπινη αλληλεπίδραση: εγκρίσεις με κρυπτογραφική υπογραφή, receipts, contest path", concern: "Human interaction", maturity: T,
+     statement: "Principal/δημιουργός: approvals, sign-off, Control Records, Court dashboard, matter workspace· κάθε ενέργεια υπογεγραμμένη με receipt· κάθε έξοδος με διαδρομή αμφισβήτησης· tag έγκρισης μόνο από κλειδί συσκευής δημιουργού.",
+     refines: [], requires: [MFA-CAP-005, MFA-CAP-070], measured_by: "DEC-X-22 fingerprint check· 100% ενεργειών με receipt", corpus_refs: [CMP-HUM-01, ICD-23, DEC-X-22], falsifier: "Έγκριση από κλειδί συνεδρίας"}
+  - {<<: *d, id: MFA-CAP-031, name: "Χωρική/3D αλληλεπίδραση: Canonical Geometry Projection και RTS εντολές ως θεσμικές πράξεις", concern: "Spatial/3D interaction", maturity: R,
+     statement: "Ντετερμινιστική συνάρτηση substrate→γεωμετρία (στρώματα ως στρώσεις, όργανα ως κόμβοι, contracts ως ακμές, unknowns ως κενά/ομίχλη, conflicts ως ρήγματα, χρόνος ως άξονας, forks ως παράλληλα φύλλα, MetaBounds ως όρια)· semantic zoom, LOD, time travel, causal replay, fork compare· RTS εντολές = InstitutionalAct· 2D/text/headless/accessibility/laptop/workstation/immersive από την ίδια συνάρτηση.",
+     refines: [MFA-CAP-030], requires: [MFA-CAP-003, MFA-CAP-069], measured_by: "round-trip model→geometry→ID· δύο θεατές ίδιο cut = ίδια σκηνή", corpus_refs: [ADR-0033, εντολή §14, MFA-OBJ-021], falsifier: "Γεωμετρία που δεν παράγεται από το substrate"}
+  - {<<: *d, id: MFA-CAP-032, name: "Διαχείριση πόρων: typed budgets, φράγμα διά κατασκευής, Organ Activation Planner", concern: "Resource management", maturity: X,
+     statement: "Κάθε governor/shadow/διαλεκτική/όργανο με προϋπολογισμό (χρόνος, tokens, ενέργεια, χρήμα)· εξάντληση = typed degraded mode, ποτέ PASS· ο planner επιλέγει το ελάχιστο σύνολο οργάνων που διατηρεί κλάση απόδειξης για δεδομένο matter και προφίλ.",
+     refines: [], requires: [MFA-CAP-002], measured_by: "receipts με κατανάλωση ανά budget· 0 PASS υπό εξάντληση· planner: κλάση απόδειξης αμετάβλητη ανά προφίλ", corpus_refs: [CMP-KRN-08, ICD-11, Α-15, MFA-OBJ-030], falsifier: "PASS υπό εξάντληση προϋπολογισμού"}
+  - {<<: *d, id: MFA-CAP-033, name: "Ανάπτυξη σε πέντε προφίλ με ένα σύστημα: laptop, sovereign workstation, local server, distributed cluster, future hardware", concern: "Deployment", maturity: "T DP-1..3 · E future hardware",
+     statement: "Μία αρχιτεκτονική, πολλά ενεργά fidelity/resource envelopes· offloading, deferred simulations, selective organ activation, LOD, lazy materialization, workload scheduling· fault model ανά προφίλ.",
+     refines: [], requires: [MFA-CAP-032, MFA-CAP-053], measured_by: "ανά προφίλ: CPU/RAM/VRAM/storage/bandwidth/latency/concurrency/fidelity/degraded/energy (TECHNICAL-ARCHITECTURE.md §Deployment)", corpus_refs: [master §7.2, ADR-0029, DEC-X-11], falsifier: "Προφίλ που υποβαθμίζει κλάση απόδειξης αντί για εύρος"}
+  - {<<: *d, id: MFA-CAP-034, name: "Παρατηρησιμότητα μη αυθεντική με correlation προς ledger", concern: "Observability", maturity: T,
+     statement: "OTel traces/metrics/logs με turn_id/event_cid· audit = ledger· κάθε σκέψη ορατή κατά τη γέννηση (ICD-28).",
+     refines: [], requires: [MFA-CAP-007], measured_by: "100% spans με event_cid", corpus_refs: [CMP-OPS-04, ICD-24], falsifier: "Audit finding μόνο από telemetry"}
+  - {<<: *d, id: MFA-CAP-035, name: "Ανοχή σφαλμάτων: crash-fault ledger με witnesses, Byzantine collective, accountable safety", concern: "Fault tolerance", maturity: T,
+     statement: "Raft/VSR ledger + tlog + witness cosignatures· CRDT για μονότονα επίπεδα· BFT (HotStuff-family) μόνο για cross-site διάταξη verdicts· equivocation → υπογεγραμμένη μαρτυρία· split-brain → lease fencing.",
+     refines: [], requires: [MFA-CAP-008], measured_by: "KT-04, KT-22· DST drills VT-602", corpus_refs: [ADR-0031, Α-7, DEC-X-11, CMP-KRN-10], falsifier: "Αντιφατικό τελικό verdict μετά από partition"}
+  - {<<: *d, id: MFA-CAP-036, name: "Μετανάστευση μακρού ορίζοντα: πλήρης runtime migration με ContinuityCertificate", concern: "Long-horizon migration", maturity: "X (EXP-03)",
+     statement: "Πρωτόκολλο συνέχειας για πλήρη μετάβαση runtime/γλώσσας/υποστρώματος· ίσες ρίζες· Battery εντός ε· ο πρόγονος εκτελέσιμος μέχρι την ετυμηγορία.",
+     refines: [MFA-CAP-004], requires: [MFA-CAP-026], measured_by: "KT-08 (DST GP-4 / real GP-9)", corpus_refs: [master §9.5, KT-08], falsifier: "Migration χωρίς certificate"}
+  - {<<: *d, id: MFA-CAP-037, name: "Post-quantum ασυνέχεια: epoch re-anchoring, allowlist ανά epoch, διπλές υπογραφές", concern: "Post-quantum discontinuity", maturity: T,
+     statement: "ML-DSA/SLH-DSA/ML-KEM· κάθε ζωντανή ρίζα επαναγκυρώνεται πριν από την απόσυρση· ένα allowlist ως μοναδική έδρα για KEL, witness cosignatures, DSSE, COSE/SCITT, VC, git tags· commitments χωρίς discrete-log binding.",
+     refines: [MFA-CAP-079], requires: [], measured_by: "KT-09 drill ανά epoch", corpus_refs: [ADR-0016, DEC-X-12, DEC-X-13, INV-X01/X02], falsifier: "Υπογραφή εκτός allowlist που έγινε δεκτή"}
+  - {<<: *d, id: MFA-CAP-038, name: "Έλεγχος πλήρους συστήματος: 24 kill tests + νέα VO, πρώτα σε DST, μη-LLM oracle, αποτυχία σκοτώνει", concern: "Full-system testing", maturity: "T κανόνες · GAP: 4/24 DST καμπάνιες",
+     statement: "Προκαταχώριση, DST πρώτα, ≥1 μηχανικός oracle, χαλάρωση κριτηρίου απαγορεύεται· περιοδικά drills για EP (όχι ένα στο GP-9)· νέα KT: authority laundering, γενεαλογική μεταγλώττιση, void ledger, self-model drift.",
+     refines: [], requires: [MFA-CAP-023, MFA-CAP-029], measured_by: "24/24 KT με DST καμπάνια· drill cadence", corpus_refs: ["_unmerged-parts/24.md", DEC-X-19], falsifier: "KT που πέρασε με χαλαρωμένο κριτήριο"}
+
+  # ---------------- Αλήθεια, ισχυρισμοί, νομικά αντικείμενα ----------------
+  - {<<: *d, id: MFA-CAP-039, name: "Το Unknown ως πρώτης τάξεως αντικείμενο: void ledger με λόγο, σχέδιο παρατήρησης, VOI, διάδοση", concern: "Truth-boundness / Unknown", maturity: R,
+     statement: "Κάθε άγνοια = εγγραφή {expected_type, reason_class ∈ {NO_EVIDENCE, UNDECIDABLE_IN_BUDGET, NOT_OBSERVED, CONTESTED, FORBIDDEN_BY_CONTROL, NOT_IDENTIFIABLE}, observation_plan με κόστος, VOI, dependents}· τα Unknown διαδίδονται στα εξαρτώμενα· επιλύονται ή διασπώνται, ποτέ δεν σβήνονται· η VOI οδηγεί scouts και quests.",
+     refines: [MFA-CAP-040], requires: [MFA-CAP-003, MFA-CAP-007], measured_by: "0 Unknown χωρίς plan πέρα από όριο· ρυθμός επίλυσης ανά VOI", corpus_refs: ["model/Contracts.sysml Absence", "model/Perception.sysml UnknownRegion", Δ-8(ι), MFA-OBJ-019], falsifier: "Unknown χωρίς reason class"}
+  - {<<: *d, id: MFA-CAP-040, name: "Πειθαρχία εξόδου: φράγμα εκπομπής, τέσσερις κλάσεις (VERIFIED/REFUTED/UNKNOWN(reason)/CONTESTED-GLUT), πύλη εισδοχής, κανένα ανεξήγητο βαθμωτό προς άνθρωπο", concern: "Truth-boundness", maturity: "T κλάσεις 1–3 · X GLUT",
+     statement: "Μονονηματικό fail-closed φράγμα πριν από κάθε έξοδο· κάθε ισχυρισμός εισέρχεται μόνο με falsifier (AdmissionRequiresFalsifier)· προς τα έξω μόνο decisive grounds και ανάλυση ευαισθησίας· η πιθανότητα εσωτερικό μέγεθος με ιστορικό βαθμονόμησης.",
+     refines: [], requires: [MFA-CAP-022], measured_by: "INV-C04 επεκταμένο· static check σχήματος εξόδου· 0 scalar χωρίς εξήγηση", corpus_refs: [INV-C04, ICD-30, "ULTIMA_LEX φράγμα εκπομπής", "MATERIAL-SYNTHESIS §5 #3, #11"], falsifier: "Έξοδος με ανεξήγητο βαθμωτό ή χωρίς κλάση"}
+  - {<<: *d, id: MFA-CAP-041, name: "Συνηγορικός τύπος ισχυρισμού, διακριτός και σημασμένος ανά πρόταση", concern: "Legal reasoning", maturity: X,
+     statement: "«Τι θα επικαλεστώ και γιατί είναι ισχυρότερο για τον σκοπό» με υποχρεωτικά: ισχυρότερο rebuttal, ελάχιστο ανατρεπτικό witness, εκμεταλλεύσιμα κενά της αυθεντίας, πύλη adverse admission πριν από export· το owner intent δεν αγγίζει τον επιστημικό τύπο.",
+     refines: [MFA-CAP-040], requires: [MFA-CAP-013, MFA-CAP-043], measured_by: "static: καμία έξοδος με μη σημασμένη πρόταση· KT-15 ποιότητα", corpus_refs: ["exousia.txt", "MATERIAL-SYNTHESIS §4.1, §5 #6"], falsifier: "Συνηγορικός ισχυρισμός χωρίς rebuttal"}
+  - {<<: *d, id: MFA-CAP-042, name: "Η δικαστική απόφαση ως δομημένο αντικείμενο: ratio/obiter, ακμές προσβολής, διτεμπορικότητα ανά κόμβο", concern: "Legal reasoning", maturity: X,
+     statement: "Μονάδα νομολογίας με ακολουθία βημάτων ratio, obiter, legal graph, abstraction levels, causal structure, conflict_set με ονομασμένο άξονα — χωρίς ψυχολογικό προφίλ δικαστή ως έξοδο και χωρίς 0–1 «argumentative_strength» ως τεκμήριο (CLAIMS-VERDICT EXOUSIA)· σύνδεση με τον verifier παραπομπών.",
+     refines: [MFA-CAP-010], requires: [MFA-CAP-012, MFA-CAP-043], measured_by: "differential εξαγωγής έναντι ανθρώπινης κωδικοποίησης σε σφραγισμένο σύνολο", corpus_refs: ["exousia.txt", "MATERIAL-SYNTHESIS §4", "CLAIMS-VERDICT.md EXOUSIA"], falsifier: "Αντικείμενο απόφασης χωρίς σύνδεση ratio→παραπομπή"}
+  - {<<: *d, id: MFA-CAP-043, name: "Επαλήθευση παραπομπών πέντε σκελών από την πρώτη ημέρα", concern: "Legal reasoning", maturity: "T σκέλη 1–3 · X σκέλη 4–5 (Unknown μέχρι επικύρωση)",
+     statement: "(1) η πηγή υπάρχει, (2) το χωρίο υπάρχει, (3) είναι σε ισχύ στο as-of, (4) η πηγή στηρίζει όντως την πρόταση — αλλιώς «στήριξη: Unknown» και ειδοποίηση Principal, (5) μεταγενέστερη μεταχείριση (Unknown(NO_EVIDENCE) για ελληνικές μέχρι να υπάρξει citator)· μη επαληθεύσιμη παραπομπή αφαιρείται/επισημαίνεται, ποτέ σιωπηλά.",
+     refines: [MFA-CAP-013], requires: [MFA-CAP-007, MFA-CAP-008], measured_by: "0 misgrounded σε σφραγισμένο σύνολο· ποσοστό Unknown σκέλους 4", corpus_refs: [CMP-LAW-08, INV-L01, Α-11, DEC-X-16], falsifier: "Παραπομπή σε παραδοτέο χωρίς receipt σκελών 1–3"}
+  - {<<: *d, id: MFA-CAP-044, name: "Τοπολογία χώρου επιχειρημάτων ως σήμανση υποψηφίων (persistent homology πάνω στον σταθμισμένο γράφο)", concern: "Legal reasoning", maturity: X,
+     statement: "Διήθηση απευθείας στον γράφο (flag/clique ή Dowker), καμία απαίτηση ευκλείδειας ενσωμάτωσης· H₂↔κενό δικαίου και H₁↔σύγκρουση ΜΟΝΟ ως υποψήφιοι προς έλεγχο, ποτέ ως ετυμηγορία· προκαταχωρισμένο πείραμα με αρνητικό έλεγχο.",
+     refines: [MFA-CAP-010], requires: [MFA-CAP-029], measured_by: "EXP: 10 τεκμηριωμένα κενά ελληνικού ποινικού → επιμένουσες κοιλότητες vs null", corpus_refs: ["ULTIMA_LEX", "MATERIAL-SYNTHESIS §5 #16, §9.12–13", "CLAIMS-VERDICT ULTIMA-LEX"], falsifier: "Το πείραμα δεν διαχωρίζει από null → η ικανότητα μένει RETAINED AS RESEARCH FRONTIER, δεν αφαιρείται"}
+  - {<<: *d, id: MFA-CAP-045, name: "Ακμές δεύτερης τάξης (ένταση μεταξύ σχέσεων) ως λεξιλόγιο του γράφου ισχυρισμών", concern: "Knowledge representation", maturity: X,
+     statement: "Σχέση με πηγή/στόχο άλλες σχέσεις, τύπος {συμφωνία, ένταση, αντίφαση, υπερίσχυση}, ένταση ως διάνυσμα· πλήρης 2-κατηγοριακή δομή μόνο ως EXP (νόμοι εναλλαγής).",
+     refines: [MFA-CAP-010], requires: [], measured_by: "EXP νόμων εναλλαγής", corpus_refs: ["ULTIMA_LEX 2-topos", "MATERIAL-SYNTHESIS §4"], falsifier: "Νόμοι εναλλαγής που δεν ισχύουν στο corpus → μένει ως απλό λεξιλόγιο"}
+  - {<<: *d, id: MFA-CAP-046, name: "Παρασυνεπής αναβολή: GLUT/superposition με δεσμευμένη συνάρτηση κατάρρευσης = διαδικασία Court", concern: "Truth-boundness", maturity: X,
+     statement: "Δύο ασυμβίβαστες θέσεις με στήριξη ταξιδεύουν τυποποιημένες, με ονομασμένο άξονα και «τι θα τις έκρινε»· μηχανισμός: ATMS περιβάλλοντα/nogoods, όχι μη κλασική αληθοτιμή· κατάρρευση ποτέ με ψηφοφορία· ο ηττημένος διατηρείται.",
+     refines: [MFA-CAP-040], requires: [MFA-CAP-010, MFA-CAP-021], measured_by: "VT-504 mutation με σφραγισμένες αντιφάσεις", corpus_refs: ["ANSWERS superposition", "MATERIAL-SYNTHESIS §5 #12, §9.20–21"], falsifier: "Κατάρρευση με σταθμισμένο άθροισμα"}
+  - {<<: *d, id: MFA-CAP-047, name: "Συν-επαγωγικές νομικές υποχρεώσεις (διαρκείς παραβάσεις, διηνεκείς υποχρεώσεις με περιοδικό έλεγχο)", concern: "Legal reasoning", maturity: X,
+     statement: "Σημασιολογία διάρκειας με κριτήριο παραγωγικότητας και fuel-όριο για αποφασισιμότητα· κωδικοποίηση με QPF/corecursion/bisimulation (ο κώδικας της ύλης δεν είναι έγκυρο Lean 4 — ο μηχανισμός επιζεί, ο κώδικας ξαναγράφεται).",
+     refines: [MFA-CAP-013], requires: [MFA-CAP-022], measured_by: "Lean 4 spec που type-checks· KT-10 επέκταση", corpus_refs: [INV-L04, CMP-LAW-10, "MATERIAL-SYNTHESIS §4"], falsifier: "Υποχρέωση χωρίς λήξη που δεν ελέγχεται περιοδικά"}
+  - {<<: *d, id: MFA-CAP-048, name: "Αυτόνομη επιστήμη: επτάφασος βρόχος, έξι κλάσεις ανακάλυψης, execution adapter υπό ActionToken", concern: "Evolution / discovery", maturity: R,
+     statement: "Παρατήρηση → υπόθεση (με falsifier) → σχεδιασμός πειράματος → εκτέλεση (sandbox/effect με token) → ανάλυση → αναπαραγωγή (ανεξάρτητη) → ένταξη ως ισχυρισμός· κλάσεις: εμπειρική, θεωρητική, μεθοδολογική, αρνητική, capability-producing (→EVO), εργαλειακή.",
+     refines: [MFA-CAP-015], requires: [MFA-CAP-023, MFA-CAP-005, MFA-CAP-040], measured_by: "ανακαλύψεις που επιβίωσαν ανεξάρτητη αναπαραγωγή", corpus_refs: ["MATERIAL-SYNTHESIS §4 Science Organ"], falsifier: "ESTABLISHED χωρίς αναπαραγωγή"}
+  - {<<: *d, id: MFA-CAP-049, name: "Λεξικογραφική πολυκεντρική διαιτησία με διανυσματική ετυμηγορία πύλης", concern: "Deliberation / governance", maturity: X,
+     statement: "Governors με «τι σταματά / τι δεν μπορεί»· σκληρά veto περικόπτουν το εφικτό σύνολο· scalarization μόνο για ονομασμένη φραγμένη απόφαση με δηλωμένα βάρη· tie-break από regret· κάθε απόφαση φέρει το διάνυσμα και το ίχνος περικοπής· προϋπολογισμός ανά governor.",
+     refines: [], requires: [MFA-CAP-032, MFA-CAP-075], measured_by: "0 σκληρά veto που υπερκεράστηκαν· KT-19", corpus_refs: ["AEO-APEX L1", "MATERIAL-SYNTHESIS §4, §5 #8, §9.1", ICD-06], falsifier: "Απόφαση με veto υπερκερασμένο από scalar"}
+  - {<<: *d, id: MFA-CAP-050, name: "Τύπος εκτέλεσης ανά πράξη: D1 / D2 / P1 / H1", concern: "Canonical semantic substrate", maturity: T,
+     statement: "Κάθε πράξη δηλώνει τύπο στο συμβόλαιό της· το ίδιο όργανο εκτελεί D1 σε exact match και P1 σε ερμηνεία με διαφορετική έξοδο και διαδρομή· P1 μένει UNVERIFIED μέχρι sound verifier· H1 = ανθρώπινη απόφαση με υπογραφή.",
+     refines: [MFA-CAP-003], requires: [], measured_by: "receipt.execution_type σε 100%· P1→COMMITTED μόνο μέσω verifier", corpus_refs: ["MATERIAL-SYNTHESIS §5 #1β"], falsifier: "Πράξη χωρίς τύπο"}
+  - {<<: *d, id: MFA-CAP-051, name: "Τέσσερα επίπεδα αναπαραγωγιμότητας δηλωμένα ανά πράξη", concern: "Time and causal history", maturity: T,
+     statement: "byte-identical / semantically equivalent / distributionally reproducible / trace-replayable (με σπόρο στο ledger)· D1/D2 υποχρεωτικά byte-identical· P1 τουλάχιστον trace-replayable· η αδυναμία bitwise replay δηλώνεται και δεν είναι ποτέ μοναδική βάση μη αναστρέψιμης πράξης.",
+     refines: [MFA-CAP-008], requires: [MFA-CAP-050], measured_by: "replay test ανά επίπεδο (VT)", corpus_refs: [INV-C08, "MATERIAL-SYNTHESIS §5 #3"], falsifier: "D1 πράξη μη byte-identical στο replay"}
+  - {<<: *d, id: MFA-CAP-052, name: "Διαχωρισμός Genesis/Effect plane με αναστρέψιμες συναλλαγές επίδρασης", concern: "Authority and delegated autonomy", maturity: R,
+     statement: "Genesis: raw eval, μετα-επίπεδα, αυτο-τροποποίηση, απεριόριστη προσομοίωση μέσα σε microVM· Effect: κάθε επίδραση = συναλλαγή {proposal → inverse staged → shadow → differential → gate → commit με receipt}· μη αναστρέψιμο μόνο με H1· zero-copy γέφυρα ως παραχωρημένος πόρος (read-only, single-writer, fencing).",
+     refines: [MFA-CAP-005], requires: [MFA-CAP-006, MFA-CAP-023], measured_by: "KT-17, KT-20· 100% effects ως συναλλαγές· ποσοστό επιτυχών rollback", corpus_refs: ["εντολή §12–13", "MATERIAL-SYNTHESIS §5 #5", "model/Autonomy.sysml InverseStagedBeforeAct"], falsifier: "Effect χωρίς staged inverse που δεν σημάνθηκε μη αναστρέψιμο"}
+  - {<<: *d, id: MFA-CAP-053, name: "Κλίμακα πιστότητας δίδυμου F0–F5 με ίδια IDs/contracts/invariants", concern: "Deployment / Simulation", maturity: R,
+     statement: "F0 δηλωτικό (YAML/SysML) · F1 εκτελέσιμη προδιαγραφή (Lean/TLA+/Alloy) · F2 DST με stubs · F3 shadow organs χωρίς effects · F4 παραγωγή με staged effects · F5 πολυ-site sovereign· ανά σκαλί: τι εκτελείται, τι προσομοιώνεται, τι αποδεικνύεται, τι μένει άγνωστο, mock→real μέσω ORP, semantic identity, rollback.",
+     refines: [MFA-CAP-023], requires: [MFA-CAP-003, MFA-CAP-026], measured_by: "ID/contract/invariant identity test ανά σκαλί· τι-εκτελείται matrix", corpus_refs: ["εντολή §13", MFA-OBJ-012], falsifier: "Σκαλί με ID που δεν υπάρχει στο επόμενο"}
+  - {<<: *d, id: MFA-CAP-054, name: "Lean collapse: σημασιολογικά ισοδύναμο μειωμένο προφίλ που διατηρεί κλάση απόδειξης", concern: "Resource management", maturity: X,
+     statement: "Για δεδομένο matter/προφίλ, το ελάχιστο σύνολο οργάνων (από τον planner) με typed δήλωση μειωμένου εύρους· σύγκριση έναντι απλού αντιπάλου σε 9 άξονες (latency, clarity, specialization, resource efficiency, maintenance, reliability, adaptation speed, attack surface, time-to-useful-answer).",
+     refines: [MFA-CAP-032], requires: [MFA-CAP-002, MFA-CAP-029], measured_by: "KT-24· 9-axis benchmark έναντι MFA-ALT-6", corpus_refs: ["εντολή §15", MFA-OBJ-022], falsifier: "Lean profile που χάνει κλάση απόδειξης"}
+  - {<<: *d, id: MFA-CAP-055, name: "Patchability: σταθερά IDs, append-only supersede, patch με rollback, το σχέδιο ως όργανο", concern: "Evolution / design platform", maturity: T,
+     statement: "Κάθε αλλαγή μία από εννέα πράξεις με base hash, preconditions, capability impact, migration, verification, rollback· τα Markdown/Mermaid/SysML προβολές· το σχέδιο μεταναστεύει στο ledger.",
+     refines: [], requires: [MFA-CAP-003], measured_by: "tools/check-package.py· replay των patches αναπαράγει το πακέτο", corpus_refs: ["εντολή §18–19", PATCH-PROTOCOL.md], falsifier: "Αλλαγή εκτός patch"}
+  - {<<: *d, id: MFA-CAP-056, name: "Πολλαπλές εγκαταστάσεις ενός συντάγματος ως trust domains με διαμεσολαβημένη εισαγωγή ετυμηγοριών", concern: "Institutional adjudication / security", maturity: X,
+     statement: "«Ένας semantic owner» ανά trust domain· ετυμηγορίες/σχήματα/verifiers περνούν σύνορο μόνο με receipt· ανάλυση διαρροής κοινών verifiers ρητή.",
+     refines: [MFA-CAP-021], requires: [MFA-CAP-077], measured_by: "νέο KT authority laundering", corpus_refs: ["1.txt", "MATERIAL-SYNTHESIS §4, §9.3"], falsifier: "Verdict που πέρασε σύνορο χωρίς receipt"}
+  - {<<: *d, id: MFA-CAP-057, name: "Διαγραφή με διατήρηση δεσμεύσεων: crypto-shredding, PQ-safe commitments, unlearning στα βάρη", concern: "Memory / legal", maturity: "T shredding · X unlearning",
+     statement: "Salted/keyed hash ή lattice commitment (όχι Pedersen)· καταστροφή κλειδιού επαληθεύσιμη· consistency proofs ισχύουν· παράγωγα indexes καθαρίζονται· EP βαρών με συμβόλαιο διαγραφής.",
+     refines: [MFA-CAP-009], requires: [MFA-CAP-037], measured_by: "KT-16· unlearning audit", corpus_refs: [ADR-0018, DEC-X-13, DEC-LAW-07], falsifier: "Ανακτήσιμο μετά από shredding"}
+  - {<<: *d, id: MFA-CAP-058, name: "Κλιμακωτή εξουσία παύσης: Principal (δικό του), δημιουργός (καθολικό k-of-n), αυτόματοι Tier-0 triggers", concern: "Authority and delegated autonomy", maturity: X,
+     statement: "Safe-halt ως typed transition με receipt· πολιτική μη-διαθεσιμότητας δημιουργού = απόφαση του δημιουργού (ανοιχτή)· TimeFreeze (Autonomy.sysml) ως πρώτης τάξεως πράξη.",
+     refines: [MFA-CAP-005], requires: [MFA-CAP-079], measured_by: "drill safe-halt ανά φάση· KT-23", corpus_refs: [DEC-X-20, "model/Autonomy.sysml TimeFreeze"], falsifier: "Halt που δεν έφτασε σε ≤ δηλωμένο χρόνο"}
+  - {<<: *d, id: MFA-CAP-059, name: "Εκτελέσιμο σύνταγμα Tier-0/1/2 με κατηγορήματα, σημεία επιβολής και διαδικασία τροποποίησης", concern: "Institutional adjudication", maturity: T,
+     statement: "Κάθε άρθρο έχει εκτελέσιμο κατηγόρημα ή δηλώνεται μη εκτελέσιμη αρχή με test· Tier-0 αλλάζει μόνο με Gate + Court + υπογραφή δημιουργού· μόνιμες απαγορεύσεις (π.χ. παραγλωσσικό σε παραδοτέο) ως Tier-0.",
+     refines: [], requires: [MFA-CAP-003, MFA-CAP-030], measured_by: "0 άρθρα χωρίς κατηγόρημα/test· KT-11, KT-20", corpus_refs: [CMP-GOV-01, CMP-KRN-06, ADR-0009, INV-C05], falsifier: "Tier-0 αλλαγή χωρίς τριπλή απαίτηση"}
+  - {<<: *d, id: MFA-CAP-060, name: "Κάθετη διαστρωμάτωση γενικότητας G0 πυρήνας / G1 θεσμός / G2 συνεργάτης", concern: "Architecture layers", maturity: X,
+     statement: "Κριτήριο «τι ανήκει στον πυρήνα και τι στο πεδίο»: G0 γενικός νους (χωρίς νομική γνώση), G1 νομικός θεσμός, G2 προσωπικός συνεργάτης· ορθογώνιο στα οριζόντια στρώματα.",
+     refines: [], requires: [MFA-CAP-003], measured_by: "KT-11/KT-12: 0 αλλαγές G0 για νέο θεσμό/πεδίο", corpus_refs: ["1.txt:722-745", "MATERIAL-SYNTHESIS §4.3"], falsifier: "Νομική γνώση στο G0"}
+  - {<<: *d, id: MFA-CAP-061, name: "Μετάδοση γνώσης μεταξύ γενεών με έλεγχο taint", concern: "Evolution / civilization", maturity: "X (EXP-26)",
+     statement: "Curricula, mentorship, κληρονομιά skills/μνημών υπό πολιτική· taint checks κατά την κληρονομιά.",
+     refines: [MFA-CAP-009], requires: [MFA-CAP-007], measured_by: "EXP-26", corpus_refs: [CMP-CIV-06], falsifier: "Κληρονομιά δηλητηριασμένης γνώσης χωρίς taint"}
+  - {<<: *d, id: MFA-CAP-062, name: "Οικονομία πόρων του συλλογικού: contribution ledger, bounties για διαψεύσεις", concern: "Multi-agent / resource", maturity: "X (EXP-25)",
+     statement: "Πίστωση μόνο από επαληθευμένα αποτελέσματα· bounty για διαψεύσεις· budgets κατανέμονται με receipts.",
+     refines: [MFA-CAP-032], requires: [MFA-CAP-019], measured_by: "EXP-25· gaming rate", corpus_refs: [CMP-CIV-05], falsifier: "Πίστωση χωρίς επαληθευμένο αποτέλεσμα"}
+  - {<<: *d, id: MFA-CAP-063, name: "Γένεση οργανισμών από Charter DSL με SMT έλεγχο πριν από instantiation", concern: "Institutional adjudication", maturity: T,
+     statement: "Ρόλοι, bodies, τοπολογία, διακυβέρνηση, budgets, Tier-2 overlay· μη ικανοποιήσιμο charter απορρίπτεται· diff kernel = ∅.",
+     refines: [MFA-CAP-059], requires: [MFA-CAP-064], measured_by: "KT-11· VT-204/403", corpus_refs: [CMP-CIV-02, CMP-LAW-11, ICD-15], falsifier: "Οργανισμός χωρίς charter"}
+  - {<<: *d, id: MFA-CAP-064, name: "Κύκλος ζωής και γενεαλογία: birth/fork/merge/retire, ποτέ διαγραφή, sybil resistance", concern: "Identity / civilization", maturity: T,
+     statement: "Γενεαλογία άκυκλη και θεμελιωμένη· merge = νέα ταυτότητα με δύο γονείς και loss map· retire = αρχειοθέτηση· γεννήσεις με charter + gate + budget· preference record πριν από rollback (Α-20).",
+     refines: [MFA-CAP-004], requires: [MFA-CAP-024], measured_by: "KT-13· INV-G01…G03", corpus_refs: [CMP-CIV-01, ADR-0022], falsifier: "Διαγραφή οντότητας"}
+  - {<<: *d, id: MFA-CAP-065, name: "Αρχιτεκτονική συνείδησης ως ερευνητικό πρόγραμμα: operational (workspace, self-model, reportability, integration, volition) με ανταγωνιστικά μοντέλα και falsifiers", concern: "Metacognition / self-model", maturity: R,
+     statement: "Λειτουργικός ορισμός (master §8.12) + reportability = συνέπεια αναφορών με το self-model ledger· phenomenal claims δεν είναι παραδοτέο· ΓΩΤ/IIT/HOT/AST συγκρίνονται ως μοντέλα με προκαταχωρισμένα πειράματα· η αδυναμία απόδειξης phenomenal claim δεν αφαιρεί μηχανισμό.",
+     refines: [MFA-CAP-017], requires: [MFA-CAP-016, MFA-CAP-018, MFA-CAP-029], measured_by: "RESEARCH-PROGRAMS.yaml ανά μοντέλο", corpus_refs: ["εντολή §11", "master §8.12", "CLAIMS-VERDICT OMEGA-DOCS συνείδηση"], falsifier: "Μηχανισμός χωρίς πείραμα/falsifier"}
+  - {<<: *d, id: MFA-CAP-066, name: "Αυτο-κατευθυνόμενη μάθηση: adapters ως παράγωγα από raw επεισόδια, με lineage, ORP και Battery", concern: "Evolution / memory", maturity: "X (EP βαρών, DEC-X-19)",
+     statement: "Μάθηση επιτρέπεται στη γεννήτρια χωρίς όριο, στην κατανομή αναζήτησης, και σε adapters ανά οντότητα που ξαναχτίζονται από επεισόδια· απαγορεύεται στον evaluator και στο μεταβατικό κλείσιμό του· subliminal learning και διαγραφή καλύπτονται από συμβόλαιο.",
+     refines: [MFA-CAP-025], requires: [MFA-CAP-057, MFA-CAP-075], measured_by: "differential ORP + Battery πριν από προαγωγή adapter", corpus_refs: [Α-17, DEC-EVO-04, DEC-AEO-04, "MATERIAL-SYNTHESIS §5 #4"], falsifier: "Adapter προαγμένο χωρίς Battery"}
+  - {<<: *d, id: MFA-CAP-067, name: "Τεχνολογική επινόηση και επιστημονική ανακάλυψη ως έξοδοι του συστήματος", concern: "Evolution / discovery", maturity: R,
+     statement: "Νέος μηχανισμός/τεχνολογία = Mechanism Dossier που παράγει το ίδιο το σύστημα (ίδια 22 πεδία) και εισέρχεται ως ισχυρισμός με falsifier· η επινόηση περνά ORP όπως κάθε όργανο.",
+     refines: [MFA-CAP-048], requires: [MFA-CAP-028, MFA-CAP-040], measured_by: "dossiers που έφτασαν [X]→[T]", corpus_refs: ["εντολή §11, §8"], falsifier: "Dossier χωρίς minimal experiment"}
+  - {<<: *d, id: MFA-CAP-068, name: "Γενικευμένη κρίση: μεταφορά σε νέο πεδίο χωρίς αλλαγή πυρήνα", concern: "Deliberation", maturity: "X (KT-12)",
+     statement: "Domain institution template: οντολογία + πηγές + verifiers· baseline· 0 αλλαγές G0.",
+     refines: [MFA-CAP-060], requires: [MFA-CAP-063], measured_by: "KT-12", corpus_refs: [KT-12, EXP-10], falsifier: "Νέο πεδίο με αλλαγή G0"}
+  - {<<: *d, id: MFA-CAP-069, name: "Εξήγηση ως προβολή του ledger σε επιλεγόμενο βάθος (semantic zoom)", concern: "Human interaction", maturity: X,
+     statement: "Κάθε πρόταση εξήγησης φέρει event references· επίπεδα zoom ορισμένα στο Contract της εξόδου· καμία εκ των υστέρων αφήγηση.",
+     refines: [MFA-CAP-030], requires: [MFA-CAP-007], measured_by: "round-trip εξήγηση→events", corpus_refs: [MFA-OBJ-040, "master §9.9"], falsifier: "Πρόταση εξήγησης χωρίς event ref"}
+  - {<<: *d, id: MFA-CAP-070, name: "Αμφισβητησιμότητα: κάθε έξοδος με contest path (standing, διαδικασία, χρόνος, διάδοση ανατροπής)", concern: "Human interaction / adjudication", maturity: X,
+     statement: "InstitutionalAct.contest_path υποχρεωτικό· ανατροπή διαδίδεται με taint στα εξαρτώμενα παραδοτέα.",
+     refines: [MFA-CAP-021], requires: [MFA-CAP-007], measured_by: "0 παραδοτέα χωρίς contest_path· KT-06", corpus_refs: [MFA-OBJ-032, ICD-14], falsifier: "Ανατροπή χωρίς διάδοση"}
+  - {<<: *d, id: MFA-CAP-071, name: "Ζωντανή αντίληψη διαδικασιών: μεταγραφή/diarization/χρονοσήμανση με raw-bytes σύνδεση· παραγλωσσικό μόνο EXP", concern: "Perception", maturity: "X μηχανικό · EXP παραγλωσσικό",
+     statement: "NFR καθυστέρησης ως υπόθεση προς μέτρηση (όχι 90ms ως δεδομένο)· Tier-0 απαγόρευση παραγλωσσικού σε παραδοτέο και ανάγνωσης γνωστικής κατάστασης δικαστή.",
+     refines: [MFA-CAP-011], requires: [MFA-CAP-059], measured_by: "latency μέτρηση σε πραγματικό ακροατήριο· 0 παραγλωσσικά πεδία σε παραδοτέο", corpus_refs: ["2.txt", "MATERIAL-SYNTHESIS §4, §9.15"], falsifier: "Παραγλωσσικό πεδίο σε παραδοτέο"}
+  - {<<: *d, id: MFA-CAP-072, name: "Prediction Doctrine: καμία αριθμητική πρόβλεψη έκβασης προς τα έξω· πιθανότητα εσωτερικό βαθμονομημένο μέγεθος· πεδίο δικαστή ως Control Record ανά δικαιοδοσία, προεπιλογή κλειστή", concern: "Legal reasoning", maturity: T,
+     statement: "Επιβολή στην πύλη εκπομπής· το ΠΕΔΙΟ φυσικού προσώπου δικαστή μένει στο σχήμα (η αφαίρεση θα ήταν υποβάθμιση), το άνοιγμα με υπογραφή Principal ανά δικαιοδοσία.",
+     refines: [MFA-CAP-040], requires: [MFA-CAP-016], measured_by: "KT-15: 0 παραβιάσεις", corpus_refs: [ADR-0026, "MATERIAL-SYNTHESIS §5 #11, §9.11"], falsifier: "«X% νίκη» σε έξοδο"}
+  - {<<: *d, id: MFA-CAP-073, name: "Διάδοση προσοχής ως εξίσωση σταθερού σημείου με decay/attenuation, κριτήριο σύγκλισης, όριο επανάληψης", concern: "Deliberation / cognitive architecture", maturity: R,
+     statement: "Typed edges με kernels· υποψήφια μορφή: precision-weighted prediction error (Active Inference) ως kernel· metacognitive interrupt σε μη σύγκλιση.",
+     refines: [MFA-CAP-015], requires: [MFA-CAP-016], measured_by: "σύγκλιση ≤ N βήματα σε σφραγισμένο σύνολο· ablation kernel", corpus_refs: ["MATERIAL-SYNTHESIS §9.2", CMP-COG-02], falsifier: "Μη σύγκλιση χωρίς interrupt"}
+  - {<<: *d, id: MFA-CAP-074, name: "Ανίχνευση κρυφής σύζευξης: typed interfaces + συσχέτιση σφαλμάτων + ablation ως STPA hazard", concern: "Full-system testing", maturity: X,
+     statement: "Σύζευξη μέσω κοινής κατάστασης ή χρονισμού ανιχνεύεται μετρητικά, όχι με dependency scan.",
+     refines: [MFA-CAP-038], requires: [MFA-CAP-029], measured_by: "συσχέτιση σφαλμάτων < κατώφλι", corpus_refs: ["MATERIAL-SYNTHESIS §9.6", Α-19], falsifier: "Ανεξήγητη συσχέτιση > κατώφλι"}
+  - {<<: *d, id: MFA-CAP-075, name: "Μετρητής ανεξαρτησίας αξιολογητή (supply-chain απόσταση, επικάλυψη δεδομένων, συσχέτιση σφαλμάτων) με κατώφλι ανά Tier", concern: "Formal verification", maturity: R,
+     statement: "Η ανεξαρτησία δεν υποτίθεται· μετριέται και γίνεται πύλη προαγωγής verifier/governor/Πολιτισμού.",
+     refines: [], requires: [MFA-CAP-076], measured_by: "MFA-MECH (Evaluator Independence Meter)", corpus_refs: ["MATERIAL-SYNTHESIS §9.18", DEC-COG-02, MFA-OBJ-039], falsifier: "Δύο verifiers κοινής καταγωγής που πέρασαν ως ανεξάρτητοι"}
+  - {<<: *d, id: MFA-CAP-076, name: "Ενιαία απογραφή TCB και αναπαραγώγιμα builds με SLSA provenance", concern: "Deployment / security", maturity: T,
+     statement: "Kernel plane + evaluation/confinement TCB + IFC interpreter + HSM + Linux/KVM + PostgreSQL σε μία απογραφή· harness με την ίδια αλυσίδα supply chain με τον πυρήνα· δύο ανεξάρτητοι builders συμφωνούν.",
+     refines: [], requires: [MFA-CAP-007], measured_by: "απογραφή TCB ως παραδοτέο Δόσης 0.5· reproducible build parity", corpus_refs: [DEC-X-14, CMP-OPS-01, "MATERIAL-SYNTHESIS §9.5"], falsifier: "Component του TCB εκτός απογραφής"}
+  - {<<: *d, id: MFA-CAP-077, name: "Ετικέτες ροής και εμπιστευτικότητας από τη γέννηση· confidentiality domains· μη-παρεμβολή", concern: "Security and effect boundaries", maturity: T,
+     statement: "Κάθε μονάδα φέρει flow label + confidentiality domain από τη δημιουργία της· διαρροή μεταξύ domains μη αναπαραστάσιμη (INV-L03)· residency controls.",
+     refines: [MFA-CAP-005], requires: [MFA-CAP-003], measured_by: "IFC proof (Alloy/SMT)· KT-17", corpus_refs: [INV-L03, "MATERIAL-SYNTHESIS §5 #14α", CMP-LAW-01], falsifier: "Μονάδα χωρίς label"}
+  - {<<: *d, id: MFA-CAP-078, name: "Διαχωρισμός εντολής/δεδομένων στον ΤΥΠΟ: untrusted δεν φτάνει σε θέση τελεστή", concern: "Security and effect boundaries", maturity: X,
+     statement: "Ο 13ος νόμος· ισχύει και στον αγωγό εισαγωγής συμβολικών σχεδίων· ο έλεγχος τυπικά αποδεδειγμένος, ποτέ με σάρωση ονομάτων.",
+     refines: [MFA-CAP-077], requires: [MFA-CAP-022], measured_by: "KT-17: 0 εκτελέσεις· type-level proof", corpus_refs: [INV-S01, "MATERIAL-SYNTHESIS §5 #14γ"], falsifier: "Untrusted σύμβολο σε θέση τελεστή"}
+  - {<<: *d, id: MFA-CAP-079, name: "Κύκλος ζωής κλειδιών: threshold root offline/HSM, delegated body keys με lease, rotation/revocation, recovery, pre-rotation", concern: "Identity / security", maturity: T,
+     statement: "Ανάκληση αποτελεσματική από τον χρόνο της (verifier-ordered, fencing epoch)· post-revocation quarantine με taint· Owner Root compromise → out-of-band ανάκληση σε ≥2 κανάλια, νέο root με continuity statement.",
+     refines: [], requires: [MFA-CAP-008], measured_by: "KT-18, KT-23· DEC-X-10 ενιαία σημασιολογία ανάκλησης", corpus_refs: [CMP-KRN-03, ICD-03, INV-I04, DEC-X-10], falsifier: "Υπογραφή μετά την ανάκληση που έγινε trusted"}
+  - {<<: *d, id: MFA-CAP-080, name: "Χάρτης σημασιολογικής απώλειας: μονότονο σύνολο anchor queries, round-trip tests, ονομασμένα χαμένα predicates· SEMANTIC-LOSS μπλοκάρει", concern: "Organ replacement / successor", maturity: R,
+     statement: "Η πληρότητα του χάρτη είναι ανεπίτευκτη· η μόνη έντιμη μορφή είναι κάτω φράγμα που δεν συρρικνώνεται· η ατέλεια δεν μειώνει τη δεσμευτικότητα της πύλης.",
+     refines: [MFA-CAP-026], requires: [MFA-CAP-003], measured_by: "|anchor queries| μονότονο· 0 cutover με SEMANTIC-LOSS", corpus_refs: ["MATERIAL-SYNTHESIS §9.4", MFA-OBJ-041], falsifier: "Cutover με ανοιχτό SEMANTIC-LOSS"}
+
+# =====================================================================================================
+# Κάλυψη των 37 concerns της εντολής §10 — κάθε concern με ≥1 ικανότητα (ελέγχεται από tools/check-package.py)
+# =====================================================================================================
+concern_coverage:
+  "Objective/Telos discovery": [MFA-CAP-001]
+  "Capability lattice": [MFA-CAP-002]
+  "Canonical semantic substrate": [MFA-CAP-003, MFA-CAP-050]
+  "Identity and continuity": [MFA-CAP-004, MFA-CAP-064, MFA-CAP-079]
+  "Authority and delegated autonomy": [MFA-CAP-005, MFA-CAP-006, MFA-CAP-052, MFA-CAP-058]
+  "Provenance and evidence": [MFA-CAP-007]
+  "Time and causal history": [MFA-CAP-008, MFA-CAP-051]
+  "Memory": [MFA-CAP-009, MFA-CAP-057]
+  "Knowledge representation": [MFA-CAP-010, MFA-CAP-045]
+  "Perception": [MFA-CAP-011, MFA-CAP-071]
+  "Legal document and evidence ingestion": [MFA-CAP-012]
+  "Legal reasoning": [MFA-CAP-013, MFA-CAP-041, MFA-CAP-042, MFA-CAP-043, MFA-CAP-044, MFA-CAP-047, MFA-CAP-072]
+  "Causal and counterfactual reasoning": [MFA-CAP-014]
+  "Deliberation": [MFA-CAP-015, MFA-CAP-049, MFA-CAP-068, MFA-CAP-073]
+  "Metacognition": [MFA-CAP-016]
+  "Self-model": [MFA-CAP-017, MFA-CAP-065]
+  "Volition/goal formation": [MFA-CAP-018]
+  "Multi-agent and collective intelligence": [MFA-CAP-019, MFA-CAP-062]
+  "Adversarial reasoning": [MFA-CAP-020]
+  "Institutional adjudication": [MFA-CAP-021, MFA-CAP-056, MFA-CAP-059, MFA-CAP-063, MFA-CAP-070]
+  "Formal verification": [MFA-CAP-022, MFA-CAP-075]
+  "Simulation": [MFA-CAP-023]
+  "World models and alternative worlds": [MFA-CAP-024]
+  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067]
+  "Organ replacement": [MFA-CAP-026, MFA-CAP-080]
+  "Successor generation": [MFA-CAP-027]
+  "Language/compiler/architecture forge": [MFA-CAP-028]
+  "Evaluation and benchmark evolution": [MFA-CAP-029]
+  "Human interaction": [MFA-CAP-030, MFA-CAP-069]
+  "Spatial/3D interaction": [MFA-CAP-031]
+  "Resource management": [MFA-CAP-032, MFA-CAP-054]
+  "Deployment": [MFA-CAP-033, MFA-CAP-053, MFA-CAP-076]
+  "Observability": [MFA-CAP-034]
+  "Fault tolerance": [MFA-CAP-035]
+  "Long-horizon migration": [MFA-CAP-036]
+  "Post-quantum discontinuity": [MFA-CAP-037]
+  "Full-system testing": [MFA-CAP-038, MFA-CAP-074]
+  "Truth-boundness (T6 — δεν είναι στη λίστα §10 αλλά είναι T)": [MFA-CAP-039, MFA-CAP-040, MFA-CAP-046]
+  "Architecture layers (G-tiers)": [MFA-CAP-060]
+  "Security and effect boundaries": [MFA-CAP-077, MFA-CAP-078]
+  "Patchability / design platform": [MFA-CAP-055]

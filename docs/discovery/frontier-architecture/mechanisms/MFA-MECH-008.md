@@ -1,0 +1,30 @@
+# MFA-MECH-008 — Canonical Geometry Projection (CGP): η γεωμετρία του cockpit ως συνάρτηση του υποστρώματος
+
+Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+| Πεδίο | Περιεχόμενο |
+|---|---|
+| **1. ID** | MFA-MECH-008 |
+| **2. Όνομα** | Canonical Geometry Projection |
+| **3. Ικανότητα** | MFA-CAP-031· MFA-CAP-069, 024, 030 |
+| **4. Πρόβλημα** | Εντολή §14: Immersive Reality OS με RTS εντολές, «η γεωμετρία πρέπει να προκύπτει από το canonical model και όχι να αποτελεί δεύτερη αλήθεια», με 2D/text/headless/accessibility/laptop/workstation/immersive προβολές. Το corpus έχει μόνο ADR-0033 («Bevy/Godot μόνο προβολές»). Οι game engines και τα dashboards κρατούν σκηνή ως δική τους κατάσταση — δεύτερη αλήθεια εξ ορισμού. |
+| **5. Πρώτη αρχή** | Η σκηνή είναι καθαρή συνάρτηση `Γ(store_at_cut, viewer_policy, seed)`· δύο θεατές με ίδιο cut/policy/seed βλέπουν ίδια σκηνή· κάθε αντικείμενο της σκηνής φέρει το CID του· κάθε ενέργεια στη σκηνή είναι `CC.apply` με receipt. Οι επτά προβολές διαφέρουν μόνο στη συνάρτηση απόδοσης `R_mode ∘ Γ`, όχι στη `Γ`. |
+| **6. Οντολογία** | **Χωρική γραμματική**: `Stratum` (στρώμα L0–L6 → οριζόντιο επίπεδο z)· `Node` (δέσμευση/όργανο → όγκος με στερεότητα = ImplMap, χρώμα = κλάση τεκμηρίου: Proof/Unknown/Both/Receipt)· `Edge` (σχέση: contract/lineage/satisfies/verifies → σωλήνας με πάχος = πλήθος receipts)· `Rift` (Both/Conflict κόμβος → ρήγμα μεταξύ δύο όγκων)· `Fog` (Unknown region → ομίχλη με πυκνότητα ∝ VOI)· `Sheet` (fork/ghost world → παράλληλο φύλλο με διαφάνεια)· `Boundary` (MetaBound: mechanism = αδιαφανές τείχος, policy = ημιδιαφανές πεδίο με λήξη)· `AutonomyEnvelope` (grant → φωτεινό περίβλημα οργάνου)· `TimeAxis` (t_known ως τρίτος άξονας· time travel = ολίσθηση cut)· `Matter` (νομική υπόθεση → «κόσμος» με τα δικά του strata)· `Institution` (Court/Πολιτισμός → περιοχή με σύνορα trust domain)· `Agent` (body → κινούμενο σημείο με lease-λάμψη) |
+| **7. Κατάσταση** | Καμία δική της. Cache: layout ανά (cut, policy, seed) — παράγωγο, rebuildable |
+| **8. Είσοδοι/έξοδοι** | Είσοδος: `CC.read(*, cut)`, viewer policy (ρόλος, LOD, mode), seed (στο ledger, ώστε το layout να είναι αναπαραγώγιμο)· Έξοδος: SceneGraph (τυποποιημένο, engine-agnostic) → renderers: 3D (Bevy/Godot), 2D (SVG/canvas), text (ιεραρχική λίστα με ίδια IDs), headless (JSON), accessibility (screen-reader δέντρο από το ίδιο SceneGraph) |
+| **9. Αλγόριθμος** | (1) **Επιλογή cut** (time travel)· (2) **Στρωμάτωση**: κάθε element → stratum από το layer του (ARCHITECTURE-ELEMENTS)· (3) **Layout ανά stratum**: stress-majorization με seed από ledger, περιορισμοί: contracts κοντά, trust domains σε χωριστές περιοχές, matters ως clusters· ντετερμινιστικό (ίδιος seed → ίδιες θέσεις)· **σταθερότητα**: νέα elements τοποθετούνται με incremental layout, τα παλιά δεν μετακινούνται πάνω από ε (ώστε η μνήμη του θεατή να μην σπάει)· (4) **LOD**: zoom level k → ορατά μόνο elements με `importance ≥ θ_k` (importance = receipts + VOI + stakes)· semantic zoom: σε κοντινό zoom ο κόμβος ανοίγει στα πεδία της δέσμευσης, στα events, στα proofs (MFA-CAP-069 round-trip)· (5) **Rifts/Fog/Sheets** από Both/Unknown/forks· (6) **Causal replay**: animation = ακολουθία `apply` από cut_a σε cut_b· (7) **Fork compare**: δύο sheets με pushout diff (MFA-MECH-014) ως χρωματισμένες διαφορές· (8) **RTS εντολές**: κάθε εντολή (quest, policy change, resource allocation, run simulation, execute/recall staged transition) = `CC.apply` με την εξουσία του θεατή· η σκηνή δεν αλλάζει μέχρι να επιστρέψει receipt |
+| **10. Διεπαφές** | `CGP.scene(cut, policy, seed)→SceneGraph` · `CGP.pick(scene, ray)→CID` · `CGP.replay(cut_a, cut_b)` · `CGP.compare(sheet_a, sheet_b)` · `CGP.command(cmd)→CC.apply`· modes: `immersive ∣ workstation ∣ laptop ∣ 2d ∣ text ∣ headless ∣ a11y` |
+| **11. Εξαρτήσεις** | MFA-MECH-001 (read at cut), 002 (Fog), 014 (compare), 006 (staged transitions), ImplMap (007), Autonomy grants |
+| **12. Πόροι** | Layout O(n log n) ανά stratum με incremental update· laptop: 10⁴ ορατά elements σε 2D· workstation: 10⁵ σε 3D· immersive: LOD επιθετικό· headless: 0 render |
+| **13. Κλιμάκωση** | LOD + ανά matter/institution partitioning· η γεωμετρία δεν φορτώνει ό,τι δεν είναι ορατό (lazy materialization) |
+| **14. Αποτυχίες** | Layout instability → seed + ε-περιορισμός· renderer crash → headless προβολή πάντα διαθέσιμη (η αλήθεια δεν είναι στη σκηνή) |
+| **15. Αντιπαλικοί** | Παραπλανητικό UI → κάθε ενέργεια receipt ορατό στη σκηνή· «κρυμμένο» element (importance χειραγωγημένη) → importance = συνάρτηση μετρήσιμων (receipts/VOI/stakes), όχι ρύθμιση· injection μέσω ονομάτων elements → ονόματα render ως δεδομένα, ποτέ ως markup |
+| **16. Επαλήθευση** | VO round-trip: `pick(scene(cut), position_of(cid)) = cid`· VO determinism: δύο κλήσεις ίδιο SceneGraph hash· VO a11y: το text δέντρο περιέχει κάθε CID του 3D· VO: καμία σκηνή δεν περιέχει element απόν από το cut |
+| **17. Πρωτότυπο** | F0: SceneGraph JSON από αυτό το πακέτο (YAML → strata) + 2D SVG· F2: DST cut → 3D σε Bevy· F3: πραγματικό matter |
+| **18. Ελάχιστο πείραμα** | 10 χρήστες, ίδιο cut: εντοπισμός ρήγματος/ομίχλης/grant σε χρόνο· σύγκριση με λίστα-κείμενο· null: καμία διαφορά χρόνου → το 3D δεν προσθέτει (και μένει προαιρετικό, ο πυρήνας είναι η Γ) |
+| **19. Διάψευση** | Αν η Γ δεν μπορεί να είναι ντετερμινιστική για κάποιον τύπο element → ο τύπος παίρνει ρητό «θέση από πολιτική» πεδίο (ορατό), ποτέ ελεύθερη θέση |
+| **20. → Παραγωγή** | 2D/text από Δόση 0 (είναι το πιο φθηνό tool ελέγχου του πακέτου)· 3D από Δόση 2 |
+| **21. Εξέλιξη** | Νέος τύπος σκηνικού στοιχείου = ADD στη γραμματική με απόδοση ανά mode |
+| **22. Αλληλεπιδράσεις** | Η εξήγηση (MFA-CAP-069) είναι semantic zoom· quests = TEGF Goals με origin creator· staged transitions = RET· forks = ALT-5 sheets |
+
+**AI Contribution Ledger:** `NEW INTERACTION PARADIGM` — η σκηνή ως καθαρή, seeded, ντετερμινιστική συνάρτηση του ledger με χωρική γραμματική τύπων (rift/fog/sheet/boundary/envelope) και RTS εντολές ως θεσμικές πράξεις. Συγγενή: software cities (CodeCity), Gephi layouts, RTS UIs· κανένα δεν δένει τη γεωμετρία σε cut/seed με round-trip VO.

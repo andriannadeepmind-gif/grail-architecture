@@ -1,0 +1,167 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0018
+title: 'Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053'
+operation: MODIFY
+targets:
+- MFA-INV-067
+- MFA-ELM-010
+- MFA-ELM-029
+- MFA-ELM-098
+- MFA-VO-032
+- MFA-VO-053
+- MFA-TEL-01
+- MFA-TEL-02
+- MFA-TEL-03
+- MFA-TEL-04
+- MFA-TEL-05
+- MFA-TEL-06
+- MFA-TEL-07
+- MFA-TEL-08
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 48ae77a00708ce1fcbfbd9cbbaf25c21edcbe1541fab3a23833a0fb8ad615e81
+    INVARIANTS.yaml: a140107267f72d5f9aed98c2aaba0b68a52e8ed696168b4db3d3ceaa1c8d59a3
+    OBJECTIVE-SPACE.yaml: 048891df6d7ced0ad1f84cee6e6c05bbb92985630c38448b30a45a909f38d8ed
+    VERIFICATION-OBLIGATIONS.yaml: 96473098d95d13157b24ea2f797fc044d6f65d24105a9de94336b26debe1f13f
+    alternatives/MFA-ALT-7.md: 15f3f50c836f58bd587baf71d46634e6f1c1798a9a6d097ea57326c10280327c
+preconditions: []
+change:
+  MFA-VO-053:
+    verifies:
+    - MFA-INV-041
+    - MFA-INV-063
+    - MFA-INV-068
+  MFA-INV-067:
+    statement: 'Καμία πράξη κλάσης IRREVERSIBLE δεν εκτελείται χωρίς (α) ζωντανό AutonomyEnvelope⟨matter, effect_class, window, max_exposure, conditions, counter_signer,
+      expiry⟩ υπογεγραμμένο εκ των προτέρων από Principal/δημιουργό, μέσα στο παράθυρο και κάτω από max_exposure, ή (β) φρέσκο H1· το envelope είναι το αναστρέψιμο
+      αντικείμενο (ανακαλείται μέχρι την πράξη)· η πράξη σημαίνεται μη αναστρέψιμη (MFA-INV-044 αμετάβλητο) (MFA-ATK-09). · Pass I κύκλος 1 (MFA-PATCH-0018): κάθε
+      AutonomyEnvelope φέρει presimulation ∈ {F-επίπεδο του World Twin (MFA-ELM-098) στο οποίο έγινε shadow run της πράξης + foreseen_effects loss map, NONE(δηλωμένο)}·
+      ο counter_signer βλέπει το foreseen_effects πριν υπογράψει· NONE επιτρέπεται (DP-1, deferred simulations) αλλά σημαίνεται στο receipt — ποτέ σιωπηλά.'
+  MFA-ELM-010:
+    statement: 'MFA-MECH-006: proposal → inverse staged → shadow → diff → gate → commit → window· NONE ⇒ H1· ο κατάλογος ενεργειών με υποχρεωτική ανθρώπινη έγκριση
+      (CLAIMS F16) = κλάσεις με inverse NONE ∪ Constitution-H1. · Κλάση DISCLOSE (MFA-ATK-05): η έξοδος πληροφορίας προς πάροχο/παραλήπτη εκτός sovereign boundary
+      είναι επίδραση με inverse NONE και standing DisclosureGrant — το plane διαρρέει ΜΟΝΟ μέσω υπογεγραμμένου, σημασμένου καναλιού· «τοπικά μοντέλα» = grant με recipient=self
+      (αναβάθμιση εμπιστευτικότητας). · Owner perimeter 6 βαθμίδων (MATERIAL §2 #14) ως τα επίπεδα των AutonomyGrant/Envelope (MFA-ATK-07). · Κλάση IRREVERSIBLE-PREAUTHORIZED
+      (MFA-ATK-09): μη αναστρέψιμη πράξη με H1 ικανοποιημένο από προ-υπογεγραμμένο AutonomyEnvelope· το «23:50 filing» γίνεται δυνατό ΜΟΝΟ αν υπάρχει envelope — ο
+      δημιουργός αποφασίζει στην υπογραφή (MFA-DEC-004). · Envelope pre-simulation (Pass I κύκλος 1): πριν υπογραφεί AutonomyEnvelope, το RET τρέχει shadow της μη
+      αναστρέψιμης πράξης στο World Twin (MFA-ELM-098) στο διαθέσιμο F-επίπεδο και προσαρτά foreseen_effects· presimulation: NONE δηλωμένο όπου ο World Twin είναι
+      deferred.'
+  MFA-ELM-029:
+    statement: 'MFA-MECH-004: GapField ανά T → υποψήφιοι Goals (EFE, LPA) → εισδοχή με falsifier → AutonomyGrant ή H1 → RET → REVIEW· Telos read-only· quests του
+      δημιουργού = Goals origin creator. · AutonomyGrant για REVERSIBLE· AutonomyEnvelope (προ-υπογεγραμμένο, με counter_signer) για IRREVERSIBLE-PREAUTHORIZED· επίπεδα
+      = owner perimeter 0–5 (MFA-ATK-09). · request_envelope → shadow στο World Twin → foreseen_effects → PENDING_SIGNATURE (Pass I κύκλος 1).'
+  MFA-ELM-098:
+    statement: 'Το δίδυμο ΤΟΥ ΚΟΣΜΟΥ (MFA-ATK-11): αντίδικοι, δικαστήρια, μητρώα, προθεσμίες, αντίπαλοι ως προσομοιωμένοι δρώντες με δικές τους δεσμεύσεις και συμπεριφορά
+      που οδηγεί ο CAM-NS (MFA-ELM-050)· δηλωμένη πιστότητα ανά δρώντα (F-επίπεδο ανά όργανο ΚΑΙ ανά δρώντα)· παράγεται από τον Temporal KG (Judicial Decision Objects
+      MFA-ELM-070, docket MFA-ELM-067, προφίλ δικαστή υπό Control Record MFA-CAP-072)· είναι αυτό που διακλαδώνουν τα ghost worlds (MFA-ELM-023)· ο Judge Simulator
+      (MFA-ELM-064) είναι ένας δρών του. · Παρέχει το shadow run των AutonomyEnvelopes (foreseen_effects) πριν από την υπογραφή (Pass I κύκλος 1, MFA-PATCH-0018).'
+  MFA-VO-032:
+    methods:
+    - DST 1000 txs
+    - rollback
+    - 'envelope drills: λήξη στη μέση της πράξης, ανάκληση μετά το staging, υπέρβαση max_exposure (MFA-ATK-09)'
+    - 'envelope χωρίς presimulation στο DP-1: επιτρέπεται, σημαίνεται NONE στο receipt (Pass I κύκλος 1)'
+    measures: 0 commits χωρίς inverse/H1/envelope, rollback εντός ε, ταξινόμηση κλάσεων, 0 IRREVERSIBLE μετά από λήξη/ανάκληση envelope · 0 envelopes με presimulation
+      ασύμφωνο με το receipt
+  OBJECTIVE-SPACE.yaml:
+    replace:
+    - - '  axes: [capability, time_to_useful_answer, resource_efficiency, sovereignty, evolvability, public_verifiability]'
+      - "  axes: [capability, time_to_useful_answer, resource_efficiency, sovereignty, evolvability, public_verifiability, time_to_correction]\n  time_to_correction_note:\
+        \ \"Άξονας που αποκαλύφθηκε στον κύκλο 1 του Pass I (MFA-PATCH-0018): χρόνος από την ανακάλυψη λάθους δέσμευσης μέχρι 100% των εξαρτώμενων σημασμένων (MFA-INV-018\
+        \ εντός Δ)· καμία αλλαγή κυριαρχίας — το TEL-08 παραμένει μη κυριαρχούμενο· η ALT-7 (unlearning) και η ALT-6 (ανθρώπινη επανεξέταση) υστερούν εδώ.\""
+  alternatives/MFA-ALT-7.md:
+    replace:
+    - - '| διάδοχος / εξέλιξη οργάνων | ✗ / συνεχής | GCP / ORP | ασύγκριτο: ALT-7 εξελίσσεται φθηνά, χωρίς έλεγχο |'
+      - '| διάδοχος / εξέλιξη οργάνων | ✗ / συνεχής | GCP / ORP | ασύγκριτο: ALT-7 εξελίσσεται φθηνά, χωρίς έλεγχο |
+
+        | time_to_correction (άξονας κύκλου 1 Pass I) | επανεκπαίδευση/unlearning: ημέρες, χωρίς εγγύηση | taint 100 % εντός Δ (λεπτά) | **Σύνθεση** |'
+  MFA-TEL-01:
+    pareto_axes:
+      capability: 2
+      time_to_useful_answer: 9
+      resource_efficiency: 9
+      sovereignty: 8
+      evolvability: 1
+      time_to_correction: 3
+  MFA-TEL-02:
+    pareto_axes:
+      capability: 4
+      time_to_useful_answer: 7
+      resource_efficiency: 6
+      sovereignty: 9
+      evolvability: 2
+      time_to_correction: 6
+  MFA-TEL-03:
+    pareto_axes:
+      capability: 6
+      time_to_useful_answer: 5
+      resource_efficiency: 4
+      sovereignty: 9
+      evolvability: 6
+      time_to_correction: 7
+  MFA-TEL-04:
+    pareto_axes:
+      capability: 8
+      time_to_useful_answer: 4
+      resource_efficiency: 3
+      sovereignty: 9
+      evolvability: 9
+      time_to_correction: 8
+  MFA-TEL-05:
+    pareto_axes:
+      capability: 10
+      time_to_useful_answer: 3
+      resource_efficiency: 2
+      sovereignty: 9
+      evolvability: 10
+      time_to_correction: 9
+  MFA-TEL-06:
+    pareto_axes:
+      capability: 8
+      time_to_useful_answer: 6
+      resource_efficiency: 4
+      sovereignty: 9
+      evolvability: 8
+      time_to_correction: 6
+  MFA-TEL-07:
+    pareto_axes:
+      capability: 0
+      time_to_useful_answer: 0
+      resource_efficiency: -2
+      sovereignty: -1
+      evolvability: 0
+      public_verifiability: 10
+      time_to_correction: 8
+  MFA-TEL-08:
+    pareto_axes:
+      capability: 10
+      time_to_useful_answer: 7
+      resource_efficiency: 6
+      sovereignty: 9
+      evolvability: 10
+      time_to_correction: 10
+rationale: 'Pass I κύκλος 1 (invent → compare → attack → revise) πάνω στην αρχιτεκτονική μετά τα MFA-PATCH-0001…0017: (1) η σύνθεση δύο διορθώσεων του Pass H (AutonomyEnvelope,
+  World Twin) δίνει αυστηρά ανώτερο μηχανισμό — foreseen_effects πριν από την υπογραφή — χωρίς να αποδυναμώνει ικανότητα (το κόστος είναι πόρος, φραγμένος από OAP,
+  και το NONE δηλώνεται)· (2) η σύγκριση των εναλλακτικών αποκάλυψε κρυφό άξονα (time_to_correction) που δεν αλλάζει κυριαρχία· (3) ο έλεγχος R3b βρήκε το MFA-INV-068
+  χωρίς VO στα verifies — ελάττωμα του MFA-PATCH-0016.'
+evidence:
+- DECISION-LOG.md §Pass I
+- adversarial/MFA-ATK-09.md
+- adversarial/MFA-ATK-11.md
+affected_dependencies:
+- MFA-ELM-085
+- MFA-ELM-040
+- MFA-ELM-091
+capability_impact:
+  gained:
+  - MFA-CAP-006 (envelope με προβλεπόμενες συνέπειες)
+  - MFA-CAP-030 (ο counter_signer βλέπει foreseen_effects)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#pass-i
+migration: 'Envelopes που υπογράφηκαν πριν (κανένα) θα έφεραν presimulation: NONE.'
+verification: tools/check-package.py (R3b PASS)· MFA-VO-032
+rollback: MFA-PATCH-0018-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

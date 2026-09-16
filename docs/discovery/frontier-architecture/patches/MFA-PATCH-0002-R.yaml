@@ -1,0 +1,39 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0002-R
+title: 'Rollback of MFA-PATCH-0002: Προσθήκη MFA-ALT-7 (weights-only continual learner) — η εναλλακτική που είχε αποκλειστεί a priori (MFA-ATK-02)'
+operation: RESTORE
+targets:
+- MFA-ALT-7
+base:
+  package_version: 0.1.0
+  file_hashes:
+    alternatives/MFA-ALT-7.md: 15f3f50c836f58bd587baf71d46634e6f1c1798a9a6d097ea57326c10280327c
+preconditions:
+- MFA-PATCH-0002.status == APPLIED
+change:
+  alternatives/MFA-ALT-7.md:
+    append: '
+
+
+      <!-- WITHDRAWN by rollback: this file was created by a patch that has been rolled back; kept append-only (PATCH-PROTOCOL §4.7) -->
+
+      '
+rationale: Αντίστροφο του MFA-PATCH-0002, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-097
+- MFA-VO-014
+- MFA-VO-015
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-066 (adapters ως παράγωγα — δότης ALT-7)
+  - MFA-CAP-057 (unlearning ως υποχρέωση)
+  ledger_entry: CAPABILITY-CONSERVATION.md#alternatives
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0002
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

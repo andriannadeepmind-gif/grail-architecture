@@ -1,0 +1,58 @@
+%% id: MFA-DIA-04 · Canonical semantic substrate · question: τι είναι μια δέσμευση, ποιοι 8 κανόνες την παράγουν, και ποιες κλειστότητες είναι θεωρήματα;
+%% elements: MFA-MECH-001, MFA-ELM-001, MFA-INV-041 · source: mechanisms/MFA-MECH-001.md, alternatives/MFA-ALT-1.md
+classDiagram
+  class Commitment {
+    +Type tau
+    +CID rho
+    +Authority alpha
+    +Interval t_valid_t_known
+    +Evidence epsilon
+    +Lineage lambda
+    +Signature sigma
+  }
+  class Authority {
+    +tokenChain
+    +ceiling
+    +depth
+    +scope
+    +lease
+    attenuationOnly()
+  }
+  class Evidence {
+    <<enumeration>>
+    Proof(v, pi, grade)
+    Unknown(reason, plan, VOI)
+    Both(pi1, pi2, collapse_fn)
+    Receipt(r)
+  }
+  class Rule {
+    <<enumeration>>
+    ASSERT
+    OBSERVE
+    DERIVE
+    DELEGATE
+    CONTEST
+    RESOLVE
+    REVOKE
+    FORGET
+  }
+  class Store {
+    +journals per author
+    +heads
+    +epoch allowlist
+    +nogoods
+    +apply(rule, args, sigma) cid
+    +read(query, cut)
+    +replay(prefix) state_hash
+  }
+  class Closure_MFA_INV_041 {
+    provenance total
+    ceiling non-increasing
+    state = fold(prefix)
+    no contradiction without Both
+  }
+  Commitment *-- Authority
+  Commitment *-- Evidence
+  Store o-- Commitment : append via Rule
+  Rule ..> Commitment : produces
+  Store ..> Closure_MFA_INV_041 : theorem (Lean, MFA-VO-025)

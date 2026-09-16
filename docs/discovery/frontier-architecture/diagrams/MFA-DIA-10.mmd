@@ -1,0 +1,22 @@
+%% id: MFA-DIA-10 · Autonomy/reversibility state machine · question: ποιες καταστάσεις περνά μια επίδραση, και πού αποφασίζεται αν χρειάζεται άνθρωπος;
+%% elements: MFA-ELM-010, MFA-INV-042/043/044, MFA-MECH-006 · source: mechanisms/MFA-MECH-006.md
+stateDiagram-v2
+  [*] --> PROPOSED : Genesis plane προτείνει Effect
+  PROPOSED --> INVERSE_STAGED : inverse ∈ {r⁻¹, ē} δεσμεύεται ΠΡΙΝ
+  PROPOSED --> NEEDS_H1 : inverse = NONE (MFA-INV-044)
+  INVERSE_STAGED --> SHADOWED : ghost world fork O(1)
+  SHADOWED --> DIFFED : ghost vs αναμενόμενο
+  DIFFED --> GATED : |diff| ≤ ε
+  DIFFED --> DENIED : |diff| > ε → Unknown
+  GATED --> COMMITTED : LPA allow-vector ∧ AutonomyGrant (FE<θ, 0 INV, ¬Root)
+  GATED --> NEEDS_H1 : grant αρνήθηκε ή stakes > κατώφλι
+  GATED --> DENIED : veto (Control Record ID ορατό)
+  NEEDS_H1 --> COMMITTED : υπογραφή Principal/δημιουργού
+  NEEDS_H1 --> DENIED : άρνηση
+  COMMITTED --> ROLLED_BACK : inverse εντός window
+  COMMITTED --> SETTLED : window λήγει
+  ROLLED_BACK --> [*]
+  SETTLED --> [*]
+  DENIED --> [*]
+  note right of NEEDS_H1 : ο κατάλογος ενεργειών με ανθρώπινη έγκριση (CLAIMS F16) = κλάσεις NONE ∪ Constitution-H1
+  note right of GATED : MFA-INV-042 καμία πράξη χωρίς απάντηση

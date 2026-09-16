@@ -1,0 +1,30 @@
+%% id: MFA-DIA-11 · Organ evolution & successor lifecycle · question: πώς προάγεται ένα όργανο (ORP) και πώς γεννιέται διάδοχος (GCP), και ποιος υπογράφει;
+%% elements: MFA-ELM-073/038/039/037/056/077, MFA-MECH-003/014/017 · source: mechanisms/MFA-MECH-003.md, MFA-MECH-017.md
+stateDiagram-v2
+  state "ORP — MFA-ELM-038 (ίδιο metamodel)" as ORP {
+    [*] --> Proposed : Evolution MFA-ELM-073 / Forge
+    Proposed --> CPEG : critical pairs (MFA-MECH-017)
+    CPEG --> Shadow : PASS ή PARTITION
+    CPEG --> Rejected : μη ενώσιμο σε Tier-0/1
+    Shadow --> LossMap : SLM pushout + anchors (MFA-MECH-014)
+    LossMap --> ND : κενό ή accept record
+    LossMap --> Rejected : SEMANTIC-LOSS χωρίς accept
+    ND --> Canary : νέα deployment
+    Canary --> Cutover : canary OK
+    Cutover --> RollbackWindow
+    RollbackWindow --> Retired : window λήγει, προκάτοχος αρχειοθετείται
+    RollbackWindow --> Proposed : rollback
+  }
+  state "GCP — MFA-ELM-039 (νέο metamodel)" as GCP {
+    [*] --> ProposedS : R_S από Architecture Forge MFA-ELM-077
+    ProposedS --> Compiling : Genome transplant (L3 αυτούσιο)
+    Compiling --> Replaying : foldl(apply_S, genesis, P.journal)
+    Replaying --> Diffing : anchors · traces · obligations · lattice
+    Diffing --> ShadowS : LossMap
+    ShadowS --> VerdictPending : παράθυρο
+    VerdictPending --> Adopted : δημιουργός + HELD_OUT (MFA-ELM-056) υπογράφουν
+    VerdictPending --> RejectedS : απόρριψη με τον χάρτη
+    Adopted --> RolledBack : rollback → P, νέες δεσμεύσεις ως Observations
+  }
+  ORP --> GCP : όταν η αλλαγή αγγίζει metamodel/πυρήνα
+  note right of GCP : MFA-INV-049 ο S δεν υπογράφει για τον εαυτό του · MFA-INV-031 L3 εγγράψιμο από κανένα εσωτερικό

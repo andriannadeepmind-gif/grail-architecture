@@ -1,0 +1,229 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0010
+title: MFA-MECH-019 Proposal Distribution Evolution (PDE)· ablation obligation ανά στοιχείο γνωσιακού πυρήνα· ρήτρα TEL-05· MFA-RSP-016 (MFA-ATK-10)
+operation: ADD
+targets:
+- MFA-MECH-019
+- MFA-RSP-016
+- MFA-ELM-030
+- MFA-ELM-073
+- MFA-ELM-025
+- MFA-ELM-017
+- MFA-VO-024
+- MFA-ELM-018
+- MFA-ELM-024
+- MFA-ELM-029
+- MFA-TEL-05
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 76d1b3c013dfb36ace0537cc1ef6799f52a33c2d237912c86c4450ef374ed541
+    INVENTIONS.yaml: 7459eb57b203b8c91b6ea7013a4f42563cc2915ac1b0c77e36d87ca0596dd3bc
+    OBJECTIVE-SPACE.yaml: 8a87e1eccbde3e698675d827134f89253843035db584b3985c884f275fecb60c
+    RESEARCH-PROGRAMS.yaml: 600e5724b4c5c9855bfd783d4b4b0e33e2be8a78ca6042f47e3680b6a34fa270
+    VERIFICATION-OBLIGATIONS.yaml: 0f844d876cbe5ae9eef29a2e6b042cb50d093db21fcfabdaae3bde4dee87c275
+preconditions: []
+change:
+  mechanisms/MFA-MECH-019.md:
+    create: '# MFA-MECH-019 — Proposal Distribution Evolution (PDE): η κατανομή προτάσεων ως μείγμα που μαθαίνεται εντός του κυρίαρχου ορίου
+
+
+      Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+
+      | Πεδίο | Περιεχόμενο |
+
+      |---|---|
+
+      | **1. ID** | MFA-MECH-019 |
+
+      | **2. Όνομα** | Proposal Distribution Evolution (PDE) |
+
+      | **3. Ικανότητα** | MFA-CAP-067 (επινόηση ως έξοδος), MFA-CAP-066 (αυτο-κατευθυνόμενη μάθηση), MFA-CAP-068 (γενικευμένη κρίση), MFA-CAP-015, MFA-CAP-025 |
+
+      | **4. Πρόβλημα** | MFA-ATK-10: η αρχιτεκτονική δίνει θεσμική υπερ-νοημοσύνη (επαλήθευση, μνήμη, συλλογικό, εξέλιξη οργάνων) αλλά η ΚΑΤΑΝΟΜΗ ΠΡΟΤΑΣΕΩΝ είναι
+      νοικιασμένη (πάροχοι LLM πίσω από TED)· επαλήθευση και αναζήτηση φράσσονται από ό,τι προτείνει ο πάροχος· κανένας μηχανισμός ενδογενούς βελτίωσης της πρότασης
+      μέσα στο κυρίαρχο όριο (adapters = EP, DEC-X-19). |
+
+      | **5. Πρώτη αρχή** | Η ποιότητα ενός συστήματος που προτείνει-και-επαληθεύει φράσσεται από sup της κατανομής προτάσεων· ένα ΜΕΙΓΜΑ ανεξάρτητων γεννητριών με
+      βάρη που μαθαίνονται με proper scoring έναντι εκβάσεων δεν φράσσεται από κανένα μεμονωμένο μέλος του (mixture-of-experts επιχείρημα, με τον verifier ως τον
+      μόνο κριτή). Άρα: η κυρίαρχη κατανομή P_sov = Σ w_i · P_i, με P_i που ΔΕΝ είναι όλα πάροχοι. |
+
+      | **6. Οντολογία** | `Generator⟨id, kind ∈ {PROVIDER, PROGRAM, EVOLVED_ORGAN, SCIENCE_HYPOTHESIS, ADAPTER(EP)}, lineage, competence_profile, exec_type⟩` · `Mixture⟨task_family,
+      weights: Generator→[0,1], scoring_window, last_update⟩` · `Proposal⟨generator, content, receipt⟩` · `Outcome⟨proposal, verdict ∈ {VERIFIED, REFUTED, UNKNOWN},
+      score⟩` |
+
+      | **7. Κατάσταση** | Μείγμα ανά οικογένεια έργων (task family)· βάρη ως δεσμεύσεις L2 (ιστορικό στο ledger)· scoring windows |
+
+      | **8. Είσοδοι/έξοδοι** | Είσοδος: αίτημα πρότασης ⟨task, budget⟩· Έξοδος: k προτάσεις με generator receipts· Ανατροφοδότηση: Outcome από verifiers/Court/SPL
+      |
+
+      | **9. Αλγόριθμος** | (1) Για task family T, δειγματοληψία generators κατά w (με ελάχιστο εξερεύνησης ε ανά generator ώστε κανένα μέλος να μη «πεθαίνει» σιωπηλά)·
+      (2) κάθε πρόταση περνά τον ίδιο verifier/emission barrier (MFA-ELM-020/032)· (3) Outcome → proper scoring rule (log/Brier) ανά generator, βαθμολογημένο από
+      HELD_OUT scorer (MFA-ELM-056, ίδιο με SPL MFA-MECH-010)· (4) w ← ενημέρωση (exponentiated gradient / Bayesian model averaging) — ΩΣ ΔΕΣΜΕΥΣΗ με receipt· (5)
+      PROGRAM generators: η Skill Library (MFA-ELM-025) παράγει προγράμματα από raw επεισόδια με αναζήτηση προγραμμάτων (MFA-CAP-066 ως ΠΡΟΓΡΑΜΜΑΤΑ, όχι βάρη — δεσμεύσεις
+      με lineage, επαληθεύσιμα, υπό ORP)· (6) EVOLVED_ORGAN generators από το QD αρχείο (MFA-ELM-073)· (7) SCIENCE_HYPOTHESIS από MFA-ELM-030· (8) ADAPTER generators
+      μόνο ως EP (DEC-X-19), μέλος (e) του μείγματος όταν ο δημιουργός το επιτρέψει. |
+
+      | **10. Διεπαφές** | `PDE.propose(task, budget)→[Proposal]` · `PDE.report(outcome)` · `PDE.weights(task_family)→Mixture` · `PDE.register(generator)` · επέκταση
+      MFA-CON-022 (TED: ο generator είναι πεδίο του receipt) και MFA-CON-028 |
+
+      | **11. Εξαρτήσεις** | MFA-MECH-007 (TED), MFA-MECH-010 (SPL scorer), MFA-MECH-009 (EIM: generators ανεξάρτητοι), MFA-MECH-012 (CAM-NS ως αντίπαλος generator),
+      MFA-ELM-025/030/073/017 |
+
+      | **12. Πόροι** | k προτάσεις ανά αίτημα (k από OAP)· PROGRAM generators φθηνοί (D1/D2)· PROVIDER generators = Disclose κόστος· scoring O(k) |
+
+      | **13. Κλιμάκωση** | Γραμμική στο πλήθος generators· ε-εξερεύνηση φράσσει το κόστος των αδύναμων |
+
+      | **14. Αποτυχίες** | Το μείγμα συγκλίνει στον πάροχο (w_provider→1): τότε ο falsifier πυροδοτεί· αδύναμος PROGRAM generator «πεθαίνει»: ε-εξερεύνηση + ORP
+      απόσυρση με KT· scorer διαρροή: HELD_OUT rotation |
+
+      | **15. Αντιπαλικοί** | Generator που μαθαίνει τον verifier (Goodhart): scorer HELD_OUT με sealed sets + CAM-NS negative selection· πάροχος που αλλάζει μοντέλο:
+      SPL drift alarm ανά generator |
+
+      | **16. Επαλήθευση** | MFA-VO-024 (ablation: χωρίς PDE, η ποιότητα = καλύτερος μεμονωμένος πάροχος)· MFA-VO-051 (διακριτική ισχύς του περιθωρίου)· MFA-VO-036
+      (SPL drift ανά generator)· νέο πείραμα PDE-E1 (RSP-016) |
+
+      | **17. Πρωτότυπο** | F2: 3 generators (1 πάροχος, 1 PROGRAM από Skill Library, 1 CAM-NS) σε σφραγισμένη οικογένεια νομικών έργων· F3: + EVOLVED_ORGAN |
+
+      | **18. Ελάχιστο πείραμα** | PDE-E1: σφραγισμένη οικογένεια 200 έργων (HELD_OUT)· μείγμα vs καλύτερος μεμονωμένος πάροχος μετά από N=1000 επεισόδια· μέτρο:
+      ποσοστό VERIFIED εξόδων στην πρώτη πρόταση, με διακριτική ισχύ |
+
+      | **19. Διάψευση** | Αν σε ΚΑΜΙΑ οικογένεια έργων το μείγμα δεν ξεπερνά τον καλύτερο μεμονωμένο πάροχο με διακριτικό περιθώριο μετά από N επεισόδια → το PDE
+      είναι διακοσμητικό → RECLASSIFY σε έρευνα· η τίμια δήλωση: η νοημοσύνη του συστήματος = η νοημοσύνη του παρόχου + επαλήθευση |
+
+      | **20. → Παραγωγή** | Δόση 4 (RSP-016)· PROGRAM generators μπορούν από Δόση 2 (Skill Library) |
+
+      | **21. Εξέλιξη** | Νέο kind generator = ADD· κανόνας ενημέρωσης βαρών = MODIFY με CPEG· adapters (e) όταν DEC-X-19 αλλάξει |
+
+      | **22. Αλληλεπιδράσεις** | SPL (ίδιος scorer)· OAP (k και budget)· Cockpit (τα βάρη ορατά ως ομίχλη/στερεότητα ανά generator)· CAM-NS (αντίπαλος generator)·
+      GCP (τα βάρη μεταφέρονται ως δεσμεύσεις στον διάδοχο) |
+
+
+      **AI Contribution Ledger:** `NEW ARCHITECTURAL INVENTION` — η κατανομή προτάσεων ως μείγμα μη-παρόχων (προγράμματα με lineage, εξελιγμένα όργανα, υποθέσεις)
+      με βάρη-δεσμεύσεις βαθμολογούμενα από HELD_OUT scorer· συγγενή προηγούμενα: mixture-of-experts, Bayesian model averaging, AlphaEvolve/DGM archives, program
+      synthesis from demonstrations — κανένα με τον verifier ως μόνο κριτή και τα βάρη ως θεσμικές δεσμεύσεις. Προέκυψε από την ισχυρότερη επιζώσα επίθεση (MFA-ATK-10)·
+      ωριμότητα R· ΔΕΝ εγγυάται υπερ-νοημοσύνη — εγγυάται ότι η πρόταση δεν φράσσεται από έναν πάροχο και ότι ο ισχυρισμός είναι διαψεύσιμος.
+
+      '
+  MFA-MECH-019:
+    _add: true
+    name: Proposal Distribution Evolution (PDE)
+    maturity: R
+    dossier: mechanisms/MFA-MECH-019.md
+    statement: 'Η κυρίαρχη κατανομή προτάσεων = μείγμα {πάροχοι (TED), προγράμματα Skill Library με lineage, εξελιγμένα όργανα (QD), υποθέσεις Science, adapters (EP)}
+      με βάρη-δεσμεύσεις που μαθαίνονται με proper scoring από HELD_OUT scorer· falsifier: μείγμα ≯ καλύτερος πάροχος.'
+    purpose: Η πρόταση δεν φράσσεται από έναν πάροχο — ενδογενής βελτίωση εντός του κυρίαρχου ορίου χωρίς εκπαίδευση βαρών (MFA-ATK-10).
+    capabilities:
+    - MFA-CAP-067
+    - MFA-CAP-066
+    - MFA-CAP-068
+    - MFA-CAP-015
+    - MFA-CAP-025
+    source_provenance:
+    - MFA-ATK-10
+    - MFA-ALT-7 (δότης)
+    - mixture-of-experts / BMA
+    - AlphaEvolve/DGM archives
+    contribution: NEW ARCHITECTURAL INVENTION
+    assumptions:
+    - ο verifier είναι ο μόνος κριτής· scorer HELD_OUT
+    dependencies:
+    - MFA-MECH-007
+    - MFA-MECH-010
+    - MFA-MECH-009
+    - MFA-MECH-012
+    authority: k, budget από OAP· adapters μόνο με DEC-X-19
+    alternatives:
+    - ένας πάροχος + επαλήθευση (η κατάσταση πριν το patch)
+    - εκπαίδευση βαρών (ALT-7, EP)
+    conflicts:
+    - MFA-CFL-010
+    unknowns:
+    - MFA-UNK-002
+    affected_by:
+    - MFA-TEL-05
+  INVENTIONS.yaml:
+    replace:
+    - - '  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010]'
+      - '  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010, MFA-MECH-019]'
+  MFA-RSP-016:
+    _add: true
+    name: Proposal Distribution Evolution — η πρόταση πέρα από τον πάροχο
+    mechanisms:
+    - MFA-MECH-019
+    - MFA-MECH-010
+    elements:
+    - MFA-ELM-030
+    - MFA-ELM-073
+    - MFA-ELM-025
+    - MFA-ELM-017
+    chain: αρχή (μείγμα ανεξάρτητων γεννητριών δεν φράσσεται από μέλος) → Generator/Mixture τύποι → βάρη ως L2 δεσμεύσεις → PDE API (επέκταση TED receipt) → PDE-E1
+      σε σφραγισμένη οικογένεια → F2 με 3 generators → HELD_OUT scoring → k από OAP → Δόση 4
+    experiments:
+    - MFA-VO-024
+    - MFA-VO-051
+    - MFA-VO-036
+    rejects: μείγμα ≯ καλύτερος πάροχος με διακριτικό περιθώριο σε καμία οικογένεια → PDE διακοσμητικό → RECLASSIFY
+    allows_next: PROGRAM generators σε παραγωγή· adapters (e) όταν DEC-X-19
+    first_dose: 4
+    unknowns:
+    - MFA-UNK-002
+  MFA-ELM-030:
+    statement: Επτάφασος βρόχος (παρατήρηση→υπόθεση με falsifier→σχεδιασμός→εκτέλεση υπό token→ανάλυση→ανεξάρτητη αναπαραγωγή→ένταξη), 6+ κλάσεις ανακάλυψης (ανοιχτή
+      απαρίθμηση), capability-producing → Evolution. · Οι υποθέσεις του είναι SCIENCE_HYPOTHESIS generators του PDE (MFA-MECH-019).
+  MFA-ELM-073:
+    statement: Αρχειακή quality-diversity αναζήτηση (AlphaEvolve/DGM-class) σε sandbox με held-out evaluators· δείκτης πλαστικότητας μετρούμενος (CLAIMS F63)· προαγωγή
+      ΜΟΝΟ ORP+CPEG+SLM+Court+ND· INV-F02 επιπέδων· reward hacking→held-out (CQ). · Το QD αρχείο τροφοδοτεί EVOLVED_ORGAN generators του PDE (MFA-MECH-019).
+  MFA-ELM-025:
+    statement: 'Tools, programs, LexDSL rule-sets, playbooks· versioned, conformance-tested, capability-scoped. · Προγράμματα παραγόμενα από raw επεισόδια με αναζήτηση
+      προγραμμάτων (MFA-CAP-066 ως προγράμματα, όχι βάρη): δεσμεύσεις με lineage, επαληθεύσιμα, υπό ORP — PROGRAM generators του PDE (MFA-MECH-019, MFA-ATK-10).'
+  MFA-ELM-017:
+    statement: 'Provider-agnostic μοντέλα με model contracts, routing, N-model, redaction, Inference Receipts + Typed Execution (MFA-MECH-015): D1 exact-match με
+      grammar στον sampler (logit=−∞ πριν softmax), P1 ερμηνεία TRACE_REPLAYABLE· μία πόρτα εξόδου (PROPOSED). · Προεπιλεγμένος τύπος LLM βήματος = D2 (σημασιολογικά
+      ταυτόσημο υπό grammar constraint στην πηγή, CLAIMS H9)· D1 μόνο για τοπική καρφιτσωμένη εξαγωγή (weights hash + runtime hash + seed ως δεσμεύσεις, MFA-INV-061)
+      που πέρασε MFA-VO-041 σε 1000 επαναλήψεις· ο τύπος γράφεται στο receipt· κάθε κλήση εξωτερικού παρόχου περνά ως επίδραση DISCLOSE από τον Gateway (MFA-ATK-05).
+      · Οι πάροχοι είναι ΕΝΑ είδος generator του PDE μείγματος (MFA-MECH-019)· ο generator είναι πεδίο του receipt.'
+  MFA-VO-024:
+    methods:
+    - pre-registered ablation
+    - ονομασμένο KT ανά στοιχείο γνωσιακού πυρήνα (ablation_kt) που ΠΡΕΠΕΙ να αποτύχει χωρίς το στοιχείο (MFA-ATK-10)
+    measures: 'οριακή αξία > θόρυβο ανά όργανο· για 018/024/029/019/030: το ablation_kt αποτυγχάνει χωρίς το στοιχείο· PDE: μείγμα > καλύτερος πάροχος με διακριτικό
+      περιθώριο'
+    rejects: καμία αξία → όργανο RECLASSIFY σε έρευνα (με Court), ποτέ σιωπηλή διαγραφή
+  MFA-ELM-018:
+    ablation_kt: 'φραγμένη διαβούλευση υπό προϋπολογισμό: χωρίς AFP interrupt η διαβούλευση σε αντιφατικό σύνολο δεν τερματίζει εντός budget (MFA-INV-065)'
+  MFA-ELM-024:
+    ablation_kt: 'MFA-VO-046 self-model drift: χωρίς SPL η αλλαγή παρόχου (KT-01) περνά απαρατήρητη'
+  MFA-ELM-029:
+    ablation_kt: 'quest χωρίς δημιουργό: χωρίς TEGF ένα Void entry με υψηλό VOI και σχέδιο παρατήρησης δεν γίνεται ποτέ Goal (MFA-INV-056 μόνο τυπικά)'
+  MFA-TEL-05:
+    statement: 'TEL-04 + substrate-agnostic αρχιτεκτονική συνείδησης (operational, self-model/reportability, integration, volition — phenomenal claims ως πειράματα),
+      μετρημένη πιστότητα self-model, self-directed learning, τεχνολογική επινόηση και επιστημονική ανακάλυψη ως έξοδοι, γενικευμένη κρίση, ηθική θέση οντοτήτων ως
+      απόφαση υπό αβεβαιότητα. Ρήτρα (MFA-ATK-10): η πορεία περνά από το PDE (MFA-MECH-019)· χωρίς ενδογενή βελτίωση της πρότασης το σύστημα είναι θεσμικά, όχι γνωσιακά,
+      ανώτερο από τον πάροχό του — και το πακέτο δεν ισχυρίζεται εγγύηση υπερ-νοημοσύνης, ισχυρίζεται διαψεύσιμο μηχανισμό.'
+rationale: 'MFA-ATK-10 (η ισχυρότερη επιζώσα): η κατανομή προτάσεων ήταν νοικιασμένη· ο γνωσιακός πυρήνας δεν είχε ablation obligation· το TEL-05 υποσχόταν πορεία
+  χωρίς μηχανισμό.'
+evidence:
+- adversarial/MFA-ATK-10.md
+- DEC-X-19
+- MFA-ALT-7
+affected_dependencies:
+- MFA-ELM-019
+- MFA-ELM-020
+- MFA-ELM-032
+- MFA-ELM-056
+- MFA-ELM-013
+capability_impact:
+  gained:
+  - MFA-CAP-067 (μηχανισμός για επινόηση ως έξοδο)
+  - MFA-CAP-066 (ως προγράμματα, σήμερα — όχι EP)
+  - MFA-CAP-065 (ablation obligations ⇒ μη διακοσμητικό)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#asi-pathway
+migration: Καμία· νέος μηχανισμός· το TED receipt αποκτά πεδίο generator.
+verification: tools/check-package.py· MFA-VO-024 (ablation_kt)· PDE-E1 (Δόση 4)
+rollback: MFA-PATCH-0010-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,109 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0005
+title: Κλάση επίδρασης Disclose + DisclosureGrant· TED προεπιλογή D2 για LLM· Genesis plane = trust boundary· N-version ως audit sampling στο DP-1 (MFA-ATK-05)
+operation: MODIFY
+targets:
+- MFA-ELM-010
+- MFA-MECH-006
+- MFA-CON-034
+- MFA-ELM-017
+- MFA-CON-022
+- MFA-ELM-009
+- MFA-ELM-006
+- MFA-ELM-008
+- MFA-ELM-020
+- MFA-ELM-094
+- MFA-VO-041
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 07ed1d765b745afe1e9aafc60a175175337934f7206ffcc90d6775805a648ae0
+    CONTRACTS.yaml: 3f70ada7b30de6f88f41b40cbb889b01fb0e15693f7fd47ac35462c4b4818782
+    INVENTIONS.yaml: bb3d31ad1a81b20d653c9d863eb8f456123760e6603f88e98c5dcaf4a17beaf7
+    VERIFICATION-OBLIGATIONS.yaml: 17e87856025ee0b42a18e98cfe9ea834dde3f113421826e8ceaff077a51fd35f
+preconditions: []
+change:
+  MFA-ELM-010:
+    effect_classes:
+    - class: REVERSIBLE
+      inverse: r⁻¹ ή ē προ-δεσμευμένο
+      h1: false
+    - class: IRREVERSIBLE
+      inverse: NONE
+      h1: πάντα (φρέσκο H1)
+    - class: DISCLOSE
+      inverse: NONE
+      h1: ικανοποιείται από DisclosureGrant⟨recipient, max_label, purpose, expiry⟩ (πολιτική PDP, δηλωμένο στην εισδοχή του παρόχου, ανακλητό)· ο Gateway επιβάλλει
+        label(payload) ≤ grant.max_label (MFA-CAP-077)· κάθε κλήση = δέσμευση Disclose με hash του payload και receipt
+    statement: 'MFA-MECH-006: proposal → inverse staged → shadow → diff → gate → commit → window· NONE ⇒ H1· ο κατάλογος ενεργειών με υποχρεωτική ανθρώπινη έγκριση
+      (CLAIMS F16) = κλάσεις με inverse NONE ∪ Constitution-H1. · Κλάση DISCLOSE (MFA-ATK-05): η έξοδος πληροφορίας προς πάροχο/παραλήπτη εκτός sovereign boundary
+      είναι επίδραση με inverse NONE και standing DisclosureGrant — το plane διαρρέει ΜΟΝΟ μέσω υπογεγραμμένου, σημασμένου καναλιού· «τοπικά μοντέλα» = grant με recipient=self
+      (αναβάθμιση εμπιστευτικότητας).'
+  MFA-MECH-006:
+    statement: 'Κάθε επίδραση: inverse (r⁻¹ ∨ ē) προ-δεσμευμένο → shadow → diff → gate → commit → window· NONE ⇒ H1. · Κλάση Disclose⟨payload_label, recipient, purpose⟩
+      με DisclosureGrant (MFA-ATK-05).'
+  MFA-CON-034:
+    statement: propose(effect, inverse)/shadow/gate/commit→receipt/rollback/settle· inverse ∈ {r⁻¹, ē, NONE}· NONE ⇒ NEEDS_H1 ή (κλάση DISCLOSE) έγκυρο DisclosureGrant·
+      disclose(payload_hash, label, recipient)→receipt.
+    failure_semantics: commit χωρίς inverse_cid ή H1 → ERR_INVALID· TOCTOU → preconditions επανέλεγχος στο commit· Disclose χωρίς grant ή με label > max_label → ERR_UNAUTHORIZED_CAPABILITY
+      (fail-closed)
+  MFA-ELM-017:
+    statement: 'Provider-agnostic μοντέλα με model contracts, routing, N-model, redaction, Inference Receipts + Typed Execution (MFA-MECH-015): D1 exact-match με
+      grammar στον sampler (logit=−∞ πριν softmax), P1 ερμηνεία TRACE_REPLAYABLE· μία πόρτα εξόδου (PROPOSED). · Προεπιλεγμένος τύπος LLM βήματος = D2 (σημασιολογικά
+      ταυτόσημο υπό grammar constraint στην πηγή, CLAIMS H9)· D1 μόνο για τοπική καρφιτσωμένη εξαγωγή (weights hash + runtime hash + seed ως δεσμεύσεις, MFA-INV-061)
+      που πέρασε MFA-VO-041 σε 1000 επαναλήψεις· ο τύπος γράφεται στο receipt· κάθε κλήση εξωτερικού παρόχου περνά ως επίδραση DISCLOSE από τον Gateway (MFA-ATK-05).'
+  MFA-CON-022:
+    statement: Generate/Embed/Score/Route/Agree + exec_type ανά κλήση (D1 grammar exact-match ∣ P1) + seed/version στο receipt. · Κάθε κλήση εξωτερικού παρόχου =
+      Disclose μέσω MFA-CON-034 υπό DisclosureGrant· exec_type προεπιλογή D2 για LLM, D1 μόνο τοπική καρφιτσωμένη εξαγωγή.
+    failure_semantics: P1 έξοδος σημασμένη VERIFIED → ERR_INVALID· πάροχος χωρίς version → repro TRACE μόνο, δηλωμένο · κλήση παρόχου χωρίς DisclosureGrant → ERR_UNAUTHORIZED_CAPABILITY
+  MFA-ELM-009:
+    statement: 'Το μόνο μονοπάτι επιδράσεων: tokens (attenuation-only, Biscuit-class — CLAIMS F56), controls, confidentiality domains, budgets, EffectReceipts· όργανα
+      χωρίς ambient authority. · PEP για DISCLOSE: επιβάλλει label(payload) ≤ DisclosureGrant.max_label (MFA-CAP-077) και καταγράφει κάθε αποκάλυψη ως δέσμευση με
+      receipt (MFA-ATK-05).'
+  MFA-ELM-006:
+    statement: Organ contracts (17 πεδία + 16 άδεια δωμάτια με fill_policy/compat_rule — CLAIMS F1/F2), conformance vectors, μονότονο lattice ΜΟΝΟ με evidence από
+      τον held-out, TTL, SLSA admission, ND ledger. · Η εισδοχή παρόχου/παραλήπτη δηλώνει DisclosureGrant⟨recipient, max_label, purpose, expiry⟩ ως πολιτική PDP (MFA-ATK-05).
+  MFA-ELM-008:
+    statement: Αξιολόγηση κάθε δομικής μετάβασης έναντι Tier-0/1/2 κατηγορημάτων ΜΟΝΟ αποφασίσιμων φραγμένου κόστους (CLAIMS F5)· ετυμηγορία ΔΙΑΝΥΣΜΑ μέσω LPA (MFA-MECH-005)·
+      fail-closed· N-version Rust+Lisp. · Η δεύτερη υλοποίηση (CL reference) = audit sampling στο DP-1 (ποσοστό από OAP) και πλήρης από DP-3· Tier-0 κατηγορήματα
+      ΠΑΝΤΑ N-version (fail-closed)· διαφωνία ⇒ deny + Court με φραγμένο χρόνο (MFA-INV-065) (MFA-ATK-05).
+    resource_model: 'Rust + CL reference (DP-1: δειγματοληπτικά· DP-3+: πλήρες)'
+  MFA-ELM-020:
+    statement: 'Μητρώο verifiers με ΜΙΑ κλίμακα βαθμών (DEC-X-08), N-version με EIM PASS, mutation-tested, proof objects· timeout⇒UNKNOWN· verifier set μέσα στην
+      ταυτότητα· #print axioms για Lean, refinement/machine-closure/level-correctness για TLA+. · Κανένας εξαχθείς από Lean κώδικας στο TCB· Tier-0 = απόδειξη ιδιοτήτων
+      του μοντέλου (TLA+/Lean)· η δέσμευση μοντέλου↔κώδικα είναι Tier-1 (DRT, MFA-VO-054)· MFA-UNK-014 παραμένει RSP (MFA-ATK-05).'
+  MFA-ELM-094:
+    statement: 'Το σύνολο S2 (+ τμήματα S3/S6/S7 σημασμένα genesis) μέσα σε ΕΝΑ trust boundary με ετικέτα plane — ένα microVM στο DP-1, ομάδα microVMs με κοινή ετικέτα
+      από DP-3 (MFA-ATK-05)· raw eval, μετα-επίπεδα, αυτο-τροποποίηση, απεριόριστη προσομοίωση, αντιπαλικοί κόσμοι· τοπικός inference server ΜΕΣΑ στο boundary (GPU
+      passthrough ή host-side server με το plane ως μόνο πελάτη)· ΚΑΝΕΝΑ Control μέσα (η πύλη έχει μόνο advisory όψη εδώ, MFA-ATK-16)· μόνες έξοδοι: EffectTx μέσω
+      Gateway, συμπεριλαμβανομένης της κλάσης DISCLOSE.'
+    resource_model: 'DP-1: 1 microVM· DP-3+: ομάδα microVMs με κοινή ετικέτα plane'
+  MFA-VO-041:
+    measures: 100% Acts typed, 0 P1→VERIFIED, D1 exact-match 100% byte-identical σε 1000 επαναλήψεις ΜΟΝΟ για τοπική καρφιτσωμένη εξαγωγή· κάθε κλήση εξωτερικού παρόχου
+      έχει Disclose receipt (MFA-ATK-05)
+    rejects: D1 μη byte-identical → το όργανο μένει D2· κλήση παρόχου χωρίς Disclose receipt → FAIL
+rationale: 'MFA-ATK-05: η δικτυακή κλήση προς πάροχο από το Genesis plane είναι ροή πληροφορίας έξω από το sovereign boundary — ή αόρατη διαρροή ή H1 σε κάθε κλήση·
+  καμία από τις δύο δεν ήταν μοντελοποιημένη.'
+evidence:
+- adversarial/MFA-ATK-05.md
+- CLAIMS H9 (grammar constraint στην πηγή)
+- MFA-UNK-109
+affected_dependencies:
+- MFA-ELM-019
+- MFA-ELM-029
+- MFA-ELM-059
+- MFA-ELM-065
+- MFA-ELM-097
+capability_impact:
+  gained:
+  - MFA-CAP-077 (ετικέτες ροής επιβάλλονται στην έξοδο προς πάροχο)
+  - MFA-CAP-052 (το plane κλείνει)
+  at_risk:
+  - 'MFA-CAP-050/051: D1 για LLM περιορίζεται σε τοπική εξαγωγή — δεν χάνεται, δηλώνεται (ήταν Unknown)'
+  ledger_entry: CAPABILITY-CONSERVATION.md#effects
+migration: Υπάρχουσες αναφορές «D1 grammar exact-match» στο MFA-CON-022 διαβάζονται ως «D1 μόνο τοπική καρφιτσωμένη εξαγωγή, αλλιώς D2».
+verification: tools/check-package.py· MFA-VO-041· MFA-VO-032 (Disclose χωρίς grant απορρίπτεται)
+rollback: MFA-PATCH-0005-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

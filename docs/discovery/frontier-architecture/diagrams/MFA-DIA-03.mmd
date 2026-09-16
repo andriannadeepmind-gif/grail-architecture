@@ -1,0 +1,40 @@
+%% id: MFA-DIA-03 · Architecture strata/domains · question: ποιο στοιχείο ανήκει πού, και ποιο plane; κριτήριο ένταξης = καταναλώνει contracts του στρώματος χωρίς να εκθέτει υλοποίηση προς τα κάτω
+%% elements: MFA-ELM-001…097 (αντιπροσωπευτικά) · source: ARCHITECTURE-ELEMENTS.yaml
+flowchart TB
+  subgraph S10["S10 Human & Spatial"]
+    E091["MFA-ELM-091 Cockpit CGP"]; E093["MFA-ELM-093 Explanation Projector"]
+  end
+  subgraph S6["S6 LAWMAX (G1)"]
+    E058["MFA-ELM-058 Matter"]; E059["MFA-ELM-059 Corpus Compiler LSC"]; E061["MFA-ELM-061 Reasoning"]; E065["MFA-ELM-065 Drafting 5-limb"]; E070["MFA-ELM-070 Decision Object"]; E072["MFA-ELM-072 Advocacy"]
+  end
+  subgraph S5["S5 Institutions & Civilizations"]
+    E048["MFA-ELM-048 Court"]; E051["MFA-ELM-051 Constitution"]; E056["MFA-ELM-056 Civilization Quorum"]; E050["MFA-ELM-050 CAM-NS"]
+  end
+  subgraph S4["S4 Collective"]
+    E041["MFA-ELM-041 Evidence"]; E042["MFA-ELM-042 Claims"]; E045["MFA-ELM-045 Stances"]; E044["MFA-ELM-044 Verdicts"]
+  end
+  subgraph S3["S3 Entity (AEO)"]
+    E033["MFA-ELM-033 Entity Core"]; E035["MFA-ELM-035 Memory"]; E037["MFA-ELM-037 Continuity Verifier"]; E038["MFA-ELM-038 ORP"]; E039["MFA-ELM-039 Successor GCP"]
+  end
+  subgraph S2["S2 Genesis plane — νόηση"]
+    E017["MFA-ELM-017 Inference TED"]; E018["MFA-ELM-018 Workspace AFP"]; E019["MFA-ELM-019 Deliberation"]; E020["MFA-ELM-020 Verification"]; E028["MFA-ELM-028 Void Ledger"]; E029["MFA-ELM-029 Volition TEGF"]; E024["MFA-ELM-024 SPL"]
+  end
+  subgraph S7["S7 Evolution & Forge"]
+    E073["MFA-ELM-073 Evolution"]; E077["MFA-ELM-077 Architecture Forge"]
+  end
+  subgraph S8["S8 Knowledge & Provenance"]
+    E079["MFA-ELM-079 Provenance"]; E080["MFA-ELM-080 Temporal KG"]
+  end
+  subgraph S9["S9 Ops & Verification"]
+    E085["MFA-ELM-085 DST + FCP"]; E086["MFA-ELM-086 Harness held-out + EIM"]; E088["MFA-ELM-088 Design Platform"]; E090["MFA-ELM-090 Patch Engine"]
+  end
+  subgraph S1["S1 Authority & Effect plane"]
+    E007["MFA-ELM-007 PDP"]; E008["MFA-ELM-008 Gate LPA"]; E009["MFA-ELM-009 Gateway"]; E010["MFA-ELM-010 RET"]; E013["MFA-ELM-013 Resources + OAP"]; E011["MFA-ELM-011 Organ Host microVM"]
+  end
+  subgraph S0["S0 Substrate (robust)"]
+    E001["MFA-ELM-001 Commitment Store"]; E002["MFA-ELM-002 CAS"]; E003["MFA-ELM-003 Identity & Keys"]; E004["MFA-ELM-004 Time"]; E005["MFA-ELM-005 Epoch Allowlist"]
+  end
+  S10 --> S6 --> S5 --> S4 --> S3 --> S2 --> S1 --> S0
+  S7 --> S3
+  S8 --> S0
+  S9 --> S0

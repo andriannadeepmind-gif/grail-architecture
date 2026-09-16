@@ -1,0 +1,96 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0019
+title: 'Συμπληρώσεις από το Capability Conservation Ledger: 12 typed σφάλματα με υποχρεωτική συμπεριφορά· πιστότητα αρχείου στο drafting· κλάσεις απομόνωσης στον
+  Organ Host· delta διορθώσεις (004, 025, 049 → STRENGTHEN· CON-032 → SPLIT)'
+operation: MODIFY
+targets:
+- MFA-CON-033
+- MFA-ELM-065
+- MFA-VO-015
+- MFA-ELM-011
+- MFA-ELM-004
+- MFA-ELM-025
+- MFA-ELM-049
+- MFA-CON-032
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 5416f9e052a1a1ee9d53de1d32651f6019c23643b610a684148e38ff667e2ab4
+    CONTRACTS.yaml: 7976f22bfe3430cfb661baf3db3feb8c0047e53965d7c41827a3fd4f56d69fdf
+    VERIFICATION-OBLIGATIONS.yaml: d8da5cbb869b32725c95811cca5c1663aa767e238ee1fcb4cc590d4952ba66cf
+preconditions: []
+change:
+  MFA-CON-033:
+    error_vocabulary:
+    - error: OUTSIDE-COMPETENCE
+      behaviour: δρομολόγηση σε άλλο όργανο ή κλιμάκωση· ποτέ απάντηση
+    - error: SEMANTIC-LOSS
+      behaviour: μπλοκάρει cutover/merge/adopt (MFA-INV-052)
+    - error: ERR_UNAUTHORIZED_CAPABILITY
+      behaviour: άρνηση + receipt + Control ID (MFA-INV-002)
+    - error: ERR_INVALID
+      behaviour: άρνηση με locus· η είσοδος δεν γράφεται
+    - error: UNKNOWN(reason, plan)
+      behaviour: εγγραφή Void (MFA-INV-056)· ποτέ σκέτο
+    - error: CONTESTED
+      behaviour: Both στο ATMS· διαδικασία Court (MFA-INV-022)
+    - error: TIMEOUT
+      behaviour: ⇒ Unknown, ποτέ pass (MFA-CON-030)
+    - error: EIM-UNVERIFIED
+      behaviour: canary-only, ποτέ cutover (MFA-ATK-13)
+    - error: CPEG-UNKNOWN
+      behaviour: υποχρεωτικό shadow + PARTITION/PRIORITY από δημιουργό (MFA-ATK-04)
+    - error: TAINT-UNKNOWN
+      behaviour: εξαρτώμενοι → CONTESTED (MFA-CFL-035)
+    - error: NOT_IMPLEMENTED
+      behaviour: stub επιστρέφει μόνο Unknown(NOT_IMPLEMENTED) (MFA-INV-060)
+    - error: CompilationError(locus)
+      behaviour: 'LSC: ονομασμένη αποτυχία με θέση· τίποτα μερικό δεν μπαίνει (MFA-VO-042)'
+    statement: 'apply(rule∈{ASSERT,OBSERVE,DERIVE,DELEGATE,CONTEST,RESOLVE,REVOKE,FORGET}, args, σ)→cid∣err · read(query, cut) · subscribe(type, from) · prove(cid)
+      · replay(prefix)→state_hash. · Κοινό λεξιλόγιο 12 typed σφαλμάτων με υποχρεωτική συμπεριφορά ανά σφάλμα (MATERIAL §2 #27) — error_vocabulary.'
+  MFA-ELM-065:
+    statement: 'Δικόγραφα/γνωμοδοτήσεις/συμβάσεις· κάθε παραπομπή με receipt as-of και τα 5 σκέλη ΑΠΟ ΤΗΝ ΠΡΩΤΗ ΗΜΕΡΑ (σκέλος 4 «στηρίζει» → Unknown+ειδοποίηση μέχρι
+      επικύρωση, σκέλος 5 Unknown(NO_EVIDENCE) για ελληνικές μέχρι citator)· μη επαληθεύσιμη→αφαιρείται/επισημαίνεται, ποτέ σιωπηλά· συνηγορικός τύπος μέσω MFA-ELM-072.
+      · Πιστότητα του ΑΡΧΕΙΟΥ ως first-class verification (MATERIAL §2 #21): styles, numbering, section breaks, footnotes, fields, tracked changes με σωστή authorship·
+      exact diff σε ορατό κείμενο ΚΑΙ σε package parts (docx) πριν από την υπογραφή.'
+  MFA-VO-015:
+    measures: 'υπεροχή ποιότητας έναντι κορυφαίας ομάδας, frontier model, Harvey-class ΚΑΙ competitor baseline· μη-κατωτερότητα ασφάλειας· 0 Prediction Doctrine παραβιάσεις·
+      το περιθώριο ανά κλάση έργου δημοσιεύεται (και όπου χάνει) · πιστότητα αρχείου: 0 διαφορές σε package parts εκτός των εγκεκριμένων αλλαγών (MATERIAL §2 #21)'
+  MFA-ELM-011:
+    isolation_classes:
+    - I0 Pure (χωρίς side effects, χωρίς κατάσταση — in-image)
+    - I1 Local stateful (κατάσταση μόνο τοπική — Wasm/microVM)
+    - I2 Privileged internal (πρόσβαση σε kernel contracts — microVM με tokens)
+    - 'I3/I4 (MATERIAL §2 #33: η περικοπή της ύλης που διαθέτει το πακέτο σταματά στο I3 — τα ονόματα ΔΕΝ εικάζονται· συμπληρώνονται από την ύλη στη Δόση 1)'
+    statement: 'Εκτέλεση οργάνων ως Wasm components ή microVM (Firecracker/gVisor)· ολόκληρο το Genesis plane ως ΕΝΑ όργανο μέσα σε microVM (MATERIAL §5 #5): μέσα
+      απόλυτη ανακλαστική εξουσία, έξω καμία· zero-copy ring ως παραχωρημένος πόρος. · Κλάσεις απομόνωσης με κανόνα επιλογής από (side effects, latency, authority)
+      (MATERIAL §2 #33) — isolation_classes.'
+  MFA-ELM-004:
+    delta: STRENGTHEN
+  MFA-ELM-025:
+    delta: STRENGTHEN
+  MFA-ELM-049:
+    delta: STRENGTHEN
+  MFA-CON-032:
+    delta: SPLIT
+    statement: 'Από SysML v2 API (Commit/Branch/Query/Generate/Check) σε: Substrate.read/apply(patch)/project(view: sysml∣yaml∣mermaid∣md)/check(package) — το SysML
+      v2 API παραμένει ως ΠΡΟΒΟΛΗ (import στο SysON) όχι ως έδρα. · SPLIT μαζί με MFA-ELM-088 (MFA-ATK-03): API του υποστρώματος + type-check hook προς SysON.'
+rationale: 'Η σύνταξη του CAPABILITY-CONSERVATION.md (MFA-ATK-07 §1) βρήκε 3 γραμμές της ύλης χωρίς επαληθεύσιμη παρουσία (#21, #27, #33) και 4 deltas που δεν αντανακλούσαν
+  τα patches 0007/0010/0016.'
+evidence:
+- 'MATERIAL-SYNTHESIS.md §2 #21, #27, #33'
+affected_dependencies:
+- MFA-ELM-032
+- MFA-ELM-059
+capability_impact:
+  gained:
+  - MFA-CAP-040 (typed σφάλματα)
+  - MFA-CAP-043 (πιστότητα αρχείου)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#material-s2
+migration: Καμία.
+verification: tools/check-package.py R10
+rollback: MFA-PATCH-0019-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,56 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0006
+title: ELM-081 RETAIN→STRENGTHEN (commitment-aware retrieval)· ELM-087 RETAIN→STRENGTHEN (αποφάσεις δειγματοληψίας ως δεσμεύσεις) (MFA-ATK-06)
+operation: MODIFY
+targets:
+- MFA-ELM-081
+- MFA-CON-031
+- MFA-VO-003
+- MFA-ELM-087
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 8e32ac07d7a53b96ef71adf364fc5b4c7dc96663ef78ba2d94de9acb45350bbb
+    CONTRACTS.yaml: 28fb60ed13c36e2a18447e85f0aa7803907f902710bc2bf2ae47154a33dd3092
+    VERIFICATION-OBLIGATIONS.yaml: ca3469c51beba957a5709b7e2dc268c51bc28249c73985e8b772e94459bfe445
+preconditions: []
+change:
+  MFA-ELM-081:
+    delta: STRENGTHEN
+    statement: 'Commitment-aware retrieval (MFA-ATK-06): ερώτημα = ⟨query, cut t_known, evidence_class_filter, contest_state_filter, confidentiality_domain⟩· αποτέλεσμα
+      = ΔΕΣΜΕΥΣΕΙΣ με receipts (CIDs του ledger), ποτέ αντίγραφα κειμένου· η ίδια η ανάκτηση είναι δέσμευση OBSERVE με provenance· υβριδική μηχανή (lexical + vectors
+      + graph walks, re-ranking) μόνο παράγωγο (MFA-INV-017)· semantic_vector ΕΚΤΟΣ κανονικού προφίλ (MATERIAL §5 #16)· persistent homology μόνο ως σήμανση υποψηφίων
+      (MFA-CAP-044, EXP).'
+    purpose: 'Η ανάκτηση εκμεταλλεύεται το υπόστρωμα: κλάση τεκμηρίου, κατάσταση αμφισβήτησης, διτεμπορική τομή, domain — αντί για «κείμενα».'
+  MFA-CON-031:
+    delta: STRENGTHEN
+    statement: Search(query, cut, evidence_class, contest_state, domain)→[CID + receipt] / GraphWalk(cut) / Rerank — μόνο παράγωγο· κάθε κλήση = δέσμευση OBSERVE
+      (MFA-ATK-06).
+    failure_semantics: διαγραφή index δεν αλλάζει αλήθεια· αποτέλεσμα χωρίς CID/receipt → ERR_INVALID· ερώτημα χωρίς cut → ERR_INVALID (MFA-INV-019)
+  MFA-VO-003:
+    measures: 'rebuild από ledger ταυτόσημο· αντικατάσταση μηχανής ανάκτησης: ίδιο ΣΥΝΟΛΟ CIDs σε σφραγισμένο σύνολο ερωτημάτων (μόνο η σειρά αλλάζει) (MFA-ATK-06)'
+  MFA-ELM-087:
+    delta: STRENGTHEN
+    statement: OTel traces/metrics/logs με event_cid correlation· μη αυθεντικό· audit = ledger· ΟΙ ΑΠΟΦΑΣΕΙΣ ΔΕΙΓΜΑΤΟΛΗΨΙΑΣ (ποσοστό, seed, παράθυρο) είναι δεσμεύσεις
+      Observation στο observability journal ώστε το ablation (MFA-VO-024) να ξέρει τι ΔΕΝ είδε· correlation προς ledger υποχρεωτική ανά span (MFA-ATK-06).
+rationale: 'MFA-ATK-06: RETAIN χωρίς να ρωτηθεί τι κάνει δυνατό το νέο υπόστρωμα — η ανάκτηση ήταν RAG stack του 2025 στο στρώμα όπου ζει το LAWMAX· η δειγματοληψία
+  traces ήταν αόρατη στα ablation studies.'
+evidence:
+- adversarial/MFA-ATK-06.md
+- 'MATERIAL §5 #16'
+affected_dependencies:
+- MFA-ELM-062
+- MFA-ELM-019
+- MFA-ELM-086
+capability_impact:
+  gained:
+  - MFA-CAP-010 (commitment-aware πρόσβαση)
+  - MFA-CAP-034 (δειγματοληψία ορατή)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#retain-review
+migration: Το retrieval API αποκτά υποχρεωτικό cut· καταναλωτές (LAW-05/07, AEO-03) περνούν cut — ήδη υποχρεωτικό από MFA-INV-019.
+verification: tools/check-package.py· MFA-VO-003
+rollback: MFA-PATCH-0006-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

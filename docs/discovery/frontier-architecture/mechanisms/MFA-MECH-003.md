@@ -1,0 +1,30 @@
+# MFA-MECH-003 — Genealogical Compilation Protocol (GCP): γένεση διαδόχου με χάρτη απώλειας και εξωτερική ετυμηγορία
+
+Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+| Πεδίο | Περιεχόμενο |
+|---|---|
+| **1. ID** | MFA-MECH-003 |
+| **2. Όνομα** | Genealogical Compilation Protocol |
+| **3. Ικανότητα** | MFA-CAP-027· χρησιμοποιεί 080, 004, 026 |
+| **4. Πρόβλημα** | Το ORP (CMP-AEO-06) αντικαθιστά ΟΡΓΑΝΟ υπό σταθερό metamodel. Ο Moving Horizon της ύλης θέλει η αρχιτεκτονική να παράγει τον ΔΙΑΔΟΧΟ της (νέο metamodel, νέος πυρήνας)· το CLAIMS-VERDICT/MATERIAL §7 #6 έριξε τον μηχανισμό της ύλης: συμπεριφορική ισοδυναμία μη αποκρίσιμη, ανυπαρξία αντιστρόφου, ψευδής ανεξαρτησία dual run, ετυμηγορία in-process. Κανένα δημόσιο σύστημα δεν μεταναστεύει τον εαυτό του σε νέο metamodel με ελέγξιμη συνέχεια. |
+| **5. Πρώτη αρχή** | Η συνέχεια δεν είναι ισομορφισμός· είναι σύζευξη τριών ελέγξιμων ιδιοτήτων: (α) αναπαραγωγή παγωμένων κρίσιμων traces, (β) διατήρηση των ανεπίλυτων υποχρεώσεων, (γ) μη παλινδρόμηση στο lattice. Ο διάδοχος δεν μεταφράζεται — **ξαναπαράγει** την ιστορία με τους δικούς του κανόνες, και ό,τι δεν ξαναπαράγεται είναι ο χάρτης απώλειας. |
+| **6. Οντολογία** | `Predecessor P` (CC store + κανόνες R_P)· `Successor S` (κανόνες R_S, αρχικά κενό store)· `Genome` = {Schemas επιπέδου 3, Telos, verifier set, allowlist} (το «Cognitive Genome» της ύλης, ως δεσμεύσεις)· `AnchorSet` (μονότονο σύνολο queries με αναμενόμενα αποτελέσματα)· `TraceSet` (παγωμένα ίχνη D1/D2 πράξεων)· `ObligationLedger` (Goals, ανεπίλυτα Both, OPEN voids)· `LossMap` = Conflict κόμβοι του pushout (MFA-ALT-5) + anchor failures + obligation diff· `Verdict` (εξωτερικός εκδότης) |
+| **7. Κατάσταση** | Φάση ∈ {PROPOSED, COMPILING, REPLAYING, DIFFING, SHADOW, VERDICT_PENDING, ADOPTED, REJECTED, ROLLED_BACK}· ο P παραμένει εκτελέσιμος σε όλες |
+| **8. Είσοδοι/έξοδοι** | Είσοδος: R_S (πρόταση από Forge/Evolution)· Έξοδος: S store, LossMap, ContinuityCertificate(4 σκέλη) ή απόρριψη με τον χάρτη |
+| **9. Αλγόριθμος** | (1) **Genome transplant**: τα Schemas επιπέδου 3 αντιγράφονται αυτούσια (δεν μεταγλωττίζονται — το Telos δεν αλλάζει)· (2) **Replay**: `S.store = foldl(apply_S, genesis, P.journal)` — κάθε δέσμευση του P ξαναπαράγεται με R_S· όπου R_S δεν μπορεί, γράφεται `Unknown(NOT_REPRODUCIBLE_BY_SUCCESSOR)` με δείκτη στην αρχική· (3) **Anchor check**: κάθε query του AnchorSet τρέχει σε P και S στο ίδιο cut· διαφορά = εγγραφή LossMap· (4) **Trace replay**: κάθε παγωμένο D1/D2 ίχνος επανεκτελείται στον S· μη byte-identical = LossMap· (5) **Obligation diff**: `ObligationLedger(P) ∖ ObligationLedger(S)` = LossMap (χαμένες υποχρεώσεις)· (6) **Lattice check**: `lattice(S) ⊒ lattice(P)` με evidence από τον held-out Πολιτισμό· (7) **Shadow**: S τρέχει παράλληλα χωρίς effects για παράθυρο· differential· (8) **Verdict**: ο δημιουργός + ανεξάρτητος verifier (άλλος Πολιτισμός, MFA-MECH-009 απόσταση > κατώφλι) υπογράφουν ContinuityCertificate ή απόρριψη· **ο S δεν μπορεί να υπογράψει για τον εαυτό του** (ο τύπος Certificate απαιτεί κλειδιά εκτός της γενεαλογίας του S)· (9) **Adopt** = ο S γίνεται ενεργός, ο P μένει εκτελέσιμος για rollback window· (10) **Rollback** = επιστροφή στον P με μεταφορά των νέων δεσμεύσεων του S ως Observations (τίποτα δεν χάνεται) |
+| **10. Διεπαφές** | `GCP.propose(R_S)` · `GCP.compile()→{S, LossMap}` · `GCP.anchor_check()` · `GCP.shadow(window)` · `GCP.request_verdict()` · `GCP.adopt(certificate)` · `GCP.rollback(reason)`· ICD Successor Migration (αδελφό του ICD-16, ζητείται ως ID) |
+| **11. Εξαρτήσεις** | MFA-MECH-001, MFA-MECH-014 (loss map), MFA-MECH-009 (ανεξαρτησία verdict), MFA-MECH-018 (Πολιτισμοί), CMP-AEO-05 Battery (κρυφή από τον S) |
+| **12. Πόροι** | Replay πλήρους ιστορίας: O(|journal|)· για 10⁸ δεσμεύσεις ≈ ώρες σε cluster· γίνεται σε deferred simulation (MFA-CAP-033)· ο shadow διπλασιάζει κόστος για το παράθυρο |
+| **13. Κλιμάκωση** | Replay παραλληλίζεται ανά journal· anchors/traces σταθεροί· η LossMap μεγαλώνει με τη διαφορά των κανόνων, όχι με το μέγεθος |
+| **14. Αποτυχίες** | Replay που δεν τερματίζει → budget → Unknown(UNDECIDABLE_IN_BUDGET) στη LossMap· anchor set ελλιπές → η LossMap είναι ΚΑΤΩ ΦΡΑΓΜΑ (δηλώνεται) και το SEMANTIC-LOSS μπλοκάρει ανεξάρτητα |
+| **15. Αντιπαλικοί** | S που «μαθαίνει» τα anchors → anchors κρυφά και περιστρεφόμενα (όπως η Battery)· S που ξαναπαράγει με χαλαρότερους verifiers → lattice check με evidence ΜΟΝΟ από held-out Πολιτισμό· συμπαιγνία verdict → δύο υπογραφές διαφορετικής γενεαλογίας κλειδιών |
+| **16. Επαλήθευση** | VO: `Certificate ⇒ (anchors pass ∧ traces byte-identical ∧ obligation diff = ∅ ∧ lattice ⊒)`· DST drill διαδόχου κάθε φάση (KT-08 γενικευμένο)· mutation: seeded απώλεια σε S πρέπει να εμφανιστεί στη LossMap |
+| **17. Πρωτότυπο** | F2: δύο εκδοχές του CC evaluator (Lean/Rust) ως P/S με 10³ δεσμεύσεις· F3: LAWMAX-Ω journals ως P, CC ως S (η πρώτη πραγματική γενεαλογική μεταγλώττιση είναι η ίδια η μετάβαση στο GRAIL) |
+| **18. Ελάχιστο πείραμα** | Seeded απώλεια: αφαιρώ έναν κανόνα από R_S· η LossMap πρέπει να τον εντοπίσει σε 100% των περιπτώσεων· ψευδώς θετικά < 1% |
+| **19. Διάψευση** | LossMap που χάνει seeded απώλεια σε ≥1 περίπτωση με anchors+traces+obligations → ο μηχανισμός δεν επαρκεί μόνος· προστίθεται τέταρτη ιδιότητα ή ο διάδοχος απαγορεύεται να αλλάζει metamodel (μένει ORP) — δηλωμένη έξοδος |
+| **20. → Παραγωγή** | Η μετάβαση LAWMAX-Ω → GRAIL Δόση 3 ΕΙΝΑΙ η πρώτη παραγωγική εκτέλεση |
+| **21. Εξέλιξη** | Το ίδιο το GCP είναι Schema· ο διάδοχος GCP μεταγλωττίζεται από το GCP (μετακυκλικό, με τον P-GCP να κρίνει) |
+| **22. Αλληλεπιδράσεις** | Forge προτείνει R_S· Evolution αξιολογεί· Court λύνει Both στη LossMap· cockpit δείχνει P/S ως παράλληλα φύλλα με τη LossMap ως ρήγματα |
+
+**AI Contribution Ledger:** `NEW PROTOCOL` — replay-as-compilation με loss map ως pushout conflicts και ετυμηγορία εκτός γενεαλογίας. Συγγενή: schema migration, database replay, live upgrade (Erlang)· κανένα δεν ξαναπαράγει την ιστορία με νέους κανόνες και δεν κρίνει εξωτερικά.

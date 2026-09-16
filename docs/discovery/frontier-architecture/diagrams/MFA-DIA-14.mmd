@@ -1,0 +1,16 @@
+%% id: MFA-DIA-14 · Deployment profiles · question: ίδια αρχιτεκτονική, ποια όργανα ενεργά ανά προφίλ, και τι υποχωρεί (εύρος, ποτέ κλάση απόδειξης);
+%% elements: MFA-DEP-1…5, MFA-ELM-013/096/097/056, MFA-MECH-013 · source: TECHNICAL-ARCHITECTURE.md §Deployment
+flowchart LR
+  OAP["MFA-ELM-013 Organ Activation Planner<br/>set cover · veto κλάσης απόδειξης"]
+  D1["MFA-DEP-1 High-end laptop<br/>Lean profile (MFA-ELM-097)<br/>robust substrate + 1 πάροχος + corpus + verifier<br/>1 VOTING + 1 HELD_OUT σε ξεχωριστή συσκευή (MFA-ATK-13)<br/>υποχωρεί: shadow runs, ghost worlds deferred· χωρίς 2η συσκευή: canary-only"]
+  D2["MFA-DEP-2 Sovereign workstation<br/>+ τοπικά μοντέλα · HSM · 3D cockpit<br/>υποχωρεί: multi-site witnesses"]
+  D3["MFA-DEP-3 Local server<br/>+ Court panels · CAM-NS πληθυσμοί · Evolution sandbox<br/>υποχωρεί: DR RPO 0 cross-site"]
+  D4["MFA-DEP-4 Distributed cluster<br/>5 Πολιτισμοί σε sites (MFA-ELM-056) · witnesses ≥2 sites · KT-22<br/>πλήρες προφίλ"]
+  D5["MFA-DEP-5 Future hardware<br/>νευρομορφικά/φωτονικά ως χρησμωδικά όργανα (Q1)<br/>ίδια IDs/contracts"]
+  SUB["MFA-ELM-096 Robust Substrate<br/>σε ΚΑΘΕ προφίλ"]
+  OAP --> D1 & D2 & D3 & D4 & D5
+  SUB --- D1
+  SUB --- D4
+  D1 -->|"offloading · deferred simulations"| D3
+  D3 -->|"scale-out"| D4
+  D4 -->|"EP-03"| D5

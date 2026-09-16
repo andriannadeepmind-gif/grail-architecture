@@ -1,0 +1,37 @@
+%% id: MFA-DIA-09 · Dynamic Quest sequence · question: τι συμβαίνει από τη στιγμή που ο δημιουργός δημιουργεί quest μέχρι το receipt;
+%% elements: MFA-ELM-091/029/028/027/010/008/009/024 · source: MFA-MECH-004/006/008
+sequenceDiagram
+  autonumber
+  participant CR as Δημιουργός
+  participant CK as MFA-ELM-091 Cockpit
+  participant VOL as MFA-ELM-029 Volition
+  participant SPL as MFA-ELM-024 SPL
+  participant VOID as MFA-ELM-028 Void Ledger
+  participant SC as MFA-ELM-027 Scouts
+  participant RET as MFA-ELM-010 RET
+  participant GATE as MFA-ELM-008 Gate
+  participant GW as MFA-ELM-009 Gateway
+  participant CC as MFA-ELM-001 Commitment Store
+  CR->>CK: quest (RTS εντολή)
+  CK->>CC: CC.apply(ASSERT Goal origin=creator, falsifier)
+  CC-->>CK: cid + receipt
+  CK->>VOL: Goal ADMITTED
+  VOL->>SPL: predict(κόστος, επιτυχία, αποτυχίες)
+  SPL-->>VOL: self_prediction_cid
+  VOL->>VOID: top-k voids για τον στόχο
+  VOID-->>SC: ObservationPlan (εξουσιοδοτημένη πηγή)
+  SC->>CC: OBSERVE (untrusted)
+  VOL->>RET: propose(Effect, inverse)
+  RET->>RET: inverse staged · shadow · diff
+  RET->>GATE: decide(options, vectors)
+  GATE-->>RET: Decision (διάνυσμα, pruning trace)
+  alt inverse ≠ NONE ∧ grant
+    RET->>GW: commit(token)
+    GW-->>CC: EffectReceipt
+  else inverse = NONE
+    RET->>CK: NEEDS_H1
+    CK->>CR: αίτηση υπογραφής
+    CR-->>RET: H1
+  end
+  CC-->>CK: scene(cut) ενημερώνεται
+  VOL->>SPL: resolve(outcome) → score

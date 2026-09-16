@@ -1,0 +1,89 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0012
+title: MFA-INV-059 από ταυτότητα σε Galois connection (πιστότητα υπό zoom)· εντολές cockpit = προτάσεις RET· MFA-VO-056 διακριτική ισχύς cockpit· omitted_count στις
+  εξηγήσεις (MFA-ATK-12)
+operation: ADD
+targets:
+- MFA-VO-056
+- MFA-INV-059
+- MFA-VO-034
+- MFA-CON-039
+- MFA-ELM-093
+- MFA-ELM-091
+- MFA-MECH-008
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 1e3d4f8dd1d5665ca5136ea8ee059652f2fd73378edf3e6858a967313edf6749
+    CONTRACTS.yaml: e4bcd7e21bdbeef7abf6008ef4d0b04f119cce7c99f48ce922735f856dbe688f
+    INVARIANTS.yaml: bd82fa99a4361a2d308e136258f8c9c0eaa02b7362c9f543af659f81ece11683
+    INVENTIONS.yaml: 19c2e5b06a544bdd95bb18c631226352b206ae2c62391046719ccc170a16998d
+    VERIFICATION-OBLIGATIONS.yaml: 87b19b1428eb00811706a79cc06479b1aacc7e79185ddda6b24914a752295868
+preconditions: []
+change:
+  MFA-VO-056:
+    _add: true
+    corresponds_to: null
+    name: Cockpit discriminative power
+    methods:
+    - σφραγισμένα έργα (εύρεση αντίφασης, εύρεση αγνώστου που μπλοκάρει, σύγκριση δύο φύλλων)
+    - χρόνος-εύρεσης και ποσοστό λάθους 3D vs 2D vs text
+    - MFA-INV-055 εφαρμοσμένη στο cockpit
+    measures: διακριτική διαφορά 3D έναντι 2D/text σε ≥1 κλάση έργων μετά από N έργα
+    rejects: καμία διακριτική διαφορά → το 3D RECLASSIFY σε προαιρετικό renderer (R_mode), ποτέ διαγραφή
+    allows_next: immersive mode ως προεπιλογή του δημιουργού
+    first_level: F3
+    verifies:
+    - MFA-INV-055
+    - MFA-INV-059
+  MFA-INV-059:
+    name: Projection faithfulness (Galois connection)
+    statement: 'Κάθε προβολή (SysML/YAML/Mermaid/σκηνή/εξήγηση) είναι σύνδεση Galois με το υπόστρωμα: α: LedgerCut → Scene (αφαίρεση), γ: SceneObject → 𝒫(CID) (συγκεκριμενοποίηση)·
+      α∘γ∘α = α (idempotent υπό zoom)· κάθε εμφανιζόμενο αντικείμενο αντιστοιχεί σε ΜΗ ΚΕΝΟ σύνολο CIDs· κάθε CID της τομής είναι προσβάσιμο με zoom· πληροφορία απούσα
+      από το υπόστρωμα δεν εμφανίζεται· ντετερμινισμός (ίδια cut, ίδιο seed ⇒ ίδια σκηνή). Η «ταυτότητα» ήταν αδύνατη για απωλεστική προβολή (MFA-ATK-12).'
+    falsifier: αντικείμενο σκηνής με γ = ∅· CID μη προσβάσιμο με zoom· προβολή με extra πληροφορία· ίδια cut/seed διαφορετική σκηνή
+  MFA-VO-034:
+    measures: γ(pick(scene(cut), pos(cid))) ∋ cid (υπερσύνολο, όχι ταυτότητα), α∘γ∘α = α σε 3 επίπεδα zoom, ίδιο SceneGraph hash, text δέντρο ⊇ CIDs, κάθε CID προσβάσιμο
+      με ≤ k zoom βήματα (MFA-ATK-12)
+    rejects: element απόν από cut στη σκηνή· αντικείμενο με γ = ∅· μη ντετερμινισμός
+  MFA-CON-039:
+    statement: scene(cut, policy, seed)→SceneGraph / pick(scene, ray)→𝒫(CID) / replay(cut_a, cut_b) / compare(sheet_a, sheet_b) / command(cmd)→RET.propose (ΠΟΤΕ commit
+      — MFA-ATK-12)· zoom(object)→Scene.
+    failure_semantics: element χωρίς θέση από Γ → «θέση από πολιτική» ορατή, ποτέ ελεύθερη· command που επιχειρεί commit → ERR_UNAUTHORIZED_CAPABILITY· ο renderer
+      δεν έχει commit path· επιβεβαίωση = υπογεγραμμένη πράξη με receipt· undo = RET window
+  MFA-ELM-093:
+    statement: 'Κάθε εξήγηση = προβολή του ledger σε επίπεδο zoom k με event references ανά πρόταση· επίπεδα ορισμένα στο Contract κάθε εξόδου· ίχνος → αιτιολόγηση
+      (CLAIMS F23) ως ονομασμένο στοιχείο· ο LPA pruning trace ως εξήγηση απόφασης. · Κάθε εξήγηση φέρει depth και omitted_count (πόσες δεσμεύσεις συνοψίστηκαν) —
+      ο άνθρωπος βλέπει ΟΤΙ παραλείφθηκε κάτι (MFA-INV-047: κανένα ανεξήγητο βαθμωτό ⇒ κανένα ανεξήγητο κενό) (MFA-ATK-12).'
+  MFA-ELM-091:
+    verification:
+    - MFA-VO-034
+    - MFA-VO-017
+    - MFA-VO-056
+    statement: 'Η Principal Console ΓΕΝΙΚΕΥΕΤΑΙ σε Immersive Reality OS με Canonical Geometry Projection (MFA-MECH-008): σκηνή = Γ(cut, policy, seed)· χωρική γραμματική·
+      semantic zoom, time travel, causal replay, fork compare, rifts/fog/sheets/boundaries/envelopes· RTS εντολές (quests→TEGF, policies→PDP, resources→OAP, simulations→DST,
+      staged transitions→RET) = CC.apply με receipts· 7 προβολές· Court dashboard, matter workspace, provenance inspection. · Εντολές = προτάσεις RET, ποτέ commits·
+      Galois προβολή (MFA-INV-059)· η αξία του 3D μετριέται (MFA-VO-056) και αν δεν αποδειχθεί, το 3D γίνεται προαιρετικός renderer — ποτέ διαγραφή (MFA-ATK-12).'
+  MFA-MECH-008:
+    statement: Σκηνή = Γ(store_at_cut, policy, seed)· χωρική γραμματική (stratum/node/edge/rift/fog/sheet/boundary/envelope)· RTS εντολές = CC.apply. · Γ είναι σύνδεση
+      Galois (α, γ), όχι ταυτότητα· command → RET.propose (MFA-ATK-12).
+rationale: 'MFA-ATK-12: η ταυτότητα round-trip είναι ψευδής για κάθε συνάθροιση· misclick = υπογεγραμμένη πράξη αν οι εντολές είναι commits· η αξία του 3D ήταν ισχυρισμός.'
+evidence:
+- adversarial/MFA-ATK-12.md
+affected_dependencies:
+- MFA-ELM-088
+- MFA-ELM-069
+- MFA-ELM-092
+capability_impact:
+  gained:
+  - MFA-CAP-031 (διαψεύσιμη αξία)
+  - MFA-CAP-069 (omitted_count)
+  - MFA-CAP-070 (contest path βλέπει τι αμφισβητείται)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#cockpit
+migration: Οι VO-026/034 ξαναγράφονται με Galois σημασιολογία· καμία αλλαγή IDs.
+verification: tools/check-package.py· MFA-VO-026/034/056
+rollback: MFA-PATCH-0012-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

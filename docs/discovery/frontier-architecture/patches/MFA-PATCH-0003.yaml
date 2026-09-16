@@ -1,0 +1,82 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0003
+title: ELM-024 REPLACE→MERGE (CompetenceProfile + SPL, cold start ως Unknown)· ELM-088 REPLACE→SPLIT (SysON ως Tier-1 verifier προβολών) (MFA-ATK-03)
+operation: MODIFY
+targets:
+- MFA-ELM-024
+- MFA-ELM-088
+- MFA-VO-026
+- MFA-MECH-010
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: f896c354a26401410644da013b8ca23d245acde1c2dbb3e4d1e248a2d8f3abdb
+    INVENTIONS.yaml: 2209592662debf2e3df13b2941b2d8387e99793981d306a983aeed0a69163613
+    VERIFICATION-OBLIGATIONS.yaml: d3ef176a3a22cc5bb90b873d637952328580469a462cfae73563ce91bdd39b1b
+preconditions: []
+change:
+  MFA-ELM-024:
+    delta: MERGE
+    statement: 'Το self-model ΣΥΓΧΩΝΕΥΕΤΑΙ ΧΩΡΙΣ ΑΠΩΛΕΙΑ (MFA-ATK-03): (α) δηλωμένο CompetenceProfile — τρεις έδρες CAPABILITY / COMPETENCE (applicability, calibration,
+      failure envelope, evidence) / AUTHORITY (μόνο action token) από MATERIAL §2 #12, χρησιμοποιήσιμο ΠΡΙΝ από κάθε πράξη (OAP set cover)· (β) Self-Prediction Ledger
+      (MFA-MECH-010) με proper scoring εκτός microVM, FidelityIndex, DriftAlarm→Battery, calibration gates με ρεύμα outcomes εκτός προσομοίωσης. Cold start: το CompetenceProfile
+      νέου οργάνου είναι δέσμευση κλάσης Unknown(NOT_OBSERVED, plan: N βαθμολογημένες προβλέψεις, VOI από OAP) μέχρι FidelityIndex ≥ κατώφλι· μέχρι τότε το όργανο
+      σχεδιάζεται μόνο σε canary.'
+    state_model: CompetenceProfile (δηλωμένο, σημασμένο unverified μέχρι FidelityIndex) + prediction ledger + FidelityIndex ανά όργανο
+    failure_modes:
+    - mode: unresolved prediction
+      response: EXPIRED μετρά ως αποτυχία
+    - mode: cold start (0 προβλέψεις)
+      response: CompetenceProfile = Unknown(NOT_OBSERVED)· OAP μόνο canary
+    - mode: δηλωμένο προφίλ ≠ μετρημένο
+      response: DriftAlarm → Battery → ORP
+    assumptions:
+    - Το δηλωμένο προφίλ είναι ισχυρισμός του οργάνου για τον εαυτό του — γι' αυτό μόνο canary μέχρι FidelityIndex
+    alternatives:
+    - στατικό self-model μόνο (corpus)
+    - 'SPL μόνο (η αρχική REPLACE — απορρίφθηκε: cold start, MFA-ATK-03)'
+  MFA-ELM-088:
+    delta: SPLIT
+    statement: 'ΑΝΤΙΚΑΘΙΣΤΑ την «SysML v2 έδρα + SysON»: έδρα = το serialization-independent υπόστρωμα (αυτό το πακέτο → CC Schemas), SysML/SysON/YAML/Mermaid = παραγόμενες
+      προβολές με round-trip VO· τα εργαλεία (SysON, checkers) όργανα υπό ORP· η αλλαγή σχεδίου = InstitutionalAct· DEC-X-01 (κείμενο στο git, εργαλεία φακοί) εφαρμοσμένο.
+      · SPLIT (MFA-ATK-03): έδρα → το υπόστρωμα (κρατιέται: το SysON ΠΟΤΕ έδρα λόγω silent truncation)· έλεγχος τύπων → το SysON (ή η reference υλοποίηση SysML v2)
+      ως Tier-1 VERIFIER ORGAN των προβολών: η SysML προβολή ελέγχεται τυπικά (KerML) και αποτυχία τύπων = SEMANTIC-LOSS της προβολής (μπλοκάρει, MFA-INV-052). DEC-PLT-01
+      superseded ως έδρα, όχι ως εργαλείο.'
+    alternatives:
+    - SysON ως έδρα (DEC-PLT-01 — superseded κατά DEC-X-01)
+    - 'πακέτο χωρίς KerML έλεγχο (η αρχική REPLACE — απορρίφθηκε: απώλεια ελέγχου τύπων, MFA-ATK-03)'
+  MFA-VO-026:
+    methods:
+    - executable spec
+    - property test
+    - KerML type-check της SysML προβολής (SysON ή reference impl)
+    measures: 'substrate→YAML/SysML/Mermaid→substrate: γ∘α ⊇ επιλεγμένο (Galois, MFA-INV-059)· SysML προβολή: 0 σφάλματα τύπων στο import'
+    rejects: απώλεια/πρόσθεση· σφάλμα τύπων KerML (= SEMANTIC-LOSS προβολής)
+    allows_next: SysON ως viewer ΚΑΙ verifier προβολών
+    status_note: 'PENDING: ο KerML έλεγχος δεν μπορεί να τρέξει στη συνεδρία 2026-09-16 (MCP syson απρόσιτο — αδυναμία εργαλείου, ΝΟΜΟΣ §14)'
+  MFA-MECH-010:
+    statement: 'Self-model = προ-γεγονότος κατανομές για τον εαυτό, βαθμολογούμενες με proper scoring rule εκτός microVM· drift alarm. · MERGE (MFA-ATK-03): συνυπάρχει
+      με δηλωμένο CompetenceProfile (3 έδρες CAPABILITY/COMPETENCE/AUTHORITY)· cold start = Unknown μέχρι FidelityIndex.'
+rationale: 'MFA-ATK-03: SPL χωρίς δηλωμένο προφίλ δεν απαντά «μπορώ;» πριν από την πρώτη πρόβλεψη (cold start του OAP)· πακέτο χωρίς KerML έλεγχο χάνει τον έλεγχο
+  τύπων του metamodel — και τα δύο REPLACE ήταν Pareto, όχι αυστηρά ανώτερα.'
+evidence:
+- adversarial/MFA-ATK-03.md
+- platform/fidelity/GrailFidelityTest.sysml (ο έλεγχος τύπων είναι πραγματικός στη SysON v2026.7.0)
+- 'MATERIAL-SYNTHESIS §2 #12'
+affected_dependencies:
+- MFA-ELM-013
+- MFA-ELM-029
+- MFA-ELM-090
+- MFA-ELM-091
+capability_impact:
+  gained:
+  - 'MFA-CAP-017 (self-model: δηλωμένο + μετρημένο)'
+  - MFA-CAP-055 (προβολές με έλεγχο τύπων)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#replace-register
+migration: 'SUPERSEDED-REGISTER: ELM-024 REPLACE→MERGED WITHOUT LOSS· ELM-088 REPLACE→SPLIT· INV-031 REPLACE παραμένει (αυστηρά ανώτερο).'
+verification: tools/check-package.py· MFA-VO-026 (PENDING μέχρι SysON)
+rollback: MFA-PATCH-0003-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

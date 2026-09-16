@@ -1,0 +1,51 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0017-R
+title: 'Rollback of MFA-PATCH-0017: Ο ανταγωνιστής (ALT-6/7) ως baseline μέσα στο harness· MFA-VO-015 τρίτο σκέλος· lean profile πρώτο (MFA-ATK-17)'
+operation: RESTORE
+targets:
+- MFA-ELM-086
+- MFA-VO-015
+- MFA-ELM-097
+- MFA-ELM-089
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 48ae77a00708ce1fcbfbd9cbbaf25c21edcbe1541fab3a23833a0fb8ad615e81
+    VERIFICATION-OBLIGATIONS.yaml: 96473098d95d13157b24ea2f797fc044d6f65d24105a9de94336b26debe1f13f
+preconditions:
+- MFA-PATCH-0017.status == APPLIED
+change:
+  MFA-ELM-086:
+    statement:
+      __raw: '"Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+        τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+        δεν ανήκουν εδώ (CLAIMS H4). · Στο DP-1/2 ο HELD_OUT ρόλος του harness τρέχει σε ξεχωριστή συσκευή (scorer + sealed sets) (MFA-ATK-13)."'
+  MFA-VO-015:
+    methods:
+      __raw: '["blind pre-registered panel", "superiority vs max of pool (DEC-X-17)"]'
+    measures:
+      __raw: '"υπεροχή ποιότητας, μη-κατωτερότητα ασφάλειας, 0 Prediction Doctrine παραβιάσεις"'
+  MFA-ELM-097:
+    falsifier:
+      __raw: '"lean profile που χάνει από τον Copilot σε LEAN-E1"'
+  MFA-ELM-089:
+    statement:
+      __raw: '"Τα 24 KT + νέα VO ως στοιχεία με προκαταχωρισμένα κατώφλια, DST-first, μη-LLM oracle, «αποτυχία σκοτώνει», περιοδικά drills για EP (DEC-X-19), SAP
+        ενιαίο (DEC-X-09)· ratchet KT-15 σε κάθε φάση."'
+rationale: Αντίστροφο του MFA-PATCH-0017, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-013
+- MFA-ELM-056
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-029 (ο ανταγωνιστής ως μόνιμο μέτρο)
+  ledger_entry: CAPABILITY-CONSERVATION.md#competitor
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0017
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

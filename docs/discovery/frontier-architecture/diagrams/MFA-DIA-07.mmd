@@ -1,0 +1,27 @@
+%% id: MFA-DIA-07 · Collective-intelligence topology · question: πόσοι Πολιτισμοί, ποιος ψηφίζει, ποιος κρίνει, και τι περνά τα σύνορα;
+%% elements: MFA-ELM-056/057/041/042/045/044/048/086/050, MFA-MECH-018 · source: mechanisms/MFA-MECH-018.md
+flowchart TB
+  subgraph V["VOTING Πολιτισμοί (n = 3f+1 = 4)"]
+    C1["Civ-1<br/>κλειδιά · supply chain · evaluators"]; C2["Civ-2"]; C3["Civ-3"]; C4["Civ-4"]
+  end
+  subgraph H["HELD_OUT Πολιτισμός (h = 1) — ποτέ δεν ψηφίζει"]
+    H1["MFA-ELM-086 Harness<br/>sealed sets: Battery · AnchorSet · AffinityTest · SeededFaults"]
+    H2["MFA-ELM-050 CAM-NS<br/>αντιγόνα που εξελίσσονται"]
+  end
+  subgraph L["Τα 4 επίπεδα του Commons (ανά Πολιτισμό, ίδιο σύνταγμα)"]
+    EV["MFA-ELM-041 Evidence · G-Set (συγκλίνει)"]
+    CL["MFA-ELM-042 Claims · ASPIC+ · Both"]
+    ST["MFA-ELM-045 Stances · ιδιωτικές (αποκλίνουν)"]
+    VD["MFA-ELM-044 Verdicts · μόνο Court"]
+  end
+  CQ["MFA-ELM-056 Civilization Quorum<br/>EIM PASS ανά ζεύγος · BFT μόνο Verdicts · rotation"]
+  IMP["MFA-ELM-057 Trust-Domain Import Gate<br/>CrossDomainImport + receipt"]
+  COURT["MFA-ELM-048 Court<br/>panels με EIM · ≥1 μη-LLM oracle"]
+  C1 & C2 & C3 & C4 --> CQ
+  CQ -->|"διάταξη"| VD
+  H1 -.->|"αξιολογεί, δεν αποφασίζει"| CQ
+  H2 -.->|"challenge"| COURT
+  EV --> CL --> ST
+  CL --> COURT --> VD
+  C1 <-->|"μόνο μέσω"| IMP
+  IMP <--> C2

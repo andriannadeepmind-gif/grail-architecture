@@ -1,0 +1,31 @@
+%% id: MFA-DIA-02 · Complete system context · question: ποιος βρίσκεται έξω από το GRAIL, από ποιο σύνορο περνά, και με ποιο receipt;
+%% elements: MFA-ELM-094/095/091/069/057/082/017/009 · source: ARCHITECTURE-ELEMENTS.yaml
+flowchart LR
+  subgraph EXT["Εξωτερικός κόσμος"]
+    CR["Δημιουργός<br/>(κλειδί συσκευής, k-of-n)"]
+    PR["Principal / δικηγόρος"]
+    CL["Πελάτες"]
+    CT["Δικαστήρια · αντίδικοι"]
+    SRC["Πηγές δικαίου<br/>ΦΕΚ · ΑΠ · ΣτΕ"]
+    PROV["Πάροχοι μοντέλων"]
+    PUB["Δημόσια εγκατάσταση<br/>(MFA-TEL-07, προαιρετικό)"]
+  end
+  subgraph GRAIL["GRAIL — ένα σύστημα, δύο planes"]
+    GEN["MFA-ELM-094 Genesis Plane<br/>microVM · χωρίς Controls"]
+    EFF["MFA-ELM-095 Effect Plane<br/>tokens · receipts · RET"]
+    CK["MFA-ELM-091 Cockpit (CGP)"]
+    PORT["MFA-ELM-069 Client Portal"]
+    ING["MFA-ELM-082 Ingestion & Attestation"]
+    IG["MFA-ELM-017 Inference Gateway (TED)"]
+    GW["MFA-ELM-009 Capability Gateway"]
+    TDI["MFA-ELM-057 Trust-Domain Import Gate"]
+  end
+  CR -->|"RTS εντολές = CC.apply + receipt"| CK
+  PR -->|"sign-off H1"| CK
+  CL <-->|"receipts · contest path"| PORT
+  SRC -->|"attested, untrusted από τη γέννηση"| ING
+  PROV <-->|"D1/P1 ανά κλήση · seed στο ledger"| IG
+  GEN -->|"EffectTx μόνο"| EFF
+  EFF -->|"EffectReceipt"| GW
+  GW -->|"κατάθεση · επικοινωνία (H1 όπου inverse=NONE)"| CT
+  PUB <-->|"CrossDomainImport με receipt"| TDI

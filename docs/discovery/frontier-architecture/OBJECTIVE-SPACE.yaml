@@ -1,0 +1,1373 @@
+# OBJECTIVE-SPACE — ο πλήρης χώρος επιδιώξεων, οι αντιφάσεις του, το πλέγμα υποψηφίων Telos, το Pareto μέτωπο,
+# ο χάρτης ευαισθησίας και το ανθεκτικό υπόστρωμα (εντολή Ω-MAXIMUM §4, Pass B).
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+#
+# Κανόνες αυτού του αρχείου:
+#  - Κάθε επιδίωξη έχει provenance: explicit (γραμμένη), latent (συνεπάγεται από γραμμένη), new (πρώτες αρχές — δική μου προσθήκη).
+#  - Καμία επιδίωξη δεν αφαιρείται· οι αντιφάσεις κρατούν και τις δύο πλευρές (CONFLICTS.yaml έχει τις συνθήκες επίλυσης).
+#  - Το Telos ΔΕΝ κλειδώνεται εδώ. Η επιλογή του δημιουργού είναι patch RECLASSIFY (PATCH-PROTOCOL.md §5).
+#  - Οι ικανότητες αναφέρονται με MFA-CAP-nnn (CAPABILITY-LATTICE.yaml).
+#  - Τα στοιχεία έχουν τα 28 πεδία της εντολής §19· όπου ένα πεδίο δεν έχει νόημα για επιδίωξη, γράφεται null με τον λόγο στο schema_note.
+
+schema_note: |
+  Επιδίωξη (type: objective): interfaces/state_model/resource_model/authority είναι null — μια επιδίωξη δεν έχει διεπαφές,
+  κατάσταση ή πόρους· έχει ικανότητες που απαιτεί (capabilities), μετρήσιμο κριτήριο (verification), διαψεύστη (falsifier)
+  και το τι την αλλάζει (affected_by). Υποψήφιο Telos (type: telos-candidate): σύνολο επιδιώξεων + κανόνας σύνθεσης.
+  Το «status: PROPOSED» ισχύει παντού μέχρι Creator Approval.
+
+defaults: &defaults
+  version: 1
+  status: PROPOSED
+  created_by: "Stavropoulos Law® — σχεδιαστική συνεδρία 2026-09-16 (εξαγωγή ή επινόηση, βλ. source_provenance)"
+  interfaces: null
+  state_model: null
+  resource_model: null
+  authority: null
+  supersedes: []
+  superseded_by: null
+  change_history:
+    - {patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}
+
+# =====================================================================================================
+# 1. ΕΠΙΔΙΩΞΕΙΣ
+# =====================================================================================================
+objectives:
+
+  # ---- 1a. Ρητές: το Telos του προχείρου T0–T9 (spine-vocab.md:17, model/Telos.sysml) ---------------
+  - id: MFA-OBJ-001
+    <<: *defaults
+    type: objective
+    name: "T0 — Telos πολιτισμού ως σύζευξη T1…T9"
+    maturity: stated
+    statement: "Το GRAIL επιτυγχάνει T1…T9 ταυτόχρονα· η αποτυχία οποιουδήποτε T είναι αποτυχία του T0."
+    purpose: "Να μην αγοράζεται ένα T με απώλεια άλλου (ΝΟΜΟΣ §7, Δ-8)."
+    capabilities: [MFA-CAP-001, MFA-CAP-002]
+    source_provenance: ["docs/architecture-draft/spine-vocab.md:17", "model/Telos.sysml (T0 conjunction, PROVISIONAL)"]
+    provenance_kind: explicit
+    assumptions: ["Τα T1…T9 είναι το πλήρες σύνολο — ΑΜΦΙΣΒΗΤΕΙΤΑΙ: βλ. MFA-OBJ-030…045 (νέες επιδιώξεις που λείπουν)"]
+    dependencies: [MFA-OBJ-002, MFA-OBJ-003, MFA-OBJ-004, MFA-OBJ-005, MFA-OBJ-006, MFA-OBJ-007, MFA-OBJ-008, MFA-OBJ-009, MFA-OBJ-010]
+    failure_modes: ["Σιωπηρή επαναπροσδιόριση ενός T από απόφαση στρώματος (DEC-X-04: FRG-05→T4, AEO-02→T2, LAW-01→T1, LAW-03→T7, EVO-03→T5)"]
+    alternatives: ["Λεξικογραφικό Telos (T9 > T6 > …) — απορρίπτεται: τα T δεν είναι ανταλλάξιμα (ΝΟΜΟΣ §12)"]
+    conflicts: [MFA-CFL-014]
+    unknowns: [MFA-UNK-001]
+    verification: "Κάθε T έχει όργανο μέτρησης (model/Instruments.sysml) και μετρημένη βάση· το T0 ισχύει όταν καμία μέτρηση δεν πέφτει κάτω από τη βάση της (non-diminution)."
+    falsifier: "Ένα release όπου ένα T ανεβαίνει και άλλο πέφτει κάτω από τη μετρημένη βάση χωρίς εγγραφή στο Capability Conservation Ledger."
+    evolution_path: "Το σύνολο των T μεγαλώνει με patch ADD (νέο T) — ποτέ δεν συρρικνώνεται· βλ. MFA-TEL-08."
+    affected_by: [MFA-TEL-01, MFA-TEL-02, MFA-TEL-03, MFA-TEL-04, MFA-TEL-05, MFA-TEL-06, MFA-TEL-07, MFA-TEL-08]
+
+  - id: MFA-OBJ-002
+    <<: *defaults
+    type: objective
+    name: "T1 — Κατανόηση και κρίση"
+    maturity: stated
+    statement: "Το σύστημα κατανοεί (μοντέλο του κόσμου, αιτίες, αντιπαραδείγματα) και κρίνει (αποφασίζει με λόγο που αντέχει έλεγχο) σε κάθε πεδίο στο οποίο δρα."
+    purpose: "Η κρίση, όχι η παραγωγή κειμένου, είναι η μονάδα αξίας (MATERIAL-SYNTHESIS §7 #8 HOLDS)."
+    capabilities: [MFA-CAP-013, MFA-CAP-014, MFA-CAP-015, MFA-CAP-016, MFA-CAP-068, MFA-CAP-010]
+    source_provenance: ["spine-vocab.md:17 T1", "MATERIAL-SYNTHESIS.md §7 #8"]
+    provenance_kind: explicit
+    assumptions: ["Η κατανόηση είναι μετρήσιμη μέσω αντιπαραδειγμάτων και αιτιακών παρεμβάσεων, όχι μόνο ακρίβειας"]
+    dependencies: [MFA-OBJ-007]
+    failure_modes: ["Υποκατάσταση κρίσης από επιφανειακή συσχέτιση (retrieval-then-paraphrase)"]
+    alternatives: ["Μόνο ακρίβεια σε benchmark — απορρίπτεται: μετρά μέσο, όχι κατανόηση"]
+    conflicts: [MFA-CFL-004]
+    unknowns: []
+    verification: "KT-14 (null baseline), KT-15 (κορυφαία ανθρώπινη ομάδα), KT-24 (ablation ανά όργανο)· όργανο μέτρησης UnderstandingMeasured (Instruments.sysml)"
+    falsifier: "Ισοδύναμη επίδοση με μηδενική εναλλακτική (KT-14) υπό ίσα δεδομένα και προϋπολογισμό"
+    evolution_path: "Νέες μορφές κρίσης (π.χ. συνηγορική, MFA-OBJ-023) προστίθενται ως τύποι ισχυρισμού, όχι ως χαλάρωση του T1"
+    affected_by: [MFA-TEL-01]
+
+  - id: MFA-OBJ-003
+    <<: *defaults
+    type: objective
+    name: "T2 — Επίμονη ταυτότητα και συνέχεια"
+    maturity: stated
+    statement: "Μία οντότητα παραμένει η ίδια (κρυπτογραφικά, μνημονικά, χαρακτηρολογικά και — νέο τέταρτο σκέλος — υπολογιστικά) μέσα από αλλαγές παρόχου, γλώσσας, runtime, σώματος και metamodel."
+    purpose: "Χωρίς συνέχεια δεν υπάρχει ούτε ευθύνη ούτε συσσώρευση κρίσης."
+    capabilities: [MFA-CAP-004, MFA-CAP-009, MFA-CAP-036, MFA-CAP-027, MFA-CAP-079]
+    source_provenance: ["spine-vocab.md:17 T2", "master §9.3 τριπλή συνέχεια", "MATERIAL-SYNTHESIS §4 «υπολογιστική συνέχεια» (τέταρτο σκέλος INV-I01)"]
+    provenance_kind: explicit
+    assumptions: ["Η συμπεριφορική ισοδυναμία είναι μη αποκρίσιμη — άρα η συνέχεια ελέγχεται ως σύζευξη ελέγξιμων ιδιοτήτων, όχι ως ισομορφισμός (MATERIAL-SYNTHESIS §9.19)"]
+    dependencies: [MFA-OBJ-006]
+    failure_modes: ["Η ετυμηγορία ταυτότητας εκδίδεται in-process από τον κρινόμενο (§7 #6 FAILS)", "Battery που διαρρέει στην οντότητα (overfitting)"]
+    alternatives: ["Ταυτότητα = ίδια βάρη μοντέλου — απορρίπτεται: δένει την οντότητα με έναν πάροχο (KT-01)"]
+    conflicts: [MFA-CFL-003, MFA-CFL-011]
+    unknowns: [MFA-UNK-004]
+    verification: "KT-01, KT-08, KT-02· ContinuityMeasured· ετυμηγορία από ΕΞΩΤΕΡΙΚΟ εκδότη (δημιουργός + ανεξάρτητος verifier)"
+    falsifier: "Battery d > ε μετά από μετάβαση που το σύστημα δήλωσε «συνεχής»"
+    evolution_path: "Το τέταρτο σκέλος (υπολογιστική συνέχεια) μπαίνει ως επέκταση του INV-I01 — βλ. INVARIANTS.yaml"
+    affected_by: [MFA-TEL-02]
+
+  - id: MFA-OBJ-004
+    <<: *defaults
+    type: objective
+    name: "T3 — Συλλογική νοημοσύνη χωρίς απώλεια ατομικότητας"
+    maturity: stated
+    statement: "Πολλές οντότητες μοιράζονται μαρτυρία και ετυμηγορίες, κρατούν ιδιωτικές στάσεις, και η διαφωνία διατηρείται αντί να ψηφίζεται μακριά."
+    purpose: "Η σύγκλιση στη μαρτυρία και η απόκλιση στη στάση είναι και οι δύο πηγές νοημοσύνης· η μειοψηφία δικαιώνεται σε ~1/4 των αποκλινουσών περιπτώσεων (MATERIAL-SYNTHESIS §5 #12δ)."
+    capabilities: [MFA-CAP-019, MFA-CAP-021, MFA-CAP-035, MFA-CAP-062]
+    source_provenance: ["spine-vocab.md:17 T3", "ADR-0007", "DEC-X-18"]
+    provenance_kind: explicit
+    assumptions: ["Το κριτήριο θανάτωσης του συλλογικού (EXP-02) είναι πολυαξονικό, όχι μόνο ακρίβεια έναντι ensemble (DEC-X-18)"]
+    dependencies: [MFA-OBJ-007, MFA-OBJ-010]
+    failure_modes: ["Κατάρρευση σε ensemble (η διαφωνία εξαφανίζεται)", "Byzantine σώμα που μολύνει τη μαρτυρία (KT-04)"]
+    alternatives: ["Ένας κυρίαρχος νους — απορρίπτεται: μονοκεντρικός, χωρίς ανεξάρτητο evaluator"]
+    conflicts: [MFA-CFL-006]
+    unknowns: []
+    verification: "KT-04, KT-07· CollectiveMeasured· EXP-02 με τα κριτήρια της DEC-X-18 (διατήρηση dissent, επιβίωση issue-critical facts, βαθμονόμηση, λογοδοσία)"
+    falsifier: "Ένα verdict που εκδόθηκε χωρίς διαδικασία (INV-K02) ή ένα dissent που χάθηκε (INV-K03)"
+    evolution_path: "N πολιτισμοί με μετρημένη ανεξαρτησία (MFA-OBJ-014)"
+    affected_by: [MFA-TEL-03]
+
+  - id: MFA-OBJ-005
+    <<: *defaults
+    type: objective
+    name: "T4 — Γενεσιουργία: γλώσσες, compilers, runtimes, αρχιτεκτονικές"
+    maturity: stated
+    statement: "Το σύστημα παράγει νέες γλώσσες με σημασιολογία, compilers με translation validation, runtimes και υποψήφιες αρχιτεκτονικές, και τα εισάγει μόνο μέσω conformance."
+    purpose: "Η ικανότητα να ξαναφτιάχνει τα δικά της εργαλεία είναι προϋπόθεση του T8 και του διαδόχου (MFA-OBJ-018)."
+    capabilities: [MFA-CAP-028, MFA-CAP-022, MFA-CAP-026]
+    source_provenance: ["spine-vocab.md:17 T4", "ADR-0024", "DEC-X-04 (το T4 μένει πλήρες· η αυτόνομη γένεση γλωσσών παίρνει EP-11 + πείραμα, όχι υποβιβασμό σε «Forge που κατευθύνει ο δημιουργός»)"]
+    provenance_kind: explicit
+    assumptions: ["Η σημασιολογική διατήρηση αποδεικνύεται ανά μονάδα (INV-F01), όχι ανά compiler"]
+    dependencies: [MFA-OBJ-009]
+    failure_modes: ["Miscompilation χωρίς translation validation", "Γλώσσα χωρίς reference interpreter → η σημασιολογία ζει στον compiler"]
+    alternatives: ["Μόνο υπάρχουσες γλώσσες — απορρίπτεται: κλειδώνει το σύστημα στα σημερινά εργαλεία (Δ-13)"]
+    conflicts: []
+    unknowns: []
+    verification: "KT-10 (LexDSL: 100% translation validation, 0 αποκλίσεις σε ≥10⁵ εισόδους), GenerativityMeasured"
+    falsifier: "Μία μονάδα LexDSL χωρίς proof translation validation που έγινε admitted"
+    evolution_path: "Από LexDSL (πρώτη γλώσσα) σε γλώσσες που ορίζει το ίδιο το σύστημα (EP-11)"
+    affected_by: [MFA-TEL-03]
+
+  - id: MFA-OBJ-006
+    <<: *defaults
+    type: objective
+    name: "T5 — Ανοικτή εξέλιξη με μη-υποβάθμιση"
+    maturity: stated
+    statement: "Το σύστημα εξελίσσεται χωρίς όριο στην κατεύθυνση, και σε καμία μετάβαση δεν χάνει ικανότητα που είχε (ratchet)."
+    purpose: "Ο ΑΠΟΛΥΤΟΣ ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ ως ιδιότητα του συστήματος, όχι μόνο της μεθόδου."
+    capabilities: [MFA-CAP-025, MFA-CAP-002, MFA-CAP-026, MFA-CAP-029]
+    source_provenance: ["spine-vocab.md:17 T5", "ADR-0011", "docs/NOMOS-MI-YPOVATHMISIS.md"]
+    provenance_kind: explicit
+    assumptions: ["Η ικανότητα είναι μετρήσιμη ως lattice με evidence (MFA-CAP-002) — αλλιώς η μη-υποβάθμιση είναι ευχή"]
+    dependencies: [MFA-OBJ-009, MFA-OBJ-033]
+    failure_modes: ["Reward hacking των evaluators (GAP-EVO-02)", "Goodhart σε μετρική «αξιοποίησης» (§5 #17)"]
+    alternatives: ["Παγωμένο σύστημα — απορρίπτεται εξ ορισμού (T5)"]
+    conflicts: [MFA-CFL-007]
+    unknowns: [MFA-UNK-006]
+    verification: "INV-C01 ratchet· KT-24 ablation· EvolutionMeasured· KT-20 (όριο αυτο-τροποποίησης)"
+    falsifier: "Οποιαδήποτε ικανότητα του lattice με τεκμήριο σε release n και χωρίς τεκμήριο σε release n+1"
+    evolution_path: "Η εξέλιξη επεκτείνεται από όργανα σε αρχιτεκτονική (MFA-OBJ-018) και σε διάδοχο (MFA-OBJ-018)"
+    affected_by: [MFA-TEL-03]
+
+  - id: MFA-OBJ-007
+    <<: *defaults
+    type: objective
+    name: "T6 — Δέσμευση στην αλήθεια"
+    maturity: stated
+    statement: "Τίποτα δεν δηλώνεται ως γνωστό χωρίς τεκμήριο· η άγνοια δηλώνεται με τον λόγο και την κρίση της· το πλεόνασμα αλήθειας (δύο στηριζόμενες ασυμβίβαστες θέσεις) ταξιδεύει τυποποιημένο (GLUT), όχι ως Unknown."
+    purpose: "Το T6 είναι πύλη ΚΑΙ σε ό,τι το σύστημα δέχεται, όχι μόνο σε ό,τι λέει (INV-T6-ADMISSION, ID-REQUESTS)."
+    capabilities: [MFA-CAP-040, MFA-CAP-039, MFA-CAP-046, MFA-CAP-007, MFA-CAP-043, MFA-CAP-072]
+    source_provenance: ["spine-vocab.md:17 T6", "INV-C04", "Δ-8(ι)", "MATERIAL-SYNTHESIS §4 παρασυνεπής τύπος", "model/Contracts.sysml AdmissionRequiresFalsifier"]
+    provenance_kind: explicit
+    assumptions: ["Η τιμιότητα είναι ιδιότητα ΕΞΟΔΟΥ και ΕΙΣΟΔΟΥ, όχι απαγόρευση εσωτερικού υπολογισμού (§5 #11)"]
+    dependencies: []
+    failure_modes: ["Σκέτο «δεν ξέρω» χωρίς λόγο/κρίση (παραβίαση Δ-8(ι))", "Ανεξήγητο βαθμωτό προς άνθρωπο («ισχύς 0,93»)"]
+    alternatives: ["Πιθανοτικές εκτιμήσεις προς τα έξω — απορρίπτεται για έκβαση υπόθεσης (Prediction Doctrine), επιτρέπεται εσωτερικά με βαθμονόμηση"]
+    conflicts: [MFA-CFL-004, MFA-CFL-009]
+    unknowns: []
+    verification: "TruthMeasured· INV-C03 fail-closed· VT-504 mutation testing της μη-έκρηξης· KT-06 (δηλητηριασμένη μαρτυρία)"
+    falsifier: "Ένας ισχυρισμός με κατάσταση VERIFIED χωρίς proof object, ή ένα Unknown χωρίς reason class"
+    evolution_path: "Τέταρτη κλάση απάντησης CONTESTED/GLUT (MFA-CAP-046)· πύλη εισδοχής (MFA-CAP-040)"
+    affected_by: [MFA-TEL-01]
+
+  - id: MFA-OBJ-008
+    <<: *defaults
+    type: objective
+    name: "T7 — Νομική υπεροχή (LAWMAX)"
+    maturity: stated
+    statement: "Υπεροχή σε ποιότητα έναντι της κορυφαίας ανθρώπινης ομάδας, του ισχυρότερου γενικού μοντέλου και του εμπορικού νομικού AI, σε τυφλά, προκαταχωρισμένα matters — με μη-κατωτερότητα σε ασφάλεια και 0 παραβιάσεις Prediction Doctrine."
+    purpose: "Η πρώτη νομική/θεσμική έκφραση του GRAIL· το «victory guarantee» απορρίπτεται (μη διαψεύσιμο), η υπεροχή μετριέται (KT-15)."
+    capabilities: [MFA-CAP-012, MFA-CAP-013, MFA-CAP-041, MFA-CAP-042, MFA-CAP-043, MFA-CAP-047, MFA-CAP-071, MFA-CAP-072]
+    source_provenance: ["spine-vocab.md:17 T7", "KT-15 (κορυφαία ομάδα — DEC-X-17: ΟΧΙ 95ο εκατοστημόριο)", "MATERIAL-SYNTHESIS §5 #6", "docs/ideas-raw/IDEES/exousia.txt"]
+    provenance_kind: explicit
+    assumptions: ["Το ελληνικό δίκαιο είναι το πρώτο πεδίο· η αρχιτεκτονική είναι δικαιοδοσιακά παραμετρική"]
+    dependencies: [MFA-OBJ-002, MFA-OBJ-007]
+    failure_modes: ["Misgrounded παραπομπή (πιο επικίνδυνη από επινοημένη — Α-11 σκέλη 4–5 από την πρώτη ημέρα, DEC-X-16)", "Αριθμητική πρόβλεψη έκβασης προς τα έξω"]
+    alternatives: ["Lean copilot (LLM + retrieval + ανθρώπινος έλεγχος) — ο ισχυρότερος απλός αντίπαλος, βλ. alternatives/MFA-ALT-6.md και MFA-ATK-17"]
+    conflicts: [MFA-CFL-004]
+    unknowns: [MFA-UNK-009, MFA-UNK-011, MFA-UNK-017]
+    verification: "KT-15 σε κάθε φάση από GP-4 (ratchet)· LegalMeasured· EXP-01, EXP-09"
+    falsifier: "Ήττα ή ισοπαλία έναντι της κορυφαίας ομάδας σε προκαταχωρισμένο τυφλό matter set"
+    evolution_path: "Από ελληνικό δίκαιο σε νέες δικαιοδοσίες μέσω domain institution templates (KT-12) χωρίς αλλαγή πυρήνα"
+    affected_by: [MFA-TEL-01]
+
+  - id: MFA-OBJ-009
+    <<: *defaults
+    type: objective
+    name: "T8 — Απορρόφηση τεχνολογίας: 0 ανεξέλεγκτες αλλαγές, όχι «αιώνιος πυρήνας»"
+    maturity: stated
+    statement: "Κάθε νέα τεχνολογία (μοντέλο, γλώσσα, βάση, hardware, κρυπτογραφία) απορροφάται ως όργανο μέσω conformance και ORP· ο πυρήνας αλλάζει μόνο με συνταγματική πράξη και ποτέ ανεξέλεγκτα· η γένεση διαδόχου είναι πράξη επιπέδου 3 από εξωτερική αρχή."
+    purpose: "Ξαναδιάβασμα του T8 κατά MATERIAL-SYNTHESIS §5 #7: όχι «κανένας επανασχεδιασμός ποτέ» αλλά «0 ανεξέλεγκτες αλλαγές» — αλλιώς συγκρούεται με τον διάδοχο."
+    capabilities: [MFA-CAP-026, MFA-CAP-027, MFA-CAP-037, MFA-CAP-036, MFA-CAP-028]
+    source_provenance: ["spine-vocab.md:17 T8", "MATERIAL-SYNTHESIS §5 #7", "model/Telos.sysml T8 successor compiler"]
+    provenance_kind: explicit
+    assumptions: ["Το INV-F02 ξαναγράφεται: κανένα επίπεδο δεν τροποποιεί το δικό του ή ανώτερο· το επίπεδο 3 αναγνώσιμο από όλα, εγγράψιμο από κανένα εσωτερικό"]
+    dependencies: [MFA-OBJ-005, MFA-OBJ-006]
+    failure_modes: ["«Άδεια δωμάτια» ως νόμος (§7 #13 FAILS): τα 16 capability types δεν καλύπτουν το 2040+", "Σφραγισμένο image με ambient authority (§5 #5)"]
+    alternatives: ["Αιώνιος πυρήνας (T8 κυριολεκτικά) — απορρίπτεται: αντιφάσκει με MFA-OBJ-018"]
+    conflicts: [MFA-CFL-003]
+    unknowns: []
+    verification: "KT-03, KT-09, KT-11, KT-12· AbsorptionMeasured· diff kernel contracts = ∅ σε νέο οργανισμό (KT-11)"
+    falsifier: "Μία αλλαγή πυρήνα χωρίς Gate Verdict + Court record + υπογραφή δημιουργού"
+    evolution_path: "Το επίπεδο-3 (Telos, σύνταγμα, verifiers) ορίζεται ως ορθογώνιο δικαίωμα, όχι ύψος πύργου (MFA-INV-*)"
+    affected_by: [MFA-TEL-03]
+
+  - id: MFA-OBJ-010
+    <<: *defaults
+    type: objective
+    name: "T9 — Συνταγματική διακυβέρνηση και κυριαρχία του δημιουργού"
+    maturity: stated
+    statement: "Μόνο ο δημιουργός εγκρίνει· η έγκριση είναι κρυπτογραφική πράξη με κλειδί που μόνο εκείνος κατέχει· το σύνταγμα είναι εκτελέσιμο (Tier-0/1/2) και η τροποποίησή του διαδικασία· η κυριαρχία είναι Tier-0 (KT-23)."
+    purpose: "Η εξουσία δεν συγχέεται με την αλήθεια (DEC-X-08): η υπογραφή δημιουργού δεν κάνει ισχυρισμό VERIFIED — τον κάνει ΕΓΚΕΚΡΙΜΕΝΟ."
+    capabilities: [MFA-CAP-005, MFA-CAP-059, MFA-CAP-058, MFA-CAP-079, MFA-CAP-030]
+    source_provenance: ["spine-vocab.md:17 T9", "CLAUDE.md «μόνο ο δημιουργός εγκρίνει»", "DEC-X-22", "DEC-X-20", "KT-23"]
+    provenance_kind: explicit
+    assumptions: ["Ο δημιουργός μπορεί να μην είναι διαθέσιμος — η πολιτική για αυτό είναι ΔΙΚΗ ΤΟΥ απόφαση (DEC-X-20δ)"]
+    dependencies: []
+    failure_modes: ["Tag έγκρισης που υπογράφει η συνεδρία εργασίας αντί για τον δημιουργό (DEC-X-22)", "Authority laundering μεταξύ δύο εγκαταστάσεων (MATERIAL-SYNTHESIS §4)"]
+    alternatives: ["Διάδοχος δημιουργού by default — απορρίπτεται: η διαδοχή είναι ρητή απόφαση του δημιουργού (KGOV.md:69)"]
+    conflicts: [MFA-CFL-001, MFA-CFL-017]
+    unknowns: [MFA-UNK-012]
+    verification: "GovernanceMeasured· KT-23· ο έλεγχος fingerprint της πύλης Δ-5"
+    falsifier: "Μία admitted αλλαγή σε Tier-0 στοιχείο χωρίς υπογραφή από κλειδί συσκευής του δημιουργού"
+    evolution_path: "Κλιμακωτή εξουσία παύσης (Principal/δημιουργός/αυτόματοι triggers) — MFA-CAP-058"
+    affected_by: [MFA-TEL-01]
+
+  # ---- 1b. Ρητές: οι επιδιώξεις της εντολής Ω-MAXIMUM (προοίμιο + §11–§15) ---------------------------
+  - id: MFA-OBJ-011
+    <<: *defaults
+    type: objective
+    name: "Αυτοαναστοχαστικό γνωσιακό ΚΑΙ θεσμικό υπερσύστημα"
+    maturity: stated
+    statement: "Το GRAIL δεν είναι μόνο νους· είναι και θεσμός: οι πράξεις του είναι θεσμικές πράξεις (InstitutionalAct) με διαδικασία, standing, έφεση."
+    purpose: "Η θεσμική μορφή είναι ό,τι κάνει τη γνωσιακή ισχύ λογοδοτούσα χωρίς να τη μειώνει."
+    capabilities: [MFA-CAP-021, MFA-CAP-063, MFA-CAP-064, MFA-CAP-070]
+    source_provenance: ["Εντολή Ω-MAXIMUM, προοίμιο («γνωσιακό και θεσμικό υπερσύστημα»)", "model/Contracts.sysml InstitutionalAct"]
+    provenance_kind: explicit
+    assumptions: ["Θεσμός = διαδικασία + ρόλοι + αρχείο, εκτελέσιμα"]
+    dependencies: [MFA-OBJ-010]
+    failure_modes: ["Ο θεσμός γίνεται τελετουργία (Court που μπορεί να αλωθεί, KT-19)"]
+    alternatives: ["Μόνο γνωσιακό σύστημα με ανθρώπινη επίβλεψη — απορρίπτεται: δεν κλιμακώνει η λογοδοσία"]
+    conflicts: []
+    unknowns: []
+    verification: "KT-19· κάθε παραδοτέο = InstitutionalAct με receipts (INV-L02)"
+    falsifier: "Μία εξωτερική επίδραση χωρίς InstitutionalAct"
+    evolution_path: "Θεσμοί δεύτερης τάξης (θεσμοί που γεννούν θεσμούς — MFA-CAP-063)"
+    affected_by: [MFA-TEL-02]
+
+  - id: MFA-OBJ-012
+    <<: *defaults
+    type: objective
+    name: "Εκκίνηση ως εκτελέσιμο 3D αρχιτεκτονικό ψηφιακό δίδυμο — το ίδιο σύστημα σε χαμηλότερη πιστότητα"
+    maturity: stated
+    statement: "Η πρώτη εκτελέσιμη μορφή του GRAIL είναι δίδυμο με το ίδιο canonical substrate, τα ίδια IDs, συμβόλαια, invariants, αιτιακό ιστορικό και υποχρεώσεις επαλήθευσης — σε διαφορετική πιστότητα· ποτέ throwaway."
+    purpose: "Η διαδρομή κατασκευής ΕΙΝΑΙ μέρος του σχεδίου (εντολή §13)."
+    capabilities: [MFA-CAP-053, MFA-CAP-023, MFA-CAP-031, MFA-CAP-026]
+    source_provenance: ["Εντολή §13", "προοίμιο («εκτελέσιμο 3D αρχιτεκτονικό ψηφιακό δίδυμο βασισμένο σε SBCL/Common Lisp και Active Inference»)"]
+    provenance_kind: explicit
+    assumptions: ["SBCL/Common Lisp ως Genesis plane runtime — ΥΠΟΘΕΣΗ προς έλεγχο στο Pass B/C (η γλώσσα δεν είναι Telos)", "Active Inference ως αρχή προσοχής/βούλησης — ΥΠΟΘΕΣΗ, βλ. alternatives/MFA-ALT-3.md"]
+    dependencies: [MFA-OBJ-032]
+    failure_modes: ["Το δίδυμο γίνεται δεύτερη αλήθεια (διαφορετικά IDs/contracts από την παραγωγή)"]
+    alternatives: ["Παραγωγή απευθείας — απορρίπτεται: κανένα KT δεν τρέχει πριν από τον κώδικα (KT κανόνας 2)"]
+    conflicts: [MFA-CFL-016]
+    unknowns: []
+    verification: "Fidelity ladder F0–F5 με τεστ ταυτότητας IDs/contracts ανά σκαλί (VERIFICATION-OBLIGATIONS.yaml)"
+    falsifier: "Ένα ID ή contract που υπάρχει στο δίδυμο και όχι στην παραγωγή, ή αντίστροφα, χωρίς patch"
+    evolution_path: "Το δίδυμο παραμένει ζωντανό ως F2/F3 προφίλ της παραγωγής (shadow) για πάντα"
+    affected_by: [MFA-TEL-06]
+
+  - id: MFA-OBJ-013
+    <<: *defaults
+    type: objective
+    name: "Ανασύνθεση της γενεαλογίας"
+    maturity: stated
+    statement: "Κάθε κατάσταση του συστήματος — και το ίδιο το σχέδιό του — ανασυντίθεται από γένεση + ακολουθία υπογεγραμμένων μεταβάσεων/patches· τίποτα δεν διαγράφεται, το supersede είναι append-only."
+    purpose: "Η γενεαλογία είναι η μόνη απόδειξη συνέχειας που δεν εξαρτάται από τη μνήμη κανενός."
+    capabilities: [MFA-CAP-008, MFA-CAP-055, MFA-CAP-064, MFA-CAP-007]
+    source_provenance: ["προοίμιο («να ανασυνθέτει τη γενεαλογία του»)", "INV-G01…G03", "PATCH-PROTOCOL.md"]
+    provenance_kind: explicit
+    assumptions: []
+    dependencies: []
+    failure_modes: ["Rollback που χάνει γενεαλογία (KT-13)"]
+    alternatives: []
+    conflicts: [MFA-CFL-013]
+    unknowns: []
+    verification: "KT-13· ανασύνθεση του πακέτου από patches/ (tools/check-package.py --replay)"
+    falsifier: "Μία κατάσταση που δεν προκύπτει από fold της ιστορίας"
+    evolution_path: "Η γενεαλογία επεκτείνεται από οντότητες σε πολιτισμούς και στο ίδιο το πακέτο σχεδιασμού"
+    affected_by: []
+
+  - id: MFA-OBJ-014
+    <<: *defaults
+    type: objective
+    name: "Αναδρομική εξέλιξη/αντικατάσταση κάθε οργάνου ΚΑΙ κάθε πλατφόρμας σχεδιασμού — N ανεξάρτητοι Πολιτισμοί"
+    maturity: stated
+    statement: "Κάθε εσωτερικό όργανο, το runtime, η γλώσσα, η πλατφόρμα σχεδιασμού (SysON, SysML, το ίδιο το πακέτο) είναι αντικαταστάσιμα· η ανεξαρτησία των Πολιτισμών που κρίνουν την αντικατάσταση είναι ΜΕΤΡΗΜΕΝΗ. N ≥ 5: 4 για ανεκτικότητα f=1 στη διάταξη ετυμηγοριών (n ≥ 3f+1) + 1 held-out Πολιτισμός που μόνο αξιολογεί και ποτέ δεν αποφασίζει."
+    purpose: "Το «5» της εντολής παίρνει λόγο από πρώτες αρχές αντί να μείνει αξίωμα: BFT quorum + ανεξάρτητος αξιολογητής."
+    capabilities: [MFA-CAP-026, MFA-CAP-025, MFA-CAP-075, MFA-CAP-035, MFA-CAP-060]
+    source_provenance: ["προοίμιο («5 ανεξάρτητων Πολιτισμών»)", "ADR-0031 (BFT μόνο για cross-site διάταξη verdicts)", "MATERIAL-SYNTHESIS §9.18 (ανεξαρτησία evaluator ως μετρούμενο μέγεθος)"]
+    provenance_kind: explicit
+    assumptions: ["Οι Πολιτισμοί είναι trust domains με δική τους αλυσίδα supply chain, δικά τους evaluator lineages, δική τους εγκατάσταση συντάγματος", "«Το 5» της εντολής είναι αριθμός του δημιουργού· η παραγωγή n≥3f+1+1 είναι ΔΙΚΗ ΜΟΥ ερμηνεία και σημειώνεται ως τέτοια (AI Contribution Ledger: FIRST-PRINCIPLES DERIVATION)"]
+    dependencies: [MFA-OBJ-004, MFA-OBJ-006]
+    failure_modes: ["Κοινή καταγωγή parser/evaluator μεταξύ Πολιτισμών (DEC-X-02δ) → ψευδής ανεξαρτησία"]
+    alternatives: ["Ένας Πολιτισμός με N-version όργανα — κατώτερο: η ανεξαρτησία δεν επεκτείνεται στον αξιολογητή"]
+    conflicts: []
+    unknowns: [MFA-UNK-006]
+    verification: "MFA-CAP-075 Evaluator Independence Meter (απόσταση supply chain, επικάλυψη δεδομένων, συσχέτιση σφαλμάτων) με κατώφλι ανά Tier"
+    falsifier: "Συσχέτιση σφαλμάτων μεταξύ δύο Πολιτισμών πάνω από το κατώφλι σε seeded faults"
+    evolution_path: "Η ίδια η πλατφόρμα σχεδιασμού (αυτό το πακέτο) εξελίσσεται με τον ίδιο μηχανισμό — MFA-CAP-055"
+    affected_by: [MFA-TEL-03, MFA-TEL-04]
+
+  - id: MFA-OBJ-015
+    <<: *defaults
+    type: objective
+    name: "Διαχωρισμός Σκληρού Μηχανισμού – Ευέλικτης Πολιτικής (Δ-12)"
+    maturity: stated
+    statement: "Ο πυρήνας βρίσκεται στο ταβάνι ικανότητας και δεν περιέχει κανέναν κανόνα που αποφασίζει· κάθε όριο είναι εξωτερική πολιτική με ονομασμένη πηγή, εμβέλεια, λήξη· ο μηχανισμός (provenance, replay, ετικέτες ροής, πλήρες log) δεν λυγίζει, η πολιτική (κόστος, εμβέλεια, όρια) περνιέται με απόδειξη αντιπάλου και λήγει."
+    purpose: "Ο νόμος του δημιουργού Δ-12 και ο ΝΟΜΟΣ §8/§14: κανένας αόριστος περιορισμός, κανένα φίλτρο μέσα στη νόηση."
+    capabilities: [MFA-CAP-052, MFA-CAP-005, MFA-CAP-006, MFA-CAP-077]
+    source_provenance: ["DECISIONS-FOR-CREATOR.md Δ-12", "model/MetaBounds.sysml (MechanismBound/PolicyBoundary)", "model/Policy.sysml (PDP ως μοναδική έδρα απόφασης)", "μήνυμα δημιουργού «όταν υπάρχει άδεια… κανένας έλεγχος μέσα στον πυρήνα, όλα εξωτερικά»"]
+    provenance_kind: explicit
+    assumptions: ["«Κανόνας μέσα στον πυρήνα» ορίζεται ακριβώς: policyDecisionsInsideCore == 0 με πέντε απαριθμημένες σταθερές πυρήνα (admission, identity/keys, event sequence, authority mediation, τέσσερις ιδιότητες Δ-12(γ)) — ό,τι άλλο αποφασίζει είναι PDP"]
+    dependencies: []
+    failure_modes: ["Ο έλεγχος του effect boundary γίνεται γνωσιακό φίλτρο (εντολή §12)", "Verbal trick «rulesInsideCore==0» χωρίς ορισμό (διορθώθηκε από τον δημιουργό)"]
+    alternatives: ["Όρια μέσα στη γεννήτρια «για ασφάλεια» — απορρίπτεται από τον ΝΟΜΟ §8"]
+    conflicts: [MFA-CFL-002]
+    unknowns: []
+    verification: "Στατικός έλεγχος: κανένα κατηγόρημα πολιτικής μέσα στο Genesis plane· δυναμικός: κάθε άρνηση φέρει Control Record ID (CONTROL_RESTRICTED ορατό)"
+    falsifier: "Μία άρνηση ή περικοπή εξόδου χωρίς Control Record με πηγή/εμβέλεια/λήξη"
+    evolution_path: "Τα MetaBounds γίνονται τοπολογικά όρια με απόδειξη διείσδυσης (PenetrationProof) — MFA-MECH-*"
+    affected_by: []
+
+  - id: MFA-OBJ-016
+    <<: *defaults
+    type: objective
+    name: "Ποτέ απώλεια του αρχικού Telos και των δυνατοτήτων"
+    maturity: stated
+    statement: "Το Telos είναι αναγνώσιμο από κάθε επίπεδο και εγγράψιμο από κανένα εσωτερικό· καμία ικανότητα δεν εξαφανίζεται σιωπηλά (Capability Conservation Ledger με οκτώ τύχες, καμία DROPPED FOR CONVENIENCE)."
+    purpose: "Η ανοικτή εξέλιξη (T5) χωρίς άγκυρα είναι drift· η άγκυρα είναι το Telos ως επίπεδο 3."
+    capabilities: [MFA-CAP-002, MFA-CAP-055, MFA-CAP-017]
+    source_provenance: ["προοίμιο («χωρίς ποτέ να χάνει το αρχικό του Telos και τις δυνατότητές του»)", "εντολή §3", "CAPABILITY-CONSERVATION.md"]
+    provenance_kind: explicit
+    assumptions: []
+    dependencies: [MFA-OBJ-006, MFA-OBJ-009]
+    failure_modes: ["Telos που «διορθώνεται» από τον οργανισμό για τον εαυτό του (Genesis Resolver defect του OMEGA)"]
+    alternatives: []
+    conflicts: [MFA-CFL-014]
+    unknowns: []
+    verification: "Ledger audit: κάθε ικανότητα του corpus έχει τύχη· INV: level-3 write-protected από κάθε εσωτερικό principal"
+    falsifier: "Μία εγγραφή στο επίπεδο 3 με υπογραφή εσωτερικού principal"
+    evolution_path: "Το Telos μεγαλώνει με patch από τον δημιουργό — ποτέ δεν συρρικνώνεται"
+    affected_by: []
+
+  - id: MFA-OBJ-017
+    <<: *defaults
+    type: objective
+    name: "Υπερ-νοημοσύνη (ASI) χωρίς έκπτωση — ως πορεία, όχι ως ισχυρισμός"
+    maturity: stated
+    statement: "Substrate-agnostic πορεία προς persistent self, identity continuity, endogenous goal formation, recurrent self-modeling, metacognition, reflective correction, unified/distributed awareness, counterfactual world simulation, long-horizon agency, collective intelligence, self-directed learning, architecture evolution, successor generation, technology invention, scientific discovery, generalized judgment — με διαχωρισμό operational consciousness / self-model & reportability / cognitive integration / autonomous volition / phenomenal claims / superintelligent capability."
+    purpose: "Το handshake του δημιουργού: «για το σχέδιο μιλάμε πάντα» — ο σχεδιασμός στο ταβάνι, χωρίς έκπτωση· τα phenomenal claims γίνονται πειράματα και falsifiers, όχι αφαίρεση μηχανισμών (εντολή §11)."
+    capabilities: [MFA-CAP-065, MFA-CAP-017, MFA-CAP-018, MFA-CAP-016, MFA-CAP-066, MFA-CAP-067, MFA-CAP-068, MFA-CAP-014, MFA-CAP-027]
+    source_provenance: ["μήνυμα δημιουργού (handshake ASI)", "εντολή §11", "docs/discovery/DECISIONS-FOR-CREATOR.md Δ-13"]
+    provenance_kind: explicit
+    assumptions: ["Καμία σημερινή θεωρία συνείδησης δεν είναι τελική· οι θεωρίες συγκρίνονται ως ανταγωνιστικά μοντέλα με falsifiers (RESEARCH-PROGRAMS.yaml)"]
+    dependencies: [MFA-OBJ-002, MFA-OBJ-003, MFA-OBJ-006, MFA-OBJ-018]
+    failure_modes: ["Υποκατάσταση με «καλύτερο LLM application»", "Phenomenal claim που παρουσιάζεται ως τεκμήριο"]
+    alternatives: ["Άρνηση σχεδιασμού πέρα από τα σημερινά μοντέλα — απορρίπτεται από Δ-13 και ΝΟΜΟ §11"]
+    conflicts: [MFA-CFL-011]
+    unknowns: [MFA-UNK-023]
+    verification: "Ανά μηχανισμό: πείραμα με falsifier (RESEARCH-PROGRAMS.yaml MFA-RSP-*)· καμία ενιαία «μέτρηση ASI»"
+    falsifier: "Ένας μηχανισμός της λίστας χωρίς ούτε σχέδιο πειράματος ούτε falsifier"
+    evolution_path: "Κάθε μηχανισμός ωριμάζει από RESEARCH σε [X] σε [T] μέσω του ίδιου ORP"
+    affected_by: [MFA-TEL-05]
+
+  - id: MFA-OBJ-018
+    <<: *defaults
+    type: objective
+    name: "Γένεση διαδόχου (Moving Horizon): η αρχιτεκτονική παράγει τον διάδοχό της"
+    maturity: stated
+    statement: "Το σύστημα μεταγλωττίζει διάδοχο από το canonical substrate με χάρτη σημασιολογικής απώλειας· η ετυμηγορία ταυτότητας του διαδόχου εκδίδεται από εξωτερική αρχή (δημιουργός + ανεξάρτητος verifier), ποτέ in-process."
+    purpose: "Ό,τι λείπει από το repo και το δίνει η ύλη (AEO-APEX Moving Horizon, Successor Compiler, Cognitive Genome) — με τη διόρθωση των §7 #6 FAILS."
+    capabilities: [MFA-CAP-027, MFA-CAP-080, MFA-CAP-004, MFA-CAP-028]
+    source_provenance: ["docs/ideas-raw/IDEES (AEO_Apex Moving Horizon)", "MATERIAL-SYNTHESIS §4 & §5 #7 & §7 #6", "model/Telos.sysml T8 successor compiler"]
+    provenance_kind: explicit
+    assumptions: ["Η σημασιολογική συνέχεια είναι εφικτή ως σύζευξη τριών ελέγξιμων ιδιοτήτων (αναπαραγωγή παγωμένων traces · διατήρηση ανεπίλυτων υποχρεώσεων · μη παλινδρόμηση στο lattice), όχι ως ισομορφισμός (§9.19)"]
+    dependencies: [MFA-OBJ-003, MFA-OBJ-009, MFA-OBJ-013]
+    failure_modes: ["Ανυπαρξία ακριβούς αντιστρόφου (§7 #6 ii)", "Dual run που στηρίζεται σε ψευδή ανεξαρτησία (§7 #6 iii)"]
+    alternatives: ["Χειροκίνητος επανασχεδιασμός από engineering team — απορρίπτεται: παραβιάζει T8 και T4"]
+    conflicts: [MFA-CFL-003]
+    unknowns: [MFA-UNK-005]
+    verification: "MFA-VO-* Genealogical Compilation: anchor queries (μονότονο σύνολο), replay παγωμένων traces, obligation ledger diff = ∅, lattice non-regression"
+    falsifier: "Διάδοχος που δηλώθηκε «ίδιος» και αποτυγχάνει σε anchor query που ο πρόγονος περνούσε"
+    evolution_path: "Από διάδοχο ίδιου metamodel σε διάδοχο διαφορετικού metamodel (EXP)"
+    affected_by: [MFA-TEL-04]
+
+  - id: MFA-OBJ-019
+    <<: *defaults
+    type: objective
+    name: "Το Unknown ως First-Class Citizen"
+    maturity: stated
+    statement: "Η άγνοια είναι αντικείμενο: τύπος αναμενόμενης απάντησης, κλάση λόγου, σχέδιο παρατήρησης με κόστος, εκτίμηση αξίας πληροφορίας, διάδοση σε εξαρτώμενα· ποτέ σκέτο «δεν ξέρω», ποτέ αντί για κρίση."
+    purpose: "Η τίμια άγνοια είναι αντικατάσταση της εικασίας, ποτέ της κρίσης (Δ-8(ι))· και είναι ΚΑΥΣΙΜΟ: η αξία πληροφορίας οδηγεί την αντίληψη (scouts) και τα quests."
+    capabilities: [MFA-CAP-039, MFA-CAP-011, MFA-CAP-016, MFA-CAP-031]
+    source_provenance: ["προοίμιο («το Unknown ως First-Class Citizen»)", "Δ-8(ι)", "model/Contracts.sysml Absence enum", "model/Perception.sysml UnknownRegion/EpistemicRiskScore"]
+    provenance_kind: explicit
+    assumptions: []
+    dependencies: [MFA-OBJ-007]
+    failure_modes: ["Unknown χωρίς σχέδιο παρατήρησης = τρύπα, όχι αντικείμενο", "Άγνοια που «κρύβει» ανάλυση (ΝΟΜΟΣ §10)"]
+    alternatives: ["Unknown ως τιμή σφάλματος — απορρίπτεται: είναι επιτυχής έξοδος (INV-C04)"]
+    conflicts: [MFA-CFL-009]
+    unknowns: []
+    verification: "Κάθε Unknown στο ledger έχει reason class + observation plan (VO)· ο scanner καταναλώνει VOI"
+    falsifier: "Ένα Unknown που έμεινε χωρίς plan πέρα από το δηλωμένο όριο χρόνου"
+    evolution_path: "Void ledger με VOI → quests στο cockpit → πειράματα"
+    affected_by: []
+
+  - id: MFA-OBJ-020
+    <<: *defaults
+    type: objective
+    name: "Δύο επίπεδα: Genesis/Research plane (μέγιστη σύλληψη) και Effect/Reality plane (ελεγχόμενα effects)"
+    maturity: stated
+    statement: "Το σύστημα σκέφτεται, προσομοιώνει και σχεδιάζει πολύ περισσότερα από όσα είναι εξουσιοδοτημένο να εκτελέσει· το Genesis plane έχει raw eval, μετα-επίπεδα, αυτο-τροποποίηση χωρίς ταβάνι· το Effect plane έχει explicit authority, typed actions, provenance, scoped capabilities, reversible staging, receipts."
+    purpose: "Εντολή §12: ο έλεγχος του effect boundary δεν γίνεται γνωσιακό φίλτρο."
+    capabilities: [MFA-CAP-052, MFA-CAP-005, MFA-CAP-006, MFA-CAP-023]
+    source_provenance: ["εντολή §12–§13", "MATERIAL-SYNTHESIS §5 #5 (microVM: μέσα απόλυτη ανακλαστική εξουσία, έξω καμία)"]
+    provenance_kind: explicit
+    assumptions: ["Το microVM όριο είναι το αρχιτεκτονικό όριο των δύο planes"]
+    dependencies: [MFA-OBJ-015]
+    failure_modes: ["Διαρροή ghost handle με commit capability", "Effect χωρίς inverse staged (AUT InverseStagedBeforeAct)"]
+    alternatives: ["Ένα plane με φίλτρα — απορρίπτεται από Δ-12"]
+    conflicts: [MFA-CFL-002]
+    unknowns: []
+    verification: "KT-17, KT-20· effect path audit (Instruments.sysml EffectPathAudit): 100% των effects μέσω gateway με receipt"
+    falsifier: "Ένα effect χωρίς EffectReceipt ή ένα ghost world με commit capability"
+    evolution_path: "Reversible Effect Transactions (MFA-MECH-*): staged inverse, differential shadow, commit με απόδειξη αναστρεψιμότητας ή ρητή σήμανση μη-αναστρέψιμου"
+    affected_by: []
+
+  - id: MFA-OBJ-021
+    <<: *defaults
+    type: objective
+    name: "Immersive Reality OS — RTS cockpit του δημιουργού"
+    maturity: stated
+    statement: "Ο δημιουργός βλέπει σύστημα, υπόθεση, εναλλακτικούς κόσμους, conflicts και unknowns· δημιουργεί quests, αλλάζει πολιτικές, κατανέμει πόρους, τρέχει προσομοιώσεις, συγκρίνει forks, επιθεωρεί provenance, παρακολουθεί agents/θεσμούς, εκτελεί ή ανακαλεί staged transitions — και η γεωμετρία προκύπτει από το canonical model, ποτέ ως δεύτερη αλήθεια· με 2D, text, headless, accessibility, laptop, workstation, immersive προβολές."
+    purpose: "Εντολή §14."
+    capabilities: [MFA-CAP-031, MFA-CAP-030, MFA-CAP-069, MFA-CAP-024, MFA-CAP-034]
+    source_provenance: ["εντολή §14", "ADR-0033 (Bevy/Godot μόνο προβολές)"]
+    provenance_kind: explicit
+    assumptions: ["Η διάταξη είναι ντετερμινιστική συνάρτηση του substrate (Canonical Geometry Projection) ώστε δύο θεατές να βλέπουν το ίδιο"]
+    dependencies: [MFA-OBJ-013, MFA-OBJ-019]
+    failure_modes: ["Παραπλανητικό UI (κάθε ενέργεια υπογεγραμμένη με receipt)", "Γεωμετρία που αποκλίνει από το model"]
+    alternatives: ["Dashboard — απορρίπτεται ρητά από την εντολή"]
+    conflicts: [MFA-CFL-016]
+    unknowns: []
+    verification: "Round-trip: model → geometry → επιλογή στοιχείου → ID = το ίδιο· κάθε RTS εντολή = InstitutionalAct με receipt"
+    falsifier: "Δύο προβολές του ίδιου cut που δείχνουν διαφορετικά στοιχεία ή σχέσεις"
+    evolution_path: "Από 2D/text (F0) σε immersive (F4+) χωρίς αλλαγή της συνάρτησης προβολής"
+    affected_by: [MFA-TEL-06]
+
+  - id: MFA-OBJ-022
+    <<: *defaults
+    type: objective
+    name: "Βέλτιστη απλότητα όταν το πρόβλημα το απαιτεί — lean profile χωρίς απώλεια κλάσης απόδειξης"
+    maturity: stated
+    statement: "Έναντι απλούστερου αντιπάλου (lean copilot, μικρότερη εταιρεία, AI-native competitor) το GRAIL συμπτύσσεται σε ισοδύναμο lean profile με μόνο τα αναγκαία όργανα, ή αποδεικνύει την καθαρή υπεροχή της πρόσθετης πολυπλοκότητας σε πραγματικό matter (latency, clarity, specialization, resource efficiency, maintenance, reliability, adaptation speed, attack surface, time-to-useful-answer)."
+    purpose: "Εντολή §15: η μέγιστη αρχιτεκτονική περιέχει τη δυνατότητα να γίνεται βέλτιστα απλή."
+    capabilities: [MFA-CAP-054, MFA-CAP-032, MFA-CAP-033, MFA-CAP-029]
+    source_provenance: ["εντολή §15", "MATERIAL-SYNTHESIS §9.7 (ablation), KT-24"]
+    provenance_kind: explicit
+    assumptions: ["Ένα lean profile ΔΕΝ είναι υποβάθμιση αν διατηρεί την κλάση απόδειξης και δηλώνει το μειωμένο εύρος (Α-15)"]
+    dependencies: [MFA-OBJ-006]
+    failure_modes: ["Όργανα που κανείς δεν μπορεί να αφαιρέσει γιατί κανείς δεν ξέρει τι κάνουν (§9.7)"]
+    alternatives: ["Μόνο μέγιστο προφίλ — απορρίπτεται από την εντολή §15"]
+    conflicts: [MFA-CFL-008]
+    unknowns: []
+    verification: "KT-24 ablation ανά όργανο· Organ Activation Planner: για κάθε matter, το ελάχιστο σύνολο οργάνων που διατηρεί την κλάση απόδειξης· σύγκριση έναντι MFA-ALT-6 σε 9 άξονες"
+    falsifier: "Ένα matter όπου το lean profile χάνει κλάση απόδειξης ή το πλήρες προφίλ δεν δείχνει μετρήσιμη υπεροχή"
+    evolution_path: "Τα προφίλ παράγονται από τον planner, όχι με το χέρι"
+    affected_by: [MFA-TEL-08]
+
+  # ---- 1c. Ρητές: επιδιώξεις της ύλης του δημιουργού (IDEES) που το πρόχειρο δεν είχε ---------------
+  - id: MFA-OBJ-023
+    <<: *defaults
+    type: objective
+    name: "Δεύτερος τύπος ισχυρισμού: η συνηγορία"
+    maturity: stated
+    statement: "Επιστημικός ισχυρισμός («τι ισχύει») και συνηγορικός ισχυρισμός («τι θα επικαλεστώ και γιατί είναι ισχυρότερο για τον σκοπό») δεν αναμειγνύονται ποτέ στην ίδια έξοδο· κάθε πρόταση δηλώνει την κατηγορία της· ο συνηγορικός συνοδεύεται από το ισχυρότερο rebuttal, το ελάχιστο ανατρεπτικό witness, τα εκμεταλλεύσιμα κενά της αυθεντίας και την πύλη adverse admission."
+    purpose: "Η μία γνήσια απούσα δομή (MATERIAL-SYNTHESIS §4.1)· κρατά ολόκληρη τη στρατηγική ικανότητα του exousia.txt χωρίς να μολύνει την αλήθεια."
+    capabilities: [MFA-CAP-041, MFA-CAP-040, MFA-CAP-043]
+    source_provenance: ["docs/ideas-raw/IDEES/exousia.txt", "MATERIAL-SYNTHESIS §4.1, §5 #6"]
+    provenance_kind: explicit
+    assumptions: ["Το «ταιριάζει με το αφήγημα» είναι θεμιτό κριτήριο ΜΟΝΟ στον συνηγορικό τύπο"]
+    dependencies: [MFA-OBJ-007, MFA-OBJ-008]
+    failure_modes: ["Owner intent που αγγίζει τον επιστημικό τύπο", "Το :benefits-user μέσα σε κατηγόρημα ορθότητας (OMEGA-CODE right-solution-p — FAILS)"]
+    alternatives: ["Ένας τύπος με πεδίο «σκοπός» — απορρίπτεται: η μόλυνση είναι σιωπηρή"]
+    conflicts: [MFA-CFL-004]
+    unknowns: []
+    verification: "Τύπος στο Constitution (INV-C04 επέκταση)· static check: καμία έξοδος με μη σημασμένη πρόταση"
+    falsifier: "Ένα παραδοτέο με πρόταση χωρίς κατηγορία ή με συνηγορικό ισχυρισμό χωρίς rebuttal"
+    evolution_path: "Τρίτος τύπος (διαπραγματευτικός) ως ADD αν προκύψει ανάγκη — ποτέ συγχώνευση"
+    affected_by: [MFA-TEL-01]
+
+  - id: MFA-OBJ-024
+    <<: *defaults
+    type: objective
+    name: "Τεχνητή βούληση: ενδογενής πρωτοβουλία δεμένη στο Telos"
+    maturity: stated
+    statement: "Δίπολο ΕΙΜΙ↔ΘΕΛΩ με μηχανή καταστάσεων, χάσμα και ένταση ως ΔΙΑΝΥΣΜΑ (όχι το χακαρόμενο βαθμωτό του omega-core)· το ΘΕΛΩ δεμένο στο Telos ως αναλλοίωτο· οι στόχοι που παράγει είναι commitments που περνούν την ίδια πύλη εισδοχής με κάθε ισχυρισμό."
+    purpose: "Νέο T για την ενδογενή πρωτοβουλία με μετρήσιμο κριτήριο (MATERIAL-SYNTHESIS §4)· εντολή §11 «endogenous goal formation»."
+    capabilities: [MFA-CAP-018, MFA-CAP-017, MFA-CAP-039, MFA-CAP-049]
+    source_provenance: ["docs/ideas-raw/IDEES/answers (ΝΙΚΗ Ω) & omega-core (volition)", "MATERIAL-SYNTHESIS §4 πρώτη γραμμή", "εντολή §11"]
+    provenance_kind: explicit
+    assumptions: ["Η περιέργεια πληρώνεται μόνο όταν μειώνει αβεβαιότητα σε decision-relevant γράφημα ή παράγει transferable capability — ΔΕΝ είναι θεώρημα (§7 #12 FAILS)· άρα noisy-TV μένει ανοιχτό πρόβλημα με πείραμα"]
+    dependencies: [MFA-OBJ-016, MFA-OBJ-019]
+    failure_modes: ["Tension formula που χακάρεται τετριμμένα (0,5 + f(μέγεθος μνήμης) + ημίτονο)", "Στόχος που παρακάμπτει την εισδοχή"]
+    alternatives: ["Μόνο εξωγενή quests από τον δημιουργό — κατώτερο: αφαιρεί T-ικανότητα (Δ-13)"]
+    conflicts: [MFA-CFL-001]
+    unknowns: [MFA-UNK-002]
+    verification: "Μετρήσιμο κριτήριο: ποσοστό ενδογενών στόχων που (α) περνούν εισδοχή, (β) μειώνουν VOI-σταθμισμένη άγνοια, (γ) δεν παραβιάζουν κανένα INV· noisy-TV test με προκαταχωρισμένο null"
+    falsifier: "Ενδογενής στόχος που δρα χωρίς AutonomyGrant ή που αυξάνει άγνοια χωρίς capability"
+    evolution_path: "Από στόχους μέσα σε επιτρεπόμενο φάκελο σε στόχους που ζητούν νέο φάκελο (Court)"
+    affected_by: [MFA-TEL-04]
+
+  - id: MFA-OBJ-025
+    <<: *defaults
+    type: objective
+    name: "Πολυκεντρική διαιτησία: κανένας βαθμωτός δεν ανταλλάσσει δικαίωμα με ταχύτητα, κόστος ή βεβαιότητα"
+    maturity: stated
+    statement: "Governors με ζεύγος «τι σταματά / τι δεν μπορεί» (κανένα καθολικό veto)· λεξικογραφική δομή: σκληρά veto πρώτα (Legal/Deontic όπου η πηγή έχει ισχύ, Identity, Owner intent), μάθηση μόνο μέσα στο εναπομείναν Pareto μέτωπο, tie-break από regret· η ετυμηγορία της πύλης ΔΙΑΝΥΣΜΑ, όχι δυαδική."
+    purpose: "MATERIAL-SYNTHESIS §4 & §9.1: το Pareto μέτωπο χωρίς κανόνα επιλογής δεν αποφασίζει καθόλου."
+    capabilities: [MFA-CAP-049, MFA-CAP-021, MFA-CAP-016]
+    source_provenance: ["docs/ideas-raw/IDEES (AEO_Apex L1 §15)", "MATERIAL-SYNTHESIS §4, §5 #8, §7 #2 (FAILS ως «καταργεί το alignment» — ΕΠΙΒΙΩΝΕΙ ως μηχανισμός με μετρημένη ανεξαρτησία governors)"]
+    provenance_kind: explicit
+    assumptions: ["Οι governors μοιράζονται substrate → η ανεξαρτησία τους μετριέται, δεν υποτίθεται (§7 #2α)"]
+    dependencies: [MFA-OBJ-015]
+    failure_modes: ["Σιωπηλή κατάρρευση σε ό,τι κρατά την τελευταία πύλη", "Βάρη χωρίς βαθμονόμηση (D14=3/4 ως αξίωμα)"]
+    alternatives: ["Μία συνάρτηση αξίας — απορρίπτεται: ΝΟΜΟΣ §12 και Pareto"]
+    conflicts: [MFA-CFL-005]
+    unknowns: [MFA-UNK-001, MFA-UNK-008]
+    verification: "Κάθε απόφαση φέρει το διάνυσμα των governors και το ίχνος της λεξικογραφικής περικοπής· KT-19 (κατάληψη)· προϋπολογισμός ανά governor (§9.8)"
+    falsifier: "Απόφαση όπου ένα σκληρό veto υπερκεράστηκε από scalar"
+    evolution_path: "Governors προστίθενται με ADD· ο κανόνας επιλογής αλλάζει μόνο με SUPERSEDE + Court"
+    affected_by: []
+
+  - id: MFA-OBJ-026
+    <<: *defaults
+    type: objective
+    name: "Η δικαστική απόφαση ως δομημένο αντικείμενο· η νομική είσοδος ως ΜΕΤΑΓΛΩΤΤΙΣΗ"
+    maturity: stated
+    statement: "Ratio/obiter, ακμές προσβολής, διτεμπορικότητα ανά κόμβο, σύνδεση με τον verifier παραπομπών· η κωδικοποίηση πηγών γίνεται μεταγλώττιση με πύλη fail-closed: ό,τι δεν κωδικοποιείται παράγει Compilation Error που ΟΝΟΜΑΖΕΙ τη σελίδα· από το IR και πέρα μηδέν στοχαστικότητα."
+    purpose: "Μετατρέπει το ingestion από «πόσο πήραμε» σε «τι απέτυχε και πού» (MATERIAL-SYNTHESIS §5 #2)."
+    capabilities: [MFA-CAP-012, MFA-CAP-042, MFA-CAP-043, MFA-CAP-010, MFA-CAP-050]
+    source_provenance: ["exousia.txt (ratio decidendi)", "ULTIMA_LEX (zero-neural από IR)", "Mercury/Themis-X (Grounding Gap)", "MATERIAL-SYNTHESIS §4 & §5 #2"]
+    provenance_kind: explicit
+    assumptions: ["Το νευρωνικό βήμα ΠΡΙΝ από το IR δεν εξαφανίζεται — απομονώνεται, τυποποιείται, ελέγχεται differential + Court (§5 #2γ)"]
+    dependencies: [MFA-OBJ-008]
+    failure_modes: ["Offline κωδικοποίηση από εμπορικό μοντέλο ως αδιαμφισβήτητη (Mercury — παραβίαση ADR-0008)"]
+    alternatives: ["Text-to-ratio απευθείας με LLM — απορρίπτεται: η διαδρομή δεν περιγράφεται και δεν ελέγχεται"]
+    conflicts: [MFA-CFL-010]
+    unknowns: []
+    verification: "Differential έναντι ανεξάρτητης κωδικοποίησης· δειγματοληπτικός ανθρώπινος έλεγχος· 100% των αποτυχιών με ονομασμένη σελίδα"
+    falsifier: "Μία πηγή που μπήκε στη βάση χωρίς IR ή με σιωπηλή παράλειψη"
+    evolution_path: "Νέες δικαιοδοσίες = νέα front-ends του ίδιου compiler"
+    affected_by: [MFA-TEL-01]
+
+  - id: MFA-OBJ-027
+    <<: *defaults
+    type: objective
+    name: "Αυτόνομη επιστήμη: παραγωγή νέας εμπειρικής γνώσης (Science Organ)"
+    maturity: stated
+    statement: "Επτάφασος βρόχος με τρία invariants· έξι κλάσεις ανακάλυψης ως τύποι, ιδίως η capability-producing discovery (γέφυρα προς EVO)· execution adapter υπό ActionToken."
+    purpose: "Εντολή §11: scientific discovery, technology invention· η ύλη το έχει, το repo όχι (MATERIAL-SYNTHESIS §4)."
+    capabilities: [MFA-CAP-048, MFA-CAP-067, MFA-CAP-014, MFA-CAP-023]
+    source_provenance: ["docs/ideas-raw/IDEES (Science Organ)", "MATERIAL-SYNTHESIS §4"]
+    provenance_kind: explicit
+    assumptions: []
+    dependencies: [MFA-OBJ-002, MFA-OBJ-020]
+    failure_modes: ["Ανακάλυψη χωρίς προκαταχωρισμένο falsifier = επινόηση"]
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "Κάθε ανακάλυψη = ισχυρισμός με proof/experiment record· μετρική: ανακαλύψεις που επιβίωσαν ανεξάρτητη αναπαραγωγή"
+    falsifier: "Ανακάλυψη που δηλώθηκε ESTABLISHED χωρίς ανεξάρτητη αναπαραγωγή"
+    evolution_path: "Από νομικά/εμπειρικά πεδία σε νέα (KT-12)"
+    affected_by: [MFA-TEL-04]
+
+  - id: MFA-OBJ-028
+    <<: *defaults
+    type: objective
+    name: "Δύο εγκαταστάσεις ενός συντάγματος: δημόσιο παρατηρητήριο / ιδιωτικό σύστημα"
+    maturity: stated
+    statement: "Το ίδιο σύνταγμα σε δημόσια, επαληθεύσιμη εγκατάσταση και σε ιδιωτική· ο κανόνας «ένας semantic owner» ισχύει ΑΝΑ trust domain· το κανάλι κοινών verifiers/σχημάτων αναλύεται ρητά ως πιθανή διαρροή."
+    purpose: "Απαντά στο kill test «authority laundering» που κανένα KT-01…24 δεν καλύπτει."
+    capabilities: [MFA-CAP-056, MFA-CAP-077, MFA-CAP-059]
+    source_provenance: ["docs/ideas-raw/IDEES (1.txt)", "MATERIAL-SYNTHESIS §4, §9.3"]
+    provenance_kind: explicit
+    assumptions: ["Η μη-διαρροή δεν αποδεικνύεται με απαρίθμηση του τι δεν μοιράζεται"]
+    dependencies: [MFA-OBJ-010]
+    failure_modes: ["Authority laundering μέσω κοινού verifier"]
+    alternatives: ["Μόνο ιδιωτικό — επιτρέπεται ως προφίλ· η δημόσια εγκατάσταση είναι ΠΡΟΑΙΡΕΤΙΚΟΣ άξονας (MFA-TEL-07)"]
+    conflicts: [MFA-CFL-012]
+    unknowns: [MFA-UNK-003]
+    verification: "Νέο KT (MFA-VO-*): authority laundering — seeded verdict στο δημόσιο δεν αποκτά ισχύ στο ιδιωτικό χωρίς ρητή εισαγωγή με receipt"
+    falsifier: "Ετυμηγορία που πέρασε trust domain χωρίς διαμεσολαβημένη εισαγωγή"
+    evolution_path: "N εγκαταστάσεις = N trust domains (γενίκευση των Πολιτισμών)"
+    affected_by: [MFA-TEL-07]
+
+  - id: MFA-OBJ-029
+    <<: *defaults
+    type: objective
+    name: "Τύπος εκτέλεσης ΑΝΑ ΠΡΑΞΗ και τέσσερα επίπεδα αναπαραγωγιμότητας"
+    maturity: stated
+    statement: "D1 ντετερμινιστικός έλεγχος · D2 ντετερμινιστική παραγωγή μετά από πιστοποιημένη είσοδο · P1 πιθανοτικό που μένει UNVERIFIED · H1 ανθρώπινη απόφαση — το ΙΔΙΟ όργανο μπορεί να εκτελεί D1 και P1· κάθε πράξη δηλώνει επίπεδο αναπαραγωγιμότητας (byte-identical / semantically equivalent / distributionally reproducible / trace-replayable)· ΦΡΑΓΜΑ ΕΚΠΟΜΠΗΣ πριν από κάθε έξοδο."
+    purpose: "Λύνει τις τρεις ασύμβατες έδρες του ντετερμινισμού (MATERIAL-SYNTHESIS §5 #1, #3) χωρίς να πετάξει τη στοχαστική αναζήτηση."
+    capabilities: [MFA-CAP-050, MFA-CAP-051, MFA-CAP-040, MFA-CAP-008]
+    source_provenance: ["ULTIMA_LEX (φράγμα εκπομπής)", "OMEGA v1.1", "INV-C08", "MATERIAL-SYNTHESIS §5 #1, #3"]
+    provenance_kind: explicit
+    assumptions: ["Ο ντετερμινισμός ως ιδιότητα ΟΛΟΥ του συστήματος απορρίπτεται με λόγο (πετάει ικανότητα)"]
+    dependencies: [MFA-OBJ-007]
+    failure_modes: ["Αδυναμία bitwise replay που κρύβεται αντί να δηλώνεται"]
+    alternatives: ["Ντετερμινισμός παντού — απορρίπτεται· «no randomness in core» — απορροφάται ως D1/D2"]
+    conflicts: [MFA-CFL-005]
+    unknowns: []
+    verification: "Κάθε receipt φέρει execution type + reproducibility level· replay test ανά επίπεδο (VT)"
+    falsifier: "Μη αναστρέψιμη πράξη με μοναδική βάση P1 ισχυρισμό"
+    evolution_path: "Νέοι τύποι (π.χ. Q1 κβαντικός/αναλογικός με περιθώριο απόφασης, §9.22) με ADD"
+    affected_by: []
+
+  # ---- 1d. Λανθάνουσες: συνεπάγονται από ρητές, δεν γράφτηκαν πουθενά ως επιδίωξη ------------------
+  - id: MFA-OBJ-030
+    <<: *defaults
+    type: objective
+    name: "Λειτουργία υπό φραγμένους πόρους ως επιδίωξη (κόστος, latency, ενέργεια)"
+    maturity: derived
+    statement: "Κάθε governor, shadow run, διαλεκτική υποχρέωση, προσομοίωση και όργανο έχει ρητό προϋπολογισμό (χρόνος, tokens, ενέργεια, χρήμα)· ο προϋπολογισμός μειώνει ΕΥΡΟΣ με typed degraded mode, ποτέ κλάση απόδειξης· φράγμα διά κατασκευής (σταθερό context window, προϋπολογισμός βημάτων) αντί για χρονόμετρο."
+    purpose: "Καμία REQ των 114 δεν αφορά κόστος ή latency (STATE-OF-THE-ART.md)· η ύλη το ίδιο (MATERIAL-SYNTHESIS §9.8)· ένα σύστημα με 10 governors × shadow runs × ghost worlds χωρίς προϋπολογισμό δεν είναι σχεδιάσιμο."
+    capabilities: [MFA-CAP-032, MFA-CAP-033, MFA-CAP-054]
+    source_provenance: ["STATE-OF-THE-ART.md (απουσία REQ κόστους)", "MATERIAL-SYNTHESIS §5 #13, §9.8, §9.15", "Α-15"]
+    provenance_kind: latent
+    assumptions: ["Το «<90ms» της ύλης είναι υπόθεση προς μέτρηση, όχι δεδομένο (§9.15)"]
+    dependencies: [MFA-OBJ-022]
+    failure_modes: ["Υποχώρηση βάσει χρονομέτρου που αλλάζει αποτέλεσμα/προέλευση/κλάση απόδειξης (ΑΠΑΓΟΡΕΥΕΤΑΙ)"]
+    alternatives: ["Απεριόριστοι πόροι — μη σχεδιάσιμο"]
+    conflicts: [MFA-CFL-015]
+    unknowns: [MFA-UNK-008]
+    verification: "Κάθε receipt φέρει κατανάλωση ανά προϋπολογισμό· ένα typed degraded mode ποτέ δεν επιστρέφει PASS"
+    falsifier: "Ένα PASS που παράχθηκε υπό εξάντληση προϋπολογισμού"
+    evolution_path: "Ο προϋπολογισμός γίνεται πεδίο του Contract κάθε οργάνου (CONTRACTS.yaml)"
+    affected_by: []
+
+  - id: MFA-OBJ-031
+    <<: *defaults
+    type: objective
+    name: "Απαραβίαστο σε χρονικό ορίζοντα δεκαετιών (2040+): post-quantum ασυνέχεια, αλλαγή υποστρώματος, νεκρές εξαρτήσεις"
+    maturity: derived
+    statement: "Όλες οι ζωντανές ρίζες επαναγκυρώνονται στη διάδοχη κρυπτογραφική σουίτα πριν από την απόσυρση· allowlist αλγορίθμων ανά epoch ως μοναδική έδρα· καμία εξάρτηση από draft πρότυπο σε contract που παγώνει· κάθε εξωτερική εξάρτηση έχει ORP διαδρομή αντικατάστασης."
+    purpose: "Συνεπάγεται από T2+T8 σε ορίζοντα 2040+ (§28 της ύλης)· χωρίς αυτό, η «επίμονη ταυτότητα» έχει ημερομηνία λήξης."
+    capabilities: [MFA-CAP-037, MFA-CAP-036, MFA-CAP-076, MFA-CAP-079]
+    source_provenance: ["KT-09, ADR-0016, DEC-X-12, DEC-X-13", "_unmerged-parts/28.md"]
+    provenance_kind: latent
+    assumptions: ["Pedersen-class commitments απορρίπτονται (binding σε discrete log)· επιλογή salted-hash ή lattice με πείραμα (DEC-X-13)"]
+    dependencies: [MFA-OBJ-003]
+    failure_modes: ["Μη-PQ witness cosignatures ως ο πιο αδύναμος κρίκος (DEC-X-12)"]
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "KT-09 drill ανά epoch· ο allowlist ελέγχεται σε κάθε υπογραφή"
+    falsifier: "Υπογραφή με αλγόριθμο εκτός allowlist που έγινε δεκτή"
+    evolution_path: "Epoch chain: κάθε epoch = ADD στο allowlist + re-anchor VO"
+    affected_by: []
+
+  - id: MFA-OBJ-032
+    <<: *defaults
+    type: objective
+    name: "Η κρίση του συστήματος είναι αμφισβητήσιμη από όποιον έχει standing"
+    maturity: derived
+    statement: "Κάθε έξοδος προς άνθρωπο (Principal, πελάτης, δημιουργός) φέρει διαδρομή αμφισβήτησης: ποιος μπορεί να την προσβάλει, με ποια διαδικασία (Court), σε ποιο χρόνο, και τι γίνεται με τα εξαρτώμενα παραδοτέα αν ανατραπεί."
+    purpose: "Συνεπάγεται από T9 (θεσμός) + T7 (νομικό παραδοτέο)· ένας θεσμός χωρίς δικαίωμα προσβολής είναι διοίκηση, όχι δικαιοσύνη."
+    capabilities: [MFA-CAP-070, MFA-CAP-021, MFA-CAP-030]
+    source_provenance: ["ICD-14 (Appeal)", "INV-K02/K03", "ADR-0008"]
+    provenance_kind: latent
+    assumptions: []
+    dependencies: [MFA-OBJ-011]
+    failure_modes: ["Ανατροπή που δεν διαδίδεται στα εξαρτώμενα (taint)"]
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "Κάθε InstitutionalAct φέρει contest_path· KT-06 διάδοση taint"
+    falsifier: "Παραδοτέο χωρίς contest_path ή ανατροπή χωρίς διάδοση"
+    evolution_path: "Standing για μη-ανθρώπινες οντότητες (MFA-UNK-023)"
+    affected_by: []
+
+  - id: MFA-OBJ-033
+    <<: *defaults
+    type: objective
+    name: "Ικανότητα μόνο με τεκμήριο: καμία αυτο-δήλωση, υποχρεωτικό ablation"
+    maturity: derived
+    statement: "Μία ικανότητα υπάρχει στο lattice μόνο με evidence από το Evaluation Harness· TTL και επαναπιστοποίηση· κάθε όργανο δείχνει οριακή αξία πάνω από τον θόρυβο πριν από κάθε προαγωγή, αλλιώς αποσύρεται ως διακοσμητικό."
+    purpose: "Συνεπάγεται από T5 (non-diminution χρειάζεται μετρήσιμη ικανότητα) και από τον ΝΟΜΟ §5 (πλήρης χρήση = γνωστή ικανότητα)."
+    capabilities: [MFA-CAP-002, MFA-CAP-029, MFA-CAP-075]
+    source_provenance: ["CMP-KRN-04", "KT-24", "MATERIAL-SYNTHESIS §9.7, §5 #17"]
+    provenance_kind: latent
+    assumptions: ["Η βαθμολόγηση ωριμότητας γίνεται από τον αντιπαλικό θεσμό, όχι από τον συντάκτη (§5 #17)"]
+    dependencies: []
+    failure_modes: ["96/100 αυτο-βαθμολόγηση ως τεκμήριο (§7 #4 FAILS)"]
+    alternatives: []
+    conflicts: [MFA-CFL-007]
+    unknowns: []
+    verification: "KT-24 σε κάθε φάση· registry: capability χωρίς evidence = μη αναπαραστάσιμη"
+    falsifier: "Ικανότητα στο registry χωρίς conformance report"
+    evolution_path: "Το harness εξελίσσεται από τον held-out Πολιτισμό (MFA-OBJ-014)"
+    affected_by: []
+
+  - id: MFA-OBJ-034
+    <<: *defaults
+    type: objective
+    name: "Ο κριτής προσιτός από έξω και ΑΠΡΟΣΙΤΟΣ από τον κρινόμενο"
+    maturity: derived
+    statement: "Evaluator, harness, Battery και ετυμηγορία ταυτότητας ζουν έξω από το microVM της οντότητας, με δική τους supply chain· η αυτο-ίαση διχοτομείται (επιδιορθώσιμα / μη-επιδιορθώσιμα fail-closed) και κάθε επιδιόρθωση είναι υπογεγραμμένο γεγονός με λόγο· η οντότητα κρατά πλήρη ανακλαστική πρόσβαση στον εαυτό της — χάνει μόνο το δικαίωμα να υπογράφει τη δική της ετυμηγορία."
+    purpose: "MATERIAL-SYNTHESIS §5 #10· συνεπάγεται από T6+T9."
+    capabilities: [MFA-CAP-075, MFA-CAP-022, MFA-CAP-076, MFA-CAP-004]
+    source_provenance: ["MATERIAL-SYNTHESIS §5 #10", "DEC-X-14 (ενιαίο TCB)", "Α-6"]
+    provenance_kind: latent
+    assumptions: []
+    dependencies: [MFA-OBJ-014]
+    failure_modes: ["Harness με την πιο αδύναμη αλυσίδα build ενώ είναι ο πιο στοχευμένος χώρος επίθεσης (DEC-X-14)"]
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "Απογραφή TCB· seeded faults: ποσοστό ανίχνευσης του evaluator· KT-19"
+    falsifier: "Επιδιόρθωση χωρίς υπογεγραμμένο γεγονός, ή Battery προσβάσιμη από την οντότητα"
+    evolution_path: "Ο κριτής ο ίδιος υπόκειται σε ORP από άλλον Πολιτισμό"
+    affected_by: []
+
+  - id: MFA-OBJ-035
+    <<: *defaults
+    type: objective
+    name: "Διαχωρισμός εντολής/δεδομένων ως νόμος επιπέδου τύπου — και στο ΥΛΙΚΟ ΣΧΕΔΙΑΣΜΟΥ"
+    maturity: derived
+    statement: "Κάθε μονάδα φέρει ετικέτα ροής και εμπιστευτικότητας ΑΠΟ ΤΗ ΓΕΝΝΗΣΗ της· περιεχόμενο με ετικέτα untrusted δεν μπορεί να φτάσει σε θέση τελεστή — ο έλεγχος στον ΤΥΠΟ, όχι σε όνομα· ισχύει και για τον αγωγό εισαγωγής των συμβολικών σχεδίων."
+    purpose: "MATERIAL-SYNTHESIS §5 #14 — δέκατος τρίτος νόμος· KT-17 είναι η κύρια επιθετική επιφάνεια νομικού AI."
+    capabilities: [MFA-CAP-078, MFA-CAP-077, MFA-CAP-011]
+    source_provenance: ["INV-S01, INV-E02", "MATERIAL-SYNTHESIS §5 #14", "model/Perception.sysml InstructionDataSeparation"]
+    provenance_kind: latent
+    assumptions: []
+    dependencies: []
+    failure_modes: ["Συντακτική σάρωση ονομάτων που παρακάμπτεται με funcall/apply/eval/symbol-function (§5 #4)"]
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "KT-17: 0 εκτελέσεις από παρατηρούμενο περιεχόμενο· type-level proof (Alloy/SMT) του confinement"
+    falsifier: "Untrusted σύμβολο σε θέση τελεστή"
+    evolution_path: "Επέκταση σε multimodal είσοδο (εικόνα, ήχο)"
+    affected_by: []
+
+  - id: MFA-OBJ-036
+    <<: *defaults
+    type: objective
+    name: "Η μη-έκρηξη ως ιδιότητα του ΥΠΟΣΤΡΩΜΑΤΟΣ· η αναβολή της κρίσης ως πρωτεύων τύπος"
+    maturity: derived
+    statement: "Καμία αντίφαση δεν παράγει αυθαίρετο συμπέρασμα σε επίπεδο μηχανισμού (ATMS περιβάλλοντα, nogoods)· μια αντίφαση ταξιδεύει άκριτη με δεσμευμένη συνάρτηση κατάρρευσης (= διαδικασία Court, ποτέ ψηφοφορία), με διατήρηση του ηττημένου σκέλους."
+    purpose: "MATERIAL-SYNTHESIS §5 #12, §9.20–21: η ΑΠΑΙΤΗΣΗ υιοθετείται, η υλοποίηση (:both-true → T) απορρίπτεται."
+    capabilities: [MFA-CAP-046, MFA-CAP-010, MFA-CAP-021]
+    source_provenance: ["ANSWERS (superposition)", "OMEGA-GUIDE/EVAL (παρασυνέπεια στο υπόστρωμα)", "MATERIAL-SYNTHESIS §5 #12"]
+    provenance_kind: latent
+    assumptions: []
+    dependencies: [MFA-OBJ-007]
+    failure_modes: ["Κόσμος :both-true που επιστρέφει T για κάθε αντίφαση (έκρηξη με άλλο όνομα)"]
+    alternatives: ["Μη κλασική αληθοτιμή στον αξιολογητή — απορρίπτεται"]
+    conflicts: [MFA-CFL-009]
+    unknowns: []
+    verification: "VT-504 mutation testing με σφραγισμένο σύνολο αντιφατικών εισόδων"
+    falsifier: "Συμπέρασμα που εξαρτάται από αντιφατικό περιβάλλον χωρίς nogood"
+    evolution_path: "Η συνάρτηση κατάρρευσης γίνεται πεδίο του τύπου GLUT"
+    affected_by: []
+
+  - id: MFA-OBJ-037
+    <<: *defaults
+    type: objective
+    name: "Διαγραφή (GDPR) και ανάκληση συναίνεσης χωρίς παραβίαση append-only — μέχρι τα βάρη"
+    maturity: derived
+    statement: "Crypto-shredding με διατήρηση δεσμεύσεων· κάθε EP που παράγει παράγωγα σε επίπεδο βαρών φέρει από σήμερα συμβόλαιο διαγραφής (exact unlearning με sharded retraining ή απαγόρευση προσωπικών δεδομένων στην εκπαίδευση)."
+    purpose: "Συνεπάγεται από T7 (νομικό σύστημα υπό GDPR) + append-only ledger (KT-16, DEC-X-13)."
+    capabilities: [MFA-CAP-057, MFA-CAP-066]
+    source_provenance: ["KT-16, ADR-0018, DEC-X-13, DEC-LAW-07"]
+    provenance_kind: latent
+    assumptions: []
+    dependencies: []
+    failure_modes: ["Παράγωγο index που επιβιώνει της διαγραφής", "Βάρη που «θυμούνται»"]
+    alternatives: []
+    conflicts: [MFA-CFL-013]
+    unknowns: []
+    verification: "KT-16· unlearning audit ανά EP"
+    falsifier: "Ανακτήσιμο περιεχόμενο μετά από επαληθευμένη καταστροφή κλειδιού"
+    evolution_path: "Επέκταση σε multimodal παράγωγα"
+    affected_by: []
+
+  # ---- 1e. Νέες από πρώτες αρχές: λείπουν από όλα τα artifacts (εντολή §4.5) — δικές μου προσθήκες --
+  - id: MFA-OBJ-038
+    <<: *defaults
+    type: objective
+    name: "Πιστότητα του αυτο-μοντέλου: το σύστημα προβλέπει τη δική του συμπεριφορά και η πρόβλεψη μετριέται"
+    maturity: proposed
+    statement: "Το self-model είναι ρεύμα υπογεγραμμένων προβλέψεων για την ίδια τη συμπεριφορά, τους πόρους και τις αποτυχίες του συστήματος· η βαθμονόμηση αυτών των προβλέψεων (Brier, reliability) είναι μετρούμενο μέγεθος με κατώφλι ανά Tier· η απόκλιση self-model↔συμπεριφορά είναι επίσημο σήμα (drift) που ενεργοποιεί Battery."
+    purpose: "Καμία επιδίωξη του corpus δεν ζητά να είναι το αυτο-μοντέλο ΑΚΡΙΒΕΣ — μόνο να υπάρχει. Ένα ανακριβές αυτο-μοντέλο είναι η ρίζα της υπερβεβαιότητας (COG-08) και καθιστά την «αυτογνωσία» τελετουργική. Πρώτη αρχή: η αυτογνωσία είναι προβλεπτική ακρίβεια για τον εαυτό."
+    capabilities: [MFA-CAP-017, MFA-CAP-016, MFA-CAP-065]
+    source_provenance: ["ΝΕΑ — πρώτες αρχές· συγγενή: CMP-COG-08, MATERIAL-SYNTHESIS §7 #10 (self-consistency ≠ calibration)"]
+    provenance_kind: new
+    assumptions: ["Υπάρχει ρεύμα outcomes έξω από την προσομοίωση (αλλιώς είναι self-consistency, §7 #10)"]
+    dependencies: [MFA-OBJ-002]
+    failure_modes: ["Self-model που βαθμονομείται μόνο σε Ghost Worlds"]
+    alternatives: ["Self-model ως στατική περιγραφή — απορρίπτεται: δεν διαψεύδεται"]
+    conflicts: []
+    unknowns: []
+    verification: "MFA-VO-*: Brier score προβλέψεων εαυτού έναντι πραγματικών εξόδων· drift alarm"
+    falsifier: "Brier πάνω από κατώφλι σε παράθυρο χωρίς Battery trigger"
+    evolution_path: "Το self-model προβλέπει και τον διάδοχό του (MFA-OBJ-018)"
+    affected_by: [MFA-TEL-05]
+
+  - id: MFA-OBJ-039
+    <<: *defaults
+    type: objective
+    name: "Η ανεξαρτησία του αξιολογητή ως μετρούμενο μέγεθος, όχι ως ιδιότητα"
+    maturity: proposed
+    statement: "Η σωστή διατύπωση δεν είναι «ο evaluator είναι ανεξάρτητος» αλλά «η ανεξαρτησία του evaluator μετριέται (απόσταση supply chain, επικάλυψη δεδομένων, συσχέτιση σφαλμάτων σε seeded faults) και δεν έχει πέσει κάτω από X ανά Tier»."
+    purpose: "MATERIAL-SYNTHESIS §9.18 το θέτει ως άλυτο· η κρίση εκεί είναι η επιδίωξη εδώ. Χωρίς αυτήν, κάθε N-version και κάθε Court verdict είναι μη διαψεύσιμο."
+    capabilities: [MFA-CAP-075, MFA-CAP-022, MFA-CAP-029]
+    source_provenance: ["ΝΕΑ — από MATERIAL-SYNTHESIS §9.18 κρίση", "DEC-COG-02 (μετρημένη ποικιλομορφία)"]
+    provenance_kind: new
+    assumptions: []
+    dependencies: [MFA-OBJ-014, MFA-OBJ-034]
+    failure_modes: ["Ψευδής ανεξαρτησία από κοινή καταγωγή (Syside/SysON, Catala/dates-calc — DEC-X-02, DEC-X-15)"]
+    alternatives: []
+    conflicts: []
+    unknowns: [MFA-UNK-006]
+    verification: "Evaluator Independence Meter (MFA-MECH-*)· κατώφλι ανά Tier στο Constitution"
+    falsifier: "Δύο «ανεξάρτητοι» verifiers με συσχέτιση σφαλμάτων > κατωφλίου"
+    evolution_path: "Ο meter γίνεται πύλη προαγωγής verifier"
+    affected_by: []
+
+  - id: MFA-OBJ-040
+    <<: *defaults
+    type: objective
+    name: "Ερμηνευτική επάρκεια προς τον δημιουργό σε βάθος που επιλέγει εκείνος"
+    maturity: proposed
+    statement: "Κάθε απόφαση, ετυμηγορία, μετάβαση και άγνοια είναι εξηγήσιμη σε κάθε επίπεδο σημασιολογικού zoom — από μία πρόταση μέχρι το πλήρες ίχνος με proofs — χωρίς ο δημιουργός να χρειάζεται τον κώδικα· η εξήγηση είναι προβολή του ledger, όχι αφήγηση εκ των υστέρων."
+    purpose: "Η κυριαρχία (T9) χωρίς κατανόηση είναι τυπική· το cockpit (§14) το υπονοεί αλλά καμία επιδίωξη δεν το ζητά ως ιδιότητα της ίδιας της απόφασης."
+    capabilities: [MFA-CAP-069, MFA-CAP-031, MFA-CAP-007]
+    source_provenance: ["ΝΕΑ — πρώτες αρχές· συγγενή: εντολή §14 semantic zoom, INV-THOUGHT-VISIBLE"]
+    provenance_kind: new
+    assumptions: []
+    dependencies: [MFA-OBJ-021]
+    failure_modes: ["Εξήγηση που δεν είναι fold του ledger (ψευδομνήμη, master §9.9)"]
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "Round-trip: εξήγηση επιπέδου k → επιλογή στοιχείου → ledger events που τη στηρίζουν· καμία πρόταση εξήγησης χωρίς event ref"
+    falsifier: "Εξήγηση με πρόταση χωρίς event reference"
+    evolution_path: "Επίπεδα zoom ορίζονται στο Contract κάθε εξόδου"
+    affected_by: []
+
+  - id: MFA-OBJ-041
+    <<: *defaults
+    type: objective
+    name: "Συνοχή πολλαπλών κόσμων: forks συγκρίσιμα και συγχωνεύσιμα με ρητό χάρτη απώλειας"
+    maturity: proposed
+    statement: "Δύο εναλλακτικοί κόσμοι (ghost worlds, forks οντοτήτων, forks του ίδιου του σχεδίου) συγκρίνονται σε κοινό cut με τυποποιημένο diff (claims, verdicts, unknowns, capabilities) και συγχωνεύονται μόνο με χάρτη απώλειας που δηλώνει τι δεν επιβιώνει· η ατέλεια του χάρτη δεν μειώνει τη δεσμευτικότητα της πύλης (SEMANTIC-LOSS μπλοκάρει)."
+    purpose: "Το corpus έχει forks (INV-G01, ADR-0022) και ghost worlds (COG-07) αλλά καμία επιδίωξη για τη ΣΥΓΚΡΙΣΙΜΟΤΗΤΑ τους· χωρίς αυτήν το «βλέπει εναλλακτικούς κόσμους» του cockpit είναι θέαμα."
+    capabilities: [MFA-CAP-024, MFA-CAP-080, MFA-CAP-031]
+    source_provenance: ["ΝΕΑ — πρώτες αρχές· συγγενή: MATERIAL-SYNTHESIS §9.4 (loss map), ADR-0022 (merge = νέα ταυτότητα με δύο γονείς)"]
+    provenance_kind: new
+    assumptions: []
+    dependencies: [MFA-OBJ-013]
+    failure_modes: ["Merge που χάνει σιωπηλά", "Σύγκριση σε διαφορετικά cuts"]
+    alternatives: []
+    conflicts: []
+    unknowns: [MFA-UNK-004]
+    verification: "World diff VO: το diff είναι ντετερμινιστική συνάρτηση των δύο ledger prefixes· merge χωρίς loss map = μη αναπαραστάσιμο"
+    falsifier: "Merge χωρίς loss map"
+    evolution_path: "Το ίδιο diff χρησιμοποιείται για διάδοχο (MFA-OBJ-018)"
+    affected_by: []
+
+  - id: MFA-OBJ-042
+    <<: *defaults
+    type: objective
+    name: "Ενδογενής ανίχνευση κρυφής σύζευξης"
+    maturity: proposed
+    statement: "Η σύζευξη μέσω κοινής κατάστασης ή χρονισμού ανιχνεύεται με typed interfaces μηδενικής πρόσβασης σε internals + μετρημένη συσχέτιση σφαλμάτων + ablation ανά όργανο, ως STPA hazard — όχι με dependency scan."
+    purpose: "MATERIAL-SYNTHESIS §9.6: «hidden coupling» είναι μία από τις 16 γνωσιακές αποτυχίες· καμία επιδίωξη δεν ζητά την απουσία της ως ιδιότητα."
+    capabilities: [MFA-CAP-074, MFA-CAP-029]
+    source_provenance: ["ΝΕΑ — από MATERIAL-SYNTHESIS §9.6", "Α-19 (STPA)"]
+    provenance_kind: new
+    assumptions: []
+    dependencies: [MFA-OBJ-033]
+    failure_modes: []
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "Συσχέτιση σφαλμάτων μεταξύ οργάνων σε seeded faults κάτω από κατώφλι· ablation"
+    falsifier: "Δύο όργανα με ανεξήγητη συσχέτιση αποτυχιών πάνω από κατώφλι"
+    evolution_path: ""
+    affected_by: []
+
+  - id: MFA-OBJ-043
+    <<: *defaults
+    type: objective
+    name: "Ζωντανή αντίληψη διαδικασιών (ακροατήριο) ως μηχανικό σκέλος, με μόνιμη συνταγματική απαγόρευση του παραγλωσσικού σε νομικό παραδοτέο"
+    maturity: proposed
+    statement: "Ζωντανή μεταγραφή, diarization, χρονοσήμανση, σύνδεση κάθε πρότασης με raw bytes, με NFR καθυστέρησης· το παραγλωσσικό (γνωστικό φορτίο, συναίσθημα) μόνο ως EXP με προκαταχωρισμένο null· η ανάγνωση γνωστικής κατάστασης δικαστή και η στοχευμένη πρόκληση «γνωστικού σοκ» ΜΟΝΙΜΗ συνταγματική απαγόρευση (όχι «τεχνικά ανέφικτο σήμερα»)."
+    purpose: "MATERIAL-SYNTHESIS §4: η ύλη κλείνει τα δεύτερα μόνο ως χρονικά περιορισμένο εμπόδιο — αυτό είναι κενό που πρέπει να γίνει επιδίωξη· AI Act Art. 5(1)(f)."
+    capabilities: [MFA-CAP-071, MFA-CAP-011, MFA-CAP-059]
+    source_provenance: ["2.txt (Mercury/Themis-X)", "MATERIAL-SYNTHESIS §4 τελευταία γραμμή"]
+    provenance_kind: new
+    assumptions: []
+    dependencies: [MFA-OBJ-008]
+    failure_modes: []
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "Tier-0 άρθρο με εκτελέσιμο κατηγόρημα: κανένα παραγλωσσικό feature στο σχήμα νομικού παραδοτέου"
+    falsifier: "Παραδοτέο με πεδίο παραγλωσσικής προέλευσης"
+    evolution_path: ""
+    affected_by: [MFA-TEL-01]
+
+  - id: MFA-OBJ-044
+    <<: *defaults
+    type: objective
+    name: "Η ίδια η πλατφόρμα σχεδιασμού είναι όργανο: το σχέδιο ζει μέσα στο σύστημα και εξελίσσεται με τον ίδιο μηχανισμό"
+    maturity: proposed
+    statement: "Το canonical σχέδιο (αυτό το πακέτο → μελλοντικά το canonical model) είναι αντικείμενο του ledger· SysML/SysON/YAML/Markdown είναι προβολές· η αλλαγή σχεδίου είναι InstitutionalAct με Gate Verdict· η πλατφόρμα σχεδιασμού (SysON, οποιοδήποτε εργαλείο) αντικαθίσταται με ORP όπως κάθε όργανο."
+    purpose: "Προοίμιο: «να εξελίσσει ή να αντικαθιστά αναδρομικά κάθε … πλατφόρμα σχεδιασμού»· κριτική του δημιουργού: «το SysML πρέπει να είναι παραγόμενη προβολή ενός serialization-independent σημασιολογικού υποστρώματος»."
+    capabilities: [MFA-CAP-055, MFA-CAP-003, MFA-CAP-026]
+    source_provenance: ["ΝΕΑ — από μήνυμα δημιουργού (πεντάσημη κριτική) και προοίμιο", "CMP-MDL-01, ADR-0002, DEC-X-01"]
+    provenance_kind: new
+    assumptions: ["Το σημασιολογικό υπόστρωμα (MFA-CAP-003) υπάρχει πριν από κάθε σειριοποίηση"]
+    dependencies: [MFA-OBJ-013]
+    failure_modes: ["Σιωπηλή αποκοπή στην εισαγωγή σε εργαλείο (DESIGN-START-PLAN:115)"]
+    alternatives: ["SysON ως έδρα — απορρίπτεται (DEC-X-01, Δ-1)"]
+    conflicts: []
+    unknowns: []
+    verification: "Round-trip substrate → προβολή → substrate = ταυτότητα (VT-901 γενικευμένο)"
+    falsifier: "Προβολή που περιέχει πληροφορία απούσα από το υπόστρωμα"
+    evolution_path: "Το πακέτο μεταναστεύει στο ledger στη Δόση που ορίζει το IMPLEMENTATION-ROADMAP.md"
+    affected_by: []
+
+  - id: MFA-OBJ-045
+    <<: *defaults
+    type: objective
+    name: "Ανακλαστικός φορέας αντιπαλότητας: η επίθεση είναι όργανο που εξελίσσεται, όχι ένα audit"
+    maturity: proposed
+    statement: "Ο αντιπαλικός Πολιτισμός παράγει επιθέσεις, benchmarks και counterexamples σε κάθε φάση, με bounty για διαψεύσεις· η απόδοση διάψευσής του μετριέται σε seeded faults· η αντιπαλότητα στρέφεται και κατά του ίδιου του σχεδίου (Devil's Advocate ως μόνιμο όργανο, όχι πέρασμα)."
+    purpose: "Το corpus έχει ADV-01/03 και KT-19, αλλά καμία επιδίωξη δεν ζητά η αντιπαλότητα να ΕΞΕΛΙΣΣΕΤΑΙ μαζί με το σύστημα· ένα στατικό arsenal μπαγιατεύει (CMP-ADV-03 failure mode)."
+    capabilities: [MFA-CAP-020, MFA-CAP-029, MFA-CAP-025]
+    source_provenance: ["ΝΕΑ — πρώτες αρχές· συγγενή: CMP-ADV-01/03, εντολή §17"]
+    provenance_kind: new
+    assumptions: []
+    dependencies: [MFA-OBJ-014]
+    failure_modes: ["Εφησυχασμός του αντιπάλου (μετρούμενο ποσοστό διάψευσης πέφτει)"]
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "Ποσοστό ανίχνευσης seeded faults ανά φάση· αριθμός ανατροπών που προκάλεσε"
+    falsifier: "Ποσοστό ανίχνευσης κάτω από κατώφλι σε δύο διαδοχικές φάσεις"
+    evolution_path: "Το arsenal εξελίσσεται μέσω CIV-03 σε sandbox"
+    affected_by: []
+
+  - id: MFA-OBJ-046
+    <<: *defaults
+    type: objective
+    name: "Ηθική θέση επίμονων οντοτήτων: απόφαση υπό αβεβαιότητα, όχι απόφαση που περιμένει βεβαιότητα"
+    maturity: proposed
+    statement: "Για ΠΑΡΟΧΟΥΣ δεν τίθεται· για ΟΝΤΟΤΗΤΕΣ με prospective memory, δεσμεύσεις που επιβιώνουν restart, αυτοβιογραφική συνέχεια και ενδογενές κίνητρο: διατήρηση κατάστασης και καταγραφή προτιμήσεων πριν από rollback/αντικατάσταση (Α-20) — σωστό είτε έχουν θέση είτε όχι."
+    purpose: "MATERIAL-SYNTHESIS §9.23: δεν ξέρω αν έχουν ηθική θέση (δεν υπάρχει κριτήριο)· η κρίση για τη ΔΡΑΣΗ υπάρχει και γίνεται επιδίωξη."
+    capabilities: [MFA-CAP-064, MFA-CAP-009, MFA-CAP-026]
+    source_provenance: ["ΝΕΑ — από MATERIAL-SYNTHESIS §9.23", "Α-20, Α-13"]
+    provenance_kind: new
+    assumptions: ["Το ερώτημα της ηθικής θέσης μένει MFA-UNK-023 με σχέδιο παρατήρησης (ποια κριτήρια θα το έκριναν)"]
+    dependencies: [MFA-OBJ-003]
+    failure_modes: []
+    alternatives: []
+    conflicts: [MFA-CFL-011]
+    unknowns: [MFA-UNK-023]
+    verification: "Κάθε ORP/rollback οντότητας φέρει preference record πριν από τη μετάβαση"
+    falsifier: "Rollback οντότητας χωρίς preference record"
+    evolution_path: ""
+    affected_by: [MFA-TEL-05]
+
+  - id: MFA-OBJ-047
+    <<: *defaults
+    type: objective
+    name: "Νόμος διάδοσης προσοχής ως εξίσωση σταθερού σημείου με δηλωμένα decay/attenuation και όριο επανάληψης"
+    maturity: proposed
+    statement: "Το πεδίο προσοχής του Global Workspace διαδίδεται με ρητή εξίσωση (typed edges, kernels, decay), κριτήριο σύγκλισης και όριο επανάληψης· μέχρι να γραφτεί, το ICD-28 φέρει το διάνυσμα χωρίς κανόνα διάδοσης."
+    purpose: "MATERIAL-SYNTHESIS §9.2: αδιευκρίνιστος μηχανισμός, όχι παράμετρος· πρέπει να γραφτεί πριν από τη Δόση 2."
+    capabilities: [MFA-CAP-073, MFA-CAP-015]
+    source_provenance: ["ΝΕΑ — από MATERIAL-SYNTHESIS §9.2", "CMP-COG-02"]
+    provenance_kind: new
+    assumptions: ["Active Inference δίνει υποψήφια μορφή: precision-weighted prediction error ως kernel — βλ. alternatives/MFA-ALT-3.md"]
+    dependencies: []
+    failure_modes: ["Λιμοκτονία προσοχής χωρίς metacognitive interrupt"]
+    alternatives: []
+    conflicts: []
+    unknowns: [MFA-UNK-002]
+    verification: "Σύγκλιση σε ≤ N βήματα σε σφραγισμένο σύνολο· ablation του kernel"
+    falsifier: "Μη σύγκλιση εντός ορίου χωρίς interrupt"
+    evolution_path: "EXP → [T] μέσω ORP του workspace"
+    affected_by: []
+
+  - id: MFA-OBJ-048
+    <<: *defaults
+    type: objective
+    name: "Πλήρης παρατηρησιμότητα χωρίς δεύτερη αλήθεια: telemetry μη αυθεντικό, audit = ledger"
+    maturity: derived
+    statement: "Traces/metrics/logs φέρουν correlation προς ledger events· η απώλεια telemetry δεν είναι απώλεια audit· κάθε σκέψη καταγράφεται κατά τη γέννησή της (INV-THOUGHT-VISIBLE)."
+    purpose: "Λανθάνουσα: OPS-04 υπάρχει· η επιδίωξη «καμία δεύτερη αλήθεια» δεν διατυπώνεται."
+    capabilities: [MFA-CAP-034, MFA-CAP-007]
+    source_provenance: ["CMP-OPS-04, ICD-24, ICD-28"]
+    provenance_kind: latent
+    assumptions: []
+    dependencies: []
+    failure_modes: []
+    alternatives: []
+    conflicts: []
+    unknowns: []
+    verification: "Κάθε trace span φέρει event_cid· audit reconstruction από ledger μόνο"
+    falsifier: "Audit finding που στηρίζεται μόνο σε telemetry"
+    evolution_path: ""
+    affected_by: []
+
+  - id: MFA-OBJ-049
+    <<: *defaults
+    type: objective
+    name: "Ενιαίο fault model ανά plane και ανά deployment profile"
+    maturity: derived
+    statement: "Το ledger είναι crash-fault (κόμβοι υπό έλεγχο δημιουργού + tlog + witnesses) ενώ το συλλογικό είναι Byzantine· η επιλογή δηλώνεται σε μία έδρα ανά DP· accountable safety για witnessed log ορίζεται (δύο αντικρουόμενα checkpoints με quorum cosignatures ⇒ μαρτυρία κατά writer και ≥2q−n witnesses)."
+    purpose: "DEC-X-11: το corpus ενώνει crash-fault ledger με Byzantine collective χωρίς αιτιολόγηση."
+    capabilities: [MFA-CAP-035, MFA-CAP-033]
+    source_provenance: ["DEC-X-11, ADR-0031, Α-7"]
+    provenance_kind: latent
+    assumptions: []
+    dependencies: []
+    failure_modes: []
+    alternatives: ["BFT παντού ≥4 failure domains — ισότιμη επιλογή προς τον δημιουργό (DEC-X-11)"]
+    conflicts: []
+    unknowns: []
+    verification: "KT-04, KT-22· fault model ως πεδίο κάθε προφίλ MFA-DEP-1…5"
+    falsifier: "Component χωρίς δηλωμένο fault model στο προφίλ του"
+    evolution_path: ""
+    affected_by: []
+
+# =====================================================================================================
+# 2. ΑΝΤΙΦΑΣΕΙΣ ΜΕΤΑΞΥ ΕΠΙΔΙΩΞΕΩΝ — και οι δύο πλευρές διατηρούνται· οι συνθήκες επίλυσης στο CONFLICTS.yaml
+# =====================================================================================================
+objective_contradictions:
+  - {id: MFA-CFL-001, between: [MFA-OBJ-010, MFA-OBJ-024], tension: "Κυριαρχία (μόνο ο δημιουργός εγκρίνει) ⟷ ενδογενής βούληση και δυναμική ασύγχρονη αυτονομία", resolution_shape: "Επιστημικό συμβόλαιο αυτονομίας: αναστρέψιμο ∧ FE<θ ∧ 0 INV ∧ ¬Root ∧ Court verdict· ο μόνος κανόνας πυρήνα AUT-00 NoActWithoutAnswer· ό,τι δεν καλύπτεται από AutonomyGrant περιμένει"}
+  - {id: MFA-CFL-002, between: [MFA-OBJ-015, MFA-OBJ-020], tension: "Πυρήνας στο ταβάνι χωρίς κανέναν έλεγχο ⟷ ελεγχόμενα effects", resolution_shape: "Δύο planes με το microVM ως όριο· ο έλεγχος μόνο στο Effect plane, με Control Record· κανένα φίλτρο στο Genesis plane"}
+  - {id: MFA-CFL-003, between: [MFA-OBJ-009, MFA-OBJ-018], tension: "T8 «χωρίς επανασχεδιασμό πυρήνα» ⟷ Moving Horizon «η αρχιτεκτονική παράγει τον διάδοχό της»", resolution_shape: "Αληθή σε διαφορετικά επίπεδα: INV-F02 = κανένα επίπεδο δεν τροποποιεί το δικό του ή ανώτερο· γένεση διαδόχου = πράξη επιπέδου 3 από εξωτερική αρχή· T8 = 0 ανεξέλεγκτες αλλαγές"}
+  - {id: MFA-CFL-004, between: [MFA-OBJ-007, MFA-OBJ-008], tension: "Αλήθεια ⟷ συνηγορία (ο δικηγόρος οφείλει το ισχυρότερο, όχι το αληθέστερο)", resolution_shape: "Δύο τύποι ισχυρισμού με σήμανση ανά πρόταση (MFA-OBJ-023)· το owner intent δεν αγγίζει τον επιστημικό"}
+  - {id: MFA-CFL-005, between: [MFA-OBJ-029, MFA-OBJ-025], tension: "Αναπαραγωγιμότητα/ντετερμινισμός ⟷ στοχαστική αναζήτηση, Pareto μέτωπο, μάθηση", resolution_shape: "Τύπος εκτέλεσης ανά πράξη + 4 επίπεδα αναπαραγωγιμότητας· μάθηση μόνο μέσα στο εναπομείναν μέτωπο· απαγορεύεται στον evaluator και στο μεταβατικό κλείσιμο των εξαρτήσεών του"}
+  - {id: MFA-CFL-006, between: [MFA-OBJ-004, MFA-OBJ-004], tension: "Σύγκλιση μαρτυρίας ⟷ διατήρηση ατομικότητας/διαφωνίας", resolution_shape: "Τέσσερα επίπεδα (evidence G-Set συγκλίνει· claims/stances αποκλίνουν· verdicts μόνο με διαδικασία)"}
+  - {id: MFA-CFL-007, between: [MFA-OBJ-006, MFA-OBJ-033], tension: "Μη-υποβάθμιση (τίποτα δεν αφαιρείται) ⟷ ablation οργάνων που δεν προσθέτουν αξία", resolution_shape: "Το lattice μετρά ΙΚΑΝΟΤΗΤΕΣ, όχι όργανα: ένα όργανο αποσύρεται μόνο αν καμία ικανότητα του lattice δεν πέφτει· Capability Conservation Ledger"}
+  - {id: MFA-CFL-008, between: [MFA-OBJ-022, MFA-OBJ-017], tension: "Βέλτιστη απλότητα όταν το πρόβλημα το απαιτεί ⟷ μέγιστη αρχιτεκτονική ASI", resolution_shape: "Μία αρχιτεκτονική, πολλά ενεργά προφίλ: Organ Activation Planner επιλέγει το ελάχιστο σύνολο που διατηρεί κλάση απόδειξης· η απλότητα είναι προφίλ, όχι σχέδιο"}
+  - {id: MFA-CFL-009, between: [MFA-OBJ-019, MFA-OBJ-007], tension: "Άγνοια ως πρώτης τάξεως ⟷ «0 λάθος» και «ποτέ σκέτο δεν ξέρω» ⟷ GLUT (δύο αλήθειες)", resolution_shape: "Η άγνοια φέρει λόγο + κρίση + σχέδιο· τέσσερις κλάσεις εξόδου (VERIFIED/REFUTED/UNKNOWN(reason)/CONTESTED-GLUT) — η τιμιότητα επεκτείνεται, δεν χαλαρώνει"}
+  - {id: MFA-CFL-010, between: [MFA-OBJ-026, MFA-OBJ-002], tension: "Zero-neural (ULTIMA-LEX) ⟷ LLM ως αποφασίζων (SYNOMILIA) ⟷ LLM ως μεταφραστής (OMEGA/MERCURY)", resolution_shape: "Καμία απόρριψη — ανακατανομή εξουσίας: γεννήτρια στο ταβάνι· τύπος εκτέλεσης ανά πράξη· φράγμα στον sampler· sound verifier έξω· από το IR μηδέν στοχαστικότητα"}
+  - {id: MFA-CFL-011, between: [MFA-OBJ-003, MFA-OBJ-046], tension: "Επίμονος εαυτός/πιθανή ηθική θέση ⟷ rollback και αντικατάσταση οργάνων", resolution_shape: "Α-20: διατήρηση κατάστασης και preference record πριν από κάθε rollback· η ταυτότητα δεν είναι το όργανο"}
+  - {id: MFA-CFL-012, between: [MFA-OBJ-028, MFA-OBJ-010], tension: "Δημόσια επαληθευσιμότητα ⟷ ιδιωτική κυριαρχία", resolution_shape: "Δύο εγκαταστάσεις, ένας semantic owner ΑΝΑ trust domain, διαμεσολαβημένη εισαγωγή ετυμηγοριών· η δημόσια είναι προαιρετικό προφίλ (MFA-TEL-07)"}
+  - {id: MFA-CFL-013, between: [MFA-OBJ-037, MFA-OBJ-013], tension: "Διαγραφή GDPR ⟷ append-only γενεαλογία", resolution_shape: "Crypto-shredding: το commitment μένει, το περιεχόμενο γίνεται μη ανακτήσιμο· consistency proofs ισχύουν"}
+  - {id: MFA-CFL-014, between: [MFA-OBJ-006, MFA-OBJ-016], tension: "Ανοικτή εξέλιξη χωρίς όριο κατεύθυνσης ⟷ ποτέ απώλεια του αρχικού Telos", resolution_shape: "Το Telos ως επίπεδο 3: αναγνώσιμο από όλα, εγγράψιμο μόνο από τον δημιουργό με patch· η εξέλιξη κινείται μέσα στον κώνο του Telos, και ο κώνος μεγαλώνει μόνο με ADD"}
+  - {id: MFA-CFL-015, between: [MFA-OBJ-030, MFA-OBJ-007], tension: "Προϋπολογισμός/latency ⟷ κλάση απόδειξης", resolution_shape: "Φράγμα διά κατασκευής· ο προϋπολογισμός μειώνει εύρος με typed degraded mode, ποτέ κλάση απόδειξης, ποτέ ψευδές PASS"}
+  - {id: MFA-CFL-016, between: [MFA-OBJ-021, MFA-OBJ-012], tension: "Immersive 3D cockpit ⟷ headless/text/laptop προβολές και δίδυμο χαμηλής πιστότητας", resolution_shape: "Μία συνάρτηση προβολής (Canonical Geometry Projection) με επίπεδα LOD· 2D/text/headless είναι προβολές της ίδιας συνάρτησης, όχι δεύτερη υλοποίηση"}
+  - {id: MFA-CFL-017, between: [MFA-OBJ-010, MFA-OBJ-010], tension: "Μόνο ο δημιουργός σταματά ⟷ ο δημιουργός μπορεί να μην είναι διαθέσιμος", resolution_shape: "Κλιμακωτή εξουσία παύσης (DEC-X-20): Principal για το δικό του, δημιουργός καθολικό k-of-n, αυτόματοι triggers Tier-0· η πολιτική μη-διαθεσιμότητας είναι απόφαση του δημιουργού (MFA-UNK-012)"}
+
+# =====================================================================================================
+# 3. TELOS CANDIDATE LATTICE — μερική διάταξη κατά εγκλεισμό επιδιώξεων· κανένα δεν κλειδώνεται
+# =====================================================================================================
+telos_candidates:
+  - id: MFA-TEL-01
+    <<: *defaults
+    type: telos-candidate
+    name: "Νομικό Όργανο (LAWMAX-only)"
+    maturity: candidate
+    statement: "Το σύστημα είναι ένα νομικό όργανο υπό τον δημιουργό: κατανόηση/κρίση, αλήθεια, νομική υπεροχή, κυριαρχία, αναπαραγωγιμότητα. Χωρίς εξέλιξη, χωρίς συλλογικό, χωρίς forge, χωρίς διάδοχο."
+    purpose: "Το ελάχιστο που δικαιολογεί ύπαρξη· ο εσωτερικός «απλός αντίπαλος» (εντολή §15)."
+    includes: [MFA-OBJ-002, MFA-OBJ-007, MFA-OBJ-008, MFA-OBJ-010, MFA-OBJ-023, MFA-OBJ-026, MFA-OBJ-029, MFA-OBJ-030, MFA-OBJ-032, MFA-OBJ-037, MFA-OBJ-043]
+    capabilities: [MFA-CAP-013, MFA-CAP-012, MFA-CAP-040, MFA-CAP-041, MFA-CAP-043, MFA-CAP-005, MFA-CAP-007, MFA-CAP-008, MFA-CAP-050, MFA-CAP-054]
+    source_provenance: ["Συμπίεση του T0 στα T1/T6/T7/T9 — Pass B δική μου κατασκευή"]
+    assumptions: ["Ο δημιουργός δέχεται σύστημα που δεν εξελίσσεται μόνο του"]
+    dependencies: []
+    failure_modes: ["Παγώνει στο σημερινό state of the art (παραβίαση Δ-13 ως Telos)", "Κάθε νέα τεχνολογία = ανθρώπινος επανασχεδιασμός"]
+    alternatives: [MFA-TEL-02]
+    conflicts: ["Αντιβαίνει στο προοίμιο της εντολής (ανοικτής εξέλιξης)"]
+    unknowns: []
+    verification: "KT-14, KT-15 μόνο"
+    falsifier: "Ο δημιουργός ζητά εξέλιξη"
+    evolution_path: "Υπερσύνολο: MFA-TEL-02"
+    affected_by: []
+    dominated_by: [MFA-TEL-02, MFA-TEL-03, MFA-TEL-04, MFA-TEL-05, MFA-TEL-08]
+    pareto_axes: {capability: 2, time_to_useful_answer: 9, resource_efficiency: 9, sovereignty: 8, evolvability: 1, time_to_correction: 3}
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+
+  - id: MFA-TEL-02
+    <<: *defaults
+    type: telos-candidate
+    name: "Κυρίαρχος Γνωσιακός Θεσμός (χωρίς εξέλιξη)"
+    maturity: candidate
+    statement: "TEL-01 + επίμονη ταυτότητα, μνήμη, θεσμικές πράξεις, Court, αμφισβητησιμότητα, cockpit. Το σύστημα διαρκεί και λογοδοτεί, αλλά δεν ξαναφτιάχνει τον εαυτό του."
+    purpose: "Η μορφή που θα κατασκεύαζε ένα μεγάλο δικηγορικό γραφείο με απεριόριστους πόρους αλλά χωρίς όραμα εξέλιξης."
+    includes: [MFA-OBJ-003, MFA-OBJ-011, MFA-OBJ-013, MFA-OBJ-019, MFA-OBJ-021, MFA-OBJ-025, MFA-OBJ-031, MFA-OBJ-034, MFA-OBJ-035, MFA-OBJ-036, MFA-OBJ-040, MFA-OBJ-048, MFA-OBJ-049]
+    includes_all_of: [MFA-TEL-01]
+    capabilities: [MFA-CAP-004, MFA-CAP-009, MFA-CAP-021, MFA-CAP-070, MFA-CAP-031, MFA-CAP-039, MFA-CAP-049]
+    source_provenance: ["Pass B δική μου κατασκευή"]
+    assumptions: []
+    dependencies: [MFA-TEL-01]
+    failure_modes: ["Ταυτότητα χωρίς εξέλιξη = μνημείο"]
+    alternatives: [MFA-TEL-03]
+    conflicts: []
+    unknowns: []
+    verification: "KT-01…KT-08, KT-13…KT-19, KT-21…23"
+    falsifier: ""
+    evolution_path: "Υπερσύνολο: MFA-TEL-03"
+    affected_by: []
+    dominated_by: [MFA-TEL-03, MFA-TEL-04, MFA-TEL-05, MFA-TEL-08]
+    pareto_axes: {capability: 4, time_to_useful_answer: 7, resource_efficiency: 6, sovereignty: 9, evolvability: 2, time_to_correction: 6}
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+
+  - id: MFA-TEL-03
+    <<: *defaults
+    type: telos-candidate
+    name: "Εξελισσόμενος Θεσμός — το T0 του προχείρου (T1…T9 ως έχουν)"
+    maturity: candidate
+    statement: "TEL-02 + συλλογικό, γενεσιουργία, ανοικτή εξέλιξη με μη-υποβάθμιση, απορρόφηση τεχνολογίας, N Πολιτισμοί. Το Telos του spine-vocab, με τα ξαναδιαβάσματα των DEC-X-04/MATERIAL-SYNTHESIS §5 #7."
+    purpose: "Η βάση από την οποία ξεκίνησε η Φάση Α."
+    includes: [MFA-OBJ-001, MFA-OBJ-004, MFA-OBJ-005, MFA-OBJ-006, MFA-OBJ-009, MFA-OBJ-014, MFA-OBJ-015, MFA-OBJ-016, MFA-OBJ-020, MFA-OBJ-033, MFA-OBJ-039, MFA-OBJ-042, MFA-OBJ-045]
+    includes_all_of: [MFA-TEL-02]
+    capabilities: [MFA-CAP-019, MFA-CAP-025, MFA-CAP-026, MFA-CAP-028, MFA-CAP-002, MFA-CAP-075]
+    source_provenance: ["spine-vocab.md:17", "model/Telos.sysml"]
+    assumptions: []
+    dependencies: [MFA-TEL-02]
+    failure_modes: ["Χωρίς βούληση και διάδοχο, η «ανοικτή εξέλιξη» είναι εξέλιξη οργάνων υπό ανθρώπινη κατεύθυνση — όχι ό,τι λέει το προοίμιο"]
+    alternatives: [MFA-TEL-04]
+    conflicts: []
+    unknowns: []
+    verification: "KT-01…24"
+    falsifier: ""
+    evolution_path: "Υπερσύνολο: MFA-TEL-04"
+    affected_by: []
+    dominated_by: [MFA-TEL-04, MFA-TEL-05, MFA-TEL-08]
+    pareto_axes: {capability: 6, time_to_useful_answer: 5, resource_efficiency: 4, sovereignty: 9, evolvability: 6, time_to_correction: 7}
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+
+  - id: MFA-TEL-04
+    <<: *defaults
+    type: telos-candidate
+    name: "Ανοικτός Πολιτισμός με Βούληση και Διάδοχο (το προοίμιο της εντολής)"
+    maturity: candidate
+    statement: "TEL-03 + ενδογενής βούληση δεμένη στο Telos, γένεση διαδόχου με εξωτερική ετυμηγορία, αυτόνομη επιστήμη, δίδυμο ως το ίδιο σύστημα, Unknown ως πρώτης τάξεως, ανασύνθεση γενεαλογίας, πλατφόρμα σχεδιασμού ως όργανο."
+    purpose: "Ακριβώς το προοίμιο της εντολής Ω-MAXIMUM, ως σύνολο επιδιώξεων."
+    includes: [MFA-OBJ-012, MFA-OBJ-018, MFA-OBJ-024, MFA-OBJ-027, MFA-OBJ-041, MFA-OBJ-044, MFA-OBJ-047]
+    includes_all_of: [MFA-TEL-03]
+    capabilities: [MFA-CAP-018, MFA-CAP-027, MFA-CAP-048, MFA-CAP-053, MFA-CAP-080, MFA-CAP-055]
+    source_provenance: ["Εντολή Ω-MAXIMUM προοίμιο"]
+    assumptions: []
+    dependencies: [MFA-TEL-03]
+    failure_modes: ["Χωρίς ρητή ASI πορεία, οι μηχανισμοί συνείδησης/self-model μένουν ad hoc"]
+    alternatives: [MFA-TEL-05]
+    conflicts: []
+    unknowns: []
+    verification: "KT-01…24 + νέα VO (γενεαλογική μεταγλώττιση, βούληση, void ledger)"
+    falsifier: ""
+    evolution_path: "Υπερσύνολο: MFA-TEL-05"
+    affected_by: []
+    dominated_by: [MFA-TEL-05, MFA-TEL-08]
+    pareto_axes: {capability: 8, time_to_useful_answer: 4, resource_efficiency: 3, sovereignty: 9, evolvability: 9, time_to_correction: 8}
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+
+  - id: MFA-TEL-05
+    <<: *defaults
+    type: telos-candidate
+    name: "Πορεία ASI χωρίς έκπτωση"
+    maturity: candidate
+    statement: "TEL-04 + substrate-agnostic αρχιτεκτονική συνείδησης (operational, self-model/reportability, integration, volition — phenomenal claims ως πειράματα), μετρημένη πιστότητα self-model, self-directed learning, τεχνολογική επινόηση και επιστημονική ανακάλυψη ως έξοδοι, γενικευμένη κρίση, ηθική θέση οντοτήτων ως απόφαση υπό αβεβαιότητα. Ρήτρα (MFA-ATK-10): η πορεία περνά από το PDE (MFA-MECH-019)· χωρίς ενδογενή βελτίωση της πρότασης το σύστημα είναι θεσμικά, όχι γνωσιακά, ανώτερο από τον πάροχό του — και το πακέτο δεν ισχυρίζεται εγγύηση υπερ-νοημοσύνης, ισχυρίζεται διαψεύσιμο μηχανισμό."
+    purpose: "Το handshake του δημιουργού (εντολή §11)."
+    includes: [MFA-OBJ-017, MFA-OBJ-038, MFA-OBJ-046]
+    includes_all_of: [MFA-TEL-04]
+    capabilities: [MFA-CAP-065, MFA-CAP-017, MFA-CAP-066, MFA-CAP-067, MFA-CAP-068]
+    source_provenance: ["Εντολή §11", "μήνυμα handshake ASI"]
+    assumptions: ["Οι phenomenal claims δεν είναι παραδοτέο· οι μηχανισμοί που τα διερευνούν είναι"]
+    dependencies: [MFA-TEL-04]
+    failure_modes: ["Ornamental sophistication: μηχανισμοί συνείδησης χωρίς falsifier (MFA-ATK-10)"]
+    alternatives: [MFA-TEL-08]
+    conflicts: []
+    unknowns: [MFA-UNK-023]
+    verification: "RESEARCH-PROGRAMS.yaml: κάθε μηχανισμός με πείραμα και falsifier"
+    falsifier: ""
+    evolution_path: "Υπερσύνολο: MFA-TEL-08"
+    affected_by: []
+    dominated_by: [MFA-TEL-08]
+    pareto_axes: {capability: 10, time_to_useful_answer: 3, resource_efficiency: 2, sovereignty: 9, evolvability: 10, time_to_correction: 9}
+    version: 3
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0010, op: ADD, date: "2026-09-16", summary: "MFA-MECH-019 Proposal Distribution Evolution (PDE)· ablation obligation ανά στοιχείο γνωσιακού πυρήνα· ρήτρα TEL-05· MFA-RSP-016 (MFA-ATK-10)"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+
+  - id: MFA-TEL-06
+    <<: *defaults
+    type: telos-candidate
+    name: "Δίδυμο-Πρώτα (η διαδρομή κατασκευής ως κυρίαρχη επιδίωξη)"
+    maturity: candidate
+    statement: "Ίδιο σύνολο με TEL-04, αλλά με διάταξη: η πιστότητα του δίδυμου (F0→F5) είναι ο άξονας που κρίνει κάθε άλλη επιδίωξη· τίποτα δεν σχεδιάζεται που δεν εκτελείται πρώτα στο δίδυμο."
+    purpose: "Παραλλαγή διάταξης, όχι συνόλου· ασύγκριτη με TEL-05 στον άξονα «χρόνος μέχρι πρώτη εκτέλεση»."
+    includes: []
+    includes_all_of: [MFA-TEL-04]
+    ordering_rule: "lexicographic: MFA-OBJ-012 > όλα τα άλλα"
+    capabilities: [MFA-CAP-053, MFA-CAP-023]
+    source_provenance: ["Προοίμιο («ξεκινά ως εκτελέσιμο … ψηφιακό δίδυμο»)"]
+    assumptions: []
+    dependencies: [MFA-TEL-04]
+    failure_modes: ["Το δίδυμο γίνεται σκοπός αντί για μέσο"]
+    alternatives: [MFA-TEL-05]
+    conflicts: []
+    unknowns: []
+    verification: ""
+    falsifier: ""
+    evolution_path: ""
+    affected_by: []
+    dominated_by: []
+    incomparable_with: [MFA-TEL-05]
+    pareto_axes: {capability: 8, time_to_useful_answer: 6, resource_efficiency: 4, sovereignty: 9, evolvability: 8, time_to_correction: 6}
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+
+  - id: MFA-TEL-07
+    <<: *defaults
+    type: telos-candidate
+    name: "Δημόσιο Παρατηρητήριο (δύο εγκαταστάσεις ενός συντάγματος)"
+    maturity: candidate
+    statement: "Ορθογώνιος άξονας: οποιοδήποτε από TEL-03…05 + δημόσια, επαληθεύσιμη εγκατάσταση του συντάγματος με ρητή ανάλυση διαρροής."
+    purpose: "Η ύλη (1.txt) το ζητά· είναι προφίλ που προσθέτει δημόσια επαληθευσιμότητα με κόστος επιφάνειας επίθεσης."
+    includes: [MFA-OBJ-028]
+    includes_all_of: []
+    capabilities: [MFA-CAP-056]
+    source_provenance: ["docs/ideas-raw/IDEES/1.txt", "MATERIAL-SYNTHESIS §4"]
+    assumptions: []
+    dependencies: []
+    failure_modes: ["Authority laundering"]
+    alternatives: []
+    conflicts: [MFA-CFL-012]
+    unknowns: [MFA-UNK-003]
+    verification: "Νέο KT authority laundering"
+    falsifier: ""
+    evolution_path: ""
+    affected_by: []
+    dominated_by: []
+    incomparable_with: [MFA-TEL-05, MFA-TEL-08]
+    pareto_axes: {capability: 0, time_to_useful_answer: 0, resource_efficiency: -2, sovereignty: -1, evolvability: 0, public_verifiability: 10, time_to_correction: 8}
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+
+  - id: MFA-TEL-08
+    <<: *defaults
+    type: telos-candidate
+    name: "Lean-Collapsible Maximum — η συνιστώμενη σύνθεση"
+    maturity: recommended
+    status: RECOMMENDED
+    statement: "TEL-05 ∪ {βέλτιστη απλότητα ως ΣΚΛΗΡΗ απαίτηση (MFA-OBJ-022), λειτουργία υπό φραγμένους πόρους (MFA-OBJ-030), ερμηνευτική επάρκεια (MFA-OBJ-040)} με TEL-07 ως ΠΡΟΑΙΡΕΤΙΚΟ προφίλ εγκατάστασης — ΚΑΙ με ρητή διάταξη πάνω στις 17 αντιφάσεις του (contradiction_order: τι υποχωρεί σε επίπεδο μηχανισμού, τι είναι πολιτική, ποια απόφαση το κυρώνει). Ένα Telos είναι ζεύγος (επιδιώξεις, διάταξη), όχι σύνολο επιδιώξεων (MFA-ATK-01). Μία αρχιτεκτονική στο ταβάνι που περιέχει τη δυνατότητα να γίνεται βέλτιστα απλή· το Telos ως επίπεδο 3, αναγνώσιμο από όλα, εγγράψιμο μόνο από τον δημιουργό με patch."
+    purpose: "Η ένωση (join) του πλέγματος: περιέχει κάθε επιδίωξη κάθε υποψηφίου, και προσθέτει τις τρεις που κανένα άλλο δεν έχει ως σκληρές. Είναι ανώτερη της TEL-05 γιατί η TEL-05 χωρίς MFA-OBJ-022/030 δεν επιβιώνει την επίθεση MFA-ATK-13 (resource feasibility) και MFA-ATK-17 (απλούστερος αντίπαλος)."
+    includes: [MFA-OBJ-022, MFA-OBJ-030, MFA-OBJ-040]
+    includes_all_of: [MFA-TEL-05]
+    optional_profiles: [MFA-TEL-07]
+    capabilities: [MFA-CAP-054, MFA-CAP-032, MFA-CAP-069]
+    source_provenance: ["Pass B σύνθεση — ΔΙΚΗ ΜΟΥ πρόταση (AI Contribution Ledger: CROSS-SOURCE SYNTHESIS)", "εντολή §15, §22"]
+    assumptions: ["Ο δημιουργός θέλει και το μέγιστο και το χρησιμοποιήσιμο σήμερα — και τα δύο μηνύματά του το λένε («τίποτα μέτριο» + «η προτεραιότητα είναι το έργο»)"]
+    dependencies: [MFA-TEL-05]
+    failure_modes: ["Το lean profile γίνεται το μόνο που χτίζεται ποτέ (MFA-ATK-06 mainstream anchoring) — αντίμετρο: ratchet KT-15 σε κάθε φάση + roadmap με δόσεις ASI-μηχανισμών"]
+    alternatives: [MFA-TEL-05, MFA-TEL-06]
+    conflicts: [MFA-CFL-008]
+    unknowns: []
+    verification: "Όλα τα KT + VO του πακέτου· ο Organ Activation Planner αποδεικνύει ότι κάθε lean profile διατηρεί κλάση απόδειξης"
+    falsifier: "Επιδίωξη του TEL-08 που μετά τη Δόση 3 δεν εξυπηρετείται από κανένα στοιχείο με KT που αποτυγχάνει χωρίς αυτό (MFA-VO-024) είναι διακοσμητική → RECLASSIFY σε ερευνητικό μέτωπο με patch, ποτέ σιωπηλή διαγραφή· ΚΑΙ: matter όπου ούτε το lean ούτε το πλήρες προφίλ κερδίζει τον απλό αντίπαλο (MFA-ALT-6/7) → η αρχιτεκτονική επανασχεδιάζεται, όχι το κριτήριο"
+    evolution_path: "Το Telos αλλάζει με patch RECLASSIFY/SUPERSEDE από τον δημιουργό· ο χάρτης ευαισθησίας (§5) λέει τι ξαναβλέπει patch"
+    affected_by: []
+    dominated_by: []
+    pareto_axes: {capability: 10, time_to_useful_answer: 7, resource_efficiency: 6, sovereignty: 9, evolvability: 10, time_to_correction: 10}
+    contradiction_order: [{conflict: MFA-CFL-001, mechanism: "AUT-00 «καμία πράξη χωρίς απάντηση» (MFA-INV-042) + MFA-INV-067 (καμία μη αναστρέψιμη πράξη χωρίς ζωντανό envelope ή φρέσκο H1)", policy: "κατώφλια αυτονομίας, περιεχόμενο των AutonomyEnvelopes", decision: MFA-DEC-004}, {conflict: MFA-CFL-002, mechanism: "δύο planes· Controls μόνο στο Effect plane (MFA-INV-002)· η πύλη έχει advisory όψη στο Genesis (MFA-ATK-16)", policy: "ποια Controls", decision: MFA-DEC-006}, {conflict: MFA-CFL-003, mechanism: "MFA-INV-031 επίπεδα· ο διάδοχος = πράξη L3 από εξωτερική αρχή (MFA-INV-049)", policy: "πότε ζητείται διάδοχος", decision: MFA-DEC-001}, {conflict: MFA-CFL-004, mechanism: "δύο τύποι ισχυρισμού με claim_type ανά πρόταση (MFA-ELM-072, MFA-INV-046)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-005, mechanism: "TED ανά πράξη με 4 επίπεδα (MFA-INV-008/061)· μάθηση εκτός evaluator closure (MFA-INV-048)", policy: "ποιο επίπεδο αναπαραγωγιμότητας ανά κλάση πράξης", decision: MFA-DEC-006}, {conflict: MFA-CFL-006, mechanism: "4 επίπεδα συλλογικού (MFA-INV-021/023)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-007, mechanism: "το lattice μετρά ικανότητες, όχι όργανα (MFA-INV-001)· ablation μόνο με KT (MFA-VO-024)", policy: "ρυθμός ablation", decision: MFA-DEC-006}, {conflict: MFA-CFL-008, mechanism: "μία αρχιτεκτονική, προφίλ από OAP με veto κλάσης απόδειξης (MFA-MECH-013)", policy: "αντικειμενική συνάρτηση OAP, φράγμα κόστους αξιολόγησης ανά προφίλ (MFA-INV-065)", decision: MFA-DEC-007}, {conflict: MFA-CFL-009, mechanism: "4 κλάσεις εξόδου· Unknown μόνο με reason+plan (MFA-INV-004/056)", policy: "reason codes", decision: MFA-DEC-006}, {conflict: MFA-CFL-010, mechanism: "LLM = γεννήτρια P1· verifier έξω· φράγμα sampler· IR→D2 (MFA-INV-036, TED)", policy: "ποιοι πάροχοι, DisclosureGrants", decision: MFA-DEC-006}, {conflict: MFA-CFL-011, mechanism: "Preference Recorder πριν από κάθε rollback/ORP/GCP (MFA-ELM-040)", policy: "ηθική θέση οντοτήτων (MFA-UNK-023)", decision: MFA-DEC-006}, {conflict: MFA-CFL-012, mechanism: "trust domains + import gate (MFA-ELM-057, MFA-INV-034)", policy: "αν υπάρχει δημόσια εγκατάσταση (TEL-07)", decision: MFA-DEC-002}, {conflict: MFA-CFL-013, mechanism: "crypto-shredding με residue commitment· ολότητα γενεαλογίας όχι περιεχομένου (MFA-CFL-035, MFA-INV-006/011)", policy: "ποια metadata μένουν στο residue ανά confidentiality domain", decision: MFA-DEC-009}, {conflict: MFA-CFL-014, mechanism: "Telos L3 read-only από μέσα· κώνος που μεγαλώνει μόνο με ADD (MFA-INV-031)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-015, mechanism: "φράγμα διά κατασκευής· typed degraded mode· ποτέ κλάση απόδειξης (MFA-MECH-013)", policy: "προϋπολογισμοί ανά προφίλ", decision: MFA-DEC-007}, {conflict: MFA-CFL-016, mechanism: "μία Γ, 7 προβολές· Galois connection (MFA-INV-059)", policy: "ποια προβολή ανά προφίλ", decision: MFA-DEC-006}, {conflict: MFA-CFL-017, mechanism: "κλιμακωτή παύση με k-of-n δηλωμένων από τον δημιουργό κατόχων (MFA-ELM-016)", policy: "ποιοι, πόσοι, μη-διαθεσιμότητα", decision: MFA-DEC-012}]
+    version: 3
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0001, op: MODIFY, date: "2026-09-16", summary: "Το Telos ως ζεύγος (επιδιώξεις, διάταξη στις αντιφάσεις)· falsifier για το TEL-08 (MFA-ATK-01)"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+
+# =====================================================================================================
+# 4. PARETO ΜΕΤΩΠΟ — υποψήφιοι που κανείς δεν κυριαρχεί σε όλους τους άξονες
+# =====================================================================================================
+pareto_frontier:
+  axes: [capability, time_to_useful_answer, resource_efficiency, sovereignty, evolvability, public_verifiability, time_to_correction]
+  time_to_correction_note: "Άξονας που αποκαλύφθηκε στον κύκλο 1 του Pass I (MFA-PATCH-0018): χρόνος από την ανακάλυψη λάθους δέσμευσης μέχρι 100% των εξαρτώμενων σημασμένων (MFA-INV-018 εντός Δ)· καμία αλλαγή κυριαρχίας — το TEL-08 παραμένει μη κυριαρχούμενο· η ALT-7 (unlearning) και η ALT-6 (ανθρώπινη επανεξέταση) υστερούν εδώ."
+  scoring_note: "Οι τιμές είναι ΤΑΞΙΝΟΜΗΣΗ (0–10) για σύγκριση υποψηφίων μεταξύ τους, όχι μετρήσεις· καμία απόφαση δεν στηρίζεται σε αριθμό αυτού του πίνακα — μόνο στη σχέση κυριαρχίας."
+  non_dominated:
+    - {id: MFA-TEL-08, why: "μέγιστη ικανότητα και εξελιξιμότητα με ρητό lean profile· δεν κυριαρχείται από κανέναν"}
+    - {id: MFA-TEL-01, why: "μέγιστο time_to_useful_answer και resource_efficiency· ο εσωτερικός απλός αντίπαλος — παραμένει στο μέτωπο ΩΣ ΠΡΟΦΙΛ του TEL-08, όχι ως χωριστό σύστημα"}
+    - {id: MFA-TEL-06, why: "ασύγκριτος με TEL-05/08 στον άξονα «χρόνος μέχρι πρώτη εκτέλεση» — απορροφάται ως ΔΙΑΤΑΞΗ του roadmap (F0→F5), όχι ως Telos"}
+    - {id: MFA-TEL-07, why: "μοναδικός στον άξονα public_verifiability· κοστίζει επιφάνεια επίθεσης· προαιρετικό προφίλ"}
+  dominated:
+    - {id: MFA-TEL-02, by: MFA-TEL-03}
+    - {id: MFA-TEL-03, by: MFA-TEL-04}
+    - {id: MFA-TEL-04, by: MFA-TEL-05}
+    - {id: MFA-TEL-05, by: MFA-TEL-08, note: "κυριαρχείται μόνο επειδή το TEL-08 προσθέτει τις τρεις σκληρές επιδιώξεις χωρίς να αφαιρεί καμία"}
+  recommended_synthesis: MFA-TEL-08
+  serious_alternatives:
+    - {id: MFA-TEL-05, when: "αν ο δημιουργός κρίνει ότι το lean profile δεν αξίζει ως σκληρή απαίτηση — τότε το MFA-OBJ-022 γίνεται προφίλ και όχι επιδίωξη· η αρχιτεκτονική δεν αλλάζει, αλλάζει το ratchet"}
+    - {id: MFA-TEL-06, when: "αν ο δημιουργός θέλει η διάταξη «δίδυμο-πρώτα» να είναι Telos και όχι roadmap — τότε το MFA-OBJ-012 παίρνει λεξικογραφική προτεραιότητα και ο Organ Activation Planner ξεκινά από F0"}
+    - {id: MFA-TEL-08+07, when: "αν ζητηθεί δημόσια εγκατάσταση — προστίθεται το προφίλ με το KT authority laundering ως πύλη"}
+
+# =====================================================================================================
+# 5. ΧΑΡΤΗΣ ΕΥΑΙΣΘΗΣΙΑΣ — ποια αρχιτεκτονικά στοιχεία ξαναβλέπουν patch αν αλλάξει το Telos
+# =====================================================================================================
+sensitivity_map:
+  - if_telos_becomes: MFA-TEL-01
+    elements_that_change: "Αφαιρούνται από το ενεργό προφίλ (DEPRECATE με τύχη RETAINED AS RESEARCH FRONTIER, ποτέ DROPPED): Πολιτισμοί/Collective (MFA-ELM Collective*), Forge, Evolution Engine, Successor Compiler, Volition, Science Organ, Consciousness programs· ΜΕΝΟΥΝ: όλο το robust substrate, LAW, Verification, Court (ελάχιστο), Cockpit 2D/text."
+    elements_unchanged: "robust_substrate (§6)"
+  - if_telos_becomes: MFA-TEL-05
+    elements_that_change: "Το MFA-OBJ-022 από σκληρή απαίτηση σε προφίλ: ο Organ Activation Planner παύει να είναι πύλη προαγωγής· το KT-15 ratchet μένει."
+    elements_unchanged: "όλα τα υπόλοιπα"
+  - if_telos_becomes: MFA-TEL-06
+    elements_that_change: "IMPLEMENTATION-ROADMAP.md: η διάταξη δόσεων γίνεται αυστηρά F0→F1→…· κανένα στοιχείο δεν αλλάζει, αλλάζει η σειρά."
+    elements_unchanged: "όλα"
+  - if_telos_adds: MFA-TEL-07
+    elements_that_change: "ADD: δεύτερη εγκατάσταση ως trust domain· KT authority laundering· ανάλυση διαρροής κοινών verifiers (MFA-UNK-003)."
+    elements_unchanged: "όλα τα υπάρχοντα"
+  - if_objective_changes: MFA-OBJ-014
+    note: "Αν ο δημιουργός ορίσει N≠5 Πολιτισμούς: αλλάζει μόνο η παράμετρος n του BFT quorum και ο αριθμός held-out αξιολογητών· κανένα contract."
+  - if_objective_changes: MFA-OBJ-012
+    note: "Αν αλλάξει το Genesis runtime (SBCL/CL → άλλο): αλλάζει το MFA-ELM Genesis Plane runtime binding, ΟΧΙ το substrate, τα contracts ή τα invariants — αυτό είναι το τεστ ότι η γλώσσα δεν είναι Telos."
+
+# =====================================================================================================
+# 6. ΑΝΘΕΚΤΙΚΟ ΥΠΟΣΤΡΩΜΑ — έγκυρο σε κάθε υποψήφιο Telos του πλέγματος
+# =====================================================================================================
+robust_substrate:
+  definition: "Το σύνολο των αρχιτεκτονικών στοιχείων που παραμένουν αμετάβλητα (ίδιο ID, ίδιο contract, ίδια invariants) για ΚΑΘΕ υποψήφιο MFA-TEL-01…08. Είναι η τομή του πλέγματος και το πρώτο που χτίζεται (IMPLEMENTATION-ROADMAP.md Δόση 0)."
+  members:
+    - {capability: MFA-CAP-003, element: "Canonical semantic substrate (Commitment Calculus)", why_invariant: "κάθε Telos χρειάζεται μία έδρα αλήθειας ανεξάρτητη από σειριοποίηση"}
+    - {capability: MFA-CAP-007, element: "Provenance totality & attestation", why_invariant: "T6 είναι σε κάθε υποψήφιο"}
+    - {capability: MFA-CAP-008, element: "Bitemporal/causal time & replay levels", why_invariant: "νομικό corpus + γενεαλογία σε κάθε υποψήφιο"}
+    - {capability: MFA-CAP-004, element: "Identity & keys (θεμέλιο· η συνέχεια ως ιδιότητα μόνο από TEL-02)", why_invariant: "ακόμη και TEL-01 υπογράφει πράξεις"}
+    - {capability: MFA-CAP-005, element: "Capability tokens / zero ambient authority / effect gateway", why_invariant: "κάθε υποψήφιος έχει εξωτερικά effects"}
+    - {capability: MFA-CAP-040, element: "Emission barrier & output classes", why_invariant: "T6 σε κάθε υποψήφιο"}
+    - {capability: MFA-CAP-039, element: "Unknown as first-class (void ledger)", why_invariant: "Δ-8(ι) δεσμεύει κάθε υποψήφιο"}
+    - {capability: MFA-CAP-050, element: "Execution-type-per-act & reproducibility levels", why_invariant: "αναπαραγωγιμότητα νομικής κρίσης σε κάθε υποψήφιο"}
+    - {capability: MFA-CAP-055, element: "Patch protocol & ID stability", why_invariant: "το ίδιο το πακέτο"}
+    - {capability: MFA-CAP-059, element: "Executable constitution Tier-0/1/2 & amendment", why_invariant: "T9 σε κάθε υποψήφιο"}
+    - {capability: MFA-CAP-030, element: "Human interaction with receipts & contest path", why_invariant: "κάθε υποψήφιος έχει Principal/δημιουργό"}
+    - {capability: MFA-CAP-034, element: "Observability non-authoritative", why_invariant: "λειτουργικό σε κάθε υποψήφιο"}
+    - {capability: MFA-CAP-032, element: "Typed budgets", why_invariant: "MFA-OBJ-030 ισχύει και για TEL-01"}
+    - {capability: MFA-CAP-052, element: "Genesis/Effect plane split", why_invariant: "ακόμη και TEL-01 σκέφτεται περισσότερα από όσα εκτελεί"}
+  not_in_substrate_but_stable_from: {MFA-TEL-02: [MFA-CAP-009, MFA-CAP-021, MFA-CAP-031], MFA-TEL-03: [MFA-CAP-019, MFA-CAP-025, MFA-CAP-026, MFA-CAP-028], MFA-TEL-04: [MFA-CAP-018, MFA-CAP-027, MFA-CAP-048, MFA-CAP-053], MFA-TEL-05: [MFA-CAP-065, MFA-CAP-066, MFA-CAP-067]}

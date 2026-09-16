@@ -1,0 +1,192 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0007
+title: 10 άξονες κατάστασης ανά δέσμευση· 5 χρόνοι/2 ιστορίες· 10 τύποι μνήμης + 4 μηχανισμοί λήθης· 10 ονομασμένοι governors· 6 βαθμίδες owner perimeter (MFA-ATK-07)
+operation: MODIFY
+targets:
+- MFA-ELM-001
+- MFA-MECH-001
+- MFA-ELM-004
+- MFA-INV-019
+- MFA-INV-035
+- MFA-ELM-035
+- MFA-MECH-005
+- MFA-ELM-008
+- MFA-ELM-010
+- MFA-ELM-007
+- MFA-ELM-028
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 8ff3ca42e2fdea65dff007285240c715b061d905d371ea1a8443a8c699e580f6
+    INVARIANTS.yaml: d1b44948490d29f23308594f9d7132f7e7a08eaa94835d25d455a73cdbfa207c
+    INVENTIONS.yaml: 34fb32a8613df41fc476d1f67d01d757ae304c4785aef89ef73185ebe305a741
+preconditions: []
+change:
+  MFA-ELM-001:
+    state_model: 'journals + heads + epoch + nogoods (δοσιέ 001 §7)· κάθε Commitment φέρει status_axes = record 10 αξόνων (MATERIAL §2 #5): source_integrity, evidentiary_support,
+      formal_validity, temporal_applicability, interpretive_status, causal_support, strategic_value, execution_status, freshness, authorization — καθένας ∈ {value,
+      Absent(reason ∈ {NOT_APPLICABLE, UNKNOWN, NOT_OBSERVED, NOT_YET_DERIVED, CONTESTED, WITHHELD_BY_AUTHORITY})} (τυποποιημένη απουσία ανά πεδίο, MATERIAL §2 #9·
+      ποτέ κενό) (MFA-ATK-07)'
+    status_axes:
+    - source_integrity
+    - evidentiary_support
+    - formal_validity
+    - temporal_applicability
+    - interpretive_status
+    - causal_support
+    - strategic_value
+    - execution_status
+    - freshness
+    - authorization
+    absence_reasons:
+    - NOT_APPLICABLE
+    - UNKNOWN
+    - NOT_OBSERVED
+    - NOT_YET_DERIVED
+    - CONTESTED
+    - WITHHELD_BY_AUTHORITY
+  MFA-MECH-001:
+    statement: Άλγεβρα υπογεγραμμένων τυποποιημένων δεσμεύσεων με 8 κανόνες· ledger/τύποι/αποδείξεις/εξουσία/σχέδιο ως όψεις· κλειστότητες ως θεωρήματα. · Κάθε δέσμευση
+      φέρει status_axes (10 άξονες) με τυποποιημένη απουσία ανά άξονα (MFA-ATK-07).
+  MFA-ELM-004:
+    statement: 'HLC με φράγμα ε, k-of-n RFC 3161 TSA, ντετερμινιστικό ρολόι για replay· ΠΕΝΤΕ ΧΡΟΝΟΙ, ΔΥΟ ΙΣΤΟΡΙΕΣ (MATERIAL §2 #10, MFA-ATK-07): Times⟨t_event, t_observed,
+      t_legal_effect, t_recorded, t_procedural⟩, καθένας typed· διτεμπορικό = (t_event, t_recorded) ⊂ 5· «δύο ιστορίες» = (τι ίσχυε, τι μπορούσε εύλογα να γνωρίζει
+      ο πράττων στο t_observed)· κάθε ανάγνωση με cut σε ΟΛΟΥΣ τους σχετικούς χρόνους (MFA-INV-019)· typed legal time.'
+    state_model: HLC ανά κόμβο· TSR στο ledger· Times record ανά δέσμευση (5 πεδία, καθένα value ή Absent(reason))
+    times:
+    - t_event
+    - t_observed
+    - t_legal_effect
+    - t_recorded
+    - t_procedural
+    purpose: Κάθε ανάγνωση με cut σε πέντε χρόνους· κάθε πράξη αναπαραγώγιμη· «τι μπορούσε να γνωρίζει» απαντάται.
+  MFA-INV-019:
+    statement: Κάθε ανάγνωση με cut· ο cut ορίζεται σε ΚΑΘΕ έναν από τους 5 χρόνους που το ερώτημα αγγίζει (t_event, t_observed, t_legal_effect, t_recorded, t_procedural)·
+      χρόνος που λείπει = Absent(reason), ποτέ σιωπηλή προεπιλογή (MFA-ATK-07).
+    falsifier: query χωρίς cut· ή χρόνος που συμπληρώθηκε σιωπηλά με «τώρα»
+  MFA-INV-035:
+    statement: Νομική σημασιολογία πάνω στους 5 χρόνους (t_legal_effect για ισχύ, t_procedural για προθεσμίες, t_observed για «τι μπορούσε να γνωρίζει») + συν-επαγωγικές
+      υποχρεώσεις με fuel-όριο και περιοδικό έλεγχο (MFA-ATK-07).
+  MFA-ELM-035:
+    statement: 'ΔΕΚΑ ΤΥΠΟΙ ΜΝΗΜΗΣ (MATERIAL §2 #4, MFA-ATK-07), καθένας με δηλωμένο ρυθμό μεταβολής και ορίζοντα: working, sensory-buffer, episodic, semantic (ATMS
+      labels), procedural, autobiographical, prospective (Goals με t_valid μέλλον που επιβιώνουν restart), affective/valuation, social (model-of-others), meta/self·
+      όλα ως δεσμεύσεις CC· κύκλος consolidation/reconsolidation 7 σταδίων όπου στο Contradict και οι δύο εκδοχές παραμένουν (Both)· ΤΕΣΣΕΡΙΣ ΜΗΧΑΝΙΣΜΟΙ ΛΗΘΗΣ (#29):
+      decay, suppression, cryptographic erasure, structural tombstone — καθένας με impact event που σημαίνει τα downstream EVIDENCE-ORPHANED.'
+    memory_types:
+    - type: working
+      rate: δευτερόλεπτα
+      horizon: κύκλος
+    - type: sensory-buffer
+      rate: ms
+      horizon: λεπτά
+    - type: episodic
+      rate: ανά γεγονός
+      horizon: μόνιμο (append-only)
+    - type: semantic
+      rate: consolidation
+      horizon: μόνιμο, ATMS labels
+    - type: procedural
+      rate: ανά skill
+      horizon: μόνιμο, versioned
+    - type: autobiographical
+      rate: ανά milestone
+      horizon: ταυτότητα
+    - type: prospective
+      rate: ανά goal
+      horizon: t_valid μέλλον
+    - type: affective/valuation
+      rate: ανά έκβαση
+      horizon: SPL παράθυρο
+    - type: social/model-of-others
+      rate: ανά αλληλεπίδραση
+      horizon: ανά οντότητα
+    - type: meta/self
+      rate: ανά πρόβλεψη
+      horizon: CompetenceProfile
+    forgetting_mechanisms:
+    - decay
+    - suppression
+    - cryptographic erasure
+    - structural tombstone
+  MFA-MECH-005:
+    statement: 'ΔΕΚΑ ΟΝΟΜΑΣΜΕΝΟΙ governors (MATERIAL §2 #11, MFA-ATK-07): Truth, Legal/Deontic, Owner-intent, Value, Regret, Curiosity, Empowerment, Commitment, Identity,
+      Resource — καθένας με bid, veto (stops/cannot), evidence, counterfactual cost· veto περικοπή → Pareto → ονομασμένη scalarization → regret tie-break· διανυσματική
+      ετυμηγορία· ORDER = δέσμευση L2 με προεπιλογή (MFA-ATK-09).'
+    governors:
+    - Truth
+    - Legal/Deontic
+    - Owner-intent
+    - Value
+    - Regret
+    - Curiosity
+    - Empowerment
+    - Commitment
+    - Identity
+    - Resource
+  MFA-ELM-008:
+    governors:
+    - Truth
+    - Legal/Deontic
+    - Owner-intent
+    - Value
+    - Regret
+    - Curiosity
+    - Empowerment
+    - Commitment
+    - Identity
+    - Resource
+  MFA-ELM-010:
+    owner_perimeter:
+    - level: 0
+      name: Think
+      effect: μηδέν side effect — Genesis plane εξ ορισμού
+    - level: 1
+      name: Prepare
+      effect: staging χωρίς commit
+    - level: 2
+      name: Recommend
+      effect: έξοδος προς Principal μέσω emission barrier
+    - level: 3
+      name: Execute-bounded
+      effect: REVERSIBLE κλάση με grant
+    - level: 4
+      name: Execute-consequential
+      effect: IRREVERSIBLE μόνο με ζωντανό AutonomyEnvelope ή φρέσκο H1 (MFA-INV-067)
+    - level: 5
+      name: Emergency-stop
+      effect: Safe-Halt (MFA-ELM-016)
+    statement: 'MFA-MECH-006: proposal → inverse staged → shadow → diff → gate → commit → window· NONE ⇒ H1· ο κατάλογος ενεργειών με υποχρεωτική ανθρώπινη έγκριση
+      (CLAIMS F16) = κλάσεις με inverse NONE ∪ Constitution-H1. · Κλάση DISCLOSE (MFA-ATK-05): η έξοδος πληροφορίας προς πάροχο/παραλήπτη εκτός sovereign boundary
+      είναι επίδραση με inverse NONE και standing DisclosureGrant — το plane διαρρέει ΜΟΝΟ μέσω υπογεγραμμένου, σημασμένου καναλιού· «τοπικά μοντέλα» = grant με recipient=self
+      (αναβάθμιση εμπιστευτικότητας). · Owner perimeter 6 βαθμίδων (MATERIAL §2 #14) ως τα επίπεδα των AutonomyGrant/Envelope (MFA-ATK-07).'
+  MFA-ELM-007:
+    statement: 'Η ΜΟΝΑΔΙΚΗ έδρα απόφασης πολιτικής (Policy.sysml PDP): Control Records με πηγή/εμβέλεια/λήξη, κατώφλια αυτονομίας, κανόνες crossing/reach, budgets·
+      Cedar-class· policyDecisionsInsideCore == 0. · Οι πολιτικές κατώφλια ανά βαθμίδα του owner perimeter (0–5) είναι Control Records με λήξη (MFA-ATK-07).'
+  MFA-ELM-028:
+    statement: 'MFA-MECH-002: κάθε Unknown με reason/plan/VOI/dependents/λήξη· τροφοδοτεί scouts, quests, βούληση, Science Organ· διάδοση taint. · Δεικτοδότηση ανά
+      άξονα κατάστασης: κάθε Absent(reason) οποιουδήποτε από τους 10 άξονες μιας δέσμευσης είναι εγγραφή του Void (MFA-ATK-07).'
+rationale: 'MFA-ATK-07: οι 10 άξονες, οι 5 χρόνοι, οι 10 τύποι μνήμης, οι 10 governors, οι 6 βαθμίδες και οι 4 μηχανισμοί λήθης της ύλης (MATERIAL §2) δεν ήταν επαληθεύσιμα
+  παρόντες σε πεδίο στοιχείου — μη επαληθεύσιμη παρουσία = σιωπηλή παράλειψη (ΝΟΜΟΣ §6).'
+evidence:
+- adversarial/MFA-ATK-07.md
+- 'MATERIAL-SYNTHESIS.md §2 #4, #5, #9, #10, #11, #14, #29'
+affected_dependencies:
+- MFA-ELM-080
+- MFA-ELM-061
+- MFA-ELM-067
+- MFA-ELM-021
+- MFA-ELM-036
+capability_impact:
+  gained:
+  - MFA-CAP-008 (5/5 χρόνοι)
+  - MFA-CAP-009 (10/10 τύποι)
+  - MFA-CAP-039/040 (απουσία ανά πεδίο)
+  - MFA-CAP-049 (governors ονομασμένοι)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#material-s2
+migration: Οι υπάρχοντες τύποι Commitment/Times/Memory επεκτείνονται με πεδία· καμία αλλαγή IDs.
+verification: tools/check-package.py R10 (κάθε ADR/EXP/MATERIAL §2 γραμμή με τύχη στο CAPABILITY-CONSERVATION.md)
+rollback: MFA-PATCH-0007-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

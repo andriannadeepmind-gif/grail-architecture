@@ -1,0 +1,106 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0010-R
+title: 'Rollback of MFA-PATCH-0010: MFA-MECH-019 Proposal Distribution Evolution (PDE)· ablation obligation ανά στοιχείο γνωσιακού πυρήνα· ρήτρα TEL-05· MFA-RSP-016
+  (MFA-ATK-10)'
+operation: RESTORE
+targets:
+- MFA-MECH-019
+- MFA-RSP-016
+- MFA-ELM-030
+- MFA-ELM-073
+- MFA-ELM-025
+- MFA-ELM-017
+- MFA-VO-024
+- MFA-ELM-018
+- MFA-ELM-024
+- MFA-ELM-029
+- MFA-TEL-05
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: a71b65c5085ee069bea0659da70ea7ae792adda9088a2e2a5cf438b9956ab9bf
+    INVENTIONS.yaml: 94f429a90f095810bdaf242cc402fdbca4cbfe99eddd12a96750553e721fa795
+    OBJECTIVE-SPACE.yaml: e0a29c817ad2a2138d39eb26a3a7f5dd8cdc2b086a3877230cbfdc9928528847
+    RESEARCH-PROGRAMS.yaml: 99b6239aaad803c2fcbcfbb7bf108b5dcc6bfd72dcf71d18ecdea2e0afafde26
+    VERIFICATION-OBLIGATIONS.yaml: 8f71d0d767b9d069b8ddbd06775ba12d3b41a38e78380b0b2e9c521ef566d827
+    mechanisms/MFA-MECH-019.md: cfadf0689906cb56b055abe33b8faeaf0b71b8a12a3140a642d1e992667fc5fa
+preconditions:
+- MFA-PATCH-0010.status == APPLIED
+change:
+  mechanisms/MFA-MECH-019.md:
+    append: '
+
+
+      <!-- WITHDRAWN by rollback: this file was created by a patch that has been rolled back; kept append-only (PATCH-PROTOCOL §4.7) -->
+
+      '
+  MFA-MECH-019:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  INVENTIONS.yaml:
+    replace:
+    - - '  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010, MFA-MECH-019]'
+      - '  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010]'
+  MFA-RSP-016:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-030:
+    statement:
+      __raw: '"Επτάφασος βρόχος (παρατήρηση→υπόθεση με falsifier→σχεδιασμός→εκτέλεση υπό token→ανάλυση→ανεξάρτητη αναπαραγωγή→ένταξη), 6+ κλάσεις ανακάλυψης (ανοιχτή
+        απαρίθμηση), capability-producing → Evolution."'
+  MFA-ELM-073:
+    statement:
+      __raw: '"Αρχειακή quality-diversity αναζήτηση (AlphaEvolve/DGM-class) σε sandbox με held-out evaluators· δείκτης πλαστικότητας μετρούμενος (CLAIMS F63)· προαγωγή
+        ΜΟΝΟ ORP+CPEG+SLM+Court+ND· INV-F02 επιπέδων· reward hacking→held-out (CQ)."'
+  MFA-ELM-025:
+    statement:
+      __raw: '"Tools, programs, LexDSL rule-sets, playbooks· versioned, conformance-tested, capability-scoped."'
+  MFA-ELM-017:
+    statement:
+      __raw: '"Provider-agnostic μοντέλα με model contracts, routing, N-model, redaction, Inference Receipts + Typed Execution (MFA-MECH-015): D1 exact-match με grammar
+        στον sampler (logit=−∞ πριν softmax), P1 ερμηνεία TRACE_REPLAYABLE· μία πόρτα εξόδου (PROPOSED). · Προεπιλεγμένος τύπος LLM βήματος = D2 (σημασιολογικά ταυτόσημο
+        υπό grammar constraint στην πηγή, CLAIMS H9)· D1 μόνο για τοπική καρφιτσωμένη εξαγωγή (weights hash + runtime hash + seed ως δεσμεύσεις, MFA-INV-061) που
+        πέρασε MFA-VO-041 σε 1000 επαναλήψεις· ο τύπος γράφεται στο receipt· κάθε κλήση εξωτερικού παρόχου περνά ως επίδραση DISCLOSE από τον Gateway (MFA-ATK-05)."'
+  MFA-VO-024:
+    methods:
+      __raw: '["pre-registered ablation"]'
+    measures:
+      __raw: '"οριακή αξία > θόρυβο ανά όργανο"'
+    rejects:
+      __raw: '"καμία αξία → όργανο αποσύρεται (με Court)"'
+  MFA-ELM-018:
+    ablation_kt:
+      __raw: 'null'
+  MFA-ELM-024:
+    ablation_kt:
+      __raw: 'null'
+  MFA-ELM-029:
+    ablation_kt:
+      __raw: 'null'
+  MFA-TEL-05:
+    statement:
+      __raw: '"TEL-04 + substrate-agnostic αρχιτεκτονική συνείδησης (operational, self-model/reportability, integration, volition — phenomenal claims ως πειράματα),
+        μετρημένη πιστότητα self-model, self-directed learning, τεχνολογική επινόηση και επιστημονική ανακάλυψη ως έξοδοι, γενικευμένη κρίση, ηθική θέση οντοτήτων
+        ως απόφαση υπό αβεβαιότητα."'
+rationale: Αντίστροφο του MFA-PATCH-0010, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-019
+- MFA-ELM-020
+- MFA-ELM-032
+- MFA-ELM-056
+- MFA-ELM-013
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-067 (μηχανισμός για επινόηση ως έξοδο)
+  - MFA-CAP-066 (ως προγράμματα, σήμερα — όχι EP)
+  - MFA-CAP-065 (ablation obligations ⇒ μη διακοσμητικό)
+  ledger_entry: CAPABILITY-CONSERVATION.md#asi-pathway
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0010
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

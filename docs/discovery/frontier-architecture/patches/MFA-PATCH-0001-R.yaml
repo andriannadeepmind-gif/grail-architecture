@@ -1,0 +1,41 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0001-R
+title: 'Rollback of MFA-PATCH-0001: Το Telos ως ζεύγος (επιδιώξεις, διάταξη στις αντιφάσεις)· falsifier για το TEL-08 (MFA-ATK-01)'
+operation: RESTORE
+targets:
+- MFA-TEL-08
+base:
+  package_version: 0.1.0
+  file_hashes:
+    OBJECTIVE-SPACE.yaml: 8a87e1eccbde3e698675d827134f89253843035db584b3985c884f275fecb60c
+preconditions:
+- MFA-PATCH-0001.status == APPLIED
+change:
+  MFA-TEL-08:
+    contradiction_order:
+      __raw: 'null'
+    falsifier:
+      __raw: '"Ένα matter όπου ούτε το lean ούτε το πλήρες προφίλ κερδίζει τον απλό αντίπαλο (MFA-ALT-6) — τότε η αρχιτεκτονική επανασχεδιάζεται, όχι το κριτήριο"'
+    statement:
+      __raw: '"TEL-05 ∪ {βέλτιστη απλότητα ως ΣΚΛΗΡΗ απαίτηση (MFA-OBJ-022), λειτουργία υπό φραγμένους πόρους (MFA-OBJ-030), ερμηνευτική επάρκεια (MFA-OBJ-040)} με
+        TEL-07 ως ΠΡΟΑΙΡΕΤΙΚΟ προφίλ εγκατάστασης. Μία αρχιτεκτονική στο ταβάνι που περιέχει τη δυνατότητα να γίνεται βέλτιστα απλή· το Telos ως επίπεδο 3, αναγνώσιμο
+        από όλα, εγγράψιμο μόνο από τον δημιουργό με patch."'
+rationale: Αντίστροφο του MFA-PATCH-0001, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-008
+- MFA-ELM-051
+- MFA-ELM-096
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-001 (Telos διαιτητεύσιμο)
+  - MFA-CAP-049 (LPA με προεπιλεγμένο ORDER)
+  ledger_entry: CAPABILITY-CONSERVATION.md#telos
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0001
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

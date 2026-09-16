@@ -1,0 +1,27 @@
+%% id: MFA-DIA-15 · Patch/update mechanism · question: πώς αλλάζει το πακέτο (και αργότερα το ζωντανό σχέδιο) χωρίς ολική επανεγγραφή;
+%% elements: MFA-ELM-090/088/038, MFA-MECH-017/014, MFA-INV-064 · source: PATCH-PROTOCOL.md
+flowchart TD
+  P["MFA-PATCH-nnnn.yaml<br/>op ∈ ADD/MODIFY/RELINK/SPLIT/MERGE/SUPERSEDE/DEPRECATE/RESTORE/RECLASSIFY<br/>targets · base hashes · preconditions · change · rationale · evidence<br/>capability_impact · migration · verification · rollback (-R)"]
+  H{"base file_hashes == MANIFEST;"}
+  PRE{"preconditions ισχύουν;"}
+  CP["MFA-MECH-017 CPEG<br/>κρίσιμα ζεύγη με υπάρχοντες κανόνες"]
+  CPQ{"joinable;"}
+  CAP{"capability_impact με τύχη στο Ledger;<br/>DROPPED FOR CONVENIENCE δεν υπάρχει"}
+  APPLY["εφαρμογή μόνο στα πεδία των targets<br/>version += 1 · change_history append"]
+  MAN["tools/build-manifest.py → MANIFEST.yaml (semver)"]
+  LOG["CHANGELOG.md · SUPERSEDED-REGISTER.md · CAPABILITY-CONSERVATION.md"]
+  CHK["tools/check-package.py (MFA-VO-049)"]
+  OK["status: APPLIED (append-only, ποτέ διαγραφή)"]
+  REJ["ξαναγράφεται πάνω στη νέα βάση"]
+  P --> H
+  H -->|"όχι"| REJ
+  H -->|"ναι"| PRE
+  PRE -->|"όχι"| REJ
+  PRE -->|"ναι"| CP --> CPQ
+  CPQ -->|"όχι: PRIORITY/PARTITION από δημιουργό ή REJECT"| REJ
+  CPQ -->|"ναι"| CAP
+  CAP -->|"όχι"| REJ
+  CAP -->|"ναι"| APPLY --> MAN --> LOG --> CHK
+  CHK -->|"FAIL"| REJ
+  CHK -->|"PASS"| OK
+  OK -.->|"το ίδιο πρωτόκολλο για Schema-δεσμεύσεις στο ledger (MFA-ELM-088/090, MFA-INV-064)"| P

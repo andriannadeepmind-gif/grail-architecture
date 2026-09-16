@@ -1,0 +1,60 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0006-R
+title: 'Rollback of MFA-PATCH-0006: ELM-081 RETAIN→STRENGTHEN (commitment-aware retrieval)· ELM-087 RETAIN→STRENGTHEN (αποφάσεις δειγματοληψίας ως δεσμεύσεις) (MFA-ATK-06)'
+operation: RESTORE
+targets:
+- MFA-ELM-081
+- MFA-CON-031
+- MFA-VO-003
+- MFA-ELM-087
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 8ff3ca42e2fdea65dff007285240c715b061d905d371ea1a8443a8c699e580f6
+    CONTRACTS.yaml: 62dba91730cf3f5daab1b0e4b1baf707ab9ef480e32dcf3a09fa90e255dd5c48
+    VERIFICATION-OBLIGATIONS.yaml: a468f1b92b713b1e00bf7fb8b1007413cd9898880398672625cea27d983a6a86
+preconditions:
+- MFA-PATCH-0006.status == APPLIED
+change:
+  MFA-ELM-081:
+    delta:
+      __raw: RETAIN
+    statement:
+      __raw: '"Υβριδική ανάκτηση (lexical+vectors+graph walks), re-ranking — μόνο παράγωγο· semantic_vector ΕΚΤΟΣ κανονικού προφίλ (MATERIAL §5 #16)· persistent homology
+        μόνο ως σήμανση υποψηφίων (MFA-CAP-044, EXP)."'
+    purpose:
+      __raw: '"Εύρεση χωρίς αλήθεια."'
+  MFA-CON-031:
+    delta:
+      __raw: RETAIN
+    statement:
+      __raw: '"Search(hybrid)/GraphWalk/Rerank — μόνο παράγωγο."'
+    failure_semantics:
+      __raw: '"διαγραφή index δεν αλλάζει αλήθεια"'
+  MFA-VO-003:
+    measures:
+      __raw: '"rebuild από ledger ταυτόσημο"'
+  MFA-ELM-087:
+    delta:
+      __raw: RETAIN
+    statement:
+      __raw: '"OTel traces/metrics/logs με event_cid correlation· μη αυθεντικό· audit = ledger."'
+rationale: Αντίστροφο του MFA-PATCH-0006, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-062
+- MFA-ELM-019
+- MFA-ELM-086
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-010 (commitment-aware πρόσβαση)
+  - MFA-CAP-034 (δειγματοληψία ορατή)
+  ledger_entry: CAPABILITY-CONSERVATION.md#retain-review
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0006
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

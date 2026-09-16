@@ -1,0 +1,109 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0008
+title: MFA-CFL-035 ολότητα προέλευσης vs διαγραφή (residue commitment)· ledger μονότονο, DPO = σημασιολογία κανόνων· κωδικοποίηση στο epoch allowlist· VO για MFA-INV-066
+  (MFA-ATK-08)
+operation: ADD
+targets:
+- MFA-CFL-035
+- MFA-INV-041
+- MFA-ELM-001
+- MFA-MECH-001
+- MFA-ELM-005
+- MFA-INV-038
+- MFA-VO-016
+- MFA-VO-009
+- MFA-VO-006
+- MFA-INV-011
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 47398a58c6c2d3282d4dcaeeded3c5dbaf55711453df5476e9037d3fe2c19f9a
+    CONFLICTS.yaml: 3f1ad2e46e77089b0d94218089badfc79011e795eac833d18a507134703890b2
+    INVARIANTS.yaml: 74da9fc2344a21394e60d8388edbb0bfb7fd7e7a2faf32d36fbc3532cf581eb2
+    INVENTIONS.yaml: 09f21051746ccfed7331621d92710e84447edbf0dea714b83aa3d35329842d5b
+    VERIFICATION-OBLIGATIONS.yaml: a468f1b92b713b1e00bf7fb8b1007413cd9898880398672625cea27d983a6a86
+preconditions: []
+change:
+  MFA-CFL-035:
+    _add: true
+    source: MFA-ATK-08
+    between:
+    - MFA-INV-006
+    - MFA-INV-011
+    side_a: ολότητα προέλευσης και διάδοση taint μέσα από κάθε κόμβο (MFA-INV-006/018)
+    side_b: 'διαγραφή με crypto-shredding: το περιεχόμενο φεύγει (MFA-INV-011, MFA-VO-016, GDPR)'
+    resolution_shape: το shredded φύλλο αφήνει residue commitment ⟨hash, schema, evidence_class, dependents_count, erasure_act_receipt⟩· η διάδοση taint αντιμετωπίζει
+      το residue ως TAINT-UNKNOWN και αναγκάζει τους εξαρτώμενους σε CONTESTED· ετυμηγορίες με shredded εισόδους σημαίνονται re_verifiable:false στον άξονα formal_validity·
+      MFA-INV-006 = ολότητα ΓΕΝΕΑΛΟΓΙΑΣ, όχι περιεχομένου
+    resolution_condition: 'MFA-VO-016 + MFA-VO-006 τρέχουν ΜΑΖΙ: shred → taint reversal → 100% εξαρτώμενων CONTESTED εντός Δ· ποια metadata μένουν στο residue ανά
+      confidentiality domain = απόφαση δημιουργού (MFA-DEC-009)· EXP-19 (crypto-shredding adequacy)'
+    elements:
+    - MFA-ELM-001
+    - MFA-ELM-002
+    - MFA-ELM-079
+    - MFA-ELM-035
+    status: OPEN
+  MFA-INV-011:
+    statement: Διαγραφή μόνο crypto-shredding + Control· αντιφάσεις διατηρούνται. · Το shredding αφήνει residue commitment (MFA-CFL-035)· οι εξαρτώμενοι γίνονται
+      CONTESTED.
+  MFA-INV-041:
+    statement: 'Για κάθε ακολουθία κανόνων από γένεση: γενεαλογία ολική ∧ ceiling μη αύξον ∧ κατάσταση = fold ∧ καμία αντίφαση χωρίς Both (θεώρημα, Lean). Το ledger
+      είναι ΜΟΝΟΤΟΝΟ (append-only· REVOKE/FORGET = tombstones + residue)· το «τρέχον γράφημα» είναι παράγωγο fold· το DPO είναι η σημασιολογία επανεγγραφής ΚΑΝΟΝΩΝ
+      (Forge/ORP/CPEG, MFA-MECH-017) — ποτέ του ledger (MFA-ATK-08).'
+  MFA-ELM-001:
+    statement: 'Το CC store (MFA-MECH-001) ως ΜΟΝΟΤΟΝΟ append-only σύνολο δεσμεύσεων (tombstones για REVOKE/FORGET, residue για shredded) πάνω σε persistent διτεμπορικό
+      υπεργράφημα ως ΠΑΡΑΓΩΓΟ fold (MFA-ALT-5: η αναστρεψιμότητα/DPO είναι η σημασιολογία των κανόνων, όχι της αποθήκης — MFA-ATK-08): journals ανά συγγραφέα, Merkle
+      inclusion/consistency (RFC 6962/9162, C2SP), witness cosignatures, HLC, fold ντετερμινιστικό.'
+  MFA-MECH-001:
+    statement: Άλγεβρα υπογεγραμμένων τυποποιημένων δεσμεύσεων με 8 κανόνες· ledger/τύποι/αποδείξεις/εξουσία/σχέδιο ως όψεις· κλειστότητες ως θεωρήματα. · Κάθε δέσμευση
+      φέρει status_axes (10 άξονες) με τυποποιημένη απουσία ανά άξονα (MFA-ATK-07). · Το ledger μονότονο· DPO = σημασιολογία κανόνων· FORGET = tombstone + shred +
+      residue (MFA-CFL-035).
+  MFA-ELM-005:
+    statement: Η μία έδρα αλγορίθμων ανά epoch για ΚΑΘΕ διαδρομή υπογραφής (KEL, witnesses, DSSE, COSE/SCITT, VC, git tags)· dual signatures· epoch re-anchor. · Το
+      allowlist ανά epoch απαριθμεί hash, υπογραφή, KEM ΚΑΙ canonical encoding (JCS-class)· αλλαγή κωδικοποίησης = epoch re-anchor (MFA-INV-039), όχι ρήξη της έδρας
+      (MFA-ATK-08).
+  MFA-INV-038:
+    statement: Μία έδρα allowlist για κάθε διαδρομή υπογραφής. · Το allowlist περιλαμβάνει και canonical encodings (MFA-ATK-08).
+  MFA-VO-016:
+    methods:
+    - verified key destruction
+    - proof check
+    - joint run με MFA-VO-006 (shred → taint reversal)
+    measures: μη ανακτήσιμο, proofs ισχύουν δομικά, residue commitment παρόν, 100% εξαρτώμενων CONTESTED εντός Δ, παράγωγα καθαρά, unlearning στα παράγωγα βάρη (MFA-CAP-057)
+    verifies:
+    - MFA-INV-011
+    - MFA-INV-040
+    - MFA-INV-066
+    - MFA-INV-006
+  MFA-VO-009:
+    verifies:
+    - MFA-INV-038
+    - MFA-INV-039
+    - MFA-INV-040
+    - MFA-INV-066
+  MFA-VO-006:
+    measures: '100% εξαρτώμενων επισημασμένα εντός Δ · μέσα από residue: TAINT-UNKNOWN ⇒ CONTESTED (MFA-CFL-035)'
+rationale: 'MFA-ATK-08: INV-006/018 και INV-011 αντιφάσκουν χωρίς MFA-CFL· «DPO υπεργράφημα» με tombstones είναι μονότονο σύνολο — η αναστρεψιμότητα ανήκει στους
+  κανόνες· το allowlist δεν ονόμαζε κωδικοποίηση.'
+evidence:
+- adversarial/MFA-ATK-08.md
+- EXP-19
+- DEC-X-13
+affected_dependencies:
+- MFA-ELM-079
+- MFA-ELM-002
+- MFA-ELM-048
+- MFA-ELM-021
+capability_impact:
+  gained:
+  - MFA-CAP-057 (διαγραφή με διατήρηση γενεαλογίας — τώρα ορισμένη)
+  - MFA-CAP-037 (encoding στο epoch)
+  at_risk:
+  - 'MFA-CAP-007: «ολότητα περιεχομένου» → «ολότητα γενεαλογίας» — ρητή, όχι απώλεια (ήταν ανέφικτη με διαγραφή)'
+  ledger_entry: CAPABILITY-CONSERVATION.md#provenance-erasure
+migration: Ετυμηγορίες με shredded εισόδους αποκτούν re_verifiable:false αναδρομικά κατά το πρώτο shred.
+verification: 'tools/check-package.py (R3b: MFA-INV-066 έχει VO)· MFA-VO-016+006 joint'
+rollback: MFA-PATCH-0008-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

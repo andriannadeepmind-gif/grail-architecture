@@ -1,0 +1,20 @@
+%% id: MFA-DIA-01 · Objective/Telos lattice · question: ποιοι υποψήφιοι Telos υπάρχουν, ποιος κυριαρχεί ποιον, και ποιο είναι το ανθεκτικό υπόστρωμα;
+%% elements: MFA-TEL-01…08, MFA-OBJ-022/030/040, MFA-ELM-096 · source: OBJECTIVE-SPACE.yaml §3–§6
+flowchart BT
+  T1["MFA-TEL-01<br/>Νομικό Όργανο<br/>(LAWMAX-only)"]
+  T2["MFA-TEL-02<br/>Κυρίαρχος Γνωσιακός Θεσμός"]
+  T3["MFA-TEL-03<br/>Εξελισσόμενος Θεσμός<br/>(T0 = T1…T9)"]
+  T4["MFA-TEL-04<br/>Ανοικτός Πολιτισμός<br/>+ βούληση + διάδοχος"]
+  T5["MFA-TEL-05<br/>Πορεία ASI χωρίς έκπτωση"]
+  T8["MFA-TEL-08<br/>Lean-Collapsible Maximum<br/>RECOMMENDED"]
+  T6["MFA-TEL-06<br/>Δίδυμο-πρώτα<br/>(διάταξη roadmap)"]
+  T7["MFA-TEL-07<br/>Δημόσιο Παρατηρητήριο<br/>(προαιρετικό προφίλ)"]
+  SUB["MFA-ELM-096 Robust Substrate<br/>τομή του πλέγματος · Δόση 0"]
+  T1 -->|"⊂"| T2 -->|"⊂"| T3 -->|"⊂"| T4 -->|"⊂"| T5 -->|"⊂ + MFA-OBJ-022/030/040"| T8
+  T4 -.->|"ίδιο σύνολο, άλλη διάταξη"| T6
+  T7 -.->|"ορθογώνιος άξονας"| T8
+  SUB --> T1
+  classDef rec fill:#1b4332,color:#fff,stroke:#95d5b2,stroke-width:2px
+  classDef sub fill:#343a40,color:#fff
+  class T8 rec
+  class SUB sub

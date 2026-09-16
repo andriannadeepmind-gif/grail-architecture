@@ -1,0 +1,107 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0007-R
+title: 'Rollback of MFA-PATCH-0007: 10 άξονες κατάστασης ανά δέσμευση· 5 χρόνοι/2 ιστορίες· 10 τύποι μνήμης + 4 μηχανισμοί λήθης· 10 ονομασμένοι governors· 6 βαθμίδες
+  owner perimeter (MFA-ATK-07)'
+operation: RESTORE
+targets:
+- MFA-ELM-001
+- MFA-MECH-001
+- MFA-ELM-004
+- MFA-INV-019
+- MFA-INV-035
+- MFA-ELM-035
+- MFA-MECH-005
+- MFA-ELM-008
+- MFA-ELM-010
+- MFA-ELM-007
+- MFA-ELM-028
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 47398a58c6c2d3282d4dcaeeded3c5dbaf55711453df5476e9037d3fe2c19f9a
+    INVARIANTS.yaml: 74da9fc2344a21394e60d8388edbb0bfb7fd7e7a2faf32d36fbc3532cf581eb2
+    INVENTIONS.yaml: 09f21051746ccfed7331621d92710e84447edbf0dea714b83aa3d35329842d5b
+preconditions:
+- MFA-PATCH-0007.status == APPLIED
+change:
+  MFA-ELM-001:
+    state_model:
+      __raw: '"journals + heads + epoch + nogoods (δοσιέ 001 §7)"'
+    status_axes:
+      __raw: 'null'
+    absence_reasons:
+      __raw: 'null'
+  MFA-MECH-001:
+    statement:
+      __raw: '"Άλγεβρα υπογεγραμμένων τυποποιημένων δεσμεύσεων με 8 κανόνες· ledger/τύποι/αποδείξεις/εξουσία/σχέδιο ως όψεις· κλειστότητες ως θεωρήματα."'
+  MFA-ELM-004:
+    statement:
+      __raw: '"HLC με φράγμα ε, διτεμπορικά cuts, k-of-n RFC 3161 TSA, ντετερμινιστικό ρολόι για replay, typed legal time."'
+    state_model:
+      __raw: '"HLC ανά κόμβο· TSR στο ledger"'
+    times:
+      __raw: 'null'
+    purpose:
+      __raw: '"Κάθε ανάγνωση με cut· κάθε πράξη αναπαραγώγιμη."'
+  MFA-INV-019:
+    statement:
+      __raw: '"Κάθε ανάγνωση με cut."'
+    falsifier:
+      __raw: '"query χωρίς cut"'
+  MFA-INV-035:
+    statement:
+      __raw: '"Διτεμπορική νομική σημασιολογία + συν-επαγωγικές υποχρεώσεις με fuel-όριο και περιοδικό έλεγχο."'
+  MFA-ELM-035:
+    statement:
+      __raw: '"Episodic/semantic (ATMS labels)/procedural/autobiographical/working + PROSPECTIVE (Goals με t_valid μέλλον που επιβιώνουν restart)· όλα ως δεσμεύσεις
+        CC· διαγραφή crypto-shredding+Control· αντιφάσεις ως Both."'
+    memory_types:
+      __raw: 'null'
+    forgetting_mechanisms:
+      __raw: 'null'
+  MFA-MECH-005:
+    statement:
+      __raw: '"Governors με stops/cannot· veto περικοπή → Pareto → ονομασμένη scalarization → regret tie-break· διανυσματική ετυμηγορία."'
+    governors:
+      __raw: 'null'
+  MFA-ELM-008:
+    governors:
+      __raw: 'null'
+  MFA-ELM-010:
+    owner_perimeter:
+      __raw: 'null'
+    statement:
+      __raw: '"MFA-MECH-006: proposal → inverse staged → shadow → diff → gate → commit → window· NONE ⇒ H1· ο κατάλογος ενεργειών με υποχρεωτική ανθρώπινη έγκριση
+        (CLAIMS F16) = κλάσεις με inverse NONE ∪ Constitution-H1. · Κλάση DISCLOSE (MFA-ATK-05): η έξοδος πληροφορίας προς πάροχο/παραλήπτη εκτός sovereign boundary
+        είναι επίδραση με inverse NONE και standing DisclosureGrant — το plane διαρρέει ΜΟΝΟ μέσω υπογεγραμμένου, σημασμένου καναλιού· «τοπικά μοντέλα» = grant με
+        recipient=self (αναβάθμιση εμπιστευτικότητας)."'
+  MFA-ELM-007:
+    statement:
+      __raw: '"Η ΜΟΝΑΔΙΚΗ έδρα απόφασης πολιτικής (Policy.sysml PDP): Control Records με πηγή/εμβέλεια/λήξη, κατώφλια αυτονομίας, κανόνες crossing/reach, budgets·
+        Cedar-class· policyDecisionsInsideCore == 0."'
+  MFA-ELM-028:
+    statement:
+      __raw: '"MFA-MECH-002: κάθε Unknown με reason/plan/VOI/dependents/λήξη· τροφοδοτεί scouts, quests, βούληση, Science Organ· διάδοση taint."'
+rationale: Αντίστροφο του MFA-PATCH-0007, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-080
+- MFA-ELM-061
+- MFA-ELM-067
+- MFA-ELM-021
+- MFA-ELM-036
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-008 (5/5 χρόνοι)
+  - MFA-CAP-009 (10/10 τύποι)
+  - MFA-CAP-039/040 (απουσία ανά πεδίο)
+  - MFA-CAP-049 (governors ονομασμένοι)
+  ledger_entry: CAPABILITY-CONSERVATION.md#material-s2
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0007
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

@@ -1,0 +1,78 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0012-R
+title: 'Rollback of MFA-PATCH-0012: MFA-INV-059 από ταυτότητα σε Galois connection (πιστότητα υπό zoom)· εντολές cockpit = προτάσεις RET· MFA-VO-056 διακριτική ισχύς
+  cockpit· omitted_count στις εξηγήσεις (MFA-ATK-12)'
+operation: RESTORE
+targets:
+- MFA-VO-056
+- MFA-INV-059
+- MFA-VO-034
+- MFA-CON-039
+- MFA-ELM-093
+- MFA-ELM-091
+- MFA-MECH-008
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 7184fc2d91296d588bb6a5ccbb1c5059c90638a9b53449324dd27898e695d4a8
+    CONTRACTS.yaml: 787cf452c5a7372eb88f83ff3d7c9077cf7a85d3d3e9dfc7a3f7060128d1f31b
+    INVARIANTS.yaml: 1fd6ba912a04a5adfc6bbde7674a93633ed05e0e32cf71765c3c5f10cec33fac
+    INVENTIONS.yaml: f4b8b1ac993015f544acf855207c2fa939fac383d0db3520a86656535316a943
+    VERIFICATION-OBLIGATIONS.yaml: dc6cc5ccfd839de8a6593e56964267d92bec1a490a0389146ae79f2f1582a164
+preconditions:
+- MFA-PATCH-0012.status == APPLIED
+change:
+  MFA-VO-056:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-059:
+    name:
+      __raw: '"Projection round-trip identity"'
+    statement:
+      __raw: '"Κάθε προβολή (SysML/YAML/Mermaid/σκηνή/εξήγηση) round-trips στο υπόστρωμα· πληροφορία απούσα από το υπόστρωμα δεν εμφανίζεται σε προβολή."'
+    falsifier:
+      __raw: '"προβολή με extra πληροφορία"'
+  MFA-VO-034:
+    measures:
+      __raw: '"pick(scene(cut), pos(cid)) = cid, ίδιο SceneGraph hash, text δέντρο ⊇ CIDs"'
+    rejects:
+      __raw: '"element απόν από cut στη σκηνή"'
+  MFA-CON-039:
+    statement:
+      __raw: '"scene(cut, policy, seed)→SceneGraph / pick(scene, ray)→CID / replay(cut_a, cut_b) / compare(sheet_a, sheet_b) / command(cmd)→CC.apply."'
+    failure_semantics:
+      __raw: '"element χωρίς θέση από Γ → «θέση από πολιτική» ορατή, ποτέ ελεύθερη"'
+  MFA-ELM-093:
+    statement:
+      __raw: '"Κάθε εξήγηση = προβολή του ledger σε επίπεδο zoom k με event references ανά πρόταση· επίπεδα ορισμένα στο Contract κάθε εξόδου· ίχνος → αιτιολόγηση
+        (CLAIMS F23) ως ονομασμένο στοιχείο· ο LPA pruning trace ως εξήγηση απόφασης."'
+  MFA-ELM-091:
+    verification:
+      __raw: '[MFA-VO-034, MFA-VO-017]'
+    statement:
+      __raw: '"Η Principal Console ΓΕΝΙΚΕΥΕΤΑΙ σε Immersive Reality OS με Canonical Geometry Projection (MFA-MECH-008): σκηνή = Γ(cut, policy, seed)· χωρική γραμματική·
+        semantic zoom, time travel, causal replay, fork compare, rifts/fog/sheets/boundaries/envelopes· RTS εντολές (quests→TEGF, policies→PDP, resources→OAP, simulations→DST,
+        staged transitions→RET) = CC.apply με receipts· 7 προβολές· Court dashboard, matter workspace, provenance inspection."'
+  MFA-MECH-008:
+    statement:
+      __raw: '"Σκηνή = Γ(store_at_cut, policy, seed)· χωρική γραμματική (stratum/node/edge/rift/fog/sheet/boundary/envelope)· RTS εντολές = CC.apply."'
+rationale: Αντίστροφο του MFA-PATCH-0012, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-088
+- MFA-ELM-069
+- MFA-ELM-092
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-031 (διαψεύσιμη αξία)
+  - MFA-CAP-069 (omitted_count)
+  - MFA-CAP-070 (contest path βλέπει τι αμφισβητείται)
+  ledger_entry: CAPABILITY-CONSERVATION.md#cockpit
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0012
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

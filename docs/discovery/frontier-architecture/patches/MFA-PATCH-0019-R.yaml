@@ -1,0 +1,76 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0019-R
+title: 'Rollback of MFA-PATCH-0019: Συμπληρώσεις από το Capability Conservation Ledger: 12 typed σφάλματα με υποχρεωτική συμπεριφορά· πιστότητα αρχείου στο drafting·
+  κλάσεις απομόνωσης στον Organ Host· delta διορθώσεις (004, 025, 049 → STRENGTHEN· CON-032 → SPLIT)'
+operation: RESTORE
+targets:
+- MFA-CON-033
+- MFA-ELM-065
+- MFA-VO-015
+- MFA-ELM-011
+- MFA-ELM-004
+- MFA-ELM-025
+- MFA-ELM-049
+- MFA-CON-032
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 6f818af3f45c04c606c7b99161938e696beff903a7570cd50c309f669bf54c05
+    CONTRACTS.yaml: c4f459791c675e8e2192c7bf4f2f7abe656c95af2bbf2a816b488502f5918775
+    VERIFICATION-OBLIGATIONS.yaml: 131cac3c1f9e9187e0ca5d73e6ade559da16fbda17b49062c16d6b931953b39b
+preconditions:
+- MFA-PATCH-0019.status == APPLIED
+change:
+  MFA-CON-033:
+    error_vocabulary:
+      __raw: 'null'
+    statement:
+      __raw: '"apply(rule∈{ASSERT,OBSERVE,DERIVE,DELEGATE,CONTEST,RESOLVE,REVOKE,FORGET}, args, σ)→cid∣err · read(query, cut) · subscribe(type, from) · prove(cid)
+        · replay(prefix)→state_hash."'
+  MFA-ELM-065:
+    statement:
+      __raw: '"Δικόγραφα/γνωμοδοτήσεις/συμβάσεις· κάθε παραπομπή με receipt as-of και τα 5 σκέλη ΑΠΟ ΤΗΝ ΠΡΩΤΗ ΗΜΕΡΑ (σκέλος 4 «στηρίζει» → Unknown+ειδοποίηση μέχρι
+        επικύρωση, σκέλος 5 Unknown(NO_EVIDENCE) για ελληνικές μέχρι citator)· μη επαληθεύσιμη→αφαιρείται/επισημαίνεται, ποτέ σιωπηλά· συνηγορικός τύπος μέσω MFA-ELM-072."'
+  MFA-VO-015:
+    measures:
+      __raw: '"υπεροχή ποιότητας έναντι κορυφαίας ομάδας, frontier model, Harvey-class ΚΑΙ competitor baseline· μη-κατωτερότητα ασφάλειας· 0 Prediction Doctrine παραβιάσεις·
+        το περιθώριο ανά κλάση έργου δημοσιεύεται (και όπου χάνει)"'
+  MFA-ELM-011:
+    isolation_classes:
+      __raw: 'null'
+    statement:
+      __raw: '"Εκτέλεση οργάνων ως Wasm components ή microVM (Firecracker/gVisor)· ολόκληρο το Genesis plane ως ΕΝΑ όργανο μέσα σε microVM (MATERIAL §5 #5): μέσα
+        απόλυτη ανακλαστική εξουσία, έξω καμία· zero-copy ring ως παραχωρημένος πόρος."'
+  MFA-ELM-004:
+    delta:
+      __raw: RETAIN
+  MFA-ELM-025:
+    delta:
+      __raw: RETAIN
+  MFA-ELM-049:
+    delta:
+      __raw: RETAIN
+  MFA-CON-032:
+    delta:
+      __raw: REPLACE
+    statement:
+      __raw: '"Από SysML v2 API (Commit/Branch/Query/Generate/Check) σε: Substrate.read/apply(patch)/project(view: sysml∣yaml∣mermaid∣md)/check(package) — το SysML
+        v2 API παραμένει ως ΠΡΟΒΟΛΗ (import στο SysON) όχι ως έδρα."'
+rationale: Αντίστροφο του MFA-PATCH-0019, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-032
+- MFA-ELM-059
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-040 (typed σφάλματα)
+  - MFA-CAP-043 (πιστότητα αρχείου)
+  ledger_entry: CAPABILITY-CONSERVATION.md#material-s2
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0019
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

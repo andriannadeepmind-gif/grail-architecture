@@ -1,0 +1,30 @@
+%% id: MFA-DIA-16 · Verification web · question: ποιος ελέγχει ποιον — invariants, obligations, held-out, EIM — και πού είναι η κλίμακα απόδειξης;
+%% elements: MFA-ELM-020/086/089/085/078/056, MFA-INV-048/063, MFA-VO-025…056 · source: VERIFICATION-OBLIGATIONS.yaml, INVARIANTS.yaml
+flowchart TB
+  subgraph TIERS["Μία κλίμακα βαθμών (DEC-X-08 · MFA-INV-063)"]
+    T0["Tier-0: proof ανεξάρτητου kernel (Lean #print axioms · TLA+ refinement)<br/>MFA-ELM-099 παγωμένος kernel · MFA-INV-068"]
+    T1["Tier-1: certificate · solver-TV · DRT vs spec"]
+    T2["Tier-2: N-version με EIM · differential"]
+    HB["Ανθρώπινη βεβαίωση: χωριστή κλάση, ποτέ VERIFIED"]
+  end
+  subgraph HO["HELD_OUT Πολιτισμός (MFA-ELM-056)"]
+    HAR["MFA-ELM-086 Harness<br/>sealed sets · TOST · ablation KT-24"]
+    EIM["MFA-MECH-009 EIM<br/>supply · data · behaviour"]
+    KTR["MFA-ELM-089 KT Registry & Drills<br/>24 KT + 32 νέες VO"]
+  end
+  VS["MFA-ELM-020 Verification Suite<br/>proof objects · timeout ⇒ Unknown"]
+  DST["MFA-ELM-085 DST + FCP<br/>KT πρώτα σε F2"]
+  LAB["MFA-ELM-078 Conformance Lab<br/>mutation · discriminative power (MFA-VO-051)"]
+  INV["68 invariants (INVARIANTS.yaml)<br/>κάθε ένα με ≥1 VO"]
+  VO["56 obligations (VERIFICATION-OBLIGATIONS.yaml)<br/>κάθε μία: method · measures · rejects · allows_next"]
+  ELM["99 elements<br/>κάθε ένα verified-by ≥1 VO"]
+  INV <-->|"verifies / verified-by"| VO
+  VO --> ELM
+  VO --> KTR
+  KTR --> DST
+  KTR --> HAR
+  HAR --> EIM
+  EIM -->|"PASS πριν από promotion"| VS
+  VS --> TIERS
+  LAB --> HAR
+  HO -.->|"MFA-INV-048 εκτός του κρινόμενου"| ELM

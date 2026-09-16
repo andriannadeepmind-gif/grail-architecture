@@ -1,0 +1,74 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0014
+title: 'PATCH-PROTOCOL §7: δομημένα πεδία, υπογραφές, συγχρονία, εργαλείο· ELM-090 F0/F2+ (MFA-ATK-14)'
+operation: MODIFY
+targets:
+- MFA-ELM-090
+- MFA-ELM-088
+- MFA-INV-064
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 398092c605826e1cb937dc150cf5969b507f0f7ebf452dd3b881dbcf992d6f4e
+    INVARIANTS.yaml: 73fcb7ab9bcb1f3f9568ea2814062ead4cc3c7652934027936cd1be2587b9dc8
+    PATCH-PROTOCOL.md: 0c529e944061f8b732030a5172cb6b8e3650093580a696913fe28e1d7c358c43
+preconditions: []
+change:
+  PATCH-PROTOCOL.md:
+    append: '
+
+      ## 7. Δομημένα πεδία, υπογραφές και συγχρονία (MFA-PATCH-0014, από MFA-ATK-14)
+
+
+      1. **Δομημένα πεδία.** Ό,τι στοχεύουν patches πρέπει να είναι λίστα ή χάρτης, όχι πρόζα: `effect_classes`, `failure_modes: [{mode, response}]`, `governors`,
+      `default_order`, `status_axes`, `times`, `memory_types`, `owner_perimeter`, `ablation_kt`. Ένα string πεδίο (`statement`, `purpose`) αλλάζει **ολόκληρο** και
+      μόνο από **ένα** patch ανά έκδοση του στοιχείου — δύο patches στο ίδιο string της ίδιας έκδοσης συγκρούονται εξ ορισμού (κειμενικά, όχι σημασιολογικά) και το
+      δεύτερο ξαναγράφεται.
+
+      2. **Υπογραφές.** Κάθε patch φέρει `author` και, στο F0, υπογράφεται με το git signing key του δημιουργού ή L3-δηλωμένου εκπροσώπου (commit signature)· το `MANIFEST.yaml`
+      υπογράφεται με το commit που το παράγει. Το `tools/check-package.py` επαληθεύει `git verify-commit` όταν το git είναι διαθέσιμο, αλλιώς αναφέρει `signature:
+      UNVERIFIED` — ποτέ σιωπή. Τα MFA-PATCH-0001…0017 εφαρμόστηκαν στη συνεδρία 2026-09-16 **χωρίς** commit (εντολή §26) → `signature: UNVERIFIED` μέχρι να τα υπογράψει
+      ο δημιουργός με το commit.
+
+      3. **Συγχρονία.** Η κανονική έδρα είναι single-writer (ίδιο σχήμα με το ledger, MFA-MECH-018)· η ταυτόχρονη συγγραφή γίνεται με **προτεινόμενα** patches στο
+      `patches/proposed/` (ένα branch ανά συγγραφέα)· η συγχώνευση είναι CPEG (MFA-MECH-017) πάνω σε σύνολα (αρχείο, id, πεδίο): ξένα σύνολα ενώνονται αυτόματα, τεμνόμενα
+      απαιτούν PRIORITY από τον δημιουργό· η σειρά εφαρμογής είναι απόφαση του δημιουργού.
+
+      4. **Εργαλείο.** `tools/apply-patch.py` εφαρμόζει το §4 μηχανικά (έλεγχος base hashes, preconditions, αλλαγή μόνο στα πεδία των targets, `version += 1`, `change_history`,
+      παραγωγή του `-R` με τις προηγούμενες τιμές, `status: APPLIED`). Το `-R` γράφεται από το εργαλείο **πριν** το ευθύ πάρει APPLIED, ώστε το ζεύγος να υπάρχει
+      μαζι (§3).
+
+      5. **F0 → F2+.** Στο F0 (αυτό το πακέτο) το ledger του σχεδίου είναι το git· από τη Δόση 3 ο Patch Engine (MFA-ELM-090) είναι ledger-native: patches ως δεσμεύσεις
+      CC, η MFA-INV-064 επιβάλλεται από τον Gate και όχι διαδικαστικά από τον checker.
+
+      '
+  MFA-ELM-090:
+    statement: 'Το PATCH-PROTOCOL.md εκτελέσιμο: εννέα πράξεις, base hashes, preconditions, capability impact, rollback patch, CPEG έλεγχος, manifest rebuild, check-package·
+      patches ως δεσμεύσεις τύπου Patch· ποτέ διαγραφή ιστορίας. · F0 = git + tools/apply-patch.py (υπογραφές git, §7)· F2+ = ledger-native (patches ως δεσμεύσεις
+      CC, MFA-INV-064 επιβάλλεται από τον Gate) (MFA-ATK-14).'
+  MFA-ELM-088:
+    statement: 'ΑΝΤΙΚΑΘΙΣΤΑ την «SysML v2 έδρα + SysON»: έδρα = το serialization-independent υπόστρωμα (αυτό το πακέτο → CC Schemas), SysML/SysON/YAML/Mermaid = παραγόμενες
+      προβολές με round-trip VO· τα εργαλεία (SysON, checkers) όργανα υπό ORP· η αλλαγή σχεδίου = InstitutionalAct· DEC-X-01 (κείμενο στο git, εργαλεία φακοί) εφαρμοσμένο.
+      · SPLIT (MFA-ATK-03): έδρα → το υπόστρωμα (κρατιέται: το SysON ΠΟΤΕ έδρα λόγω silent truncation)· έλεγχος τύπων → το SysON (ή η reference υλοποίηση SysML v2)
+      ως Tier-1 VERIFIER ORGAN των προβολών: η SysML προβολή ελέγχεται τυπικά (KerML) και αποτυχία τύπων = SEMANTIC-LOSS της προβολής (μπλοκάρει, MFA-INV-052). DEC-PLT-01
+      superseded ως έδρα, όχι ως εργαλείο. · Πεδία-στόχοι patches δομημένα (PATCH-PROTOCOL §7)· string πεδία ολόκληρα, ένα patch ανά έκδοση.'
+  MFA-INV-064:
+    statement: 'Καμία αλλαγή στο canonical σχέδιο εκτός patch με base hash, rollback, CPEG, manifest· supersede append-only. · F0: επιβολή διαδικαστική (checker +
+      git signatures, αναφέρει UNVERIFIED αντί σιωπής)· F2+: μηχανική (Gate) (MFA-ATK-14).'
+rationale: 'MFA-ATK-14: πρόζα δεν έχει σημασιολογία diff· patches χωρίς υπογραφές παραβίαζαν την MFA-INV-064 από το ίδιο το tooling· η σειριοποίηση ήταν σωστή αλλά
+  αδήλωτη.'
+evidence:
+- adversarial/MFA-ATK-14.md
+affected_dependencies:
+- MFA-ELM-084
+capability_impact:
+  gained:
+  - MFA-CAP-055 (patchability με υπογραφές και συγχρονία)
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#patchability
+migration: Καμία· τα πεδία που έγιναν δομημένα (0005/0007/0009) ήδη λίστες.
+verification: tools/check-package.py· tools/apply-patch.py
+rollback: MFA-PATCH-0014-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'
