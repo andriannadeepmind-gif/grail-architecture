@@ -9,28 +9,34 @@ not summarised, nothing dropped as "irrelevant". The script is idempotent — ru
 mirrors the current state of the source folder.
 
 Mechanism:
-  1. Every source file is hashed (SHA-256). Reading the bytes also materialises OneDrive
-     "online-only" placeholders, which robocopy would otherwise carry over as empty stubs.
-  2. robocopy /MIR mirrors the folder into docs/ideas-raw/<Name>.
-  3. Every copied file is hashed again and compared with the source. A missing file, a different
+  1. The folder is enumerated. Files that OneDrive keeps in the cloud (Files On-Demand) are
+     pinned with attrib +P -U, the equivalent of "Always keep on this device", and the script
+     waits for them to arrive. A file that never arrives stops the run: it must not enter the
+     repository as an empty stub.
+  2. Every file is hashed (SHA-256), read with FileShare.ReadWrite so that a document open in
+     another program is still readable, and retried three times. Every file that still cannot be
+     read is reported together with the others, with what to do about it.
+  3. robocopy /MIR mirrors the folder into docs/ideas-raw/<Name>.
+  4. Every copied file is hashed again and compared with the source. A missing file, a different
      size or a different hash fails the run and nothing is committed.
-  4. docs/ideas-raw/<Name>.manifest.tsv is written (path, bytes, sha256), so the identity of the
+  5. docs/ideas-raw/<Name>.manifest.tsv is written (path, bytes, sha256), so the identity of the
      copy is proven by the repository itself and can be re-checked at any time.
-  5. The copy is staged and the git index is counted against the manifest, so a file silently
+  6. The copy is staged and the git index is counted against the manifest, so a file silently
      excluded by .gitignore, or swallowed by a nested .git, fails the run instead of disappearing.
-  6. The result is committed, and pushed when -Push is given (with backoff on network failure).
+  7. The result is committed, and pushed when -Push is given (with backoff on network failure).
 
 Checks that stop the run before anything is copied, all reported together:
   file >= 100 MB          GitHub rejects the push  -> Git LFS, or leave it out deliberately
   path > 240 characters   not portable             -> shorten folder names in the source
   nested .git directory   git would store it as a submodule link and lose its contents
                           -> -ExcludeNestedGit (recorded in the manifest), or archive that repo
+  unreadable file         the material would be incomplete -> the run prints what to do
 
 .EXAMPLE
 pwsh -File platform/import-ideas.ps1 -Source 'C:\Users\David Spiridon\OneDrive\Desktop\IDEES' -InventoryOnly
 
 .EXAMPLE
-pwsh -File platform/import-ideas.ps1 -Source 'C:\Users\David Spiridon\OneDrive\Desktop\IDEES' -Branch claude/quirky-lovelace-ucnjlj -Push
+pwsh -File platform/import-ideas.ps1 -Source 'C:\Users\David Spiridon\OneDrive\Desktop\IDEES' -Push
 #>
 [CmdletBinding()]
 param(
@@ -38,6 +44,7 @@ param(
     [string]$Name,
     [string]$Repo = (Split-Path $PSScriptRoot -Parent),
     [string]$Branch,
+    [int]$HydrationTimeoutMinutes = 60,
     [switch]$InventoryOnly,
     [switch]$ExcludeNestedGit,
     [switch]$Push
@@ -56,28 +63,163 @@ $AuthorEmail = 'info@stavropouloslaw.com'
 $MaxFileBytes = 100MB
 $WarnFileBytes = 50MB
 $MaxPathLength = 240
+$HashAttempts = 3
+# A file that OneDrive has not put on this disk carries one of these bits:
+# FILE_ATTRIBUTE_OFFLINE 0x1000, FILE_ATTRIBUTE_RECALL_ON_OPEN 0x40000,
+# FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS 0x400000.
+$CloudMask = 0x441000
 
 function Step([string]$Message) { Write-Host "==> $Message" -ForegroundColor Cyan }
 function Note([string]$Message) { Write-Host "    $Message" }
+function Warn([string]$Message) { Write-Host "  $Message" -ForegroundColor Yellow }
 function Fail([string]$Message) { Write-Host "FAIL  $Message" -ForegroundColor Red; exit 1 }
 
-function Get-Inventory([string]$Root) {
+function Test-Cloud($File) { return ((([int]$File.Attributes) -band $CloudMask) -ne 0) }
+
+function Get-LongPath([string]$Path) {
+    if ($Path.Length -lt 250 -or $Path.StartsWith('\\?\')) { return $Path }
+    if ($Path.StartsWith('\\')) { return '\\?\UNC\' + $Path.Substring(2) }
+    return '\\?\' + $Path
+}
+
+function Get-Sha256([string]$Path) {
+    # FileShare::ReadWrite, so a document currently open in another program can still be read.
+    $stream = [System.IO.File]::Open((Get-LongPath $Path), [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
+    try {
+        $sha = [System.Security.Cryptography.SHA256]::Create()
+        try { return [BitConverter]::ToString($sha.ComputeHash($stream)).Replace('-', '').ToLowerInvariant() }
+        finally { $sha.Dispose() }
+    } finally { $stream.Dispose() }
+}
+
+function Resolve-Exception($ErrorRecord) {
+    # PowerShell wraps a failing .NET call in a MethodInvocationException whose own HResult says
+    # nothing; the file system error is the innermost exception.
+    $exception = $ErrorRecord.Exception
+    while ($exception.InnerException) { $exception = $exception.InnerException }
+    $permanent = $exception -is [System.IO.FileNotFoundException] -or $exception -is [System.IO.DirectoryNotFoundException]
+    return [pscustomobject]@{
+        Code      = ('0x{0:X8}' -f $exception.HResult)
+        Message   = $exception.Message
+        Permanent = $permanent
+    }
+}
+
+function Get-Entries([string]$Root) {
     $base = $Root.TrimEnd('\', '/')
-    $cut = $base.Length + 1
-    $files = @(Get-ChildItem -LiteralPath $base -Recurse -File -Force)
-    $result = [System.Collections.Generic.List[object]]::new()
+    $walkErrors = $null
+    $files = @(Get-ChildItem -LiteralPath $base -Recurse -File -Force -ErrorAction SilentlyContinue -ErrorVariable walkErrors)
+    foreach ($problem in @($walkErrors)) { Warn "could not be listed: $($problem.TargetObject)" }
+    return [pscustomobject]@{ Base = $base; Cut = $base.Length + 1; Files = $files }
+}
+
+function Wait-ForCloudFiles([string]$Root, [object[]]$Pending, [int]$TimeoutMinutes) {
+    Note "$($Pending.Count) file(s) are not on this device (OneDrive Files On-Demand)."
+    Note 'Pinning them ("Always keep on this device") and waiting for the download.'
+    & attrib.exe +P -U $Root /D 2>&1 | Out-Null
+    & attrib.exe +P -U (Join-Path $Root '*') /S /D 2>&1 | Out-Null
+
+    $total = $Pending.Count
+    $left = $total
+    $deadline = [DateTime]::UtcNow.AddMinutes($TimeoutMinutes)
+    $lastProgress = [DateTime]::UtcNow
+    while ($left -gt 0 -and [DateTime]::UtcNow -lt $deadline) {
+        Start-Sleep -Seconds 5
+        $still = @($Pending | Where-Object {
+            $item = Get-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue
+            $item -and (Test-Cloud $item)
+        })
+        if ($still.Count -lt $left) { $lastProgress = [DateTime]::UtcNow }
+        $left = $still.Count
+        $Pending = $still
+        Write-Progress -Activity 'Downloading from OneDrive' -Status "$left of $total left" -PercentComplete (100 - 100 * $left / [Math]::Max($total, 1))
+        # OneDrive downloads in the background; if nothing has arrived for three minutes the sync
+        # engine is not doing the work and waiting longer will not change that.
+        if (([DateTime]::UtcNow - $lastProgress).TotalMinutes -ge 3) { break }
+    }
+    Write-Progress -Activity 'Downloading from OneDrive' -Completed
+    if ($left -eq 0) { Note 'All files are on this device.' }
+    return $left
+}
+
+function Get-Inventory([string]$Root, [switch]$Hydrate) {
+    $scan = Get-Entries $Root
+    if ($scan.Files.Count -eq 0) { return [pscustomobject]@{ Items = @(); Failures = @(); Cloud = 0 } }
+
+    $cloudLeft = 0
+    $files = $scan.Files
+    if ($Hydrate) {
+        $pending = @($files | Where-Object { Test-Cloud $_ })
+        if ($pending.Count -gt 0) {
+            $cloudLeft = Wait-ForCloudFiles $scan.Base $pending $HydrationTimeoutMinutes
+            $files = (Get-Entries $Root).Files   # sizes and attributes change once a file arrives
+        }
+    }
+
+    $items = [System.Collections.Generic.List[object]]::new()
+    $failures = [System.Collections.Generic.List[object]]::new()
     $done = 0
     foreach ($file in $files) {
         $done++
-        if ($done % 200 -eq 0) { Write-Progress -Activity 'Hashing' -Status "$done / $($files.Count)" -PercentComplete (100 * $done / [Math]::Max($files.Count, 1)) }
-        $result.Add([pscustomobject]@{
-            Path  = $file.FullName.Substring($cut).Replace('\', '/')
-            Bytes = $file.Length
-            Hash  = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
-        })
+        if ($done % 25 -eq 0) { Write-Progress -Activity 'Hashing' -Status "$done / $($files.Count)" -PercentComplete (100 * $done / [Math]::Max($files.Count, 1)) }
+        $relative = $file.FullName.Substring($scan.Cut).Replace('\', '/')
+        $hash = $null
+        $problem = $null
+        # Once the sync engine is down every file fails; stop paying the retry delay for each one.
+        $attempts = if ($failures.Count -ge 20) { 1 } else { $HashAttempts }
+        foreach ($attempt in 1..$attempts) {
+            try { $hash = Get-Sha256 $file.FullName; $problem = $null; break }
+            catch {
+                $problem = Resolve-Exception $_
+                if ($problem.Permanent -or $attempt -ge $attempts) { break }
+                Start-Sleep -Seconds (2 * $attempt)
+            }
+        }
+        if ($null -eq $hash) {
+            $failures.Add([pscustomobject]@{
+                Path       = $relative
+                Code       = $problem.Code
+                Message    = $problem.Message
+                StillCloud = (Test-Cloud $file)
+            })
+            continue
+        }
+        $items.Add([pscustomobject]@{ Path = $relative; Bytes = $file.Length; Hash = $hash })
     }
     Write-Progress -Activity 'Hashing' -Completed
-    return $result.ToArray()
+    return [pscustomobject]@{ Items = $items.ToArray(); Failures = $failures.ToArray(); Cloud = $cloudLeft }
+}
+
+function Stop-OnUnreadable([object[]]$Failures, [string]$Root) {
+    Warn "$($Failures.Count) file(s) could not be read:"
+    foreach ($failure in ($Failures | Select-Object -First 25)) {
+        Note "  $($failure.Path)"
+        Note "      $($failure.Code) $($failure.Message)"
+    }
+    if ($Failures.Count -gt 25) { Note "  ... and $($Failures.Count - 25) more" }
+    $cloudy = @($Failures | Where-Object { $_.StillCloud })
+    Write-Host ''
+    Warn 'What to do, in this order:'
+    $stepNumber = 1
+    if ($cloudy.Count -gt 0) {
+        Note "  $($cloudy.Count) of them are still only in the cloud, so OneDrive is not delivering them."
+        Note "  $stepNumber. Restart OneDrive and wait until it reports \"Up to date\":"
+        Note '         Get-Process OneDrive -ErrorAction SilentlyContinue | Stop-Process -Force'
+        Note '         Start-Process "$env:LOCALAPPDATA\Microsoft\OneDrive\OneDrive.exe"'
+        Note '     Then run this script again.'
+        $stepNumber++
+        Note "  $stepNumber. In File Explorer, right-click the folder -> \"Always keep on this device\","
+        Note '     and wait until every icon is a green tick and not a cloud.'
+        $stepNumber++
+    }
+    Note "  $stepNumber. Close any file of the folder that is open in Word or another program, and check"
+    Note '     that your account can read it (right-click -> Properties -> Security).'
+    $stepNumber++
+    Note "  $stepNumber. The reliable way out of OneDrive altogether — copy the folder to a plain local"
+    Note '     path and import from there:'
+    Note ('         robocopy "' + $Root + '" "C:\IDEES" /E /R:1 /W:1')
+    Note '         pwsh -File platform/import-ideas.ps1 -Source C:\IDEES -Name IDEES -InventoryOnly'
+    Fail 'nothing was copied: the material must be readable in full before it enters the repository.'
 }
 
 function Sort-ByPath([object[]]$Items) {
@@ -98,12 +240,13 @@ $destination = Join-Path $landing $Name
 $manifestPath = Join-Path $landing "$Name.manifest.tsv"
 
 Step "Reading $Source"
-Note 'Every file is read once, which also downloads any OneDrive online-only file.'
-$sourceFiles = @(Get-Inventory $Source)
+$scan = Get-Inventory -Root $Source -Hydrate
+$sourceFiles = @($scan.Items)
+if (@($scan.Failures).Count -gt 0) { Stop-OnUnreadable @($scan.Failures) $Source }
 if ($sourceFiles.Count -eq 0) { Fail "the source folder is empty: $Source" }
 
 $totalBytes = ($sourceFiles | Measure-Object -Property Bytes -Sum).Sum
-Note ("{0} files, {1:N1} MB" -f $sourceFiles.Count, ($totalBytes / 1MB))
+Note ("{0} files, {1:N1} MB, all readable" -f $sourceFiles.Count, ($totalBytes / 1MB))
 $sourceFiles |
     Group-Object { $ext = [IO.Path]::GetExtension($_.Path).ToLowerInvariant(); if ($ext) { $ext } else { '(no extension)' } } |
     Sort-Object Count -Descending | Select-Object -First 12 |
@@ -122,18 +265,18 @@ $tooLong = @($kept | Where-Object { ("docs/ideas-raw/$Name/" + $_.Path).Length -
 $blocked = $false
 if ($tooBig.Count -gt 0) {
     $blocked = $true
-    Write-Host "  $($tooBig.Count) file(s) >= 100 MB — GitHub would reject the push:" -ForegroundColor Yellow
+    Warn "$($tooBig.Count) file(s) >= 100 MB — GitHub would reject the push:"
     $tooBig | Sort-Object Bytes -Descending | Select-Object -First 20 | ForEach-Object { Note ("  {0,8:N1} MB  {1}" -f ($_.Bytes / 1MB), $_.Path) }
 }
 if ($tooLong.Count -gt 0) {
     $blocked = $true
-    Write-Host "  $($tooLong.Count) path(s) longer than $MaxPathLength characters:" -ForegroundColor Yellow
+    Warn "$($tooLong.Count) path(s) longer than $MaxPathLength characters:"
     $tooLong | Select-Object -First 20 | ForEach-Object { Note ("  {0}" -f $_.Path) }
 }
 if ($nestedGit.Count -gt 0 -and -not $ExcludeNestedGit) {
     $blocked = $true
     $repos = @($nestedGit | ForEach-Object { ($_.Path -replace '(^|/)\.git/.*$', '$1') } | Sort-Object -Unique)
-    Write-Host "  the material contains $($repos.Count) git repository/-ies; git would store them as submodule links and lose their contents:" -ForegroundColor Yellow
+    Warn "the material contains $($repos.Count) git repository/-ies; git would store them as submodule links and lose their contents:"
     $repos | Select-Object -First 20 | ForEach-Object { Note ("  {0}.git" -f $_) }
     Note 'Re-run with -ExcludeNestedGit to import everything except those .git directories (recorded in the manifest).'
 }
@@ -152,7 +295,9 @@ if ($ExcludeNestedGit) { $robocopyArgs += @('/XD', '.git') }
 if ($LASTEXITCODE -ge 8) { Fail "robocopy failed (exit $LASTEXITCODE)" }
 
 Step 'Verifying the copy against the source'
-$copyFiles = @(Get-Inventory $destination)
+$copyScan = Get-Inventory -Root $destination
+if (@($copyScan.Failures).Count -gt 0) { Stop-OnUnreadable @($copyScan.Failures) $destination }
+$copyFiles = @($copyScan.Items)
 $sourceByPath = @{}; foreach ($file in $kept) { $sourceByPath[$file.Path] = $file }
 $copyByPath = @{}; foreach ($file in $copyFiles) { $copyByPath[$file.Path] = $file }
 
@@ -162,7 +307,7 @@ $altered = @($kept | Where-Object { $copyByPath.ContainsKey($_.Path) -and $copyB
 
 foreach ($set in @(@{ n = 'missing from the copy'; v = $missing }, @{ n = 'present only in the copy'; v = $extra }, @{ n = 'different content'; v = $altered })) {
     if ($set.v.Count -gt 0) {
-        Write-Host "  $($set.v.Count) file(s) $($set.n):" -ForegroundColor Yellow
+        Warn "$($set.v.Count) file(s) $($set.n):"
         $set.v | Select-Object -First 20 | ForEach-Object { Note ("  {0}" -f $_.Path) }
     }
 }
@@ -212,7 +357,7 @@ this clone commits as '$configuredEmail'. Set the identity of the work once:
     git add -A -- 'docs/ideas-raw' | Out-Null
     $staged = @((@(git ls-files -z -- "docs/ideas-raw/$Name") -join '') -split "`0" | Where-Object { $_ })
     if ($staged.Count -ne $kept.Count) {
-        Write-Host "  git holds $($staged.Count) of the $($kept.Count) copied files." -ForegroundColor Yellow
+        Warn "git holds $($staged.Count) of the $($kept.Count) copied files."
         $ignored = @(git -c core.quotepath=false ls-files -o -i --exclude-standard -- "docs/ideas-raw/$Name")
         if ($ignored.Count -gt 0) {
             Note "$($ignored.Count) file(s) excluded by .gitignore:"
