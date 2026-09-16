@@ -12,7 +12,7 @@ package GRAIL_Contracts {
 	// reference oracle with stated tolerances, resources including energy and a typed timeout,
 	// and no-training as the default rather than a negotiated term.
 
-	part def <'ICD-10-CONTRACT'> OrganAbiContract {
+	part def OrganAbiContract {
 		attribute identity : String;
 		attribute capability : String;
 		attribute semantics : String;              // law: no untyped success
@@ -70,7 +70,7 @@ package GRAIL_Contracts {
 		enum quarantined;
 	}
 
-	part def <'ICD-29-ACT'> InstitutionalAct {
+	part def InstitutionalAct {
 		attribute claim : String;
 		attribute sourceSet : String;
 		attribute temporalFrame : BitemporalCut;   // five times, two histories
@@ -95,7 +95,7 @@ package GRAIL_Contracts {
 
 	// A single total order would let "authentic source but out of date" collapse into one number.
 	// Ten axes, never compressed.
-	part def <'STATUS-VECTOR'> StatusVector {
+	part def StatusVector {
 		attribute sourceIntegrity : Real;
 		attribute evidentiarySupport : Real;
 		attribute formalValidity : Real;
@@ -111,20 +111,20 @@ package GRAIL_Contracts {
 		assert constraint { compressedToScalar == false }
 	}
 
-	constraint def <'INV-ONE-ENVELOPE'> OneEnvelope {
+	constraint def OneEnvelope {
 		in envelopeKinds : Integer;
 		envelopeKinds == 1
 	}
 
 	// T6 as a gate rather than a wish: nothing is admitted without its falsifier.
-	constraint def <'INV-T6-ADMISSION'> AdmissionRequiresFalsifier {
+	constraint def AdmissionRequiresFalsifier {
 		in admittedWithoutFalsificationConditions : Integer;
 		admittedWithoutFalsificationConditions == 0
 	}
 
 	// Meta-level confinement, from the creator's own +META-LEVEL-RULES+: default deny, no skipping
 	// a level, a declared reason to ascend. gap/EVO.md asked for exactly this and called it absent.
-	part def <'META-LEVELS'> ReflectiveTower {
+	part def ReflectiveTower {
 		attribute defaultDeny : Boolean = true;
 		attribute skippingAllowed : Boolean = false;
 		attribute ascentRequiresDeclaredReason : Boolean = true;

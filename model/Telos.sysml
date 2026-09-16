@@ -71,7 +71,7 @@ package GRAIL_Telos {
 
 	// ------------------------------------------------------------- the concern
 
-	concern def <'CON-01'> Sovereignty {
+	concern def Sovereignty {
 		doc /* Only the creator approves. No mechanism inside GRAIL may substitute for that act,
 		     and no telos may be redefined by a layer decision (Δ-0). */
 		stakeholder creator : Creator;

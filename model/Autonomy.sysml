@@ -14,7 +14,7 @@ package GRAIL_Autonomy {
 
 	// The three conditions of the epistemic contract, evaluated BEFORE the act, by an organ that
 	// is itself outside every search space (INV-F02).
-	part def <'EC-01'> EpistemicContract {
+	part def EpistemicContract {
 		attribute fullyReversible : Boolean;
 		attribute freeEnergy : Real;
 		attribute thetaSafe : Real;
@@ -29,7 +29,7 @@ package GRAIL_Autonomy {
 	// EVALUATED OUTSIDE THE CORE. This is the contract the PDP applies (GRAIL_Policy::PDP-01);
 	// it is written here as the shape of the question, not as a gate welded into the kernel. The
 	// core's only obligation is AUT-00: it does not act without an answer.
-	constraint def <'AUT-01'> AutonomyAdmissible {
+	constraint def AutonomyAdmissible {
 		in fullyReversible : Boolean;
 		in freeEnergy : Real;
 		in thetaSafe : Real;
@@ -44,7 +44,7 @@ package GRAIL_Autonomy {
 	}
 
 	// The core's whole rule. Everything else about autonomy is decided outside it.
-	constraint def <'AUT-00'> NoActWithoutAnswer {
+	constraint def NoActWithoutAnswer {
 		in actsTakenWithoutPdpAnswer : Integer;
 		actsTakenWithoutPdpAnswer == 0
 	}
@@ -53,7 +53,7 @@ package GRAIL_Autonomy {
 	// the classifier is conservative BY CONSTRUCTION: an act whose reversibility is not proven is
 	// irreversible. Otherwise the fastest path to full autonomy is to leave reversibility unknown,
 	// and the contract becomes a formality that always passes.
-	constraint def <'AUT-02'> UnprovenReversibilityIsIrreversible {
+	constraint def UnprovenReversibilityIsIrreversible {
 		in reversibilityProven : Boolean;
 		in classifiedAs : Reversibility;
 		reversibilityProven == true or classifiedAs == Reversibility::irreversible
@@ -61,7 +61,7 @@ package GRAIL_Autonomy {
 
 	// Rollback must be READY before the act, not merely possible after it. "Reversible" with no
 	// pre-staged inverse is a promise, and a promise executes nothing.
-	constraint def <'AUT-03'> InverseStagedBeforeAct {
+	constraint def InverseStagedBeforeAct {
 		in inversePreStaged : Boolean;
 		in classifiedAs : Reversibility;
 		inversePreStaged == true or classifiedAs == Reversibility::irreversible
@@ -69,7 +69,7 @@ package GRAIL_Autonomy {
 
 	// A hot swap in the real world is an act like any other: it passes the same contract, and its
 	// inverse is the previous organ, kept executable (T8 keeps the ancestor runnable).
-	part def <'HOT-SWAP'> HotSwapAct {
+	part def HotSwapAct {
 		attribute previousOrganExecutable : Boolean = true;
 		attribute differentialReportPassed : Boolean;
 		attribute nonDiminutionCertified : Boolean;   // INV-C01 over the Competence lattice
@@ -79,7 +79,7 @@ package GRAIL_Autonomy {
 
 	// The irreversible path. Time freezes: nothing in the affected scope advances while the
 	// signature is outstanding, so that waiting cannot be exploited as a state change.
-	part def <'FREEZE'> TimeFreeze {
+	part def TimeFreeze {
 		attribute scopeFrozen : Boolean = true;
 		attribute externalEffectsSuspended : Boolean = true;
 		attribute creatorSignatureRequired : Boolean = true;
@@ -90,14 +90,14 @@ package GRAIL_Autonomy {
 
 	// A-14: the creator's approval is never reward, never fitness. Layered autonomy serves this
 	// directly — fewer acts of approval, grouped and escalated, instead of one per change.
-	constraint def <'AUT-04'> ApprovalIsNotASignal {
+	constraint def ApprovalIsNotASignal {
 		in approvalUsedAsRewardOrFitness : Boolean;
 		approvalUsedAsRewardOrFitness == false
 	}
 
 	// The grant is POLICY: thetaSafe, the grades and the scope are set from outside and change
 	// without rebuild or restart (Δ-12). The mediation that makes them binding is mechanism.
-	part def <'POL-04'> AutonomyGrant {
+	part def AutonomyGrant {
 		attribute thetaSafe : Real;
 		attribute maximumAutonomousGrade : AutonomyGrade;
 		attribute adjustableWithoutRebuild : Boolean = true;

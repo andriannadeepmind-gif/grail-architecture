@@ -58,7 +58,7 @@ package GRAIL_Instruments {
 		attribute identityVerdictParts : Integer = 3;
 	}
 
-	part def <'CMP-KRN-11-AUDIT'> EffectPathAudit {
+	part def EffectPathAudit {
 		attribute unmediatedEffectPaths : Integer;
 		attribute pathsEnumeratedStatically : Boolean = true;
 	}
@@ -98,15 +98,15 @@ package GRAIL_Instruments {
 
 	// ------------------------------------------------------- verification cases
 
-	verification def <'VT-T1'> UnderstandingMeasured { subject sys : Grail; objective { verify telosT1; } }
-	verification def <'VT-T2'> ContinuityMeasured    { subject sys : Grail; objective { verify telosT2; } }
-	verification def <'VT-T3'> CollectiveMeasured    { subject sys : Grail; objective { verify telosT3; } }
-	verification def <'VT-T4'> GenerativityMeasured  { subject sys : Grail; objective { verify telosT4; } }
-	verification def <'VT-T5'> EvolutionMeasured     { subject sys : Grail; objective { verify telosT5; } }
-	verification def <'VT-T6'> TruthMeasured         { subject sys : Grail; objective { verify telosT6; } }
-	verification def <'VT-T7'> LegalMeasured         { subject sys : Grail; objective { verify telosT7; } }
-	verification def <'VT-T8'> AbsorptionMeasured    { subject sys : Grail; objective { verify telosT8; } }
-	verification def <'VT-T9'> GovernanceMeasured    { subject sys : Grail; objective { verify telosT9; } }
+	verification def UnderstandingMeasured { subject sys : Grail; objective { verify telosT1; } }
+	verification def ContinuityMeasured    { subject sys : Grail; objective { verify telosT2; } }
+	verification def CollectiveMeasured    { subject sys : Grail; objective { verify telosT3; } }
+	verification def GenerativityMeasured  { subject sys : Grail; objective { verify telosT4; } }
+	verification def EvolutionMeasured     { subject sys : Grail; objective { verify telosT5; } }
+	verification def TruthMeasured         { subject sys : Grail; objective { verify telosT6; } }
+	verification def LegalMeasured         { subject sys : Grail; objective { verify telosT7; } }
+	verification def AbsorptionMeasured    { subject sys : Grail; objective { verify telosT8; } }
+	verification def GovernanceMeasured    { subject sys : Grail; objective { verify telosT9; } }
 
 	// --------------------------------------------------------------- ID-REQUESTS
 

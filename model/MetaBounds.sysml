@@ -16,7 +16,7 @@ package GRAIL_MetaBounds {
 	// Not a prohibition. A statement about what exists: an act performed without provenance has no
 	// provenance afterwards, and no later decision can create it. Same for replay, flow labels and
 	// the log. These are the four of Δ-12(γ).
-	part def <'MB-MECH'> MechanismBound {
+	part def MechanismBound {
 		attribute name : String;
 		attribute boundClass : BoundClass = BoundClass::mechanism;
 		attribute penetrable : Boolean = false;
@@ -26,17 +26,17 @@ package GRAIL_MetaBounds {
 	}
 
 	// The four, named, so the class is a list and not a sentiment.
-	part def <'MB-MECH-01'> ProvenanceBound  :> MechanismBound;
-	part def <'MB-MECH-02'> ReplayBound      :> MechanismBound;
-	part def <'MB-MECH-03'> FlowLabelBound   :> MechanismBound;
-	part def <'MB-MECH-04'> CompleteLogBound :> MechanismBound;
+	part def ProvenanceBound  :> MechanismBound;
+	part def ReplayBound      :> MechanismBound;
+	part def FlowLabelBound   :> MechanismBound;
+	part def CompleteLogBound :> MechanismBound;
 
 	// ------------------------------------------------ the class that does bend
 
 	// A boundary is a COST FIELD, not a wall. The system keeps its telos and searches for the
 	// optimal path; a region of high cost is crossed when crossing is proven cheaper than not
 	// crossing. This is where jurisdiction, scope and envelope live.
-	part def <'MB-POL'> PolicyBoundary {
+	part def PolicyBoundary {
 		attribute name : String;
 		attribute boundClass : BoundClass = BoundClass::policy;
 		attribute freeEnergyCost : Real;            // the height of the field, not an interdiction
@@ -47,7 +47,7 @@ package GRAIL_MetaBounds {
 	// Crossing carries a burden of proof, and the burden is on the ADVERSARIAL side of the house:
 	// the Epistemic Court's adversary must show that NOT crossing leads to total capability decay.
 	// Without the adversary, the system argues with itself and always wins.
-	part def <'MB-CROSS'> PenetrationProof {
+	part def PenetrationProof {
 		attribute boundary : String;
 		attribute nonEntryLeadsToCapabilityDecay : Boolean;
 		attribute decayShownOverHorizon : Real;
@@ -60,7 +60,7 @@ package GRAIL_MetaBounds {
 	}
 
 	// The crossing rule. Six conditions, conjunction, nothing pays for anything.
-	constraint def <'MB-01'> CrossingAdmissible {
+	constraint def CrossingAdmissible {
 		in boundClass : BoundClass;
 		in nonEntryLeadsToCapabilityDecay : Boolean;
 		in producedByAdversary : Boolean;
@@ -80,7 +80,7 @@ package GRAIL_MetaBounds {
 	// crossing is recorded, replayable and reversible BECAUSE the mechanism class did not bend.
 	// Soften the mechanism and the crossing becomes unprovable and unrecoverable, which is the
 	// grip an adversary wants.
-	constraint def <'MB-02'> HardMechanismEnablesSoftPolicy {
+	constraint def HardMechanismEnablesSoftPolicy {
 		in mechanismBoundsPenetrated : Integer;
 		in crossingsRecorded : Integer;
 		in crossingsAttempted : Integer;
@@ -88,7 +88,7 @@ package GRAIL_MetaBounds {
 	}
 
 	// A crossing never becomes the new default. It expires, and the field returns to its height.
-	part def <'MB-EXPIRY'> CrossingGrant {
+	part def CrossingGrant {
 		attribute expiresAfter : Real;
 		attribute becomesPrecedent : Boolean = false;
 		attribute revocableInstantly : Boolean = true;

@@ -16,7 +16,7 @@ package GRAIL_Policy {
 	// parallel. It never lowers the class of proof, and it never turns a met telos into a failed
 	// one. Fail-closed: when the budget is exhausted the work stops and says so, rather than
 	// continuing with weaker evidence.
-	part def <'POL-01'> CostAndTimeEnvelope {
+	part def CostAndTimeEnvelope {
 		attribute costCeiling : Real;
 		attribute timeCeiling : Real;
 		attribute reducesScope : Boolean = true;
@@ -27,14 +27,14 @@ package GRAIL_Policy {
 	// Α-12. The system never produces a probability of the outcome of a case. This is a
 	// prohibition, not a capability, so it is policy and not telos — and being policy does not
 	// make it weak: it is enforced at the mediated point, where the effect would leave.
-	part def <'POL-02'> NoOutcomeProbability {
+	part def NoOutcomeProbability {
 		attribute outcomeProbabilityEverProduced : Boolean = false;
 	}
 
 	// Δ-12(β). Policy binds only what the core mediates. Zero ambient authority is the property
 	// that makes everything in this package real rather than advisory, and it is stated in T9 as
 	// a capability of the mechanism — not here, because it is not adjustable.
-	part def <'POL-03'> PolicyDecisionPoint {
+	part def PolicyDecisionPoint {
 		attribute changeTakesEffectWithoutRebuild : Boolean = true;
 		attribute changeTakesEffectWithoutRestart : Boolean = true;
 	}
@@ -46,7 +46,7 @@ package GRAIL_Policy {
 	// overrule this one — a core that carries its own rule is a limit baked into the mechanism,
 	// which is what Δ-12 exists to remove.
 
-	part def <'PDP-00'> PolicyDecisionSeat {
+	part def PolicyDecisionSeat {
 		attribute rulesInsideCore : Integer = 0;
 		attribute rulesReadAsData : Boolean = true;
 		attribute changeWithoutRebuild : Boolean = true;
@@ -56,7 +56,7 @@ package GRAIL_Policy {
 	}
 
 	// Autonomy. The five conditions of the epistemic contract, applied here and not in the kernel.
-	part def <'PDP-01'> AutonomyRule {
+	part def AutonomyRule {
 		attribute thetaSafe : Real;
 		attribute requireFullyReversible : Boolean = true;
 		attribute requireCourtVerdict : Boolean = true;
@@ -73,7 +73,7 @@ package GRAIL_Policy {
 	// systems; scope: systems the Principal holds no authorization for, and nothing else (article
 	// 9: the bound does not spread). It is evaluated HERE, as data, and opens the moment the
 	// authorization record exists.
-	part def <'PDP-02'> ReachRule {
+	part def ReachRule {
 		attribute authorizationOnRecord : Boolean;
 		attribute admitsAtFullStrength : Boolean = true;
 		attribute secondCheckInsideCore : Boolean = false;
@@ -82,7 +82,7 @@ package GRAIL_Policy {
 	}
 
 	// Crossing a policy boundary. Also a decision, also here.
-	part def <'PDP-03'> CrossingRule {
+	part def CrossingRule {
 		attribute requireAdversaryProof : Boolean = true;
 		attribute requireCostOfCrossingLower : Boolean = true;
 		attribute grantExpires : Boolean = true;

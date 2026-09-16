@@ -16,21 +16,21 @@ package GRAIL_Verification {
 	// T2. A signature is evidence about a person, not a measurement of the system. While the
 	// Continuity Battery is Unknown, the creator's act is recorded as a human attestation and
 	// never counts as a pass of KT-01 (Δ-0, DEC-X-09).
-	constraint def <'VR-01'> HumanAttestationIsNotAPass {
+	constraint def HumanAttestationIsNotAPass {
 		in humanAttestationCountedAsPass : Boolean;
 		humanAttestationCountedAsPass == false
 	}
 
 	// T4. Generation the creator steers is not autonomous generation. Without this the telos is
 	// satisfied by a forge with a hand on it, which is the reduction Δ-0 refused.
-	constraint def <'VR-02'> SteeredGenerationIsNotAutonomous {
+	constraint def SteeredGenerationIsNotAutonomous {
 		in steeredByCreatorCountsAsPass : Boolean;
 		steeredByCreatorCountsAsPass == false
 	}
 
 	// T5. Margins, alpha, power and multiplicity control are fixed BEFORE the run, so that the
 	// test cannot be chosen after seeing the result (Α-6).
-	constraint def <'VR-03'> MarginsPreRegistered {
+	constraint def MarginsPreRegistered {
 		in marginsPreRegistered : Boolean;
 		marginsPreRegistered == true
 	}

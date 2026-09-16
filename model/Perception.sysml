@@ -10,7 +10,7 @@ package GRAIL_Perception {
 
 	// Epistemic risk is not a mood. It is the measured extent of what has not been looked at,
 	// and the scanner's job is to make it fall before the adversary can trade on it.
-	part def <'EPI-RISK'> EpistemicRiskScore {
+	part def EpistemicRiskScore {
 		attribute unknownRegionCount : Integer;
 		attribute unknownRegionsCovered : Integer;
 		attribute staleSourceCount : Integer;
@@ -20,7 +20,7 @@ package GRAIL_Perception {
 
 	// A region of the world the system has not mapped. Named, so that "unknown" is a list rather
 	// than a feeling, and so that coverage is countable.
-	part def <'UNKNOWN-REGION'> UnknownRegion {
+	part def UnknownRegion {
 		attribute name : String;
 		attribute expectedInformationGain : Real;
 		attribute costToScan : Real;
@@ -43,7 +43,7 @@ package GRAIL_Perception {
 
 	// Spawned autonomously, lives briefly, reports and dies. It carries no standing authority:
 	// like every organ it reaches the world only through KRN-11 (INV-S02).
-	part def <'SCOUT'> ScoutAgent {
+	part def ScoutAgent {
 		attribute target : String;
 		attribute sourceClass : SourceClass;
 		attribute depth : Integer;
@@ -60,7 +60,7 @@ package GRAIL_Perception {
 
 	// epistemic_scouting_protocols. The standing orders: what to hunt, how deep, how often, and
 	// when to escalate from watching to reading everything.
-	part def <'SCOUT-PROTO'> ScoutingProtocol {
+	part def ScoutingProtocol {
 		attribute name : String;
 		attribute regions : String;
 		attribute maxDepth : Integer;
@@ -85,7 +85,7 @@ package GRAIL_Perception {
 	}
 
 	// The scanner earns its place only if risk actually falls.
-	constraint def <'PER-01'> ScanningReducesRisk {
+	constraint def ScanningReducesRisk {
 		in riskBefore : Real;
 		in riskAfter : Real;
 		riskAfter < riskBefore
@@ -96,7 +96,7 @@ package GRAIL_Perception {
 	// The record itself is data the PDP reads. Where authorization exists the scanner works at
 	// full strength, with no redesign, no rebuild and no restart, and with NO second check inside
 	// the core to overrule it (Δ-12).
-	part def <'POL-05'> AccessAuthorization {
+	part def AccessAuthorization {
 		attribute target : String;
 		attribute basis : String;             // ownership, contract, discovery order, client mandate
 		attribute evidence : ContentId;       // the instrument itself, content-addressed
@@ -110,7 +110,7 @@ package GRAIL_Perception {
 
 	// The DECISION does not live here. The scanner asks at the mediated point and obeys the
 	// answer; it holds no rule of its own about what it may reach. See GRAIL_Policy::PDP-02.
-	constraint def <'PER-02'> ReachIsAsked {
+	constraint def ReachIsAsked {
 		in reachesWithoutAskingThePdp : Integer;
 		reachesWithoutAskingThePdp == 0
 	}
