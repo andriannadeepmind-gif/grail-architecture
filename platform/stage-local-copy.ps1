@@ -4,15 +4,20 @@
 Copies a OneDrive folder to a plain local path, taking only the files that are really on this disk, and naming the ones that are not.
 
 .DESCRIPTION
-When the OneDrive sync engine will not deliver a file, robocopy can carry the placeholder over as an
-empty shell without saying so, and once the copy is outside OneDrive nothing marks it as incomplete:
-the material would enter the repository as zeros. This script never copies a file it cannot fully
-read. It takes everything that is on the disk, and prints the exact list of what is missing, to be
-downloaded from onedrive.com by hand into the same destination.
+When the OneDrive sync engine will not deliver a file, a copy of that folder cannot be complete.
+robocopy reports the failures it hits, but it reports them in a log that scrolls past, it leaves
+what it managed to write, and once the copy is outside OneDrive no attribute marks a file as
+incomplete. This script makes the gap impossible to miss: it copies a file only after reading every
+byte and checking the count against the declared length, deletes the target if the read falls
+short, and ends by printing the exact list of what is missing, to be downloaded from onedrive.com
+by hand into the same destination.
 
-A file is treated as not on this device when it carries FILE_ATTRIBUTE_OFFLINE 0x1000,
-FILE_ATTRIBUTE_RECALL_ON_OPEN 0x40000 or FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS 0x400000, or when
-reading its bytes fails.
+What decides is the read, never the attributes. FILE_ATTRIBUTE_OFFLINE 0x1000 and
+FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS 0x400000 are recorded only to explain a failure:
+FILE_ATTRIBUTE_RECALL_ON_OPEN 0x40000 is the same bit as FILE_ATTRIBUTE_EA and would take a file
+with extended attributes for a placeholder, a process can run in a placeholder compatibility mode
+that hides those bits altogether, and a provider is not obliged to set them. A file whose bytes
+come back in full is on this disk, whatever its attributes say.
 
 .EXAMPLE
 pwsh -File platform/stage-local-copy.ps1 -Source 'C:\Users\David Spiridon\OneDrive\Desktop\IDEES' -Destination C:\IDEES
@@ -28,7 +33,7 @@ Set-StrictMode -Version Latest
 if (Test-Path variable:PSNativeCommandUseErrorActionPreference) { $PSNativeCommandUseErrorActionPreference = $false }
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
 
-$CloudMask = 0x441000
+$CloudMask = 0x401000
 
 function Step([string]$Message) { Write-Host "==> $Message" -ForegroundColor Cyan }
 function Note([string]$Message) { Write-Host "    $Message" }
@@ -50,10 +55,6 @@ $copied = 0
 $missing = [System.Collections.Generic.List[object]]::new()
 foreach ($file in $files) {
     $relative = $file.FullName.Substring($Source.Length + 1)
-    if ((([int]$file.Attributes) -band $CloudMask) -ne 0) {
-        $missing.Add([pscustomobject]@{ Path = $relative; Bytes = $file.Length; Why = 'only in the cloud' })
-        continue
-    }
     $target = Join-Path $Destination $relative
     [System.IO.Directory]::CreateDirectory([System.IO.Path]::GetDirectoryName($target)) | Out-Null
     try {
@@ -69,7 +70,11 @@ foreach ($file in $files) {
         $exception = $_.Exception
         while ($exception.InnerException) { $exception = $exception.InnerException }
         if (Test-Path -LiteralPath $target) { Remove-Item -LiteralPath $target -Force }
-        $missing.Add([pscustomobject]@{ Path = $relative; Bytes = $file.Length; Why = $exception.Message })
+        $why = $exception.Message
+        # ERROR_CLOUD_FILE_PROVIDER_TERMINATED, Win32 404 (0x194): the sync engine died mid-read.
+        if ($exception.HResult -eq 0x80070194) { $why = 'the OneDrive sync engine stopped (0x80070194): only in the cloud' }
+        elseif ((([int]$file.Attributes) -band $CloudMask) -ne 0) { $why = "$why [marked as only in the cloud]" }
+        $missing.Add([pscustomobject]@{ Path = $relative; Bytes = $file.Length; Why = $why })
     }
 }
 

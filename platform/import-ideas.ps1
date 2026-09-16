@@ -64,10 +64,12 @@ $MaxFileBytes = 100MB
 $WarnFileBytes = 50MB
 $MaxPathLength = 240
 $HashAttempts = 3
-# A file that OneDrive has not put on this disk carries one of these bits:
-# FILE_ATTRIBUTE_OFFLINE 0x1000, FILE_ATTRIBUTE_RECALL_ON_OPEN 0x40000,
-# FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS 0x400000.
-$CloudMask = 0x441000
+# A hint that OneDrive has not put a file on this disk: FILE_ATTRIBUTE_OFFLINE 0x1000 and
+# FILE_ATTRIBUTE_RECALL_ON_DATA_ACCESS 0x400000. FILE_ATTRIBUTE_RECALL_ON_OPEN 0x40000 is NOT in
+# the mask: winnt.h gives that bit to FILE_ATTRIBUTE_EA as well, so a file with extended attributes
+# would be taken for a placeholder. The mask only decides whether to pin and wait; what a file
+# really is, is settled by reading its bytes.
+$CloudMask = 0x401000
 
 function Step([string]$Message) { Write-Host "==> $Message" -ForegroundColor Cyan }
 function Note([string]$Message) { Write-Host "    $Message" }
