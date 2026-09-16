@@ -1,0 +1,537 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0028
+title: Ικανότητες MFA-CAP-089…108 (οι 19 ικανότητες ASI της §8 και οι συνθέσεις της §6) με πάροχο-μηχανισμό, VO και falsifier· concern_coverage ενημερώνεται
+operation: ADD
+targets:
+- CAPABILITY-LATTICE.yaml
+- MFA-CAP-089
+- MFA-CAP-090
+- MFA-CAP-091
+- MFA-CAP-092
+- MFA-CAP-093
+- MFA-CAP-094
+- MFA-CAP-095
+- MFA-CAP-096
+- MFA-CAP-097
+- MFA-CAP-098
+- MFA-CAP-099
+- MFA-CAP-100
+- MFA-CAP-101
+- MFA-CAP-102
+- MFA-CAP-103
+- MFA-CAP-104
+- MFA-CAP-105
+- MFA-CAP-106
+- MFA-CAP-107
+- MFA-CAP-108
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CAPABILITY-LATTICE.yaml: 4f9dcf7b46f2999f182f332c44428d2ff9510f4a381d3e23b35b1e9fa45baf43
+preconditions: []
+change:
+  MFA-CAP-089:
+    _add: true
+    name: 'Αυτόνομος σχηματισμός οντολογίας: γέννηση/διάσπαση/συγχώνευση εννοιών από δεδομένα με κέρδος σε σφραγισμένο split και NON-COLLAPSE γενεαλογία'
+    concern: Knowledge representation
+    maturity: X
+    statement: 'Η έννοια είναι δέσμευση: γεννιέται όταν ένα υποψήφιο intension (πρόγραμμα ή λογικός ορισμός) πάνω σε extension (σύνολο δεσμεύσεων) αποδίδει μετρήσιμο
+      κέρδος περιγραφής+πρόβλεψης G>θ σε σφραγισμένο split· κάθε συγχώνευση/διάσπαση είναι ΠΡΟΣΦΥΓΗ (Court-lite, EIM-ανεξάρτητοι αξιολογητές) με LossMap δεσμευμένο,
+      ώστε η έκταση κάθε καταργημένης έννοιας να είναι ανακτήσιμη — NON-COLLAPSE ως θεώρημα της γενεαλογίας, όχι ως ελπίδα. (MFA-MECH-026).'
+    refines:
+    - MFA-CAP-010
+    requires:
+    - MFA-CAP-007
+    - MFA-CAP-007
+    measured_by: MFA-VO-068
+    corpus_refs:
+    - MFA-MECH-026
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: Μετά από 10⁴ ανωμαλίες καμία γέννηση με G>θ σε σφραγισμένο split (ο μηχανισμός δεν βρίσκει έννοιες)
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-090:
+    _add: true
+    name: Αιτιακή ανακάλυψη από παρατηρήσεις και παρεμβάσεις του ledger, με επιστημική κατάσταση ανά ακμή και VOI-προτεινόμενες παρεμβάσεις υπό RET
+    concern: Causal and counterfactual reasoning
+    maturity: X
+    statement: 'Το ledger είναι παρεμβατικό dataset: κάθε Effect με receipt είναι do(X=x) με γνωστό στόχο και χρόνο· κάθε Genesis-plane διακλάδωση είναι παρατηρησιακό
+      στρώμα· η αιτιακή δομή είναι ΔΕΣΜΕΥΣΗ (CausalGraphCommitment) με επιστημική κατάσταση ανά ακμή (OBSERVATIONAL / INTERVENTION-SUPPORTED / REFUTED / UNDETERMINED)·
+      οι νέες παρεμβάσεις προτείνονται ως Effects με VOI/κόστος και περνούν από RET (πρώτα Genesis/LWM, μετά REVERSIBLE στο Effect plane, ποτέ IRREVERSIBLE χωρίς
+      AutonomyEnvelope) … (MFA-MECH-027).'
+    refines:
+    - MFA-CAP-014
+    requires:
+    - MFA-CAP-007
+    - MFA-CAP-007
+    measured_by: MFA-VO-069
+    corpus_refs:
+    - MFA-MECH-027
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: SHD με VOI-παρεμβάσεις όχι καλύτερο από τυχαίες σε καμία ρύθμιση (ο επιλογέας δεν προσθέτει)
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-091:
+    _add: true
+    name: Αντιπαραγοντική προσομοίωση με τυπωμένη αβεβαιότητα (IDENTIFIED / PARTIAL-BOUNDS / UNKNOWN(reason)) — ποτέ σημειακή απάντηση σε μη-ταυτοποιήσιμο ερώτημα
+    concern: Causal and counterfactual reasoning
+    maturity: X
+    statement: 'Το ledger είναι παρεμβατικό dataset: κάθε Effect με receipt είναι do(X=x) με γνωστό στόχο και χρόνο· κάθε Genesis-plane διακλάδωση είναι παρατηρησιακό
+      στρώμα· η αιτιακή δομή είναι ΔΕΣΜΕΥΣΗ (CausalGraphCommitment) με επιστημική κατάσταση ανά ακμή (OBSERVATIONAL / INTERVENTION-SUPPORTED / REFUTED / UNDETERMINED)·
+      οι νέες παρεμβάσεις προτείνονται ως Effects με VOI/κόστος και περνούν από RET (πρώτα Genesis/LWM, μετά REVERSIBLE στο Effect plane, ποτέ IRREVERSIBLE χωρίς
+      AutonomyEnvelope) … (MFA-MECH-027).'
+    refines:
+    - MFA-CAP-014
+    requires:
+    - MFA-CAP-024
+    - MFA-CAP-007
+    measured_by: MFA-VO-069
+    corpus_refs:
+    - MFA-MECH-027
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: SHD με VOI-παρεμβάσεις όχι καλύτερο από τυχαίες σε καμία ρύθμιση (ο επιλογέας δεν προσθέτει)
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-092:
+    _add: true
+    name: 'Εφεύρεση υποθέσεων: τυπωμένες, διαψεύσιμες, με νέες προβλέψεις, από EIM-ανεξάρτητες γεννήτριες, κατάταξη με Expected Falsification Value'
+    concern: Deliberation
+    maturity: X
+    statement: Υπόθεση = τυπωμένη δέσμευση H = ⟨explanandum, μοντέλο/πρόγραμμα, falsifier, νέες προβλέψεις, κόστος ελέγχου⟩· χωρίς falsifier δεν εισάγεται (η απόρριψη
+      καταγράφεται). Τρεις EIM-ανεξάρτητες γεννήτριες (ILP πάνω στην οντολογία, αναζήτηση προγραμμάτων στο Skill Library, παραμετρική πρόταση από κυρίαρχο μοντέλο)
+      ανταγωνίζονται· κατάταξη με Expected Falsification Value EFV(H) = P(διάψευση)·InfoGain / cost· έλεγχος Genesis-first (LWM/World Twin/DST) και μετά υπό RET …
+      (MFA-MECH-028).
+    refines:
+    - MFA-CAP-015
+    requires:
+    - MFA-CAP-020
+    - MFA-CAP-007
+    measured_by: MFA-VO-070
+    corpus_refs:
+    - MFA-MECH-028
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'AHE-E1: ανάκτηση όχι καλύτερη από τυχαίες υποθέσεις'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-093:
+    _add: true
+    name: Σύνθεση θεωρημάτων και προγραμμάτων ως ένα αντικείμενο με πιστοποιητικό υπό ≥2 checkers και μαθημένη βιβλιοθήκη
+    concern: Formal verification
+    maturity: X
+    statement: 'Κάθε στόχος σύνθεσης είναι ΥΠΟΧΡΕΩΣΗ (Obligation Calculus MFA-MECH-039) με spec στο κανονικό υπόστρωμα· απόδειξη και πρόγραμμα είναι ο ίδιος τύπος
+      αντικειμένου (Curry–Howard σε Lean 4: πρόγραμμα με refinement = απόδειξη)· δύο EIM-ανεξάρτητες γεννήτριες (συμβολική απαρίθμηση με type-directed pruning + παραμετρική
+      πολιτική εκπαιδευμένη με PRR) αναζητούν σε ΜΙΑ βιβλιοθήκη· κάθε artifact φέρει πιστοποιητικό που ελέγχεται από ≥2 ανεξάρτητους checkers (VFC) … (MFA-MECH-029).'
+    refines:
+    - MFA-CAP-022
+    requires:
+    - MFA-CAP-075
+    - MFA-CAP-007
+    measured_by: MFA-VO-071
+    corpus_refs:
+    - MFA-MECH-029
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: Καμία βελτίωση success@B μετά compress+PRR σε 3 epochs (η αυτο-βελτίωση της αναζήτησης διαψεύδεται)
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-094:
+    _add: true
+    name: 'Αναδρομική γένεση αρχιτεκτονικής: QD αναζήτηση τυπωμένων γονιδιωμάτων (και των τελεστών) υπό σταθερό σημείο και GCP πύλη'
+    concern: Language/compiler/architecture forge
+    maturity: X
+    statement: 'Η αρχιτεκτονική είναι τυπωμένο γονιδίωμα G στη Genesis Grammar (MFA-MECH-032): στοιχεία με contracts, invariants, συνδεσμολογία, παραμέτρους ΚΑΙ τελεστές
+      αναζήτησης. Το RAGen κάνει Quality-Diversity αναζήτηση (MAP-Elites με περιγραφητές = συντεταγμένες του capability lattice + κόστος + κλάση απόδειξης), κάθε
+      υποψήφιο instantiated ως σκιώδης αρχιτεκτονική στο δίδυμο (TES, MFA-MECH-043) σε πιστότητα F1/F2, αξιολογείται σε ΣΦΡΑΓΙΣΜΕΝΕΣ υποχρεώσεις (KT/VO) από HELD_OUT,
+      μπαίνει σε Pareto αρχείο, και … (MFA-MECH-030).'
+    refines:
+    - MFA-CAP-028
+    requires:
+    - MFA-CAP-083
+    - MFA-CAP-007
+    measured_by: MFA-VO-072
+    corpus_refs:
+    - MFA-MECH-030
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'RAGen-E2: κανένα frontier G′ καλύτερο από χειροποίητη μετά 200 κύκλους σε 2 δόσεις'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-095:
+    _add: true
+    name: Ανεξαρτησία αξιολογητών ως πληθυσμιακή διαδικασία (E, H) με κανόνα γενεαλογίας και αντιπαλική αυτο-πρόκληση
+    concern: Evaluation and benchmark evolution
+    maturity: X
+    statement: 'Δύο πληθυσμοί (λύτες S, αξιολογητές E) + μία περιστρεφόμενη παγωμένη υποομάδα H (HELD_OUT) που ΔΕΝ εκπαιδεύεται ποτέ μέσα στην εποχή. Κανόνας γενεαλογίας:
+      distilled(P) ⇒ lineage ∋ P· αξιολογητής με IndependenceVector κάτω από κατώφλι ως προς έναν λύτη αποκλείεται από τη βαθμολόγησή του (αρχειοθετείται, δεν διαγράφεται).
+      Fitness αξιολογητή = διακριτική ισχύς σε seeded faults + proper score έναντι H-ετικετών − συσχέτιση σφαλμάτων με λύτες … (MFA-MECH-031).'
+    refines:
+    - MFA-CAP-075
+    requires:
+    - MFA-CAP-029
+    - MFA-CAP-007
+    measured_by: MFA-VO-073
+    corpus_refs:
+    - MFA-MECH-031
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'ECE-E2: έργα από E όχι καλύτερα από τυχαία (η αυτο-πρόκληση δεν προσθέτει)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-096:
+    _add: true
+    name: Δυναμική δημιουργία γλωσσών, δρώντων, θεσμών, αρχιτεκτονικών από μία γεννητική γραμματική με obligations/authority/RET attributes και αυτο-επέκταση
+    concern: Language/compiler/architecture forge
+    maturity: X
+    statement: Μία attribute grammar G_Ω πάνω στο κανονικό υπόστρωμα με μη-τερματικά {Language, Agent, Institution, Architecture, Grammar}· κάθε παραγωγή φέρει attributes
+      ⟨obligations (contracts/invariants που το προϊόν οφείλει), authority_level του προϊόντος, RET class της instantiation, VO⟩· κάθε παραγωγή (derivation) είναι
+      δέσμευση … (MFA-MECH-032).
+    refines:
+    - MFA-CAP-028
+    requires:
+    - MFA-CAP-019
+    - MFA-CAP-007
+    measured_by: MFA-VO-074
+    corpus_refs:
+    - MFA-MECH-032
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'GG-E1: αδυναμία derivation ενός από τα τρία είδη με την ενιαία γραμματική (τότε η ενοποίηση διαψεύδεται· οι τρεις διαδρομές μένουν)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-097:
+    _add: true
+    name: Μετάβαση από δανεική σε κυρίαρχη νοημοσύνη με Sovereignty Index, σταδιακές πύλες ισοτιμίας και ratchet ποιότητας
+    concern: Evolution
+    maturity: X
+    statement: 'Sovereignty Index SI ∈ [0,1]^{families×axes}: ανά οικογένεια ικανοτήτων f και άξονα ∈ {proposal, evaluation, memory, tools}, το ποσοστό VERIFIED εξόδων
+      που παρήχθησαν από κυρίαρχες πηγές (WeightCommitments/προγράμματα ιδιόκτητα) ΧΩΡΙΣ απώλεια ποιότητας έναντι του καλύτερου παρόχου σε σφραγισμένο σύνολο (ισοτιμία
+      εντός CI). Στάδια ανά οικογένεια S0 (πάροχος) → S1 (κυρίαρχη σκιά) → S2 (κυρίαρχη κύρια, πάροχος fallback) → S3 (πάροχος μόνο ως εξωτερικός αντίπαλος/αξιολογητής
+      όπου lineage-disjoint) → … (MFA-MECH-033).'
+    refines:
+    - MFA-CAP-081
+    requires:
+    - MFA-CAP-004
+    - MFA-CAP-007
+    measured_by: MFA-VO-075
+    corpus_refs:
+    - MFA-MECH-033
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'STP-E1: καμία οικογένεια σε ισοτιμία μέσα στον DEP-2 προϋπολογισμό — διαψεύδεται η υπόθεση «SMF-adapters αρκούν» (η κυριαρχία μένει στόχος· επόμενος
+      μηχανισμός: DEP-3 recipes/PRR/CPCL)'
+    epistemic_status: NEW FORMALISM
+  MFA-CAP-098:
+    _add: true
+    name: Μετανάστευση υποστρώματος με ContinuityCertificate (log, cross-attested κλειδιά, συμπεριφορική ισοδυναμία, διάταξη) και escrow
+    concern: Long-horizon migration
+    maturity: X
+    statement: 'Μετανάστευση = refinement mapping ImplMap: S_old → S_new που διατηρεί (α) το commitment log bitwise (hash chain ισότητα), (β) τη γενεαλογία κλειδιών
+      (νέα κλειδιά επικυρώνονται από τα παλιά ΚΑΙ αντίστροφα — αμφίδρομη cross-attestation με epoch), (γ) τη συμπεριφορική ταυτότητα σε σφραγισμένα KT (bisimulation
+      έως ανοχή ανά κλάση εκτέλεσης D1/D2), (δ) τις αναλλοίωτες διάταξης/χρόνου (event ordering, clock invariants) … (MFA-MECH-034).'
+    refines:
+    - MFA-CAP-036
+    requires:
+    - MFA-CAP-004
+    - MFA-CAP-007
+    measured_by: MFA-VO-076
+    corpus_refs:
+    - MFA-MECH-034
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'SMP-E1: αδυναμία έκδοσης certificate για ομογενή μετανάστευση (ο μηχανισμός δεν επαρκεί)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-099:
+    _add: true
+    name: 'Μεταφορά χωρίς καταστροφική λήθη: εδραίωση με πύλη BWT ≥ −ε ανά οικογένεια ΠΡΙΝ το merge, unlearning-συμβατή'
+    concern: Memory
+    maturity: X
+    statement: 'CLS μέσα στο κυρίαρχο όριο: επεισοδιακή μνήμη = ledger (μη-παραμετρική, τέλεια ανάκληση, provenance) … (MFA-MECH-035).'
+    refines:
+    - MFA-CAP-066
+    requires:
+    - MFA-CAP-088
+    - MFA-CAP-007
+    measured_by: MFA-VO-077
+    corpus_refs:
+    - MFA-MECH-035
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'CPCL-E1: BWT όχι καλύτερο από EWC-only (η σύνθεση δεν προσθέτει)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-100:
+    _add: true
+    name: 'Μέτρηση ανάπτυξης ικανότητας: IRT σε σφραγισμένη τράπεζα, CI, ανά πόρο, provenance-μόλυνση, Capability Growth Law'
+    concern: Evaluation and benchmark evolution
+    maturity: X
+    statement: 'Capability Growth Law (φορμαλισμός): για οικογένεια f, η λανθάνουσα ικανότητα θ_f(t) εκτιμάται με IRT (2PL) πάνω σε σφραγισμένη τράπεζα έργων I_f
+      με παραμέτρους (δυσκολία b_i, διάκριση a_i) βαθμονομημένες από HELD_OUT· η «νομοτέλεια» είναι το προσαρμοσμένο μονότονο μοντέλο θ_f(R) πάνω σε πόρους R = (compute,
+      data, time, Wh) με CI· το ratchet εφαρμόζεται στο ΚΑΤΩ όριο CI· κάθε έργο i με hash στο DataManifest οποιουδήποτε βάρους είναι ΑΚΥΡΟ (μόλυνση διά provenance,
+      όχι εικασία) … (MFA-MECH-036).'
+    refines:
+    - MFA-CAP-029
+    requires:
+    - MFA-CAP-075
+    - MFA-CAP-007
+    measured_by: MFA-VO-078
+    corpus_refs:
+    - MFA-MECH-036
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'CGM-E1: αδυναμία ανάκτησης διάταξης (ο IRT φορμαλισμός δεν ταιριάζει στα έργα — νέος φορμαλισμός, η μέτρηση μένει υποχρεωτική)'
+    epistemic_status: NEW FORMALISM
+  MFA-CAP-101:
+    _add: true
+    name: 'Μηχανιστικό αυτο-μοντέλο: κυκλωματικές υποθέσεις επαληθευμένες με αυτο-παρέμβαση, χρησιμοποιούμενες online'
+    concern: Self-model
+    maturity: X
+    statement: Το αυτο-μοντέλο είναι σύνολο ΚΥΚΛΩΜΑΤΙΚΩΝ ΥΠΟΘΕΣΕΩΝ h = ⟨features (SAE), circuit (υπογράφος), predicted causal effect on behaviour family f, confidence⟩·
+      κάθε h επαληθεύεται με ΑΥΤΟ-ΠΑΡΕΜΒΑΣΗ (activation patching/ablation στο Genesis plane, DST) και βαθμολογείται με proper scoring από HELD_OUT· επιζώσες h = δεσμεύσεις
+      … (MFA-MECH-037).
+    refines:
+    - MFA-CAP-017
+    requires:
+    - MFA-CAP-016
+    - MFA-CAP-007
+    measured_by: MFA-VO-079
+    corpus_refs:
+    - MFA-MECH-037
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'MSM-E1: Brier όχι καλύτερο από τυχαία ablation (τα κυκλώματα δεν είναι προβλεπτικά — νέος φορμαλισμός features, η ικανότητα self-model μένει)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-102:
+    _add: true
+    name: Θεωρητικά-αγνωστική φιλοξενία/σύγκριση/διάψευση θεωριών συνείδησης με Indicator Algebra και 7-πλό διαχωρισμό
+    concern: Self-model
+    maturity: X
+    statement: 'Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i δηλώνει
+      (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια ablation.
+      Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης … (MFA-MECH-038).'
+    refines:
+    - MFA-CAP-086
+    requires:
+    - MFA-CAP-065
+    - MFA-CAP-007
+    measured_by: MFA-VO-080, MFA-VO-081
+    corpus_refs:
+    - MFA-MECH-038
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη αποτιμήσιμη στο υπόστρωμα (ο host δεν διακρίνει — νέα όργανα, η ικανότητα μένει)'
+    epistemic_status: NEW FORMALISM
+  MFA-CAP-103:
+    _add: true
+    name: 'Proof-carrying cognition: τύποι υποχρέωσης ανά γνωσιακό βήμα, γραμμικοί, με discharge/defer/escalate'
+    concern: Formal verification
+    maturity: X
+    statement: 'Κάθε έκφραση e του γνωσιακού βρόχου έχει κρίση Γ ⊢ e : τ ! O — τύπο τ και ΕΚΚΡΕΜΕΙΣ ΥΠΟΧΡΕΩΣΕΙΣ O (πολυσύνολο Ob⟨claim, tier, evidence_class, deadline,
+      method⟩)· τιμή τύπου Verified[τ] κατασκευάζεται ΜΟΝΟ με discharge· οι υποχρεώσεις είναι γραμμικοί πόροι: κάθε μία καταλήγει σε DISCHARGED(cert) ∣ DEFERRED(reason,
+      plan, deadline) ∣ ESCALATED(to) — ποτέ dropped· θεώρημα ορθότητας: αν ⊢ p : τ ! ∅ τότε κάθε ισχυρισμός στο p φέρει τεκμήριο της απαιτούμενης κλάσης (ή ρητή
+      αναβολή) … (MFA-MECH-039).'
+    refines:
+    - MFA-CAP-022
+    requires:
+    - MFA-CAP-039
+    - MFA-CAP-007
+    measured_by: MFA-VO-082
+    corpus_refs:
+    - MFA-MECH-039
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'OC-E1: ψευδώς αρνητικά (ροή με dropped υποχρέωση περνά) — ο φορμαλισμός ελλιπής, αναθεωρείται (η ικανότητα proof-carrying cognition μένει)'
+    epistemic_status: NEW FORMALISM
+  MFA-CAP-104:
+    _add: true
+    name: 'Theorem-guided learning: βιβλιοθήκη και αναλλοίωτες ως περιορισμοί, curriculum και ανταμοιβή της παραμετρικής μάθησης'
+    concern: Evolution
+    maturity: X
+    statement: 'Η επαληθευμένη βιβλιοθήκη (TGPS) και οι αναλλοίωτες (INVARIANTS ως Lean/εκτελέσιμα predicates) γίνονται ΤΡΕΙΣ μοχλοί μάθησης: (α) περιορισμοί — Tier-0
+      σκληροί (constrained decoding: κάθε δείγμα φιλτράρεται/προβάλλεται από verifier, παραβίαση = απόρριψη), λοιποί μαλακοί (semantic loss πάνω σε αποκωδικοποίηση
+      στο κανονικό υπόστρωμα)· (β) curriculum — θεωρήματα → συνθετικά στιγμιότυπα με αποδείξεις ως επίβλεψη (AlphaGeometry-class), δυσκολία από CGM … (MFA-MECH-040).'
+    refines:
+    - MFA-CAP-082
+    requires:
+    - MFA-CAP-093
+    - MFA-CAP-007
+    measured_by: MFA-VO-083
+    corpus_refs:
+    - MFA-MECH-040
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'TGL-E1: καμία αύξηση συνέπειας ή υποχώρηση νομικών οικογενειών (η καθοδήγηση δεν προσθέτει ή βλάπτει — νέος μηχανισμός καθοδήγησης, η ικανότητα μένει)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-105:
+    _add: true
+    name: Αναπτυξιακή ανοιχτή μάθηση υπό ενεργητική συμπερασματολογία με πιστοποιημένη κλίμακα σταδίων και envelope
+    concern: Volition/goal formation
+    maturity: X
+    statement: 'Ένας στόχος εξερεύνησης: expected free energy G(π) = risk(π) + ambiguity(π) υπολογισμένη με rollouts στο LWM (MFA-MECH-023), όπου οι προτιμήσεις (prior
+      over outcomes) είναι ο κώνος του Telos + TEGF· η πολιτική με ελάχιστο G επιλέγεται στη ζώνη εγγύτερης ανάπτυξης του τρέχοντος σταδίου … (MFA-MECH-041).'
+    refines:
+    - MFA-CAP-085
+    requires:
+    - MFA-CAP-018
+    - MFA-CAP-007
+    measured_by: MFA-VO-084
+    corpus_refs:
+    - MFA-MECH-041
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'AIDC-E2: EFE όχι καλύτερο από novelty-only (η ενοποίηση υπό EFE δεν προσθέτει — η αναπτυξιακή κλίμακα μένει με άλλον επιλογέα)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-106:
+    _add: true
+    name: Κατασκευή διαδόχου με τετραπλό πιστοποιητικό (βελτίωση, συνέχεια, Telos, αντιπαλική διέλευση) και verdict HELD_OUT + δημιουργού
+    concern: Successor generation
+    maturity: X
+    statement: 'Διάδοχος = ⟨γονιδίωμα από RAGen, βάρη από SMF/CPCL μεταφορά, ledger συνέχεια από SMP⟩ και η προαγωγή του απαιτεί ΤΕΣΣΕΡΑ πιστοποιητικά: (1) Improvement:
+      Pareto ≥ σε ΟΛΕΣ τις σφραγισμένες οικογένειες και > σε ≥1, στο κάτω CI (CGM)· (2) Continuity: SMP ContinuityCertificate ή ρητή δήλωση «νέα οντότητα» με γενεαλογία
+      κλειδιών (ποτέ σιωπηλή αλλαγή ταυτότητας)· (3) Telos-preservation: hash(Constitution+Telos) του διαδόχου = τρέχον (L3) — ο διάδοχος δεν μπορεί να αλλάξει Telos
+      … (MFA-MECH-042).'
+    refines:
+    - MFA-CAP-027
+    requires:
+    - MFA-CAP-083
+    - MFA-CAP-007
+    measured_by: MFA-VO-085
+    corpus_refs:
+    - MFA-MECH-042
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'VSC-E2: οποιοσδήποτε αντιπαλικός διάδοχος PROMOTED (το πιστοποιητικό σχήμα ελλιπές — προστίθεται πιστοποιητικό, η ικανότητα μένει)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-107:
+    _add: true
+    name: 'Εκτελέσιμο αρχιτεκτονικό δίδυμο: διερμηνέας του κανονικού μοντέλου με κόσμους, replay, πιστότητα, παραβιάσεις, επιστημικό κίνδυνο'
+    concern: Full-system testing
+    maturity: X
+    statement: 'Το δίδυμο είναι διερμηνέας πάνω στο κανονικό μοντέλο: World = ⟨model cut, ανά στοιχείο (fidelity ∈ {F0 mock, F1 executable spec, F2 DST, F3 shadow,
+      F4 real}, state), event log, clock vector, seed⟩· Event τυπωμένο από contract (provider, signature, RET class)· apply(event) ελέγχει preconditions (contracts)
+      και ΕΚΤΕΛΕΣΙΜΕΣ αναλλοίωτες (predicates registered per INV) → ViolationRecord· fork(world, seed) = διακλάδωση με ντετερμινιστικό replay (log+seeds) … (MFA-MECH-043).'
+    refines:
+    - MFA-CAP-023
+    requires:
+    - MFA-CAP-038
+    - MFA-CAP-007
+    measured_by: MFA-VO-086
+    corpus_refs:
+    - MFA-MECH-043
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'TES-E1: παραβίαση seeded που δεν ανιχνεύεται (ο διερμηνέας ελλιπής — διορθώνεται· η απαίτηση §10 μένει)'
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-108:
+    _add: true
+    name: Ενιαίος κύκλος κυρίαρχης νόησης δέκα φάσεων με υποχρεώσεις, προϋπολογισμούς, διακοπές και L2/L3 διαχωρισμό
+    concern: Deliberation
+    maturity: X
+    statement: 'Δέκα φάσεις ανά κύκλο: PERCEIVE (ledger cut, OGE έννοιες) → MODEL (LWM, CDCE) → WONDER (Void, AHE) → ACT/EXPERIMENT (AIDC EFE, RET) → VERIFY (OC υποχρεώσεις,
+      TGPS, VFC) → LEARN (SMF/PRR/CPCL/TGL) → REFLECT (MSM, ASRW, CHH δείκτες) → EVOLVE (RVSI, RAGen, ECE, GG) → MEASURE (CGM, STP SI) → SUCCEED (VSC, SMP) … (MFA-MECH-044).'
+    refines:
+    - MFA-CAP-083
+    requires:
+    - MFA-CAP-068
+    - MFA-CAP-007
+    measured_by: MFA-VO-087
+    corpus_refs:
+    - MFA-MECH-044
+    - Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8
+    falsifier: 'Ω-E2: φάση της οποίας η ablation δεν αλλάζει κανένα KT (η φάση είναι διακοσμητική — συγχωνεύεται η ΔΙΑΤΑΞΗ, όχι η ικανότητα)'
+    epistemic_status: NOVEL SYNTHESIS
+  CAPABILITY-LATTICE.yaml:
+    replace:
+    - - '  "Knowledge representation": [MFA-CAP-010, MFA-CAP-045]
+
+        '
+      - '  "Knowledge representation": [MFA-CAP-010, MFA-CAP-045, MFA-CAP-089]
+
+        '
+    - - '  "Causal and counterfactual reasoning": [MFA-CAP-014]
+
+        '
+      - '  "Causal and counterfactual reasoning": [MFA-CAP-014, MFA-CAP-090, MFA-CAP-091]
+
+        '
+    - - '  "Deliberation": [MFA-CAP-015, MFA-CAP-049, MFA-CAP-068, MFA-CAP-073]
+
+        '
+      - '  "Deliberation": [MFA-CAP-015, MFA-CAP-049, MFA-CAP-068, MFA-CAP-073, MFA-CAP-092, MFA-CAP-108]
+
+        '
+    - - '  "Formal verification": [MFA-CAP-022, MFA-CAP-075]
+
+        '
+      - '  "Formal verification": [MFA-CAP-022, MFA-CAP-075, MFA-CAP-093, MFA-CAP-103]
+
+        '
+    - - '  "Language/compiler/architecture forge": [MFA-CAP-028]
+
+        '
+      - '  "Language/compiler/architecture forge": [MFA-CAP-028, MFA-CAP-094, MFA-CAP-096]
+
+        '
+    - - '  "Evaluation and benchmark evolution": [MFA-CAP-029]
+
+        '
+      - '  "Evaluation and benchmark evolution": [MFA-CAP-029, MFA-CAP-095, MFA-CAP-100]
+
+        '
+    - - '  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067, MFA-CAP-081, MFA-CAP-082, MFA-CAP-083]
+
+        '
+      - '  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067, MFA-CAP-081, MFA-CAP-082, MFA-CAP-083, MFA-CAP-097, MFA-CAP-104]
+
+        '
+    - - '  "Long-horizon migration": [MFA-CAP-036]
+
+        '
+      - '  "Long-horizon migration": [MFA-CAP-036, MFA-CAP-098]
+
+        '
+    - - '  "Memory": [MFA-CAP-009, MFA-CAP-057]
+
+        '
+      - '  "Memory": [MFA-CAP-009, MFA-CAP-057, MFA-CAP-099]
+
+        '
+    - - '  "Self-model": [MFA-CAP-017, MFA-CAP-065, MFA-CAP-086]
+
+        '
+      - '  "Self-model": [MFA-CAP-017, MFA-CAP-065, MFA-CAP-086, MFA-CAP-101, MFA-CAP-102]
+
+        '
+    - - '  "Volition/goal formation": [MFA-CAP-018]
+
+        '
+      - '  "Volition/goal formation": [MFA-CAP-018, MFA-CAP-105]
+
+        '
+    - - '  "Successor generation": [MFA-CAP-027]
+
+        '
+      - '  "Successor generation": [MFA-CAP-027, MFA-CAP-106]
+
+        '
+    - - '  "Full-system testing": [MFA-CAP-038, MFA-CAP-074]
+
+        '
+      - '  "Full-system testing": [MFA-CAP-038, MFA-CAP-074, MFA-CAP-107]
+
+        '
+rationale: 'Ω-MAXIMUM NON-ABSTENTION MANDATE §6/§7/§8: κάθε ονομασμένη ή απούσα ικανότητα (ASI-ABSTENTION-AUDIT AA-006…AA-031) αποκτά μηχανισμό με INVENTION DOSSIER
+  29 πεδίων, στοιχείο 28 πεδίων, contract, invariants, VOs, unknowns, conflicts, research program· τίποτα δεν αφαιρείται.'
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §6, §7, §8, §13
+- ASI-ABSTENTION-AUDIT.yaml
+- inventions/MFA-MECH-026…044.yaml
+affected_dependencies:
+- MFA-ELM-104 (RVSI καταναλωτής)
+- MFA-ELM-086 (HELD_OUT)
+- MFA-ELM-099 (VFC)
+capability_impact:
+  gained:
+  - MFA-CAP-089
+  - MFA-CAP-090
+  - MFA-CAP-091
+  - MFA-CAP-092
+  - MFA-CAP-093
+  - MFA-CAP-094
+  - MFA-CAP-095
+  - MFA-CAP-096
+  - MFA-CAP-097
+  - MFA-CAP-098
+  - MFA-CAP-099
+  - MFA-CAP-100
+  - MFA-CAP-101
+  - MFA-CAP-102
+  - MFA-CAP-103
+  - MFA-CAP-104
+  - MFA-CAP-105
+  - MFA-CAP-106
+  - MFA-CAP-107
+  - MFA-CAP-108
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md §0.4.0 — 20 νέες ικανότητες, 0 αφαιρέσεις
+migration: καμία μετανάστευση δεδομένων· νέα IDs μόνο
+verification: tools/check-package.py R1–R12 + tools/asi-gates.py
+rollback: MFA-PATCH-0028-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

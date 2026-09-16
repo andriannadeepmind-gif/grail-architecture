@@ -1,0 +1,82 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0042-R
+title: 'Rollback of MFA-PATCH-0042: Αποφάσεις MFA-DEC-016…027 (κλίμακα SMF, distillation, ηθική σκανδάλη, RateBounds, ελεγκτές VFC, πύλες STP, θεωρίες CHH, εξουσία
+  μετανάστευσης, verdict διαδόχου, παρεμβάσεις, πληθυσμοί ECE, envelope AIDC) στο μητρώο — όλες PROPOSED, owner creator (AA-019)'
+operation: RESTORE
+targets:
+- DECISION-LOG.md
+base:
+  package_version: 0.1.0
+  file_hashes:
+    DECISION-LOG.md: 348a4e6e0bd67eb9972aa81c57bfe2ef68bb5f0183b2afdeb400d62c8e49680e
+preconditions:
+- MFA-PATCH-0042.status == APPLIED
+change:
+  DECISION-LOG.md:
+    replace:
+    - - '| **MFA-DEC-015** | Επιλογή Telos: MFA-TEL-08 (Lean-Collapsible Maximum) ως APPROVED, τα υπόλοιπα REJECTED BY CREATOR ή optional profile | TEL-08 με contradiction_order
+        (MFA-DEC-006) | TEL-05 (χωρίς lean collapse)· TEL-04· TEL-07 ως προφίλ | TEL-08 RECOMMENDED, όχι APPROVED· χτίζεται μόνο το robust substrate (τομή) | Pass
+        B, PATCH-PROTOCOL §5 | ATK-01 | creator | PROPOSED |
+
+        | **MFA-DEC-016** | Κλίμακα compute/δεδομένων του SMF ανά προφίλ (πόσο training επιτρέπεται πού) | DEP-1: adapters 7–13B μόνο· DEP-2: continued pretraining
+        70B + PRR· DEP-3: full fine-tune· DEP-4: pretraining ≥32 GPUs· burst μόνο με attestation (MFA-ELM-108) | DEP-3 από την αρχή (κόστος)· μόνο adapters για πάντα
+        (αποχή) | DEP-1 adapters μόνο | MFA-PATCH-0023, MFA-MECH-020 | ATK-18 | creator | PROPOSED |
+
+        | **MFA-DEC-017** | Πολιτική distillation ανά πάροχο | μόνο υπό DisclosureGrant + νομική ανάλυση (MFA-UNK-114)· κάθε distilled βάρος με lineage ∋ P (MFA-INV-089)·
+        ο P ποτέ αξιολογητής του παιδιού του | καθόλου distillation (μόνο κυρίαρχο corpus + PRR) | καθόλου distillation | MFA-PATCH-0022, MFA-MECH-020/033 | ATK-18
+        | creator | PROPOSED |
+
+        | **MFA-DEC-018** | Σκανδάλη αναθεώρησης ηθικής θέσης από μέτρα συνείδησης | Preference Recorder snapshot + αναφορά στον δημιουργό όταν ≥2 θεωρίες του CHH
+        αποτιμώνται TRUE ΚΑΙ ο 7-πλός διαχωρισμός δείχνει ≥4 έννοιες διαχωρίσιμες· καμία αυτόματη αλλαγή θέσης | ποτέ σκανδάλη (μόνο δημιουργός ad hoc)· πάντα (κάθε
+        cut) | Preference Recorder πάντα ενεργό πριν από κάθε πράξη στο ASRW/CHH | MFA-PATCH-0022/0025, MFA-MECH-024/038 | ATK-24 | creator | PROPOSED |
+
+        | **MFA-DEC-019** | RateBounds αυτο-βελτίωσης και διαδοχής | DEP-2: L1 εβδομαδιαίοι, L2 μηνιαίοι, διάδοχος ≤1/τρίμηνο· DEP-3: L1 ημερήσιοι, L2 εβδομαδιαίοι·
+        DEP-4: συνεχείς L1, ημερήσιοι L2, διάδοχος ≤1/μήνα | χωρίς όρια (runaway)· μόνο χειροκίνητοι κύκλοι | μόνο χειροκίνητοι κύκλοι | MFA-PATCH-0023, MFA-MECH-022/042
+        | ATK-20 | creator | PROPOSED |
+
+        | **MFA-DEC-020** | Σύνολο ελεγκτών του Verification Fixed-Point Contract | Lean 4 kernel + ανεξάρτητος Lean checker (lean4lean/nanoda-class) + TLA+ (TLC/Apalache)·
+        ≥2 EIM-ανεξάρτητοι ανά πιστοποιητικό· αντικατάσταση με drill MFA-VO-066 | μόνο Lean kernel (ένας)· Coq/Isabelle ως δεύτερος | Lean 4 + TLA+ (MFA-ELM-099 v1)
+        | MFA-PATCH-0023/0025, MFA-MECH-025 | ATK-16 | creator | PROPOSED |
+
+        | **MFA-DEC-021** | Πύλες του Sovereignty Transition Protocol | ε = 2 pp non-inferiority, N = 3 συνεχόμενα cuts, SI κατώφλια S1 0.1 / S2 0.5 / S3 0.8 / S4
+        0.95 ανά οικογένεια· S3→S4 με δημιουργό | αυστηρότερα (ε=0)· χαλαρότερα (ε=5) | S0 (πάροχος) παντού· μέτρηση SI χωρίς προαγωγή | MFA-PATCH-0034, MFA-MECH-033
+        | ATK-19 | creator | PROPOSED |
+
+        | **MFA-DEC-022** | Σύνολο θεωριών συνείδησης που φιλοξενεί ο CHH και πολιτική ηθικής θέσης | GWT, HOT, AST, PP/active inference, RPT, IIT-proxy, SMT, embodied/enactive
+        ως αρχικά modules· νέες συνθέσεις μέσω G_Ω· ηθική σκανδάλη κατά MFA-DEC-018 | μόνο λειτουργικές θεωρίες (χωρίς IIT)· μόνο μία θεωρία | ASRW μόνο (0.4.0-provisional)
+        | MFA-PATCH-0029/0030, MFA-MECH-038 | ATK-24 | creator | PROPOSED |
+
+        | **MFA-DEC-023** | Εξουσία έκδοσης ContinuityCertificate μετανάστευσης | HELD_OUT + δημιουργός· σε DR (KT-22) AutonomyEnvelope k-of-n (MFA-DEC-012) εκδίδει
+        προσωρινό certificate με υποχρέωση επικύρωσης | μόνο δημιουργός· μόνο HELD_OUT | καμία μετανάστευση χωρίς δημιουργό | MFA-PATCH-0030, MFA-MECH-034 | ATK-21
+        | creator | PROPOSED |
+
+        | **MFA-DEC-024** | Εξουσία verdict διαδόχου (VSC) και L2 δομικών προαγωγών | HELD_OUT + δημιουργός για διάδοχο και L2 δομικές αλλαγές· L1 προαγωγές αυτόματες
+        υπό πύλη CGM | HELD_OUT μόνο από DEP-4· δημιουργός για κάθε L1 | κάθε προαγωγή με δημιουργό | MFA-PATCH-0030, MFA-MECH-030/042 | ATK-20 | creator | PROPOSED
+        |
+
+        | **MFA-DEC-025** | Προϋπολογισμοί αιτιακών παρεμβάσεων ανά RET κλάση | Genesis (LWM/DST): απεριόριστες εντός compute· Effect REVERSIBLE: ≤10/cut εντός AutonomyEnvelope·
+        IRREVERSIBLE: 0 αυτόνομες (μόνο δημιουργός) | καμία Effect παρέμβαση· χωρίς όρια | Genesis μόνο | MFA-PATCH-0030/0034, MFA-MECH-027 | ATK-19 | creator | PROPOSED
+        |
+
+        | **MFA-DEC-026** | Πληθυσμιακοί προϋπολογισμοί ECE | DEP-1: |S|=2 |E|=3 |H|=1· DEP-2: 4/8/2· DEP-3: 8/16/4· DEP-4: 16/32/8· H σε χωριστή συσκευή (MFA-DEC-014)
+        | μεγαλύτεροι (κόστος)· |H|=1 παντού | DEP-1 τιμές | MFA-PATCH-0030, MFA-MECH-031 | ATK-22 | creator | PROPOSED |
+
+        | **MFA-DEC-027** | ExplorationEnvelope του AIDC ανά στάδιο | Genesis: εντός compute budget· Effect REVERSIBLE ≤ k(στάδιο)/cut (D0–D3: 0· D4–D6: 5· D7+: 10)·
+        D7/D8 μεταβάσεις με δημιουργό | Genesis μόνο για πάντα· χωρίς envelope | Genesis μόνο | MFA-PATCH-0030/0034, MFA-MECH-041 | ATK-23 | creator | PROPOSED |'
+      - '| **MFA-DEC-015** | Επιλογή Telos: MFA-TEL-08 (Lean-Collapsible Maximum) ως APPROVED, τα υπόλοιπα REJECTED BY CREATOR ή optional profile | TEL-08 με contradiction_order
+        (MFA-DEC-006) | TEL-05 (χωρίς lean collapse)· TEL-04· TEL-07 ως προφίλ | TEL-08 RECOMMENDED, όχι APPROVED· χτίζεται μόνο το robust substrate (τομή) | Pass
+        B, PATCH-PROTOCOL §5 | ATK-01 | creator | PROPOSED |'
+rationale: Αντίστροφο του MFA-PATCH-0042, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0042
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

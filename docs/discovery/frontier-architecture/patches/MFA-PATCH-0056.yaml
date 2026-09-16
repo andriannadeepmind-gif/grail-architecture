@@ -1,0 +1,45 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0056
+title: 'Υπολείμματα γλώσσας: MFA-VO-056 «RECLASSIFY 3D» → FALSIFIED ως υποχρεωτικός renderer/ικανότητα PRESERVED· MFA-ELM-020/096 «παγωμένος Tier-0 kernel» → VFC
+  με αντικαταστάσιμους checkers (πύλες 1 και 4)'
+operation: MODIFY
+targets:
+- MFA-VO-056
+- MFA-ELM-020
+- MFA-ELM-096
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: f490779c0d177636314ffe5105e7e0b621c69022a9a0cb23640fa1384f3e6ebb
+    VERIFICATION-OBLIGATIONS.yaml: 5ce6d14ca90324df6684f8f1a4ccb4502448520de8cf8b4e594b42e49079fba3
+preconditions: []
+change:
+  MFA-VO-056:
+    rejects: καμία διακριτική διαφορά → το 3D FALSIFIED ως ΥΠΟΧΡΕΩΤΙΚΟΣ renderer → προαιρετικό R_mode· η ικανότητα Spatial/3D (MFA-CAP-031) PRESERVED ως προβολή της
+      ίδιας συνάρτησης CGP· ποτέ διαγραφή (§5)
+  MFA-ELM-020:
+    statement: 'Μητρώο verifiers με ΜΙΑ κλίμακα βαθμών (DEC-X-08), N-version με EIM PASS, mutation-tested, proof objects· timeout⇒UNKNOWN· verifier set μέσα στην
+      ταυτότητα· #print axioms για Lean, refinement/machine-closure/level-correctness για TLA+. · Κανένας εξαχθείς από Lean κώδικας στο TCB· Tier-0 = απόδειξη ιδιοτήτων
+      του μοντέλου (TLA+/Lean)· η δέσμευση μοντέλου↔κώδικα είναι Tier-1 (DRT, MFA-VO-054)· MFA-UNK-014 παραμένει RSP (MFA-ATK-05). · SPLIT (MFA-ATK-16): το 020 =
+      Verification Suite Tier-1/2 (όργανα υπό ORP)· ο παγωμένος Tier-0 kernel = MFA-ELM-099· κάθε διάδοχος verifier περνά το σφραγισμένο corpus από τον kernel (MFA-INV-068).
+      · 0.4.0: ο «παγωμένος Tier-0 kernel» αντικαταστάθηκε από το Verification Fixed-Point Contract (MFA-ELM-099, MFA-MECH-025, MFA-INV-076· MFA-INV-068 SUPERSEDED):
+      συμβόλαιο με ≥2 αντικαταστάσιμους, EIM-ανεξάρτητους checkers — κανένα εργαλείο δεν είναι αιώνιο ταβάνι (AA-005).'
+  MFA-ELM-096:
+    statement: 'Η τομή του Telos lattice (OBJECTIVE-SPACE §6): 001–005, 007, 009, 010, 028, 032, 051, 084, 088, 090, 093 — ό,τι χτίζεται πρώτο και δεν αλλάζει αν
+      αλλάξει το Telos. · + 099 Tier-0 Kernel (παγωμένος) (MFA-ATK-16). · 0.4.0: το 099 είναι Verification Fixed-Point CONTRACT (αντικαταστάσιμοι checkers, MFA-INV-076),
+      όχι παγωμένος kernel· στο robust substrate προστίθενται τα lite σκέλη OC (122), CGM (119), TES F1 (126).'
+rationale: 'Πύλες §15 capability_removed_without_proof / current_tool_treated_as_permanent_ceiling: τρία υπολείμματα γλώσσας του 0.3.0 που δεν είχε πιάσει το MFA-PATCH-0039.'
+evidence:
+- tools/asi-gates.py (πρώτη εκτέλεση)
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §15
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: καμία
+verification: tools/asi-gates.py
+rollback: MFA-PATCH-0056-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

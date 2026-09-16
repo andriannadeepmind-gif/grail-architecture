@@ -1,0 +1,48 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0053-R
+title: 'Rollback of MFA-PATCH-0053: ATK-28 (ριζικά διαφορετικοί ανταγωνιστές): ALT-8…14 ως baselines/proxies στο harness όπου υλοποιούνται φθηνά· πειράματα ALTn-E1/E2
+  στα VO-014/015'
+operation: RESTORE
+targets:
+- MFA-ELM-086
+- MFA-VO-014
+- MFA-VO-015
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 8819520fbf91c223aad0b22c571048767a63286e83048ed1e80fbaf20b8ade8f
+    VERIFICATION-OBLIGATIONS.yaml: 4d4d8a69930dfa68041284d7d39e465b93b43a664b0f76cdb85875c3c2e97875
+preconditions:
+- MFA-PATCH-0053.status == APPLIED
+change:
+  MFA-ELM-086:
+    statement:
+      __raw: '"Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+        τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+        δεν ανήκουν εδώ (CLAIMS H4). · Στο DP-1/2 ο HELD_OUT ρόλος του harness τρέχει σε ξεχωριστή συσκευή (scorer + sealed sets) (MFA-ATK-13). · Φιλοξενεί τον COMPETITOR
+        BASELINE (MFA-ATK-17): το υβρίδιο MFA-ALT-6/7 ως script (πάροχος + document store + prompt)· κάθε δόση αναφέρει GRAIL vs competitor σε σφραγισμένα έργα (HELD_OUT),
+        συμπεριλαμβανομένων των έργων όπου ο ανταγωνιστής νικά. · 0.4.0 (AA-015): κανόνας γενεαλογίας EIM — distilled(P) ⇒ lineage(student) ∋ P· αξιολογητής της ίδιας
+        γενεαλογίας με τον αξιολογούμενο δεν τον βαθμολογεί (MFA-INV-089)· η HELD_OUT υποομάδα H περιστρέφεται και δεν εκπαιδεύεται ποτέ μέσα στην εποχή (ECE, MFA-ELM-114)·
+        η μετρολογία ανάπτυξης = CGM (MFA-ELM-119). · ATK-20: το harness ΔΕΝ είναι στατικό ταβάνι — εξελίσσεται (α) με νέα items από ECE/curriculum (MFA-ELM-114/106)
+        υπό HELD_OUT escrow και (β) με L3 patches του δημιουργού με drill· το σταθερό σημείο (MFA-INV-086) κλειδώνει ΠΟΙΟΣ αλλάζει το harness, όχι ΑΝ αλλάζει. · ATK-22:
+        η H χρειάζεται να είναι ισχυρότερος ΚΡΙΤΗΣ, όχι ισχυρότερος λύτης (verification ≪ generation)· σύνθεση H κατά MFA-ELM-114."'
+  MFA-VO-014:
+    methods:
+      __raw: '["pre-registered superiority test", "competitor baseline: ALT-6/7 υβρίδιο ως script στο harness (MFA-ATK-17)"]'
+  MFA-VO-015:
+    methods:
+      __raw: '["blind pre-registered panel", "superiority vs max of pool (DEC-X-17)", "τρίτο σκέλος: competitor baseline ALT-6/7 (MFA-ATK-17)"]'
+rationale: Αντίστροφο του MFA-PATCH-0053, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0053
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

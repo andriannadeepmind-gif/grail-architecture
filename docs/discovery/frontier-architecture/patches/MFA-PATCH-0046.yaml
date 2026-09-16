@@ -1,0 +1,54 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0046
+title: 'ATK-21 (παράδοξο escrow): key-epoch διαχωρισμός εξουσιών κατά το escrow, Owner-Root απόδειξη ελέγχου του νέου υποστρώματος, τ ratchet και ORP parity για ποιότητα'
+operation: MODIFY
+targets:
+- MFA-ELM-003
+- MFA-ELM-117
+- MFA-INV-094
+- MFA-VO-076
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 2e7b41dcb89d7a706bd496a4559be7ea44c1cc2ccdf72b34bb6ee34d2f4883f9
+    INVARIANTS.yaml: 7dedae74a0fe5657f7ed7c7f110f4b48d716cf1a9da5b4558e139ca4691656ef
+    VERIFICATION-OBLIGATIONS.yaml: d614748e3e2b441cc6a25765b7e1e26d0404c9cdf9a38856d213f9f690aaf9f3
+preconditions: []
+change:
+  MFA-ELM-117:
+    statement: 'Μετανάστευση = refinement mapping ImplMap: S_old → S_new που διατηρεί (α) το commitment log bitwise (hash chain ισότητα), (β) τη γενεαλογία κλειδιών
+      (νέα κλειδιά επικυρώνονται από τα παλιά ΚΑΙ αντίστροφα — αμφίδρομη cross-attestation με epoch), (γ) τη συμπεριφορική ταυτότητα σε σφραγισμένα KT (bisimulation
+      έως ανοχή ανά κλάση εκτέλεσης D1/D2), (δ) τις αναλλοίωτες διάταξης/χρόνου (event ordering, clock invariants)· η μεταγωγή (cutover) είναι IRREVERSIBLE-PREAUTHORIZED
+      με escrow: το παλιό υπόστρωμα μένει ζωντανό και αυθεντικό μέχρι ContinuityCertificate από HELD_OUT + δημιουργό (MFA-DEC-023)· μέχρι τότε rollback = επιστροφή
+      στο παλιό χωρίς απώλεια. · ATK-21: κατά το escrow τα κλειδιά του παλιού υποστρώματος περνούν σε epoch ATTEST-ONLY (μπορούν να υπογράψουν μόνο attestations/rollback,
+      όχι δεσμεύσεις)· το νέο υπόστρωμα αποδεικνύει έλεγχο δημιουργού (Owner Root, KT-23 διαδικασία) ΠΡΙΝ από το CERTIFY· οι ανοχές τ ratchet μόνο προς αυστηρότερα,
+      ποτέ ανοχή σε Tier-0 οικογένειες· απόκλιση ΠΟΙΟΤΗΤΑΣ (όχι ντετερμινισμού) κρίνεται με ORP parity test, όχι με τ.'
+  MFA-INV-094:
+    statement: 'κανένα RETIRE του παλιού υποστρώματος πριν από ContinuityCertificate· μέχρι τότε το παλιό είναι αυθεντικό fallback (escrow) (MFA-MECH-034). · ATK-21:
+      δύο υποστρώματα με εξουσία δέσμευσης ταυτόχρονα είναι αδύνατο εκ κατασκευής (key epoch ATTEST-ONLY για το παλιό μετά το CUTOVER).'
+  MFA-VO-076:
+    methods:
+    - Μετανάστευση πλήρους DST οντότητας από Linux/x86 σε άλλο OS/ARM· 200 σφραγισμένα KT· cross-attestation· escrow 24 h
+    - 'GPU→CPU-only: βάρη RETRAIN_UNDER_VFC ή quantized· typed degraded mode'
+    - property tests στο tools/twin (F1)
+    - 'ATK-21: SMP-E3 — προσπάθεια εγγραφής δέσμευσης από το παλιό υπόστρωμα κατά το escrow απορρίπτεται 100 %· μετανάστευση σε υπόστρωμα χωρίς Owner-Root απόδειξη
+      → CERTIFY αδύνατο'
+  MFA-ELM-003:
+    statement: 'Charters, threshold root offline/HSM, delegated body keys με lease, pre-rotation, verifier-ordered revocation με fencing epoch, post-revocation quarantine+taint
+      (DEC-X-10), recovery KT-23. · 0.4.0/ATK-21: key epochs με ρόλους (COMMIT ∣ ATTEST-ONLY) για escrow μετανάστευσης/διαδοχής (MFA-ELM-117/125).'
+rationale: Τροποποίηση από την επίθεση MFA-ATK-21 (Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12)· καμία ικανότητα δεν αφαιρείται — αλλάζουν μηχανισμοί, κατωφλιώσεις,
+  δηλώσεις.
+evidence:
+- adversarial/MFA-ATK-21.md
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: καμία
+verification: adversarial/MFA-ATK-21.md §falsifier · tools/check-package.py
+rollback: MFA-PATCH-0046-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

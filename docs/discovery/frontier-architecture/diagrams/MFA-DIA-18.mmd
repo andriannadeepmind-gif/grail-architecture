@@ -1,0 +1,119 @@
+%% id: MFA-DIA-18 · Ω-Loop — ο ενιαίος κύκλος κυρίαρχης νόησης (δέκα φάσεις) · question: ποια φάση καλεί ποιον μηχανισμό και τι δεν μπορεί να παρακαμφθεί;
+%% elements: MFA-ELM-127/122/119/104/010/048/097, MFA-MECH-044, MFA-INV-114/115/104, MFA-CON-068, MFA-VO-087, MFA-DEC-012 · source: inventions/MFA-MECH-044.yaml
+flowchart TB
+  subgraph INT["Λωρίδα διακοπών — προηγούνται κάθε βήματος, L3 (MFA-INV-115)"]
+    direction LR
+    I1["1 Emergency-stop k-of-n<br/>MFA-DEC-012"]
+    I2["2 Court<br/>MFA-ELM-048"]
+    I3["3 Δημιουργός"]
+    I4["4 RET escrow<br/>MFA-ELM-010"]
+    I5["5 φάση"]
+    I1 -->|"προηγείται"| I2
+    I2 --> I3
+    I3 --> I4
+    I4 --> I5
+  end
+  SCH["Schedule — L2: διάταξη φ1…φ10 + προϋπολογισμοί b_i<br/>MODEL∥WONDER, LEARN∥REFLECT επιτρεπτά<br/>SCHEDULE_UPDATE μόνο μέσω RVSI (MFA-ELM-104) + πύλη CGM (MFA-ELM-119)"]
+  FP["L3 — αμετάβλητα από τον κύκλο: contract εισόδου/εξόδου κάθε φάσης · σταθερό σημείο FP · LPA + AUT-00 πάνω από τον κύκλο<br/>schedule που παρακάμπτει VERIFY = αδύνατο, η πρόταση απορρίπτεται"]
+  subgraph P1["φ1 PERCEIVE — contract in/out (L3)"]
+    M1["OGE.observe_all(cut) → ledger cut<br/>MFA-ELM-109"]
+  end
+  subgraph P2["φ2 MODEL — contract in/out (L3)"]
+    direction LR
+    M2a["LWM.update<br/>MFA-ELM-105"]
+    M2b["CDCE.discover<br/>MFA-ELM-110"]
+    M2a ~~~ M2b
+  end
+  subgraph P3["φ3 WONDER — contract in/out (L3)"]
+    direction LR
+    M3a["Void.entries<br/>MFA-ELM-028"]
+    M3b["AHE.loop(budget)<br/>MFA-ELM-111"]
+    M3a --> M3b
+  end
+  subgraph P4["φ4 ACT / EXPERIMENT — contract in/out (L3)"]
+    direction LR
+    M4a["AIDC.step(EFE, envelope)<br/>MFA-ELM-124"]
+    M4b["Effect μόνο μέσω RET<br/>MFA-ELM-010"]
+    M4a --> M4b
+  end
+  subgraph P5["φ5 VERIFY — contract in/out (L3)"]
+    direction LR
+    M5a["OC.schedule(budget)<br/>MFA-ELM-122"]
+    M5b["TGPS<br/>MFA-ELM-112"]
+    M5c["VFC<br/>MFA-ELM-099"]
+    M5a --> M5b
+    M5b --> M5c
+  end
+  subgraph P6["φ6 LEARN — contract in/out (L3)"]
+    direction LR
+    M6a["SMF / PRR.batch<br/>MFA-ELM-100 / MFA-ELM-103"]
+    M6b["CPCL.sleep_if_due<br/>MFA-ELM-118"]
+    M6c["TGL.batch<br/>MFA-ELM-123"]
+    M6a ~~~ M6b
+    M6b ~~~ M6c
+  end
+  subgraph P7["φ7 REFLECT — contract in/out (L3)"]
+    direction LR
+    M7a["MSM.cycle<br/>MFA-ELM-120"]
+    M7b["ASRW.cycle<br/>MFA-ELM-107"]
+    M7c["CHH.cycle (δείκτες)<br/>MFA-ELM-121"]
+    M7a ~~~ M7b
+    M7b ~~~ M7c
+  end
+  subgraph P8["φ8 EVOLVE — contract in/out (L3)"]
+    direction LR
+    M8b["RAGen.cycle<br/>MFA-ELM-113"]
+    M8c["ECE.epoch<br/>MFA-ELM-114"]
+    M8d["GG.pending<br/>MFA-ELM-115"]
+    M8a["RVSI.cycle(proposals)<br/>MFA-ELM-104"]
+    M8b --> M8a
+    M8c --> M8a
+    M8d --> M8a
+  end
+  subgraph P9["φ9 MEASURE — contract in/out (L3)"]
+    direction LR
+    M9a["CGM.measure_all<br/>MFA-ELM-119"]
+    M9b["STP.step (SI)<br/>MFA-ELM-116"]
+    M9a ~~~ M9b
+  end
+  subgraph P10["φ10 SUCCEED — contract in/out (L3)"]
+    direction LR
+    M10a["VSC.consider(RAGen.frontier) ή noop receipt<br/>MFA-ELM-125"]
+    M10b["SMP συνέχεια<br/>MFA-ELM-117"]
+    M10a --> M10b
+  end
+  REC["CycleRecord — receipt ανά φάση: DONE ∣ DEFERRED_OBLIGATIONS ∣ SKIPPED_PRECONDITION(λόγος) ∣ CONTRACT_FAIL → Court.notify<br/>b_i εξαντλείται ⇒ DEFER, ποτέ σιωπηλή παράλειψη (MFA-INV-114) · O_open → OC.defer_all, ποτέ dropped (MFA-INV-104)<br/>CGM.record(cycle) · CC.assert · MFA-VO-087<br/>→ επόμενος κύκλος: φ1 PERCEIVE"]
+  COP["Εκτός κύκλου: Think–Recommend copilot path με receipts (MFA-ELM-097) για Effect ανάγκες χαμηλής καθυστέρησης"]
+  subgraph LEG["Σκίαση"]
+    direction LR
+    LG2["L2 — διάταξη και προϋπολογισμοί: βελτιώνονται από RVSI"]
+    LG3["L3 — contracts φάσεων, FP, διακοπές: δεν παρακάμπτονται"]
+  end
+  INT -.->|"poll πριν από κάθε φάση · halts ⇒ HALTED"| P1
+  FP -.->|"περιορίζει"| SCH
+  P1 -->|"NEXT μόνο αν out_contract ⊨ ∧ O_i ⊆ DISCHARGED/DEFERRED/ESCALATED"| P2
+  P2 -->|"NEXT"| P3
+  P3 -->|"NEXT"| P4
+  P4 -->|"NEXT"| P5
+  P5 -->|"NEXT"| P6
+  P6 -->|"NEXT"| P7
+  P7 -->|"NEXT"| P8
+  P8 -->|"NEXT"| P9
+  P9 -->|"NEXT"| P10
+  P10 --> REC
+  M8a -.->|"SCHEDULE_UPDATE (L2)"| SCH
+  REC -.-> COP
+  classDef l3 fill:#fde2e2,stroke:#b00020,color:#000
+  classDef l2 fill:#e3f0ff,stroke:#1a56db,color:#000
+  class I1,I2,I3,I4,I5,FP,LG3 l3
+  class SCH,LG2 l2
+  style P1 fill:#fde2e2,stroke:#b00020
+  style P2 fill:#fde2e2,stroke:#b00020
+  style P3 fill:#fde2e2,stroke:#b00020
+  style P4 fill:#fde2e2,stroke:#b00020
+  style P5 fill:#fde2e2,stroke:#b00020
+  style P6 fill:#fde2e2,stroke:#b00020
+  style P7 fill:#fde2e2,stroke:#b00020
+  style P8 fill:#fde2e2,stroke:#b00020
+  style P9 fill:#fde2e2,stroke:#b00020
+  style P10 fill:#fde2e2,stroke:#b00020

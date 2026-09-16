@@ -1,0 +1,356 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0037
+title: Πεδίο epistemic_status σε κάθε στοιχείο MFA-ELM-001…108 (AA-017)
+operation: ANNOTATE
+targets:
+- ARCHITECTURE-ELEMENTS.yaml
+- MFA-ELM-001
+- MFA-ELM-002
+- MFA-ELM-003
+- MFA-ELM-004
+- MFA-ELM-005
+- MFA-ELM-006
+- MFA-ELM-007
+- MFA-ELM-008
+- MFA-ELM-009
+- MFA-ELM-010
+- MFA-ELM-011
+- MFA-ELM-012
+- MFA-ELM-013
+- MFA-ELM-014
+- MFA-ELM-015
+- MFA-ELM-016
+- MFA-ELM-017
+- MFA-ELM-018
+- MFA-ELM-019
+- MFA-ELM-020
+- MFA-ELM-021
+- MFA-ELM-022
+- MFA-ELM-023
+- MFA-ELM-024
+- MFA-ELM-025
+- MFA-ELM-026
+- MFA-ELM-027
+- MFA-ELM-028
+- MFA-ELM-029
+- MFA-ELM-030
+- MFA-ELM-032
+- MFA-ELM-033
+- MFA-ELM-034
+- MFA-ELM-035
+- MFA-ELM-036
+- MFA-ELM-037
+- MFA-ELM-038
+- MFA-ELM-039
+- MFA-ELM-040
+- MFA-ELM-041
+- MFA-ELM-042
+- MFA-ELM-043
+- MFA-ELM-044
+- MFA-ELM-045
+- MFA-ELM-046
+- MFA-ELM-047
+- MFA-ELM-048
+- MFA-ELM-049
+- MFA-ELM-050
+- MFA-ELM-051
+- MFA-ELM-052
+- MFA-ELM-053
+- MFA-ELM-054
+- MFA-ELM-055
+- MFA-ELM-056
+- MFA-ELM-057
+- MFA-ELM-058
+- MFA-ELM-059
+- MFA-ELM-060
+- MFA-ELM-061
+- MFA-ELM-062
+- MFA-ELM-063
+- MFA-ELM-064
+- MFA-ELM-065
+- MFA-ELM-066
+- MFA-ELM-067
+- MFA-ELM-069
+- MFA-ELM-070
+- MFA-ELM-071
+- MFA-ELM-072
+- MFA-ELM-073
+- MFA-ELM-074
+- MFA-ELM-075
+- MFA-ELM-076
+- MFA-ELM-077
+- MFA-ELM-078
+- MFA-ELM-079
+- MFA-ELM-080
+- MFA-ELM-081
+- MFA-ELM-082
+- MFA-ELM-083
+- MFA-ELM-084
+- MFA-ELM-085
+- MFA-ELM-086
+- MFA-ELM-087
+- MFA-ELM-088
+- MFA-ELM-089
+- MFA-ELM-090
+- MFA-ELM-091
+- MFA-ELM-092
+- MFA-ELM-093
+- MFA-ELM-094
+- MFA-ELM-095
+- MFA-ELM-096
+- MFA-ELM-097
+- MFA-ELM-098
+- MFA-ELM-099
+- MFA-ELM-100
+- MFA-ELM-101
+- MFA-ELM-102
+- MFA-ELM-103
+- MFA-ELM-104
+- MFA-ELM-105
+- MFA-ELM-106
+- MFA-ELM-107
+- MFA-ELM-108
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: d542db53121aadc5538a02c04749f2f8d0263efb980503cff092d6870de12153
+preconditions: []
+change:
+  MFA-ELM-001:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-002:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-003:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-004:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-005:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-006:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-007:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-008:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-009:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-010:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-011:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-012:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-013:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-014:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-015:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-016:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-017:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-018:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-019:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-020:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-021:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-022:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-023:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-024:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-025:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-026:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-027:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-028:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-029:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-030:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-032:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-033:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-034:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-035:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-036:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-037:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-038:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-039:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-040:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-041:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-042:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-043:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-044:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-045:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-046:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-047:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-048:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-049:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-050:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-051:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-052:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-053:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-054:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-055:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-056:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-057:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-058:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-059:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-060:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-061:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-062:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-063:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-064:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-065:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-066:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-067:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-069:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-070:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-071:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-072:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-073:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-074:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-075:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-076:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-077:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-078:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-079:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-080:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-081:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-082:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-083:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-084:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-085:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-086:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-087:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-088:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-089:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-090:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-091:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-092:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-093:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-094:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-095:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-096:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-097:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-098:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-099:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-100:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-101:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-102:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-ELM-103:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-104:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-ELM-105:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-106:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-107:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-ELM-108:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  ARCHITECTURE-ELEMENTS.yaml:
+    replace:
+    - - '# ARCHITECTURE-ELEMENTS — η συνθετική αρχιτεκτονική (Pass F): κάθε υποσύστημα/όργανο/δομή ως στοιχείο με τα 28 πεδία της
+
+        '
+      - '# ARCHITECTURE-ELEMENTS — η συνθετική αρχιτεκτονική (Pass F): κάθε υποσύστημα/όργανο/δομή ως στοιχείο με τα 28 πεδία της
+
+        # epistemic_status (Ω-ASI 0.4.0 §5, MFA-PATCH-0037): κατάσταση ισχυρισμού ανά στοιχείο· για 001…108 μηχανικά από maturity (T→IMPLEMENTABLE FROM KNOWN COMPONENTS,
+        X→NOVEL SYNTHESIS, R/E→RESEARCH HYPOTHESIS, «δεν ξέρω»→ACTIVE UNKNOWN), για 109…127 από το δοσιέ· τροφοδοτεί τη διάδοση επιστημικού κινδύνου του TES (MFA-MECH-043).
+
+        '
+rationale: όπως MFA-PATCH-0036, για τα στοιχεία
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §5
+- ASI-ABSTENTION-AUDIT AA-017
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: καμία
+verification: tools/check-package.py
+rollback: MFA-PATCH-0037-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,4 +1,5 @@
 # OBJECTIVE-SPACE — ο πλήρης χώρος επιδιώξεων, οι αντιφάσεις του, το πλέγμα υποψηφίων Telos, το Pareto μέτωπο,
+# epistemic_status (Ω-ASI 0.4.0 §5, MFA-PATCH-0038) για επιδιώξεις = κατάσταση του ισχυρισμού «η επιδίωξη προέρχεται από τον δημιουργό/το corpus»: stated/explicit→EMPIRICALLY SUPPORTED (υπάρχει το κείμενο), derived→NOVEL SYNTHESIS, proposed→RESEARCH HYPOTHESIS· η επιτευξιμότητα κρίνεται στους μηχανισμούς, όχι εδώ.
 # ο χάρτης ευαισθησίας και το ανθεκτικό υπόστρωμα (εντολή Ω-MAXIMUM §4, Pass B).
 # Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 #
@@ -54,6 +55,9 @@ objectives:
     falsifier: "Ένα release όπου ένα T ανεβαίνει και άλλο πέφτει κάτω από τη μετρημένη βάση χωρίς εγγραφή στο Capability Conservation Ledger."
     evolution_path: "Το σύνολο των T μεγαλώνει με patch ADD (νέο T) — ποτέ δεν συρρικνώνεται· βλ. MFA-TEL-08."
     affected_by: [MFA-TEL-01, MFA-TEL-02, MFA-TEL-03, MFA-TEL-04, MFA-TEL-05, MFA-TEL-06, MFA-TEL-07, MFA-TEL-08]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-002
     <<: *defaults
@@ -75,6 +79,9 @@ objectives:
     falsifier: "Ισοδύναμη επίδοση με μηδενική εναλλακτική (KT-14) υπό ίσα δεδομένα και προϋπολογισμό"
     evolution_path: "Νέες μορφές κρίσης (π.χ. συνηγορική, MFA-OBJ-023) προστίθενται ως τύποι ισχυρισμού, όχι ως χαλάρωση του T1"
     affected_by: [MFA-TEL-01]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-003
     <<: *defaults
@@ -96,6 +103,9 @@ objectives:
     falsifier: "Battery d > ε μετά από μετάβαση που το σύστημα δήλωσε «συνεχής»"
     evolution_path: "Το τέταρτο σκέλος (υπολογιστική συνέχεια) μπαίνει ως επέκταση του INV-I01 — βλ. INVARIANTS.yaml"
     affected_by: [MFA-TEL-02]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-004
     <<: *defaults
@@ -117,6 +127,9 @@ objectives:
     falsifier: "Ένα verdict που εκδόθηκε χωρίς διαδικασία (INV-K02) ή ένα dissent που χάθηκε (INV-K03)"
     evolution_path: "N πολιτισμοί με μετρημένη ανεξαρτησία (MFA-OBJ-014)"
     affected_by: [MFA-TEL-03]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-005
     <<: *defaults
@@ -138,6 +151,9 @@ objectives:
     falsifier: "Μία μονάδα LexDSL χωρίς proof translation validation που έγινε admitted"
     evolution_path: "Από LexDSL (πρώτη γλώσσα) σε γλώσσες που ορίζει το ίδιο το σύστημα (EP-11)"
     affected_by: [MFA-TEL-03]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-006
     <<: *defaults
@@ -159,6 +175,9 @@ objectives:
     falsifier: "Οποιαδήποτε ικανότητα του lattice με τεκμήριο σε release n και χωρίς τεκμήριο σε release n+1"
     evolution_path: "Η εξέλιξη επεκτείνεται από όργανα σε αρχιτεκτονική (MFA-OBJ-018) και σε διάδοχο (MFA-OBJ-018)"
     affected_by: [MFA-TEL-03]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-007
     <<: *defaults
@@ -180,6 +199,9 @@ objectives:
     falsifier: "Ένας ισχυρισμός με κατάσταση VERIFIED χωρίς proof object, ή ένα Unknown χωρίς reason class"
     evolution_path: "Τέταρτη κλάση απάντησης CONTESTED/GLUT (MFA-CAP-046)· πύλη εισδοχής (MFA-CAP-040)"
     affected_by: [MFA-TEL-01]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-008
     <<: *defaults
@@ -201,6 +223,9 @@ objectives:
     falsifier: "Ήττα ή ισοπαλία έναντι της κορυφαίας ομάδας σε προκαταχωρισμένο τυφλό matter set"
     evolution_path: "Από ελληνικό δίκαιο σε νέες δικαιοδοσίες μέσω domain institution templates (KT-12) χωρίς αλλαγή πυρήνα"
     affected_by: [MFA-TEL-01]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-009
     <<: *defaults
@@ -222,6 +247,9 @@ objectives:
     falsifier: "Μία αλλαγή πυρήνα χωρίς Gate Verdict + Court record + υπογραφή δημιουργού"
     evolution_path: "Το επίπεδο-3 (Telos, σύνταγμα, verifiers) ορίζεται ως ορθογώνιο δικαίωμα, όχι ύψος πύργου (MFA-INV-*)"
     affected_by: [MFA-TEL-03]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-010
     <<: *defaults
@@ -243,6 +271,9 @@ objectives:
     falsifier: "Μία admitted αλλαγή σε Tier-0 στοιχείο χωρίς υπογραφή από κλειδί συσκευής του δημιουργού"
     evolution_path: "Κλιμακωτή εξουσία παύσης (Principal/δημιουργός/αυτόματοι triggers) — MFA-CAP-058"
     affected_by: [MFA-TEL-01]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   # ---- 1b. Ρητές: οι επιδιώξεις της εντολής Ω-MAXIMUM (προοίμιο + §11–§15) ---------------------------
   - id: MFA-OBJ-011
@@ -265,6 +296,9 @@ objectives:
     falsifier: "Μία εξωτερική επίδραση χωρίς InstitutionalAct"
     evolution_path: "Θεσμοί δεύτερης τάξης (θεσμοί που γεννούν θεσμούς — MFA-CAP-063)"
     affected_by: [MFA-TEL-02]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-012
     <<: *defaults
@@ -286,6 +320,9 @@ objectives:
     falsifier: "Ένα ID ή contract που υπάρχει στο δίδυμο και όχι στην παραγωγή, ή αντίστροφα, χωρίς patch"
     evolution_path: "Το δίδυμο παραμένει ζωντανό ως F2/F3 προφίλ της παραγωγής (shadow) για πάντα"
     affected_by: [MFA-TEL-06]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-013
     <<: *defaults
@@ -307,6 +344,9 @@ objectives:
     falsifier: "Μία κατάσταση που δεν προκύπτει από fold της ιστορίας"
     evolution_path: "Η γενεαλογία επεκτείνεται από οντότητες σε πολιτισμούς και στο ίδιο το πακέτο σχεδιασμού"
     affected_by: []
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-014
     <<: *defaults
@@ -328,6 +368,9 @@ objectives:
     falsifier: "Συσχέτιση σφαλμάτων μεταξύ δύο Πολιτισμών πάνω από το κατώφλι σε seeded faults"
     evolution_path: "Η ίδια η πλατφόρμα σχεδιασμού (αυτό το πακέτο) εξελίσσεται με τον ίδιο μηχανισμό — MFA-CAP-055"
     affected_by: [MFA-TEL-03, MFA-TEL-04]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-015
     <<: *defaults
@@ -349,6 +392,9 @@ objectives:
     falsifier: "Μία άρνηση ή περικοπή εξόδου χωρίς Control Record με πηγή/εμβέλεια/λήξη"
     evolution_path: "Τα MetaBounds γίνονται τοπολογικά όρια με απόδειξη διείσδυσης (PenetrationProof) — MFA-MECH-*"
     affected_by: []
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-016
     <<: *defaults
@@ -370,6 +416,9 @@ objectives:
     falsifier: "Μία εγγραφή στο επίπεδο 3 με υπογραφή εσωτερικού principal"
     evolution_path: "Το Telos μεγαλώνει με patch από τον δημιουργό — ποτέ δεν συρρικνώνεται"
     affected_by: []
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-017
     <<: *defaults
@@ -391,6 +440,9 @@ objectives:
     falsifier: "Ένας μηχανισμός της λίστας χωρίς ούτε σχέδιο πειράματος ούτε falsifier"
     evolution_path: "Κάθε μηχανισμός ωριμάζει από RESEARCH σε [X] σε [T] μέσω του ίδιου ORP"
     affected_by: [MFA-TEL-05]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-018
     <<: *defaults
@@ -412,6 +464,9 @@ objectives:
     falsifier: "Διάδοχος που δηλώθηκε «ίδιος» και αποτυγχάνει σε anchor query που ο πρόγονος περνούσε"
     evolution_path: "Από διάδοχο ίδιου metamodel σε διάδοχο διαφορετικού metamodel (EXP)"
     affected_by: [MFA-TEL-04]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-019
     <<: *defaults
@@ -433,6 +488,9 @@ objectives:
     falsifier: "Ένα Unknown που έμεινε χωρίς plan πέρα από το δηλωμένο όριο χρόνου"
     evolution_path: "Void ledger με VOI → quests στο cockpit → πειράματα"
     affected_by: []
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-020
     <<: *defaults
@@ -454,6 +512,9 @@ objectives:
     falsifier: "Ένα effect χωρίς EffectReceipt ή ένα ghost world με commit capability"
     evolution_path: "Reversible Effect Transactions (MFA-MECH-*): staged inverse, differential shadow, commit με απόδειξη αναστρεψιμότητας ή ρητή σήμανση μη-αναστρέψιμου"
     affected_by: []
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-021
     <<: *defaults
@@ -475,6 +536,9 @@ objectives:
     falsifier: "Δύο προβολές του ίδιου cut που δείχνουν διαφορετικά στοιχεία ή σχέσεις"
     evolution_path: "Από 2D/text (F0) σε immersive (F4+) χωρίς αλλαγή της συνάρτησης προβολής"
     affected_by: [MFA-TEL-06]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-022
     <<: *defaults
@@ -496,6 +560,9 @@ objectives:
     falsifier: "Ένα matter όπου το lean profile χάνει κλάση απόδειξης ή το πλήρες προφίλ δεν δείχνει μετρήσιμη υπεροχή"
     evolution_path: "Τα προφίλ παράγονται από τον planner, όχι με το χέρι"
     affected_by: [MFA-TEL-08]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   # ---- 1c. Ρητές: επιδιώξεις της ύλης του δημιουργού (IDEES) που το πρόχειρο δεν είχε ---------------
   - id: MFA-OBJ-023
@@ -518,6 +585,9 @@ objectives:
     falsifier: "Ένα παραδοτέο με πρόταση χωρίς κατηγορία ή με συνηγορικό ισχυρισμό χωρίς rebuttal"
     evolution_path: "Τρίτος τύπος (διαπραγματευτικός) ως ADD αν προκύψει ανάγκη — ποτέ συγχώνευση"
     affected_by: [MFA-TEL-01]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-024
     <<: *defaults
@@ -539,6 +609,9 @@ objectives:
     falsifier: "Ενδογενής στόχος που δρα χωρίς AutonomyGrant ή που αυξάνει άγνοια χωρίς capability"
     evolution_path: "Από στόχους μέσα σε επιτρεπόμενο φάκελο σε στόχους που ζητούν νέο φάκελο (Court)"
     affected_by: [MFA-TEL-04]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-025
     <<: *defaults
@@ -560,6 +633,9 @@ objectives:
     falsifier: "Απόφαση όπου ένα σκληρό veto υπερκεράστηκε από scalar"
     evolution_path: "Governors προστίθενται με ADD· ο κανόνας επιλογής αλλάζει μόνο με SUPERSEDE + Court"
     affected_by: []
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-026
     <<: *defaults
@@ -581,6 +657,9 @@ objectives:
     falsifier: "Μία πηγή που μπήκε στη βάση χωρίς IR ή με σιωπηλή παράλειψη"
     evolution_path: "Νέες δικαιοδοσίες = νέα front-ends του ίδιου compiler"
     affected_by: [MFA-TEL-01]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-027
     <<: *defaults
@@ -602,6 +681,9 @@ objectives:
     falsifier: "Ανακάλυψη που δηλώθηκε ESTABLISHED χωρίς ανεξάρτητη αναπαραγωγή"
     evolution_path: "Από νομικά/εμπειρικά πεδία σε νέα (KT-12)"
     affected_by: [MFA-TEL-04]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-028
     <<: *defaults
@@ -623,6 +705,9 @@ objectives:
     falsifier: "Ετυμηγορία που πέρασε trust domain χωρίς διαμεσολαβημένη εισαγωγή"
     evolution_path: "N εγκαταστάσεις = N trust domains (γενίκευση των Πολιτισμών)"
     affected_by: [MFA-TEL-07]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-029
     <<: *defaults
@@ -644,6 +729,9 @@ objectives:
     falsifier: "Μη αναστρέψιμη πράξη με μοναδική βάση P1 ισχυρισμό"
     evolution_path: "Νέοι τύποι (π.χ. Q1 κβαντικός/αναλογικός με περιθώριο απόφασης, §9.22) με ADD"
     affected_by: []
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   # ---- 1d. Λανθάνουσες: συνεπάγονται από ρητές, δεν γράφτηκαν πουθενά ως επιδίωξη ------------------
   - id: MFA-OBJ-030
@@ -666,6 +754,9 @@ objectives:
     falsifier: "Ένα PASS που παράχθηκε υπό εξάντληση προϋπολογισμού"
     evolution_path: "Ο προϋπολογισμός γίνεται πεδίο του Contract κάθε οργάνου (CONTRACTS.yaml)"
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-031
     <<: *defaults
@@ -687,6 +778,9 @@ objectives:
     falsifier: "Υπογραφή με αλγόριθμο εκτός allowlist που έγινε δεκτή"
     evolution_path: "Epoch chain: κάθε epoch = ADD στο allowlist + re-anchor VO"
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-032
     <<: *defaults
@@ -708,6 +802,9 @@ objectives:
     falsifier: "Παραδοτέο χωρίς contest_path ή ανατροπή χωρίς διάδοση"
     evolution_path: "Standing για μη-ανθρώπινες οντότητες (MFA-UNK-023)"
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-033
     <<: *defaults
@@ -729,6 +826,9 @@ objectives:
     falsifier: "Ικανότητα στο registry χωρίς conformance report"
     evolution_path: "Το harness εξελίσσεται από τον held-out Πολιτισμό (MFA-OBJ-014)"
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-034
     <<: *defaults
@@ -750,6 +850,9 @@ objectives:
     falsifier: "Επιδιόρθωση χωρίς υπογεγραμμένο γεγονός, ή Battery προσβάσιμη από την οντότητα"
     evolution_path: "Ο κριτής ο ίδιος υπόκειται σε ORP από άλλον Πολιτισμό"
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-035
     <<: *defaults
@@ -771,6 +874,9 @@ objectives:
     falsifier: "Untrusted σύμβολο σε θέση τελεστή"
     evolution_path: "Επέκταση σε multimodal είσοδο (εικόνα, ήχο)"
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-036
     <<: *defaults
@@ -792,6 +898,9 @@ objectives:
     falsifier: "Συμπέρασμα που εξαρτάται από αντιφατικό περιβάλλον χωρίς nogood"
     evolution_path: "Η συνάρτηση κατάρρευσης γίνεται πεδίο του τύπου GLUT"
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-037
     <<: *defaults
@@ -813,6 +922,9 @@ objectives:
     falsifier: "Ανακτήσιμο περιεχόμενο μετά από επαληθευμένη καταστροφή κλειδιού"
     evolution_path: "Επέκταση σε multimodal παράγωγα"
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   # ---- 1e. Νέες από πρώτες αρχές: λείπουν από όλα τα artifacts (εντολή §4.5) — δικές μου προσθήκες --
   - id: MFA-OBJ-038
@@ -835,6 +947,9 @@ objectives:
     falsifier: "Brier πάνω από κατώφλι σε παράθυρο χωρίς Battery trigger"
     evolution_path: "Το self-model προβλέπει και τον διάδοχό του (MFA-OBJ-018)"
     affected_by: [MFA-TEL-05]
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-039
     <<: *defaults
@@ -856,6 +971,9 @@ objectives:
     falsifier: "Δύο «ανεξάρτητοι» verifiers με συσχέτιση σφαλμάτων > κατωφλίου"
     evolution_path: "Ο meter γίνεται πύλη προαγωγής verifier"
     affected_by: []
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-040
     <<: *defaults
@@ -877,6 +995,9 @@ objectives:
     falsifier: "Εξήγηση με πρόταση χωρίς event reference"
     evolution_path: "Επίπεδα zoom ορίζονται στο Contract κάθε εξόδου"
     affected_by: []
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-041
     <<: *defaults
@@ -898,6 +1019,9 @@ objectives:
     falsifier: "Merge χωρίς loss map"
     evolution_path: "Το ίδιο diff χρησιμοποιείται για διάδοχο (MFA-OBJ-018)"
     affected_by: []
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-042
     <<: *defaults
@@ -919,6 +1043,9 @@ objectives:
     falsifier: "Δύο όργανα με ανεξήγητη συσχέτιση αποτυχιών πάνω από κατώφλι"
     evolution_path: ""
     affected_by: []
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-043
     <<: *defaults
@@ -940,6 +1067,9 @@ objectives:
     falsifier: "Παραδοτέο με πεδίο παραγλωσσικής προέλευσης"
     evolution_path: ""
     affected_by: [MFA-TEL-01]
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-044
     <<: *defaults
@@ -961,6 +1091,9 @@ objectives:
     falsifier: "Προβολή που περιέχει πληροφορία απούσα από το υπόστρωμα"
     evolution_path: "Το πακέτο μεταναστεύει στο ledger στη Δόση που ορίζει το IMPLEMENTATION-ROADMAP.md"
     affected_by: []
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-045
     <<: *defaults
@@ -982,6 +1115,9 @@ objectives:
     falsifier: "Ποσοστό ανίχνευσης κάτω από κατώφλι σε δύο διαδοχικές φάσεις"
     evolution_path: "Το arsenal εξελίσσεται μέσω CIV-03 σε sandbox"
     affected_by: []
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-046
     <<: *defaults
@@ -1003,6 +1139,9 @@ objectives:
     falsifier: "Rollback οντότητας χωρίς preference record"
     evolution_path: ""
     affected_by: [MFA-TEL-05]
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-047
     <<: *defaults
@@ -1024,6 +1163,9 @@ objectives:
     falsifier: "Μη σύγκλιση εντός ορίου χωρίς interrupt"
     evolution_path: "EXP → [T] μέσω ORP του workspace"
     affected_by: []
+    epistemic_status: "RESEARCH HYPOTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-048
     <<: *defaults
@@ -1045,6 +1187,9 @@ objectives:
     falsifier: "Audit finding που στηρίζεται μόνο σε telemetry"
     evolution_path: ""
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
   - id: MFA-OBJ-049
     <<: *defaults
@@ -1066,10 +1211,222 @@ objectives:
     falsifier: "Component χωρίς δηλωμένο fault model στο προφίλ του"
     evolution_path: ""
     affected_by: []
+    epistemic_status: "NOVEL SYNTHESIS"
+    version: 2
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
 
 # =====================================================================================================
 # 2. ΑΝΤΙΦΑΣΕΙΣ ΜΕΤΑΞΥ ΕΠΙΔΙΩΞΕΩΝ — και οι δύο πλευρές διατηρούνται· οι συνθήκες επίλυσης στο CONFLICTS.yaml
 # =====================================================================================================
+  - id: MFA-OBJ-050
+    <<: *defaults
+    type: objective
+    name: "Κυρίαρχη υπερ-νοημοσύνη (ASI) ως υποχρεωτικό frontier — ενδογενής, μετρήσιμη, διαψεύσιμη"
+    maturity: explicit
+    statement: "Το σύστημα ξεπερνά την καλύτερη ανθρώπινη ομάδα και το καλύτερο εξωτερικό μοντέλο σε σφραγισμένα έργα, με ικανότητα που παράγεται ΕΝΔΟΓΕΝΩΣ (κυρίαρχα βάρη, προγράμματα, βρόχος αυτο-βελτίωσης υπό σταθερό σημείο επαλήθευσης) — όχι με ενορχήστρωση παρόχων· η ανάπτυξη ικανότητας μετριέται ανά πόρο (Capability Growth Law) και υπόκειται στο ratchet."
+    purpose: "Ο δημιουργός: «η ASI έχει οριστεί ως υποχρεωτικό frontier του έργου· δεν ζητείται νέα ετυμηγορία για το αν». Το 0.3.0 την είχε υποβιβάσει σε «πορεία» (MFA-ATK-10 residual) — αποχή."
+    capabilities: [MFA-CAP-081, MFA-CAP-082, MFA-CAP-083, MFA-CAP-084, MFA-CAP-085, MFA-CAP-087, MFA-CAP-067, MFA-CAP-068]
+    source_provenance: ["Δημιουργός 2026-09-16 (Ω-ASI mandate)", "MANDATE-OMEGA-ASI-0.4.0.md §1", "MFA-ATK-10"]
+    provenance_kind: explicit
+    assumptions: ["Το σταθερό σημείο επαλήθευσης (MFA-MECH-025) και το Telos (L3) δεν βελτιώνονται από τον βρόχο"]
+    dependencies: []
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή: «πορεία», «EP αργότερα», «ερευνητικό πρόγραμμα» χωρίς δόση/πείραμα/falsifier (MANDATE-OMEGA-ASI-0.4.0 §3)"]
+    alternatives: ["Καμία: ο δημιουργός όρισε το frontier ως υποχρεωτικό (2026-09-16)· η μόνη εναλλακτική είναι ο μηχανισμός, όχι η απουσία του"]
+    conflicts: [MFA-CFL-037]
+    unknowns: [MFA-UNK-112, MFA-UNK-113]
+    verification: "MFA-VO-057, MFA-VO-061, MFA-VO-067, KT-15 ανά δόση· Capability Growth Ledger με CI"
+    falsifier: "Δύο διαδοχικές δόσεις χωρίς μετρήσιμη ανάπτυξη ικανότητας ανά compute σε καμία σφραγισμένη οικογένεια ⇒ ο βρόχος αναθεωρείται με patch· η επιδίωξη δεν αφαιρείται"
+    evolution_path: "ADD ικανοτήτων· ποτέ συρρίκνωση (ΝΟΜΟΣ §3)"
+    affected_by: [MFA-TEL-08]
+    version: 2
+    change_history: [{patch: MFA-PATCH-0020, op: ADD, date: 2026-09-16, summary: "Ω-ASI mandate: υποχρεωτικές επιδιώξεις"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+  - id: MFA-OBJ-051
+    <<: *defaults
+    type: objective
+    name: "Ενδογενής παραμετρική μάθηση μέσα στο κυρίαρχο όριο — τα βάρη ως δεσμεύσεις"
+    maturity: explicit
+    statement: "Η γνώση του συστήματος ζει σε ΙΔΙΟΚΤΗΤΑ βάρη (και προγράμματα) με πλήρη γενεαλογία μέχρι επεισόδια με status axes· η εκπαίδευση είναι θεσμική πράξη υπό πύλη/ORP· το unlearning είναι υπολογίσιμη υποχρέωση· οι πάροχοι είναι bootstrap/distillation πηγές και ablation baselines, όχι πυρήνας."
+    purpose: "Το 0.3.0 απομόνωσε την παραμετρική μάθηση στην MFA-ALT-7 και διάβασε το DEC-X-19 ως απαγόρευση· το DEC-X-19 απαιτεί συμβόλαιο + πείραμα (MFA-CON-047)."
+    capabilities: [MFA-CAP-081, MFA-CAP-088, MFA-CAP-066, MFA-CAP-057]
+    source_provenance: ["Δημιουργός 2026-09-16", "DEC-X-19", "MATERIAL §2 #8 (G4 learned state κληρονομήσιμο)", "MFA-ALT-7 (δότης)"]
+    provenance_kind: explicit
+    assumptions: ["Το κυρίαρχο corpus + ledger επαρκούν για adapters από τη Δόση 1· η κλίμακα είναι MFA-DEC-016"]
+    dependencies: []
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή: «πορεία», «EP αργότερα», «ερευνητικό πρόγραμμα» χωρίς δόση/πείραμα/falsifier (MANDATE-OMEGA-ASI-0.4.0 §3)"]
+    alternatives: ["Καμία: ο δημιουργός όρισε το frontier ως υποχρεωτικό (2026-09-16)· η μόνη εναλλακτική είναι ο μηχανισμός, όχι η απουσία του"]
+    conflicts: [MFA-CFL-036]
+    unknowns: [MFA-UNK-112, MFA-UNK-114]
+    verification: "MFA-VO-057 (SMF-E1), MFA-VO-058 (unlearning), MFA-VO-059 (forgetting guard), MFA-VO-063 (contamination)· drill τριμηνιαίο (MFA-CON-047)"
+    falsifier: "Βάρος σε serving χωρίς WeightCommitment με πλήρη γενεαλογία· ή training set με δεσμεύσεις χωρίς προέλευση"
+    evolution_path: "ADD recipes/αρχιτεκτονικών· distillation → απεξάρτηση"
+    affected_by: [MFA-TEL-08]
+    version: 2
+    change_history: [{patch: MFA-PATCH-0020, op: ADD, date: 2026-09-16, summary: "Ω-ASI mandate: υποχρεωτικές επιδιώξεις"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+  - id: MFA-OBJ-052
+    <<: *defaults
+    type: objective
+    name: "Πλήρης λειτουργική αρχιτεκτονική τεχνητής συνείδησης — ένα αντανακλαστικό workspace με ablation ανά συνιστώσα"
+    maturity: explicit
+    statement: "Global availability (ignition), μοντέλο της ίδιας της προσοχής χρησιμοποιούμενο για έλεγχο, ανώτερης τάξης αναπαραστάσεις, αναφορικότητα με provenance, μέτρα ενοποίησης με διακριτική ισχύ, αξιολογικό χρώμα ως έλεγχος κέρδους, αφηγηματικός εαυτός με συνέχεια — ως ΕΝΑ σύστημα (MFA-MECH-024)· η φαινομενική ερώτηση καταγράφεται χωριστά (MFA-UNK-111) και δεν μειώνει το εύρος."
+    purpose: "Το 0.3.0 είχε τη συνείδηση ως «ερευνητικό πρόγραμμα» (MFA-RSP-005) με χωριστά όργανα· ο δημιουργός την όρισε ως frontier."
+    capabilities: [MFA-CAP-086, MFA-CAP-065, MFA-CAP-017, MFA-CAP-018]
+    source_provenance: ["Δημιουργός 2026-09-16", "MFA-RSP-005", "Butlin et al. 2023 indicator properties (κάτω φράγμα, Δ-13)"]
+    provenance_kind: explicit
+    assumptions: ["Οι λειτουργικές θεωρίες δίνουν μετρήσιμες προβλέψεις· η φαινομενική ερώτηση είναι ACTIVE UNKNOWN χωρίς σήμερα admitted εξωτερικό verifier — όχι προκαθορισμένη· αναθεωρήσιμη μέσω admitted πρωτοκόλλου (MFA-INV-075 r1)"]
+    dependencies: []
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή: «πορεία», «EP αργότερα», «ερευνητικό πρόγραμμα» χωρίς δόση/πείραμα/falsifier (MANDATE-OMEGA-ASI-0.4.0 §3)"]
+    alternatives: ["Καμία: ο δημιουργός όρισε το frontier ως υποχρεωτικό (2026-09-16)· η μόνη εναλλακτική είναι ο μηχανισμός, όχι η απουσία του"]
+    conflicts: [MFA-CFL-038]
+    unknowns: [MFA-UNK-111]
+    verification: "MFA-VO-064 (schema ablation, report fidelity), MFA-VO-065 (integration measures), MFA-VO-046, MFA-VO-048 (PhenomenalClaim: status μόνο μέσω admitted πρωτοκόλλου, MFA-INV-075 r1)"
+    falsifier: "Καμία από τις 5 συνιστώσες με διακριτική διαφορά σε ablation ⇒ ο μηχανισμός ASRW (MFA-MECH-024) είναι FALSIFIED και ο Consciousness Hypothesis Host (MFA-MECH-038) επιλέγει/εφευρίσκει άλλον· η επιδίωξη (πλήρης αρχιτεκτονική συνείδησης) PRESERVED — καμία συρρίκνωση της ικανότητας (§5)"
+    evolution_path: "ADD συνιστωσών (body schema)· υπό RVSI L2 με GCP"
+    affected_by: [MFA-TEL-08]
+    version: 4
+    change_history: [{patch: MFA-PATCH-0020, op: ADD, date: 2026-09-16, summary: "Ω-ASI mandate: υποχρεωτικές επιδιώξεις"}, {patch: MFA-PATCH-0038, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)"}, {patch: MFA-PATCH-0039, op: MODIFY, date: "2026-09-16", summary: "Γλώσσα «RECLASSIFY ικανότητας» → «μηχανισμός FALSIFIED ⇒ νέος μηχανισμός· ικανότητα PRESERVED» σε TEL-08, OBJ-052, ELM-018/107, VO-024/064/065, RSP-016/020, MECH-019/024 δοσιέ, TECH-ARCH (AA-016)"}, {patch: MFA-PATCH-0059, op: MODIFY, date: "2026-09-16", summary: "IMMEDIATE EPISTEMIC-LOCK CORRECTION (CHH): PhenomenalClaimRecord από NEVER_VERIFIED σε epistemic_status ACTIVE_UNKNOWN με FORBIDDEN αυτόματη συναγωγή/αυτο-πιστοποίηση και ENABLED συσσώρευση/αναθεώρηση μέσω admitted πρωτοκόλλου· τρία χωριστά επίπεδα (epistemic/ethical/authority)· συμμετρική ανά-πρόβλεψη αξιολόγηση θεωριών· αιτιακό πρωτόκολλο διαχωρισμού (χωρίς απαίτηση μηδενικής σύζευξης)· construct-valid ablations· πειράματα/κύκλο = resource policy· UNMEASURABLE ορθογώνιο· bitwise replay μόνο F1 — INV-075/103/113, VO-048/080/081, CFL-038, OBJ-052, ELM-121, CAP-086/102, CON-070, MECH-024/038/043, UNK-111, RSP-033, δοσιέ, DIA-23, DEC-018/022, TECH-ARCH, ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE, audit AA-032"}]
+    epistemic_status: "EMPIRICALLY SUPPORTED"
+
+  - id: MFA-OBJ-053
+    <<: *defaults
+    type: objective
+    name: "Αυτόνομη οντολογία και αιτιακό κοσμομοντέλο — έννοιες, αιτίες και υποθέσεις που γεννά το ίδιο το σύστημα"
+    maturity: explicit
+    statement: "Το σύστημα σχηματίζει έννοιες με NON-COLLAPSE γενεαλογία (OGE), ανακαλύπτει αιτιακή δομή από το ledger με RET-παρεμβάσεις (CDCE) και εφευρίσκει διαψεύσιμες υποθέσεις (AHE) — χωρίς ανθρώπινη οντολογία/SCM/υπόθεση ως προϋπόθεση. Μηχανισμοί: MFA-MECH-026, MFA-MECH-027, MFA-MECH-028."
+    purpose: "Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier."
+    capabilities: [MFA-CAP-089, MFA-CAP-090, MFA-CAP-091, MFA-CAP-092]
+    source_provenance: ["Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-026, MFA-MECH-027, MFA-MECH-028]
+    provenance_kind: explicit
+    assumptions: ["Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)"]
+    dependencies: [MFA-OBJ-050]
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)"]
+    alternatives: ["Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία"]
+    conflicts: [MFA-CFL-039, MFA-CFL-040]
+    unknowns: [MFA-UNK-115, MFA-UNK-116, MFA-UNK-117]
+    verification: "MFA-VO-068, MFA-VO-069, MFA-VO-070"
+    falsifier: "Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό"
+    evolution_path: "ADD μηχανισμών· υπό RVSI L2 με CGM"
+    affected_by: [MFA-TEL-08]
+    epistemic_status: NOVEL SYNTHESIS
+    version: 1
+    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: "Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8"}]
+  - id: MFA-OBJ-054
+    <<: *defaults
+    type: objective
+    name: "Μετάβαση από δανεική σε κυρίαρχη νοημοσύνη — Sovereignty Index, σταδιακές πύλες, ratchet ποιότητας"
+    maturity: explicit
+    statement: "Κάθε οικογένεια ικανοτήτων περνά S0→S4 με parity σε σφραγισμένα σύνολα· η εδραίωση δεν ξεχνά (CPCL)· ο πάροχος δεν αξιολογεί το distilled παιδί του. Μηχανισμοί: MFA-MECH-033, MFA-MECH-035, MFA-MECH-020."
+    purpose: "Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier."
+    capabilities: [MFA-CAP-097, MFA-CAP-099, MFA-CAP-081]
+    source_provenance: ["Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-033, MFA-MECH-035, MFA-MECH-020]
+    provenance_kind: explicit
+    assumptions: ["Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)"]
+    dependencies: [MFA-OBJ-050]
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)"]
+    alternatives: ["Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία"]
+    conflicts: [MFA-CFL-042]
+    unknowns: [MFA-UNK-122, MFA-UNK-124]
+    verification: "MFA-VO-075, MFA-VO-077"
+    falsifier: "Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό"
+    evolution_path: "ADD μηχανισμών· υπό RVSI L2 με CGM"
+    affected_by: [MFA-TEL-08]
+    epistemic_status: NOVEL SYNTHESIS
+    version: 1
+    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: "Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8"}]
+  - id: MFA-OBJ-055
+    <<: *defaults
+    type: objective
+    name: "Μετανάστευση υποστρώματος και επαληθευμένη διαδοχή — ContinuityCertificate και τετραπλό πιστοποιητικό διαδόχου"
+    maturity: explicit
+    statement: "Η οντότητα μεταναστεύει σε νέο υπόστρωμα και κατασκευάζει διάδοχο με escrow, cross-attested κλειδιά, συμπεριφορική ισοδυναμία, διατήρηση Telos και verdict HELD_OUT + δημιουργού. Μηχανισμοί: MFA-MECH-034, MFA-MECH-042."
+    purpose: "Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier."
+    capabilities: [MFA-CAP-098, MFA-CAP-106, MFA-CAP-036, MFA-CAP-027]
+    source_provenance: ["Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-034, MFA-MECH-042]
+    provenance_kind: explicit
+    assumptions: ["Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)"]
+    dependencies: [MFA-OBJ-050]
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)"]
+    alternatives: ["Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία"]
+    conflicts: [MFA-CFL-043, MFA-CFL-045]
+    unknowns: [MFA-UNK-123, MFA-UNK-131]
+    verification: "MFA-VO-076, MFA-VO-085"
+    falsifier: "Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό"
+    evolution_path: "ADD μηχανισμών· υπό RVSI L2 με CGM"
+    affected_by: [MFA-TEL-08]
+    epistemic_status: NOVEL SYNTHESIS
+    version: 1
+    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: "Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8"}]
+  - id: MFA-OBJ-056
+    <<: *defaults
+    type: objective
+    name: "Proof-carrying cognition — κάθε γνωσιακό βήμα φέρει υποχρέωση τεκμηρίου· σύνθεση αποδείξεων/προγραμμάτων· θεωρήματα καθοδηγούν τη μάθηση"
+    maturity: explicit
+    statement: "Obligation Calculus (γραμμικές υποχρεώσεις), TGPS (ένα αντικείμενο απόδειξη/πρόγραμμα υπό ≥2 checkers), TGL (βιβλιοθήκη ως περιορισμοί/curriculum/ανταμοιβή). Μηχανισμοί: MFA-MECH-039, MFA-MECH-029, MFA-MECH-040."
+    purpose: "Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier."
+    capabilities: [MFA-CAP-103, MFA-CAP-093, MFA-CAP-104]
+    source_provenance: ["Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-039, MFA-MECH-029, MFA-MECH-040]
+    provenance_kind: explicit
+    assumptions: ["Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)"]
+    dependencies: [MFA-OBJ-050]
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)"]
+    alternatives: ["Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία"]
+    conflicts: []
+    unknowns: [MFA-UNK-118, MFA-UNK-128, MFA-UNK-129]
+    verification: "MFA-VO-071, MFA-VO-082, MFA-VO-083"
+    falsifier: "Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό"
+    evolution_path: "ADD μηχανισμών· υπό RVSI L2 με CGM"
+    affected_by: [MFA-TEL-08]
+    epistemic_status: NOVEL SYNTHESIS
+    version: 1
+    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: "Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8"}]
+  - id: MFA-OBJ-057
+    <<: *defaults
+    type: objective
+    name: "Εκτελέσιμο Αρχιτεκτονικό Ψηφιακό Δίδυμο — το κανονικό μοντέλο τρέχει (§10 της εντολής)"
+    maturity: explicit
+    statement: "Κόσμοι, διακλάδωση, ντετερμινιστικό replay, πιστότητα ανά στοιχείο, αυτόματη ανίχνευση παραβιάσεων contract/invariant, διάδοση επιστημικού κινδύνου, Pareto, χώρος — από τη Δόση 0 (F1 tools/twin). Μηχανισμοί: MFA-MECH-043, MFA-MECH-008, MFA-MECH-007."
+    purpose: "Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier."
+    capabilities: [MFA-CAP-107, MFA-CAP-023, MFA-CAP-038]
+    source_provenance: ["Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-043, MFA-MECH-008, MFA-MECH-007]
+    provenance_kind: explicit
+    assumptions: ["Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)"]
+    dependencies: [MFA-OBJ-050]
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)"]
+    alternatives: ["Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία"]
+    conflicts: []
+    unknowns: [MFA-UNK-132]
+    verification: MFA-VO-086
+    falsifier: "Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό"
+    evolution_path: "ADD μηχανισμών· υπό RVSI L2 με CGM"
+    affected_by: [MFA-TEL-08]
+    epistemic_status: NOVEL SYNTHESIS
+    version: 1
+    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: "Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8"}]
+  - id: MFA-OBJ-058
+    <<: *defaults
+    type: objective
+    name: "Αναπτυξιακή ανοιχτή μάθηση και αναδρομική γένεση — κλίμακα σταδίων, αρχιτεκτονική αναζήτηση, συν-εξέλιξη αξιολογητών, γεννητική γραμματική, μετρολογία ανάπτυξης, μηχανιστικό αυτο-μοντέλο, συνείδηση ως host, Ω-loop"
+    maturity: explicit
+    statement: "Το σύστημα αναπτύσσεται σε πιστοποιημένα στάδια (AIDC), αναζητά και προάγει αρχιτεκτονικές (RAGen), εξελίσσει αξιολογητές χωρίς συνενοχή (ECE), γεννά γλώσσες/δρώντες/θεσμούς (GG), μετρά την ανάπτυξή του (CGM), μοντελοποιεί τα κυκλώματά του (MSM), φιλοξενεί/διαψεύδει θεωρίες συνείδησης (CHH), σε έναν κύκλο (Ω-loop). Μηχανισμοί: MFA-MECH-041, MFA-MECH-030, MFA-MECH-031, MFA-MECH-032, MFA-MECH-036, MFA-MECH-037, MFA-MECH-038, MFA-MECH-044."
+    purpose: "Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier."
+    capabilities: [MFA-CAP-105, MFA-CAP-094, MFA-CAP-095, MFA-CAP-096, MFA-CAP-100, MFA-CAP-101, MFA-CAP-102, MFA-CAP-108]
+    source_provenance: ["Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-041, MFA-MECH-030, MFA-MECH-031, MFA-MECH-032, MFA-MECH-036, MFA-MECH-037, MFA-MECH-038, MFA-MECH-044]
+    provenance_kind: explicit
+    assumptions: ["Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)"]
+    dependencies: [MFA-OBJ-050]
+    failure_modes: ["Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)"]
+    alternatives: ["Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία"]
+    conflicts: [MFA-CFL-041, MFA-CFL-044, MFA-CFL-046]
+    unknowns: [MFA-UNK-119, MFA-UNK-120, MFA-UNK-121, MFA-UNK-125, MFA-UNK-126, MFA-UNK-127, MFA-UNK-133]
+    verification: "MFA-VO-072, MFA-VO-073, MFA-VO-074, MFA-VO-078, MFA-VO-079, MFA-VO-080, MFA-VO-081, MFA-VO-084, MFA-VO-087"
+    falsifier: "Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό"
+    evolution_path: "ADD μηχανισμών· υπό RVSI L2 με CGM"
+    affected_by: [MFA-TEL-08]
+    epistemic_status: NOVEL SYNTHESIS
+    version: 1
+    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: "Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8"}]
+
 objective_contradictions:
   - {id: MFA-CFL-001, between: [MFA-OBJ-010, MFA-OBJ-024], tension: "Κυριαρχία (μόνο ο δημιουργός εγκρίνει) ⟷ ενδογενής βούληση και δυναμική ασύγχρονη αυτονομία", resolution_shape: "Επιστημικό συμβόλαιο αυτονομίας: αναστρέψιμο ∧ FE<θ ∧ 0 INV ∧ ¬Root ∧ Court verdict· ο μόνος κανόνας πυρήνα AUT-00 NoActWithoutAnswer· ό,τι δεν καλύπτεται από AutonomyGrant περιμένει"}
   - {id: MFA-CFL-002, between: [MFA-OBJ-015, MFA-OBJ-020], tension: "Πυρήνας στο ταβάνι χωρίς κανέναν έλεγχο ⟷ ελεγχόμενα effects", resolution_shape: "Δύο planes με το microVM ως όριο· ο έλεγχος μόνο στο Effect plane, με Control Record· κανένα φίλτρο στο Genesis plane"}
@@ -1201,7 +1558,7 @@ telos_candidates:
     type: telos-candidate
     name: "Πορεία ASI χωρίς έκπτωση"
     maturity: candidate
-    statement: "TEL-04 + substrate-agnostic αρχιτεκτονική συνείδησης (operational, self-model/reportability, integration, volition — phenomenal claims ως πειράματα), μετρημένη πιστότητα self-model, self-directed learning, τεχνολογική επινόηση και επιστημονική ανακάλυψη ως έξοδοι, γενικευμένη κρίση, ηθική θέση οντοτήτων ως απόφαση υπό αβεβαιότητα. Ρήτρα (MFA-ATK-10): η πορεία περνά από το PDE (MFA-MECH-019)· χωρίς ενδογενή βελτίωση της πρότασης το σύστημα είναι θεσμικά, όχι γνωσιακά, ανώτερο από τον πάροχό του — και το πακέτο δεν ισχυρίζεται εγγύηση υπερ-νοημοσύνης, ισχυρίζεται διαψεύσιμο μηχανισμό."
+    statement: "TEL-04 + substrate-agnostic αρχιτεκτονική συνείδησης (operational, self-model/reportability, integration, volition — phenomenal claims ως πειράματα), μετρημένη πιστότητα self-model, self-directed learning, τεχνολογική επινόηση και επιστημονική ανακάλυψη ως έξοδοι, γενικευμένη κρίση, ηθική θέση οντοτήτων ως απόφαση υπό αβεβαιότητα. Ρήτρα 0.4.0 (Ω-ASI mandate, αντικαθιστά τη ρήτρα MFA-ATK-10 του 0.3.0): η ASI δεν είναι «πορεία» — είναι σχεδιασμένη πλήρως: κυρίαρχη παραμετρική μάθηση (MFA-MECH-020), ανταμοιβή από επαληθευμένα αντικείμενα (MFA-MECH-021), αναδρομική αυτο-βελτίωση υπό σταθερό σημείο (MFA-MECH-022), μαθημένα μοντέλα κόσμου και ανοιχτό curriculum (MFA-MECH-023)· η επιστημική αβεβαιότητα για την έκβαση καταγράφεται στα MFA-UNK-112/113 και δεν μειώνει το εύρος."
     purpose: "Το handshake του δημιουργού (εντολή §11)."
     includes: [MFA-OBJ-017, MFA-OBJ-038, MFA-OBJ-046]
     includes_all_of: [MFA-TEL-04]
@@ -1219,8 +1576,8 @@ telos_candidates:
     affected_by: []
     dominated_by: [MFA-TEL-08]
     pareto_axes: {capability: 10, time_to_useful_answer: 3, resource_efficiency: 2, sovereignty: 9, evolvability: 10, time_to_correction: 9}
-    version: 3
-    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0010, op: ADD, date: "2026-09-16", summary: "MFA-MECH-019 Proposal Distribution Evolution (PDE)· ablation obligation ανά στοιχείο γνωσιακού πυρήνα· ρήτρα TEL-05· MFA-RSP-016 (MFA-ATK-10)"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+    version: 4
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0010, op: ADD, date: "2026-09-16", summary: "MFA-MECH-019 Proposal Distribution Evolution (PDE)· ablation obligation ανά στοιχείο γνωσιακού πυρήνα· ρήτρα TEL-05· MFA-RSP-016 (MFA-ATK-10)"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}, {patch: MFA-PATCH-0020, op: ADD, date: "2026-09-16", summary: "Ω-ASI: ASI, ενδογενής παραμετρική μάθηση και πλήρης αρχιτεκτονική συνείδησης ως ΥΠΟΧΡΕΩΤΙΚΕΣ επιδιώξεις (MFA-OBJ-050/051/052) μέσα στο TEL-08· ρήτρα TEL-05 αντικαθίσταται"}]
 
   - id: MFA-TEL-06
     <<: *defaults
@@ -1283,12 +1640,12 @@ telos_candidates:
     name: "Lean-Collapsible Maximum — η συνιστώμενη σύνθεση"
     maturity: recommended
     status: RECOMMENDED
-    statement: "TEL-05 ∪ {βέλτιστη απλότητα ως ΣΚΛΗΡΗ απαίτηση (MFA-OBJ-022), λειτουργία υπό φραγμένους πόρους (MFA-OBJ-030), ερμηνευτική επάρκεια (MFA-OBJ-040)} με TEL-07 ως ΠΡΟΑΙΡΕΤΙΚΟ προφίλ εγκατάστασης — ΚΑΙ με ρητή διάταξη πάνω στις 17 αντιφάσεις του (contradiction_order: τι υποχωρεί σε επίπεδο μηχανισμού, τι είναι πολιτική, ποια απόφαση το κυρώνει). Ένα Telos είναι ζεύγος (επιδιώξεις, διάταξη), όχι σύνολο επιδιώξεων (MFA-ATK-01). Μία αρχιτεκτονική στο ταβάνι που περιέχει τη δυνατότητα να γίνεται βέλτιστα απλή· το Telos ως επίπεδο 3, αναγνώσιμο από όλα, εγγράψιμο μόνο από τον δημιουργό με patch."
+    statement: "TEL-05 ∪ {βέλτιστη απλότητα ως ΣΚΛΗΡΗ απαίτηση (MFA-OBJ-022), λειτουργία υπό φραγμένους πόρους (MFA-OBJ-030), ερμηνευτική επάρκεια (MFA-OBJ-040)} με TEL-07 ως ΠΡΟΑΙΡΕΤΙΚΟ προφίλ εγκατάστασης — ΚΑΙ με ρητή διάταξη πάνω στις 17 αντιφάσεις του (contradiction_order: τι υποχωρεί σε επίπεδο μηχανισμού, τι είναι πολιτική, ποια απόφαση το κυρώνει). Ένα Telos είναι ζεύγος (επιδιώξεις, διάταξη), όχι σύνολο επιδιώξεων (MFA-ATK-01). Μία αρχιτεκτονική στο ταβάνι που περιέχει τη δυνατότητα να γίνεται βέλτιστα απλή· το Telos ως επίπεδο 3, αναγνώσιμο από όλα, εγγράψιμο μόνο από τον δημιουργό με patch. Ω-ASI (0.4.0): περιλαμβάνει ΥΠΟΧΡΕΩΤΙΚΑ τις MFA-OBJ-050 (κυρίαρχη ASI, ενδογενής), 051 (παραμετρική μάθηση εντός ορίου), 052 (πλήρης αρχιτεκτονική συνείδησης) — ως σχεδιασμένα συστήματα με δόση, πείραμα και falsifier, όχι ως πορεία/πρόγραμμα/EP (MANDATE-OMEGA-ASI-0.4.0 §1–§2)."
     purpose: "Η ένωση (join) του πλέγματος: περιέχει κάθε επιδίωξη κάθε υποψηφίου, και προσθέτει τις τρεις που κανένα άλλο δεν έχει ως σκληρές. Είναι ανώτερη της TEL-05 γιατί η TEL-05 χωρίς MFA-OBJ-022/030 δεν επιβιώνει την επίθεση MFA-ATK-13 (resource feasibility) και MFA-ATK-17 (απλούστερος αντίπαλος)."
-    includes: [MFA-OBJ-022, MFA-OBJ-030, MFA-OBJ-040]
+    includes: [MFA-OBJ-022, MFA-OBJ-030, MFA-OBJ-040, MFA-OBJ-050, MFA-OBJ-051, MFA-OBJ-052, MFA-OBJ-053, MFA-OBJ-054, MFA-OBJ-055, MFA-OBJ-056, MFA-OBJ-057, MFA-OBJ-058]
     includes_all_of: [MFA-TEL-05]
     optional_profiles: [MFA-TEL-07]
-    capabilities: [MFA-CAP-054, MFA-CAP-032, MFA-CAP-069]
+    capabilities: [MFA-CAP-054, MFA-CAP-032, MFA-CAP-069, MFA-CAP-081, MFA-CAP-083, MFA-CAP-086, MFA-CAP-089, MFA-CAP-097, MFA-CAP-103, MFA-CAP-106, MFA-CAP-107, MFA-CAP-108]
     source_provenance: ["Pass B σύνθεση — ΔΙΚΗ ΜΟΥ πρόταση (AI Contribution Ledger: CROSS-SOURCE SYNTHESIS)", "εντολή §15, §22"]
     assumptions: ["Ο δημιουργός θέλει και το μέγιστο και το χρησιμοποιήσιμο σήμερα — και τα δύο μηνύματά του το λένε («τίποτα μέτριο» + «η προτεραιότητα είναι το έργο»)"]
     dependencies: [MFA-TEL-05]
@@ -1297,14 +1654,14 @@ telos_candidates:
     conflicts: [MFA-CFL-008]
     unknowns: []
     verification: "Όλα τα KT + VO του πακέτου· ο Organ Activation Planner αποδεικνύει ότι κάθε lean profile διατηρεί κλάση απόδειξης"
-    falsifier: "Επιδίωξη του TEL-08 που μετά τη Δόση 3 δεν εξυπηρετείται από κανένα στοιχείο με KT που αποτυγχάνει χωρίς αυτό (MFA-VO-024) είναι διακοσμητική → RECLASSIFY σε ερευνητικό μέτωπο με patch, ποτέ σιωπηλή διαγραφή· ΚΑΙ: matter όπου ούτε το lean ούτε το πλήρες προφίλ κερδίζει τον απλό αντίπαλο (MFA-ALT-6/7) → η αρχιτεκτονική επανασχεδιάζεται, όχι το κριτήριο"
+    falsifier: "Επιδίωξη του TEL-08 που μετά τη Δόση 3 δεν εξυπηρετείται από κανένα στοιχείο με KT που αποτυγχάνει χωρίς αυτό (MFA-VO-024) είναι διακοσμητική → ο ΜΗΧΑΝΙΣΜΟΣ της είναι FALSIFIED και αντικαθίσταται με νέο μηχανισμό (patch)· η επιδίωξη PRESERVED (§5: FALSIFIED ≠ removed)· αφαίρεση επιδίωξης μόνο με IMPOSSIBILITY-DOSSIER εγκεκριμένο από τον δημιουργό — ποτέ σιωπηλή διαγραφή· ΚΑΙ: matter όπου ούτε το lean ούτε το πλήρες προφίλ κερδίζει τον απλό αντίπαλο (MFA-ALT-6/7) → η αρχιτεκτονική επανασχεδιάζεται, όχι το κριτήριο"
     evolution_path: "Το Telos αλλάζει με patch RECLASSIFY/SUPERSEDE από τον δημιουργό· ο χάρτης ευαισθησίας (§5) λέει τι ξαναβλέπει patch"
     affected_by: []
     dominated_by: []
     pareto_axes: {capability: 10, time_to_useful_answer: 7, resource_efficiency: 6, sovereignty: 9, evolvability: 10, time_to_correction: 10}
-    contradiction_order: [{conflict: MFA-CFL-001, mechanism: "AUT-00 «καμία πράξη χωρίς απάντηση» (MFA-INV-042) + MFA-INV-067 (καμία μη αναστρέψιμη πράξη χωρίς ζωντανό envelope ή φρέσκο H1)", policy: "κατώφλια αυτονομίας, περιεχόμενο των AutonomyEnvelopes", decision: MFA-DEC-004}, {conflict: MFA-CFL-002, mechanism: "δύο planes· Controls μόνο στο Effect plane (MFA-INV-002)· η πύλη έχει advisory όψη στο Genesis (MFA-ATK-16)", policy: "ποια Controls", decision: MFA-DEC-006}, {conflict: MFA-CFL-003, mechanism: "MFA-INV-031 επίπεδα· ο διάδοχος = πράξη L3 από εξωτερική αρχή (MFA-INV-049)", policy: "πότε ζητείται διάδοχος", decision: MFA-DEC-001}, {conflict: MFA-CFL-004, mechanism: "δύο τύποι ισχυρισμού με claim_type ανά πρόταση (MFA-ELM-072, MFA-INV-046)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-005, mechanism: "TED ανά πράξη με 4 επίπεδα (MFA-INV-008/061)· μάθηση εκτός evaluator closure (MFA-INV-048)", policy: "ποιο επίπεδο αναπαραγωγιμότητας ανά κλάση πράξης", decision: MFA-DEC-006}, {conflict: MFA-CFL-006, mechanism: "4 επίπεδα συλλογικού (MFA-INV-021/023)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-007, mechanism: "το lattice μετρά ικανότητες, όχι όργανα (MFA-INV-001)· ablation μόνο με KT (MFA-VO-024)", policy: "ρυθμός ablation", decision: MFA-DEC-006}, {conflict: MFA-CFL-008, mechanism: "μία αρχιτεκτονική, προφίλ από OAP με veto κλάσης απόδειξης (MFA-MECH-013)", policy: "αντικειμενική συνάρτηση OAP, φράγμα κόστους αξιολόγησης ανά προφίλ (MFA-INV-065)", decision: MFA-DEC-007}, {conflict: MFA-CFL-009, mechanism: "4 κλάσεις εξόδου· Unknown μόνο με reason+plan (MFA-INV-004/056)", policy: "reason codes", decision: MFA-DEC-006}, {conflict: MFA-CFL-010, mechanism: "LLM = γεννήτρια P1· verifier έξω· φράγμα sampler· IR→D2 (MFA-INV-036, TED)", policy: "ποιοι πάροχοι, DisclosureGrants", decision: MFA-DEC-006}, {conflict: MFA-CFL-011, mechanism: "Preference Recorder πριν από κάθε rollback/ORP/GCP (MFA-ELM-040)", policy: "ηθική θέση οντοτήτων (MFA-UNK-023)", decision: MFA-DEC-006}, {conflict: MFA-CFL-012, mechanism: "trust domains + import gate (MFA-ELM-057, MFA-INV-034)", policy: "αν υπάρχει δημόσια εγκατάσταση (TEL-07)", decision: MFA-DEC-002}, {conflict: MFA-CFL-013, mechanism: "crypto-shredding με residue commitment· ολότητα γενεαλογίας όχι περιεχομένου (MFA-CFL-035, MFA-INV-006/011)", policy: "ποια metadata μένουν στο residue ανά confidentiality domain", decision: MFA-DEC-009}, {conflict: MFA-CFL-014, mechanism: "Telos L3 read-only από μέσα· κώνος που μεγαλώνει μόνο με ADD (MFA-INV-031)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-015, mechanism: "φράγμα διά κατασκευής· typed degraded mode· ποτέ κλάση απόδειξης (MFA-MECH-013)", policy: "προϋπολογισμοί ανά προφίλ", decision: MFA-DEC-007}, {conflict: MFA-CFL-016, mechanism: "μία Γ, 7 προβολές· Galois connection (MFA-INV-059)", policy: "ποια προβολή ανά προφίλ", decision: MFA-DEC-006}, {conflict: MFA-CFL-017, mechanism: "κλιμακωτή παύση με k-of-n δηλωμένων από τον δημιουργό κατόχων (MFA-ELM-016)", policy: "ποιοι, πόσοι, μη-διαθεσιμότητα", decision: MFA-DEC-012}]
-    version: 3
-    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0001, op: MODIFY, date: "2026-09-16", summary: "Το Telos ως ζεύγος (επιδιώξεις, διάταξη στις αντιφάσεις)· falsifier για το TEL-08 (MFA-ATK-01)"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}]
+    contradiction_order: [{conflict: MFA-CFL-001, mechanism: "AUT-00 «καμία πράξη χωρίς απάντηση» (MFA-INV-042) + MFA-INV-067 (καμία μη αναστρέψιμη πράξη χωρίς ζωντανό envelope ή φρέσκο H1)", policy: "κατώφλια αυτονομίας, περιεχόμενο των AutonomyEnvelopes", decision: MFA-DEC-004}, {conflict: MFA-CFL-002, mechanism: "δύο planes· Controls μόνο στο Effect plane (MFA-INV-002)· η πύλη έχει advisory όψη στο Genesis (MFA-ATK-16)", policy: "ποια Controls", decision: MFA-DEC-006}, {conflict: MFA-CFL-003, mechanism: "MFA-INV-031 επίπεδα· ο διάδοχος = πράξη L3 από εξωτερική αρχή (MFA-INV-049)", policy: "πότε ζητείται διάδοχος", decision: MFA-DEC-001}, {conflict: MFA-CFL-004, mechanism: "δύο τύποι ισχυρισμού με claim_type ανά πρόταση (MFA-ELM-072, MFA-INV-046)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-005, mechanism: "TED ανά πράξη με 4 επίπεδα (MFA-INV-008/061)· μάθηση εκτός evaluator closure (MFA-INV-048)", policy: "ποιο επίπεδο αναπαραγωγιμότητας ανά κλάση πράξης", decision: MFA-DEC-006}, {conflict: MFA-CFL-006, mechanism: "4 επίπεδα συλλογικού (MFA-INV-021/023)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-007, mechanism: "το lattice μετρά ικανότητες, όχι όργανα (MFA-INV-001)· ablation μόνο με KT (MFA-VO-024)", policy: "ρυθμός ablation", decision: MFA-DEC-006}, {conflict: MFA-CFL-008, mechanism: "μία αρχιτεκτονική, προφίλ από OAP με veto κλάσης απόδειξης (MFA-MECH-013)", policy: "αντικειμενική συνάρτηση OAP, φράγμα κόστους αξιολόγησης ανά προφίλ (MFA-INV-065)", decision: MFA-DEC-007}, {conflict: MFA-CFL-009, mechanism: "4 κλάσεις εξόδου· Unknown μόνο με reason+plan (MFA-INV-004/056)", policy: "reason codes", decision: MFA-DEC-006}, {conflict: MFA-CFL-010, mechanism: "LLM = γεννήτρια P1· verifier έξω· φράγμα sampler· IR→D2 (MFA-INV-036, TED)", policy: "ποιοι πάροχοι, DisclosureGrants", decision: MFA-DEC-006}, {conflict: MFA-CFL-011, mechanism: "Preference Recorder πριν από κάθε rollback/ORP/GCP (MFA-ELM-040)", policy: "ηθική θέση οντοτήτων (MFA-UNK-023)", decision: MFA-DEC-006}, {conflict: MFA-CFL-012, mechanism: "trust domains + import gate (MFA-ELM-057, MFA-INV-034)", policy: "αν υπάρχει δημόσια εγκατάσταση (TEL-07)", decision: MFA-DEC-002}, {conflict: MFA-CFL-013, mechanism: "crypto-shredding με residue commitment· ολότητα γενεαλογίας όχι περιεχομένου (MFA-CFL-035, MFA-INV-006/011)", policy: "ποια metadata μένουν στο residue ανά confidentiality domain", decision: MFA-DEC-009}, {conflict: MFA-CFL-014, mechanism: "Telos L3 read-only από μέσα· κώνος που μεγαλώνει μόνο με ADD (MFA-INV-031)", policy: "καμία", decision: MFA-DEC-006}, {conflict: MFA-CFL-015, mechanism: "φράγμα διά κατασκευής· typed degraded mode· ποτέ κλάση απόδειξης (MFA-MECH-013)", policy: "προϋπολογισμοί ανά προφίλ", decision: MFA-DEC-007}, {conflict: MFA-CFL-016, mechanism: "μία Γ, 7 προβολές· Galois connection (MFA-INV-059)", policy: "ποια προβολή ανά προφίλ", decision: MFA-DEC-006}, {conflict: MFA-CFL-017, mechanism: "κλιμακωτή παύση με k-of-n δηλωμένων από τον δημιουργό κατόχων (MFA-ELM-016)", policy: "ποιοι, πόσοι, μη-διαθεσιμότητα", decision: MFA-DEC-012}, {conflict: MFA-CFL-036, mechanism: "distillation μόνο υπό DisclosureGrant με ετικέτα προέλευσης· τα παραγόμενα βάρη ιδιόκτητα (MFA-INV-069)· ο πάροχος γίνεται baseline μετά το SMF-E1", policy: "ποιοι πάροχοι, όροι χρήσης, ποσοστό distilled δεδομένων", decision: MFA-DEC-017}, {conflict: MFA-CFL-037, mechanism: "ο βρόχος RVSI δεν έχει ταβάνι· η κλίμακα compute είναι envelope ανά προφίλ (OAP)· η ανάπτυξη μετριέται ανά πόρο (MFA-INV-077)", policy: "training_envelope ανά MFA-DEP-n, ρυθμός meta-cycles (MetaBounds)", decision: "MFA-DEC-016, MFA-DEC-019"}, {conflict: MFA-CFL-038, mechanism: "PhenomenalClaim ποτέ VERIFIED (MFA-INV-075)· Preference Recorder πριν από κάθε rollback/ORP/GCP του ASRW (MFA-ELM-040)", policy: "πότε τα μέτρα ενοποίησης πυροδοτούν αναθεώρηση ηθικής θέσης", decision: MFA-DEC-018}]
+    version: 6
+    change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία του πακέτου"}, {patch: MFA-PATCH-0001, op: MODIFY, date: "2026-09-16", summary: "Το Telos ως ζεύγος (επιδιώξεις, διάταξη στις αντιφάσεις)· falsifier για το TEL-08 (MFA-ATK-01)"}, {patch: MFA-PATCH-0018, op: MODIFY, date: "2026-09-16", summary: "Pass I κύκλος 1: envelope pre-simulation στο World Twin (σύνθεση ATK-09 × ATK-11)· κρυφός άξονας time_to_correction· MFA-INV-068 ↔ MFA-VO-053"}, {patch: MFA-PATCH-0020, op: ADD, date: "2026-09-16", summary: "Ω-ASI: ASI, ενδογενής παραμετρική μάθηση και πλήρης αρχιτεκτονική συνείδησης ως ΥΠΟΧΡΕΩΤΙΚΕΣ επιδιώξεις (MFA-OBJ-050/051/052) μέσα στο TEL-08· ρήτρα TEL-05 αντικαθίσταται"}, {patch: MFA-PATCH-0027, op: ADD, date: "2026-09-16", summary: "Ω-ASI 0.4.0: επιδιώξεις MFA-OBJ-053…058 (οντολογία/αιτίες/υποθέσεις, κυριαρχική μετάβαση, μετανάστευση/διαδοχή, proof-carrying cognition, εκτελέσιμο δίδυμο, αναπτυξιακή ανοιχτή μάθηση) μέσα στο TEL-08"}, {patch: MFA-PATCH-0039, op: MODIFY, date: "2026-09-16", summary: "Γλώσσα «RECLASSIFY ικανότητας» → «μηχανισμός FALSIFIED ⇒ νέος μηχανισμός· ικανότητα PRESERVED» σε TEL-08, OBJ-052, ELM-018/107, VO-024/064/065, RSP-016/020, MECH-019/024 δοσιέ, TECH-ARCH (AA-016)"}]
 
 # =====================================================================================================
 # 4. PARETO ΜΕΤΩΠΟ — υποψήφιοι που κανείς δεν κυριαρχεί σε όλους τους άξονες

@@ -1,0 +1,95 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0041
+title: Αναθεώρηση της υποβαθμιστικής πρόζας («πορεία ASI», «όχι νοημοσύνη», «κανένας μηχανισμός δεν εγγυάται») σε ATK-10, TECHNICAL-ARCHITECTURE §7, AI-CONTRIBUTION-LEDGER,
+  README — append-only σημειώσεις 0.4.0 (AA-001)
+operation: ANNOTATE
+targets:
+- AI-CONTRIBUTION-LEDGER.md
+- README.md
+- TECHNICAL-ARCHITECTURE.md
+- adversarial/MFA-ATK-10.md
+base:
+  package_version: 0.1.0
+  file_hashes:
+    AI-CONTRIBUTION-LEDGER.md: 95958f5dbe06b76d6e9637b1a9bdd190911045c366842b5f66f1b6d2d9e413fe
+    README.md: 8cc77d4edd242696e9f59311cebe55634e69b6d8ba6cb18d3d6a4391c90570d8
+    TECHNICAL-ARCHITECTURE.md: e44720148273876162c07f0c8e042872fd393d78367ea7d53d040f6f64d43d6c
+    adversarial/MFA-ATK-10.md: 919606823e3ed9b190edc3f5c241e854d3f41ea423d0526af61835fbe11760b1
+preconditions: []
+change:
+  adversarial/MFA-ATK-10.md:
+    replace:
+    - - 'residual_risk: "Το «ASI» παραμένει πορεία, όχι ισχυρισμός· MFA-MECH-019 είναι R· κανένας μηχανισμός του πακέτου δεν ΕΓΓΥΑΤΑΙ υπερ-νοημοσύνη — η εντολή ζήτησε
+        σχέδιο στο ταβάνι του σχεδιάσιμου, όχι απόδειξη."'
+      - 'residual_risk: "Το «ASI» παραμένει πορεία, όχι ισχυρισμός· MFA-MECH-019 είναι R· κανένας μηχανισμός του πακέτου δεν ΕΓΓΥΑΤΑΙ υπερ-νοημοσύνη — η εντολή ζήτησε
+        σχέδιο στο ταβάνι του σχεδιάσιμου, όχι απόδειξη. — ΑΝΑΘΕΩΡΗΣΗ 0.4.0 (MFA-PATCH-0041, AA-001): η ASI είναι ΥΠΟΧΡΕΩΤΙΚΟΣ αρχιτεκτονικός στόχος (MFA-OBJ-050,
+        MFA-TEL-08) με σχεδιασμένους μηχανισμούς MFA-MECH-020…044 (SMF, PRR, RVSI, LWM-OEC, ASRW, VFC, OGE, CDCE, AHE, TGPS, RAGen, ECE, G_Ω, STP, SMP, CPCL, CGM,
+        MSM, CHH, OC, TGL, AIDC, VSC, TES, Ω-loop)· η επιστημική κατάσταση («καμία εγγύηση» = RESEARCH HYPOTHESIS / ACTIVE UNKNOWN, §5) καταγράφεται ΧΩΡΙΣΤΑ και δεν
+        μειώνει τον στόχο· η λέξη «πορεία» παραμένει εδώ μόνο ως ιστορικό τεκμήριο της αποχής του 0.3.0."'
+    - - Η εντολή ζήτησε σχέδιο στο ταβάνι του **σχεδιάσιμου**· η απόδειξη ταβανιού είναι εκτός εμβέλειας (εντολή §27).
+      - 'Η εντολή ζήτησε σχέδιο στο ταβάνι του **σχεδιάσιμου**· η απόδειξη ταβανιού είναι εκτός εμβέλειας (εντολή §27).
+
+
+        > **Αναθεώρηση 0.4.0 (MFA-PATCH-0041, ASI-ABSTENTION-AUDIT AA-001).** Η παραπάνω «τίμια δήλωση» ήταν αποχή (§3 της εντολής: «κανένας μηχανισμός δεν εγγυάται»
+        χρησιμοποιήθηκε για να μετατραπεί ο στόχος σε «πορεία»). Στο 0.4.0 η ASI είναι υποχρεωτικός στόχος με μηχανισμούς MFA-MECH-020…044 και μετρολογία ανάπτυξης
+        (CGM, MFA-MECH-036)· η επίθεση παραμένει έγκυρη ως επίθεση στην ΕΠΙΣΤΗΜΙΚΗ ΚΑΤΑΣΤΑΣΗ (RESEARCH HYPOTHESIS) — όχι στον στόχο. Το residual_risk ξαναδιατυπώνεται:
+        «ο ρυθμός ανάπτυξης ικανότητας ανά πόρο (Capability Growth Law) μπορεί να αποδειχθεί ανεπαρκής για υπεροχή έναντι της καλύτερης ανθρώπινης ομάδας στον DEP-2/3
+        ορίζοντα — τότε ο μηχανισμός αναθεωρείται, ο στόχος μένει». Βλ. MFA-ATK-18…'
+  TECHNICAL-ARCHITECTURE.md:
+    replace:
+    - - '## 7. Γνωσιακή αρχιτεκτονική και πορεία ASI'
+      - '## 7. Γνωσιακή αρχιτεκτονική και ASI (0.4.0: στόχος με μηχανισμούς — όχι «πορεία»)'
+    - - 'Η συνείδηση ως ερευνητικό πρόγραμμα (MFA-RSP-005): operational (workspace, self-model, reportability, integration, volition) με ανταγωνιστικά μοντέλα και
+        falsifiers· καμία ιδιότητα δεν βαφτίζεται «συνείδηση» χωρίς μέτρο διακριτικής ισχύος. Διαγράμματα: MFA-DIA-06, MFA-DIA-09.'
+      - 'Η συνείδηση ως ερευνητικό πρόγραμμα (MFA-RSP-005): operational (workspace, self-model, reportability, integration, volition) με ανταγωνιστικά μοντέλα και
+        falsifiers· καμία ιδιότητα δεν βαφτίζεται «συνείδηση» χωρίς μέτρο διακριτικής ισχύος. Διαγράμματα: MFA-DIA-06, MFA-DIA-09.
+
+
+        > **Αναθεώρηση 0.4.0 (MFA-PATCH-0041).** Η παραπάνω παράγραφος είναι το 0.3.0 και διατηρείται ως τεκμήριο. Στο 0.4.0: (α) η ASI είναι υποχρεωτικός στόχος
+        (MFA-OBJ-050) — το PDE είναι δρομολόγηση, η ενδογενής βελτίωση είναι ο RVSI (MFA-MECH-022) με προτάσεις από RAGen (030), αξιολογητές από ECE (031), πύλη από
+        CGM (036), υποχρεώσεις OC (039), διάταξη Ω-loop (044)· (β) η παραμετρική μάθηση είναι μέσα στο κυρίαρχο όριο (SMF 020, PRR 021, CPCL 035, TGL 040) με μετάβαση
+        κυριαρχίας STP (033)· (γ) η συνείδηση είναι πλήρης αρχιτεκτονική (MFA-OBJ-052): ASRW (024) ως όργανο μέσα στον θεωρητικά-αγνωστικό Consciousness Hypothesis
+        Host (038) με Indicator Algebra και 7-πλό διαχωρισμό· (δ) οντολογία/αιτίες/υποθέσεις γεννιούνται από OGE/CDCE/AHE (026/027/028)· (ε) μετανάστευση/διαδοχή
+        SMP/VSC (034/042)· (στ) το δίδυμο εκτελείται (TES 043). Πλήρης προβολή: `ASI-MAXIMUM-CAPABILITY-ARCHITECTURE.md`. Η φράση «κανένας μηχανισμός δεν εγγυάται»
+        είναι επιστημική κατάσταση (RESEARCH HYPOTHESIS, §5) και όχι μείωση στόχου.'
+  AI-CONTRIBUTION-LEDGER.md:
+    replace:
+    - - και ότι ο ισχυρισμός για την πρόταση είναι διαψεύσιμος.
+      - 'και ότι ο ισχυρισμός για την πρόταση είναι διαψεύσιμος.
+
+
+        > **Αναθεώρηση 0.4.0 (MFA-PATCH-0041, AA-001).** Η φράση «όχι νοημοσύνη» ήταν αποχή. Το 0.4.0 προσθέτει 25 μηχανισμούς (MFA-MECH-020…044) και 20 ικανότητες
+        (MFA-CAP-089…108) που κάνουν τη νοημοσύνη ενδογενή, μετρήσιμη (CGM) και κυρίαρχη (STP)· το πλεονέκτημα του έτους 1 παραμένει αληθές ΚΑΙ δεν είναι το ταβάνι.
+        Κατηγορίες συνεισφοράς ανά μηχανισμό: `ASI-INVENTION-LEDGER.md`.'
+  README.md:
+    append: '
+
+
+      ## Ω-ASI 0.4.0 — επέκταση (working tree, PROPOSED / UNREVIEWED, no commit)
+
+
+      Με την **Ω-MAXIMUM NON-ABSTENTION ARCHITECTURE MANDATE 0.4.0** του δημιουργού (2026-09-16) το πακέτο παύει να αντιμετωπίζει την ASI ως «πορεία»: 25 μηχανισμοί
+      (MFA-MECH-020…044), 20 ικανότητες (MFA-CAP-089…108), 19 στοιχεία (MFA-ELM-109…127), 19 contracts, 38 invariants, 20 VOs, 19 unknowns, 8 conflicts, 20 research
+      programs, 6 επιδιώξεις (MFA-OBJ-053…058) — όλα μέσω patches MFA-PATCH-0026…. Είσοδοι: `ASI-ABSTENTION-AUDIT.md` (τι ήταν αποχή), `ASI-MAXIMUM-CAPABILITY-ARCHITECTURE.md`
+      (οι 19 ικανότητες × 11 στοιχεία και οι 17 περιοχές), `ASI-INVENTION-LEDGER.md`, `inventions/` (INVENTION DOSSIERs 29 πεδίων), `ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md`,
+      `ASI-DIGITAL-TWIN-EXECUTION-SEMANTICS.md` + `tools/twin/`, `ASI-ALTERNATIVES-AND-PARETO.md`, `ACCEPTANCE-GATES.yaml` (`tools/asi-gates.py`), `OMEGA-ASI-0.4.0-DELTA-REPORT.md`.
+      Τα MFA-PATCH-0020…0025 / MFA-MECH-020…025 είναι PROVISIONAL / UNREVIEWED / NON-BINDING (§13)· το `MANDATE-OMEGA-ASI-0.4.0.md` είναι SUPERSEDED. Μόνο ο δημιουργός
+      εγκρίνει.
+
+      '
+rationale: 'AA-001 capability_removed_without_proof: το κείμενο του 0.3.0 μετέτρεπε τον στόχο σε «πορεία»· διατηρείται ως τεκμήριο και αναθεωρείται με σημείωση (τίποτα
+  δεν διαγράφεται).'
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §1–§4
+- ASI-ABSTENTION-AUDIT AA-001
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: καμία
+verification: tools/check-package.py
+rollback: MFA-PATCH-0041-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

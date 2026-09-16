@@ -1,0 +1,51 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0026
+title: Σήμανση του MANDATE-OMEGA-ASI-0.4.0.md ως PROVISIONAL / UNREVIEWED / NON-BINDING — SUPERSEDED από την εντολή του δημιουργού (AA-022)
+operation: ANNOTATE
+targets:
+- MANDATE-OMEGA-ASI-0.4.0.md
+base:
+  package_version: 0.1.0
+  file_hashes:
+    MANDATE-OMEGA-ASI-0.4.0.md: a660c2f1177028472cc7e00804cd27dc9095fadfb1cbc0430159956010e0a180
+preconditions: []
+change:
+  MANDATE-OMEGA-ASI-0.4.0.md:
+    replace:
+    - - '# Ω-ASI NON-ABSTENTION & FRONTIER-COMPLETION MANDATE — κείμενο της εντολής (συνταχθέν από τον εκτελούντα, κατ'' εντολή του δημιουργού)
+
+        '
+      - '# ⚠ PROVISIONAL / UNREVIEWED / NON-BINDING — SUPERSEDED (2026-09-16)
+
+
+        **Σήμανση (MFA-PATCH-0026, ASI-ABSTENTION-AUDIT AA-022):** το κείμενο που ακολουθεί συντάχθηκε από τον εκτελούντα **χωρίς εξουσιοδότηση** να ορίσει εντολή,
+        acceptance criteria ή scope «έξι μηχανισμών». Ο δημιουργός το ακύρωσε ως εντολή (IMMEDIATE PAUSE, 2026-09-16) και παρέδωσε την πραγματική **Ω-MAXIMUM NON-ABSTENTION
+        ARCHITECTURE MANDATE — GRAIL / ASI FRONTIER ARCHITECTURE 0.4.0 (CREATOR-AUTHORIZED — ARCHITECTURAL COMPLETION)**, §1–§17, η οποία και μόνη διέπει το 0.4.0.
+        Το παρόν αρχείο μένει append-only ως τεκμήριο προέλευσης των provisional MFA-PATCH-0020…0025 / MFA-MECH-020…025 (§13 της εντολής: PROVISIONAL / UNREVIEWED
+        / NON-BINDING)· τα «κριτήρια R13/R14» της §4 του παρακάτω κειμένου **δεν ισχύουν** — αντικαθίστανται από τις 12 πύλες της §15 της εντολής του δημιουργού (`ACCEPTANCE-GATES.yaml`).
+        Καμία πρόταση του παρακάτω κειμένου δεν δεσμεύει· ό,τι από αυτό επιβίωσε, επιβίωσε επειδή το επαναδιατύπωσε η εντολή του δημιουργού.
+
+
+        ---
+
+
+        # Ω-ASI NON-ABSTENTION & FRONTIER-COMPLETION MANDATE — κείμενο της εντολής (συνταχθέν από τον εκτελούντα, κατ'' εντολή του δημιουργού)
+
+        '
+rationale: Ο εκτελών συνέταξε εντολή χωρίς εξουσιοδότηση (AA-022 nonexistence_used_as_refusal / unauthorized scope)· ο δημιουργός απαίτησε να μη διαγραφεί τίποτα,
+  να παραμείνει append-only, και να διέπει μόνο η δική του εντολή.
+evidence:
+- Δημιουργός 2026-09-16 IMMEDIATE PAUSE
+- Ω-MAXIMUM NON-ABSTENTION MANDATE §13, §17
+- ASI-ABSTENTION-AUDIT.yaml AA-022
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change — provenance annotation only
+migration: καμία
+verification: ASI-ABSTENTION-AUDIT AA-022 → RESOLVED(MFA-PATCH-0026)
+rollback: MFA-PATCH-0026-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

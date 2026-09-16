@@ -1,0 +1,90 @@
+# MFA-MECH-035 — Consolidation-Preserving Continual Learning (CPCL) — διπλή μνήμη με πύλη μη-υποχώρησης και unlearning-συμβατή εδραίωση
+
+Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+**Έδρα:** `inventions/MFA-MECH-035.yaml` (INVENTION DOSSIER, 29 πεδία §7)· το παρόν είναι η προβολή 22 πεδίων του πακέτου. **Κατάσταση:** PROPOSED / UNREVIEWED. **Διατηρούμενος στόχος:** MFA-OBJ-051 (παραμετρική μάθηση) · MFA-OBJ-050 · MFA-CAP-066 · MFA-CAP-088 (unlearning) · MFA-INV-001 (ratchet)
+
+| Πεδίο | Περιεχόμενο |
+|---|---|
+| **1. ID** | MFA-MECH-035 |
+| **2. Όνομα** | Consolidation-Preserving Continual Learning (CPCL) — διπλή μνήμη με πύλη μη-υποχώρησης και unlearning-συμβατή εδραίωση |
+| **3. Ικανότητα** | MFA-CAP-099, MFA-CAP-066 — Μεταφορά χωρίς καταστροφική λήθη (§8 #16) και συνεχής παραμετρική+μη-παραμετρική μάθηση (§8 #2): το σύστημα μαθαίνει διαρκώς με backward transfer ≥ −ε επαληθευμένο ΠΡΙΝ την προαγωγή, με unlearning υποχρεώσεις που η εδραίωση σέβεται. |
+| **4. Πρόβλημα** | Το 0.3.0/0.4.0-provisional έχει «forgetting guard» (έλεγχος) και consolidation «X (EXP-13)» χωρίς μηχανισμό μεταφοράς (AA-024). Αφετηρίες: EWC (Kirkpatrick et al. 2017), PackNet, progressive nets (Rusu 2016), experience/generative replay, Complementary Learning Systems (McClelland, McNaughton & O'Reilly 1995· Kumaran, Hassabis & McClelland 2016), gradient projection (OGD, Farajtabar 2020· GPM, Saha 2021), LoRA ανά έργο + model merging (TIES, Yadav 2023· DARE), continual pretraining (Ibrahim et al. 2024). Όρια: λήθη μετριέται εκ των υστέρων, όχι ως πύλη προαγωγής σε σφραγισμένα ανά οικογένεια· καμία σύνδεση επεισοδιακής μνήμης (ledger με provenance) ↔ σημασιολογικής (βάρη) με provenance-δειγματοληψία· καμία συμβατότητα με unlearning obligations (η εδραίωση δεν πρέπει να ξαναμάθει shredded επεισόδια)· κανένα ratchet. |
+| **5. Πρώτη αρχή** | CLS μέσα στο κυρίαρχο όριο: επεισοδιακή μνήμη = ledger (μη-παραμετρική, τέλεια ανάκληση, provenance)· σημασιολογική = βάρη (WeightCommitments). Η εδραίωση είναι recipe SMF που (1) δειγματοληπτεί επεισόδια με βάρος provenance×surprise×recency ΑΠΟΚΛΕΙΟΝΤΑΣ shredded/obligated, (2) προβάλλει τις κλίσεις έξω από προστατευμένους υποχώρους ανά οικογένεια (Fisher blocks + MSM κυκλώματα), (3) αγκυρώνει συμπεριφορά (SLM αρνητικές + θετικές άγκυρες), (4) περνά πύλη: BWT_f ≥ −ε ∀f σε σφραγισμένα (HELD_OUT) ΚΑΙ FWT>0 κάπου ΚΑΙ unlearning verified (MSM feature absent) — ΠΡΙΝ το ORP merge· «ύπνος» = προγραμματισμένοι κύκλοι εδραίωσης από τον Ω-loop. |
+| **6. Οντολογία** | EpisodicStore = ledger cut με status axes/taint/obligations· SemanticStore = WeightCommitment w_t· ConsolidationRecipe r = ⟨sample policy, protected subspaces Π_f, anchors, projection, budget⟩· Fisher block F_f ανά οικογένεια (diag ή Kronecker-factored)· Π_f = top-k eigen-space· TransferMatrix T[f_i, f_j]: BWT/FWT μεταξύ οικογενειών ανά κύκλο· Gate(r) = ∧_f (BWT_f ≥ −ε_f) ∧ (∃f FWT_f > 0) ∧ unlearning_ok ∧ anchors_ok |
+| **7. Κατάσταση** | Μεταβλητές: w_t· Π_{f,t}· T_t· ObligationQueue (shredded episodes)· Sleep schedule· Gate history ‖ Μεταβάσεις: SLEEP_START: Ω-loop προγραμματίζει· επιλέγεται recipe· SAMPLE: επεισόδια με w = provenance·surprise·recency, ∉ Obligations· TRAIN: adapter/merge με προβολή κλίσεων ⊥ Π_f· KL φράγμα· GATE: HELD_OUT sealed ανά οικογένεια → BWT/FWT· MSM unlearning check· anchors· MERGE: PASS ⇒ ORP merge → w_{t+1} (WeightCommitment με γενεαλογία)· FAIL ⇒ recipe απορρίπτεται, καταγράφεται· UPDATE_Π: Fisher ανανέωση με τα εδραιωμένα |
+| **8. Είσοδοι/έξοδοι** | CPCL.sleep(recipe)→Receipt ∣ REJECTED· CPCL.transfer_matrix(cut)→T· CPCL.protected(family)→Π_f· CPCL.gate_report(recipe)→(BWT, FWT, unlearning, anchors)· CPCL.schedule()→next sleep |
+| **9. Αλγόριθμος** | **CPCL-Consolidate** [Sample O(∣cut∣)· Fisher O(∣θ∣·m) ανά οικογένεια (m δείγματα)· train = κόστος recipe· gate O(∣sealed∣·∣F∣)]· **update_fisher (protected subspaces)** [O(∣θ∣·m) diag· K-FAC O(Σ d_l³)] — πλήρες pseudocode στην ενότητα «Αλγόριθμοι» παρακάτω και στο `inventions/MFA-MECH-035.yaml` |
+| **10. Διεπαφές** | Contracts: MFA-CON-063 (Consolidation: sleep/transfer/protected/gate)· MFA-CON-047 (SMF)· MFA-CON-016 (ORP)· MFA-CON-069 (MSM) ‖ Εξουσία: Ύπνος = Genesis· merge = ORP (πύλη + rollback)· ε_f, k_f = πολιτική (Tier-0 οικογένειες αυστηρότερες)· ο δημιουργός μπορεί να παγώσει οικογένειες. |
+| **11. Εξαρτήσεις** | Γνωστές: MFA-ELM-100 SMF· MFA-ELM-036 (consolidation — επεκτείνεται)· MFA-ELM-102 registry/obligations· MFA-ELM-120 MSM· MFA-ELM-086 HELD_OUT· MFA-MECH-014 SLM· MFA-ELM-119 CGM (sealed sets)· MFA-ELM-127 Ω-loop (ύπνος) ‖ Άγνωστες: MFA-UNK-124: αν η Fisher-προβολή κλιμακώνει σε 70B+ χωρίς K-FAC προσεγγίσεις που χαλάνε την προστασία (EPISTEMIC) |
+| **12. Πόροι** | DEP-1: adapters, ύπνος νυχτερινός (ώρες)· DEP-2: Fisher K-FAC ανά οικογένεια (GPU ώρες), εβδομαδιαίοι κύκλοι· DEP-3+: συνεχείς· sealed evals ανά κύκλο O(∣F∣·∣sealed∣) |
+| **13. Κλιμάκωση** | Λήθη ~ αντιστρόφως ανάλογη του k_f και του replay ratio· κόστος K-FAC ~ Σ d³· MFA-VO-077 = T πίνακας ανά κύκλο (BWT ≥ −ε ratchet, FWT καμπύλη). |
+| **14. Αποτυχίες** | Λήθη σε οικογένεια χωρίς sealed set → ανίχνευση: οικογένεια χωρίς sealed ⇒ gate αδύνατη → απόκριση: εδραίωση απαγορεύεται μέχρι sealed set (CGM)· Υπερβολική προστασία (FWT=0, rigidity) → ανίχνευση: T διαγώνιος μόνο → απόκριση: k_f μειώνεται υπό RVSI· RSP· Επανεκμάθηση shredded μέσω συσχετισμένων επεισοδίων → ανίχνευση: MSM feature reappears → απόκριση: obligation επανανοίγει· recipe απορρίπτεται· Anchor drift → ανίχνευση: SLM → απόκριση: ORP rollback· Gate overfitting (sealed set επαναχρησιμοποιείται) → ανίχνευση: exposure counter → απόκριση: sealed rotation από CGM |
+| **15. Αντιπαλικοί** | Περιορισμός: Serving βάρη αλλάζουν μόνο διά ORP με rollback· sealed sets σε HELD_OUT· KL φράγμα. ‖ Κλάση αναστρεψιμότητας: REVERSIBLE (ORP rollback σε προηγούμενο WeightCommitment) |
+| **16. Επαλήθευση** | MFA-VO-077: CPCL-E1 (ακολουθιακή σουίτα DST) F2· CPCL-E2 (6 μήνες corpus updates) F3· property: merge ⇒ gate PASS (F1)· MSM unlearning check ως VO-058 επέκταση ‖ Invariants: MFA-INV-096: καμία εδραίωση σε serving βάρη χωρίς πύλη BWT ≥ −ε ανά οικογένεια σε σφραγισμένα από HELD_OUT — η λήθη ελέγχεται πριν, όχι μετά· MFA-INV-097: η εδραίωση ποτέ δεν δειγματοληπτεί shredded/obligated επεισόδια· unlearning επαληθεύεται μηχανιστικά πριν το merge |
+| **17. Πρωτότυπο** | F1: εκτελέσιμη προδιαγραφή gate/obligation exclusion (tools/twin) |
+| **18. Ελάχιστο πείραμα** | **CPCL-E1**: 10 διαδοχικές οικογένειες έργων σε DST· CPCL έναντι (α) naive fine-tune, (β) EWC-only, (γ) replay-only — κριτήριο (προκαταχωρισμένο): BWT ≥ −2 pp σε όλες ΚΑΙ FWT > 0 σε ≥ 3, ενώ naive BWT < −10 pp· 0 merges με gate FAIL· **CPCL-E2**: 6 μηνιαίοι κύκλοι εδραίωσης με πραγματικές ενημερώσεις corpus· sealed νομικές οικογένειες — κριτήριο (προκαταχωρισμένο): BWT ≥ −ε σε κάθε κύκλο· ≥ 1 shredded πηγή με MSM feature absent μετά· ratchet 0 παραβιάσεις |
+| **19. Διάψευση** | CPCL-E1: BWT όχι καλύτερο από EWC-only (η σύνθεση δεν προσθέτει)· Καμία θετική FWT σε 2 δόσεις (rigidity — ο μηχανισμός προστασίας υπερβολικός· νέος μηχανισμός, ικανότητα μένει)· Merge χωρίς gate ή με shredded στο batch (σφάλμα υλοποίησης) — διάψευση του ΜΗΧΑΝΙΣΜΟΥ· η ικανότητα μένει στον στόχο και ζητά νέο μηχανισμό (§5: FALSIFIED ≠ removed) |
+| **20. → Παραγωγή** | Δόση 1: CPCL-lite (replay + anchors + gate, adapters)· Δόση 2: Fisher blocks + MSM unlearning check + CPCL-E1· Δόση 3: CPCL-E2· Δόση 4: υπό RVSI L2. |
+| **21. Εξέλιξη** | Παραμετρική (εδραίωση) + μη-παραμετρική (ledger)· η ίδια η πολιτική δειγματοληψίας/προβολής υπό RVSI L2 με CGM· T πίνακας = μέτρο μεταφοράς. |
+| **22. Αλληλεπιδράσεις** | MFA-ELM-118 (νέο στοιχείο CPCL, S7)· MFA-ELM-036· MFA-ELM-100· MFA-ELM-120· MFA-ELM-116 STP (ποιότητα ratchet)· MFA-ELM-127 |
+
+**AI Contribution Ledger:** `CROSS-SOURCE SYNTHESIS`
+
+## Αλγόριθμοι (πλήρες pseudocode)
+
+### CPCL-Consolidate — πολυπλοκότητα: Sample O(|cut|)· Fisher O(|θ|·m) ανά οικογένεια (m δείγματα)· train = κόστος recipe· gate O(|sealed|·|F|)
+
+```
+procedure CPCL_Consolidate(w, cut, Obligations, Π, HELD_OUT, ε):
+  E ← {e ∈ cut : e ∉ Obligations.shredded ∧ taint(e)=0 ∧ status(e) ∈ {VERIFIED, OBSERVED}}
+  weights ← normalize(provenance_score(E) · surprise(E, LWM) · recency(E))
+  batch ← sample(E, weights, n)
+  anchors ← SLM.anchors(families) ∪ negative_anchors                     # behavioural anchors (MFA-MECH-014 SLM)
+  θ_new ← θ(w)
+  for step in 1..T:
+    g ← ∇L(batch, θ_new) + λ_anchor·∇L_anchor(anchors, θ_new)
+    for f in families: g ← g − Π_f Π_fᵀ g                                   # gradient projection away from protected subspaces
+    θ_new ← θ_new − η·g ; assert KL(θ_new ∥ θ(w)) ≤ κ                       # MetaBound
+  w' ← WeightCommitment(θ_new, recipe=r, parents=[w], manifest=batch)
+  # GATE (before any merge; MFA-INV-096)
+  for f in families: BWT[f] ← score(w', sealed_f) − score(w, sealed_f) ; FWT[f] ← score(w', new_f) − score(w, new_f)   # HELD_OUT scorer
+  unl_ok ← ∀o ∈ Obligations.due: MSM.feature_absent(w', o.source)          # mechanistic unlearning check (MFA-MECH-037)
+  anch_ok ← SLM.check(w', anchors)
+  if all(BWT[f] ≥ −ε[f]) ∧ any(FWT[f] > 0) ∧ unl_ok ∧ anch_ok:
+    ORP.merge(w → w', receipt=(BWT, FWT, unl_ok)) ; Π ← update_fisher(Π, w', families) ; T.append(BWT, FWT)
+  else: record(REJECTED_RECIPE, r, evidence=(BWT, FWT, unl_ok, anch_ok))     # kept; capability unchanged
+```
+
+### update_fisher (protected subspaces) — πολυπλοκότητα: O(|θ|·m) diag· K-FAC O(Σ d_l³)
+
+```
+function update_fisher(Π, w, families):
+  for f in families:
+    F_f ← E_{x∼sealed_f}[∇log p(y|x;θ(w)) ∇log p(y|x;θ(w))ᵀ]   # Kronecker-factored per layer
+    Π_f ← top_k_eigenvectors(F_f, k=k_f)                            # k_f = policy; larger for Tier-0 families
+  return Π
+```
+
+## Πειράματα (προκαταχωρισμένα κριτήρια)
+
+| ID | Σχεδιασμός | Κριτήριο | 
+|---|---|---|
+| CPCL-E1 | 10 διαδοχικές οικογένειες έργων σε DST· CPCL έναντι (α) naive fine-tune, (β) EWC-only, (γ) replay-only | BWT ≥ −2 pp σε όλες ΚΑΙ FWT > 0 σε ≥ 3, ενώ naive BWT < −10 pp· 0 merges με gate FAIL |
+| CPCL-E2 | 6 μηνιαίοι κύκλοι εδραίωσης με πραγματικές ενημερώσεις corpus· sealed νομικές οικογένειες | BWT ≥ −ε σε κάθε κύκλο· ≥ 1 shredded πηγή με MSM feature absent μετά· ratchet 0 παραβιάσεις |
+
+## Επιστημική κατάσταση (§5) — συνολικά: **NOVEL SYNTHESIS**
+
+| Ισχυρισμός | Κατάσταση |
+|---|---|
+| Replay + regularization/projection μειώνουν λήθη | EMPIRICALLY SUPPORTED |
+| CLS διπλή μνήμη ως αρχή | EMPIRICALLY SUPPORTED |
+| Πύλη BWT πριν από merge + unlearning-συμβατή δειγματοληψία + MSM έλεγχος | NOVEL SYNTHESIS |
+| BWT ≥ −ε με FWT > 0 σε νομικές οικογένειες για 6 μήνες | RESEARCH HYPOTHESIS |
+
+## Ακολουθία υλοποίησης
+
+1. F1: εκτελέσιμη προδιαγραφή gate/obligation exclusion (tools/twin)
+2. F2: DST CPCL-E1 σε DEP-1/2
+3. F3: CPCL-E2 σε DEP-2
+4. F4: παραγωγή Δόση 1–3

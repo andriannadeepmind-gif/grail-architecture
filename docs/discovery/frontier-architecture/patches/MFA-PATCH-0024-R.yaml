@@ -1,0 +1,80 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0024-R
+title: 'Rollback of MFA-PATCH-0024: Contracts MFA-CON-047…053 (Parametric Learning = DEC-X-19 συμβόλαιο ενεργό, Proof-Reward, RVSI, LWM/Curriculum, Introspection,
+  VFC, Compute & Data)· CON-025 και CON-030 ευθυγραμμίζονται'
+operation: RESTORE
+targets:
+- MFA-CON-047
+- MFA-CON-048
+- MFA-CON-049
+- MFA-CON-050
+- MFA-CON-051
+- MFA-CON-052
+- MFA-CON-053
+- MFA-CON-025
+- MFA-CON-030
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CONTRACTS.yaml: 5cba2b648f8c7e24682911a1fbd68150bcdf948acc568cd2b4ecf730014cc31e
+preconditions:
+- MFA-PATCH-0024.status == APPLIED
+change:
+  MFA-CON-047:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CON-048:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CON-049:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CON-050:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CON-051:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CON-052:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CON-053:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CON-025:
+    activation_gate:
+      __raw: 'null'
+    experiment:
+      __raw: 'null'
+    invariants_when_active:
+      __raw: 'null'
+    drill:
+      __raw: 'null'
+    statement:
+      __raw: '"BindHumanIdentity/ImportConsentedCorpus/RevokeConsent — μόνο συμβόλαιο."'
+  MFA-CON-030:
+    provider:
+      __raw: '"MFA-ELM-020 (Tier-1/2· εγγεγραμμένοι: 061, 065, 067, 022, 024, 075) · MFA-ELM-099 (Tier-0, παγωμένος)"'
+    statement:
+      __raw: '"Verify(claim, class)→ProofObject(grade) ∣ Refuted ∣ Unknown(reason)· grade από τη μία κλίμακα· independence attestation (EIM). · tier ανά verifier·
+        kernel_checked: bool (ο verifier πέρασε το σφραγισμένο corpus από MFA-ELM-099)· Tier-0 = μόνο kernel."'
+rationale: Αντίστροφο του MFA-PATCH-0024, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-017
+- MFA-ELM-020
+- MFA-ELM-092
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-081
+  - MFA-CAP-083
+  - MFA-CAP-086
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0024
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

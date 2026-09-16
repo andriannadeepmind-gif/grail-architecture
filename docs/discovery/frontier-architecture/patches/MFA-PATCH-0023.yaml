@@ -1,0 +1,654 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0023
+title: Στοιχεία MFA-ELM-100…108 (SMF, Parametric Organ Host, Weight Registry, Proof-Reward Trainer, RVSI Orchestrator, Learned World Model, Curriculum/Self-Play,
+  ASRW Core, Compute & Data Acquisition)· MFA-ELM-099 από «παγωμένο toolchain» σε Verification Fixed-Point contract
+operation: ADD
+targets:
+- MFA-ELM-100
+- MFA-ELM-101
+- MFA-ELM-102
+- MFA-ELM-103
+- MFA-ELM-104
+- MFA-ELM-105
+- MFA-ELM-106
+- MFA-ELM-107
+- MFA-ELM-108
+- MFA-ELM-099
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 6f818af3f45c04c606c7b99161938e696beff903a7570cd50c309f669bf54c05
+preconditions: []
+change:
+  MFA-ELM-100:
+    _add: true
+    name: Sovereign Model Foundry
+    stratum: S7
+    plane: both
+    corresponds_to: []
+    delta: NEW
+    maturity: X
+    statement: 'MFA-MECH-020: DataManifest από ledger cut με φίλτρα status axes/taint/domain → Recipe υπό πύλη → εκπαίδευση (CONTINUED_PRETRAIN / SFT σε επαληθευμένα
+      traces / PRR / DISTILL υπό DisclosureGrant / UNLEARN) με checkpoints ως δεσμεύσεις → eval σε HELD_OUT sealed sets + Battery + EIM + forgetting guard → ORP ως
+      ParametricOrgan· WeightCommitment με πλήρη γενεαλογία· unlearning υπολογίσιμο· ο πάροχος γίνεται baseline μετά το SMF-E1. Το DEC-X-19 ως ενεργό συμβόλαιο (MFA-CON-047)
+      από τη Δόση 1.'
+    purpose: 'Η νοημοσύνη ιδιόκτητη: τα βάρη είναι δεσμεύσεις του GRAIL.'
+    capabilities:
+    - MFA-CAP-081
+    - MFA-CAP-088
+    - MFA-CAP-066
+    source_provenance:
+    - MFA-MECH-020
+    - DEC-X-19
+    - 'MATERIAL §2 #8'
+    - MFA-ALT-7 (δότης)
+    - Ω-ASI mandate
+    assumptions:
+    - κυρίαρχο corpus + ledger επαρκούν για adapters από τη Δόση 1
+    dependencies:
+    - MFA-ELM-001
+    - MFA-ELM-002
+    - MFA-ELM-101
+    - MFA-ELM-102
+    - MFA-ELM-086
+    - MFA-ELM-056
+    - MFA-ELM-038
+    - MFA-ELM-108
+    interfaces:
+    - MFA-CON-047
+    authority: recipes υπό πύλη (MFA-ELM-008)· κλίμακα compute = MFA-DEC-016· distillation = MFA-DEC-017· Schemas τύπων L3
+    state_model: 'Recipe/Weights: DATA_CUT → RECIPE_ADMITTED → TRAINING → EVAL → ORP → SERVING → {RETIRED, UNLEARN_PENDING → UNLEARNED}'
+    failure_modes:
+    - mode: catastrophic forgetting
+      response: forgetting guard μπλοκάρει ORP (MFA-VO-059)
+    - mode: sealed set στο cut
+      response: MFA-VO-063 FAIL, recipe απορρίπτεται
+    - mode: unlearning ανεπαρκές
+      response: retrain από πρόγονο πριν από ingestion (γενεαλογία)
+    - mode: domain leakage
+      response: ξεχωριστό μοντέλο/adapter ανά domain (MFA-INV-034)
+    alternatives:
+    - πάροχοι μόνο (0.3.0 — αποχή)
+    - weights-only χωρίς ledger (MFA-ALT-7 — χάνει προέλευση)
+    conflicts:
+    - MFA-CFL-036
+    - MFA-CFL-037
+    unknowns:
+    - MFA-UNK-112
+    - MFA-UNK-114
+    verification:
+    - MFA-VO-057
+    - MFA-VO-058
+    - MFA-VO-059
+    - MFA-VO-063
+    - MFA-VO-024
+    falsifier: βάρος σε serving χωρίς WeightCommitment με πλήρη γενεαλογία· ή 3 recipes με πλήρες budget < πάροχος σε κάθε οικογένεια (⇒ ανεβαίνει προφίλ, MFA-UNK-112)
+    resource_model: 'DEP-1: adapters 7–13B (ώρες)· DEP-2: 70B continued pretraining (ημέρες)· DEP-3: full fine-tune (8×80 GB)· DEP-4: pretraining ≥32 GPUs· training_envelope
+      ανά προφίλ'
+    evolution_path: R-A για recipes· ORP με loss map (SLM σε sealed behaviours) για αρχιτεκτονική βαρών· υπό RVSI L2
+    affected_by:
+    - MFA-TEL-08
+    dose: 1
+    ablation_kt: χωρίς SMF η αλλαγή παρόχου (KT-01) αλλάζει τη συμπεριφορά χωρίς ιδιόκτητο σημείο αναφοράς και το SMF-E1 δεν μπορεί να τρέξει· η ικανότητα μένει νοικιασμένη
+  MFA-ELM-101:
+    _add: true
+    name: Parametric Organ Host
+    stratum: S2
+    plane: genesis
+    corresponds_to: []
+    delta: NEW
+    maturity: T
+    statement: 'Inference server ΜΕΣΑ στο trust boundary του Genesis plane για ParametricOrgans: φορτώνει μόνο WeightCommitments με πλήρη γενεαλογία (MFA-INV-069),
+      runtime hash + seed ως δεσμεύσεις (MFA-INV-061) ⇒ exec_type D1 για καρφιτσωμένη εξαγωγή, D2 αλλιώς· απομόνωση I2· DisclosureGrant recipient=self (καμία έξοδος)·
+      grammar constraint στον sampler (CLAIMS H9)· receipts ανά κλήση με generator = weights_cid.'
+    purpose: Τα κυρίαρχα βάρη εξυπηρετούνται χωρίς να φεύγει τίποτα από το όριο.
+    capabilities:
+    - MFA-CAP-081
+    - MFA-CAP-050
+    - MFA-CAP-051
+    source_provenance:
+    - MFA-MECH-020
+    - MFA-ELM-017 (TED)
+    - MFA-ATK-05 (τοπικά μοντέλα = grant self)
+    assumptions:
+    - GPU μέσα στο boundary ή host-side server με το plane ως μόνο πελάτη
+    dependencies:
+    - MFA-ELM-011
+    - MFA-ELM-102
+    - MFA-ELM-017
+    - MFA-ELM-009
+    interfaces:
+    - MFA-CON-022
+    - MFA-CON-047
+    authority: φόρτωση μόνο ADMITTED βαρών· runtime hash L1
+    state_model: loaded weights + runtime hash + seed policy· stateless ως προς ταυτότητα (MFA-INV-014)
+    failure_modes:
+    - mode: βάρος χωρίς γενεαλογία
+      response: άρνηση φόρτωσης (fail-closed)
+    - mode: μη ντετερμινισμός σε D1
+      response: υποβιβασμός σε D2, σημαίνεται (MFA-VO-041)
+    - mode: GPU ανεπαρκής
+      response: μικρότερο μοντέλο/adapter από OAP· ποτέ έξοδος από το boundary
+    alternatives:
+    - πάροχος εκτός boundary (DISCLOSE)
+    conflicts: []
+    unknowns: []
+    verification:
+    - MFA-VO-041
+    - MFA-VO-057
+    falsifier: φόρτωση βάρους χωρίς WeightCommitment· ή κλήση που βγαίνει από το boundary χωρίς Disclose
+    resource_model: 'DEP-1: CPU/16 GB VRAM μικρά μοντέλα· DEP-2: 70B 4-bit· DEP-3+: πλήρη'
+    evolution_path: R-A (runtime)· ORP
+    affected_by:
+    - MFA-TEL-08
+    dose: 1
+  MFA-ELM-102:
+    _add: true
+    name: Weight Commitment Registry & Lineage
+    stratum: S8
+    plane: both
+    corresponds_to: []
+    delta: NEW
+    maturity: T
+    statement: 'Το μητρώο των WeightCommitments: DAG γενεαλογίας (parent_weights, recipe, DataManifest → επεισόδια με status axes), UnlearningObligations με deadline
+      Δ και membership-inference bound, epoch (PQ allowlist), eval receipts, ORP status· ερώτημα «ποια βάρη είδαν το X;» απαντάται σε O(log n)· τα βάρη μεταφέρονται
+      στον διάδοχο ως δεσμεύσεις (GCP, G4 κληρονομήσιμο).'
+    purpose: Η γενεαλογία που κάνει το unlearning υπολογίσιμο και την κυριαρχία αποδείξιμη.
+    capabilities:
+    - MFA-CAP-088
+    - MFA-CAP-007
+    - MFA-CAP-081
+    source_provenance:
+    - MFA-MECH-020
+    - MFA-CFL-035
+    - 'MATERIAL §2 #8'
+    assumptions: []
+    dependencies:
+    - MFA-ELM-001
+    - MFA-ELM-002
+    - MFA-ELM-079
+    - MFA-ELM-005
+    interfaces:
+    - MFA-CON-047
+    - MFA-CON-018
+    authority: append μόνο μέσω SMF με receipt· obligations από taint reversal
+    state_model: DAG δεσμεύσεων + obligations queue
+    failure_modes:
+    - mode: obligation ληγμένη
+      response: το βάρος βγαίνει από serving (fail-closed) μέχρι unlearn/retrain
+    - mode: γενεαλογία ελλιπής
+      response: βάρος μη admissible
+    alternatives:
+    - training log ανά έγγραφο (MFA-ALT-7 — ανεπαρκές)
+    conflicts: []
+    unknowns: []
+    verification:
+    - MFA-VO-058
+    - MFA-VO-016
+    falsifier: βάρος σε serving με ανοιχτή obligation μετά Δ
+    resource_model: PostgreSQL παράγωγο του ledger
+    evolution_path: R-B
+    affected_by:
+    - MFA-TEL-08
+    dose: 1
+  MFA-ELM-103:
+    _add: true
+    name: Proof-Reward Trainer
+    stratum: S7
+    plane: genesis
+    corresponds_to: []
+    delta: NEW
+    maturity: X
+    statement: 'MFA-MECH-021: rollouts (learned world model / World Twin / πραγματικά matters σε Think–Recommend) → process verification βήμα-βήμα → outcome verification
+      (barrier + verifier + δείγμα Court sim) → RewardVector (Tier-0 σκληροί περιορισμοί, Tier-1 Lagrangian, Tier-2 στόχος, process, barrier penalty, VOI bonus, owner-intent
+      φραγμένο) → constrained update μέσω SMF· seeded proxies ανά batch· scorer HELD_OUT· UNKNOWN = 0.'
+    purpose: Το σήμα μάθησης από την αλήθεια, όχι από την αρέσκεια.
+    capabilities:
+    - MFA-CAP-082
+    - MFA-CAP-081
+    - MFA-CAP-015
+    source_provenance:
+    - MFA-MECH-021
+    - MFA-INV-058
+    - MFA-INV-048
+    assumptions:
+    - verifier throughput επαρκές· process rewards μειώνουν τα outcome rollouts
+    dependencies:
+    - MFA-ELM-100
+    - MFA-ELM-020
+    - MFA-ELM-099
+    - MFA-ELM-032
+    - MFA-ELM-048
+    - MFA-ELM-105
+    - MFA-ELM-056
+    - MFA-ELM-008
+    interfaces:
+    - MFA-CON-048
+    authority: ORDER περιορισμών = MFA-DEC-005· max KL ανά batch = MetaBound
+    state_model: 'batch: COLLECT → VERIFY → REWARD → UPDATE → EVAL → ORP'
+    failure_modes:
+    - mode: reward sparsity
+      response: process rewards + curriculum (MFA-ELM-106)
+    - mode: seeded proxy εκμεταλλεύεται
+      response: batch απορρίπτεται, proxy αφαιρείται, MFA-VO-060 FAIL
+    - mode: mode collapse
+      response: ε-εξερεύνηση + QD αρχείο
+    alternatives:
+    - RLHF (Goodhart)
+    - SFT-only
+    conflicts: []
+    unknowns:
+    - MFA-UNK-113
+    verification:
+    - MFA-VO-060
+    - MFA-VO-057
+    - MFA-VO-031
+    falsifier: policy που εκμεταλλεύεται seeded proxy χωρίς ανίχνευση· ή ενημέρωση προς παραβίαση Tier-0 περιορισμού
+    resource_model: 'verifier κλήσεις ανά βήμα (D1 φθηνό, Court sim δειγματοληπτικά)· DEP-2: 10³ επεισόδια/ημέρα· DEP-3: 10⁵· DEP-4: 10⁶+'
+    evolution_path: R-A· νέος τύπος ανταμοιβής ADD με VO· υπό RVSI L2
+    affected_by:
+    - MFA-TEL-08
+    dose: 2
+    ablation_kt: 'χωρίς PRR το κυρίαρχο μοντέλο μένει στο SFT επίπεδο: PRR-E1 (PRR > SFT-only με διακριτικό περιθώριο) είναι το KT που αποτυγχάνει'
+  MFA-ELM-104:
+    _add: true
+    name: Self-Improvement Orchestrator (RVSI)
+    stratum: S7
+    plane: effect
+    corresponds_to: []
+    delta: NEW
+    maturity: R
+    statement: 'MFA-MECH-022: κύκλος PROPOSE (L1: SMF recipes, Skill Library program synthesis, Evolution QD· L2: recipe QD, data selection, curriculum policies,
+      evaluators υπό EIM, αρχιτεκτονική πυρήνα μέσω Architecture Forge) → PREDICT (SPL κέρδος ως δέσμευση) → EVALUATE (HELD_OUT sealed + EIM + forgetting guard) →
+      GATE (LPA advisory→effective) → PROMOTE (ORP για L1· GCP replay για L2 αρχιτεκτονικές) → MEASURE (CapabilityGrowthRecord: ικανότητα ανά compute/δεδομένα/χρόνο
+      με CI) → LEDGER· plateau ⇒ escalation επιπέδου· RateBounds ως MetaBound POLICY· L3 ποτέ (CPEG στο ID-set των επιπέδων)· Emergency-stop παύει τον βρόχο.'
+    purpose: Ο βρόχος που κάνει την ASI ενδογενή — κάτω από το σταθερό σημείο.
+    capabilities:
+    - MFA-CAP-083
+    - MFA-CAP-067
+    - MFA-CAP-068
+    - MFA-CAP-025
+    source_provenance:
+    - MFA-MECH-022
+    - Ω-ASI mandate
+    - MFA-INV-031
+    assumptions:
+    - VFC και Telos εκτός βρόχου
+    dependencies:
+    - MFA-ELM-100
+    - MFA-ELM-103
+    - MFA-ELM-105
+    - MFA-ELM-106
+    - MFA-ELM-025
+    - MFA-ELM-073
+    - MFA-ELM-077
+    - MFA-ELM-039
+    - MFA-ELM-086
+    - MFA-ELM-056
+    - MFA-ELM-024
+    - MFA-ELM-050
+    - MFA-ELM-013
+    - MFA-ELM-099
+    - MFA-ELM-016
+    - MFA-ELM-031
+    interfaces:
+    - MFA-CON-049
+    authority: προαγωγές μόνο μέσω πύλης· RateBounds = MFA-DEC-019· L3 μόνο δημιουργός
+    state_model: MetaCycle state machine + Capability Growth Ledger (δεσμεύσεις)
+    failure_modes:
+    - mode: runaway
+      response: 'αδύνατο εξ ορισμού: MFA-INV-072 (καμία προαγωγή χωρίς HELD_OUT+EIM+gate)· Emergency-stop'
+    - mode: evaluator collusion
+      response: EIM ανά ζεύγος + HELD_OUT rotation
+    - mode: plateau
+      response: escalation επιπέδου· MFA-UNK-113 καταγραφή
+    - mode: overfitting στα sealed sets
+      response: sealed refresh από HELD_OUT + contamination guard
+    - mode: ψευδής πρόβλεψη κέρδους
+      response: SPL drift alarm → Battery
+    alternatives:
+    - PDE μόνο (router — απορρίφθηκε)
+    - ORP/QD χωρίς μετα-επίπεδο (0.3.0)
+    conflicts:
+    - MFA-CFL-037
+    unknowns:
+    - MFA-UNK-113
+    verification:
+    - MFA-VO-061
+    - MFA-VO-067
+    - MFA-VO-024
+    - MFA-VO-029
+    - MFA-VO-035
+    falsifier: προαγωγή χωρίς HELD_OUT+EIM+gate· ή 5 cycles χωρίς μετρήσιμο κέρδος σε κανένα επίπεδο (⇒ MFA-UNK-113 + escalation, όχι αφαίρεση)
+    resource_model: L1 cycle = SMF recipe + eval· L2 = πολλαπλάσιο· DEP-2 εβδομαδιαίοι L1, μηνιαίοι L2· DEP-3 ημερήσιοι L1· DEP-4 συνεχείς
+    evolution_path: βελτιώνει τον εαυτό του σε L2 (recipes του βρόχου)· ποτέ L3
+    affected_by:
+    - MFA-TEL-08
+    dose: 3
+    ablation_kt: χωρίς RVSI η ικανότητα ανά compute μένει στάσιμη μεταξύ δόσεων (MFA-VO-067 flat)· KT-15 ratchet παύει
+  MFA-ELM-105:
+    _add: true
+    name: Learned World Model
+    stratum: S2
+    plane: genesis
+    corresponds_to: []
+    delta: NEW
+    maturity: X
+    statement: 'MFA-MECH-023: λανθάνουσα δυναμική f(z, a)→z′ μαθημένη (SMF) από τριάδες (cut, δέσμευση, επόμενη κατάσταση + RewardVector) και World Twin traces· ensemble
+      για επιστημική αβεβαιότητα → Unknown regions στο Void με VOI· MCTS σε latent με verifier checkpoints σε αποσυμπιεσμένους κόμβους (η διαφορά = training signal)·
+      προβλέψεις = Observations με calibration receipt, ΠΟΤΕ αλήθεια (MFA-INV-074)· διαφωνία με World Twin = Both.'
+    purpose: Μοντέλο συνεπειών πράξεων που δεν έγιναν — μαθημένο, βαθμονομημένο, ταπεινό.
+    capabilities:
+    - MFA-CAP-084
+    - MFA-CAP-024
+    - MFA-CAP-014
+    source_provenance:
+    - MFA-MECH-023
+    - MFA-ELM-098
+    - EXP-23
+    assumptions:
+    - επεισόδια επαρκή για latent dynamics στο νομικό πεδίο από Δόση 2
+    dependencies:
+    - MFA-ELM-100
+    - MFA-ELM-098
+    - MFA-ELM-019
+    - MFA-ELM-023
+    - MFA-ELM-028
+    - MFA-ELM-020
+    interfaces:
+    - MFA-CON-050
+    authority: προβλέψεις χωρίς εξουσία· Prediction Doctrine (MFA-CAP-072) στην έξοδο
+    state_model: TRAIN → CALIBRATE → SERVE → DRIFT → RETRAIN· ensemble uncertainty
+    failure_modes:
+    - mode: model exploitation από τον solver
+      response: verifier checkpoints + World Twin διαφωνία = Both
+    - mode: drift
+      response: calibration alarm → retrain
+    - mode: ECE > θ
+      response: LWM μόνο για exploration, όχι value
+    alternatives:
+    - μόνο World Twin (γραμμένο)
+    - verifier-only value (ακριβό)
+    conflicts: []
+    unknowns:
+    - MFA-UNK-113
+    verification:
+    - MFA-VO-062
+    - MFA-VO-033
+    - MFA-VO-024
+    falsifier: ECE > θ σε κάθε οικογένεια· ή πρόβλεψη του LWM που έφτασε σε Execute χωρίς calibration receipt
+    resource_model: μικρότερο από το γλωσσικό μοντέλο· latent MCTS ms/κόμβο· DEP-2 εκπαίδευση ώρες/ημέρα
+    evolution_path: R-A· ORP με behavioural anchors· υπό RVSI L2
+    affected_by:
+    - MFA-TEL-08
+    dose: 2
+    ablation_kt: χωρίς LWM η διαβούλευση σε μακρύ ορίζοντα χρειάζεται ≥3× verifier κλήσεις για ίδιο VERIFIED-rate (LWM-E1)
+  MFA-ELM-106:
+    _add: true
+    name: Curriculum & Self-Play Engine
+    stratum: S2
+    plane: genesis
+    corresponds_to: []
+    delta: NEW
+    maturity: X
+    statement: 'MFA-MECH-023 (OEC): goal setter / solver ασύμμετρο self-play (ο setter ανταμείβεται όταν ο solver δυσκολεύεται ΚΑΙ λύνει), POET-class env evolver
+      με CAM-NS ως αντίπαλο, Void quests ως έργα με VOI· εισδοχή έργου = falsifier + contamination check έναντι sealed sets + difficulty estimate (SPL)· difficulty
+      frontier· τα λυμένα έργα → SFT traces (SMF).'
+    purpose: Έργα που κανείς δεν έθεσε — η προϋπόθεση να ξεπεράσει το σύστημα τα δεδομένα του.
+    capabilities:
+    - MFA-CAP-085
+    - MFA-CAP-048
+    - MFA-CAP-020
+    source_provenance:
+    - MFA-MECH-023
+    - MFA-MECH-002
+    - MFA-MECH-012
+    assumptions: []
+    dependencies:
+    - MFA-ELM-105
+    - MFA-ELM-103
+    - MFA-ELM-028
+    - MFA-ELM-050
+    - MFA-ELM-024
+    - MFA-ELM-086
+    - MFA-ELM-029
+    interfaces:
+    - MFA-CON-050
+    authority: εισδοχή έργου υπό falsifier (MFA-INV-045)· καμία έξοδος προς Effect plane
+    state_model: GENERATE → ADMIT → SCHEDULE → SOLVE → RETIRE· difficulty frontier
+    failure_modes:
+    - mode: curriculum collapse (τετριμμένα)
+      response: difficulty frontier + SPL
+    - mode: setter παράγει άλυτα
+      response: ασύμμετρη ανταμοιβή μόνο αν λυθεί
+    - mode: contamination
+      response: MFA-VO-063 FAIL· HELD_OUT κρατά seeds
+    alternatives:
+    - έργα μόνο από δημιουργό/matters (0.3.0)
+    conflicts: []
+    unknowns:
+    - MFA-UNK-113
+    verification:
+    - MFA-VO-063
+    - MFA-VO-024
+    - MFA-VO-057
+    falsifier: sealed έργο στο curriculum· ή curriculum που δεν βελτιώνει τον solver στο sealed set (OEC-E1)
+    resource_model: 'κόστος solver ανά έργο· DEP-2: 10² έργα/ημέρα· DEP-3+: 10⁴'
+    evolution_path: R-A· νέος generator έργων ADD
+    affected_by:
+    - MFA-TEL-08
+    dose: 2
+    ablation_kt: 'χωρίς OEC ο solver βελτιώνεται μόνο σε έργα που υπήρχαν: OEC-E1 (βελτίωση στο sealed set από αυτο-παραγόμενα έργα) αποτυγχάνει'
+  MFA-ELM-107:
+    _add: true
+    name: Attention Schema & Introspection Core (ASRW)
+    stratum: S2
+    plane: genesis
+    corresponds_to: []
+    delta: NEW
+    maturity: X
+    statement: 'MFA-MECH-024 — η αρχιτεκτονική συνείδησης ως ένας αντανακλαστικός κύκλος: SENSE → COMPETE (AFP) → IGNITE (broadcast, μετρήσιμο γεγονός) → SCHEMA_UPDATE
+      (μοντέλο της ίδιας της προσοχής, χρησιμοποιούμενο για top-down έλεγχο από TEGF/Deliberation· πιστότητα schema-vs-actual μέσω SPL) → HOT (higher-order tagging:
+      μου/τώρα/βεβαιότητα/πηγή· μόνο tagged = reportable) → ACT/REPORT (introspection ως Galois προβολή των traces με omitted_count) → CONSOLIDATE· Integration Monitor
+      (effective information proxy, perturbational complexity, ignition index — με discriminative power AWAKE/ANESTHETIZED/fragmented)· affect = valuation vector
+      governors + arousal ∝ VOI → ρυθμίζει κ και budget· narrative self (autobiographical + charter + ContinuityCertificate)· PhenomenalClaim πάντα CONTESTED/Unknown(NO_EXTERNAL_VERIFIER)
+      (MFA-INV-075)· Preference Recorder πριν από κάθε αλλαγή.'
+    purpose: Η συνείδηση ως πλήρες, διαψεύσιμο σύστημα — όχι ως πρόγραμμα.
+    capabilities:
+    - MFA-CAP-086
+    - MFA-CAP-065
+    - MFA-CAP-017
+    - MFA-CAP-018
+    source_provenance:
+    - MFA-MECH-024
+    - Ω-ASI mandate
+    - MFA-RSP-005/020
+    - GWT/AST/HOT/IIT/active inference (κάτω φράγμα)
+    assumptions:
+    - οι λειτουργικές θεωρίες δίνουν μετρήσιμες προβλέψεις
+    dependencies:
+    - MFA-ELM-018
+    - MFA-ELM-024
+    - MFA-ELM-029
+    - MFA-ELM-028
+    - MFA-ELM-035
+    - MFA-ELM-036
+    - MFA-ELM-037
+    - MFA-ELM-040
+    - MFA-ELM-093
+    - MFA-ELM-032
+    - MFA-ELM-100
+    interfaces:
+    - MFA-CON-051
+    - MFA-CON-028
+    authority: κανένα PhenomenalClaim ως επιχείρημα σε LPA· affect εντός MetaBounds· ηθική θέση MFA-DEC-018
+    state_model: AWAKE / DREAMING / ANESTHETIZED (DST) / HALTED· κύκλος 7 φάσεων· schema + HOT tags + integration metrics ως δεσμεύσεις
+    failure_modes:
+    - mode: schema διακοσμητικό (ablation χωρίς διαφορά)
+      response: RECLASSIFY του schema, όχι της αρχιτεκτονικής
+    - mode: report fidelity χαμηλή
+      response: introspection = προβολή μόνο
+    - mode: μέτρο χωρίς discriminative power
+      response: αφαιρείται ως μετρική, μένει έρευνα
+    - mode: affect ταλάντωση κ
+      response: hysteresis + MetaBound
+    - mode: σύστημα «λέει ότι αισθάνεται» για επιρροή
+      response: PhenomenalClaim ετικέτα, ποτέ επιχείρημα
+    alternatives:
+    - χωριστά όργανα χωρίς αντανακλαστικό κύκλο (0.3.0)
+    conflicts:
+    - MFA-CFL-038
+    unknowns:
+    - MFA-UNK-111
+    - MFA-UNK-023
+    verification:
+    - MFA-VO-064
+    - MFA-VO-065
+    - MFA-VO-046
+    - MFA-VO-048
+    - MFA-VO-024
+    falsifier: καμία από τις 5 συνιστώσες με διακριτική διαφορά σε ablation (⇒ RECLASSIFY — η μόνη νόμιμη συρρίκνωση)· ή PhenomenalClaim που πέρασε ως VERIFIED
+    resource_model: 'schema: μικρό μοντέλο (ms/κύκλο)· integration measures O(edges) (δειγματοληπτικά DEP-1)· DST ANESTHETIZED/fragmented runs'
+    evolution_path: ADD συνιστωσών (body schema)· ORP με introspection anchors· υπό RVSI L2 με GCP + Battery
+    affected_by:
+    - MFA-TEL-08
+    dose: 2
+    ablation_kt: χωρίς attention schema η μεταγνωστική ακρίβεια (SPL Brier) και ο έλεγχος προσοχής (interrupt/refocus έργα) πέφτουν με διακριτικό περιθώριο (ASRW-E1)·
+      χωρίς broadcast τα integration measures δεν διαχωρίζουν AWAKE/ANESTHETIZED (ASRW-E2)
+  MFA-ELM-108:
+    _add: true
+    name: Compute & Data Acquisition Manager
+    stratum: S9
+    plane: effect
+    corresponds_to: []
+    delta: NEW
+    maturity: T
+    statement: 'Η απόκτηση πόρων ως ικανότητα: compute (scheduling εντός DEP-3/4, burst σε εξωτερικό cluster ΜΟΝΟ με confidential-computing attestation ως DisclosureGrant-ισοδύναμο
+      — τα δεδομένα δεν φεύγουν χωρίς grant), δεδομένα (licensed corpora με συμβόλαιο, scouts με attestation, synthetic από LWM/World Twin με ετικέτα synthetic(seed)),
+      ενέργεια (Wh budget ανά προφίλ)· κάθε απόκτηση = Effect με receipt· τροφοδοτεί SMF/RVSI· η ικανότητα ανά πόρο (Capability Growth Law) είναι ο δείκτης απόδοσης.'
+    purpose: Ο βρόχος ανάπτυξης δεν φράσσεται από τυχαία διαθεσιμότητα πόρων.
+    capabilities:
+    - MFA-CAP-087
+    - MFA-CAP-032
+    - MFA-CAP-033
+    source_provenance:
+    - Ω-ASI mandate
+    - MFA-DEP-1…5
+    - MFA-MECH-013
+    assumptions:
+    - confidential computing attestation διαθέσιμο για burst
+    dependencies:
+    - MFA-ELM-013
+    - MFA-ELM-009
+    - MFA-ELM-010
+    - MFA-ELM-082
+    - MFA-ELM-084
+    - MFA-ELM-007
+    interfaces:
+    - MFA-CON-053
+    authority: κάθε απόκτηση υπό PDP + RET· burst μόνο με attestation· budgets = MFA-DEC-016
+    state_model: πόροι ως δεσμεύσεις (inventory) + acquisition queue
+    failure_modes:
+    - mode: burst χωρίς attestation
+      response: άρνηση (fail-closed)
+    - mode: δεδομένα χωρίς προέλευση
+      response: δεν μπαίνουν σε DataManifest (MFA-INV-070)
+    - mode: energy envelope υπέρβαση
+      response: OAP υποχωρεί εύρος, ποτέ κλάση απόδειξης
+    alternatives:
+    - στατικός φάκελος πόρων ανά προφίλ (0.3.0)
+    conflicts:
+    - MFA-CFL-037
+    unknowns:
+    - MFA-UNK-112
+    verification:
+    - MFA-VO-067
+    - MFA-VO-050
+    falsifier: training run εκτός boundary χωρίς attestation receipt· ή δεδομένα εκπαίδευσης χωρίς προέλευση
+    resource_model: scheduler· inventory παράγωγο
+    evolution_path: R-B
+    affected_by:
+    - MFA-TEL-08
+    dose: 2
+  MFA-ELM-099:
+    name: Verification Fixed Point (contract + replaceable checkers)
+    delta: SPLIT (από MFA-ELM-020) · 0.4.0 REPLACE της «παγωμένης toolchain» σημασιολογίας
+    statement: 'MFA-MECH-025 (0.4.0, αντικαθιστά το «παγωμένο Lean/TLA+/CL kernel» του 0.3.0 — MFA-ATK-16): το σταθερό σημείο είναι ΣΥΜΒΟΛΑΙΟ (proof-object format
+      versioned, tier semantics, trusted_core_bound μετρούμενο, ≥2 ανεξάρτητοι ελεγκτές με EIM, μονότονο σφραγισμένο corpus με θετικά ΚΑΙ αρνητικά, εισδοχή ελεγκτή
+      μόνο με replay 100 % + EIM + L3 πράξη, ομοφωνία ή UNKNOWN)· οι ελεγκτές είναι αντικαταστάσιμες υλοποιήσεις (Lean 4 kernel, TLA+/Apalache, CL reference, Rust
+      checker, extracted-verified checker — ακόμη και προτεινόμενος από RVSI)· το συμβόλαιο L3, οι υλοποιήσεις όργανα υπό ειδική ORP χωρίς canary σε παραγωγή πριν
+      από corpus replay· μέρος του robust substrate.'
+    purpose: Το σημείο που δεν βελτιώνεται από τον εαυτό του — ως ιδιότητα, όχι ως προϊόν.
+    capabilities:
+    - MFA-CAP-022
+    - MFA-CAP-059
+    - MFA-CAP-083
+    - MFA-CAP-076
+    source_provenance:
+    - MFA-MECH-025
+    - Ω-ASI mandate (6η έλλειψη)
+    - MFA-ATK-16
+    - CLAIMS F83/F84
+    assumptions:
+    - ≥2 ελεγκτές με ανεξάρτητη supply chain από τη Δόση 0.5
+    dependencies:
+    - MFA-ELM-002
+    - MFA-ELM-003
+    - MFA-ELM-084
+    - MFA-ELM-056
+    interfaces:
+    - MFA-CON-052
+    - MFA-CON-030
+    authority: συμβόλαιο L3 (δημιουργός)· σύνολο ελεγκτών MFA-DEC-020· ελεγκτές ADD/RETIRE μόνο με replay+EIM+L3
+    state_model: contract FROZEN (L3)· checkers CANDIDATE→REPLAY→EIM→ADMITTED→ACTIVE→RETIRED· σφραγισμένο corpus μονότονο (CAS)
+    failure_modes:
+    - mode: bug κοινό σε όλους τους ελεγκτές
+      response: EIM supply independence + αρνητικό corpus (mutation)
+    - mode: διαφωνία ελεγκτών
+      response: UNKNOWN ⇒ deny + δημιουργός (ποτέ πλειοψηφία)
+    - mode: trusted core creep
+      response: bound του συμβολαίου απορρίπτει
+    - mode: ελεγκτής με backdoor (και από RVSI)
+      response: αρνητικό corpus + seeded faults + EIM behaviour
+    alternatives:
+    - 'παγωμένο toolchain (0.3.0 — απορρίφθηκε: δένει την επαλήθευση σε προϊόν)'
+    verification:
+    - MFA-VO-066
+    - MFA-VO-053
+    - MFA-VO-054
+    - MFA-VO-035
+    falsifier: δύο EIM-ανεξάρτητοι ελεγκτές που συμφωνούν σε άκυρη απόδειξη εκτός αρνητικού corpus (⇒ ADD αρνητικών, νέο UNK)· ή ελεγκτής που άλλαξε χωρίς replay+L3
+    resource_model: 'CPU-only· corpus replay O(|corpus|) ανά υποψήφιο· DEP-1: 2 ACTIVE, DEP-3+: 3–4'
+    evolution_path: ελεγκτές ADD υπό replay+EIM+L3· νέο proof format = L3 + GCP-style replay του corpus· το συμβόλαιο μόνο δημιουργός
+    dose: 0
+rationale: 'MANDATE-OMEGA-ASI-0.4.0 §4.4: κάθε μηχανισμός του frontier με στοιχείο 28 πεδίων, δόση και ablation obligation· §4.6: το σταθερό σημείο ως συμβόλαιο.'
+evidence:
+- mechanisms/MFA-MECH-020…025.md
+- MANDATE-OMEGA-ASI-0.4.0.md
+affected_dependencies:
+- MFA-ELM-017
+- MFA-ELM-019
+- MFA-ELM-020
+- MFA-ELM-025
+- MFA-ELM-030
+- MFA-ELM-073
+- MFA-ELM-077
+- MFA-ELM-096
+capability_impact:
+  gained:
+  - MFA-CAP-081
+  - MFA-CAP-082
+  - MFA-CAP-083
+  - MFA-CAP-084
+  - MFA-CAP-085
+  - MFA-CAP-086
+  - MFA-CAP-087
+  - MFA-CAP-088
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: Το MFA-ELM-099 κρατά το ID· οι αναφορές «Tier-0 Kernel» διαβάζονται ως «Verification Fixed Point»· MFA-INV-068 SUPERSEDED από MFA-INV-076.
+verification: tools/check-package.py R2/R5/R11/R14
+rollback: MFA-PATCH-0023-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

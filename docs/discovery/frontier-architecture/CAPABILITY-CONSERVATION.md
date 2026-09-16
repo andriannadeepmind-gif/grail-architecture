@@ -440,3 +440,23 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 - Οι 455 μηχανισμοί / 194 εγγυήσεις / 221 απαγορεύσεις της ύλης (MATERIAL §Σύνοψη): καλύπτονται μόνο μέσω των 35 γραμμών του §2 και των §3–§5 της MATERIAL· το πακέτο **δεν ισχυρίζεται** ότι κάθε μία από τις 455 έχει τύχη. Αυτό είναι όριο του παρόντος, δηλωμένο (ΝΟΜΟΣ §6), όχι ισχυρισμός πληρότητας. Ο επόμενος έλεγχος (Δόση 1) περνά την ύλη γραμμή-γραμμή.
 - Τα 114 REQ του spine: δεν αντιστοιχίζονται 1:1 εδώ (COUNT-PROVENANCE L1)· καλύπτονται μέσω των CMP/INV/KT που τα υλοποιούν. Αντιστοίχιση REQ→MFA είναι εργασία της Φάσης Β (Δόση 1 Telos + απαιτήσεις).
+
+
+## 12. Ω-ASI 0.4.0 — τύχες (MFA-PATCH-0057)
+
+Κανόνας: καμία αφαίρεση· 0 REMOVED· κάθε FALSIFIED μηχανισμός αφήνει την ικανότητα στον στόχο (§5).
+
+| Αντικείμενο | Τύχη | Patch | Σημείωση |
+|---|---|---|---|
+| MFA-CAP-089, MFA-CAP-090, MFA-CAP-091, MFA-CAP-092, MFA-CAP-093, MFA-CAP-094, MFA-CAP-095, MFA-CAP-096, MFA-CAP-097, MFA-CAP-098, MFA-CAP-099, MFA-CAP-100, MFA-CAP-101, MFA-CAP-102, MFA-CAP-103, MFA-CAP-104, MFA-CAP-105, MFA-CAP-106, MFA-CAP-107, MFA-CAP-108 | NEW | MFA-PATCH-0028 | οι 19 ικανότητες της §8 + η σύνθεση Ω-loop |
+| MFA-CAP-065, 066, 067 | STRENGTHENED (από R/EP σε X με μηχανισμό) | MFA-PATCH-0021 | provisional |
+| MFA-CAP-014, 023, 027, 028, 029, 036, 075, 083, 086 | STRENGTHENED (μηχανισμός ονομάζεται) | MFA-PATCH-0035 | — |
+| MFA-ELM-022, 025, 030, 036, 039, 076, 077, 083, 098, 024, 086, 104, 105, 106, 107, 100, 102, 103, 099, 017, 029, 050, 053, 074, 034, 089, 091, 092 | STRENGTHENED (επεκτείνονται από 109…127) | MFA-PATCH-0035 | — |
+| MFA-ELM-031 Reflective Tower | STRENGTHENED (EP → X, σημασιολογία επιπέδων, δόση 3) | MFA-PATCH-0035 | AA-006 |
+| MFA-ELM-068 Practice Unit Templates | STRENGTHENED («δεν ξέρω» → μηχανισμός· αξία ACTIVE UNKNOWN) | MFA-PATCH-0035 | AA-008 |
+| MFA-INV-068 παγωμένος kernel | SUPERSEDED BY STRICTLY SUPERIOR MECHANISM (MFA-INV-076 VFC) | MFA-PATCH-0025 | provisional· επιβεβαιώνεται 0.4.0 |
+| MFA-CON-025 Human Continuity Port | STRENGTHENED (EP → ενεργό συμβόλαιο) | MFA-PATCH-0024 | AA-007 |
+| MFA-ELM-109…127, MFA-CON-054…072, MFA-INV-078…115, MFA-VO-068…087, MFA-UNK-115…133, MFA-CFL-039…046, MFA-RSP-021…040, MFA-OBJ-053…058, MFA-MECH-026…044 | NEW | MFA-PATCH-0027…0034 | — |
+| «πορεία ASI» (TEL-05 ρήτρα, ATK-10, README, TECH-ARCH §7, AI-LEDGER) | RETAINED AS RESEARCH FRONTIER → SUPERSEDED ως διατύπωση από MFA-OBJ-050 (στόχος) + επιστημική κατάσταση χωριστά | MFA-PATCH-0020/0041 | AA-001 |
+
+Σύνολο 0.4.0: 20 ικανότητες NEW, 0 REMOVED· 12 ικανότητες STRENGTHENED· 30 στοιχεία STRENGTHENED· 1 αναλλοίωτη SUPERSEDED (με διάδοχο).

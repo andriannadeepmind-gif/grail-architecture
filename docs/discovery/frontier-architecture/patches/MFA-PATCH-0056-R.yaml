@@ -1,0 +1,44 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0056-R
+title: 'Rollback of MFA-PATCH-0056: Υπολείμματα γλώσσας: MFA-VO-056 «RECLASSIFY 3D» → FALSIFIED ως υποχρεωτικός renderer/ικανότητα PRESERVED· MFA-ELM-020/096 «παγωμένος
+  Tier-0 kernel» → VFC με αντικαταστάσιμους checkers (πύλες 1 και 4)'
+operation: RESTORE
+targets:
+- MFA-VO-056
+- MFA-ELM-020
+- MFA-ELM-096
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 5fa51a381b8d908ea73ba177d5228f338d5d95e5a13b3cb31c57ef235eed694b
+    VERIFICATION-OBLIGATIONS.yaml: 77ae952925499caf2935098ad665ccf438dd29ade28e4d46e4b019678c21c2b1
+preconditions:
+- MFA-PATCH-0056.status == APPLIED
+change:
+  MFA-VO-056:
+    rejects:
+      __raw: '"καμία διακριτική διαφορά → το 3D RECLASSIFY σε προαιρετικό renderer (R_mode), ποτέ διαγραφή"'
+  MFA-ELM-020:
+    statement:
+      __raw: '"Μητρώο verifiers με ΜΙΑ κλίμακα βαθμών (DEC-X-08), N-version με EIM PASS, mutation-tested, proof objects· timeout⇒UNKNOWN· verifier set μέσα στην ταυτότητα·
+        #print axioms για Lean, refinement/machine-closure/level-correctness για TLA+. · Κανένας εξαχθείς από Lean κώδικας στο TCB· Tier-0 = απόδειξη ιδιοτήτων του
+        μοντέλου (TLA+/Lean)· η δέσμευση μοντέλου↔κώδικα είναι Tier-1 (DRT, MFA-VO-054)· MFA-UNK-014 παραμένει RSP (MFA-ATK-05). · SPLIT (MFA-ATK-16): το 020 = Verification
+        Suite Tier-1/2 (όργανα υπό ORP)· ο παγωμένος Tier-0 kernel = MFA-ELM-099· κάθε διάδοχος verifier περνά το σφραγισμένο corpus από τον kernel (MFA-INV-068)."'
+  MFA-ELM-096:
+    statement:
+      __raw: '"Η τομή του Telos lattice (OBJECTIVE-SPACE §6): 001–005, 007, 009, 010, 028, 032, 051, 084, 088, 090, 093 — ό,τι χτίζεται πρώτο και δεν αλλάζει αν αλλάξει
+        το Telos. · + 099 Tier-0 Kernel (παγωμένος) (MFA-ATK-16)."'
+rationale: Αντίστροφο του MFA-PATCH-0056, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0056
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

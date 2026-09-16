@@ -15,6 +15,9 @@ Checks (each prints PASS/FAIL with details; exit code 1 on any FAIL):
   R10 every ADR-0001..0033, EXP-01..27 and MATERIAL §2 row #1..35 has exactly one fate row in CAPABILITY-CONSERVATION.md
   R11 every element has a dose in IMPLEMENTATION-ROADMAP.md (or a research program with first_dose)
   R12 every APPLIED patch has its -R rollback next to it; git signature of the patch commits is reported (UNVERIFIED when no commit)
+  R13 every element/capability/mechanism/objective carries epistemic_status (11 states, Ω-ASI 0.4.0 §5)
+  R14 no falsifier/rejects reclassifies a capability (FALSIFIED mechanism ≠ removed capability)
+  R15 every mechanism >= MFA-MECH-026 has a 29-field INVENTION DOSSIER (inventions/) with pseudocode
 RELATIONS.yaml is regenerated from the source files (provides / corresponds-to / verifies / enforces / depends-on / refines / requires).
 """
 import re, sys, pathlib, collections, subprocess, yaml
@@ -194,6 +197,31 @@ for p in patches:
         unsigned += 1
 check(not no_rb, f'R12 every APPLIED patch has its -R rollback ({len(patches)} patches; missing rollback: {no_rb})')
 print(f'INFO R12 signatures: {len(patches) - unsigned} verified, {unsigned} UNVERIFIED (uncommitted or unsigned — PATCH-PROTOCOL §7.2; never silent)')
+
+# R13 epistemic_status (Ω-ASI 0.4.0 §5) on every element / capability / mechanism / objective
+STATUSES = {'PROVEN', 'MECHANICALLY VERIFIED', 'EMPIRICALLY SUPPORTED', 'IMPLEMENTABLE FROM KNOWN COMPONENTS', 'NOVEL SYNTHESIS', 'NEW FORMALISM', 'RESEARCH HYPOTHESIS', 'ACTIVE UNKNOWN', 'CONFLICT', 'FALSIFIED', 'IMPOSSIBLE UNDER EXPLICIT ASSUMPTIONS'}
+nost = [r['id'] for coll in (elm['elements'], cap['capabilities'], mech['mechanisms'], obj['objectives']) for r in coll if r.get('epistemic_status') not in STATUSES]
+check(not nost, f'R13 every element/capability/mechanism/objective has epistemic_status in the 11 states of §5 ({len(nost)} without: {nost[:8]})')
+
+# R14 no falsifier / rejects reclassifies a CAPABILITY (§5: FALSIFIED mechanism ≠ removed capability)
+recl = []
+for coll, key in ((obj['objectives'], 'falsifier'), (obj.get('telos_candidates', []), 'falsifier'), (elm['elements'], 'falsifier'), (vo['obligations'], 'rejects'), (rsp['programs'], 'rejects'), (cap['capabilities'], 'falsifier')):
+    for r in coll:
+        t_ = str(r.get(key, ''))
+        if 'RECLASSIFY' in t_ and not any(k in t_ for k in ('IMPOSSIBILITY-DOSSIER', 'PRESERVED', 'FALSIFIED')): recl.append(r['id'])
+check(not recl, f'R14 no falsifier/rejects reclassifies a capability without PRESERVED/FALSIFIED-mechanism wording ({recl})')
+
+# R15 every mechanism >= 026 has an INVENTION DOSSIER (29 fields, §7) with algorithms.pseudocode, falsifiers, experiments
+FIELDS29 = ['invention_id', 'name', 'required_capability', 'why_known_methods_are_insufficient', 'preserved_objective', 'new_principle', 'formal_objects', 'state_variables', 'transition_rules', 'algorithms', 'interfaces', 'contracts', 'invariants', 'authority_model', 'learning_model', 'failure_modes', 'containment', 'reversibility_class', 'resource_complexity', 'scaling_law', 'verification_strategy', 'experiments', 'falsifiers', 'known_dependencies', 'unknown_dependencies', 'integration_points', 'migration_path', 'implementation_sequence', 'epistemic_status']
+bad15 = []
+for m in mech['mechanisms']:
+    if int(m['id'].split('-')[-1]) < 26: continue
+    p_ = PKG / 'inventions' / (m['id'] + '.yaml')
+    if not p_.exists(): bad15.append((m['id'], 'missing')); continue
+    d_ = yaml.safe_load(p_.read_text(encoding='utf-8'))
+    miss = [f for f in FIELDS29 if f not in d_ or d_[f] in (None, '', [], {})]
+    if miss or not all(a.get('pseudocode') for a in d_.get('algorithms', [])): bad15.append((m['id'], miss or 'pseudocode'))
+check(not bad15, f'R15 every mechanism >= MFA-MECH-026 has a 29-field INVENTION DOSSIER with pseudocode ({bad15})')
 
 # RELATIONS.yaml
 rels = []

@@ -1,0 +1,56 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0045-R
+title: 'Rollback of MFA-PATCH-0045: ATK-20 (ξέπλυμα χώρου αναζήτησης): calibration record ανά τελεστή RAGen έναντι F3 shadow· F3 πριν από L2 δομικές προαγωγές· το
+  harness εξελίσσεται (από ποιον, όχι αν)'
+operation: RESTORE
+targets:
+- MFA-ELM-086
+- MFA-ELM-113
+- MFA-INV-087
+- MFA-VO-072
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 2e7b41dcb89d7a706bd496a4559be7ea44c1cc2ccdf72b34bb6ee34d2f4883f9
+    INVARIANTS.yaml: 7dedae74a0fe5657f7ed7c7f110f4b48d716cf1a9da5b4558e139ca4691656ef
+    VERIFICATION-OBLIGATIONS.yaml: d614748e3e2b441cc6a25765b7e1e26d0404c9cdf9a38856d213f9f690aaf9f3
+preconditions:
+- MFA-PATCH-0045.status == APPLIED
+change:
+  MFA-ELM-113:
+    statement:
+      __raw: '"Η αρχιτεκτονική είναι τυπωμένο γονιδίωμα G στη Genesis Grammar (MFA-MECH-032): στοιχεία με contracts, invariants, συνδεσμολογία, παραμέτρους ΚΑΙ τελεστές
+        αναζήτησης. Το RAGen κάνει Quality-Diversity αναζήτηση (MAP-Elites με περιγραφητές = συντεταγμένες του capability lattice + κόστος + κλάση απόδειξης), κάθε
+        υποψήφιο instantiated ως σκιώδης αρχιτεκτονική στο δίδυμο (TES, MFA-MECH-043) σε πιστότητα F1/F2, αξιολογείται σε ΣΦΡΑΓΙΣΜΕΝΕΣ υποχρεώσεις (KT/VO) από HELD_OUT,
+        μπαίνει σε Pareto αρχείο, και προάγεται ΜΟΝΟ μέσω RVSI L2 → GCP shadow→canary→cutover. Αναδρομή: οι τελεστές μετάλλαξης είναι γονιδιώματα επιπέδου L2 με fitness
+        = ρυθμός βελτίωσης απογόνων· το harness αξιολόγησης, το VFC και το Telos είναι L3 (σταθερό σημείο) — ποτέ στον χώρο."'
+  MFA-INV-087:
+    statement:
+      __raw: '"καμία αρχιτεκτονική προαγωγή χωρίς Pareto μη-υποχώρηση (ratchet) σε ΟΛΕΣ τις σφραγισμένες οικογένειες + GCP shadow/canary (MFA-MECH-030)."'
+  MFA-VO-072:
+    methods:
+      __raw: '["DST: αρχιτεκτονική με 3 στοιχεία αφαιρεμένα (KT αποτυγχάνουν)· RAGen από αρχείο μόνο με βιβλιοθήκη στοιχείων· μετράμε κύκλους μέχρι PASS", "Από την
+        τρέχουσα αρχιτεκτονική, 200 κύκλοι· frontier έναντι χειροποίητης σε σφραγισμένες KT οικογένειες", "property tests στο tools/twin (F1)"]'
+  MFA-ELM-086:
+    statement:
+      __raw: '"Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+        τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+        δεν ανήκουν εδώ (CLAIMS H4). · Στο DP-1/2 ο HELD_OUT ρόλος του harness τρέχει σε ξεχωριστή συσκευή (scorer + sealed sets) (MFA-ATK-13). · Φιλοξενεί τον COMPETITOR
+        BASELINE (MFA-ATK-17): το υβρίδιο MFA-ALT-6/7 ως script (πάροχος + document store + prompt)· κάθε δόση αναφέρει GRAIL vs competitor σε σφραγισμένα έργα (HELD_OUT),
+        συμπεριλαμβανομένων των έργων όπου ο ανταγωνιστής νικά. · 0.4.0 (AA-015): κανόνας γενεαλογίας EIM — distilled(P) ⇒ lineage(student) ∋ P· αξιολογητής της ίδιας
+        γενεαλογίας με τον αξιολογούμενο δεν τον βαθμολογεί (MFA-INV-089)· η HELD_OUT υποομάδα H περιστρέφεται και δεν εκπαιδεύεται ποτέ μέσα στην εποχή (ECE, MFA-ELM-114)·
+        η μετρολογία ανάπτυξης = CGM (MFA-ELM-119)."'
+rationale: Αντίστροφο του MFA-PATCH-0045, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0045
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

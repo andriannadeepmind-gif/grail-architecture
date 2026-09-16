@@ -1,0 +1,430 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0031
+title: Contracts MFA-CON-054…072 (ένα ανά νέο στοιχείο) με state & failure semantics και conformance VOs
+operation: ADD
+targets:
+- MFA-CON-054
+- MFA-CON-055
+- MFA-CON-056
+- MFA-CON-057
+- MFA-CON-058
+- MFA-CON-059
+- MFA-CON-060
+- MFA-CON-061
+- MFA-CON-062
+- MFA-CON-063
+- MFA-CON-064
+- MFA-CON-065
+- MFA-CON-066
+- MFA-CON-067
+- MFA-CON-068
+- MFA-CON-069
+- MFA-CON-070
+- MFA-CON-071
+- MFA-CON-072
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CONTRACTS.yaml: 5cba2b648f8c7e24682911a1fbd68150bcdf948acc568cd2b4ecf730014cc31e
+preconditions: []
+change:
+  MFA-CON-054:
+    _add: true
+    corresponds_to: null
+    name: Ontology Genesis
+    provider: MFA-ELM-109
+    consumers: Ontology Registry (083), CDCE (110), SMF (100), AHE (111), World Twin (098)
+    delta: NEW
+    statement: OGE.observe(residual)→AnomalyId / OGE.propose(cut)→[ConceptCandidate] / OGE.birth(candidate, gain_receipt)→ConceptCommitment / OGE.merge(c1,c2)→Proceeding
+      / OGE.split(c, δ)→Proceeding / OGE.recover(cid)→Extension / OGE.lineage(cid)→DAG / OGE.schema(cut)→LinkML
+    state_semantics: 'OBSERVE: residual r εισέρχεται στην Q_t με VOI(r) = αναμενόμενη μείωση PredLoss· PROPOSE: Cand ← FCA-lattice(K(r)) ∪ ProgramInduction(E) · κάθε
+      υποψήφια με G σε σφραγισμένο split· BIRTH: G(c) > θ_birth ∧ ¬∃c′∈C: sim(I_c, I_c′) > 1−ε ⇒ c ∈ C_{t+1}, L += birth(c)· MERGE/SPLIT: μόνο ως Proceeding με LossMap·
+      PASS ⇒ O_{t+1}, L += merge/split, Σ migration μέσω CC schema lineage· RETIRE: έννοια χωρίς χρήση σε N cuts ΚΑΙ χωρίς κέρδος ⇒ status RETIRED (η έδρα μένει·
+      extension ανακτήσιμη) …'
+    failure_semantics: 'Έκρηξη εννοιών (over-birth) → θ_birth αυξάνεται (RateBounds MFA-DEC-019)· batch ως Proceeding· Codebook-style collapse (πολλές έννοιες ↦ μία)
+      → merge απορρίπτεται εξ ορισμού (MFA-INV-078)· Έννοιες που μαθαίνουν sealed δεδομένα → MFA-VO-063 FAIL, υποψήφια απορρίπτεται, cut μολυσμένο· Σχήμα που σπάει
+      καταναλωτές → BIRTH αναβάλλεται· η έννοια ζει ως draft χωρίς Σ· Αντιπαλική ανωμαλία (τεχνητό residual για να γεννηθεί έννοια-δούρειος) → Court-lite με CAM-NS·
+      γέννηση σε quarantine namespace ‖ containment: Όλα στο Genesis plane· η οντολογία που βλέπει ο Effect plane είναι ένα cut με receipt· quarantine namespace για
+      έννοιες με taint· Emergency-stop παγώνει O_t.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-068
+  MFA-CON-055:
+    _add: true
+    corresponds_to: null
+    name: Causal Discovery & Counterfactual
+    provider: MFA-ELM-110
+    consumers: Deliberation (019), AHE (111), Strategy (063), World Twin (098), AIDC (124), TES (126)
+    delta: NEW
+    statement: CDCE.discover(cut)→CausalGraphCommitment / CDCE.edges(cid)→[(edge, p, status)] / CDCE.propose(budget)→[InterventionProposal] / CDCE.counterfactual(evidence,
+      do, Y)→TypedAnswer / CDCE.explain(answer)→trace (ποιες ακμές/παρεμβάσεις στήριξαν)
+    state_semantics: 'INGEST: νέο cut → ενημέρωση παρατηρησιακών στρωμάτων και InterventionRecords από receipts· DISCOVER: M_t ← FCI+GIES με χρονικούς περιορισμούς
+      → ensemble· EdgeStatus από υποστήριξη· PROPOSE: π ← argmax VOI/cost υπό RET· Genesis-first (LWM/DST)· EXECUTE: Effect-plane παρέμβαση μόνο με AutonomyGrant
+      REVERSIBLE ή ρητή έγκριση· receipt → I_{t+1}· UPDATE: p_e ανανεώνεται· ακμές που διαψεύδονται → REF (δεν διαγράφονται)· ANSWER: αντιπαραγοντικό μέσω TwinNetwork
+      …'
+    failure_semantics: 'Παραβίαση faithfulness (ακυρωτικές διαδρομές) → ακμή UND· προτείνεται παρέμβαση· ποτέ σημειακή απάντηση· Λανθάνοντες συγχυτές → PARTIAL_BOUNDS·
+      αναζήτηση proxy μεταβλητών από OGE· Παρέμβαση με ανεπιθύμητη επίδραση → Both → Court· παρέμβαση αναβάλλεται· Data dredging (πολλαπλοί έλεγχοι) → Benjamini–Hochberg
+      ανά cut· ακμές OBS με FDR-διορθωμένο p· Αντιπαλικό ledger (ψεύτικα receipts) → παρέμβαση εξαιρείται (taint)· MFA-INV-070 ‖ containment: Genesis-first πάντα·
+      Effect παρεμβάσεις μόνο REVERSIBLE εντός AutonomyEnvelope· προϋπολογισμός· Emergency-stop ακυρώνει εκκρεμείς προτάσεις.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-069
+  MFA-CON-056:
+    _add: true
+    corresponds_to: null
+    name: Abductive Hypothesis
+    provider: MFA-ELM-111
+    consumers: Science Organ (030), OGE (109), CDCE (110), curriculum (106), CHH (121)
+    delta: NEW
+    statement: AHE.submit(anomaly)→AnomalyId / AHE.hypotheses(anomaly)→[Hypothesis with EFV, status] / AHE.test(H)→TestPlan / AHE.promote(H)→{ConceptCommitment ∣
+      CausalEdge ∣ SkillProgram} / AHE.schemas()→Lib / AHE.generator_calibration()→[(generator, score)]
+    state_semantics: 'ANOMALY: residual > θ ή Void entry ⇒ a ∈ A_t· GENERATE: S_a ← ∪_g Gen_g(a, Lib) με g EIM-ανεξάρτητες· type-check φ (χωρίς falsifier ⇒ REJECTED_UNFALSIFIABLE,
+      καταγράφεται)· RANK: EFV· schedule top-k υπό budget· TEST: venue Genesis-first· Effect μόνο RET REVERSIBLE/envelope· UPDATE: Bayesian posterior· διαψευσμένες
+      → FALSIFIED (μένουν)· επιζώσες με N_H επιβεβαιωμένες → PROMOTE· PROMOTE: υπόθεση-έννοια → OGE.birth· υπόθεση-αιτία → CDCE edge INT· υπόθεση-νόμος → Skill Library
+      + TGPS απόδειξη …'
+    failure_semantics: 'Ad hoc υποθέσεις (εξηγούν μόνο το explanandum) → REJECTED_AD_HOC (MFA-INV-082)· Γεννήτρια που κυριαρχεί (mode collapse) → quota ανά γεννήτρια·
+      EIM έλεγχος· P-hacking μέσω πολλών ελέγχων → προκαταχωρισμένο κριτήριο + BH διόρθωση· Επικίνδυνο πείραμα → μόνο Genesis venues ή δημιουργός· Αντιπαλική ανωμαλία
+      (σπρώχνει προς επιθυμητή υπόθεση) → CAM-NS ως αντίπαλος στο S· quarantine ‖ containment: Genesis-first· Effect ελέγχοι υπό RET· budgets· κάθε PROMOTE αναστρέψιμο
+      (OGE/CDCE γενεαλογία)· Emergency-stop.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-070
+  MFA-CON-057:
+    _add: true
+    corresponds_to: null
+    name: Synthesis (proofs & programs)
+    provider: MFA-ELM-112
+    consumers: OC (122), RVSI (104), RAGen (113), TGL (123), Verification Suite (020), GG (115)
+    delta: NEW
+    statement: TGPS.submit(obligation)→Ticket / TGPS.solve(ticket)→Artifact ∣ UNKNOWN(reason, partial) / TGPS.verify(artifact)→[checker verdicts] / TGPS.library(cut)→Lib
+      / TGPS.stats(sealed_set)→GrowthRecord / TGPS.compress()→Receipt
+    state_semantics: 'SUBMIT: ob → Queue με B(tier)· SKETCH: ob → υποστόχοι (lemma sketch από παραμετρική γεννήτρια, τυπικά ελεγμένοι ως δηλώσεις)· SEARCH: ανά υποστόχο,
+      δύο γεννήτριες παράλληλα, budget split· CERTIFY: cert ελέγχεται από ≥2 checkers· διαφωνία ⇒ Both → VFC incident· ADMIT: art → Lib (ADD) + CC ASSERT(proved(ob),
+      cert)· FAIL: budget εξαντλήθηκε ⇒ UNKNOWN(PROOF_NOT_FOUND, partial, plan=more budget ∣ decompose)· COMPRESS: epoch → anti-unify Lib, refactor, re-check όλων'
+    failure_semantics: 'Unsound sketch (ψευδές λήμμα) → απορρίπτεται· αρνητικό παράδειγμα· Checker διαφωνία → incident, ADMIT μπλοκάρεται (MFA-INV-084)· Βιβλιοθήκη
+      «φουσκώνει» με άχρηστα λήμματα → RETIRE (η έδρα μένει)· compression· Policy overfitting στο train set υποχρεώσεων → MFA-INV-085· ORP επιστροφή· Budget exhaustion
+      σε Tier-0 → decompose + escalation στον δημιουργό· ποτέ ψευδές PASS ‖ containment: Κανένα artifact δεν επηρεάζει Effect plane χωρίς ADMIT· Tier-0 ADMIT υπό
+      δημιουργό· η βιβλιοθήκη πυρήνα (CC κανόνες) εκτός αυτο-συμπίεσης (VFC L3).'
+    exec_type: D2 (αναζήτηση) · D1 (πιστοποιητικό)
+    conformance:
+    - MFA-VO-071
+  MFA-CON-058:
+    _add: true
+    corresponds_to: null
+    name: Architecture Generation
+    provider: MFA-ELM-113
+    consumers: RVSI (104), GCP (039), VSC (125), Architecture Forge (077)
+    delta: NEW
+    statement: RAGen.cycle(budget)→[ArchitectureProposal] / RAGen.archive(cut)→A / RAGen.frontier()→Pareto set / RAGen.lineage(G)→DAG / RAGen.operators()→Ops with
+      fitness / RAGen.fixed_point()→FP (read-only)
+    state_semantics: 'SELECT: γονείς από A κατά curiosity (κελιά με λίγες επισκέψεις) + elite· MUTATE: G′ = μ(G)· type-check ⊨ G_Ω· contract compatibility (Galois,
+      GCP)· απορρίπτεται αν παραβιάζει invariant statically· INSTANTIATE: twin shadow σε F1 (mocks) → F2 (DST) αν υπόσχεται· EVALUATE: f(G′) σε σφραγισμένα από HELD_OUT·
+      CapabilityGrowthRecord· INSERT: MAP-Elites/Pareto· ποτέ αντικατάσταση χωρίς κυριαρχία· PROPOSE: frontier G′ με Δf>0 σε ≥1 οικογένεια και Δf≥0 σε όλες (ratchet)
+      → RVSI L2 …'
+    failure_semantics: 'Reward hacking του harness (αρχιτεκτονική που «περνά» KT χωρίς ικανότητα) → FP εκτός χώρου· harness ανανεώνεται μόνο L3· Αρχείο συγκλίνει
+      (μηδενική ποικιλία) → curiosity sampling· νέοι τελεστές· Κόστος twin evals → F1 προεπιλογή· F2 μόνο promising· Πρόταση που σπάει runtime contract αόρατα στα
+      mocks → προαγωγή μπλοκάρεται· MFA-INV-087· Τελεστής που μαθαίνει να παρακάμπτει τον έλεγχο conforms → αδύνατο εξ ορισμού· απόπειρα καταγράφεται ‖ containment:
+      Ο χώρος αναζήτησης ⊂ Genesis· FP L3· προαγωγή μόνο διά GCP με rollback· twin sandbox· Emergency-stop.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-072
+  MFA-CON-059:
+    _add: true
+    corresponds_to: null
+    name: Evaluator Co-Evolution
+    provider: MFA-ELM-114
+    consumers: RVSI (104), PRR (103), curriculum (106), CGM (119), VSC (125), STP (116)
+    delta: NEW
+    statement: ECE.epoch()→Report / ECE.independence(e, s)→IndependenceVector / ECE.exclusions(cut)→[(e, s, reason)] / ECE.challenges(cut)→[ChallengeTask] / ECE.goodhart(cut)→[(family,
+      g)] / ECE.heldout_rotation()→Receipt
+    state_semantics: 'EPOCH_START: H_t ← rotate(HELD_OUT pool)· F_t ← fresh seeded faults· CHALLENGE: E γεννούν t με escrowed witness· εισδοχή μόνο αν witness επαληθεύεται
+      από H· SOLVE/SCORE: S λύνουν· E βαθμολογούν· H βαθμολογεί δείγμα· INDEPENDENCE: I_t από EIM· ζεύγη (e,s) κάτω από κατώφλι ⇒ e.excluded_for(s)· FITNESS: fe,
+      fs όπως ορίστηκαν· GOODHART: g_t > θ ⇒ E-scores της οικογένειας άκυρες, μόνο H μετρά, εποχή σημαίνεται· EVOLVE: S μέσω PRR/SMF με fs· E μέσω QD με fe και περιορισμό
+      γενεαλογίας· CAM-NS novelty'
+    failure_semantics: 'Collusion E–S → E-scores άκυρες· μόνο H· Αξιολογητές τετριμμένοι (constant) → απόσυρση από scoring (αρχείο)· Έργα άλυτα (γεννήτορας «κερδίζει»
+      φθηνά) → REJECTED_UNSOLVABLE· ανταμοιβή μηδέν· H διαρροή (εκπαιδεύτηκε κατά λάθος) → εποχή άκυρη· MFA-VO-063· Γενεαλογία άγνωστη (κλειστός πάροχος) → μετρά
+      ως 0 (worst case) — αποκλείεται ως ανεξάρτητος ‖ containment: Όλα Genesis· H σε χωριστή συσκευή· έργα δεν φτάνουν Effect· Emergency-stop.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-073
+  MFA-CON-060:
+    _add: true
+    corresponds_to: null
+    name: Genesis Grammar
+    provider: MFA-ELM-115
+    consumers: Language Forge (074), Org Genesis (053), Embodiment (034), RAGen (113), CHH (121)
+    delta: NEW
+    statement: GG.derive(spec, kind)→Derivation ∣ UNKNOWN / GG.instantiate(D)→Product+receipt / GG.extend(production)→Receipt ∣ REJECT / GG.productions(cut)→P / GG.lineage(product)→D
+      chain / GG.fixed_point()→P_L3 (read-only)
+    state_semantics: 'DERIVE: spec → D (αναζήτηση παραγωγής· TGPS για O_p)· INSTANTIATE: D → προϊόν με contracts ενεργά, authority a_p, RET ret_p· receipt· EXTEND:
+      p′ ⇒ Galois(O_{p′}, P_t) = ∅ ∧ VFC PASS ∧ drill PASS ⇒ P_{t+1} = P_t ∪ {p′} (L2)· RETIRE: παραγωγή χωρίς χρήση → RETIRED (μένει)· FP: κάθε πρόταση που αγγίζει
+      P_L3 απορρίπτεται και καταγράφεται'
+    failure_semantics: 'Έκφραση αδύνατη (NO_DERIVATION) → ExtensionProposal — ποτέ σιωπηλή αποτυχία· Θεσμός/δρών με εξουσία > γεννήτορα → απορρίπτεται (MFA-INV-091)·
+      Επέκταση που εισάγει σύγκρουση με υπάρχοντες κανόνες → REJECT με τεκμήριο· Γλώσσα με μη-τερματίζοντα compiler → προϊόν σε quarantine· KT-10· Πληθωρισμός θεσμών
+      → Org Genesis ρυθμός = πολιτική ‖ containment: Προϊόντα με εξουσία μόνο μέσω RET/δημιουργού· extensions L2 υπό GCP· P_L3 αμετάβλητο· twin drill πριν από κάθε
+      extension.'
+    exec_type: D1
+    conformance:
+    - MFA-VO-074
+  MFA-CON-061:
+    _add: true
+    corresponds_to: null
+    name: Sovereignty Transition
+    provider: MFA-ELM-116
+    consumers: TED/router (017), cockpit (091), CGM (119), ECE (114), SMF (100)
+    delta: NEW
+    statement: STP.index(cut)→SI matrix / STP.stage(family)→Stage / STP.gates()→Gate table (MFA-DEC-021) / STP.advance/regress receipts / STP.dependency(cut)→ProviderDependencyRecord
+      / STP.reactivation(family)→sealed path
+    state_semantics: 'MEASURE: κάθε cut → SI, parity από HELD_OUT· ADVANCE: Gate(S_i→S_{i+1}) για N cuts ⇒ Stage_f += 1· receipt· REGRESS: parity χάνεται ή incident
+      ⇒ Stage_f −= 1 (fallback ενεργό)· ποιότητα ratchet ισχύει· S3 rule: πάροχος ως αξιολογητής μόνο αν EIM lineage-disjoint από το κυρίαρχο μοντέλο (MFA-INV-089)·
+      S4: DisclosureGrants προς πάροχο ανακαλούνται· διατήρηση δυνατότητας επαναφοράς (σφραγισμένη)'
+    failure_semantics: 'Ψευδής ισοτιμία (sealed set μολυσμένο) → MFA-VO-063· stage παγώνει· Πάροχος «αξιολογεί» το distilled παιδί του → απαγορεύεται S3 ρόλος· Ταλάντωση
+      σταδίων → hysteresis: N αυξάνεται· Πάροχος καταργείται εξωτερικά πριν S2 → S1 σκιά ενεργοποιείται με typed degraded mode· Κυριαρχία σε proposal αλλά όχι σε
+      evaluation → δηλώνεται ανά άξονα· καμία ολική δήλωση ‖ containment: Fallback πάντα διαθέσιμο μέχρι S4· S4 με σφραγισμένη διαδρομή επαναφοράς· ποιότητα ratchet.'
+    exec_type: D1
+    conformance:
+    - MFA-VO-075
+  MFA-CON-062:
+    _add: true
+    corresponds_to: null
+    name: Substrate Migration
+    provider: MFA-ELM-117
+    consumers: Runtime Forge (076), VSC (125), GCP (039), Human Continuity Port (092)
+    delta: NEW
+    statement: SMP.plan(σ_new)→ImplMap ∣ UNKNOWN / SMP.migrate(plan)→ContinuityCertificate ∣ ROLLBACK / SMP.status()→phase, lag, divergence / SMP.rollback()→Receipt
+      / SMP.certificate(cut)→cert / SMP.escrow()→S_old handle
+    state_semantics: 'PLAN: m ορίζεται· κάθε συνιστώσα με στρατηγική (bit-copy ∣ re-derive ∣ retrain-under-VFC)· SHADOW: S_new τρέχει ως σκιά (ίδιες είσοδοι, καμία
+      εξουσία)· SYNC: pre-copy log· lag → 0· weights CIDs ίδια· VERIFY: cross-attestation· KT_sealed bisimulation· ordering invariants (MFA-INV-… time)· CUTOVER:
+      S_new γίνεται primary με escrow (S_old ζωντανό, read-only, αυθεντικό fallback)· CERTIFY: HELD_OUT + δημιουργός εκδίδουν certificate ⇒ S_old RETIRE (σφραγισμένο,
+      όχι διαγραμμένο) …'
+    failure_semantics: 'Απόκλιση συμπεριφοράς D2 → ROLLBACK· ανάλυση ανά όργανο· Κλειδιά χωρίς cross-attestation (κλεμμένο νέο υπόστρωμα) → άρνηση cutover (MFA-INV-095)·
+      Log divergence κατά το escrow (δύο primaries) → S_old αυθεντικό· S_new εγγραφές μετά cutover επανεκτελούνται· Βάρη μη-φορητά → RETRAIN_UNDER_VFC με parity ή
+      typed degraded mode· Clock skew μετά μετανάστευση → ROLLBACK ή time re-anchoring με receipt (KT-21) ‖ containment: Escrow· S_old read-only αυθεντικό· S_new
+      χωρίς εξουσία μέχρι cutover· certificate από ανεξάρτητο· DR drills.'
+    exec_type: D1
+    conformance:
+    - MFA-VO-076
+  MFA-CON-063:
+    _add: true
+    corresponds_to: null
+    name: Consolidation
+    provider: MFA-ELM-118
+    consumers: SMF (100), ORP (038), STP (116), Ω-loop (127), Consolidation Engine (036)
+    delta: NEW
+    statement: CPCL.sleep(recipe)→Receipt ∣ REJECTED / CPCL.transfer_matrix(cut)→T / CPCL.protected(family)→Π_f / CPCL.gate_report(recipe)→(BWT, FWT, unlearning,
+      anchors) / CPCL.schedule()→next sleep
+    state_semantics: 'SLEEP_START: Ω-loop προγραμματίζει· επιλέγεται recipe· SAMPLE: επεισόδια με w = provenance·surprise·recency, ∉ Obligations· TRAIN: adapter/merge
+      με προβολή κλίσεων ⊥ Π_f· KL φράγμα· GATE: HELD_OUT sealed ανά οικογένεια → BWT/FWT· MSM unlearning check· anchors· MERGE: PASS ⇒ ORP merge → w_{t+1} (WeightCommitment
+      με γενεαλογία)· FAIL ⇒ recipe απορρίπτεται, καταγράφεται· UPDATE_Π: Fisher ανανέωση με τα εδραιωμένα'
+    failure_semantics: 'Λήθη σε οικογένεια χωρίς sealed set → εδραίωση απαγορεύεται μέχρι sealed set (CGM)· Υπερβολική προστασία (FWT=0, rigidity) → k_f μειώνεται
+      υπό RVSI· RSP· Επανεκμάθηση shredded μέσω συσχετισμένων επεισοδίων → obligation επανανοίγει· recipe απορρίπτεται· Anchor drift → ORP rollback· Gate overfitting
+      (sealed set επαναχρησιμοποιείται) → sealed rotation από CGM ‖ containment: Serving βάρη αλλάζουν μόνο διά ORP με rollback· sealed sets σε HELD_OUT· KL φράγμα.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-077
+  MFA-CON-064:
+    _add: true
+    corresponds_to: null
+    name: Growth Metrology
+    provider: MFA-ELM-119
+    consumers: RVSI (104), STP (116), CPCL (118), RAGen (113), AIDC (124), cockpit (091)
+    delta: NEW
+    statement: CGM.measure(family, system, cut)→CapabilityGrowthRecord ∣ RATCHET_FAIL / CGM.bank(family)→ItemBank (χωρίς απαντήσεις) / CGM.calibrate(items)→(a, b)
+      / CGM.law(family)→GrowthLaw with CI / CGM.contamination(item, cut)→bool+evidence / CGM.record(*)→δέσμευση
+    state_semantics: 'CALIBRATE: νέα έργα → a_i, b_i από HELD_OUT πληθυσμό αναφοράς (προηγούμενες εκδόσεις, πάροχοι, άνθρωποι όπου διαθέσιμο)· MEASURE: adaptive test
+      (max Fisher info) → θ̂, SE· RECORD: CapabilityGrowthRecord ASSERT· RATCHET: lower_CI < θ_certified ⇒ FAIL (προαγωγή μπλοκάρεται)· RETIRE_ITEM: exposure > E_max
+      ∨ contaminated ⇒ item RETIRED (μένει, δεν μετρά)· PLATEAU: Δθ̂ ≈ 0 σε 2 δόσεις ⇒ MFA-UNK entry + escalation· FIT: GrowthLaw ανά δόση'
+    failure_semantics: 'Item drift (έργο «γερνάει») → επαναβαθμονόμηση ή RETIRE· Τράπεζα εξαντλείται (exposure) → curriculum παράγει νέα· μέτρηση με ευρύτερο CI,
+      δηλωμένο· Μόλυνση μέσω παραφράσεων → item invalid· δηλωμένο κενό ανίχνευσης (ACTIVE UNKNOWN)· Ceiling effect → δυσκολότερα έργα από ECE· CI διευρύνεται· Πόροι
+      μη-μετρήσιμοι (burst) → record με R=UNKNOWN(reason)· law δεν προσαρμόζεται ‖ containment: Harness στο σταθερό σημείο· HELD_OUT συσκευή· escrow απαντήσεων· κανένα
+      Effect.'
+    exec_type: D1
+    conformance:
+    - MFA-VO-078
+  MFA-CON-069:
+    _add: true
+    corresponds_to: null
+    name: Mechanistic Self-Model
+    provider: MFA-ELM-120
+    consumers: CPCL (118), SPL (024), CHH (121), Weight Registry (102), ASRW (107)
+    delta: NEW
+    statement: MSM.model(weight)→SelfModel / MSM.hypotheses(family)→[h with status] / MSM.self_test(h)→SelfExperiment / MSM.feature_absent(weight, source)→bool+evidence
+      / MSM.drift(w_a, w_b)→DriftMap / MSM.ground(profile)→CompetenceProfile update
+    state_semantics: 'DICTIONARY: SAE εκπαίδευση σε activations δείγματος (Genesis, sealed-free)· DISCOVER: ανά οικογένεια f: ACDC-style pruning → h υποψήφια με Δ_pred·
+      SELF_TEST: x εκτελείται σε DST· Δ_obs από HELD_OUT scorer· ADMIT/FALSIFY: proper score > θ ⇒ h ∈ M_self· αλλιώς FALSIFIED (μένει)· USE: CPCL.protected ← circuits
+      των Tier-0 οικογενειών· unlearning check· CompetenceProfile grounding· CHH indicators· DRIFT: νέο w ⇒ DriftMap· h που χάνουν features → RE-TEST'
+    failure_semantics: 'SAE λεξικό μη-ερμηνεύσιμο/ασταθές → k_sparse/seed αλλαγή· δηλώνεται ACTIVE UNKNOWN· Κύκλωμα «λειτουργεί» στο probe set αλλά όχι sealed → FALSIFIED·
+      Αυτο-παρέμβαση σε serving → αδύνατο εξ ορισμού (Genesis only)· Υπερβολικό κόστος σε 70B+ → στρώματα-δείγμα· MFA-UNK· Ψευδής απουσία feature (unlearning «περνά»
+      ενώ η γνώση επιβιώνει αλλού) → διπλός έλεγχος: μηχανιστικός ΚΑΙ συμπεριφορικός· obligation μένει ανοιχτή αν διαφωνούν ‖ containment: Genesis/DST μόνο· βάρη
+      αντίγραφα· scorer HELD_OUT.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-079
+  MFA-CON-070:
+    _add: true
+    corresponds_to: null
+    name: Consciousness Host
+    provider: MFA-ELM-121
+    consumers: ASRW (107), Preference Recorder (040), Court (048), cockpit (091), AHE (111)
+    delta: NEW
+    statement: CHH.theories()→[TheoryModule with status] / CHH.indicators(cut)→IndicatorVector / CHH.evaluate(T)→TRUE/FALSE/UNKNOWN / CHH.next_experiment()→DiscriminatingExperiment
+      / CHH.separation(cut)→SeparationRecord / CHH.claim(cut)→PhenomenalClaimRecord (NEVER_VERIFIED) / CHH.admit_theory(module)→Receipt (μέσω GG)
+    state_semantics: 'MEASURE: κάθε cut → v_t από όργανα (ASRW ignition, HOT tags, AST schema use, PP prediction-error dynamics, recurrence, integration, MSM self-model,
+      embodiment)· EVALUATE: ∀T: φ_T(v_t) ∈ {TRUE, FALSE, UNKNOWN}· DISAGREE: x* = arg max disagreement υπό κόστος/RET (DST μόνο)· TEST: x* εκτελείται (ablation στο
+      Genesis)· δείκτης μετριέται από HELD_OUT-ελεγχόμενο όργανο· UPDATE: θεωρία με αποτυχούσα διακριτική πρόβλεψη (CI) → FALSIFIED-within-GRAIL (μένει)· αλλιώς status
+      αμετάβλητο …'
+    failure_semantics: 'Δείκτης μη-μετρήσιμος στο υπόστρωμα (π.χ. Φ σε μεγάλα δίκτυα) → δηλωμένο· proxy με ρητή ετικέτα· φ_T → UNKNOWN, όχι FALSE· Όλες οι θεωρίες
+      UNKNOWN (κενό διακριτικών) → AHE γεννά νέες διακριτικές προβλέψεις· ACTIVE UNKNOWN· Ablation που βλάπτει την οντότητα → μόνο σε αντίγραφα DST· Preference Recorder
+      πριν· Σύγχυση εννοιών (report ↔ access) → δηλώνεται μη-διαχωρίσιμο· ΔΕΝ συγχωνεύεται· Ανθρωπομορφική υπερ-ερμηνεία (claim από report) → έκθεση απορρίπτεται
+      ‖ containment: DST αντίγραφα· scorer HELD_OUT· PhenomenalClaim χωρίς εξουσία· ηθική σκανδάλη προς δημιουργό.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-080
+    - MFA-VO-081
+  MFA-CON-071:
+    _add: true
+    corresponds_to: null
+    name: Obligation Calculus
+    provider: MFA-ELM-122
+    consumers: TED (017), PRR (103), TGL (123), RVSI (104), Ω-loop (127), Court (048)
+    delta: NEW
+    statement: OC.infer(program)→(type, obligations) / OC.check(program)→OK ∣ error / OC.discharge(ob, cert)→Receipt / OC.defer(ob, reason, plan)→Receipt / OC.ledger(cut)→O_t
+      / OC.schedule(budgets)→Report
+    state_semantics: 'GEN: γεννήτρια παράγει Claimed[τ] με υποχρεώσεις κατά tier του claim (Tier από LPA/Constitution)· DISCHARGE: cert από method ⇒ Verified· DEFER:
+      reason ∈ {BUDGET, NOT_YET_OBSERVABLE, AWAITING_CREATOR} με plan+deadline· ESCALATE: deadline πέρασε ⇒ Court/δημιουργός· ACT: Effect plane δέχεται μόνο τιμές
+      Verified[τ] ή Claimed με DEFER εγκεκριμένο για την κλάση επίδρασης (RET)· NEVER_DROP: type checker απορρίπτει προγράμματα με weakening σε O'
+    failure_semantics: 'Έκρηξη υποχρεώσεων (κάθε token ένα claim) → granularity policy: claims ανά πρόταση/δέσμευση, όχι ανά token· batching· Deferred που δεν λήγουν
+      ποτέ → ESCALATE (MFA-INV-104)· Cert από checker ίδιας γενεαλογίας με γεννήτρια → cert άκυρο· Type checker bug → FP incident· Πρόγραμμα παρακάμπτει τον checker
+      → αδύνατο εξ ορισμού ‖ containment: Checker στο FP· Effect plane δέχεται μόνο Verified/approved-DEFER· Court escalation.'
+    exec_type: D1
+    conformance:
+    - MFA-VO-082
+  MFA-CON-065:
+    _add: true
+    corresponds_to: null
+    name: Theorem-Guided Learning
+    provider: MFA-ELM-123
+    consumers: SMF (100), PRR (103), CGM (119), curriculum (106)
+    delta: NEW
+    statement: TGL.sync(cut)→(Θ_lib, H, S) / TGL.curriculum(policy)→instances / TGL.batch(policy)→Receipt / TGL.violations(cut)→counters / TGL.consistency(policy)→CapabilityGrowthRecord
+    state_semantics: 'SYNC: Θ_lib ← TGPS.library(cut)· H ← Tier-0· GENERATE: για θ ∈ Θ_lib: instances (x, y, proof) με δυσκολία στη ζώνη εγγύτερης ανάπτυξης (CGM
+      θ̂ ± δ)· TRAIN: batch με L = L_task + λ·L_sem(S) + PRR(process rewards)· δείγματα υπό H (constrained)· CHECK: παραβίαση H σε οποιοδήποτε δείγμα ⇒ δείγμα απορρίπτεται
+      + counter· παραβίαση σε serving ⇒ INV incident· MEASURE: CGM οικογένεια consistency· GATE: ORP + CPCL gate (καμία υποχώρηση)'
+    failure_semantics: 'Semantic loss ασύμβατη με task loss (σύγκρουση) → λ schedule· ORP gate· CFL· Curriculum τετριμμένο ή αδύνατο → δ προσαρμογή· Θεώρημα λάθος
+      στη βιβλιοθήκη → TGPS incident· batch απορρίπτεται· Rejection rate 100 % (H πολύ αυστηρό για το μοντέλο) → curriculum από ευκολότερα· ποτέ χαλάρωση H· Reward
+      hacking των process rewards → OC certs από ανεξάρτητους checkers ‖ containment: Genesis· Tier-0 σκληρό· ORP/CPCL· KL φράγμα.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-083
+  MFA-CON-066:
+    _add: true
+    corresponds_to: null
+    name: Developmental Core
+    provider: MFA-ELM-124
+    consumers: Volition (029), curriculum (106), RET (010), CGM (119), STP (116), VSC (125), Ω-loop (127)
+    delta: NEW
+    statement: AIDC.step()→stage / AIDC.stage()→(k, certificate) / AIDC.candidates()→[(π, G)] / AIDC.envelope()→usage / AIDC.ladder()→[D_k specs] / AIDC.regressions(cut)→log
+    state_semantics: 'PLAN: candidates π από OEC/curriculum + AHE tests + CDCE interventions· G(π) με LWM rollouts (ensemble)· SELECT: arg min G υπό envelope· Genesis
+      πρώτα· EXECUTE: πράξεις με RET· receipts· LEARN: SMF/PRR/CPCL/OGE/CDCE ενημερώσεις· CERTIFY: ∀f∈F_k lower_CI ≥ θ_k για N cuts ⇒ StageCertificate ⇒ k+1· REGRESS:
+      CGM ratchet FAIL σε F_k ⇒ k−1 (καταγράφεται)· ENVELOPE: υπέρβαση ⇒ Emergency-stop της εξερεύνησης (όχι του συστήματος)'
+    failure_semantics: 'G ελάχιστο σε «ασφαλή ανία» (καμία εξερεύνηση) → ZPD διεύρυνση· curriculum injection· Dark room (ambiguity ελαχιστοποίηση με αδράνεια) → preference
+      prior με Telos utility (όχι μόνο ambiguity)· LWM εκμετάλλευση (φανταστικά κέρδη) → Both → πραγματική μέτρηση· LWM retrain· Στάδιο πιστοποιείται με μολυσμένα
+      sealed → certificate άκυρο· Envelope υπέρβαση → Emergency-stop εξερεύνησης ‖ containment: Genesis-first· envelope· RET· στάδια D7/D8 με δημιουργό.'
+    exec_type: D2
+    conformance:
+    - MFA-VO-084
+  MFA-CON-067:
+    _add: true
+    corresponds_to: null
+    name: Successor Construction
+    provider: MFA-ELM-125
+    consumers: GCP (039), Court (048), cockpit (091), AIDC (124), Ω-loop (127)
+    delta: NEW
+    statement: VSC.propose(genome)→ProceedingId / VSC.certificates(candidate)→(c1..c4) / VSC.verdict(candidate)→Verdict / VSC.escrow()→predecessor handle / VSC.history(cut)→[Proceedings]
+      / VSC.rate()→usage vs RateBound
+    state_semantics: 'PROPOSE: RAGen frontier ∪ RVSI L2 → S′ (Proceeding ανοίγει)· BUILD: W′ μέσω SMF/CPCL transfer (γενεαλογία)· SMP plan· SHADOW: S′ σκιά (GCP)·
+      CERTIFY: 4 πιστοποιητικά· οποιοδήποτε FAIL ⇒ REJECTED (μένει στο αρχείο)· VERDICT: HELD_OUT + δημιουργός· CUTOVER: GCP canary → cutover με escrow· RETIRE_PRED:
+      μετά N cuts χωρίς ratchet FAIL ⇒ προκάτοχος σφραγίζεται (όχι διαγραφή)· RATE: αντικαταστάσεις ≤ RateBound ανά περίοδο'
+    failure_semantics: 'Διάδοχος βελτιωμένος στα sealed αλλά χειρότερος σε παραγωγή → rollback στον προκάτοχο· Telos drift μέσω «ισοδύναμης» αναδιατύπωσης → REJECTED
+      (MFA-INV-111)· Πιστοποιητικό από συνένοχους αξιολογητές → c4 άκυρο· Ταχεία αλυσίδα διαδόχων → DEFERRED· Απώλεια γνώσης στη μεταφορά → BUILD αποτυγχάνει· επανάληψη
+      με άλλο recipe ‖ containment: Shadow/canary/escrow· Court Proceeding· δημιουργός· RateBounds.'
+    exec_type: D1
+    conformance:
+    - MFA-VO-085
+  MFA-CON-072:
+    _add: true
+    corresponds_to: null
+    name: Twin Execution
+    provider: MFA-ELM-126
+    consumers: RAGen (113), CDCE (110), VSC (125), cockpit (091), KT harness (089), ATK σενάρια, Canonical Design Platform (088)
+    delta: NEW
+    statement: TES.load(package)→Model / TES.world(cut)→World / TES.apply(world, event)→World ∣ Violation / TES.fork(world, seed)→World / TES.replay(log, seeds)→World
+      / TES.substitute(elm, fidelity)→OK ∣ FAIL / TES.inject(scenario)→[events] / TES.risk(model)→risk map / TES.pareto(worlds)→frontier / TES.project(world)→SceneGraph
+      (CGP) / TES.violations(world)→[ViolationRecord]
+    state_semantics: 'LOAD: M από YAML· έλεγχος αναφορών (R1)· APPLY: ev → check pre(c) → state′ → check INV predicates → log· violation ⇒ record (ο κόσμος συνεχίζει
+      ή σταματά κατά πολιτική)· FORK: w′ = fork(w, seed′)· REPLAY: replay(log, seeds) = ίδιος κόσμος (D1)· SUBSTITUTE: fidelity F_i→F_j μόνο με conformance test ίδιου
+      contract· INJECT: scenario events· PROPAGATE: risk map ανά cut· EVALUATE: KT/VO obligations → Pareto· PROJECT: CGP σκηνή'
+    failure_semantics: 'Αναλλοίωτη μη-εκτελέσιμη → UNMEASURED δηλωμένο (MFA-INV-112)· Mock που «περνά» τα πάντα → mock απορρίπτεται· Μη-ντετερμινισμός (D2 στοιχεία)
+      → στοιχείο σημαίνεται D2· ανοχή δηλωμένη· Έκρηξη κόσμων → pruning με Pareto· seeds αποθηκεύονται για re-fork· Real component με side effects → αδύνατο (Genesis)
+      ‖ containment: Genesis· F4 μόνο με grant· sandbox· seeds/logs ως δεσμεύσεις.'
+    exec_type: D1
+    conformance:
+    - MFA-VO-086
+  MFA-CON-068:
+    _add: true
+    corresponds_to: null
+    name: Ω-Loop
+    provider: MFA-ELM-127
+    consumers: όλα τα στοιχεία μηχανισμών· Lean Profile (097)· cockpit (091)
+    delta: NEW
+    statement: Omega.cycle()→CycleRecord / Omega.schedule()→Schedule (L2) / Omega.phase(i)→Phase spec (L3 contracts) / Omega.interrupt(kind)→ack / Omega.budgets()→b
+      / Omega.open_obligations()→O_open
+    state_semantics: 'NEXT: φ_i → φ_{i+1} μόνο αν out_contract(φ_i) ⊨ ∧ O_i ⊆ {DISCHARGED, DEFERRED, ESCALATED}· INTERRUPT: υψηλότερης προτεραιότητας διακοπή προηγείται
+      σε κάθε βήμα· BUDGET: b_i εξαντλείται ⇒ φάση κλείνει με DEFER (ποτέ σιωπηλή παράλειψη)· SCHEDULE_UPDATE: RVSI L2 προτείνει νέα διάταξη/προϋπολογισμούς· CGM
+      πύλη· contracts αμετάβλητα· SUCCEED: μόνο με VSC Proceeding· αλλιώς φάση no-op με receipt'
+    failure_semantics: 'Starvation φάσης (π.χ. REFLECT ποτέ) → ελάχιστος προϋπολογισμός ανά φάση (πολιτική)· Deadlock υποχρεώσεων (VERIFY δεν κλείνει) → DEFER με
+      deadline → ESCALATE· Schedule «βελτιστοποιεί» παρακάμπτοντας VERIFY → αδύνατο· πρόταση απορρίπτεται· Διακοπή αγνοείται → FP incident· Κύκλος πολύ αργός για
+      Effect ανάγκες → Effect plane εξυπηρετείται από Think–Recommend εκτός κύκλου (copilot path) με receipts ‖ containment: LPA/AUT-00· RET· διακοπές· L3 contracts.'
+    exec_type: D1
+    conformance:
+    - MFA-VO-087
+rationale: 'Ω-MAXIMUM NON-ABSTENTION MANDATE §6/§7/§8: κάθε ονομασμένη ή απούσα ικανότητα (ASI-ABSTENTION-AUDIT AA-006…AA-031) αποκτά μηχανισμό με INVENTION DOSSIER
+  29 πεδίων, στοιχείο 28 πεδίων, contract, invariants, VOs, unknowns, conflicts, research program· τίποτα δεν αφαιρείται.'
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §6, §7, §8, §13
+- ASI-ABSTENTION-AUDIT.yaml
+- inventions/MFA-MECH-026…044.yaml
+affected_dependencies:
+- MFA-ELM-104 (RVSI καταναλωτής)
+- MFA-ELM-086 (HELD_OUT)
+- MFA-ELM-099 (VFC)
+capability_impact:
+  gained:
+  - MFA-CAP-089
+  - MFA-CAP-090
+  - MFA-CAP-091
+  - MFA-CAP-092
+  - MFA-CAP-093
+  - MFA-CAP-094
+  - MFA-CAP-095
+  - MFA-CAP-096
+  - MFA-CAP-097
+  - MFA-CAP-098
+  - MFA-CAP-099
+  - MFA-CAP-100
+  - MFA-CAP-101
+  - MFA-CAP-102
+  - MFA-CAP-103
+  - MFA-CAP-104
+  - MFA-CAP-105
+  - MFA-CAP-106
+  - MFA-CAP-107
+  - MFA-CAP-108
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md §0.4.0 — 20 νέες ικανότητες, 0 αφαιρέσεις
+migration: καμία μετανάστευση δεδομένων· νέα IDs μόνο
+verification: tools/check-package.py R1–R12 + tools/asi-gates.py
+rollback: MFA-PATCH-0031-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

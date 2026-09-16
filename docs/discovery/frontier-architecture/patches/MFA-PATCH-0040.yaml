@@ -1,0 +1,57 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0040
+title: Κανόνας γενεαλογίας EIM (distilled(P) ⇒ lineage ∋ P) στα δοσιέ MFA-MECH-009 και MFA-MECH-020 — append-only (AA-015, AA-025)
+operation: ANNOTATE
+targets:
+- mechanisms/MFA-MECH-009.md
+- mechanisms/MFA-MECH-020.md
+base:
+  package_version: 0.1.0
+  file_hashes:
+    mechanisms/MFA-MECH-009.md: 9ebfde325e718682ea7a6a69c1e983e6def8c7764178b77b89d27519adf34493
+    mechanisms/MFA-MECH-020.md: 928a4d177d8c54ef649f84ac28e18969daa67b29492ac4892f7f12a7bf329d76
+preconditions: []
+change:
+  mechanisms/MFA-MECH-009.md:
+    append: '
+
+
+      ## 0.4.0 — Κανόνας γενεαλογίας (MFA-PATCH-0040, ASI-ABSTENTION-AUDIT AA-015)
+
+
+      **Κανόνας:** `distilled(student, P) ⇒ lineage(student) ∋ P`. Ένα κυρίαρχο μοντέλο που αποστάχθηκε (SFT σε εξόδους, distillation υπό DisclosureGrant) από πάροχο
+      P **κληρονομεί** τη γενεαλογία του P στη διάσταση `d_supply` (μοντέλο) και `d_data` (δεδομένα εκπαίδευσης)· επομένως ο P (ή οποιοδήποτε άλλο μοντέλο της γενεαλογίας
+      του) **δεν είναι ανεξάρτητος αξιολογητής** του student, και instances του ίδιου μοντέλου δεν είναι ανεξάρτητοι κριτές μεταξύ τους (§4 της εντολής). Η γενεαλογία
+      διαβάζεται από το Weight Commitment Registry (MFA-ELM-102) — ποτέ από δήλωση. Η πληθυσμιακή εφαρμογή (πληθυσμοί E/H, αποκλεισμοί ανά ζεύγος, Goodhart monitor)
+      είναι ο μηχανισμός MFA-MECH-031 (ECE)· η αναλλοίωτη είναι η MFA-INV-089. Επιστημική κατάσταση του κανόνα: **EMPIRICALLY SUPPORTED** (συσχέτιση σφαλμάτων ίδιας
+      γενεαλογίας) — η κατωφλίωση ανά Tier παραμένει πολιτική.
+
+      '
+  mechanisms/MFA-MECH-020.md:
+    append: '
+
+
+      ## 0.4.0 — Σημείωση γενεαλογίας και μετάβασης (MFA-PATCH-0040)
+
+
+      Κάθε recipe `DISTILL` καταγράφει τον πάροχο P στη γενεαλογία του WeightCommitment (`parent_lineage ∋ P`, MFA-INV-089)· ο P δεν αξιολογεί το distilled παιδί
+      του (MFA-MECH-009 κανόνας γενεαλογίας, MFA-MECH-031). Η φράση «ο πάροχος γίνεται baseline μετά το SMF-E1» **αντικαθίσταται** από το Sovereignty Transition Protocol
+      (MFA-MECH-033): στάδια S0…S4 ανά οικογένεια, Sovereignty Index, πύλες ισοτιμίας (MFA-DEC-021), ratchet ποιότητας. Η εδραίωση χωρίς λήθη είναι το CPCL (MFA-MECH-035)·
+      η μέτρηση ανάπτυξης το CGM (MFA-MECH-036).
+
+      '
+rationale: 'AA-015 same_lineage_agents_claimed_independent: ο κανόνας δεν δηλωνόταν· τώρα είναι ρητός στο δοσιέ του EIM, στο SMF, στην MFA-INV-089 και στο ECE.'
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §4
+- ASI-ABSTENTION-AUDIT AA-015, AA-025
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: καμία
+verification: tools/check-package.py
+rollback: MFA-PATCH-0040-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

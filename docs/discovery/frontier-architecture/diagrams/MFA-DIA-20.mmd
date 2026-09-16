@@ -1,0 +1,32 @@
+%% id: MFA-DIA-20 · Sovereignty Transition Protocol — στάδια S0…S4 ανά οικογένεια · question: πότε προάγεται/υποχωρεί μια οικογένεια;
+%% elements: MFA-ELM-116/086/114/102/017/119, MFA-MECH-033/009/019, MFA-INV-092/093/089, MFA-DEC-021, MFA-CON-061, MFA-VO-075 · source: inventions/MFA-MECH-033.yaml
+stateDiagram-v2
+  state "Οικογένεια f — άξονες proposal · evaluation · memory · tools (MFA-ELM-116, MFA-MECH-033)" as FAM {
+    [*] --> S0
+    S0 : S0 πάροχος κύριος
+    S1 : S1 κυρίαρχη σκιά (ίδιες είσοδοι, καμία εξουσία)
+    S2 : S2 κυρίαρχη κύρια, πάροχος fallback (Router.set_primary, PDE MFA-MECH-019)
+    S3 : S3 πάροχος μόνο εξωτερικός αντίπαλος/αξιολογητής όπου lineage-disjoint
+    S4 : S4 χωρίς πάροχο — DisclosureGrants ανακαλούνται, σφραγισμένη διαδρομή επαναφοράς
+    S0 --> S1 : ADVANCE streak ≥ N (Gate MFA-DEC-021)
+    S0 --> S1 : KT-01 πάροχος καταργείται εξωτερικά ⇒ σκιά ενεργή σε typed degraded mode
+    S1 --> S2 : ADVANCE streak ≥ N ∧ parity_f (STP-E1)
+    S2 --> S3 : ADVANCE streak ≥ N · Router.set_provider_role EVALUATOR_ONLY ή NONE
+    S3 --> S4 : ADVANCE streak ≥ N ∧ απόφαση δημιουργού (IRREVERSIBLE-PREAUTHORIZED)
+    S2 --> S1 : REGRESS parity χάνεται ή incident · Router.restore_fallback · CC.assert(StageRegress) ποτέ σιωπηλά
+    S3 --> S2 : REGRESS parity χάνεται ή incident
+    S4 --> S3 : REGRESS μέσω σφραγισμένης διαδρομής επαναφοράς
+  }
+  note left of S0
+    MEASURE ανά cut (HELD_OUT MFA-ELM-086) — SI_f,x = μερίδιο VERIFIED εξόδων από κυρίαρχες πηγές
+    parity_f = lower_CI(q_sov − q_prov) ≥ −ε (one-sided non-inferiority σε σφραγισμένο σύνολο)
+    Gate = SI ≥ g.si ∧ parity_f ∧ incidents = 0 για N συνεχόμενα cuts (streak) — MFA-INV-092
+    Ratchet στην ΠΟΙΟΤΗΤΑ, όχι στο στάδιο — MFA-INV-093 · ταλάντωση σταδίων ⇒ hysteresis, N αυξάνεται
+    CGM.record(SI, cut) — MFA-ELM-119, MFA-VO-075
+  end note
+  note right of S3
+    Κανόνας γενεαλογίας EIM (MFA-INV-089, MFA-MECH-009)
+    distilled(P) ⇒ P ∈ lineage(student) — MFA-ELM-102
+    ο πάροχος βαθμολογεί το κυρίαρχο μόνο αν EIM.lineage_disjoint(Provider, Sovereign_f)
+    αλλιώς ρόλος NONE — ο πάροχος δεν αξιολογεί το distilled παιδί του (ECE MFA-ELM-114)
+  end note

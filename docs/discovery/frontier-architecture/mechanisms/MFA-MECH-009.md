@@ -28,3 +28,8 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | **22. Αλληλεπιδράσεις** | Απαντά στο MATERIAL §7 #2 (governors) και §9.18· κάνει το N-version του corpus διαψεύσιμο· τροφοδοτεί το MFA-OBJ-039 |
 
 **AI Contribution Ledger:** `NEW ALGORITHM` — τριδιάστατη μετρούμενη ανεξαρτησία (supply/data/behaviour) με veto ανά διάσταση και worst-case για μη παρατηρήσιμα. Συγγενή: N-version diversity metrics, Knight–Leveson, SLSA provenance· κανένα δεν συνθέτει τις τρεις σε πύλη προαγωγής.
+
+
+## 0.4.0 — Κανόνας γενεαλογίας (MFA-PATCH-0040, ASI-ABSTENTION-AUDIT AA-015)
+
+**Κανόνας:** `distilled(student, P) ⇒ lineage(student) ∋ P`. Ένα κυρίαρχο μοντέλο που αποστάχθηκε (SFT σε εξόδους, distillation υπό DisclosureGrant) από πάροχο P **κληρονομεί** τη γενεαλογία του P στη διάσταση `d_supply` (μοντέλο) και `d_data` (δεδομένα εκπαίδευσης)· επομένως ο P (ή οποιοδήποτε άλλο μοντέλο της γενεαλογίας του) **δεν είναι ανεξάρτητος αξιολογητής** του student, και instances του ίδιου μοντέλου δεν είναι ανεξάρτητοι κριτές μεταξύ τους (§4 της εντολής). Η γενεαλογία διαβάζεται από το Weight Commitment Registry (MFA-ELM-102) — ποτέ από δήλωση. Η πληθυσμιακή εφαρμογή (πληθυσμοί E/H, αποκλεισμοί ανά ζεύγος, Goodhart monitor) είναι ο μηχανισμός MFA-MECH-031 (ECE)· η αναλλοίωτη είναι η MFA-INV-089. Επιστημική κατάσταση του κανόνα: **EMPIRICALLY SUPPORTED** (συσχέτιση σφαλμάτων ίδιας γενεαλογίας) — η κατωφλίωση ανά Tier παραμένει πολιτική.

@@ -1,0 +1,83 @@
+%% id: MFA-DIA-22 · Endogenous science loop — από ανωμαλία σε έννοια, αιτία ή θεώρημα · question: πώς μια ανωμαλία γίνεται έννοια, αιτία ή θεώρημα;
+%% elements: MFA-ELM-109/110/111/112/105/028/024/083/025/100/085/098/010/086/099, MFA-MECH-026/027/028/029/009/019, MFA-INV-078/079/080/081/082/083/084, MFA-CON-054/055/056/057, MFA-VO-070 · source: inventions/MFA-MECH-026.yaml, MFA-MECH-027.yaml, MFA-MECH-028.yaml, MFA-MECH-029.yaml
+flowchart TB
+  subgraph SRC["Πηγές ανωμαλιών"]
+    direction LR
+    A1["LWM residuals<br/>MFA-ELM-105"]
+    A2["Void Ledger<br/>MFA-ELM-028"]
+    A3["Self-Prediction Ledger<br/>MFA-ELM-024"]
+    A4["Αποτυχίες schema validation<br/>MFA-ELM-083"]
+  end
+  AQ["AnomalyQueue — a = ⟨observation, prediction, residual, provenance⟩<br/>κατάταξη κατά VOI = αναμενόμενη μείωση PredLoss"]
+  SRC --> AQ
+  subgraph AHE["AHE — MFA-ELM-111 (MFA-MECH-028)"]
+    G1["Gen 1: ILP πάνω στην οντολογία"]
+    G2["Gen 2: αναζήτηση προγραμμάτων στο Skill Library<br/>MFA-ELM-025"]
+    G3["Gen 3: παραμετρική πρόταση από κυρίαρχο μοντέλο<br/>MFA-ELM-100"]
+    TC{"type-check: falsifier φ εκτελέσιμο ∧ ≥1 νέα πρόβλεψη N_H;"}
+    RJ["REJECTED_UNFALSIFIABLE ∣ REJECTED_AD_HOC — καταγράφεται<br/>MFA-INV-082"]
+    HS["HypothesisSet S_a — H = ⟨explanandum, model, φ, N_H, cost, generator_lineage⟩<br/>RANK: EFV(H) = P_refute · IG / cost · top-k υπό budget"]
+    G1 --> TC
+    G2 --> TC
+    G3 --> TC
+    TC -->|"όχι"| RJ
+    TC -->|"ναι"| HS
+  end
+  AQ --> G1
+  AQ --> G2
+  AQ --> G3
+  EIM["τρεις γεννήτριες EIM-ανεξάρτητες (MFA-MECH-009)<br/>calibration ανά γεννήτρια: proper scoring από HELD_OUT (MFA-ELM-086) → βάρη PDE (MFA-MECH-019)"]
+  EIM -.-> G1
+  subgraph TEST["TEST — venue Genesis-first, Effect μόνο υπό RET (MFA-ELM-010)"]
+    direction LR
+    V1["DST<br/>MFA-ELM-085"]
+    V2["LWM<br/>MFA-ELM-105"]
+    V3["World Twin<br/>MFA-ELM-098"]
+    V4["Effect μόνο REVERSIBLE / envelope<br/>MFA-INV-080"]
+  end
+  HS -->|"φ με προκαταχωρισμένο κριτήριο, receipt"| TEST
+  UPD{"Bayesian update της posterior"}
+  TEST --> UPD
+  FAL["FALSIFIED — μένει, δεν διαγράφεται<br/>MFA-INV-083"]
+  UPD -->|"REFUTED"| FAL
+  SUR["Survivors: posterior πάνω από θ_promote ∧ ≥1 N_H επιβεβαιωμένη"]
+  UPD -->|"επιβίωση"| SUR
+  COMP["COMPRESS: anti-unify survivors → βιβλιοθήκη εξηγητικών σχημάτων Lib"]
+  SUR --> COMP
+  COMP -.-> G2
+  subgraph PRO["PROMOTE — τρεις έδρες, με provenance"]
+    subgraph OGE["OGE — MFA-ELM-109 (MFA-MECH-026)"]
+      OB["υπόθεση-έννοια → OGE.birth<br/>G(O → O′ ∣ D_sealed) πάνω από θ_birth σε σφραγισμένο split, HELD_OUT scorer (MFA-INV-079)"]
+      OM["merge/split = Proceeding με LossMap<br/>NON-COLLAPSE: έκταση πάντα ανακτήσιμη, OGE.recover(cid) (MFA-INV-078)"]
+      OB --> OM
+    end
+    subgraph CDCE["CDCE — MFA-ELM-110 (MFA-MECH-027)"]
+      CE["υπόθεση-αιτία → ακμή SCM με EdgeStatus INT (OBS ∣ INT ∣ REF ∣ UND)<br/>ledger = παρεμβατικό dataset: κάθε Effect receipt = do(X=x)"]
+      CI["InterventionProposal VOI/cost υπό RET — Genesis-first, IRREVERSIBLE μόνο με AutonomyEnvelope ή δημιουργό (MFA-INV-080)"]
+      CQ["Counterfactual (TwinNetwork) → τυπωμένη απάντηση: IDENTIFIED ∣ PARTIAL-BOUNDS ∣ UNKNOWN(CAUSAL_UNDERDETERMINED, plan) (MFA-INV-081)"]
+      CE --> CI
+      CE --> CQ
+    end
+    subgraph TGPS["TGPS — MFA-ELM-112 (MFA-MECH-029)"]
+      TO["υπόθεση-νόμος → Skill Library + υποχρέωση απόδειξης (spec: Lean Prop ∣ refinement ∣ tests+contract)"]
+      TS["δύο EIM-ανεξάρτητες γεννήτριες: enumerative + guided (π_θ, V_θ) · CEGIS για προγράμματα"]
+      TV{"cert PASS από ≥2 ανεξάρτητους checkers (VFC MFA-ELM-099);"}
+      TA["ADMIT → Lib ⊕ art · CC.assert(proved) (MFA-INV-084)"]
+      TU["UNKNOWN(PROOF_NOT_FOUND, partial, plan) ∣ VFC incident επί διαφωνίας"]
+      TO --> TS
+      TS --> TV
+      TV -->|"ναι"| TA
+      TV -->|"όχι"| TU
+    end
+  end
+  SUR -->|"έννοια"| OB
+  SUR -->|"αιτία"| CE
+  SUR -->|"νόμος"| TO
+  OM -.->|"έννοιες = μεταβλητές V"| CE
+  CE -.->|"UND ακμές → νέες ανωμαλίες"| AQ
+  CI -.->|"παρεμβάσεις"| V4
+  TU -.->|"νέα υποχρέωση ή ανωμαλία"| AQ
+  classDef keep fill:#e8f5e9,stroke:#2e7d32,color:#000
+  classDef rej fill:#fde2e2,stroke:#b00020,color:#000
+  class FAL,RJ,TU rej
+  class OB,CE,TA keep

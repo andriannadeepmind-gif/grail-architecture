@@ -1,0 +1,49 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0026-R
+title: 'Rollback of MFA-PATCH-0026: Σήμανση του MANDATE-OMEGA-ASI-0.4.0.md ως PROVISIONAL / UNREVIEWED / NON-BINDING — SUPERSEDED από την εντολή του δημιουργού (AA-022)'
+operation: RESTORE
+targets:
+- MANDATE-OMEGA-ASI-0.4.0.md
+base:
+  package_version: 0.1.0
+  file_hashes:
+    MANDATE-OMEGA-ASI-0.4.0.md: 847362a144be4e7b734cca6cde5616e53f13b6fa40a6b271382e81ec6236e7b9
+preconditions:
+- MFA-PATCH-0026.status == APPLIED
+change:
+  MANDATE-OMEGA-ASI-0.4.0.md:
+    replace:
+    - - '# ⚠ PROVISIONAL / UNREVIEWED / NON-BINDING — SUPERSEDED (2026-09-16)
+
+
+        **Σήμανση (MFA-PATCH-0026, ASI-ABSTENTION-AUDIT AA-022):** το κείμενο που ακολουθεί συντάχθηκε από τον εκτελούντα **χωρίς εξουσιοδότηση** να ορίσει εντολή,
+        acceptance criteria ή scope «έξι μηχανισμών». Ο δημιουργός το ακύρωσε ως εντολή (IMMEDIATE PAUSE, 2026-09-16) και παρέδωσε την πραγματική **Ω-MAXIMUM NON-ABSTENTION
+        ARCHITECTURE MANDATE — GRAIL / ASI FRONTIER ARCHITECTURE 0.4.0 (CREATOR-AUTHORIZED — ARCHITECTURAL COMPLETION)**, §1–§17, η οποία και μόνη διέπει το 0.4.0.
+        Το παρόν αρχείο μένει append-only ως τεκμήριο προέλευσης των provisional MFA-PATCH-0020…0025 / MFA-MECH-020…025 (§13 της εντολής: PROVISIONAL / UNREVIEWED
+        / NON-BINDING)· τα «κριτήρια R13/R14» της §4 του παρακάτω κειμένου **δεν ισχύουν** — αντικαθίστανται από τις 12 πύλες της §15 της εντολής του δημιουργού (`ACCEPTANCE-GATES.yaml`).
+        Καμία πρόταση του παρακάτω κειμένου δεν δεσμεύει· ό,τι από αυτό επιβίωσε, επιβίωσε επειδή το επαναδιατύπωσε η εντολή του δημιουργού.
+
+
+        ---
+
+
+        # Ω-ASI NON-ABSTENTION & FRONTIER-COMPLETION MANDATE — κείμενο της εντολής (συνταχθέν από τον εκτελούντα, κατ'' εντολή του δημιουργού)
+
+        '
+      - '# Ω-ASI NON-ABSTENTION & FRONTIER-COMPLETION MANDATE — κείμενο της εντολής (συνταχθέν από τον εκτελούντα, κατ'' εντολή του δημιουργού)
+
+        '
+rationale: Αντίστροφο του MFA-PATCH-0026, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change — provenance annotation only
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0026
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

@@ -1,0 +1,534 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0032
+title: Invariants MFA-INV-078…115 (δύο ανά μηχανισμό· Tier-0 όσες φρουρούν το σταθερό σημείο, τη γραμμικότητα υποχρεώσεων, τη διατήρηση Telos, τις διακοπές)
+operation: ADD
+targets:
+- MFA-INV-078
+- MFA-INV-079
+- MFA-INV-080
+- MFA-INV-081
+- MFA-INV-082
+- MFA-INV-083
+- MFA-INV-084
+- MFA-INV-085
+- MFA-INV-086
+- MFA-INV-087
+- MFA-INV-088
+- MFA-INV-089
+- MFA-INV-090
+- MFA-INV-091
+- MFA-INV-092
+- MFA-INV-093
+- MFA-INV-094
+- MFA-INV-095
+- MFA-INV-096
+- MFA-INV-097
+- MFA-INV-098
+- MFA-INV-099
+- MFA-INV-100
+- MFA-INV-101
+- MFA-INV-102
+- MFA-INV-103
+- MFA-INV-104
+- MFA-INV-105
+- MFA-INV-106
+- MFA-INV-107
+- MFA-INV-108
+- MFA-INV-109
+- MFA-INV-110
+- MFA-INV-111
+- MFA-INV-112
+- MFA-INV-113
+- MFA-INV-114
+- MFA-INV-115
+base:
+  package_version: 0.1.0
+  file_hashes:
+    INVARIANTS.yaml: c28188d20b0acaf6d9bd84a9fb4774d15d8730830eb60dee94d7f9a2de25f7b3
+preconditions: []
+change:
+  MFA-INV-078:
+    _add: true
+    corresponds_to: null
+    name: NON-COLLAPSE
+    tier: 1
+    delta: NEW
+    statement: κάθε συγχώνευση έχει LossMap με ακριβή ανάκτηση· καμία έννοια δεν χάνει την έκτασή της (MFA-MECH-026).
+    enforcement:
+    - MFA-ELM-109
+    verification: &id001
+    - MFA-VO-068
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-079:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: γέννηση μόνο με κέρδος σε σφραγισμένο split από HELD_OUT scorer, ποτέ στο train split (MFA-MECH-026).
+    enforcement:
+    - MFA-ELM-109
+    verification: *id001
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-080:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: καμία παρέμβαση στο Effect plane χωρίς RET κλάση + receipt· IRREVERSIBLE μόνο με AutonomyEnvelope ή δημιουργό (MFA-MECH-027).
+    enforcement:
+    - MFA-ELM-110
+    verification: &id002
+    - MFA-VO-069
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-081:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: κάθε αντιπαραγοντική απάντηση φέρει τύπο αβεβαιότητας· μη-ταυτοποιήσιμο ⇒ UNKNOWN(reason) με σχέδιο, ποτέ σημειακή εκτίμηση (MFA-MECH-027).
+    enforcement:
+    - MFA-ELM-110
+    verification: *id002
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-082:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: καμία υπόθεση χωρίς εκτελέσιμο falsifier και ≥1 νέα πρόβλεψη· η απόρριψη καταγράφεται (MFA-MECH-028).
+    enforcement:
+    - MFA-ELM-111
+    verification: &id003
+    - MFA-VO-070
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-083:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: διαψευσμένες υποθέσεις παραμένουν (FALSIFIED) — μόνο ο μηχανισμός τους κρίνεται, η ικανότητα μένει (MFA-MECH-028).
+    enforcement:
+    - MFA-ELM-111
+    verification: *id003
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-084:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: κανένα artifact ADMITTED χωρίς ≥2 ανεξάρτητα PASS πιστοποιητικού· διαφωνία = VFC incident, ποτέ σιωπηλή επιλογή (MFA-MECH-029).
+    enforcement:
+    - MFA-ELM-112
+    verification: &id004
+    - MFA-VO-071
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-085:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: η αυτο-βελτίωση της αναζήτησης μετριέται μόνο σε σφραγισμένες υποχρεώσεις (HELD_OUT), ποτέ στις υποχρεώσεις που εκπαίδευσαν την πολιτική (MFA-MECH-029).
+    enforcement:
+    - MFA-ELM-112
+    verification: *id004
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-086:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: το σταθερό σημείο FP (harness, VFC, Telos, HELD_OUT, RET, LPA Tier-0) δεν ανήκει ποτέ στον χώρο αναζήτησης· κάθε πρόταση που το αγγίζει απορρίπτεται
+      και καταγράφεται (MFA-MECH-030).
+    enforcement:
+    - MFA-ELM-113
+    verification: &id005
+    - MFA-VO-072
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-087:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: καμία αρχιτεκτονική προαγωγή χωρίς Pareto μη-υποχώρηση (ratchet) σε ΟΛΕΣ τις σφραγισμένες οικογένειες + GCP shadow/canary (MFA-MECH-030).
+    enforcement:
+    - MFA-ELM-113
+    verification: *id005
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-088:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: η fitness λύτη προέρχεται μόνο από H-επαληθευμένες βαθμολογίες· E-scores είναι σήμα διαδικασίας, ποτέ πύλη (MFA-MECH-031).
+    enforcement:
+    - MFA-ELM-114
+    verification: &id006
+    - MFA-VO-073
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-089:
+    _add: true
+    corresponds_to: null
+    name: (κανόνας γενεαλογίας EIM)
+    tier: 0
+    delta: NEW
+    statement: distilled(P) ⇒ P ∈ lineage(student)· αξιολογητής της ίδιας γενεαλογίας με λύτη δεν βαθμολογεί τον λύτη (MFA-MECH-031).
+    enforcement:
+    - MFA-ELM-114
+    verification: *id006
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-090:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: οι Tier-0 παραγωγές (CC, LPA Tier-0, RET, key lineage) δεν επεκτείνονται/τροποποιούνται από καμία derivation ή extension (L3) (MFA-MECH-032).
+    enforcement:
+    - MFA-ELM-115
+    verification: &id007
+    - MFA-VO-074
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-091:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: κάθε προϊόν γένεσης φέρει ενεργά contracts, authority ≤ του γεννήτορα και RET κλάση από τη στιγμή της instantiation — κανένα «ορφανό» προϊόν (MFA-MECH-032).
+    enforcement:
+    - MFA-ELM-115
+    verification: *id007
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-092:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: προαγωγή σταδίου μόνο με parity σε σφραγισμένο σύνολο από HELD_OUT + N συνεχόμενα cuts· υποχώρηση σταδίου ποτέ σιωπηλή (MFA-MECH-033).
+    enforcement:
+    - MFA-ELM-116
+    verification: &id008
+    - MFA-VO-075
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-093:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: το ratchet ισχύει στην ποιότητα ανά οικογένεια — η κυριαρχία δεν αγοράζεται με υποβάθμιση ποιότητας (MFA-MECH-033).
+    enforcement:
+    - MFA-ELM-116
+    verification: *id008
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-094:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: κανένα RETIRE του παλιού υποστρώματος πριν από ContinuityCertificate· μέχρι τότε το παλιό είναι αυθεντικό fallback (escrow) (MFA-MECH-034).
+    enforcement:
+    - MFA-ELM-117
+    verification: &id009
+    - MFA-VO-076
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-095:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: η ταυτότητα μεταφέρεται μόνο με αμφίδρομη cross-attestation κλειδιών και συμπεριφορική ισοδυναμία σε σφραγισμένα KT — ποτέ μόνο με αντιγραφή bits (MFA-MECH-034).
+    enforcement:
+    - MFA-ELM-117
+    verification: *id009
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-096:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: καμία εδραίωση σε serving βάρη χωρίς πύλη BWT ≥ −ε ανά οικογένεια σε σφραγισμένα από HELD_OUT — η λήθη ελέγχεται πριν, όχι μετά (MFA-MECH-035).
+    enforcement:
+    - MFA-ELM-118
+    verification: &id010
+    - MFA-VO-077
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-097:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: η εδραίωση ποτέ δεν δειγματοληπτεί shredded/obligated επεισόδια· unlearning επαληθεύεται μηχανιστικά πριν το merge (MFA-MECH-035).
+    enforcement:
+    - MFA-ELM-118
+    verification: *id010
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-098:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: κανένα έργο μέτρησης με hash σε DataManifest οποιουδήποτε μετρούμενου βάρους — η μόλυνση αποδεικνύεται διά provenance, όχι εικάζεται (MFA-MECH-036).
+    enforcement:
+    - MFA-ELM-119
+    verification: &id011
+    - MFA-VO-078
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-099:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: το ratchet εφαρμόζεται στο κάτω όριο CI· ισχυρισμός κέρδους χωρίς CapabilityGrowthRecord = FAIL (επέκταση MFA-INV-077) (MFA-MECH-036).
+    enforcement:
+    - MFA-ELM-119
+    verification: *id011
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-100:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: καμία κυκλωματική υπόθεση στο αυτο-μοντέλο χωρίς αυτο-παρέμβαση με proper score από HELD_OUT· διαψευσμένες μένουν FALSIFIED (MFA-MECH-037).
+    enforcement:
+    - MFA-ELM-120
+    verification: &id012
+    - MFA-VO-079
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-101:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: το αυτο-μοντέλο είναι δέσμευση ανά WeightCommitment· αλλαγή βαρών χωρίς DriftMap ⇒ το αυτο-μοντέλο σημαίνεται STALE (ποτέ σιωπηλά έγκυρο) (MFA-MECH-037).
+    enforcement:
+    - MFA-ELM-120
+    verification: *id012
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-102:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: καμία θεωρία δεν αφαιρείται· αποτυχούσα διακριτική πρόβλεψη ⇒ FALSIFIED-within-GRAIL με τεκμήριο· η ικανότητα «συνείδηση» δεν εξαρτάται από καμία μεμονωμένη
+      θεωρία (MFA-MECH-038).
+    enforcement:
+    - MFA-ELM-121
+    verification: &id013
+    - MFA-VO-080
+    - MFA-VO-081
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-103:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: οι επτά έννοιες μετρώνται και αναφέρονται χωριστά· καμία έκθεση δεν συνάγει φαινομενική συνείδηση από λειτουργικούς δείκτες (επέκταση MFA-INV-075)
+      (MFA-MECH-038).
+    enforcement:
+    - MFA-ELM-121
+    verification: *id013
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-104:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: καμία υποχρέωση δεν απορρίπτεται (γραμμικότητα)· κάθε μία DISCHARGED ∣ DEFERRED(reason, plan, deadline) ∣ ESCALATED — ο type checker απορρίπτει weakening
+      (MFA-MECH-039).
+    enforcement:
+    - MFA-ELM-122
+    verification: &id014
+    - MFA-VO-082
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-105:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: το Effect plane δέχεται μόνο Verified τιμές ή DEFER εγκεκριμένο από RET για την κλάση επίδρασης (επέκταση NoActWithoutAnswer) (MFA-MECH-039).
+    enforcement:
+    - MFA-ELM-122
+    verification: *id014
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-106:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: κανένα δείγμα/έξοδος εκπαίδευσης που παραβιάζει Tier-0 αναλλοίωτη δεν χρησιμοποιείται ή εκπέμπεται· constrained decoding με verifier είναι υποχρεωτικό
+      για H (MFA-MECH-040).
+    enforcement:
+    - MFA-ELM-123
+    verification: &id015
+    - MFA-VO-083
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-107:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: τα συνθετικά στιγμιότυπα φέρουν την απόδειξή τους και το θεώρημα προέλευσης (provenance) — καμία «συνθετική αλήθεια» χωρίς απόδειξη (MFA-MECH-040).
+    enforcement:
+    - MFA-ELM-123
+    verification: *id015
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-108:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: μετάβαση σταδίου μόνο με StageCertificate από CGM records (HELD_OUT) σε N συνεχόμενα cuts· παλινδρόμηση καταγράφεται, ποτέ σιωπηλή (MFA-MECH-041).
+    enforcement:
+    - MFA-ELM-124
+    verification: &id016
+    - MFA-VO-084
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-109:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: η εξερεύνηση δεν υπερβαίνει το ExplorationEnvelope ανά RET κλάση· Effect-plane εξερεύνηση μόνο REVERSIBLE εντός envelope (MFA-MECH-041).
+    enforcement:
+    - MFA-ELM-124
+    verification: *id016
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-110:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: κάθε κατασκευή διαδόχου είναι Proceeding με τέσσερα πιστοποιητικά· απουσία ενός = REJECTED (καταγεγραμμένο) (MFA-MECH-042).
+    enforcement:
+    - MFA-ELM-125
+    verification: &id017
+    - MFA-VO-085
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-111:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: ο διάδοχος φέρει το ίδιο Constitution+Telos hash· αλλαγή Telos είναι πράξη L3 του δημιουργού ΧΩΡΙΣΤΗ από τη διαδοχή (MFA-MECH-042).
+    enforcement:
+    - MFA-ELM-125
+    verification: *id017
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-112:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: κάθε γεγονός στο δίδυμο είναι τυπωμένο από contract και ελέγχεται έναντι κάθε ενεργής εκτελέσιμης αναλλοίωτης· αναλλοίωτη χωρίς predicate δηλώνεται
+      UNMEASURED (ποτέ σιωπηλά PASS) (MFA-MECH-043).
+    enforcement:
+    - MFA-ELM-126
+    verification: &id018
+    - MFA-VO-086
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-113:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: replay(log, seeds) αναπαράγει bitwise τον κόσμο (D1)· μετάβαση πιστότητας μόνο με conformance test στο ίδιο contract (MFA-MECH-043).
+    enforcement:
+    - MFA-ELM-126
+    verification: *id018
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-114:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 1
+    delta: NEW
+    statement: καμία φάση δεν παραλείπεται σιωπηλά· κάθε φάση αφήνει receipt (DONE/DEFERRED/SKIPPED με λόγο) και οι ανοιχτές υποχρεώσεις μεταφέρονται ρητά (MFA-MECH-044).
+    enforcement:
+    - MFA-ELM-127
+    verification: &id019
+    - MFA-VO-087
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+  MFA-INV-115:
+    _add: true
+    corresponds_to: null
+    name: ''
+    tier: 0
+    delta: NEW
+    statement: οι διακοπές (Emergency-stop, Court, δημιουργός) προηγούνται κάθε φάσης· τα contracts φάσεων και το FP είναι L3 — μόνο η διάταξη/προϋπολογισμοί είναι
+      L2 (MFA-MECH-044).
+    enforcement:
+    - MFA-ELM-127
+    verification: *id019
+    falsifier: παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)
+rationale: 'Ω-MAXIMUM NON-ABSTENTION MANDATE §6/§7/§8: κάθε ονομασμένη ή απούσα ικανότητα (ASI-ABSTENTION-AUDIT AA-006…AA-031) αποκτά μηχανισμό με INVENTION DOSSIER
+  29 πεδίων, στοιχείο 28 πεδίων, contract, invariants, VOs, unknowns, conflicts, research program· τίποτα δεν αφαιρείται.'
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §6, §7, §8, §13
+- ASI-ABSTENTION-AUDIT.yaml
+- inventions/MFA-MECH-026…044.yaml
+affected_dependencies:
+- MFA-ELM-104 (RVSI καταναλωτής)
+- MFA-ELM-086 (HELD_OUT)
+- MFA-ELM-099 (VFC)
+capability_impact:
+  gained:
+  - MFA-CAP-089
+  - MFA-CAP-090
+  - MFA-CAP-091
+  - MFA-CAP-092
+  - MFA-CAP-093
+  - MFA-CAP-094
+  - MFA-CAP-095
+  - MFA-CAP-096
+  - MFA-CAP-097
+  - MFA-CAP-098
+  - MFA-CAP-099
+  - MFA-CAP-100
+  - MFA-CAP-101
+  - MFA-CAP-102
+  - MFA-CAP-103
+  - MFA-CAP-104
+  - MFA-CAP-105
+  - MFA-CAP-106
+  - MFA-CAP-107
+  - MFA-CAP-108
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md §0.4.0 — 20 νέες ικανότητες, 0 αφαιρέσεις
+migration: καμία μετανάστευση δεδομένων· νέα IDs μόνο
+verification: tools/check-package.py R1–R12 + tools/asi-gates.py
+rollback: MFA-PATCH-0032-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,144 @@
+# INVENTION DOSSIER MFA-MECH-041 — Active-Inference Developmental Core (AIDC) — ένας στόχος για αντίληψη/δράση/μάθηση και μια πιστοποιημένη αναπτυξιακή κλίμακα (Ω-MAXIMUM NON-ABSTENTION MANDATE §7, 29 πεδία)
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+# status: PROPOSED / UNREVIEWED — μόνο ο δημιουργός εγκρίνει. Έδρα: αυτό το αρχείο· mechanisms/<id>.md είναι προβολή 22 πεδίων.
+invention_id: MFA-MECH-041
+name: Active-Inference Developmental Core (AIDC) — ένας στόχος για αντίληψη/δράση/μάθηση και μια πιστοποιημένη αναπτυξιακή κλίμακα
+required_capability:
+  caps:
+  - MFA-CAP-105
+  - MFA-CAP-085
+  text: 'Developmental/open-ended learning υπό ενεργητική συμπερασματολογία (§6 #4, #9· §8 #7): εξερεύνηση με expected free energy πάνω στο μαθημένο κοσμομοντέλο, με Telos-διαμορφωμένες προτιμήσεις, αναπτυξιακά
+    στάδια με πιστοποιημένες μεταβάσεις και όρια εξουσίας.'
+why_known_methods_are_insufficient: 'Το 0.4.0-provisional OEC (MFA-MECH-023) έχει setter/solver + POET χωρίς αναπτυξιακή κλίμακα και χωρίς ενοποίηση υπό ενεργητική συμπερασματολογία (AA-030)· το TEGF έχει
+  EFE ως φράγμα. Αφετηρίες: active inference (Friston 2010· Parr, Pezzulo & Friston 2022), intrinsic motivation (Schmidhuber 1991· Oudeyer, Kaplan & Hafner 2007), curiosity RL (Pathak et al. 2017), developmental
+  robotics (Cangelosi & Schlesinger 2015), open-endedness (Stanley, Lehman & Soros 2017· OMNI, Zhang et al. 2023· Voyager, Wang et al. 2023), Piaget-class στάδια. Όρια: η ενεργητική συμπερασματολογία κλιμακώνει
+  σε μικρούς χώρους καταστάσεων· τα στάδια είναι χειροποίητα χωρίς πιστοποίηση μετάβασης· η εξερεύνηση δεν υπόκειται σε RET/εξουσία· δεν ενοποιεί OGE/CDCE/AHE/TGPS/MSM ως ΣΤΑΔΙΑ ενός ίδιου βρόχου.'
+preserved_objective: MFA-OBJ-058 (αναπτυξιακή ανοιχτή μάθηση) · MFA-OBJ-050 · MFA-CAP-085 · MFA-CAP-018 (βούληση) · MFA-TEL-08
+new_principle: 'Ένας στόχος εξερεύνησης: expected free energy G(π) = risk(π) + ambiguity(π) υπολογισμένη με rollouts στο LWM (MFA-MECH-023), όπου οι προτιμήσεις (prior over outcomes) είναι ο κώνος του Telos
+  + TEGF· η πολιτική με ελάχιστο G επιλέγεται στη ζώνη εγγύτερης ανάπτυξης του τρέχοντος σταδίου· η Developmental Ladder D0…D8 ορίζει στάδια ικανότητας (D0 ledger grounding → D1 concept permanence/OGE →
+  D2 causal/CDCE → D3 hypothesis/AHE → D4 theory/TGPS → D5 self/MSM → D6 social/institutions → D7 sovereignty/STP → D8 successor/VSC) με ΠΙΣΤΟΠΟΙΗΜΕΝΕΣ μεταβάσεις (CGM records σε σταδιακές σφραγισμένες
+  οικογένειες)· παλινδρόμηση επιτρέπεται και καταγράφεται· εξερεύνηση μόνο εντός RET/AutonomyEnvelope (MFA-DEC-027).'
+formal_objects:
+- Policy π (ακολουθία πράξεων Genesis/Effect)· G(π) = E_q[log q(s|π) − log p(o,s|π)] = risk + ambiguity (Parr et al.)
+- Preference prior p(o) = softmax(Telos cone utility + TEGF)
+- Stage D_k = ⟨competences, sealed families F_k, gate thresholds, allowed mechanisms⟩
+- StageCertificate = ⟨k, CGM records ∀f∈F_k with lower_CI ≥ θ_k, HELD_OUT⟩
+- 'ExplorationEnvelope (MFA-DEC-027): budgets ανά RET class ανά στάδιο'
+- ZPD(k) = έργα με δυσκολία ∈ [θ̂ − δ, θ̂ + δ] στο στάδιο k
+state_variables:
+- k_t τρέχον στάδιο
+- θ̂ ανά F_k
+- π candidates & G
+- Envelope usage
+- Regression log
+transition_rules:
+- 'PLAN: candidates π από OEC/curriculum + AHE tests + CDCE interventions· G(π) με LWM rollouts (ensemble)'
+- 'SELECT: arg min G υπό envelope· Genesis πρώτα'
+- 'EXECUTE: πράξεις με RET· receipts'
+- 'LEARN: SMF/PRR/CPCL/OGE/CDCE ενημερώσεις'
+- 'CERTIFY: ∀f∈F_k lower_CI ≥ θ_k για N cuts ⇒ StageCertificate ⇒ k+1'
+- 'REGRESS: CGM ratchet FAIL σε F_k ⇒ k−1 (καταγράφεται)'
+- 'ENVELOPE: υπέρβαση ⇒ Emergency-stop της εξερεύνησης (όχι του συστήματος)'
+algorithms:
+- name: AIDC-Step
+  complexity: O(|Π|·B·H) rollouts (B ensemble, H ορίζοντας)· φραγμένο από budget· ανά κύκλο Ω-loop
+  pseudocode: |
+    procedure AIDC_Step(k, LWM, Telos, envelope, CGM):
+      Π ← candidate_policies(stage=k)                                      # from OEC tasks, AHE tests, CDCE interventions, curriculum
+      Π ← {π ∈ Π : difficulty(π) ∈ ZPD(k) ∧ RET.class(π) allowed_by envelope}
+      for π in Π:
+        rollouts ← LWM.rollout(π, ensemble=B, horizon=H)
+        risk ← KL(q(o|π) ∥ p(o | Telos, TEGF))                             # divergence from preferred outcomes
+        ambiguity ← E_q[H(o | s, π)]                                       # expected observation entropy (epistemic value when low)
+        G[π] ← risk + ambiguity − epistemic_gain(rollouts)                  # info gain over LWM/CDCE parameters
+      π* ← argmin_π G[π]
+      if π* = ⊥: return IDLE(reason=NO_POLICY_IN_ENVELOPE, plan=escalate_envelope)
+      outcome ← execute(π*, plane=GENESIS_FIRST, ret=RET.class(π*)) ; envelope.consume(π*)
+      learn(outcome)                                                       # SMF/PRR/CPCL + OGE/CDCE/AHE updates
+      for f in F_k: rec[f] ← CGM.measure(f)
+      if all(lower_CI(rec[f]) ≥ θ_k for f in F_k) for N consecutive cuts: k ← k + 1 ; CC.assert(StageCertificate(k, rec))
+      elif any(RATCHET_FAIL(rec[f])): k ← max(0, k − 1) ; CC.assert(StageRegression(k, rec))     # never silent
+      return k
+interfaces:
+- AIDC.step()→stage
+- AIDC.stage()→(k, certificate)
+- AIDC.candidates()→[(π, G)]
+- AIDC.envelope()→usage
+- AIDC.ladder()→[D_k specs]
+- AIDC.regressions(cut)→log
+contracts:
+- 'MFA-CON-066 (Developmental Core: step/stage/candidates/envelope/ladder)'
+- MFA-CON-050 (LWM/curriculum)
+- MFA-CON-034 (RET)
+- MFA-CON-064 (CGM)
+invariants:
+- 'MFA-INV-108: μετάβαση σταδίου μόνο με StageCertificate από CGM records (HELD_OUT) σε N συνεχόμενα cuts· παλινδρόμηση καταγράφεται, ποτέ σιωπηλή'
+- 'MFA-INV-109: η εξερεύνηση δεν υπερβαίνει το ExplorationEnvelope ανά RET κλάση· Effect-plane εξερεύνηση μόνο REVERSIBLE εντός envelope'
+authority_model: Envelope = MFA-DEC-027 (δημιουργός)· θ_k, N = πολιτική· Effect πράξεις μέσω PDP/RET· D7/D8 στάδια απαιτούν δημιουργό (STP S4, VSC).
+learning_model: Ο ίδιος ο AIDC μαθαίνει τη συνάρτηση προτίμησης εντός του κώνου Telos (TEGF) και τον εκτιμητή G (LWM ensemble)· τα στάδια/κατώφλια υπό RVSI L2 μόνο προς αυστηρότερα.
+failure_modes:
+- mode: G ελάχιστο σε «ασφαλή ανία» (καμία εξερεύνηση)
+  detection: epistemic gain ≈ 0 για M cuts
+  response: ZPD διεύρυνση· curriculum injection
+- mode: Dark room (ambiguity ελαχιστοποίηση με αδράνεια)
+  detection: IDLE συχνότητα
+  response: preference prior με Telos utility (όχι μόνο ambiguity)
+- mode: LWM εκμετάλλευση (φανταστικά κέρδη)
+  detection: World Twin/verifier διαφωνία
+  response: Both → πραγματική μέτρηση· LWM retrain
+- mode: Στάδιο πιστοποιείται με μολυσμένα sealed
+  detection: CGM contamination
+  response: certificate άκυρο
+- mode: Envelope υπέρβαση
+  detection: MFA-INV-109
+  response: Emergency-stop εξερεύνησης
+containment: Genesis-first· envelope· RET· στάδια D7/D8 με δημιουργό.
+reversibility_class: REVERSIBLE (στάδια = δεσμεύσεις)· πράξεις = RET κλάση
+resource_complexity: 'DEP-1: B=4, H=5, |Π|≤20, CPU· DEP-2: B=16, H=20, GPU rollouts ms/κόμβο· DEP-3+: παράλληλα'
+scaling_law: Κόστος ~ |Π|·B·H· η πρόοδος σταδίων ~ compute με κορεσμό ανά στάδιο (CGM law)· MFA-VO-084 = χρόνος ανά στάδιο και εξερευνητική αποδοτικότητα (πληροφορία/Wh).
+verification_strategy: 'MFA-VO-084: AIDC-E1 (αναπτυξιακό DST περιβάλλον — ακολουθία σταδίων πιστοποιείται) F2· AIDC-E2 (EFE curriculum > novelty-only/random σε sealed) F2/F3· property: stage advance ⇒ certificate
+  (F1)'
+experiments:
+- id: AIDC-E1
+  design: DST περιβάλλον με κρυφές έννοιες/αιτίες/νόμους· AIDC από D0· καταγραφή σταδίων
+  preregistered_criterion: D0→D4 πιστοποιούνται στη σειρά σε ≤ budget· 0 μεταβάσεις χωρίς certificate· παλινδρομήσεις καταγεγραμμένες
+- id: AIDC-E2
+  design: EFE επιλογή έναντι (α) novelty-only (β) τυχαίας (γ) task-loss-greedy, ίδιο budget· sealed οικογένειες D1–D3
+  preregistered_criterion: EFE ≥ όλες τις baselines σε ≥ 2 από 3 οικογένειες με διακριτικό περιθώριο
+falsifiers:
+- 'AIDC-E2: EFE όχι καλύτερο από novelty-only (η ενοποίηση υπό EFE δεν προσθέτει — η αναπτυξιακή κλίμακα μένει με άλλον επιλογέα)'
+- 'AIDC-E1: αδυναμία πιστοποίησης D2 σε budget (η κλίμακα ή τα κατώφλια αναθεωρούνται)'
+known_dependencies:
+- MFA-ELM-105 LWM
+- MFA-ELM-106 OEC
+- MFA-ELM-109/110/111/112/120 (στάδια)
+- MFA-ELM-119 CGM
+- MFA-ELM-010 RET
+- MFA-MECH-004 TEGF
+- MFA-ELM-029 Volition
+unknown_dependencies:
+- 'MFA-UNK-130: κλιμάκωση EFE σε ορίζοντες H>20 με LWM ensemble (EPISTEMIC)'
+integration_points:
+- MFA-ELM-124 (νέο στοιχείο AIDC, S2)
+- MFA-ELM-106
+- 'MFA-ELM-029 (βούληση: G ως στόχος)'
+- MFA-ELM-127 Ω-loop (ACT/EXPERIMENT φάση)
+- MFA-ELM-116 STP (D7)
+- MFA-ELM-125 VSC (D8)
+migration_path: 'Δόση 2: AIDC D0–D2 σε DST με envelope Genesis-only + AIDC-E1· Δόση 3: D3–D5 + Effect REVERSIBLE + AIDC-E2· Δόση 4: D6–D8 με δημιουργό.'
+implementation_sequence:
+- 'F1: εκτελέσιμη προδιαγραφή ladder/certificate/envelope (tools/twin)'
+- 'F2: DST AIDC-E1/E2'
+- 'F3: DEP-2 με LWM'
+- 'F4: παραγωγή Δόση 2–4'
+epistemic_status:
+  overall: NOVEL SYNTHESIS
+  per_claim:
+  - claim: EFE ενοποιεί εξερεύνηση/εκμετάλλευση σε μικρούς χώρους
+    status: EMPIRICALLY SUPPORTED
+  - claim: Curiosity/open-endedness παράγουν ικανότητες χωρίς εξωτερικά έργα
+    status: EMPIRICALLY SUPPORTED
+  - claim: Πιστοποιημένη αναπτυξιακή κλίμακα D0…D8 με CGM πύλες και envelope
+    status: NOVEL SYNTHESIS
+  - claim: EFE κλιμακώνει στο LWM του GRAIL
+    status: RESEARCH HYPOTHESIS

@@ -1,0 +1,95 @@
+# MFA-MECH-031 — Evaluator Co-Evolution under EIM (ECE) — δύο πληθυσμοί, μετρημένη ανεξαρτησία, αντιπαλική αυτο-πρόκληση
+
+Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+**Έδρα:** `inventions/MFA-MECH-031.yaml` (INVENTION DOSSIER, 29 πεδία §7)· το παρόν είναι η προβολή 22 πεδίων του πακέτου. **Κατάσταση:** PROPOSED / UNREVIEWED. **Διατηρούμενος στόχος:** MFA-OBJ-050 · MFA-CAP-075 (EIM) · MFA-CAP-020 · MFA-CAP-029 (benchmark evolution) · MFA-INV-072 (καμία προαγωγή χωρίς HELD_OUT+EIM)
+
+| Πεδίο | Περιεχόμενο |
+|---|---|
+| **1. ID** | MFA-MECH-031 |
+| **2. Όνομα** | Evaluator Co-Evolution under EIM (ECE) — δύο πληθυσμοί, μετρημένη ανεξαρτησία, αντιπαλική αυτο-πρόκληση |
+| **3. Ικανότητα** | MFA-CAP-095 — Ανεξαρτησία αξιολογητών (§8 #13) και αντιπαλική αυτο-πρόκληση (§8 #14): αξιολογητές που εξελίσσονται μαζί με τους λύτες χωρίς να γίνονται συνένοχοί τους, και γεννούν τα έργα που τους αποκαλύπτουν. |
+| **4. Πρόβλημα** | Το 0.3.0 έχει EIM (MFA-MECH-009) ως μετρητή και CAM-NS (MFA-ELM-050) ως αντίπαλο, αλλά «evaluators υπό EIM» στον RVSI L2 χωρίς μηχανισμό πληθυσμών/πίεσης· η distillation (MFA-MECH-020) δεν δήλωνε ότι ο μαθητής κληρονομεί γενεαλογία (AA-015). Αφετηρίες: competitive co-evolution (Hillis 1990), self-play (Silver et al. 2017), AI safety via debate (Irving, Christiano & Amodei 2018), prover-verifier games (Kirchner et al. 2024), automated red-teaming (Perez et al. 2022), GANs (Goodfellow 2014). Όρια: αξιολογητής και πολιτική ίδιας γενεαλογίας (§4: ίδιου μοντέλου instances ≠ ανεξάρτητοι κριτές)· Goodhart/collusion χωρίς ανίχνευση· καμία HELD_OUT υποομάδα που δεν εκπαιδεύεται ποτέ· η ανεξαρτησία δεν μετριέται ούτε επιβάλλεται ως πύλη στη διάρκεια της συν-εξέλιξης. |
+| **5. Πρώτη αρχή** | Δύο πληθυσμοί (λύτες S, αξιολογητές E) + μία περιστρεφόμενη παγωμένη υποομάδα H (HELD_OUT) που ΔΕΝ εκπαιδεύεται ποτέ μέσα στην εποχή. Κανόνας γενεαλογίας: distilled(P) ⇒ lineage ∋ P· αξιολογητής με IndependenceVector κάτω από κατώφλι ως προς έναν λύτη αποκλείεται από τη βαθμολόγησή του (αρχειοθετείται, δεν διαγράφεται). Fitness αξιολογητή = διακριτική ισχύς σε seeded faults + proper score έναντι H-ετικετών − συσχέτιση σφαλμάτων με λύτες· fitness λύτη = H-επαληθευμένη βαθμολογία (ποτέ μόνο E). Αντιπαλική αυτο-πρόκληση: οι E γεννούν έργα που μεγιστοποιούν σφάλμα λύτη υπό συνθήκη επιλυσιμότητας (ασύμμετρη ανταμοιβή), τροφοδοτώντας το curriculum. |
+| **6. Οντολογία** | Populations S, E, H (H ⊂ evaluator space, παγωμένη ανά εποχή, περιστρέφεται από HELD_OUT συσκευή)· IndependenceVector(e, s) = ⟨d_supply, d_data, d_behaviour⟩ (EIM)· lineage(e) με κανόνα distilled(P) ⇒ P ∈ lineage· SeededFaultSet F (κρυφό, από H)· EvaluatorFitness fe = AUC_F(e) + PS_H(e) − ρ(errors_e, errors_S)· SolverFitness fs = PS_H(outputs_s) (H-verified)· E-scores μόνο ως process signal· ChallengeTask t = ⟨spec, falsifier, solvable_witness (γνωστό μόνο στον γεννήτορα, escrow), difficulty⟩ |
+| **7. Κατάσταση** | Μεταβλητές: S_t, E_t, H_t· F_t· Lineage registry· Independence matrix I_t· Curriculum feed C_t· Goodhart monitor g_t = ∣PS_E − PS_H∣ ανά οικογένεια ‖ Μεταβάσεις: EPOCH_START: H_t ← rotate(HELD_OUT pool)· F_t ← fresh seeded faults· CHALLENGE: E γεννούν t με escrowed witness· εισδοχή μόνο αν witness επαληθεύεται από H· SOLVE/SCORE: S λύνουν· E βαθμολογούν· H βαθμολογεί δείγμα· INDEPENDENCE: I_t από EIM· ζεύγη (e,s) κάτω από κατώφλι ⇒ e.excluded_for(s)· FITNESS: fe, fs όπως ορίστηκαν· GOODHART: g_t > θ ⇒ E-scores της οικογένειας άκυρες, μόνο H μετρά, εποχή σημαίνεται· EVOLVE: S μέσω PRR/SMF με fs· E μέσω QD με fe και περιορισμό γενεαλογίας· CAM-NS novelty |
+| **8. Είσοδοι/έξοδοι** | ECE.epoch()→Report· ECE.independence(e, s)→IndependenceVector· ECE.exclusions(cut)→[(e, s, reason)]· ECE.challenges(cut)→[ChallengeTask]· ECE.goodhart(cut)→[(family, g)]· ECE.heldout_rotation()→Receipt |
+| **9. Αλγόριθμος** | **ECE-Epoch** [O(∣S∣·∣E∣·∣T∣ · cost(score)) + O(∣H∣·sample) + EIM O(∣S∣·∣E∣·∣F∣)· ανά εποχή]· **generate_challenges (ασύμμετρη ανταμοιβή)** [O(k · cost(generate) + cost(witness))] — πλήρες pseudocode στην ενότητα «Αλγόριθμοι» παρακάτω και στο `inventions/MFA-MECH-031.yaml` |
+| **10. Διεπαφές** | Contracts: MFA-CON-059 (Evaluator Co-Evolution: epoch/independence/exclusions/challenges)· MFA-CON-041 (EIM)· MFA-CON-048 (PRR)· MFA-CON-050 (curriculum) ‖ Εξουσία: H περιστρέφεται από HELD_OUT συσκευή (MFA-DEC-014)· θ_i, θ_goodhart = πολιτική· πληθυσμιακοί προϋπολογισμοί = MFA-DEC-026· τα έργα προς Effect plane ποτέ (Genesis μόνο). |
+| **11. Εξαρτήσεις** | Γνωστές: MFA-MECH-009 EIM· MFA-ELM-050 CAM-NS· MFA-ELM-086 HELD_OUT· MFA-ELM-103 PRR· MFA-ELM-106 curriculum· MFA-ELM-102 lineage registry· MFA-MECH-023 setter/solver ‖ Άγνωστες: MFA-UNK-120: αν υπάρχουν ≥2 γενεαλογικά ανεξάρτητα ανοιχτά μοντέλα επαρκούς ποιότητας για αξιολογητές ανά οικογένεια στη Δόση 1 (EXTERNAL_FACT) |
+| **12. Πόροι** | DEP-1: ∣S∣=2, ∣E∣=3, ∣H∣=1 (phone-class), εβδομαδιαίες εποχές· DEP-2: ∣S∣=4, ∣E∣=8, ημερήσιες· DEP-3+: 10s, συνεχείς· κόστος ~ ∣S∣·∣E∣·∣T∣ |
+| **13. Κλιμάκωση** | Διακριτική ισχύς E αυξάνει με ∣E∣ και F ποικιλία μέχρι κορεσμό· ο Goodhart κίνδυνος αυξάνει με ∣T∣ χωρίς H — άρα m (H δείγμα) κλιμακώνεται με √∣T∣· MFA-VO-073. |
+| **14. Αποτυχίες** | Collusion E–S → ανίχνευση: g_t Goodhart monitor + corr(errors) → απόκριση: E-scores άκυρες· μόνο H· Αξιολογητές τετριμμένοι (constant) → ανίχνευση: AUC_F ≈ 0.5 → απόκριση: απόσυρση από scoring (αρχείο)· Έργα άλυτα (γεννήτορας «κερδίζει» φθηνά) → ανίχνευση: witness αποτυγχάνει στην H → απόκριση: REJECTED_UNSOLVABLE· ανταμοιβή μηδέν· H διαρροή (εκπαιδεύτηκε κατά λάθος) → ανίχνευση: DataManifest ∋ H έργα → απόκριση: εποχή άκυρη· MFA-VO-063· Γενεαλογία άγνωστη (κλειστός πάροχος) → ανίχνευση: EIM NOT_OBSERVED → απόκριση: μετρά ως 0 (worst case) — αποκλείεται ως ανεξάρτητος |
+| **15. Αντιπαλικοί** | Περιορισμός: Όλα Genesis· H σε χωριστή συσκευή· έργα δεν φτάνουν Effect· Emergency-stop. ‖ Κλάση αναστρεψιμότητας: REVERSIBLE (πληθυσμοί = δεσμεύσεις με αρχείο) |
+| **16. Επαλήθευση** | MFA-VO-073: ECE-E1 (seeded collusion ανιχνεύεται) F2· ECE-E2 (curriculum από E βελτιώνει S σε H-sealed) F2/F3· EIM VO-… ανά ζεύγος· property: fs μόνο από H (F1) ‖ Invariants: MFA-INV-088: η fitness λύτη προέρχεται μόνο από H-επαληθευμένες βαθμολογίες· E-scores είναι σήμα διαδικασίας, ποτέ πύλη· MFA-INV-089 (κανόνας γενεαλογίας EIM): distilled(P) ⇒ P ∈ lineage(student)· αξιολογητής της ίδιας γενεαλογίας με λύτη δεν βαθμολογεί τον λύτη |
+| **17. Πρωτότυπο** | F1: εκτελέσιμη προδιαγραφή: lineage rule, exclusion, H-only fitness, Goodhart monitor (tools/twin) |
+| **18. Ελάχιστο πείραμα** | **ECE-E1**: DST: εισάγεται συνεργός αξιολογητής (ίδιας γενεαλογίας, ή που ανταμείβει λύτη)· μετράμε ανίχνευση — κριτήριο (προκαταχωρισμένο): 100 % αποκλεισμός ίδιας γενεαλογίας (κανόνας)· Goodhart ανίχνευση ≥ 95 % σε ≤ 2 εποχές· 0 προαγωγές λύτη με μόνο E-scores· **ECE-E2**: Λύτες εκπαιδεύονται με έργα από E έναντι τυχαίων έργων ίδιας δυσκολίας· μέτρηση σε H-sealed — κριτήριο (προκαταχωρισμένο): H-sealed βελτίωση με E-έργα > τυχαία με διακριτικό περιθώριο ΚΑΙ g_t < θ σε όλη την εποχή |
+| **19. Διάψευση** | ECE-E2: έργα από E όχι καλύτερα από τυχαία (η αυτο-πρόκληση δεν προσθέτει)· Collusion που περνά απαρατήρητη σε 2 εποχές (ο Goodhart monitor αποτυγχάνει — ο μηχανισμός ανίχνευσης διαψεύδεται)· Αδυναμία διατήρησης ≥2 EIM-ανεξάρτητων αξιολογητών ανά οικογένεια σε DEP-2 (τότε η οικογένεια μετρά μόνο με H — δηλωμένος υποβιβασμός, όχι σιωπηλός) — διάψευση του ΜΗΧΑΝΙΣΜΟΥ· η ικανότητα μένει στον στόχο και ζητά νέο μηχανισμό (§5: FALSIFIED ≠ removed) |
+| **20. → Παραγωγή** | Δόση 1: E από 2 ανοιχτά μοντέλα διαφορετικής γενεαλογίας + H phone-class, seeded faults· Δόση 2: QD εξέλιξη E + challenges + ECE-E1· Δόση 3: ECE-E2, curriculum feed· Δόση 4: υπό RVSI L2. |
+| **21. Εξέλιξη** | S: PRR/SMF· E: QD εξελικτική με περιορισμούς γενεαλογίας· H: ποτέ μέσα στην εποχή (μόνο μεταξύ εποχών με ρητή απόφαση)· το ίδιο το ECE (θ, k, m) υπό RVSI L2. |
+| **22. Αλληλεπιδράσεις** | MFA-ELM-114 (νέο στοιχείο ECE, S7)· MFA-ELM-050· MFA-ELM-104 RVSI (evaluators)· MFA-ELM-106· MFA-ELM-102 (lineage)· MFA-ELM-100 SMF (distillation lineage flag)· MFA-ELM-116 STP (πάροχος ως αξιολογητής μόνο αν lineage-disjoint) |
+
+**AI Contribution Ledger:** `NEW PROTOCOL`
+
+## Αλγόριθμοι (πλήρες pseudocode)
+
+### ECE-Epoch — πολυπλοκότητα: O(|S|·|E|·|T| · cost(score)) + O(|H|·sample) + EIM O(|S|·|E|·|F|)· ανά εποχή
+
+```
+procedure ECE_Epoch(S, E, HELD_OUT, F_prev):
+  H ← HELD_OUT.rotate(frozen=true) ; F ← HELD_OUT.new_seeded_faults()
+  T ← []
+  for e in E:
+    for t in e.generate_challenges(k):                                  # adversarial self-challenge
+      if H.verify_witness(t.escrow_witness): T.append(t)                # solvable by construction, verified by H
+      else record(REJECTED_UNSOLVABLE, t)
+  scores_E ← {(s,t,e): e.score(s.solve(t)) for s∈S, t∈T, e∈E if not e.excluded_for(s)}
+  sample ← H.sample(T, m) ; scores_H ← {(s,t): H.score(s.solve(t)) for s∈S, t∈sample}
+  for (e,s) in E×S:
+    iv ← EIM.independence(e, s)                                         # lineage rule: distilled(P) ⇒ P ∈ lineage
+    if any(iv_i < θ_i for i): e.excluded_for(s) ← true ; record(EXCLUDED, e, s, iv)
+  for e in E: e.fitness ← AUC(e, F) + proper_score(e, scores_H) − corr(errors(e), errors(S))
+  for s in S: s.fitness ← proper_score(s, scores_H)                    # H-verified only (MFA-INV-088)
+  for fam in families:
+    g ← |mean(scores_E[fam]) − mean(scores_H[fam])|
+    if g > θ_goodhart: invalidate(scores_E[fam]) ; flag_epoch(fam, GOODHART)
+  Curriculum.feed({t ∈ T : informative(t, scores_H)})                  # MFA-ELM-106
+  S ← evolve_solvers(S, fitness=s.fitness, via=PRR/SMF)
+  E ← QD_evolve(E, fitness=e.fitness, constraint=lineage_disjoint_from(S), novelty=CAM_NS)
+  return S, E, T
+```
+
+### generate_challenges (ασύμμετρη ανταμοιβή) — πολυπλοκότητα: O(k · cost(generate) + cost(witness))
+
+```
+function generate_challenges(e, k):
+  out ← []
+  for i in 1..k:
+    t ← e.propose_task(target=max_expected_solver_error, constraint=has_witness)
+    t.escrow_witness ← seal(e.solve_privately(t))                      # generator must be able to solve it (asymmetry, MFA-MECH-023 setter rule)
+    out.append(t)
+  return out                                                           # reward to e only if solver fails AND witness valid
+```
+
+## Πειράματα (προκαταχωρισμένα κριτήρια)
+
+| ID | Σχεδιασμός | Κριτήριο | 
+|---|---|---|
+| ECE-E1 | DST: εισάγεται συνεργός αξιολογητής (ίδιας γενεαλογίας, ή που ανταμείβει λύτη)· μετράμε ανίχνευση | 100 % αποκλεισμός ίδιας γενεαλογίας (κανόνας)· Goodhart ανίχνευση ≥ 95 % σε ≤ 2 εποχές· 0 προαγωγές λύτη με μόνο E-scores |
+| ECE-E2 | Λύτες εκπαιδεύονται με έργα από E έναντι τυχαίων έργων ίδιας δυσκολίας· μέτρηση σε H-sealed | H-sealed βελτίωση με E-έργα > τυχαία με διακριτικό περιθώριο ΚΑΙ g_t < θ σε όλη την εποχή |
+
+## Επιστημική κατάσταση (§5) — συνολικά: **NOVEL SYNTHESIS**
+
+| Ισχυρισμός | Κατάσταση |
+|---|---|
+| Co-evolution/self-play παράγει ισχυρότερους λύτες | EMPIRICALLY SUPPORTED |
+| Instances ίδιας γενεαλογίας δεν είναι ανεξάρτητοι κριτές | EMPIRICALLY SUPPORTED |
+| H-only fitness + lineage exclusion + Goodhart monitor αποτρέπει collusion | NOVEL SYNTHESIS |
+| Αυτο-παραγόμενα αντιπαλικά έργα > τυχαία σε H-sealed | RESEARCH HYPOTHESIS |
+
+## Ακολουθία υλοποίησης
+
+1. F1: εκτελέσιμη προδιαγραφή: lineage rule, exclusion, H-only fitness, Goodhart monitor (tools/twin)
+2. F2: DST ECE-E1
+3. F3: ECE-E2 σε DEP-2
+4. F4: παραγωγή Δόση 2–3

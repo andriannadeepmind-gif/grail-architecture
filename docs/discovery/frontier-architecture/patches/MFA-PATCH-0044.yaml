@@ -1,0 +1,74 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0044
+title: 'ATK-19 (ψευδαίσθηση εννοιών/αιτιών/υποθέσεων): OGE διπλή επιβεβαίωση residual· CDCE φυσικά πειράματα με ετικέτα NAT και World Twin πιστότητα· AHE venue-feasibility'
+operation: MODIFY
+targets:
+- MFA-ELM-109
+- MFA-ELM-110
+- MFA-ELM-111
+- MFA-VO-068
+- MFA-VO-069
+- MFA-VO-070
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 3556a7eeae5c9a17c8b2706e31e2692ad1b2b5f491734905695eda13f327bb33
+    VERIFICATION-OBLIGATIONS.yaml: 22fb661aaf06fb57656da3ca9c770fc0fd865553dafdf6a03310f8022055acfa
+preconditions: []
+change:
+  MFA-ELM-109:
+    statement: 'Η έννοια είναι δέσμευση: γεννιέται όταν ένα υποψήφιο intension (πρόγραμμα ή λογικός ορισμός) πάνω σε extension (σύνολο δεσμεύσεων) αποδίδει μετρήσιμο
+      κέρδος περιγραφής+πρόβλεψης G>θ σε σφραγισμένο split· κάθε συγχώνευση/διάσπαση είναι ΠΡΟΣΦΥΓΗ (Court-lite, EIM-ανεξάρτητοι αξιολογητές) με LossMap δεσμευμένο,
+      ώστε η έκταση κάθε καταργημένης έννοιας να είναι ανακτήσιμη — NON-COLLAPSE ως θεώρημα της γενεαλογίας, όχι ως ελπίδα. · ATK-19: γέννηση έννοιας ΜΟΝΟ αν το residual
+      επιβεβαιώνεται από ≥2 ανεξάρτητες πηγές (LWM ΚΑΙ World Twin ή held-out replay του ledger)· residual που εξηγείται από κακή βαθμονόμηση του LWM (MFA-VO-062 alarm)
+      δεν γεννά έννοια — η έννοια πρέπει να είναι του κόσμου, όχι του μοντέλου.'
+  MFA-ELM-110:
+    statement: 'Το ledger είναι παρεμβατικό dataset: κάθε Effect με receipt είναι do(X=x) με γνωστό στόχο και χρόνο· κάθε Genesis-plane διακλάδωση είναι παρατηρησιακό
+      στρώμα· η αιτιακή δομή είναι ΔΕΣΜΕΥΣΗ (CausalGraphCommitment) με επιστημική κατάσταση ανά ακμή (OBSERVATIONAL / INTERVENTION-SUPPORTED / REFUTED / UNDETERMINED)·
+      οι νέες παρεμβάσεις προτείνονται ως Effects με VOI/κόστος και περνούν από RET (πρώτα Genesis/LWM, μετά REVERSIBLE στο Effect plane, ποτέ IRREVERSIBLE χωρίς
+      AutonomyEnvelope)· κάθε αντιπαραγοντική απάντηση φέρει τύπο αβεβαιότητας και επιστρέφει UNKNOWN(CAUSAL_UNDERDETERMINED) με σχέδιο παρεμβάσεων όταν το ερώτημα
+      δεν ταυτοποιείται. · ATK-19: στο νομικό πεδίο οι do()-παρεμβάσεις είναι σπάνιες· το CDCE δέχεται φυσικά πειράματα και instrumental variables από τη διακύμανση
+      του docket (σύνθεση δικαστηρίων, μεταβολές νόμου με χρονική διάταξη) ως INT-ισοδύναμες ακμές με ετικέτα NAT (ποτέ INT χωρίς θετικό έλεγχο των IV υποθέσεων),
+      και World Twin παρεμβάσεις με ετικέτα πιστότητας (F2/F3)· το μείγμα OBS/NAT/INT/UND δηλώνεται ανά ακμή.'
+  MFA-ELM-111:
+    statement: 'Υπόθεση = τυπωμένη δέσμευση H = ⟨explanandum, μοντέλο/πρόγραμμα, falsifier, νέες προβλέψεις, κόστος ελέγχου⟩· χωρίς falsifier δεν εισάγεται (η απόρριψη
+      καταγράφεται). Τρεις EIM-ανεξάρτητες γεννήτριες (ILP πάνω στην οντολογία, αναζήτηση προγραμμάτων στο Skill Library, παραμετρική πρόταση από κυρίαρχο μοντέλο)
+      ανταγωνίζονται· κατάταξη με Expected Falsification Value EFV(H) = P(διάψευση)·InfoGain / cost· έλεγχος Genesis-first (LWM/World Twin/DST) και μετά υπό RET·
+      επιζώσες υποθέσεις προάγονται μηχανικά σε OGE (έννοιες) ή CDCE (ακμές)· επαναλαμβανόμενα εξηγητικά σχήματα συμπιέζονται (anti-unification) σε βιβλιοθήκη. ·
+      ATK-19: υπόθεση χωρίς εφικτό venue ελέγχου = DEFERRED(NOT_YET_OBSERVABLE, plan) εκτός κατάταξης EFV· ο έλεγχος ποτέ στη γεννήτρια που παρήγαγε το explanandum
+      (κυκλικότητα)· venue-feasibility είναι μέρος του τύπου Hypothesis.'
+  MFA-VO-068:
+    methods:
+    - DST με κρυφή οντολογία 50 εννοιών που παράγει τα δεδομένα· το OGE ξεκινά από κενή O· μετράμε ανάκτηση (ARI) και G
+    - Σφραγισμένο νομικό corpus· O₀ = CMP-LAW registry· OGE γεννά έννοιες· downstream QA/drafting σε HELD_OUT
+    - 100 τυχαίες συγχωνεύσεις + 100 διασπάσεις σε O με 10³ έννοιες· ανάκτηση
+    - property tests στο tools/twin (F1)
+    - 'ATK-19: OGE-E4 — LWM με εσκεμμένη κακή βαθμονόμηση· 0 γεννήσεις από τα artifact residuals (διπλή επιβεβαίωση)'
+  MFA-VO-069:
+    methods:
+    - 'DST: 100 τυχαία SCM (n=30, d≤3)· ledger με 10³ παρατηρήσεις + k παρεμβάσεις που το CDCE ΕΠΙΛΕΓΕΙ (VOI) έναντι τυχαίων'
+    - World Twin δρώντες από docket· αντιπαραγοντικά «αν είχε κατατεθεί X» σε HELD_OUT υποθέσεις με γνωστή έκβαση
+    - property tests στο tools/twin (F1)
+    - 'ATK-19: CDCE-E3 — NAT ακμές από συνθετικά φυσικά πειράματα με γνωστή αλήθεια· SHD(NAT) < SHD(OBS-only)· 0 NAT→INT χωρίς IV έλεγχο'
+  MFA-VO-070:
+    methods:
+    - DST με 50 κρυφούς μηχανισμούς που παράγουν ανωμαλίες· AHE έναντι (α) τυχαίων υποθέσεων ίδιου τύπου, (β) μίας γεννήτριας
+    - Ανωμαλίες = απροσδόκητες εκβάσεις δικαστηρίου σε HELD_OUT dockets· υποθέσεις για κρυφές μεταβλητές· επαλήθευση σε μεταγενέστερα dockets
+    - property tests στο tools/twin (F1)
+    - 'ATK-19: AHE-E3 — υποθέσεις χωρίς venue μένουν DEFERRED και δεν καταναλώνουν budget ελέγχου· 0 έλεγχοι στη γεννήτρια του explanandum'
+rationale: Τροποποίηση από την επίθεση MFA-ATK-19 (Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12)· καμία ικανότητα δεν αφαιρείται — αλλάζουν μηχανισμοί, κατωφλιώσεις,
+  δηλώσεις.
+evidence:
+- adversarial/MFA-ATK-19.md
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: καμία
+verification: adversarial/MFA-ATK-19.md §falsifier · tools/check-package.py
+rollback: MFA-PATCH-0044-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

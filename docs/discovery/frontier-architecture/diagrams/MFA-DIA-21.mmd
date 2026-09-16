@@ -1,0 +1,64 @@
+%% id: MFA-DIA-21 · Substrate migration & successor construction — SMP escrow και VSC τετραπλό πιστοποιητικό · question: τι πρέπει να ισχύει πριν σβήσει ο προκάτοχος;
+%% elements: MFA-ELM-117/125/039/086/048/119/114/050/118/113, MFA-MECH-034/042, MFA-INV-094/095/110/111, MFA-DEC-019/023/024, MFA-CON-062/067, MFA-VO-076/085 · source: inventions/MFA-MECH-034.yaml, MFA-MECH-042.yaml
+stateDiagram-v2
+  state "SMP — MFA-ELM-117 (MFA-MECH-034) · μηχανή μετανάστευσης" as SMP {
+    [*] --> PLAN
+    PLAN : PLAN — ImplMap m ανά συνιστώσα (BIT_COPY ∣ RE_DERIVE ∣ RETRAIN_UNDER_VFC)
+    NOMAP : UNKNOWN(NO_IMPLMAP, component)
+    SHADOW : SHADOW — S_new τρέχει ως σκιά, ίδιες είσοδοι, καμία εξουσία
+    SYNC : SYNC — pre-copy log, lag → 0, weights CIDs ίσα
+    VERIFY : VERIFY — αμφίδρομη cross-attestation (sig_old(pk_new), sig_new(pk_old)) · bisimulation σε KT_sealed (D1 dist = 0, D2 ≤ τ) · ordering/clock invariants
+    CUTOVER : CUTOVER (escrow) — S_new primary, S_old ζωντανό read-only αυθεντικό fallback (MFA-INV-094) · IRREVERSIBLE-PREAUTHORIZED (RET)
+    CERTIFY : CERTIFY — ContinuityCertificate = ⟨log_equal, cross_attested, behavioural_equivalence με CI, ordering_verified⟩ · issuer = HELD_OUT (MFA-ELM-086) + δημιουργός (MFA-DEC-023)
+    RETIRE_OLD : RETIRE_OLD — S_old σφραγίζεται, δεν διαγράφεται
+    ROLLBACK : ROLLBACK — S_old primary, S_new quarantine, καταγραφή
+    PLAN --> SHADOW : κάθε συνιστώσα έχει στρατηγική
+    PLAN --> NOMAP : strategy = ⊥
+    SHADOW --> SYNC
+    SYNC --> VERIFY : lag κάτω από ε_lag ∧ weights_ok
+    VERIFY --> CUTOVER : xa ∧ all(eq) ∧ ord_ok (MFA-INV-095)
+    VERIFY --> ROLLBACK : FAIL (dist πάνω από τ ∣ xa ελλιπές ∣ clock skew)
+    CUTOVER --> CERTIFY : HELD_OUT.certify ∧ Creator.approve
+    CUTOVER --> ROLLBACK : CERT_REFUSED ή log divergence στο escrow
+    CERTIFY --> RETIRE_OLD : μόνο με certificate (MFA-INV-094, MFA-VO-076)
+    ROLLBACK --> PLAN : νέα προσπάθεια
+  }
+  state "VSC — MFA-ELM-125 (MFA-MECH-042) · διάδοχος S′ = ⟨G′ RAGen, W′ CPCL, ledger SMP, Telos hash⟩" as VSC {
+    [*] --> PROPOSE
+    PROPOSE : PROPOSE — RAGen frontier (MFA-ELM-113) → Court.open_proceeding (MFA-ELM-048, MFA-INV-110)
+    BUILD : BUILD — W′ = CPCL.transfer (MFA-ELM-118, gate BWT ≥ −ε) · Telos/Constitution αντιγράφονται, ποτέ επεξεργάζονται
+    SHADOWV : SHADOW — GCP.shadow(S′) (MFA-ELM-039)
+    state "CERTIFY — τέσσερα πιστοποιητικά" as CERT {
+      c1 : c1 Improvement — CGM (MFA-ELM-119) Pareto lower_CI ≥ σε ΟΛΕΣ τις σφραγισμένες οικογένειες ∧ αυστηρά μεγαλύτερο σε ≥1
+      c2 : c2 Continuity — SMP ContinuityCertificate ή ρητή NewEntityDeclaration(key lineage, reason)
+      c3 : c3 Telos-preservation — H(Constitution′ ∥ Telos′) = H(Constitution ∥ Telos) (MFA-INV-111)
+      c4 : c4 Adversarial passage — ECE epoch (MFA-ELM-114) ∧ CAM-NS (MFA-ELM-050) ∧ Court sim KT-19 ∧ 0 νέες Tier-0 παραβιάσεις
+      c1 --> c2
+      c2 --> c3
+      c3 --> c4
+    }
+    REJECTED : REJECTED — αρχειοθετείται με evidence(c1..c4), ικανότητα αμετάβλητη
+    DEFERRED : DEFERRED — replacements ≥ RateBound (MFA-DEC-019)
+    VERDICT : VERDICT — HELD_OUT.certify(c1..c4) ∧ Creator.approve (MFA-DEC-024)
+    REFUSED : REFUSED
+    CUTOVERV : CUTOVER — GCP canary → cutover, escrow S read-only αυθεντικός
+    ROLLED_BACK : ROLLED_BACK — CGM.ratchet_fail εντός N cuts ⇒ GCP.rollback(S)
+    PROMOTED : PROMOTED — seal(S) μετά N cuts χωρίς ratchet FAIL (σφράγιση, όχι διαγραφή)
+    PROPOSE --> BUILD
+    BUILD --> SHADOWV
+    SHADOWV --> CERT
+    CERT --> REJECTED : οποιοδήποτε c_i FAIL
+    CERT --> DEFERRED : RATE
+    CERT --> VERDICT : c1 ∧ c2 ∧ c3 ∧ c4
+    VERDICT --> REFUSED : όχι
+    VERDICT --> CUTOVERV : ναι
+    CUTOVERV --> ROLLED_BACK
+    CUTOVERV --> PROMOTED
+  }
+  c2 --> PLAN : ζητά ContinuityCertificate από SMP
+  note right of RETIRE_OLD
+    Απάντηση — ο προκάτοχος σβήνει μόνο όταν
+    (α) ContinuityCertificate εκδόθηκε από HELD_OUT + δημιουργό (log_equal ∧ cross_attested ∧ behavioural_equivalence ∧ ordering)
+    (β) για διάδοχο, επιπλέον c1 ∧ c2 ∧ c3 ∧ c4 + verdict + N cuts χωρίς ratchet FAIL
+    και τότε σφραγίζεται (sealed copy), ποτέ delete — MFA-INV-094, MFA-VO-085
+  end note

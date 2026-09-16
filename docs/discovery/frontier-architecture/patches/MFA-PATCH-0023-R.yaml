@@ -1,0 +1,120 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0023-R
+title: 'Rollback of MFA-PATCH-0023: Στοιχεία MFA-ELM-100…108 (SMF, Parametric Organ Host, Weight Registry, Proof-Reward Trainer, RVSI Orchestrator, Learned World
+  Model, Curriculum/Self-Play, ASRW Core, Compute & Data Acquisition)· MFA-ELM-099 από «παγωμένο toolchain» σε Verification Fixed-Point contract'
+operation: RESTORE
+targets:
+- MFA-ELM-100
+- MFA-ELM-101
+- MFA-ELM-102
+- MFA-ELM-103
+- MFA-ELM-104
+- MFA-ELM-105
+- MFA-ELM-106
+- MFA-ELM-107
+- MFA-ELM-108
+- MFA-ELM-099
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: afc336a5a5aecceb21c3ae6048247254ab9378ab845d01c5af5323a9e17c19d6
+preconditions:
+- MFA-PATCH-0023.status == APPLIED
+change:
+  MFA-ELM-100:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-101:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-102:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-103:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-104:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-105:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-106:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-107:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-108:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-ELM-099:
+    name:
+      __raw: '"Tier-0 Kernel (frozen)"'
+    delta:
+      __raw: '"SPLIT (από MFA-ELM-020 / CMP-COG-04)"'
+    statement:
+      __raw: '"Ο παγωμένος πυρήνας επαλήθευσης (MFA-ATK-16): Lean 4 kernel (#print axioms audit, MFA-VO-053) + TLA+ model checker (refinement/machine closure, MFA-VO-054)
+        + CC-lite reference interpreter σε Common Lisp (N-version με το Rust journal)· κρατά το ΣΦΡΑΓΙΣΜΕΝΟ proof-object corpus· δεν είναι όργανο υπό ORP· αλλάζει
+        μόνο με L3 πράξη + GCP replay· μέρος του robust substrate (MFA-ELM-096)."'
+    purpose:
+      __raw: '"Το σταθερό σημείο της επαλήθευσης: ο μόνος επαληθευτής που δεν επαληθεύει τον διάδοχό του."'
+    capabilities:
+      __raw: '[MFA-CAP-022, MFA-CAP-059]'
+    source_provenance:
+      __raw: '[MFA-ATK-16, "SPLIT από MFA-ELM-020 (CMP-COG-04)", "CLAIMS F83/F84 (#print axioms, TLA+ refinement)"]'
+    assumptions:
+      __raw: '["δύο ανεξάρτητοι ελεγκτές (Lean + TLA+/CL) — bugs του ενός δεν συμπίπτουν με του άλλου"]'
+    dependencies:
+      __raw: '[MFA-ELM-002, MFA-ELM-003]'
+    interfaces:
+      __raw: '[MFA-CON-030]'
+    authority:
+      __raw: '"L3 μόνο δημιουργός· ΠΟΤΕ ORP"'
+    state_model:
+      __raw: '"σφραγισμένο proof-object corpus (CAS) + kernel versions ως L3 δεσμεύσεις"'
+    failure_modes:
+      __raw: '[{mode: "bug του kernel", response: "N-version: Lean + TLA+ + CL reference· διαφωνία ⇒ deny + δημιουργός"}, {mode: "σφραγισμένο corpus ελλιπές", response:
+        "προσθήκη μόνο με ADD (μονότονο, όπως anchors)"}]'
+    alternatives:
+      __raw: '["Suite που επαληθεύει τον διάδοχό της (η κατάσταση πριν — απορρίφθηκε: κυκλική επαλήθευση)"]'
+    verification:
+      __raw: '[MFA-VO-053, MFA-VO-054, MFA-VO-035]'
+    falsifier:
+      __raw: '"kernel που άλλαξε χωρίς L3 πράξη + replay· ή verifier διάδοχος που πέρασε χωρίς τον kernel"'
+    resource_model:
+      __raw: '"Lean + TLA+ toolchain (CPU-only)· CL reference"'
+    evolution_path:
+      __raw: '"ΜΟΝΟ L3 + GCP replay του corpus (ποτέ R-A/R-B/R-C)"'
+    dose:
+      __raw: 'null'
+rationale: Αντίστροφο του MFA-PATCH-0023, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-017
+- MFA-ELM-019
+- MFA-ELM-020
+- MFA-ELM-025
+- MFA-ELM-030
+- MFA-ELM-073
+- MFA-ELM-077
+- MFA-ELM-096
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-081
+  - MFA-CAP-082
+  - MFA-CAP-083
+  - MFA-CAP-084
+  - MFA-CAP-085
+  - MFA-CAP-086
+  - MFA-CAP-087
+  - MFA-CAP-088
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0023
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

@@ -1,0 +1,52 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0050-R
+title: 'Rollback of MFA-PATCH-0050: ATK-25 (φόρος επαλήθευσης): κοκκομετρία υποχρεώσεων ανά δέσμευση/κλάση επίδρασης· κόστος OC μέσα στον eval_cost_ratio· DEFER(reason)
+  στο Effect = κλάση UNKNOWN(reason) υπό RET'
+operation: RESTORE
+targets:
+- MFA-CON-071
+- MFA-ELM-013
+- MFA-ELM-122
+- MFA-VO-082
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 62c3753546e20096b3ac8d1df1d54220c6ad94c5841b677cb12cdb87e7dfea19
+    CONTRACTS.yaml: 1fad13ba64c48ff2ff99bbd50afb907acd9b9dcd49f7cfbcb784f5cbb791363f
+    VERIFICATION-OBLIGATIONS.yaml: f9b2dc9fda778da11728ee89e714c097e54a0fad001a761f275b9797a941848f
+preconditions:
+- MFA-PATCH-0050.status == APPLIED
+change:
+  MFA-ELM-122:
+    statement:
+      __raw: '"Κάθε έκφραση e του γνωσιακού βρόχου έχει κρίση Γ ⊢ e : τ ! O — τύπο τ και ΕΚΚΡΕΜΕΙΣ ΥΠΟΧΡΕΩΣΕΙΣ O (πολυσύνολο Ob⟨claim, tier, evidence_class, deadline,
+        method⟩)· τιμή τύπου Verified[τ] κατασκευάζεται ΜΟΝΟ με discharge· οι υποχρεώσεις είναι γραμμικοί πόροι: κάθε μία καταλήγει σε DISCHARGED(cert) ∣ DEFERRED(reason,
+        plan, deadline) ∣ ESCALATED(to) — ποτέ dropped· θεώρημα ορθότητας: αν ⊢ p : τ ! ∅ τότε κάθε ισχυρισμός στο p φέρει τεκμήριο της απαιτούμενης κλάσης (ή ρητή
+        αναβολή)· ο έλεγχος είναι αμφίδρομος και το κόστος discharge δρομολογείται ανά tier."'
+  MFA-CON-071:
+    failure_semantics:
+      __raw: '"Έκρηξη υποχρεώσεων (κάθε token ένα claim) → granularity policy: claims ανά πρόταση/δέσμευση, όχι ανά token· batching· Deferred που δεν λήγουν ποτέ
+        → ESCALATE (MFA-INV-104)· Cert από checker ίδιας γενεαλογίας με γεννήτρια → cert άκυρο· Type checker bug → FP incident· Πρόγραμμα παρακάμπτει τον checker
+        → αδύνατο εξ ορισμού ‖ containment: Checker στο FP· Effect plane δέχεται μόνο Verified/approved-DEFER· Court escalation."'
+  MFA-VO-082:
+    measures:
+      __raw: '"25/25 λανθασμένες απορρίπτονται με σωστό λόγο· 25/25 σωστές περνούν· 0 ψευδώς θετικά/αρνητικά ‖ Θεώρημα ελέγχεται από 2 checkers· μόνο standard axioms"'
+  MFA-ELM-013:
+    statement:
+      __raw: '"Namespaces, placement, residency, typed budgets (χρόνος/tokens/ενέργεια/χρήμα), accounting + Organ Activation Planner (MFA-MECH-013): ελάχιστο σύνολο
+        οργάνων ανά matter/deployment με veto κλάσης απόδειξης. · Περιορισμοί ανά προφίλ: λόγος κόστους αξιολόγησης (MFA-INV-065) και energy_envelope (Wh/matter)·
+        υποχωρεί εύρος, ποτέ κλάση απόδειξης (MFA-ATK-13)."'
+rationale: Αντίστροφο του MFA-PATCH-0050, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0050
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

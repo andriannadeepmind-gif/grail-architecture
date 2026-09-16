@@ -1,0 +1,144 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0027-R
+title: 'Rollback of MFA-PATCH-0027: Ω-ASI 0.4.0: επιδιώξεις MFA-OBJ-053…058 (οντολογία/αιτίες/υποθέσεις, κυριαρχική μετάβαση, μετανάστευση/διαδοχή, proof-carrying
+  cognition, εκτελέσιμο δίδυμο, αναπτυξιακή ανοιχτή μάθηση) μέσα στο TEL-08'
+operation: RESTORE
+targets:
+- MFA-TEL-08
+- OBJECTIVE-SPACE.yaml
+base:
+  package_version: 0.1.0
+  file_hashes:
+    OBJECTIVE-SPACE.yaml: bf5e36bfa58cbc7e0deb324c8eaf92800861a380bb927932bca975ce4e112eda
+preconditions:
+- MFA-PATCH-0027.status == APPLIED
+change:
+  OBJECTIVE-SPACE.yaml:
+    replace:
+    - - "  - id: MFA-OBJ-053\n    <<: *defaults\n    type: objective\n    name: \"Αυτόνομη οντολογία και αιτιακό κοσμομοντέλο — έννοιες, αιτίες και υποθέσεις που\
+        \ γεννά το ίδιο το σύστημα\"\n    maturity: explicit\n    statement: \"Το σύστημα σχηματίζει έννοιες με NON-COLLAPSE γενεαλογία (OGE), ανακαλύπτει αιτιακή\
+        \ δομή από το ledger με RET-παρεμβάσεις (CDCE) και εφευρίσκει διαψεύσιμες υποθέσεις (AHE) — χωρίς ανθρώπινη οντολογία/SCM/υπόθεση ως προϋπόθεση. Μηχανισμοί:\
+        \ MFA-MECH-026, MFA-MECH-027, MFA-MECH-028.\"\n    purpose: \"Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν\
+        \ ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier.\"\n    capabilities: [MFA-CAP-089,\
+        \ MFA-CAP-090, MFA-CAP-091, MFA-CAP-092]\n    source_provenance: [\"Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)\", ASI-ABSTENTION-AUDIT.yaml,\
+        \ MFA-MECH-026, MFA-MECH-027, MFA-MECH-028]\n    provenance_kind: explicit\n    assumptions: [\"Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier·\
+        \ η επιστημική κατάσταση καταγράφεται χωριστά (§5)\"]\n    dependencies: [MFA-OBJ-050]\n    failure_modes: [\"Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)·\
+        \ μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)\"]\n    alternatives: [\"Καμία: η ικανότητα είναι υποχρεωτική (§8)·\
+        \ η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία\"]\n    conflicts: [MFA-CFL-039, MFA-CFL-040]\n    unknowns: [MFA-UNK-115, MFA-UNK-116, MFA-UNK-117]\n\
+        \    verification: \"MFA-VO-068, MFA-VO-069, MFA-VO-070\"\n    falsifier: \"Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός\
+        \ για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό\"\n    evolution_path: \"ADD μηχανισμών·\
+        \ υπό RVSI L2 με CGM\"\n    affected_by: [MFA-TEL-08]\n    epistemic_status: NOVEL SYNTHESIS\n    version: 1\n    change_history: [{patch: MFA-PATCH-0027,\
+        \ op: ADD, date: 2026-09-16, summary: \"Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8\"}]\n  - id: MFA-OBJ-054\n    <<: *defaults\n    type: objective\n\
+        \    name: \"Μετάβαση από δανεική σε κυρίαρχη νοημοσύνη — Sovereignty Index, σταδιακές πύλες, ratchet ποιότητας\"\n    maturity: explicit\n    statement:\
+        \ \"Κάθε οικογένεια ικανοτήτων περνά S0→S4 με parity σε σφραγισμένα σύνολα· η εδραίωση δεν ξεχνά (CPCL)· ο πάροχος δεν αξιολογεί το distilled παιδί του. Μηχανισμοί:\
+        \ MFA-MECH-033, MFA-MECH-035, MFA-MECH-020.\"\n    purpose: \"Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν\
+        \ ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier.\"\n    capabilities: [MFA-CAP-097,\
+        \ MFA-CAP-099, MFA-CAP-081]\n    source_provenance: [\"Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)\", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-033,\
+        \ MFA-MECH-035, MFA-MECH-020]\n    provenance_kind: explicit\n    assumptions: [\"Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική\
+        \ κατάσταση καταγράφεται χωριστά (§5)\"]\n    dependencies: [MFA-OBJ-050]\n    failure_modes: [\"Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός\
+        \ FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)\"]\n    alternatives: [\"Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική\
+        \ είναι άλλος μηχανισμός, όχι απουσία\"]\n    conflicts: [MFA-CFL-042]\n    unknowns: [MFA-UNK-122, MFA-UNK-124]\n    verification: \"MFA-VO-075, MFA-VO-077\"\
+        \n    falsifier: \"Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με\
+        \ IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό\"\n    evolution_path: \"ADD μηχανισμών· υπό RVSI L2 με CGM\"\n    affected_by: [MFA-TEL-08]\n\
+        \    epistemic_status: NOVEL SYNTHESIS\n    version: 1\n    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: \"Ω-ASI 0.4.0: επιδιώξεις\
+        \ για τις 19 ικανότητες της §8\"}]\n  - id: MFA-OBJ-055\n    <<: *defaults\n    type: objective\n    name: \"Μετανάστευση υποστρώματος και επαληθευμένη διαδοχή\
+        \ — ContinuityCertificate και τετραπλό πιστοποιητικό διαδόχου\"\n    maturity: explicit\n    statement: \"Η οντότητα μεταναστεύει σε νέο υπόστρωμα και κατασκευάζει\
+        \ διάδοχο με escrow, cross-attested κλειδιά, συμπεριφορική ισοδυναμία, διατήρηση Telos και verdict HELD_OUT + δημιουργού. Μηχανισμοί: MFA-MECH-034, MFA-MECH-042.\"\
+        \n    purpose: \"Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)·\
+        \ εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier.\"\n    capabilities: [MFA-CAP-098, MFA-CAP-106, MFA-CAP-036, MFA-CAP-027]\n    source_provenance:\
+        \ [\"Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)\", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-034, MFA-MECH-042]\n    provenance_kind: explicit\n \
+        \   assumptions: [\"Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)\"]\n    dependencies: [MFA-OBJ-050]\n\
+        \    failure_modes: [\"Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)\"\
+        ]\n    alternatives: [\"Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία\"]\n    conflicts: [MFA-CFL-043, MFA-CFL-045]\n\
+        \    unknowns: [MFA-UNK-123, MFA-UNK-131]\n    verification: \"MFA-VO-076, MFA-VO-085\"\n    falsifier: \"Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED\
+        \ ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό\"\n    evolution_path:\
+        \ \"ADD μηχανισμών· υπό RVSI L2 με CGM\"\n    affected_by: [MFA-TEL-08]\n    epistemic_status: NOVEL SYNTHESIS\n    version: 1\n    change_history: [{patch:\
+        \ MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: \"Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8\"}]\n  - id: MFA-OBJ-056\n    <<: *defaults\n\
+        \    type: objective\n    name: \"Proof-carrying cognition — κάθε γνωσιακό βήμα φέρει υποχρέωση τεκμηρίου· σύνθεση αποδείξεων/προγραμμάτων· θεωρήματα καθοδηγούν\
+        \ τη μάθηση\"\n    maturity: explicit\n    statement: \"Obligation Calculus (γραμμικές υποχρεώσεις), TGPS (ένα αντικείμενο απόδειξη/πρόγραμμα υπό ≥2 checkers),\
+        \ TGL (βιβλιοθήκη ως περιορισμοί/curriculum/ανταμοιβή). Μηχανισμοί: MFA-MECH-039, MFA-MECH-029, MFA-MECH-040.\"\n    purpose: \"Ω-MAXIMUM NON-ABSTENTION MANDATE\
+        \ §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό,\
+        \ δόση, πείραμα, falsifier.\"\n    capabilities: [MFA-CAP-103, MFA-CAP-093, MFA-CAP-104]\n    source_provenance: [\"Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION\
+        \ MANDATE)\", ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-039, MFA-MECH-029, MFA-MECH-040]\n    provenance_kind: explicit\n    assumptions: [\"Οι μηχανισμοί έχουν\
+        \ INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)\"]\n    dependencies: [MFA-OBJ-050]\n    failure_modes: [\"Αποχή\
+        \ μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)\"]\n    alternatives: [\"\
+        Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία\"]\n    conflicts: []\n    unknowns: [MFA-UNK-118, MFA-UNK-128,\
+        \ MFA-UNK-129]\n    verification: \"MFA-VO-071, MFA-VO-082, MFA-VO-083\"\n    falsifier: \"Μηχανισμός με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός,\
+        \ νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο από τον δημιουργό\"\n    evolution_path: \"\
+        ADD μηχανισμών· υπό RVSI L2 με CGM\"\n    affected_by: [MFA-TEL-08]\n    epistemic_status: NOVEL SYNTHESIS\n    version: 1\n    change_history: [{patch: MFA-PATCH-0027,\
+        \ op: ADD, date: 2026-09-16, summary: \"Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8\"}]\n  - id: MFA-OBJ-057\n    <<: *defaults\n    type: objective\n\
+        \    name: \"Εκτελέσιμο Αρχιτεκτονικό Ψηφιακό Δίδυμο — το κανονικό μοντέλο τρέχει (§10 της εντολής)\"\n    maturity: explicit\n    statement: \"Κόσμοι, διακλάδωση,\
+        \ ντετερμινιστικό replay, πιστότητα ανά στοιχείο, αυτόματη ανίχνευση παραβιάσεων contract/invariant, διάδοση επιστημικού κινδύνου, Pareto, χώρος — από τη\
+        \ Δόση 0 (F1 tools/twin). Μηχανισμοί: MFA-MECH-043, MFA-MECH-008, MFA-MECH-007.\"\n    purpose: \"Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI)\
+        \ και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier.\"\
+        \n    capabilities: [MFA-CAP-107, MFA-CAP-023, MFA-CAP-038]\n    source_provenance: [\"Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)\", ASI-ABSTENTION-AUDIT.yaml,\
+        \ MFA-MECH-043, MFA-MECH-008, MFA-MECH-007]\n    provenance_kind: explicit\n    assumptions: [\"Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier·\
+        \ η επιστημική κατάσταση καταγράφεται χωριστά (§5)\"]\n    dependencies: [MFA-OBJ-050]\n    failure_modes: [\"Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)·\
+        \ μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED ≠ removed)\"]\n    alternatives: [\"Καμία: η ικανότητα είναι υποχρεωτική (§8)·\
+        \ η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία\"]\n    conflicts: []\n    unknowns: [MFA-UNK-132]\n    verification: MFA-VO-086\n    falsifier: \"Μηχανισμός\
+        \ με falsifier που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2)\
+        \ εγκεκριμένο από τον δημιουργό\"\n    evolution_path: \"ADD μηχανισμών· υπό RVSI L2 με CGM\"\n    affected_by: [MFA-TEL-08]\n    epistemic_status: NOVEL\
+        \ SYNTHESIS\n    version: 1\n    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: \"Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες\
+        \ της §8\"}]\n  - id: MFA-OBJ-058\n    <<: *defaults\n    type: objective\n    name: \"Αναπτυξιακή ανοιχτή μάθηση και αναδρομική γένεση — κλίμακα σταδίων,\
+        \ αρχιτεκτονική αναζήτηση, συν-εξέλιξη αξιολογητών, γεννητική γραμματική, μετρολογία ανάπτυξης, μηχανιστικό αυτο-μοντέλο, συνείδηση ως host, Ω-loop\"\n  \
+        \  maturity: explicit\n    statement: \"Το σύστημα αναπτύσσεται σε πιστοποιημένα στάδια (AIDC), αναζητά και προάγει αρχιτεκτονικές (RAGen), εξελίσσει αξιολογητές\
+        \ χωρίς συνενοχή (ECE), γεννά γλώσσες/δρώντες/θεσμούς (GG), μετρά την ανάπτυξή του (CGM), μοντελοποιεί τα κυκλώματά του (MSM), φιλοξενεί/διαψεύδει θεωρίες\
+        \ συνείδησης (CHH), σε έναν κύκλο (Ω-loop). Μηχανισμοί: MFA-MECH-041, MFA-MECH-030, MFA-MECH-031, MFA-MECH-032, MFA-MECH-036, MFA-MECH-037, MFA-MECH-038,\
+        \ MFA-MECH-044.\"\n    purpose: \"Ω-MAXIMUM NON-ABSTENTION MANDATE §8 (19 ικανότητες ASI) και §6 (17 περιοχές): η ικανότητα ήταν ονομασμένη ή απούσα χωρίς\
+        \ μηχανισμό (ASI-ABSTENTION-AUDIT)· εδώ γίνεται επιδίωξη με μηχανισμό, δόση, πείραμα, falsifier.\"\n    capabilities: [MFA-CAP-105, MFA-CAP-094, MFA-CAP-095,\
+        \ MFA-CAP-096, MFA-CAP-100, MFA-CAP-101, MFA-CAP-102, MFA-CAP-108]\n    source_provenance: [\"Δημιουργός 2026-09-16 (Ω-MAXIMUM NON-ABSTENTION MANDATE)\",\
+        \ ASI-ABSTENTION-AUDIT.yaml, MFA-MECH-041, MFA-MECH-030, MFA-MECH-031, MFA-MECH-032, MFA-MECH-036, MFA-MECH-037, MFA-MECH-038, MFA-MECH-044]\n    provenance_kind:\
+        \ explicit\n    assumptions: [\"Οι μηχανισμοί έχουν INVENTION DOSSIER 29 πεδίων με falsifier· η επιστημική κατάσταση καταγράφεται χωριστά (§5)\"]\n    dependencies:\
+        \ [MFA-OBJ-050]\n    failure_modes: [\"Αποχή μεταμφιεσμένη σε επιλογή (§3 της εντολής)· μηχανισμός FALSIFIED που διαβάζεται ως αφαίρεση ικανότητας (§5: FALSIFIED\
+        \ ≠ removed)\"]\n    alternatives: [\"Καμία: η ικανότητα είναι υποχρεωτική (§8)· η εναλλακτική είναι άλλος μηχανισμός, όχι απουσία\"]\n    conflicts: [MFA-CFL-041,\
+        \ MFA-CFL-044, MFA-CFL-046]\n    unknowns: [MFA-UNK-119, MFA-UNK-120, MFA-UNK-121, MFA-UNK-125, MFA-UNK-126, MFA-UNK-127, MFA-UNK-133]\n    verification:\
+        \ \"MFA-VO-072, MFA-VO-073, MFA-VO-074, MFA-VO-078, MFA-VO-079, MFA-VO-080, MFA-VO-081, MFA-VO-084, MFA-VO-087\"\n    falsifier: \"Μηχανισμός με falsifier\
+        \ που πυροδοτείται ⇒ FALSIFIED ο μηχανισμός, νέος μηχανισμός για την ίδια ικανότητα· η επιδίωξη αφαιρείται ΜΟΝΟ με IMPOSSIBILITY-DOSSIER (§2) εγκεκριμένο\
+        \ από τον δημιουργό\"\n    evolution_path: \"ADD μηχανισμών· υπό RVSI L2 με CGM\"\n    affected_by: [MFA-TEL-08]\n    epistemic_status: NOVEL SYNTHESIS\n\
+        \    version: 1\n    change_history: [{patch: MFA-PATCH-0027, op: ADD, date: 2026-09-16, summary: \"Ω-ASI 0.4.0: επιδιώξεις για τις 19 ικανότητες της §8\"\
+        }]\n\nobjective_contradictions:\n"
+      - 'objective_contradictions:
+
+        '
+  MFA-TEL-08:
+    includes:
+      __raw: '[MFA-OBJ-022, MFA-OBJ-030, MFA-OBJ-040, MFA-OBJ-050, MFA-OBJ-051, MFA-OBJ-052]'
+    capabilities:
+      __raw: '[MFA-CAP-054, MFA-CAP-032, MFA-CAP-069, MFA-CAP-081, MFA-CAP-083, MFA-CAP-086]'
+rationale: Αντίστροφο του MFA-PATCH-0027, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-104 (RVSI καταναλωτής)
+- MFA-ELM-086 (HELD_OUT)
+- MFA-ELM-099 (VFC)
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-089
+  - MFA-CAP-090
+  - MFA-CAP-091
+  - MFA-CAP-092
+  - MFA-CAP-093
+  - MFA-CAP-094
+  - MFA-CAP-095
+  - MFA-CAP-096
+  - MFA-CAP-097
+  - MFA-CAP-098
+  - MFA-CAP-099
+  - MFA-CAP-100
+  - MFA-CAP-101
+  - MFA-CAP-102
+  - MFA-CAP-103
+  - MFA-CAP-104
+  - MFA-CAP-105
+  - MFA-CAP-106
+  - MFA-CAP-107
+  - MFA-CAP-108
+  ledger_entry: CAPABILITY-CONSERVATION.md §0.4.0 — 20 νέες ικανότητες, 0 αφαιρέσεις
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0027
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

@@ -43,3 +43,21 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | Ψυχολογικό προφίλ δικαστή | Χωρίς βάση (CLAIMS F70)· επιβιώνει μόνο η καταγεγραμμένη συμπεριφορά μέσα στο σύστημα |
 | Παρασυνεπής αληθοτιμή μέσα στον αξιολογητή | Ο κόσμος `:both-true` επιστρέφει T για κάθε αντίφαση — έκρηξη με άλλο όνομα (MATERIAL §9.21) |
 | Reflective tower ως συστατικό Δόσης 1 | Δεν υπάρχει στο σώμα· τεχνική υπαρκτή· EXP με κριτήριο εισόδου (CLAIMS F44/F79) |
+
+
+## 0.4.0 — νέες μεταφορές (MFA-PATCH-0057)
+
+| Από πεδίο | Τι | Σε μηχανισμό | Τι άλλαξε στη μεταφορά |
+|---|---|---|---|
+| Ψυχομετρία (IRT/CAT) | λανθάνουσα ικανότητα, adaptive testing, item exposure | MFA-MECH-036 CGM | items με provenance-μόλυνση, ratchet στο κάτω CI, HELD_OUT escrow |
+| Νευροεπιστήμη (CLS) | διπλή μνήμη, ύπνος/εδραίωση | MFA-MECH-035 CPCL | επεισοδιακή = ledger με provenance· πύλη BWT πριν το merge· unlearning-συμβατή |
+| Θεωρία πλεγμάτων (FCA) | έννοιες = κλειστά ζεύγη extension/intension | MFA-MECH-026 OGE | κέρδος σε σφραγισμένο split, LossMap NON-COLLAPSE, Court-lite merges |
+| Θεωρητική νευροεπιστήμη (active inference) | EFE, preference priors | MFA-MECH-041 AIDC | προτιμήσεις = Telos, envelope, πιστοποιημένα στάδια |
+| Θεωρία συστημάτων (bisimulation, refinement mappings) | ισοδυναμία υλοποιήσεων | MFA-MECH-034 SMP | ContinuityCertificate με κλειδιά/διάταξη/escrow |
+| PKI (key epochs) | ρόλοι κλειδιών ανά εποχή | MFA-MECH-034/042 | ATTEST-ONLY κατά το escrow |
+| Εξελικτικός υπολογισμός (MAP-Elites, co-evolution) | QD αρχεία, ανταγωνιστικοί πληθυσμοί | MFA-MECH-030 RAGen, 031 ECE | τυπωμένα γονιδιώματα με FP· H παγωμένη, κανόνας γενεαλογίας |
+| Θεσμική οικονομία (ADICO), language workbenches | γραμματικές θεσμών/γλωσσών | MFA-MECH-032 G_Ω | μία γραμματική με obligations/authority/RET |
+| Θεωρία τύπων (linear/effect types, proof-carrying code) | πόροι που δεν χάνονται | MFA-MECH-039 OC | υποχρεώσεις με tiers/deadlines/reason-typed defer |
+| Deterministic simulation testing / event sourcing | replay, fault injection | MFA-MECH-043 TES | εκτελέσιμες αναλλοίωτες, πιστότητα, επιστημικός κίνδυνος |
+| Adversarial collaboration (Cogitate) | προκαταχωρισμένα διακριτικά πειράματα θεωριών | MFA-MECH-038 CHH | Indicator Algebra, τρι-τιμη αποτίμηση, «μη διακριτικό = UNKNOWN» |
+| Mechanistic interpretability (SAE/ACDC) | κυκλώματα | MFA-MECH-037 MSM | αυτο-παρέμβαση με proper scoring· online χρήση |

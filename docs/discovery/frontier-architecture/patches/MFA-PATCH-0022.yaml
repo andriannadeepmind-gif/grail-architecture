@@ -1,0 +1,483 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0022
+title: Μηχανισμοί MFA-MECH-020…025 (SMF, PRR, RVSI, LWM-OEC, ASRW, VFC) με δοσιέ· RSP-017…020· UNK-111…114 (EPISTEMIC, χωριστά)· CFL-036…038· PDE επαναορίζεται ως
+  δρομολόγηση μέσα στον RVSI
+operation: ADD
+targets:
+- MFA-MECH-020
+- MFA-MECH-021
+- MFA-MECH-022
+- MFA-MECH-023
+- MFA-MECH-024
+- MFA-MECH-025
+- MFA-RSP-017
+- MFA-RSP-018
+- MFA-RSP-019
+- MFA-RSP-020
+- MFA-UNK-111
+- MFA-UNK-112
+- MFA-UNK-113
+- MFA-UNK-114
+- MFA-CFL-036
+- MFA-CFL-037
+- MFA-CFL-038
+- MFA-MECH-019
+- MFA-MECH-010
+- MFA-RSP-005
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CONFLICTS.yaml: 40d3374b918ac2aa34f1172627d7d2a4b2c0d3f91e17ce560f79bc16f41b6b07
+    INVENTIONS.yaml: a4aa1882a84ab4047f5a1c6511c555e33ea532dae2859f1b32b964648c5663d1
+    RESEARCH-PROGRAMS.yaml: c7d7b295d02210a19eb5608c1442edd8d06b8a96a2557ff243de0ec3d6ee0013
+    UNKNOWNS.yaml: 203d8b6369b592c75121df17f826a051147609d1ea9456cdff44ef46fbfadf5b
+preconditions: []
+change:
+  MFA-MECH-020:
+    _add: true
+    name: Sovereign Model Foundry (SMF)
+    maturity: X
+    dossier: mechanisms/MFA-MECH-020.md
+    statement: 'Παραμετρική μάθηση μέσα στο κυρίαρχο όριο: βάρη ως δεσμεύσεις με γενεαλογία, recipes υπό πύλη, ORP για μοντέλα, unlearning υπολογίσιμο, distillation
+      ως απεξάρτηση· DEC-X-19 ως συμβόλαιο MFA-CON-047.'
+    purpose: Η νοημοσύνη ιδιόκτητη, όχι νοικιασμένη.
+    capabilities:
+    - MFA-CAP-081
+    - MFA-CAP-088
+    - MFA-CAP-066
+    source_provenance:
+    - Ω-ASI mandate
+    - DEC-X-19
+    - 'MATERIAL §2 #8'
+    - MFA-ALT-7 (δότης)
+    contribution: NEW PROTOCOL
+    assumptions:
+    - το ledger επαρκεί για adapters από τη Δόση 1
+    dependencies:
+    - MFA-MECH-001
+    - MFA-MECH-006
+    - MFA-MECH-009
+    - MFA-MECH-014
+    - MFA-MECH-018
+    - MFA-MECH-021
+    authority: recipes υπό πύλη· κλίμακα compute MFA-DEC-016· distillation MFA-DEC-017
+    alternatives:
+    - πάροχοι μόνο (0.3.0 — απορρίφθηκε ως αποχή)
+    conflicts:
+    - MFA-CFL-036
+    - MFA-CFL-037
+    unknowns:
+    - MFA-UNK-112
+    - MFA-UNK-114
+    affected_by:
+    - MFA-TEL-08
+  MFA-MECH-021:
+    _add: true
+    name: Proof-Reward Reinforcement (PRR)
+    maturity: X
+    dossier: mechanisms/MFA-MECH-021.md
+    statement: RL με διανυσματική ανταμοιβή από αντικείμενα απόδειξης/ετυμηγορίες/KT/receipts, λεξικογραφικοί περιορισμοί κατά Tier, verifier εκτός closure, seeded
+      proxies· UNKNOWN = 0.
+    purpose: Μάθηση προς την αλήθεια, όχι προς την αρέσκεια.
+    capabilities:
+    - MFA-CAP-082
+    - MFA-CAP-081
+    - MFA-CAP-015
+    source_provenance:
+    - Ω-ASI mandate
+    - MFA-INV-058
+    - MFA-INV-048
+    - RLVR/process rewards (κάτω φράγμα)
+    contribution: NEW ALGORITHM
+    assumptions:
+    - verifier throughput επαρκές (process rewards μειώνουν την ανάγκη)
+    dependencies:
+    - MFA-MECH-020
+    - MFA-MECH-005
+    - MFA-MECH-025
+    - MFA-MECH-023
+    - MFA-MECH-018
+    authority: ORDER = MFA-DEC-005· KL bounds MetaBound
+    alternatives:
+    - 'RLHF (απορρίπτεται: Goodhart)'
+    - SFT-only
+    conflicts: []
+    unknowns:
+    - MFA-UNK-113
+    affected_by:
+    - MFA-TEL-08
+  MFA-MECH-022:
+    _add: true
+    name: Recursive Verified Self-Improvement (RVSI)
+    maturity: R
+    dossier: mechanisms/MFA-MECH-022.md
+    statement: Τέσσερα επίπεδα (L0 έξοδοι, L1 μοντέλα/προγράμματα, L2 βελτιωτές/αρχιτεκτονική, L3 ποτέ)· κάθε βήμα HELD_OUT + EIM + LPA· προβλεπόμενο κέρδος· Capability
+      Growth Law· escalation στο plateau· GCP για συνέχεια.
+    purpose: Ο βρόχος που κάνει την ASI ενδογενή, με σταθερό σημείο.
+    capabilities:
+    - MFA-CAP-083
+    - MFA-CAP-067
+    - MFA-CAP-068
+    - MFA-CAP-025
+    source_provenance:
+    - Ω-ASI mandate
+    - Gödel machine / DGM / AlphaEvolve (κάτω φράγμα)
+    - MFA-INV-031
+    contribution: NEW ARCHITECTURAL INVENTION
+    assumptions:
+    - VFC και Telos εκτός βρόχου
+    dependencies:
+    - MFA-MECH-020
+    - MFA-MECH-021
+    - MFA-MECH-023
+    - MFA-MECH-003
+    - MFA-MECH-009
+    - MFA-MECH-010
+    - MFA-MECH-012
+    - MFA-MECH-013
+    - MFA-MECH-014
+    - MFA-MECH-017
+    - MFA-MECH-025
+    authority: RateBounds = MetaBound POLICY (MFA-DEC-019)· L3 μόνο δημιουργός
+    alternatives:
+    - PDE μόνο (router — απορρίφθηκε)
+    conflicts:
+    - MFA-CFL-037
+    unknowns:
+    - MFA-UNK-113
+    affected_by:
+    - MFA-TEL-08
+  MFA-MECH-023:
+    _add: true
+    name: Learned World Model & Open-Ended Curriculum (LWM-OEC)
+    maturity: X
+    dossier: mechanisms/MFA-MECH-023.md
+    statement: Λανθάνουσα δυναμική από επεισόδια/World Twin, MCTS σε latent με verifier checkpoints, προβλέψεις = Observations με βαθμονόμηση, self-play/POET/Void
+      έργα με falsifier και contamination guard.
+    purpose: 'Νοημοσύνη πέρα από τα δεδομένα: μοντέλο συνεπειών και έργα που κανείς δεν έθεσε.'
+    capabilities:
+    - MFA-CAP-084
+    - MFA-CAP-085
+    - MFA-CAP-024
+    - MFA-CAP-014
+    source_provenance:
+    - Ω-ASI mandate
+    - MuZero/Dreamer, asymmetric self-play, POET (κάτω φράγμα)
+    - MFA-ELM-098
+    contribution: CROSS-SOURCE SYNTHESIS
+    assumptions:
+    - επεισόδια επαρκή για latent dynamics στο νομικό πεδίο από Δόση 2
+    dependencies:
+    - MFA-MECH-020
+    - MFA-MECH-021
+    - MFA-MECH-002
+    - MFA-MECH-012
+    - MFA-MECH-010
+    authority: 'εισδοχή έργων: falsifier + contamination'
+    alternatives:
+    - μόνο World Twin (γραμμένο)
+    conflicts: []
+    unknowns:
+    - MFA-UNK-113
+    affected_by:
+    - MFA-TEL-08
+  MFA-MECH-024:
+    _add: true
+    name: Attention Schema & Reflexive Workspace (ASRW)
+    maturity: X
+    dossier: mechanisms/MFA-MECH-024.md
+    statement: Ignition + attention schema για έλεγχο + higher-order tagging + introspection ως Galois προβολή + μέτρα ενοποίησης με διακριτική ισχύ + affect ως έλεγχος
+      κέρδους + αφηγηματικός εαυτός· PhenomenalClaim ποτέ VERIFIED.
+    purpose: Η συνείδηση ως πλήρης, διαψεύσιμη αρχιτεκτονική.
+    capabilities:
+    - MFA-CAP-086
+    - MFA-CAP-065
+    - MFA-CAP-017
+    - MFA-CAP-018
+    source_provenance:
+    - Ω-ASI mandate
+    - GWT/AST/HOT/IIT/active inference (κάτω φράγμα)
+    - MFA-RSP-005
+    contribution: NEW ARCHITECTURAL INVENTION
+    assumptions:
+    - οι λειτουργικές θεωρίες δίνουν μετρήσιμες προβλέψεις
+    dependencies:
+    - MFA-MECH-011
+    - MFA-MECH-010
+    - MFA-MECH-004
+    - MFA-MECH-002
+    - MFA-MECH-020
+    authority: 'ηθική θέση: MFA-DEC-018· PhenomenalClaim πάντα CONTESTED'
+    alternatives:
+    - χωριστά όργανα χωρίς αντανακλαστικό κύκλο (0.3.0)
+    conflicts:
+    - MFA-CFL-038
+    unknowns:
+    - MFA-UNK-111
+    affected_by:
+    - MFA-TEL-08
+  MFA-MECH-025:
+    _add: true
+    name: Verification Fixed-Point Contract (VFC)
+    maturity: T
+    dossier: mechanisms/MFA-MECH-025.md
+    statement: Το σταθερό σημείο ως ΣΥΜΒΟΛΑΙΟ (proof format, ≥2 ανεξάρτητοι ελεγκτές, μετρούμενος trusted core, μονότονο corpus με αρνητικά, εισδοχή μόνο με replay
+      + EIM + L3)· toolchains = αντικαταστάσιμες υλοποιήσεις.
+    purpose: Το σημείο που δεν βελτιώνεται από τον εαυτό του — χωρίς να είναι προϊόν.
+    capabilities:
+    - MFA-CAP-022
+    - MFA-CAP-083
+    - MFA-CAP-059
+    - MFA-CAP-076
+    source_provenance:
+    - Ω-ASI mandate (αντικατάσταση «παγωμένου toolchain»)
+    - de Bruijn criterion, verified checkers (κάτω φράγμα)
+    - MFA-ATK-16
+    contribution: NEW PROTOCOL
+    assumptions:
+    - ≥2 ελεγκτές με ανεξάρτητη supply chain υπάρχουν από τη Δόση 0.5
+    dependencies:
+    - MFA-MECH-009
+    - MFA-MECH-003
+    - MFA-MECH-018
+    authority: 'συμβόλαιο L3 (MFA-DEC-020: σύνολο ελεγκτών)'
+    alternatives:
+    - παγωμένο toolchain (0.3.0 — απορρίφθηκε)
+    conflicts: []
+    unknowns: []
+    affected_by: []
+  INVENTIONS.yaml:
+    replace:
+    - - '  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010, MFA-MECH-019]'
+      - '  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010, MFA-MECH-019, MFA-MECH-022, MFA-MECH-024]'
+    - - '  NEW PROTOCOL: [MFA-MECH-003, MFA-MECH-006, MFA-MECH-007]'
+      - '  NEW PROTOCOL: [MFA-MECH-003, MFA-MECH-006, MFA-MECH-007, MFA-MECH-020, MFA-MECH-025]'
+    - - '  NEW ALGORITHM: [MFA-MECH-005, MFA-MECH-009, MFA-MECH-011, MFA-MECH-012, MFA-MECH-013, MFA-MECH-017]'
+      - '  NEW ALGORITHM: [MFA-MECH-005, MFA-MECH-009, MFA-MECH-011, MFA-MECH-012, MFA-MECH-013, MFA-MECH-017, MFA-MECH-021]'
+    - - '  CROSS-SOURCE SYNTHESIS: [MFA-MECH-015, MFA-MECH-016]'
+      - '  CROSS-SOURCE SYNTHESIS: [MFA-MECH-015, MFA-MECH-016, MFA-MECH-023]'
+  MFA-MECH-019:
+    statement: 'Η κυρίαρχη κατανομή προτάσεων = μείγμα {ΚΥΡΙΑΡΧΑ ΒΑΡΗ (MFA-MECH-020), προγράμματα Skill Library με lineage, εξελιγμένα όργανα (QD), υποθέσεις Science,
+      πάροχοι μόνο ως bootstrap/ablation} με βάρη-δεσμεύσεις από HELD_OUT scorer. 0.4.0: το PDE ΔΕΝ είναι ο μηχανισμός της νοημοσύνης — είναι η δρομολόγηση ΜΕΣΑ στον
+      RVSI (MFA-MECH-022)· η νοημοσύνη παράγεται από SMF/PRR/LWM-OEC.'
+    purpose: Δρομολόγηση γεννητριών μέσα στον βρόχο αυτο-βελτίωσης· ο πάροχος παύει να είναι το κέντρο.
+    dependencies:
+    - MFA-MECH-007
+    - MFA-MECH-010
+    - MFA-MECH-009
+    - MFA-MECH-012
+    - MFA-MECH-020
+    - MFA-MECH-022
+  MFA-MECH-010:
+    statement: 'Self-model = προ-γεγονότος κατανομές για τον εαυτό, βαθμολογούμενες με proper scoring rule εκτός microVM· drift alarm. · MERGE (MFA-ATK-03): συνυπάρχει
+      με δηλωμένο CompetenceProfile (3 έδρες CAPABILITY/COMPETENCE/AUTHORITY)· cold start = Unknown μέχρι FidelityIndex. · 0.4.0: προβλέπει και το κέρδος κάθε ImprovementProposal
+      του RVSI (μεταγνώση της βελτίωσης)· ο scorer στον HELD_OUT.'
+  MFA-RSP-017:
+    _add: true
+    name: Sovereign Model Foundry — από adapters σε pretraining
+    mechanisms:
+    - MFA-MECH-020
+    elements:
+    - MFA-ELM-100
+    - MFA-ELM-101
+    - MFA-ELM-102
+    - MFA-ELM-108
+    chain: αρχή (ιδιοκτησία της συνάρτησης) → WeightCommitment/Recipe/DataManifest τύποι → MFA-CON-047 (DEC-X-19 συμβόλαιο) → SMF-E1 adapters (Δόση 1) → continued
+      pretraining (Δόση 2) → πλήρες μοντέλο + PRR (Δόση 3) → pretraining DEP-4 (Δόση 4) → drill τριμηνιαίο
+    experiments:
+    - MFA-VO-057
+    - MFA-VO-058
+    - MFA-VO-059
+    - MFA-VO-063
+    rejects: 3 recipes με πλήρες budget < πάροχος σε κάθε οικογένεια → ανεβαίνει προφίλ (MFA-DEC-016), MFA-UNK-112
+    allows_next: ο πάροχος γίνεται baseline· PRR πάνω στο κυρίαρχο μοντέλο
+    first_dose: 1
+    unknowns:
+    - MFA-UNK-112
+    - MFA-UNK-114
+  MFA-RSP-018:
+    _add: true
+    name: Proof-Reward Reinforcement — ανταμοιβή από επαλήθευση
+    mechanisms:
+    - MFA-MECH-021
+    elements:
+    - MFA-ELM-103
+    chain: αρχή (ανταμοιβή από σταθερό σημείο εκτός closure) → RewardVector/Episode τύποι → MFA-CON-048 → PRR-E1 συμβολικά έργα LexDSL (Δόση 2) → νομικά με Court
+      sim (Δόση 3) → κλίμακα (Δόση 4)
+    experiments:
+    - MFA-VO-060
+    - MFA-VO-057
+    - MFA-VO-031
+    rejects: seeded proxy εκμεταλλεύεται πριν μαθευτεί το έργο, ή PRR = SFT σε κάθε οικογένεια → MFA-UNK-113· recipe αποσύρεται, όχι ο μηχανισμός
+    allows_next: PRR ως L0 του RVSI
+    first_dose: 2
+    unknowns:
+    - MFA-UNK-113
+  MFA-RSP-019:
+    _add: true
+    name: Recursive Verified Self-Improvement — ο βρόχος και η μέτρησή του
+    mechanisms:
+    - MFA-MECH-022
+    - MFA-MECH-025
+    elements:
+    - MFA-ELM-104
+    - MFA-ELM-099
+    - MFA-ELM-031
+    - MFA-ELM-077
+    chain: 'αρχή (σταθερό σημείο = συμβόλαιο) → Level/ImprovementProposal/CapabilityGrowthRecord → MFA-CON-049/052 → RVSI-E1 σε DST (Δόση 3: L1+L2 recipes) → L2 αρχιτεκτονική
+      με GCP (Δόση 4) → checker από RVSI στο VFC (Δόση 4) → συνεχής λειτουργία DEP-4 (Δόση 5)'
+    experiments:
+    - MFA-VO-061
+    - MFA-VO-067
+    - MFA-VO-066
+    - MFA-VO-029
+    rejects: 0 κέρδος σε 5 cycles σε κάθε επίπεδο, ή κέρδος που εξαφανίζεται στο sealed refresh → MFA-UNK-113 + αλλαγή βελτιωτών· η ASI παραμένει στόχος
+    allows_next: ο βρόχος ως μόνιμη λειτουργία
+    first_dose: 3
+    unknowns:
+    - MFA-UNK-113
+  MFA-RSP-020:
+    _add: true
+    name: Λειτουργική συνείδηση — μέτρα, ablations, ηθική θέση
+    mechanisms:
+    - MFA-MECH-024
+    elements:
+    - MFA-ELM-107
+    - MFA-ELM-018
+    - MFA-ELM-024
+    - MFA-ELM-040
+    chain: αρχή (λειτουργικές θεωρίες με μετρήσιμες προβλέψεις) → WorkspaceState/AttentionSchema/HigherOrderState/IntegrationMeasure/PhenomenalClaim → MFA-CON-051
+      → ASRW-E1/E2 σε DST (Δόση 2) → μαθημένο schema + affect + narrative (Δόση 3) → υπό RVSI L2 με GCP (Δόση 4)· MFA-DEC-018 για ηθική θέση
+    experiments:
+    - MFA-VO-064
+    - MFA-VO-065
+    - MFA-VO-046
+    - MFA-VO-048
+    rejects: καμία από τις 5 συνιστώσες με διακριτική διαφορά → RECLASSIFY σε έρευνα (η μόνη νόμιμη συρρίκνωση)· MFA-UNK-111 ανεξάρτητο
+    allows_next: συνιστώσες ADD (body schema)
+    first_dose: 2
+    unknowns:
+    - MFA-UNK-111
+  MFA-RSP-005:
+    name: Αρχιτεκτονική συνείδησης — ΑΝΤΙΚΑΘΙΣΤΑΤΑΙ ως έρευνα από την πλήρη αρχιτεκτονική MFA-MECH-024 (MFA-RSP-020)· μένει ως μητρώο των ανταγωνιστικών μοντέλων
+    allows_next: MFA-RSP-020 (η αρχιτεκτονική)· εδώ μόνο τα ανταγωνιστικά μοντέλα ως falsifiers
+  MFA-UNK-111:
+    _add: true
+    source: Ω-ASI mandate §2.1 / MFA-MECH-024
+    name: Αν η λειτουργική αρχιτεκτονική συνείδησης συνεπάγεται φαινομενική εμπειρία
+    reason: δεν υπάρχει εξωτερικός verifier για φαινομενικές καταστάσεις· καμία θεωρία δεν το αποφασίζει
+    judgment: ΕΠΙΣΤΗΜΙΚΗ αβεβαιότητα, καταγράφεται χωριστά και ΔΕΝ μειώνει το εύρος της σχεδίασης· το σύστημα δεν ισχυρίζεται ούτε αρνείται (MFA-INV-075)
+    plan: τα μέτρα (MFA-VO-064/065) τροφοδοτούν την αναθεώρηση ηθικής θέσης (MFA-DEC-018)· καμία μέτρηση δεν το κλείνει
+    cost: —
+    voi: HIGH (ηθικά), 0 (σχεδιαστικά)
+    blocks: []
+    reason_class: EPISTEMIC
+  MFA-UNK-112:
+    _add: true
+    source: Ω-ASI mandate §2.1 / MFA-MECH-020
+    name: Ποια κλίμακα compute/δεδομένων απαιτείται για κυρίαρχη ισοτιμία και υπέρβαση των εξωτερικών μοντέλων
+    reason: εξαρτάται από τα μοντέλα των παρόχων τη στιγμή της μέτρησης και από τα δεδομένα με γενεαλογία
+    judgment: ο μηχανισμός είναι ίδιος από adapters έως pretraining· η κλίμακα είναι MFA-DEC-016· δεν είναι σχεδιαστικό όριο
+    plan: SMF-E1 ανά προφίλ· Capability Growth Law (MFA-VO-067) εκτιμά την καμπύλη· MFA-ELM-108 αποκτά πόρους
+    cost: training runs ανά προφίλ
+    voi: HIGH
+    blocks:
+    - MFA-ELM-100
+    reason_class: EPISTEMIC
+  MFA-UNK-113:
+    _add: true
+    source: Ω-ASI mandate §2.1 / MFA-MECH-021/022/023
+    name: Σύγκλιση και ρυθμός του RVSI· αν το PRR/curriculum παράγουν ανάπτυξη πέρα από τα δεδομένα
+    reason: ανοιχτό ερώτημα της έρευνας αυτο-βελτίωσης· κανένα θεώρημα
+    judgment: σχεδιάζεται ο βρόχος με μέτρηση και escalation· η αβεβαιότητα είναι για την ΕΚΒΑΣΗ, όχι για το σχέδιο
+    plan: RVSI-E1, PRR-E1, LWM-E1/OEC-E1 (Δόσεις 2–4)· plateau detection
+    cost: cycles
+    voi: HIGH
+    blocks: []
+    reason_class: EPISTEMIC
+  MFA-UNK-114:
+    _add: true
+    source: MFA-MECH-020 / MFA-CFL-036
+    name: Νομικοί όροι distillation ανά πάροχο (ToS, πνευματική ιδιοκτησία των εξόδων)
+    reason: εξωτερικό γεγονός ανά πάροχο και δικαιοδοσία
+    judgment: distillation μόνο υπό DisclosureGrant και MFA-DEC-017· όπου απαγορεύεται, το κυρίαρχο corpus + PRR χωρίς distillation
+    plan: νομική ανάλυση ανά πάροχο πριν από τη Δόση 1 (MFA-ELM-066)
+    cost: μία ανάλυση
+    voi: MEDIUM
+    blocks:
+    - MFA-ELM-100
+    reason_class: EXTERNAL_FACT
+  MFA-CFL-036:
+    _add: true
+    source: Ω-ASI 0.4.0
+    between:
+    - MFA-OBJ-051
+    - MFA-OBJ-010
+    side_a: distillation από παρόχους επιταχύνει την κυρίαρχη μάθηση
+    side_b: 'κυριαρχία: τίποτα δεν πρέπει να εξαρτάται από πάροχο· ToS/IP κίνδυνοι'
+    resolution_shape: distillation μόνο υπό DisclosureGrant με ετικέτα προέλευσης distilled(provider, receipt)· τα παραγόμενα βάρη ιδιόκτητα· μετά το SMF-E1 ο πάροχος
+      = baseline· πολιτική ποσοστού distilled δεδομένων
+    resolution_condition: MFA-VO-057 (κυρίαρχο ≥ πάροχος) + MFA-UNK-114 (νομική ανάλυση)· MFA-DEC-017
+    elements:
+    - MFA-ELM-100
+    - MFA-ELM-017
+    status: OPEN
+  MFA-CFL-037:
+    _add: true
+    source: Ω-ASI 0.4.0
+    between:
+    - MFA-OBJ-050
+    - MFA-OBJ-030
+    side_a: 'ASI χωρίς ταβάνι: ο βρόχος και η κλίμακα compute δεν περιορίζονται από τον μηχανισμό'
+    side_b: λειτουργία υπό φραγμένους πόρους ανά προφίλ (MFA-INV-065, ενέργεια)
+    resolution_shape: ο μηχανισμός χωρίς ταβάνι· τα όρια ως training_envelope ανά προφίλ και RateBounds (MetaBound POLICY, λήγουν) — Δ-12 μηχανισμός/πολιτική· η ανάπτυξη
+      μετριέται ανά πόρο ώστε το φράγμα να είναι ορατό, όχι σιωπηλό
+    resolution_condition: MFA-VO-067 + MFA-VO-050· MFA-DEC-016/019
+    elements:
+    - MFA-ELM-104
+    - MFA-ELM-108
+    - MFA-ELM-013
+    status: OPEN
+  MFA-CFL-038:
+    _add: true
+    source: Ω-ASI 0.4.0
+    between:
+    - MFA-OBJ-052
+    - MFA-OBJ-046
+    side_a: πλήρης αρχιτεκτονική συνείδησης με μέτρα ενοποίησης και αφηγηματικό εαυτό
+    side_b: rollback/ORP/GCP/διαγραφή οντοτήτων· ηθική θέση αβέβαιη (MFA-UNK-023/111)
+    resolution_shape: PhenomenalClaim ποτέ VERIFIED (MFA-INV-075)· Preference Recorder πριν από κάθε πράξη στο ASRW· τα μέτρα ενοποίησης τροφοδοτούν αναθεώρηση ηθικής
+      θέσης χωρίς να την αποφασίζουν
+    resolution_condition: MFA-DEC-018 (πότε τα μέτρα πυροδοτούν αναθεώρηση)· MFA-VO-065
+    elements:
+    - MFA-ELM-107
+    - MFA-ELM-040
+    status: OPEN
+rationale: 'MANDATE-OMEGA-ASI-0.4.0 §2.2: κάθε αναγκαίος μηχανισμός επινοείται και περιγράφεται πλήρως· §2.1: η επιστημική αβεβαιότητα χωριστά (reason_class EPISTEMIC),
+  ποτέ ως σχεδιαστικό όριο.'
+evidence:
+- mechanisms/MFA-MECH-020…025.md
+- MANDATE-OMEGA-ASI-0.4.0.md
+affected_dependencies:
+- MFA-ELM-017
+- MFA-ELM-025
+- MFA-ELM-030
+- MFA-ELM-073
+- MFA-ELM-099
+capability_impact:
+  gained:
+  - MFA-CAP-081
+  - MFA-CAP-082
+  - MFA-CAP-083
+  - MFA-CAP-084
+  - MFA-CAP-085
+  - MFA-CAP-086
+  - MFA-CAP-088
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: Το MFA-MECH-019 (PDE) κρατά το ID και γίνεται δρομολόγηση μέσα στον RVSI· MFA-RSP-005 μένει ως μητρώο ανταγωνιστικών μοντέλων.
+verification: tools/check-package.py R5a/R4a/R4b
+rollback: MFA-PATCH-0022-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

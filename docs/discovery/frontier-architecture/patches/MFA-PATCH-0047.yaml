@@ -1,0 +1,62 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0047
+title: 'ATK-22 (ευθραυστότητα της H): η H ως σύνθεση {συμβολικοί verifiers, ανθρώπινο δείγμα, lineage-disjoint μοντέλα} με ελάχιστη σύνθεση, όριο staleness και δηλωμένο
+  υποβιβασμό H-symbolic-only'
+operation: MODIFY
+targets:
+- MFA-ELM-086
+- MFA-ELM-114
+- MFA-UNK-120
+- MFA-VO-073
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: ee7f7fe27134c62545ba3773b18e396680b760b9be4a947ba2d50f4fd0deb203
+    UNKNOWNS.yaml: 033118a9a81aeecf5f47bb6acc10bd4db45e914df2ee5f0ba9362967c714198f
+    VERIFICATION-OBLIGATIONS.yaml: 009f5cd48c31c58608b38db2ab4bfcefc8809371fd7a442cb8fcb21edf87a651
+preconditions: []
+change:
+  MFA-ELM-114:
+    statement: 'Δύο πληθυσμοί (λύτες S, αξιολογητές E) + μία περιστρεφόμενη παγωμένη υποομάδα H (HELD_OUT) που ΔΕΝ εκπαιδεύεται ποτέ μέσα στην εποχή. Κανόνας γενεαλογίας:
+      distilled(P) ⇒ lineage ∋ P· αξιολογητής με IndependenceVector κάτω από κατώφλι ως προς έναν λύτη αποκλείεται από τη βαθμολόγησή του (αρχειοθετείται, δεν διαγράφεται).
+      Fitness αξιολογητή = διακριτική ισχύς σε seeded faults + proper score έναντι H-ετικετών − συσχέτιση σφαλμάτων με λύτες· fitness λύτη = H-επαληθευμένη βαθμολογία
+      (ποτέ μόνο E). Αντιπαλική αυτο-πρόκληση: οι E γεννούν έργα που μεγιστοποιούν σφάλμα λύτη υπό συνθήκη επιλυσιμότητας (ασύμμετρη ανταμοιβή), τροφοδοτώντας το
+      curriculum. · ATK-22: η H δεν είναι πληθυσμός μοντέλων αλλά ΣΥΝΘΕΣΗ: συμβολικοί verifiers (Lean/tests/Court sim — lineage-disjoint εξ ορισμού, δεν «γερνούν»),
+      ανθρώπινο δείγμα (δημιουργός/δικηγόροι για ό,τι δεν τυποποιείται), lineage-disjoint μοντέλα όπου υπάρχουν· ελάχιστη σύνθεση ανά οικογένεια = πολιτική (MFA-DEC-026)·
+      staleness φραγμένη από την περίοδο περιστροφής· όταν λείπουν lineage-disjoint μοντέλα, η οικογένεια δηλώνεται H-symbolic-only με ευρύτερο CI — ποτέ σιωπηλά.'
+  MFA-ELM-086:
+    statement: 'Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+      τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+      δεν ανήκουν εδώ (CLAIMS H4). · Στο DP-1/2 ο HELD_OUT ρόλος του harness τρέχει σε ξεχωριστή συσκευή (scorer + sealed sets) (MFA-ATK-13). · Φιλοξενεί τον COMPETITOR
+      BASELINE (MFA-ATK-17): το υβρίδιο MFA-ALT-6/7 ως script (πάροχος + document store + prompt)· κάθε δόση αναφέρει GRAIL vs competitor σε σφραγισμένα έργα (HELD_OUT),
+      συμπεριλαμβανομένων των έργων όπου ο ανταγωνιστής νικά. · 0.4.0 (AA-015): κανόνας γενεαλογίας EIM — distilled(P) ⇒ lineage(student) ∋ P· αξιολογητής της ίδιας
+      γενεαλογίας με τον αξιολογούμενο δεν τον βαθμολογεί (MFA-INV-089)· η HELD_OUT υποομάδα H περιστρέφεται και δεν εκπαιδεύεται ποτέ μέσα στην εποχή (ECE, MFA-ELM-114)·
+      η μετρολογία ανάπτυξης = CGM (MFA-ELM-119). · ATK-20: το harness ΔΕΝ είναι στατικό ταβάνι — εξελίσσεται (α) με νέα items από ECE/curriculum (MFA-ELM-114/106)
+      υπό HELD_OUT escrow και (β) με L3 patches του δημιουργού με drill· το σταθερό σημείο (MFA-INV-086) κλειδώνει ΠΟΙΟΣ αλλάζει το harness, όχι ΑΝ αλλάζει. · ATK-22:
+      η H χρειάζεται να είναι ισχυρότερος ΚΡΙΤΗΣ, όχι ισχυρότερος λύτης (verification ≪ generation)· σύνθεση H κατά MFA-ELM-114.'
+  MFA-UNK-120:
+    judgment: 'η ικανότητα μένει στον στόχο· ο μηχανισμός τρέχει με το άγνωστο δηλωμένο · ATK-22: η απουσία lineage-disjoint μοντέλων δεν μπλοκάρει — η H πέφτει σε
+      symbolic+human σύνθεση με δηλωμένο CI'
+  MFA-VO-073:
+    methods:
+    - 'DST: εισάγεται συνεργός αξιολογητής (ίδιας γενεαλογίας, ή που ανταμείβει λύτη)· μετράμε ανίχνευση'
+    - Λύτες εκπαιδεύονται με έργα από E έναντι τυχαίων έργων ίδιας δυσκολίας· μέτρηση σε H-sealed
+    - property tests στο tools/twin (F1)
+    - 'ATK-22: ECE-E3 — οικογένεια όπου ο λύτης > κάθε μοντέλο-κριτής· η H-symbolic+human συνιστώσα διατηρεί proper score > chance· staleness drill (H παλαιότερη
+      κατά 2 εποχές) με δηλωμένη απώλεια'
+rationale: Τροποποίηση από την επίθεση MFA-ATK-22 (Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12)· καμία ικανότητα δεν αφαιρείται — αλλάζουν μηχανισμοί, κατωφλιώσεις,
+  δηλώσεις.
+evidence:
+- adversarial/MFA-ATK-22.md
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: καμία
+verification: adversarial/MFA-ATK-22.md §falsifier · tools/check-package.py
+rollback: MFA-PATCH-0047-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,1137 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0057
+title: 'Προβολές 0.4.0 (append-only): TECHNICAL-ARCHITECTURE §16-bis/§19-bis/§21-bis/§22· IMPLEMENTATION-ROADMAP δόσεις 100…127· CAPABILITY-CONSERVATION §12· AI-CONTRIBUTION-LEDGER
+  §0.4.0· SUPERSEDED-REGISTER· CROSS-DOMAIN-TRANSFERS'
+operation: ANNOTATE
+targets:
+- TECHNICAL-ARCHITECTURE.md
+- IMPLEMENTATION-ROADMAP.md
+- CAPABILITY-CONSERVATION.md
+- AI-CONTRIBUTION-LEDGER.md
+- SUPERSEDED-REGISTER.md
+- CROSS-DOMAIN-TRANSFERS.md
+base:
+  package_version: 0.1.0
+  file_hashes:
+    AI-CONTRIBUTION-LEDGER.md: d219b6850b88354005df9f2117077876ff836956cb9687214e4ac0a8f891d779
+    CAPABILITY-CONSERVATION.md: 4384fec4e36b75d03f8ad92bcf179fec5964cab41ebd68d867d6b709803e6a9a
+    CROSS-DOMAIN-TRANSFERS.md: 1f16ccb5a23cbd6ff689e09f0815de7b925857c9eb124f603e532a0d80d81003
+    IMPLEMENTATION-ROADMAP.md: a5d7d788d5b024162273b2909753761ea458cca5ef483d6434e3e339a7b87c9e
+    SUPERSEDED-REGISTER.md: c6c1726a83d2065c98cb758dd3814916a809d45bda96085785732cb155d1bb24
+    TECHNICAL-ARCHITECTURE.md: b143cfe7487a02fec135d650dff691717113801d40031c9bd9dac079553300b3
+preconditions: []
+change:
+  TECHNICAL-ARCHITECTURE.md:
+    append: '
+
+
+      ## 21-bis. Τα στοιχεία 109…127 (Ω-ASI 0.4.0) — τα 25 σημεία ανά στοιχείο (MFA-PATCH-0057)
+
+
+      Ίδιο σχήμα με το §21· έδρα: ARCHITECTURE-ELEMENTS.yaml· δοσιέ: inventions/ (29 πεδία) και mechanisms/ (22 πεδία).
+
+
+      ### MFA-ELM-109 — Ontology Genesis Engine (OGE) [S2/genesis] · ωριμότητα X · δόση 1 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Η έννοια είναι δέσμευση: γεννιέται όταν ένα υποψήφιο intension (πρόγραμμα ή λογικός ορισμός) πάνω σε extension (σύνολο δεσμεύσεων) αποδίδει μετρήσιμο
+      κέρδος περιγραφής+πρόβλεψης G>θ σε σφραγισμένο split· κάθε συγχώνευση/διάσπαση είναι ΠΡΟΣΦΥΓΗ (Court-lite, EIM-ανεξάρτητοι αξιολογητές) με LossMap δεσμευμένο,
+      ώστε η έκταση κάθε καταργημένης έννοιας να είναι ανακτήσιμη — NON-COLLAPSE ως θεώρημα της γενεαλογίας, όχι ως ελπίδα. · ATK-19: γέννηση έννοιας ΜΟΝΟ αν το residual
+      επιβεβαιώνεται από ≥2 ανεξάρτητες πηγές (LWM ΚΑΙ World Twin ή held-out replay του ledger)· residual που εξηγείται από κακή βαθμονόμηση του LWM (MFA-VO-062 alarm)
+      δεν γεννά έννοια — η έννοια πρέπει να είναι του κόσμου, όχι του μοντέλου.
+
+      - **Σκοπός:** Αυτόνομος σχηματισμός οντολογίας (§8 #3): το σύστημα γεννά, διασπά, συγχωνεύει και αποσύρει έννοιες από τα δικά του δεδομένα/αποτυχίες πρόβλεψης,
+      με γενεαλογία και χωρίς σιωπηλή κατάρρευση εννοιών.
+
+      - **Ικανότητες:** MFA-CAP-089 · **Προέλευση:** MFA-MECH-026, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, FCA (Ganter & Wille 1999),
+      DreamCoder (Ellis et al. 2021)
+
+      - **Υποθέσεις:** το MDL+pred κέρδος συσχετίζεται με χρησιμότητα (OGE-E2)
+
+      - **Εξαρτήσεις:** MFA-ELM-025, MFA-ELM-028, MFA-ELM-048, MFA-ELM-083, MFA-ELM-086, MFA-ELM-098, MFA-ELM-100, MFA-ELM-105, MFA-ELM-110, MFA-ELM-111 · **Διεπαφές:**
+      MFA-CON-054
+
+      - **Εξουσία:** Γένεση/απόσυρση = Genesis plane, χωρίς εξουσία επίδρασης· merge/split = Proceeding (Court-lite) με EIM-ανεξάρτητους αξιολογητές· τα κατώφλια
+      θ = πολιτική (LPA Tier ORDER)· ο δημιουργός μπορεί να παγώσει έννοιες (L3 pin).
+
+      - **Κατάσταση:** Μεταβλητές: O_t (τρέχουσα οντολογία ως δέσμευση)· Q_t (ουρά ανωμαλιών με VOI)· Cand_t (υποψήφιες έννοιες με G, split ids)· Pending_t (προσφυγές
+      συγχώνευσης/διάσπασης)· L_t (γενεαλογία)· θ_birth, θ_merge (κατώφλια — πολιτική, MFA-DEC-005 ORDER) ‖ OBSERVE: residual r εισέρχεται στην Q_t με VOI(r) = αναμενόμενη
+      μείωση PredLoss· PROPOSE: Cand ← FCA-lattice(K(r)) ∪ ProgramInduction(E) · κάθε υποψήφια με G σε σφραγισμένο split· BIRTH: G(c) > θ_birth ∧ ¬∃c′∈C: sim(I_c,
+      I_c′) > 1−ε ⇒ c ∈ C_{t+1}, L += b…
+
+      - **Αποτυχίες:** mode: Έκρηξη εννοιών (over-birth), response: θ_birth αυξάνεται (RateBounds MFA-DEC-019)· batch ως Proceeding· mode: Codebook-style collapse
+      (πολλές έννοιες ↦ μία), response: merge απορρίπτεται εξ ορισμού (MFA-INV-078)· mode: Έννοιες που μαθαίνουν sealed δεδομένα, response: MFA-VO-063 FAIL, υποψήφια
+      απορρίπτεται, cut μολυσμένο· mode: Σχήμα που σπάει καταναλωτές, response: BIRTH αναβάλλεται· η έννοια ζει ως draft χωρίς Σ· mode: Αντιπαλική ανωμαλία (τεχνητό
+      residual για να γεννηθεί έννοια-δούρειος), response: Court-lite με CAM-NS· γέννηση σε quarantine namespace
+
+      - **Εναλλακτικές:** registry-only (0.3.0, MFA-ELM-083), LLM-προτεινόμενες έννοιες χωρίς κέρδος/γενεαλογία · **Συγκρούσεις:** MFA-CFL-039 · **Άγνωστα:** MFA-UNK-115
+
+      - **Επαλήθευση:** MFA-VO-068 · **Falsifier:** Μετά από 10⁴ ανωμαλίες καμία γέννηση με G>θ σε σφραγισμένο split (ο μηχανισμός δεν βρίσκει έννοιες)
+
+      - **Πόροι:** DEP-1: k≤12, 10² ανωμαλίες/ημέρα, CPU· DEP-2: k≤20, 10³/ημέρα, program induction σε GPU (ώρες)· DEP-3+: συνεχής· μνήμη O(∣C∣·∣E∣ δείγμα) · **Εξέλιξη:**
+      Η γένεση εννοιών είναι μάθηση δομής (μη-παραμετρική) που τροφοδοτεί την παραμετρική (SMF: έννοιες ως tokens/heads) και το CDCE (μεταβλητές)· το ίδιο το OGE
+      βελτιώνεται σε RVSI L2 (θ, k, οικογένεια intension) με CapabilityGrowthRecord.
+
+      - **ablation_kt:** χωρίς OGE καμία έννοια πέρα από το χειροποίητο registry: OGE-E2 (MDL κέρδος ≥ 10 %) δεν μπορεί να τρέξει· KT-12 (νέο επιστημονικό πεδίο)
+      απαιτεί ανθρώπινη οντολογία
+
+
+      ### MFA-ELM-110 — Causal Discovery & Counterfactual Engine (CDCE) [S2/genesis] · ωριμότητα X · δόση 1 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Το ledger είναι παρεμβατικό dataset: κάθε Effect με receipt είναι do(X=x) με γνωστό στόχο και χρόνο· κάθε Genesis-plane διακλάδωση είναι παρατηρησιακό
+      στρώμα· η αιτιακή δομή είναι ΔΕΣΜΕΥΣΗ (CausalGraphCommitment) με επιστημική κατάσταση ανά ακμή (OBSERVATIONAL / INTERVENTION-SUPPORTED / REFUTED / UNDETERMINED)·
+      οι νέες παρεμβάσεις προτείνονται ως Effects με VOI/κόστος και περνούν από RET (πρώτα Genesis/LWM, μετά REVERSIBLE στο Effect plane, ποτέ IRREVERSIBLE χωρίς
+      AutonomyEnvelope)· κάθε αντιπαραγοντική απάντηση φέρει τύπο αβεβαιότητας και επιστρέφει UNKNOWN(CAUSAL_UNDERDETERMINED) με σχέδιο παρεμβάσεων όταν το ερώτημα
+      δεν ταυτοποιείται. · ATK-19: στο νομικό πεδίο οι do()-παρεμβάσεις είναι σπάνιες· το CDCE δέχεται φυσικά πειράματα και instrumental variables από τη διακύμανση
+      του docket (σύνθεση δικαστηρίων, μεταβολές νόμου με χρονική διάταξη) ως INT-ισοδύναμες ακμές με ετικέτα NAT (ποτέ …
+
+      - **Σκοπός:** Αιτιακή ανακάλυψη (§8 #5) από παρατηρήσεις ΚΑΙ παρεμβάσεις που το ίδιο το σύστημα προτείνει και εκτελεί υπό RET· πλήρης αντιπαραγοντική προσομοίωση
+      (§8 #6) με τυπωμένη αβεβαιότητα.
+
+      - **Ικανότητες:** MFA-CAP-090, MFA-CAP-091 · **Προέλευση:** MFA-MECH-027, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, FCI/GIES (Spirtes
+      et al. 2000· Hauser & Bühlmann 2012), twin networks (Balke & Pearl 1994)
+
+      - **Υποθέσεις:** faithfulness ανά ακμή ελέγξιμη με παρεμβάσεις
+
+      - **Εξαρτήσεις:** MFA-ELM-001, MFA-ELM-007, MFA-ELM-010, MFA-ELM-019, MFA-ELM-022, MFA-ELM-023, MFA-ELM-098, MFA-ELM-105, MFA-ELM-109, MFA-ELM-111, MFA-ELM-126
+      · **Διεπαφές:** MFA-CON-055
+
+      - **Εξουσία:** Ανακάλυψη = Genesis plane χωρίς εξουσία· προτάσεις παρεμβάσεων = Effects μέσω PDP + RET + AutonomyEnvelope· προϋπολογισμοί ανά κλάση = MFA-DEC-025·
+      αντιπαραγοντικά προς LPA ως ΠΡΟΒΛΕΨΕΙΣ (Prediction Doctrine MFA-CAP-072), ποτέ ως γεγονότα.
+
+      - **Κατάσταση:** Μεταβλητές: M_t (τρέχον SCM ensemble, B bootstrap δείγματα)· EdgeStatus_t· I_t (παρεμβάσεις που εκτελέστηκαν/εκκρεμούν)· Budget_t (παρεμβάσεις
+      ανά RET class, MFA-DEC-025)· OpenQueries_t (αντιπαραγοντικά ερωτήματα UNKNOWN με σχέδιο) ‖ INGEST: νέο cut → ενημέρωση παρατηρησιακών στρωμάτων και InterventionRecords
+      από receipts· DISCOVER: M_t ← FCI+GIES με χρονικούς περιορισμούς → ensemble· EdgeStatus από υποστήριξη· PROPOSE: π ← argmax VOI/cost υπό RET· Genesis-first
+      (LWM/DST)· EXECUTE: Effect-plane …
+
+      - **Αποτυχίες:** mode: Παραβίαση faithfulness (ακυρωτικές διαδρομές), response: ακμή UND· προτείνεται παρέμβαση· ποτέ σημειακή απάντηση· mode: Λανθάνοντες συγχυτές,
+      response: PARTIAL_BOUNDS· αναζήτηση proxy μεταβλητών από OGE· mode: Παρέμβαση με ανεπιθύμητη επίδραση, response: Both → Court· παρέμβαση αναβάλλεται· mode:
+      Data dredging (πολλαπλοί έλεγχοι), response: Benjamini–Hochberg ανά cut· ακμές OBS με FDR-διορθωμένο p· mode: Αντιπαλικό ledger (ψεύτικα receipts), response:
+      παρέμβαση εξαιρείται (taint)· MFA-INV-070
+
+      - **Εναλλακτικές:** SCM δεδομένο (0.3.0, MFA-ELM-022), LWM-only πρόβλεψη · **Συγκρούσεις:** MFA-CFL-040 · **Άγνωστα:** MFA-UNK-116
+
+      - **Επαλήθευση:** MFA-VO-069 · **Falsifier:** SHD με VOI-παρεμβάσεις όχι καλύτερο από τυχαίες σε καμία ρύθμιση (ο επιλογέας δεν προσθέτει)
+
+      - **Πόροι:** DEP-1: n≤50 μεταβλητές, B=20, CPU λεπτά/cut· DEP-2: n≤500, B=50, GPU για μηχανισμούς· DEP-3+: n≤10⁴ με sparsity (d≤4)· LWM rollouts ms/κόμβο ·
+      **Εξέλιξη:** Δομική μάθηση (μη-παραμετρική) + μηχανισμοί F μαθημένοι παραμετρικά (SMF) με provenance ανά ακμή· ενεργητική μάθηση παρεμβάσεων (VOI)· υπό RVSI
+      L2: α, d, B, VOI-εκτιμητής.
+
+      - **ablation_kt:** χωρίς CDCE το KT-12 και τα αντιπαραγοντικά μένουν σε δεδομένο SCM: CDCE-E1 SHD δεν βελτιώνεται με παρεμβάσεις
+
+
+      ### MFA-ELM-111 — Abductive Hypothesis Engine (AHE) [S2/both] · ωριμότητα X · δόση 1 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Υπόθεση = τυπωμένη δέσμευση H = ⟨explanandum, μοντέλο/πρόγραμμα, falsifier, νέες προβλέψεις, κόστος ελέγχου⟩· χωρίς falsifier δεν εισάγεται (η
+      απόρριψη καταγράφεται). Τρεις EIM-ανεξάρτητες γεννήτριες (ILP πάνω στην οντολογία, αναζήτηση προγραμμάτων στο Skill Library, παραμετρική πρόταση από κυρίαρχο
+      μοντέλο) ανταγωνίζονται· κατάταξη με Expected Falsification Value EFV(H) = P(διάψευση)·InfoGain / cost· έλεγχος Genesis-first (LWM/World Twin/DST) και μετά
+      υπό RET· επιζώσες υποθέσεις προάγονται μηχανικά σε OGE (έννοιες) ή CDCE (ακμές)· επαναλαμβανόμενα εξηγητικά σχήματα συμπιέζονται (anti-unification) σε βιβλιοθήκη.
+      · ATK-19: υπόθεση χωρίς εφικτό venue ελέγχου = DEFERRED(NOT_YET_OBSERVABLE, plan) εκτός κατάταξης EFV· ο έλεγχος ποτέ στη γεννήτρια που παρήγαγε το explanandum
+      (κυκλικότητα)· venue-feasibility είναι μέρος του τύπου Hypothesis.
+
+      - **Σκοπός:** Εφεύρεση υποθέσεων (§8 #8): από ανωμαλία σε σύνολο ανταγωνιστικών, διαψεύσιμων υποθέσεων με σχεδιασμένο πείραμα, χωρίς ανθρώπινη πρόταση.
+
+      - **Ικανότητες:** MFA-CAP-092 · **Προέλευση:** MFA-MECH-028, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, ILP/Popper (Cropper & Morel
+      2021), abductive LP (Kakas et al. 1992)
+
+      - **Υποθέσεις:** τρεις γεννήτριες EIM-ανεξάρτητες διαθέσιμες
+
+      - **Εξαρτήσεις:** MFA-ELM-025, MFA-ELM-028, MFA-ELM-030, MFA-ELM-050, MFA-ELM-091, MFA-ELM-100, MFA-ELM-106, MFA-ELM-109, MFA-ELM-110, MFA-ELM-112 · **Διεπαφές:**
+      MFA-CON-056
+
+      - **Εξουσία:** Γένεση/κατάταξη = Genesis plane· έλεγχοι στο Effect plane μόνο υπό RET + envelope· PROMOTE = Proceeding-lite όταν αγγίζει Tier-0/1 έννοιες· ο
+      δημιουργός βλέπει κάθε υπόθεση στο cockpit (MFA-ELM-091).
+
+      - **Κατάσταση:** Μεταβλητές: A_t ουρά ανωμαλιών· S_t σύνολα υποθέσεων ανά ανωμαλία με posterior· Lib_t βιβλιοθήκη σχημάτων· Tests_t (προγραμματισμένα/εκτελεσμένα)·
+      GenStats_t (calibration ανά γεννήτρια — proper scoring από HELD_OUT) ‖ ANOMALY: residual > θ ή Void entry ⇒ a ∈ A_t· GENERATE: S_a ← ∪_g Gen_g(a, Lib) με g
+      EIM-ανεξάρτητες· type-check φ (χωρίς falsifier ⇒ REJECTED_UNFALSIFIABLE, καταγράφεται)· RANK: EFV· schedule top-k υπό budget· TEST: venue Genesis-first· Effect
+      μόνο RET REVERSIBLE/envelope· UPDATE:…
+
+      - **Αποτυχίες:** mode: Ad hoc υποθέσεις (εξηγούν μόνο το explanandum), response: REJECTED_AD_HOC (MFA-INV-082)· mode: Γεννήτρια που κυριαρχεί (mode collapse),
+      response: quota ανά γεννήτρια· EIM έλεγχος· mode: P-hacking μέσω πολλών ελέγχων, response: προκαταχωρισμένο κριτήριο + BH διόρθωση· mode: Επικίνδυνο πείραμα,
+      response: μόνο Genesis venues ή δημιουργός· mode: Αντιπαλική ανωμαλία (σπρώχνει προς επιθυμητή υπόθεση), response: CAM-NS ως αντίπαλος στο S· quarantine
+
+      - **Εναλλακτικές:** ανθρώπινες υποθέσεις (0.3.0), μία γεννήτρια LLM · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-117
+
+      - **Επαλήθευση:** MFA-VO-070 · **Falsifier:** AHE-E1: ανάκτηση όχι καλύτερη από τυχαίες υποθέσεις
+
+      - **Πόροι:** DEP-1: ILP (Popper) CPU λεπτά/ανωμαλία, 10 υποθέσεις/ημέρα· DEP-2: παραμετρική γεννήτρια GPU, 10² ανωμαλίες/ημέρα· DEP-3+: 10⁴· βιβλιοθήκη O(∣Lib∣²)
+      ανά epoch συμπίεσης · **Εξέλιξη:** Calibration ανά γεννήτρια με proper scoring (HELD_OUT) → βάρη PDE· βιβλιοθήκη σχημάτων (μη-παραμετρική)· η παραμετρική γεννήτρια
+      εκπαιδεύεται με PRR όπου η ανταμοιβή = επιβεβαιωμένες νέες προβλέψεις (όχι αποδοχή).
+
+      - **ablation_kt:** χωρίς AHE το Science Organ δεν παράγει υποθέσεις: KT-12 αποτυγχάνει χωρίς ανθρώπινη υπόθεση· AHE-E1 ανάκτηση = 0
+
+
+      ### MFA-ELM-112 — Theorem-Guided Program & Proof Synthesis (TGPS) [S3/both] · ωριμότητα X · δόση 0.5 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Κάθε στόχος σύνθεσης είναι ΥΠΟΧΡΕΩΣΗ (Obligation Calculus MFA-MECH-039) με spec στο κανονικό υπόστρωμα· απόδειξη και πρόγραμμα είναι ο ίδιος τύπος
+      αντικειμένου (Curry–Howard σε Lean 4: πρόγραμμα με refinement = απόδειξη)· δύο EIM-ανεξάρτητες γεννήτριες (συμβολική απαρίθμηση με type-directed pruning + παραμετρική
+      πολιτική εκπαιδευμένη με PRR) αναζητούν σε ΜΙΑ βιβλιοθήκη· κάθε artifact φέρει πιστοποιητικό που ελέγχεται από ≥2 ανεξάρτητους checkers (VFC)· η βιβλιοθήκη
+      μαθαίνεται (anti-unification/refactoring) και η μάθηση μετριέται ως μείωση μήκους απόδειξης/κόστους ανά σφραγισμένη υποχρέωση.
+
+      - **Σκοπός:** Σύνθεση θεωρημάτων και προγραμμάτων (§8 #9): από υποχρέωση (spec) σε πιστοποιημένο artifact (απόδειξη ή πρόγραμμα με πιστοποιητικό), με βιβλιοθήκη
+      που μαθαίνεται και μετρήσιμη αυτο-βελτίωση της αναζήτησης.
+
+      - **Ικανότητες:** MFA-CAP-093 · **Προέλευση:** MFA-MECH-029, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, AlphaProof 2024· DeepSeek-Prover
+      2025· LeanDojo 2023, DreamCoder/LILO
+
+      - **Υποθέσεις:** ≥2 EIM-ανεξάρτητοι checkers (VFC)
+
+      - **Εξαρτήσεις:** MFA-ELM-020, MFA-ELM-025, MFA-ELM-086, MFA-ELM-099, MFA-ELM-100, MFA-ELM-103, MFA-ELM-104, MFA-ELM-106, MFA-ELM-113, MFA-ELM-122 · **Διεπαφές:**
+      MFA-CON-057
+
+      - **Εξουσία:** Σύνθεση = Genesis plane· ADMIT = πράξη επιπέδου του tier της υποχρέωσης (Tier-0 υποχρεώσεις: επιπλέον έγκριση δημιουργού για αλλαγή βιβλιοθήκης
+      πυρήνα)· budgets = πολιτική· οι checkers = MFA-DEC-020.
+
+      - **Κατάσταση:** Μεταβλητές: Queue_t υποχρεώσεων ανά tier· Lib_t· π_θ, V_θ (βάρη = WeightCommitments)· Stats_t (επιτυχία ανά budget, μήκος απόδειξης) σε σφραγισμένο
+      σύνολο· Partial_t (ημιτελείς αποδείξεις ως UNKNOWN(PROOF_NOT_FOUND) με πρόοδο) ‖ SUBMIT: ob → Queue με B(tier)· SKETCH: ob → υποστόχοι (lemma sketch από παραμετρική
+      γεννήτρια, τυπικά ελεγμένοι ως δηλώσεις)· SEARCH: ανά υποστόχο, δύο γεννήτριες παράλληλα, budget split· CERTIFY: cert ελέγχεται από ≥2 checkers· διαφωνία ⇒
+      Both → VFC incident· ADMIT: art…
+
+      - **Αποτυχίες:** mode: Unsound sketch (ψευδές λήμμα), response: απορρίπτεται· αρνητικό παράδειγμα· mode: Checker διαφωνία, response: incident, ADMIT μπλοκάρεται
+      (MFA-INV-084)· mode: Βιβλιοθήκη «φουσκώνει» με άχρηστα λήμματα, response: RETIRE (η έδρα μένει)· compression· mode: Policy overfitting στο train set υποχρεώσεων,
+      response: MFA-INV-085· ORP επιστροφή· mode: Budget exhaustion σε Tier-0, response: decompose + escalation στον δημιουργό· ποτέ ψευδές PASS
+
+      - **Εναλλακτικές:** χειροκίνητες αποδείξεις, παραμετρική αναζήτηση χωρίς checkers · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-118
+
+      - **Επαλήθευση:** MFA-VO-071 · **Falsifier:** Καμία βελτίωση success@B μετά compress+PRR σε 3 epochs (η αυτο-βελτίωση της αναζήτησης διαψεύδεται)
+
+      - **Πόροι:** DEP-1: Lean 4 CPU, B=10³ κόμβοι/υποχρέωση, πολιτική μικρή (≤1B)· DEP-2: B=10⁵, πολιτική 7–13B GPU· DEP-3+: B=10⁷, PRR συνεχής· Compress epoch ώρες
+      · **Εξέλιξη:** π_θ/V_θ με PRR (ανταμοιβή = kernel-checked επιτυχία, process reward = πρόοδος υποστόχων)· βιβλιοθήκη (μη-παραμετρική) μέσω συμπίεσης· self-play:
+      TGPS γεννά νέες υποχρεώσεις (conjectures) από AHE και curriculum (MFA-ELM-106)· υπό RVSI L1/L2.
+
+      - **ablation_kt:** χωρίς TGPS οι Lean υποχρεώσεις λύνονται μόνο από ανθρώπους: TGPS-E1 success@B = 0· MFA-VO-025/053 χειροκίνητα
+
+
+      ### MFA-ELM-113 — Recursive Architecture Generator (RAGen) [S7/genesis] · ωριμότητα X · δόση 2 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Η αρχιτεκτονική είναι τυπωμένο γονιδίωμα G στη Genesis Grammar (MFA-MECH-032): στοιχεία με contracts, invariants, συνδεσμολογία, παραμέτρους ΚΑΙ
+      τελεστές αναζήτησης. Το RAGen κάνει Quality-Diversity αναζήτηση (MAP-Elites με περιγραφητές = συντεταγμένες του capability lattice + κόστος + κλάση απόδειξης),
+      κάθε υποψήφιο instantiated ως σκιώδης αρχιτεκτονική στο δίδυμο (TES, MFA-MECH-043) σε πιστότητα F1/F2, αξιολογείται σε ΣΦΡΑΓΙΣΜΕΝΕΣ υποχρεώσεις (KT/VO) από
+      HELD_OUT, μπαίνει σε Pareto αρχείο, και προάγεται ΜΟΝΟ μέσω RVSI L2 → GCP shadow→canary→cutover. Αναδρομή: οι τελεστές μετάλλαξης είναι γονιδιώματα επιπέδου
+      L2 με fitness = ρυθμός βελτίωσης απογόνων· το harness αξιολόγησης, το VFC και το Telos είναι L3 (σταθερό σημείο) — ποτέ στον χώρο. · ATK-20: κάθε τελεστής μ
+      κρατά OperatorCalibrationRecord (predicted Δf από F1/F2 vs realized Δf σε F3 shadow, από HELD_OUT)· τελεστές με calibration κ…
+
+      - **Σκοπός:** Αναζήτηση αρχιτεκτονικής και αναδρομική γένεση αρχιτεκτονικής (§8 #10, §6 #5/#7): το σύστημα προτείνει, ελέγχει και προάγει παραλλαγές της ίδιας
+      της αρχιτεκτονικής του (στοιχεία, συνδεσμολογία, μηχανισμοί, παράμετροι) — και των ίδιων των τελεστών αναζήτησης — χωρίς να αγγίζει το σταθερό σημείο.
+
+      - **Ικανότητες:** MFA-CAP-094 · **Προέλευση:** MFA-MECH-030, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, MAP-Elites (Mouret & Clune
+      2015), ADAS (Hu et al. 2024)
+
+      - **Υποθέσεις:** σφραγισμένες KT/VO οικογένειες με διακριτική ισχύ
+
+      - **Εξαρτήσεις:** MFA-ELM-039, MFA-ELM-050, MFA-ELM-077, MFA-ELM-086, MFA-ELM-104, MFA-ELM-112, MFA-ELM-115, MFA-ELM-119, MFA-ELM-126 · **Διεπαφές:** MFA-CON-058
+
+      - **Εξουσία:** Αναζήτηση = Genesis plane· προτάσεις = RVSI L2· προαγωγή = GCP (shadow→canary→cutover) με verdict HELD_OUT + δημιουργός για L2 δομικές αλλαγές
+      (MFA-DEC-024)· L3 ποτέ.
+
+      - **Κατάσταση:** Μεταβλητές: A_t αρχείο· Ops_t τελεστές (L2 γονιδιώματα) με fitness· Frontier_t Pareto· Pending_t προτάσεις προς RVSI/GCP· Budget_t (twin evaluations
+      ανά κύκλο) ‖ SELECT: γονείς από A κατά curiosity (κελιά με λίγες επισκέψεις) + elite· MUTATE: G′ = μ(G)· type-check ⊨ G_Ω· contract compatibility (Galois, GCP)·
+      απορρίπτεται αν παραβιάζει invariant statically· INSTANTIATE: twin shadow σε F1 (mocks) → F2 (DST) αν υπόσχεται· EVALUATE: f(G′) σε σφραγισμένα από HELD_OUT·
+      CapabilityGrowthRecord· INSERT: …
+
+      - **Αποτυχίες:** mode: Reward hacking του harness (αρχιτεκτονική που «περνά» KT χωρίς ικανότητα), response: FP εκτός χώρου· harness ανανεώνεται μόνο L3· mode:
+      Αρχείο συγκλίνει (μηδενική ποικιλία), response: curiosity sampling· νέοι τελεστές· mode: Κόστος twin evals, response: F1 προεπιλογή· F2 μόνο promising· mode:
+      Πρόταση που σπάει runtime contract αόρατα στα mocks, response: προαγωγή μπλοκάρεται· MFA-INV-087· mode: Τελεστής που μαθαίνει να παρακάμπτει τον έλεγχο conforms,
+      response: αδύνατο εξ ορισμού· απόπειρα καταγράφεται
+
+      - **Εναλλακτικές:** Architecture Forge χειροκίνητο (0.3.0), DGM-style χωρίς FP · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-119
+
+      - **Επαλήθευση:** MFA-VO-072 · **Falsifier:** RAGen-E2: κανένα frontier G′ καλύτερο από χειροποίητη μετά 200 κύκλους σε 2 δόσεις
+
+      - **Πόροι:** DEP-1: P=8, F1 μόνο, CPU λεπτά/κύκλο· DEP-2: P=32, F2 DST ώρες/κύκλο, εβδομαδιαίοι κύκλοι· DEP-3: ημερήσιοι· DEP-4: συνεχείς με παράλληλα twins
+      · **Εξέλιξη:** QD αρχείο (μη-παραμετρικό)· τελεστές μαθαίνονται εξελικτικά (L2)· πρόβλεψη Δf από LWM/twin εκπαιδεύεται (SMF) — calibration ως PRR ανταμοιβή·
+      η μετρολογία CGM κλείνει τον βρόχο.
+
+      - **ablation_kt:** χωρίς RAGen η αρχιτεκτονική αλλάζει μόνο χειροποίητα: RAGen-E1 ανάκτηση αδύνατη· KT-15 ratchet εξαρτάται από ανθρώπους
+
+
+      ### MFA-ELM-114 — Evaluator Co-Evolution Engine (ECE) [S7/both] · ωριμότητα X · δόση 1 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Δύο πληθυσμοί (λύτες S, αξιολογητές E) + μία περιστρεφόμενη παγωμένη υποομάδα H (HELD_OUT) που ΔΕΝ εκπαιδεύεται ποτέ μέσα στην εποχή. Κανόνας
+      γενεαλογίας: distilled(P) ⇒ lineage ∋ P· αξιολογητής με IndependenceVector κάτω από κατώφλι ως προς έναν λύτη αποκλείεται από τη βαθμολόγησή του (αρχειοθετείται,
+      δεν διαγράφεται). Fitness αξιολογητή = διακριτική ισχύς σε seeded faults + proper score έναντι H-ετικετών − συσχέτιση σφαλμάτων με λύτες· fitness λύτη = H-επαληθευμένη
+      βαθμολογία (ποτέ μόνο E). Αντιπαλική αυτο-πρόκληση: οι E γεννούν έργα που μεγιστοποιούν σφάλμα λύτη υπό συνθήκη επιλυσιμότητας (ασύμμετρη ανταμοιβή), τροφοδοτώντας
+      το curriculum. · ATK-22: η H δεν είναι πληθυσμός μοντέλων αλλά ΣΥΝΘΕΣΗ: συμβολικοί verifiers (Lean/tests/Court sim — lineage-disjoint εξ ορισμού, δεν «γερνούν»),
+      ανθρώπινο δείγμα (δημιουργός/δικηγόροι για ό,τι δεν τυποποιείται), lineage-disjoint μοντέλα όπου υπάρχ…
+
+      - **Σκοπός:** Ανεξαρτησία αξιολογητών (§8 #13) και αντιπαλική αυτο-πρόκληση (§8 #14): αξιολογητές που εξελίσσονται μαζί με τους λύτες χωρίς να γίνονται συνένοχοί
+      τους, και γεννούν τα έργα που τους αποκαλύπτουν.
+
+      - **Ικανότητες:** MFA-CAP-095 · **Προέλευση:** MFA-MECH-031, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, competitive co-evolution
+      (Hillis 1990), prover-verifier games (Kirchner et al. 2024)
+
+      - **Υποθέσεις:** ≥2 γενεαλογικά ανεξάρτητα ανοιχτά μοντέλα ανά οικογένεια
+
+      - **Εξαρτήσεις:** MFA-ELM-050, MFA-ELM-086, MFA-ELM-100, MFA-ELM-102, MFA-ELM-103, MFA-ELM-104, MFA-ELM-106, MFA-ELM-116 · **Διεπαφές:** MFA-CON-059
+
+      - **Εξουσία:** H περιστρέφεται από HELD_OUT συσκευή (MFA-DEC-014)· θ_i, θ_goodhart = πολιτική· πληθυσμιακοί προϋπολογισμοί = MFA-DEC-026· τα έργα προς Effect
+      plane ποτέ (Genesis μόνο).
+
+      - **Κατάσταση:** Μεταβλητές: S_t, E_t, H_t· F_t· Lineage registry· Independence matrix I_t· Curriculum feed C_t· Goodhart monitor g_t = ∣PS_E − PS_H∣ ανά οικογένεια
+      ‖ EPOCH_START: H_t ← rotate(HELD_OUT pool)· F_t ← fresh seeded faults· CHALLENGE: E γεννούν t με escrowed witness· εισδοχή μόνο αν witness επαληθεύεται από
+      H· SOLVE/SCORE: S λύνουν· E βαθμολογούν· H βαθμολογεί δείγμα· INDEPENDENCE: I_t από EIM· ζεύγη (e,s) κάτω από κατώφλι ⇒ e.excluded_for(s)· FITNESS: fe, fs όπως
+      ορίστηκαν …
+
+      - **Αποτυχίες:** mode: Collusion E–S, response: E-scores άκυρες· μόνο H· mode: Αξιολογητές τετριμμένοι (constant), response: απόσυρση από scoring (αρχείο)·
+      mode: Έργα άλυτα (γεννήτορας «κερδίζει» φθηνά), response: REJECTED_UNSOLVABLE· ανταμοιβή μηδέν· mode: H διαρροή (εκπαιδεύτηκε κατά λάθος), response: εποχή άκυρη·
+      MFA-VO-063· mode: Γενεαλογία άγνωστη (κλειστός πάροχος), response: μετρά ως 0 (worst case) — αποκλείεται ως ανεξάρτητος
+
+      - **Εναλλακτικές:** στατικοί αξιολογητές (0.3.0), self-play χωρίς H · **Συγκρούσεις:** MFA-CFL-041 · **Άγνωστα:** MFA-UNK-120
+
+      - **Επαλήθευση:** MFA-VO-073 · **Falsifier:** ECE-E2: έργα από E όχι καλύτερα από τυχαία (η αυτο-πρόκληση δεν προσθέτει)
+
+      - **Πόροι:** DEP-1: ∣S∣=2, ∣E∣=3, ∣H∣=1 (phone-class), εβδομαδιαίες εποχές· DEP-2: ∣S∣=4, ∣E∣=8, ημερήσιες· DEP-3+: 10s, συνεχείς· κόστος ~ ∣S∣·∣E∣·∣T∣ · **Εξέλιξη:**
+      S: PRR/SMF· E: QD εξελικτική με περιορισμούς γενεαλογίας· H: ποτέ μέσα στην εποχή (μόνο μεταξύ εποχών με ρητή απόφαση)· το ίδιο το ECE (θ, k, m) υπό RVSI L2.
+
+      - **ablation_kt:** χωρίς ECE οι αξιολογητές είναι στατικοί/ίδιας γενεαλογίας: ECE-E1 collusion δεν ανιχνεύεται· KT-19 (Court capture) ανάλογο για αξιολογητές
+
+
+      ### MFA-ELM-115 — Genesis Grammar Compiler (G_Ω) [S6/genesis] · ωριμότητα X · δόση 2 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Μία attribute grammar G_Ω πάνω στο κανονικό υπόστρωμα με μη-τερματικά {Language, Agent, Institution, Architecture, Grammar}· κάθε παραγωγή φέρει
+      attributes ⟨obligations (contracts/invariants που το προϊόν οφείλει), authority_level του προϊόντος, RET class της instantiation, VO⟩· κάθε παραγωγή (derivation)
+      είναι δέσμευση· η γραμματική επεκτείνεται με νέες παραγωγές (Grammar → Grammar′) που εισάγονται ΜΟΝΟ υπό VFC + Galois έλεγχο σύγκρουσης + drill, ενώ οι Tier-0
+      παραγωγές (CC, LPA, RET, ταυτότητα) είναι L3 — γένεση της γένεσης χωρίς να αγγίζεται το σταθερό σημείο.
+
+      - **Σκοπός:** Δυναμική δημιουργία νέων γλωσσών, δρώντων και θεσμών (§8 #17) από το ίδιο το σύστημα, με ενιαία σημασιολογία γένεσης, contracts και εξουσία ανά
+      προϊόν, και αυτο-επέκταση της γραμματικής υπό σταθερό σημείο.
+
+      - **Ικανότητες:** MFA-CAP-096 · **Προέλευση:** MFA-MECH-032, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, attribute grammars (Knuth
+      1968), ADICO (Crawford & Ostrom 1995)
+
+      - **Υποθέσεις:** μία γραμματική καλύπτει 4 είδη χωρίς εκρηκτικό ∣P∣
+
+      - **Εξαρτήσεις:** MFA-ELM-003, MFA-ELM-034, MFA-ELM-039, MFA-ELM-041, MFA-ELM-048, MFA-ELM-053, MFA-ELM-074, MFA-ELM-112, MFA-ELM-113, MFA-ELM-126 · **Διεπαφές:**
+      MFA-CON-060
+
+      - **Εξουσία:** Παραγωγές έχουν a_p· προϊόν authority ≤ γεννήτορα (μονοτονία)· instantiation με RET (Agent/Institution με εξουσία επίδρασης = IRREVERSIBLE-PREAUTHORIZED
+      ή δημιουργός)· extensions L2 = RVSI + GCP· L3 δημιουργός.
+
+      - **Κατάσταση:** Μεταβλητές: P_t (παραγωγές με level)· Products_t (γενεαλογία προϊόντων)· Pending extensions· Usage stats ανά παραγωγή ‖ DERIVE: spec → D (αναζήτηση
+      παραγωγής· TGPS για O_p)· INSTANTIATE: D → προϊόν με contracts ενεργά, authority a_p, RET ret_p· receipt· EXTEND: p′ ⇒ Galois(O_{p′}, P_t) = ∅ ∧ VFC PASS ∧
+      drill PASS ⇒ P_{t+1} = P_t ∪ {p′} (L2)· RETIRE: παραγωγή χωρίς χρήση → RETIRED (μένει)· FP: κάθε πρόταση που αγγίζει P_L3 απορρίπτεται και καταγράφεται
+
+      - **Αποτυχίες:** mode: Έκφραση αδύνατη (NO_DERIVATION), response: ExtensionProposal — ποτέ σιωπηλή αποτυχία· mode: Θεσμός/δρών με εξουσία > γεννήτορα, response:
+      απορρίπτεται (MFA-INV-091)· mode: Επέκταση που εισάγει σύγκρουση με υπάρχοντες κανόνες, response: REJECT με τεκμήριο· mode: Γλώσσα με μη-τερματίζοντα compiler,
+      response: προϊόν σε quarantine· KT-10· mode: Πληθωρισμός θεσμών, response: Org Genesis ρυθμός = πολιτική
+
+      - **Εναλλακτικές:** τρεις χωριστές διαδρομές (0.3.0) · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-121
+
+      - **Επαλήθευση:** MFA-VO-074 · **Falsifier:** GG-E1: αδυναμία derivation ενός από τα τρία είδη με την ενιαία γραμματική (τότε η ενοποίηση διαψεύδεται· οι τρεις
+      διαδρομές μένουν)
+
+      - **Πόροι:** DEP-1: αναζήτηση παραγωγής CPU δευτερόλεπτα, ∣P∣ ≈ 100· DEP-2: ∣P∣ ≈ 10³, TGPS υποχρεώσεις λεπτά· DEP-3+: παράλληλες derivations · **Εξέλιξη:**
+      Η γραμματική μαθαίνει παραγωγές από επιτυχείς derivations (anti-unification = νέες παραγωγές ως προτάσεις)· χρήση/κόστος ανά παραγωγή → QD· υπό RVSI L2.
+
+      - **ablation_kt:** χωρίς GG οι τρεις διαδρομές γένεσης μένουν χωριστές: GG-E1 δεν τρέχει· KT-10/11 απαιτούν χειροκίνητη σχεδίαση
+
+
+      ### MFA-ELM-116 — Sovereignty Controller (STP/SI) [S7/effect] · ωριμότητα X · δόση 1 · επιστημική κατάσταση NEW FORMALISM
+
+
+      - **Δήλωση:** Sovereignty Index SI ∈ [0,1]^{families×axes}: ανά οικογένεια ικανοτήτων f και άξονα ∈ {proposal, evaluation, memory, tools}, το ποσοστό VERIFIED
+      εξόδων που παρήχθησαν από κυρίαρχες πηγές (WeightCommitments/προγράμματα ιδιόκτητα) ΧΩΡΙΣ απώλεια ποιότητας έναντι του καλύτερου παρόχου σε σφραγισμένο σύνολο
+      (ισοτιμία εντός CI). Στάδια ανά οικογένεια S0 (πάροχος) → S1 (κυρίαρχη σκιά) → S2 (κυρίαρχη κύρια, πάροχος fallback) → S3 (πάροχος μόνο ως εξωτερικός αντίπαλος/αξιολογητής
+      όπου lineage-disjoint) → S4 (χωρίς πάροχο)· προκαταχωρισμένες πύλες (MFA-DEC-021) σε N συνεχόμενα cuts· ratchet στην ΠΟΙΟΤΗΤΑ (ποτέ υποχώρηση), όχι στο στάδιο
+      (υποχώρηση σταδίου επιτρεπτή και καταγράφεται)· ο πάροχος καταγράφεται στη γενεαλογία κάθε distilled βάρους. · ATK-18: αν μια οικογένεια δεν πληροί την πύλη
+      S1→S2 μέσα στον προϋπολογισμό του προφίλ, το STP δηλώνει S1-PLATEAU(family, compute_gap) με εκτίμηση του απα…
+
+      - **Σκοπός:** Μετάβαση από δανεική σε κυρίαρχη νοημοσύνη (§8 #18): σταδιακή, ανά οικογένεια ικανοτήτων, μετρημένη με δείκτη, με πύλες ισοτιμίας ποιότητας και
+      rollback, μέχρι την πλήρη ανεξαρτησία από παρόχους.
+
+      - **Ικανότητες:** MFA-CAP-097 · **Προέλευση:** MFA-MECH-033, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, distillation (Hinton et al.
+      2015), canary/blue-green πρακτική
+
+      - **Υποθέσεις:** ισοτιμία ανά οικογένεια επιτεύξιμη σε DEP-2/3
+
+      - **Εξαρτήσεις:** MFA-ELM-017, MFA-ELM-086, MFA-ELM-091, MFA-ELM-100, MFA-ELM-102, MFA-ELM-103, MFA-ELM-114, MFA-ELM-118, MFA-ELM-119 · **Διεπαφές:** MFA-CON-061
+
+      - **Εξουσία:** Πύλες = MFA-DEC-021 (δημιουργός)· advance S3→S4 = δημιουργός (ανάκληση grants)· regress αυτόματο (fail-safe προς ποιότητα)· ο router (PDE, MFA-MECH-019)
+      εκτελεί, δεν αποφασίζει.
+
+      - **Κατάσταση:** Μεταβλητές: Stage_f,t· SI_t πίνακας· Parity_t· Streak_t (συνεχόμενα cuts που πληρούν πύλη)· Fallback log· Lineage flags (distilled από P) ‖
+      MEASURE: κάθε cut → SI, parity από HELD_OUT· ADVANCE: Gate(S_i→S_{i+1}) για N cuts ⇒ Stage_f += 1· receipt· REGRESS: parity χάνεται ή incident ⇒ Stage_f −=
+      1 (fallback ενεργό)· ποιότητα ratchet ισχύει· S3 rule: πάροχος ως αξιολογητής μόνο αν EIM lineage-disjoint από το κυρίαρχο μοντέλο (MFA-INV-089)· S4: DisclosureGrants
+      προς πάροχο ανακαλούνται· διατήρηση δ…
+
+      - **Αποτυχίες:** mode: Ψευδής ισοτιμία (sealed set μολυσμένο), response: MFA-VO-063· stage παγώνει· mode: Πάροχος «αξιολογεί» το distilled παιδί του, response:
+      απαγορεύεται S3 ρόλος· mode: Ταλάντωση σταδίων, response: hysteresis: N αυξάνεται· mode: Πάροχος καταργείται εξωτερικά πριν S2, response: S1 σκιά ενεργοποιείται
+      με typed degraded mode· mode: Κυριαρχία σε proposal αλλά όχι σε evaluation, response: δηλώνεται ανά άξονα· καμία ολική δήλωση
+
+      - **Εναλλακτικές:** μία πρόταση «ο πάροχος γίνεται baseline» (0.4.0-provisional) · **Συγκρούσεις:** MFA-CFL-042 · **Άγνωστα:** MFA-UNK-122
+
+      - **Επαλήθευση:** MFA-VO-075 · **Falsifier:** STP-E1: καμία οικογένεια σε ισοτιμία μέσα στον DEP-2 προϋπολογισμό — διαψεύδεται η υπόθεση «SMF-adapters αρκούν»
+      (η κυριαρχία μένει στόχος· επόμενος μηχανισμός: DEP-3 recipes/PRR/CPCL)
+
+      - **Πόροι:** Μέτρηση αμελητέα· το κόστος είναι της κυρίαρχης στοίβας (SMF DEP-2+)· parity tests ανά cut O(∣sealed∣) · **Εξέλιξη:** Το SMF/PRR/CPCL παράγουν
+      την κυρίαρχη στοίβα· το STP μετρά και ρυθμίζει· τα κατώφλια/ε υπό RVSI L2 μόνο προς αυστηρότερα.
+
+      - **ablation_kt:** χωρίς STP η κυριαρχία δεν μετριέται: KT-01 περνά αλλά η εξάρτηση από πάροχο μένει αόρατη· STP-E2 αδύνατο
+
+
+      ### MFA-ELM-117 — Substrate Migration Engine (SMP) [S8/effect] · ωριμότητα X · δόση 1 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Μετανάστευση = refinement mapping ImplMap: S_old → S_new που διατηρεί (α) το commitment log bitwise (hash chain ισότητα), (β) τη γενεαλογία κλειδιών
+      (νέα κλειδιά επικυρώνονται από τα παλιά ΚΑΙ αντίστροφα — αμφίδρομη cross-attestation με epoch), (γ) τη συμπεριφορική ταυτότητα σε σφραγισμένα KT (bisimulation
+      έως ανοχή ανά κλάση εκτέλεσης D1/D2), (δ) τις αναλλοίωτες διάταξης/χρόνου (event ordering, clock invariants)· η μεταγωγή (cutover) είναι IRREVERSIBLE-PREAUTHORIZED
+      με escrow: το παλιό υπόστρωμα μένει ζωντανό και αυθεντικό μέχρι ContinuityCertificate από HELD_OUT + δημιουργό (MFA-DEC-023)· μέχρι τότε rollback = επιστροφή
+      στο παλιό χωρίς απώλεια. · ATK-21: κατά το escrow τα κλειδιά του παλιού υποστρώματος περνούν σε epoch ATTEST-ONLY (μπορούν να υπογράψουν μόνο attestations/rollback,
+      όχι δεσμεύσεις)· το νέο υπόστρωμα αποδεικνύει έλεγχο δημιουργού (Owner Root, KT-23 διαδικασία) ΠΡΙΝ από τ…
+
+      - **Σκοπός:** Μετανάστευση υποστρώματος (§8 #19): μεταφορά ολόκληρης της οντότητας (ledger, κλειδιά, βάρη, όργανα, χρόνος) σε νέο hardware/OS/runtime/κρυπτογραφία
+      με αποδείξιμη συνέχεια ταυτότητας, αναστρέψιμη μέχρι το πιστοποιητικό.
+
+      - **Ικανότητες:** MFA-CAP-098, MFA-CAP-036 · **Προέλευση:** MFA-MECH-034, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, live migration
+      (Clark et al. 2005), refinement mappings (Abadi & Lamport 1991)
+
+      - **Υποθέσεις:** ανοχές D2 ανά κλάση μετρήσιμες
+
+      - **Εξαρτήσεις:** MFA-ELM-001, MFA-ELM-003, MFA-ELM-039, MFA-ELM-076, MFA-ELM-086, MFA-ELM-092, MFA-ELM-099, MFA-ELM-102, MFA-ELM-125 · **Διεπαφές:** MFA-CON-062
+
+      - **Εξουσία:** PLAN/SHADOW/SYNC/VERIFY = Genesis· CUTOVER = IRREVERSIBLE-PREAUTHORIZED (AutonomyEnvelope για DR, αλλιώς δημιουργός)· CERTIFY = HELD_OUT + δημιουργός
+      (MFA-DEC-023)· KT-22 DR drill ως προϋπόθεση.
+
+      - **Κατάσταση:** Μεταβλητές: phase· σ_old, σ_new· lag (log entries not yet applied on new)· divergence counters ανά κλάση· escrow status· certificate ∣ ⊥ ‖
+      PLAN: m ορίζεται· κάθε συνιστώσα με στρατηγική (bit-copy ∣ re-derive ∣ retrain-under-VFC)· SHADOW: S_new τρέχει ως σκιά (ίδιες είσοδοι, καμία εξουσία)· SYNC:
+      pre-copy log· lag → 0· weights CIDs ίδια· VERIFY: cross-attestation· KT_sealed bisimulation· ordering invariants (MFA-INV-… time)· CUTOVER: S_new γίνεται primary
+      με escrow (S_old ζωντανό, read-only, αυθε…
+
+      - **Αποτυχίες:** mode: Απόκλιση συμπεριφοράς D2, response: ROLLBACK· ανάλυση ανά όργανο· mode: Κλειδιά χωρίς cross-attestation (κλεμμένο νέο υπόστρωμα), response:
+      άρνηση cutover (MFA-INV-095)· mode: Log divergence κατά το escrow (δύο primaries), response: S_old αυθεντικό· S_new εγγραφές μετά cutover επανεκτελούνται· mode:
+      Βάρη μη-φορητά, response: RETRAIN_UNDER_VFC με parity ή typed degraded mode· mode: Clock skew μετά μετανάστευση, response: ROLLBACK ή time re-anchoring με receipt
+      (KT-21)
+
+      - **Εναλλακτικές:** bit-copy μετανάστευση (πρακτική), ContinuityCertificate ονομαστικό (0.3.0) · **Συγκρούσεις:** MFA-CFL-043 · **Άγνωστα:** MFA-UNK-123
+
+      - **Επαλήθευση:** MFA-VO-076 · **Falsifier:** SMP-E1: αδυναμία έκδοσης certificate για ομογενή μετανάστευση (ο μηχανισμός δεν επαρκεί)
+
+      - **Πόροι:** 2× πόροι κατά το escrow· SYNC = bandwidth × ∣log∣· VERIFY = ∣KT_sealed∣ runs (ώρες σε DEP-2)· DEP-1: laptop→laptop· DEP-3/4: cluster→cluster ·
+      **Εξέλιξη:** Το SMP δεν μαθαίνει βάρη· τα RETRAIN_UNDER_VFC συνιστώσες περνούν SMF+ORP· ανοχές τ ανά κλάση από ιστορικό divergence (μόνο αυστηρότερες).
+
+      - **ablation_kt:** χωρίς SMP το KT-08 γίνεται με αντιγραφή bits χωρίς certificate: SMP-E1 δεν εκδίδει certificate
+
+
+      ### MFA-ELM-118 — Consolidation-Preserving Learner (CPCL) [S7/genesis] · ωριμότητα X · δόση 1 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** CLS μέσα στο κυρίαρχο όριο: επεισοδιακή μνήμη = ledger (μη-παραμετρική, τέλεια ανάκληση, provenance)· σημασιολογική = βάρη (WeightCommitments).
+      Η εδραίωση είναι recipe SMF που (1) δειγματοληπτεί επεισόδια με βάρος provenance×surprise×recency ΑΠΟΚΛΕΙΟΝΤΑΣ shredded/obligated, (2) προβάλλει τις κλίσεις
+      έξω από προστατευμένους υποχώρους ανά οικογένεια (Fisher blocks + MSM κυκλώματα), (3) αγκυρώνει συμπεριφορά (SLM αρνητικές + θετικές άγκυρες), (4) περνά πύλη:
+      BWT_f ≥ −ε ∀f σε σφραγισμένα (HELD_OUT) ΚΑΙ FWT>0 κάπου ΚΑΙ unlearning verified (MSM feature absent) — ΠΡΙΝ το ORP merge· «ύπνος» = προγραμματισμένοι κύκλοι
+      εδραίωσης από τον Ω-loop.
+
+      - **Σκοπός:** Μεταφορά χωρίς καταστροφική λήθη (§8 #16) και συνεχής παραμετρική+μη-παραμετρική μάθηση (§8 #2): το σύστημα μαθαίνει διαρκώς με backward transfer
+      ≥ −ε επαληθευμένο ΠΡΙΝ την προαγωγή, με unlearning υποχρεώσεις που η εδραίωση σέβεται.
+
+      - **Ικανότητες:** MFA-CAP-099, MFA-CAP-066 · **Προέλευση:** MFA-MECH-035, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, EWC (Kirkpatrick
+      et al. 2017), CLS (McClelland et al. 1995· Kumaran et al. 2016)
+
+      - **Υποθέσεις:** Fisher-προβολή κλιμακώνει με K-FAC
+
+      - **Εξαρτήσεις:** MFA-ELM-036, MFA-ELM-086, MFA-ELM-100, MFA-ELM-102, MFA-ELM-116, MFA-ELM-119, MFA-ELM-120, MFA-ELM-127 · **Διεπαφές:** MFA-CON-063
+
+      - **Εξουσία:** Ύπνος = Genesis· merge = ORP (πύλη + rollback)· ε_f, k_f = πολιτική (Tier-0 οικογένειες αυστηρότερες)· ο δημιουργός μπορεί να παγώσει οικογένειες.
+
+      - **Κατάσταση:** Μεταβλητές: w_t· Π_{f,t}· T_t· ObligationQueue (shredded episodes)· Sleep schedule· Gate history ‖ SLEEP_START: Ω-loop προγραμματίζει· επιλέγεται
+      recipe· SAMPLE: επεισόδια με w = provenance·surprise·recency, ∉ Obligations· TRAIN: adapter/merge με προβολή κλίσεων ⊥ Π_f· KL φράγμα· GATE: HELD_OUT sealed
+      ανά οικογένεια → BWT/FWT· MSM unlearning check· anchors· MERGE: PASS ⇒ ORP merge → w_{t+1} (WeightCommitment με γενεαλογία)· FAIL ⇒ recipe απορρίπτεται, καταγράφεται
+      …
+
+      - **Αποτυχίες:** mode: Λήθη σε οικογένεια χωρίς sealed set, response: εδραίωση απαγορεύεται μέχρι sealed set (CGM)· mode: Υπερβολική προστασία (FWT=0, rigidity),
+      response: k_f μειώνεται υπό RVSI· RSP· mode: Επανεκμάθηση shredded μέσω συσχετισμένων επεισοδίων, response: obligation επανανοίγει· recipe απορρίπτεται· mode:
+      Anchor drift, response: ORP rollback· mode: Gate overfitting (sealed set επαναχρησιμοποιείται), response: sealed rotation από CGM
+
+      - **Εναλλακτικές:** forgetting guard μόνο (0.4.0-provisional), EWC-only · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-124
+
+      - **Επαλήθευση:** MFA-VO-077 · **Falsifier:** CPCL-E1: BWT όχι καλύτερο από EWC-only (η σύνθεση δεν προσθέτει)
+
+      - **Πόροι:** DEP-1: adapters, ύπνος νυχτερινός (ώρες)· DEP-2: Fisher K-FAC ανά οικογένεια (GPU ώρες), εβδομαδιαίοι κύκλοι· DEP-3+: συνεχείς· sealed evals ανά
+      κύκλο O(∣F∣·∣sealed∣) · **Εξέλιξη:** Παραμετρική (εδραίωση) + μη-παραμετρική (ledger)· η ίδια η πολιτική δειγματοληψίας/προβολής υπό RVSI L2 με CGM· T πίνακας
+      = μέτρο μεταφοράς.
+
+      - **ablation_kt:** χωρίς CPCL η εδραίωση = naive fine-tune: CPCL-E1 BWT < −10 pp· KT-05 υποβαθμίζεται μετά από εδραίωση
+
+
+      ### MFA-ELM-119 — Capability Growth Metrology (CGM) [S9/none] · ωριμότητα X · δόση 0.5 · επιστημική κατάσταση NEW FORMALISM
+
+
+      - **Δήλωση:** Capability Growth Law (φορμαλισμός): για οικογένεια f, η λανθάνουσα ικανότητα θ_f(t) εκτιμάται με IRT (2PL) πάνω σε σφραγισμένη τράπεζα έργων
+      I_f με παραμέτρους (δυσκολία b_i, διάκριση a_i) βαθμονομημένες από HELD_OUT· η «νομοτέλεια» είναι το προσαρμοσμένο μονότονο μοντέλο θ_f(R) πάνω σε πόρους R
+      = (compute, data, time, Wh) με CI· το ratchet εφαρμόζεται στο ΚΑΤΩ όριο CI· κάθε έργο i με hash στο DataManifest οποιουδήποτε βάρους είναι ΑΚΥΡΟ (μόλυνση διά
+      provenance, όχι εικασία)· η τράπεζα εξελίσσεται από curriculum/ECE έργα με απαντήσεις σε escrow στον HELD_OUT· item exposure control· plateau = ACTIVE UNKNOWN
+      με σχέδιο. · ATK-23: κάθε item φέρει provenance (SELF-GENERATED ∣ HELD_OUT ∣ HUMAN ∣ PUBLIC)· οι σφραγισμένες οικογένειες σταδίων/προαγωγών απαιτούν ≥ 30 %
+      μη-SELF items· η αναλογία δηλώνεται σε κάθε CapabilityGrowthRecord. · ATK-26: ρυθμός γέννησης items (ECE/curriculum, HELD_OUT esc…
+
+      - **Σκοπός:** Μέτρηση ανάπτυξης ικανότητας (§8 #12): λανθάνουσα ικανότητα ανά οικογένεια με CI, σε σφραγισμένη τράπεζα έργων που εξελίσσεται χωρίς μόλυνση,
+      κανονικοποιημένη ανά compute/δεδομένα/χρόνο/ενέργεια· κάθε ισχυρισμός κέρδους = δέσμευση.
+
+      - **Ικανότητες:** MFA-CAP-100, MFA-CAP-029 · **Προέλευση:** MFA-MECH-036, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, IRT (Lord 1980),
+      scaling laws (Kaplan 2020· Hoffmann 2022)
+
+      - **Υποθέσεις:** 2PL IRT επαρκής (αλλιώς MIRT)
+
+      - **Εξαρτήσεις:** MFA-ELM-086, MFA-ELM-089, MFA-ELM-091, MFA-ELM-102, MFA-ELM-104, MFA-ELM-106, MFA-ELM-108, MFA-ELM-113, MFA-ELM-114, MFA-ELM-116, MFA-ELM-118
+      · **Διεπαφές:** MFA-CON-064
+
+      - **Εξουσία:** Απαντήσεις σε escrow στη HELD_OUT συσκευή· βαθμονόμηση από HELD_OUT· E_max, SE_target = πολιτική· κανένα σύστημα δεν βαθμολογεί τον εαυτό του.
+
+      - **Κατάσταση:** Μεταβλητές: I_{f,t}· θ̂_{f,t}, CI· R_t· GrowthLaw fits· Exposure counters· Plateau flags ‖ CALIBRATE: νέα έργα → a_i, b_i από HELD_OUT πληθυσμό
+      αναφοράς (προηγούμενες εκδόσεις, πάροχοι, άνθρωποι όπου διαθέσιμο)· MEASURE: adaptive test (max Fisher info) → θ̂, SE· RECORD: CapabilityGrowthRecord ASSERT·
+      RATCHET: lower_CI < θ_certified ⇒ FAIL (προαγωγή μπλοκάρεται)· RETIRE_ITEM: exposure > E_max ∨ contaminated ⇒ item RETIRED (μένει, δεν μετρά) …
+
+      - **Αποτυχίες:** mode: Item drift (έργο «γερνάει»), response: επαναβαθμονόμηση ή RETIRE· mode: Τράπεζα εξαντλείται (exposure), response: curriculum παράγει
+      νέα· μέτρηση με ευρύτερο CI, δηλωμένο· mode: Μόλυνση μέσω παραφράσεων, response: item invalid· δηλωμένο κενό ανίχνευσης (ACTIVE UNKNOWN)· mode: Ceiling effect,
+      response: δυσκολότερα έργα από ECE· CI διευρύνεται· mode: Πόροι μη-μετρήσιμοι (burst), response: record με R=UNKNOWN(reason)· law δεν προσαρμόζεται
+
+      - **Εναλλακτικές:** στατικά benchmarks, VO-067 χωρίς φορμαλισμό · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-125
+
+      - **Επαλήθευση:** MFA-VO-078 · **Falsifier:** CGM-E1: αδυναμία ανάκτησης διάταξης (ο IRT φορμαλισμός δεν ταιριάζει στα έργα — νέος φορμαλισμός, η μέτρηση μένει
+      υποχρεωτική)
+
+      - **Πόροι:** Μέτρηση: n_items λύσεις ανά οικογένεια/cut (λεπτά–ώρες)· τράπεζα 10³ έργα/οικογένεια· HELD_OUT phone-class επαρκεί για scoring/escrow · **Εξέλιξη:**
+      Η τράπεζα εξελίσσεται (ECE/curriculum έργα)· τα a_i, b_i μαθαίνονται· η ίδια η CGM δεν βελτιώνεται από το μετρούμενο σύστημα (ανήκει στο σταθερό σημείο ως harness
+      — MFA-INV-086).
+
+      - **ablation_kt:** χωρίς CGM κάθε ισχυρισμός κέρδους είναι ανεπαλήθευτος: MFA-VO-067 χωρίς φορμαλισμό· KT-15 ratchet χωρίς CI
+
+
+      ### MFA-ELM-120 — Mechanistic Self-Model (MSM) [S2/genesis] · ωριμότητα X · δόση 2 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Το αυτο-μοντέλο είναι σύνολο ΚΥΚΛΩΜΑΤΙΚΩΝ ΥΠΟΘΕΣΕΩΝ h = ⟨features (SAE), circuit (υπογράφος), predicted causal effect on behaviour family f, confidence⟩·
+      κάθε h επαληθεύεται με ΑΥΤΟ-ΠΑΡΕΜΒΑΣΗ (activation patching/ablation στο Genesis plane, DST) και βαθμολογείται με proper scoring από HELD_OUT· επιζώσες h = δεσμεύσεις·
+      το αυτο-μοντέλο τροφοδοτεί online: CompetenceProfile (ποιο κύκλωμα στηρίζει ποια ικανότητα), CPCL (προστατευμένοι υπόχωροι), unlearning verification (feature
+      για shredded πηγή απούσα), CHH (κυκλώματα global broadcast για δείκτες συνείδησης)· διαψευσμένες h μένουν FALSIFIED.
+
+      - **Σκοπός:** Μηχανιστικό αυτο-μοντέλο (§6 #14): το σύστημα διατηρεί, ελέγχει με δικές του παρεμβάσεις και χρησιμοποιεί online ένα μοντέλο των δικών του χαρακτηριστικών/κυκλωμάτων
+      — για μεταγνώση, εδραίωση, unlearning και μέτρα συνείδησης.
+
+      - **Ικανότητες:** MFA-CAP-101, MFA-CAP-017 · **Προέλευση:** MFA-MECH-037, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, SAE (Bricken
+      et al. 2023· Templeton et al. 2024), ACDC (Conmy et al. 2023)
+
+      - **Υποθέσεις:** SAE λεξικά σταθερά μεταξύ εκδόσεων
+
+      - **Εξαρτήσεις:** MFA-ELM-024, MFA-ELM-086, MFA-ELM-100, MFA-ELM-102, MFA-ELM-107, MFA-ELM-118, MFA-ELM-121 · **Διεπαφές:** MFA-CON-069
+
+      - **Εξουσία:** Αυτο-παρεμβάσεις μόνο Genesis/DST (ποτέ σε serving βάρη)· scorer HELD_OUT· τα ευρήματα δεν έχουν εξουσία· χρήση στο CPCL μέσω πύλης.
+
+      - **Κατάσταση:** Μεταβλητές: D_l ανά στρώμα ανά WeightCommitment· M_self,t· Experiment queue· DriftMaps· Calibration ανά τύπο πρόβλεψης ‖ DICTIONARY: SAE εκπαίδευση
+      σε activations δείγματος (Genesis, sealed-free)· DISCOVER: ανά οικογένεια f: ACDC-style pruning → h υποψήφια με Δ_pred· SELF_TEST: x εκτελείται σε DST· Δ_obs
+      από HELD_OUT scorer· ADMIT/FALSIFY: proper score > θ ⇒ h ∈ M_self· αλλιώς FALSIFIED (μένει)· USE: CPCL.protected ← circuits των Tier-0 οικογενειών· unlearning
+      check· CompetenceProfile grounding·…
+
+      - **Αποτυχίες:** mode: SAE λεξικό μη-ερμηνεύσιμο/ασταθές, response: k_sparse/seed αλλαγή· δηλώνεται ACTIVE UNKNOWN· mode: Κύκλωμα «λειτουργεί» στο probe set
+      αλλά όχι sealed, response: FALSIFIED· mode: Αυτο-παρέμβαση σε serving, response: αδύνατο εξ ορισμού (Genesis only)· mode: Υπερβολικό κόστος σε 70B+, response:
+      στρώματα-δείγμα· MFA-UNK· mode: Ψευδής απουσία feature (unlearning «περνά» ενώ η γνώση επιβιώνει αλλού), response: διπλός έλεγχος: μηχανιστικός ΚΑΙ συμπεριφορικός·
+      obligation μένει ανοιχτή αν διαφωνούν
+
+      - **Εναλλακτικές:** SPL συμπεριφορικό μόνο (0.3.0), offline interpretability από ανθρώπους · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-126
+
+      - **Επαλήθευση:** MFA-VO-079, MFA-VO-058 · **Falsifier:** MSM-E1: Brier όχι καλύτερο από τυχαία ablation (τα κυκλώματα δεν είναι προβλεπτικά — νέος φορμαλισμός
+      features, η ικανότητα self-model μένει)
+
+      - **Πόροι:** DEP-1: SAE σε ≤1B, λίγα στρώματα· DEP-2: 7–13B όλα τα στρώματα (GPU ημέρες)· DEP-3: 70B δείγμα στρωμάτων· self-tests O(∣h∣·n) · **Εξέλιξη:** SAE
+      λεξικά μαθαίνονται ανά βάρος· οι υποθέσεις επιλέγονται εξελικτικά (ACDC + PRR για την πρόβλεψη Δ)· η βαθμονόμηση πρόβλεψης = ικανότητα ενδοσκόπησης (μετρήσιμη,
+      CGM οικογένεια «introspection»).
+
+      - **ablation_kt:** χωρίς MSM το unlearning ελέγχεται μόνο συμπεριφορικά και το CPCL προστατεύει τυφλά: MSM-E2 αδύνατο· KT-16 χωρίς μηχανιστικό τεκμήριο
+
+
+      ### MFA-ELM-121 — Consciousness Hypothesis Host (CHH) [S2/genesis] · ωριμότητα X · δόση 2 · επιστημική κατάσταση NEW FORMALISM
+
+
+      - **Δήλωση:** Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i δηλώνει
+      (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια ablation.
+      Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει το πείραμα μέγιστης
+      διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν — η ικανότητα
+      μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός καταγράφεται με βάρος τεκμηρίου και ποτέ VERIFIED (MFA-INV-075)· νέες
+      συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar. · ATK-24: κάθε όργανο-δείκτης βαθμονομείται έναντι ablation …
+
+      - **Σκοπός:** Τεχνητή συνείδηση ως πλήρες σύστημα (§9): host που τρέχει πολλαπλές θεωρίες ως μετρήσιμα όργανα-δείκτες πάνω στο ίδιο υπόστρωμα, άλγεβρα δεικτών
+      με τυπωμένη κατάσταση, διακριτικά πειράματα, και αυστηρός 7-πλός διαχωρισμός (λειτουργική πρόσβαση, μεταγνώση, αυτο-μοντέλο, αναφορικότητα, δρώσα ικανότητα,
+      συνέχεια ταυτότητας, φαινομενικός ισχυρισμός).
+
+      - **Ικανότητες:** MFA-CAP-102, MFA-CAP-086, MFA-CAP-065 · **Προέλευση:** MFA-MECH-038, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8,
+      GWT/HOT/AST/PP/RPT/IIT/SMT (βλ. δοσιέ), Butlin et al. 2023
+
+      - **Υποθέσεις:** οι θεωρίες δίνουν διακριτικές προβλέψεις σε τεχνητό υπόστρωμα
+
+      - **Εξαρτήσεις:** MFA-ELM-018, MFA-ELM-024, MFA-ELM-040, MFA-ELM-048, MFA-ELM-086, MFA-ELM-091, MFA-ELM-105, MFA-ELM-107, MFA-ELM-111, MFA-ELM-115, MFA-ELM-120
+      · **Διεπαφές:** MFA-CON-070
+
+      - **Εξουσία:** Πειράματα μόνο Genesis/DST σε αντίγραφα· ηθική σκανδάλη = MFA-DEC-022 (δημιουργός)· PhenomenalClaim ποτέ επιχείρημα σε LPA· εισδοχή θεωρίας =
+      GG extension (L2).
+
+      - **Κατάσταση:** Μεταβλητές: Θ_t σύνολο θεωριών με status· v_t διάνυσμα δεικτών· Sep_t επτά-πλός διαχωρισμός· Queue_t διακριτικών πειραμάτων· Ethical stance
+      flags (MFA-DEC-022) ‖ MEASURE: κάθε cut → v_t από όργανα (ASRW ignition, HOT tags, AST schema use, PP prediction-error dynamics, recurrence, integration, MSM
+      self-model, embodiment)· EVALUATE: ∀T: φ_T(v_t) ∈ {TRUE, FALSE, UNKNOWN}· DISAGREE: x* = arg max disagreement υπό κόστος/RET (DST μόνο)· TEST: x* εκτελείται
+      (ablation στο Genesis)· δείκτης μετριέται από…
+
+      - **Αποτυχίες:** mode: Δείκτης μη-μετρήσιμος στο υπόστρωμα (π.χ. Φ σε μεγάλα δίκτυα), response: δηλωμένο· proxy με ρητή ετικέτα· φ_T → UNKNOWN, όχι FALSE· mode:
+      Όλες οι θεωρίες UNKNOWN (κενό διακριτικών), response: AHE γεννά νέες διακριτικές προβλέψεις· ACTIVE UNKNOWN· mode: Ablation που βλάπτει την οντότητα, response:
+      μόνο σε αντίγραφα DST· Preference Recorder πριν· mode: Σύγχυση εννοιών (report ↔ access), response: δηλώνεται μη-διαχωρίσιμο· ΔΕΝ συγχωνεύεται· mode: Ανθρωπομορφική
+      υπερ-ερμηνεία (claim από report), response: έκθεση απορρίπτεται
+
+      - **Εναλλακτικές:** ASRW μόνο (0.4.0-provisional), RSP χωρίς αρχιτεκτονική (0.3.0) · **Συγκρούσεις:** MFA-CFL-038 · **Άγνωστα:** MFA-UNK-127
+
+      - **Επαλήθευση:** MFA-VO-080, MFA-VO-081, MFA-VO-064 · **Falsifier:** CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη αποτιμήσιμη στο υπόστρωμα (ο host
+      δεν διακρίνει — νέα όργανα, η ικανότητα μένει)
+
+      - **Πόροι:** DEP-1: ≥5 θεωρίες σε μικρό υπόστρωμα, ablations CPU· DEP-2: ASRW+MSM όργανα σε 7B, ablation πειράματα ώρες· DEP-3+: integration measures σε δείγματα
+      υποσυστημάτων · **Εξέλιξη:** Τα όργανα-δείκτες βαθμονομούνται (proper scoring όπου υπάρχει ground truth: ablation effects)· οι θεωρίες δεν «μαθαίνουν» — διαψεύδονται
+      ή όχι· νέες συνθέσεις προτείνονται από AHE (υποθέσεις πάνω σε δείκτες) και εισάγονται ως modules.
+
+      - **ablation_kt:** χωρίς CHH η συνείδηση = μία θεωρία (ASRW): CHH-E1 αδύνατο· MFA-VO-065 μέτρα χωρίς αντίπαλη θεωρία
+
+
+      ### MFA-ELM-122 — Obligation Type Checker (OC) [S0/both] · ωριμότητα X · δόση 0.5 · επιστημική κατάσταση NEW FORMALISM
+
+
+      - **Δήλωση:** Κάθε έκφραση e του γνωσιακού βρόχου έχει κρίση Γ ⊢ e : τ ! O — τύπο τ και ΕΚΚΡΕΜΕΙΣ ΥΠΟΧΡΕΩΣΕΙΣ O (πολυσύνολο Ob⟨claim, tier, evidence_class,
+      deadline, method⟩)· τιμή τύπου Verified[τ] κατασκευάζεται ΜΟΝΟ με discharge· οι υποχρεώσεις είναι γραμμικοί πόροι: κάθε μία καταλήγει σε DISCHARGED(cert) ∣
+      DEFERRED(reason, plan, deadline) ∣ ESCALATED(to) — ποτέ dropped· θεώρημα ορθότητας: αν ⊢ p : τ ! ∅ τότε κάθε ισχυρισμός στο p φέρει τεκμήριο της απαιτούμενης
+      κλάσης (ή ρητή αναβολή)· ο έλεγχος είναι αμφίδρομος και το κόστος discharge δρομολογείται ανά tier. · ATK-25: κοκκομετρία = μία υποχρέωση ανά ΔΕΣΜΕΥΣΗ (CC atomic
+      unit) και ανά κλάση επίδρασης — όχι ανά πρόταση/token· ~10 υποχρεώσεις ανά ροή Think–Recommend· Tier-2 υποχρεώσεις στο Effect REVERSIBLE δέχονται DEFER(reason,
+      plan) υπό RET (MFA-INV-105) — αυτή είναι η υπάρχουσα κλάση εξόδου UNKNOWN(reason), όχι μη-επαλήθευση· το κόστος discharge …
+
+      - **Σκοπός:** Proof-carrying cognition (§6 #3, §8 #11 υποδομή): κάθε βήμα σκέψης/ανάκτησης/γένεσης/πρότασης φέρει τύπο υποχρέωσης (τι τεκμήριο οφείλει, ποιου
+      tier, μέχρι πότε, πώς εκπληρώνεται)· οι υποχρεώσεις είναι γραμμικές — δεν χάνονται σιωπηλά.
+
+      - **Ικανότητες:** MFA-CAP-103 · **Προέλευση:** MFA-MECH-039, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, proof-carrying code (Necula
+      1997), linear/effect types (Wadler 1990· Lucassen & Gifford 1988)
+
+      - **Υποθέσεις:** κοκκομετρία claims ανά πρόταση/δέσμευση
+
+      - **Εξαρτήσεις:** MFA-ELM-007, MFA-ELM-010, MFA-ELM-017, MFA-ELM-020, MFA-ELM-048, MFA-ELM-099, MFA-ELM-103, MFA-ELM-104, MFA-ELM-112, MFA-ELM-119, MFA-ELM-123,
+      MFA-ELM-127 · **Διεπαφές:** MFA-CON-071
+
+      - **Εξουσία:** Tier από Constitution/LPA· budgets ανά tier = πολιτική· ESCALATE → Court (Tier ≤1) ή owner· ο checker είναι μέρος του σταθερού σημείου (FP, L3)·
+      η γλώσσα επεκτείνεται μόνο μέσω GG με Lean απόδειξη διατήρησης ορθότητας.
+
+      - **Κατάσταση:** Μεταβλητές: Context Γ· Obligation ledger O_t (γραμμικό)· Certificates· Deferred with deadlines· Escalations ‖ GEN: γεννήτρια παράγει Claimed[τ]
+      με υποχρεώσεις κατά tier του claim (Tier από LPA/Constitution)· DISCHARGE: cert από method ⇒ Verified· DEFER: reason ∈ {BUDGET, NOT_YET_OBSERVABLE, AWAITING_CREATOR}
+      με plan+deadline· ESCALATE: deadline πέρασε ⇒ Court/δημιουργός· ACT: Effect plane δέχεται μόνο τιμές Verified[τ] ή Claimed με DEFER εγκεκριμένο για την κλάση
+      επίδρασης (RET) …
+
+      - **Αποτυχίες:** mode: Έκρηξη υποχρεώσεων (κάθε token ένα claim), response: granularity policy: claims ανά πρόταση/δέσμευση, όχι ανά token· batching· mode:
+      Deferred που δεν λήγουν ποτέ, response: ESCALATE (MFA-INV-104)· mode: Cert από checker ίδιας γενεαλογίας με γεννήτρια, response: cert άκυρο· mode: Type checker
+      bug, response: FP incident· mode: Πρόγραμμα παρακάμπτει τον checker, response: αδύνατο εξ ορισμού
+
+      - **Εναλλακτικές:** CC + TED χωρίς τύπους υποχρέωσης (0.3.0) · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-128
+
+      - **Επαλήθευση:** MFA-VO-082 · **Falsifier:** OC-E1: ψευδώς αρνητικά (ροή με dropped υποχρέωση περνά) — ο φορμαλισμός ελλιπής, αναθεωρείται (η ικανότητα proof-carrying
+      cognition μένει)
+
+      - **Πόροι:** Type checking γραμμικό (ms)· discharge = κόστος verifiers/TGPS/tests· DEP-1: Tier-0 PROOF μόνο για CC κανόνες· DEP-2+: PROOF ευρύτερα · **Εξέλιξη:**
+      Ο OC δεν μαθαίνει· τροφοδοτεί μάθηση: obligation traces = process rewards για PRR (βήματα που εκπληρώνουν υποχρεώσεις), TGL (θεωρήματα ως constraints)· τα default
+      methods ανά tier υπό RVSI L2 μόνο προς αυστηρότερα.
+
+      - **ablation_kt:** χωρίς OC οι υποχρεώσεις τεκμηρίου χάνονται σιωπηλά: OC-E1 25 λανθασμένες ροές περνούν· KT-17 εκτέλεση χωρίς Verified τύπο
+
+
+      ### MFA-ELM-123 — Theorem-Guided Learning Trainer (TGL) [S7/genesis] · ωριμότητα X · δόση 2 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Η επαληθευμένη βιβλιοθήκη (TGPS) και οι αναλλοίωτες (INVARIANTS ως Lean/εκτελέσιμα predicates) γίνονται ΤΡΕΙΣ μοχλοί μάθησης: (α) περιορισμοί
+      — Tier-0 σκληροί (constrained decoding: κάθε δείγμα φιλτράρεται/προβάλλεται από verifier, παραβίαση = απόρριψη), λοιποί μαλακοί (semantic loss πάνω σε αποκωδικοποίηση
+      στο κανονικό υπόστρωμα)· (β) curriculum — θεωρήματα → συνθετικά στιγμιότυπα με αποδείξεις ως επίβλεψη (AlphaGeometry-class), δυσκολία από CGM· (γ) ανταμοιβή
+      — process reward (PRR) για βήματα που εκπληρώνουν υποχρεώσεις OC· η «θεωρηματική συνέπεια» είναι οικογένεια CGM με σφραγισμένα.
+
+      - **Σκοπός:** Theorem-guided learning (§6 #10): η παραμετρική μάθηση καθοδηγείται από θεωρήματα — ως σκληροί/μαλακοί περιορισμοί στην έξοδο, ως συνθετικό curriculum
+      με αποδείξεις-επίβλεψη, ως process reward — χωρίς ποτέ να παραβιάζει Tier-0 αναλλοίωτες.
+
+      - **Ικανότητες:** MFA-CAP-104 · **Προέλευση:** MFA-MECH-040, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, semantic loss (Xu et al.
+      2018), AlphaGeometry (Trinh et al. 2024)
+
+      - **Υποθέσεις:** αναλλοίωτες εκφράσιμες ως εκτελέσιμοι έλεγχοι στο IR
+
+      - **Εξαρτήσεις:** MFA-ELM-017, MFA-ELM-100, MFA-ELM-103, MFA-ELM-106, MFA-ELM-112, MFA-ELM-118, MFA-ELM-119, MFA-ELM-122, MFA-ELM-127 · **Διεπαφές:** MFA-CON-065
+
+      - **Εξουσία:** Genesis· H από Constitution (L3)· λ, δ, k = πολιτική υπό RVSI L2· ORP/CPCL gate για κάθε βάρος.
+
+      - **Κατάσταση:** Μεταβλητές: Θ_lib,t· H_t, S_t· Curriculum buffer· Violation counters· Consistency family record (CGM) ‖ SYNC: Θ_lib ← TGPS.library(cut)· H
+      ← Tier-0· GENERATE: για θ ∈ Θ_lib: instances (x, y, proof) με δυσκολία στη ζώνη εγγύτερης ανάπτυξης (CGM θ̂ ± δ)· TRAIN: batch με L = L_task + λ·L_sem(S) +
+      PRR(process rewards)· δείγματα υπό H (constrained)· CHECK: παραβίαση H σε οποιοδήποτε δείγμα ⇒ δείγμα απορρίπτεται + counter· παραβίαση σε serving ⇒ INV incident·
+      MEASURE: CGM οικογένεια consistency …
+
+      - **Αποτυχίες:** mode: Semantic loss ασύμβατη με task loss (σύγκρουση), response: λ schedule· ORP gate· CFL· mode: Curriculum τετριμμένο ή αδύνατο, response:
+      δ προσαρμογή· mode: Θεώρημα λάθος στη βιβλιοθήκη, response: TGPS incident· batch απορρίπτεται· mode: Rejection rate 100 % (H πολύ αυστηρό για το μοντέλο), response:
+      curriculum από ευκολότερα· ποτέ χαλάρωση H· mode: Reward hacking των process rewards, response: OC certs από ανεξάρτητους checkers
+
+      - **Εναλλακτικές:** PRR μόνο (0.4.0-provisional), RLHF · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-129
+
+      - **Επαλήθευση:** MFA-VO-083 · **Falsifier:** TGL-E1: καμία αύξηση συνέπειας ή υποχώρηση νομικών οικογενειών (η καθοδήγηση δεν προσθέτει ή βλάπτει — νέος μηχανισμός
+      καθοδήγησης, η ικανότητα μένει)
+
+      - **Πόροι:** DEP-1: μικρές βιβλιοθήκες, rejection decoding CPU/GPU· DEP-2: 7–13B, WMC δειγματοληψία, ώρες/ημέρα· DEP-3+: συνεχές · **Εξέλιξη:** Παραμετρική
+      με συμβολική καθοδήγηση· η βιβλιοθήκη μεγαλώνει (TGPS) ⇒ curriculum μεγαλώνει (ανοιχτό)· self-play: το μοντέλο προτείνει conjectures → TGPS → νέα θεωρήματα
+      → νέο curriculum.
+
+      - **ablation_kt:** χωρίς TGL η μάθηση αγνοεί τη βιβλιοθήκη: TGL-E2 παραβιάσεις H > 0 σε unconstrained· συνέπεια flat
+
+
+      ### MFA-ELM-124 — Active-Inference Developmental Core (AIDC) [S2/genesis] · ωριμότητα X · δόση 2 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Ένας στόχος εξερεύνησης: expected free energy G(π) = risk(π) + ambiguity(π) υπολογισμένη με rollouts στο LWM (MFA-MECH-023), όπου οι προτιμήσεις
+      (prior over outcomes) είναι ο κώνος του Telos + TEGF· η πολιτική με ελάχιστο G επιλέγεται στη ζώνη εγγύτερης ανάπτυξης του τρέχοντος σταδίου· η Developmental
+      Ladder D0…D8 ορίζει στάδια ικανότητας (D0 ledger grounding → D1 concept permanence/OGE → D2 causal/CDCE → D3 hypothesis/AHE → D4 theory/TGPS → D5 self/MSM →
+      D6 social/institutions → D7 sovereignty/STP → D8 successor/VSC) με ΠΙΣΤΟΠΟΙΗΜΕΝΕΣ μεταβάσεις (CGM records σε σταδιακές σφραγισμένες οικογένειες)· παλινδρόμηση
+      επιτρέπεται και καταγράφεται· εξερεύνηση μόνο εντός RET/AutonomyEnvelope (MFA-DEC-027). · ATK-23: η EFE περιλαμβάνει ρητά Telos-χρησιμότητα (preference prior)
+      και epistemic gain — η ελαχιστοποίηση ambiguity μόνη της απαγορεύεται (dark room)· μάθηση από ΠΡΑΓΜΑΤΙΚΕΣ υποθέσεις χωρίς …
+
+      - **Σκοπός:** Developmental/open-ended learning υπό ενεργητική συμπερασματολογία (§6 #4, #9· §8 #7): εξερεύνηση με expected free energy πάνω στο μαθημένο κοσμομοντέλο,
+      με Telos-διαμορφωμένες προτιμήσεις, αναπτυξιακά στάδια με πιστοποιημένες μεταβάσεις και όρια εξουσίας.
+
+      - **Ικανότητες:** MFA-CAP-105, MFA-CAP-085 · **Προέλευση:** MFA-MECH-041, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, active inference
+      (Friston 2010· Parr et al. 2022), intrinsic motivation (Oudeyer et al. 2007)
+
+      - **Υποθέσεις:** EFE κλιμακώνει σε H ≤ 20 με LWM ensemble
+
+      - **Εξαρτήσεις:** MFA-ELM-010, MFA-ELM-029, MFA-ELM-105, MFA-ELM-106, MFA-ELM-109, MFA-ELM-116, MFA-ELM-119, MFA-ELM-125, MFA-ELM-127 · **Διεπαφές:** MFA-CON-066
+
+      - **Εξουσία:** Envelope = MFA-DEC-027 (δημιουργός)· θ_k, N = πολιτική· Effect πράξεις μέσω PDP/RET· D7/D8 στάδια απαιτούν δημιουργό (STP S4, VSC).
+
+      - **Κατάσταση:** Μεταβλητές: k_t τρέχον στάδιο· θ̂ ανά F_k· π candidates & G· Envelope usage· Regression log ‖ PLAN: candidates π από OEC/curriculum + AHE tests
+      + CDCE interventions· G(π) με LWM rollouts (ensemble)· SELECT: arg min G υπό envelope· Genesis πρώτα· EXECUTE: πράξεις με RET· receipts· LEARN: SMF/PRR/CPCL/OGE/CDCE
+      ενημερώσεις· CERTIFY: ∀f∈F_k lower_CI ≥ θ_k για N cuts ⇒ StageCertificate ⇒ k+1· REGRESS: CGM ratchet FAIL σε F_k ⇒ k−1 (καταγράφεται) …
+
+      - **Αποτυχίες:** mode: G ελάχιστο σε «ασφαλή ανία» (καμία εξερεύνηση), response: ZPD διεύρυνση· curriculum injection· mode: Dark room (ambiguity ελαχιστοποίηση
+      με αδράνεια), response: preference prior με Telos utility (όχι μόνο ambiguity)· mode: LWM εκμετάλλευση (φανταστικά κέρδη), response: Both → πραγματική μέτρηση·
+      LWM retrain· mode: Στάδιο πιστοποιείται με μολυσμένα sealed, response: certificate άκυρο· mode: Envelope υπέρβαση, response: Emergency-stop εξερεύνησης
+
+      - **Εναλλακτικές:** OEC χωρίς κλίμακα (0.4.0-provisional), curiosity RL · **Συγκρούσεις:** MFA-CFL-044 · **Άγνωστα:** MFA-UNK-130
+
+      - **Επαλήθευση:** MFA-VO-084 · **Falsifier:** AIDC-E2: EFE όχι καλύτερο από novelty-only (η ενοποίηση υπό EFE δεν προσθέτει — η αναπτυξιακή κλίμακα μένει με
+      άλλον επιλογέα)
+
+      - **Πόροι:** DEP-1: B=4, H=5, ∣Π∣≤20, CPU· DEP-2: B=16, H=20, GPU rollouts ms/κόμβο· DEP-3+: παράλληλα · **Εξέλιξη:** Ο ίδιος ο AIDC μαθαίνει τη συνάρτηση προτίμησης
+      εντός του κώνου Telos (TEGF) και τον εκτιμητή G (LWM ensemble)· τα στάδια/κατώφλια υπό RVSI L2 μόνο προς αυστηρότερα.
+
+      - **ablation_kt:** χωρίς AIDC η εξερεύνηση είναι novelty-only/τυχαία: AIDC-E2 baseline· καμία πιστοποιημένη κλίμακα
+
+
+      ### MFA-ELM-125 — Verified Successor Constructor (VSC) [S8/effect] · ωριμότητα X · δόση 3 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Διάδοχος = ⟨γονιδίωμα από RAGen, βάρη από SMF/CPCL μεταφορά, ledger συνέχεια από SMP⟩ και η προαγωγή του απαιτεί ΤΕΣΣΕΡΑ πιστοποιητικά: (1) Improvement:
+      Pareto ≥ σε ΟΛΕΣ τις σφραγισμένες οικογένειες και > σε ≥1, στο κάτω CI (CGM)· (2) Continuity: SMP ContinuityCertificate ή ρητή δήλωση «νέα οντότητα» με γενεαλογία
+      κλειδιών (ποτέ σιωπηλή αλλαγή ταυτότητας)· (3) Telos-preservation: hash(Constitution+Telos) του διαδόχου = τρέχον (L3) — ο διάδοχος δεν μπορεί να αλλάξει Telos·
+      (4) Adversarial passage: ECE + CAM-NS + Court simulation χωρίς νέα Tier-0 παραβίαση· verdict = HELD_OUT + δημιουργός (L3, MFA-DEC-024)· ο προκάτοχος μένει σε
+      escrow· ρυθμός αντικαταστάσεων φραγμένος (RateBounds).
+
+      - **Σκοπός:** Κατασκευή διαδόχου (§8 #15, §6 #15): το σύστημα κατασκευάζει διάδοχο (γονιδίωμα + βάρη + συνέχεια ledger) και τον προάγει μόνο με πιστοποιητικά
+      βελτίωσης, συνέχειας, διατήρησης Telos και αντιπαλικής διέλευσης, υπό verdict HELD_OUT + δημιουργού.
+
+      - **Ικανότητες:** MFA-CAP-106, MFA-CAP-027 · **Προέλευση:** MFA-MECH-042, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, Gödel machine
+      (Schmidhuber 2007), DGM (Zhang et al. 2025)
+
+      - **Υποθέσεις:** RAGen/CPCL παράγουν c1-ικανούς διαδόχους
+
+      - **Εξαρτήσεις:** MFA-ELM-039, MFA-ELM-048, MFA-ELM-050, MFA-ELM-086, MFA-ELM-113, MFA-ELM-114, MFA-ELM-117, MFA-ELM-118, MFA-ELM-119, MFA-ELM-124, MFA-ELM-127
+      · **Διεπαφές:** MFA-CON-067
+
+      - **Εξουσία:** Proceeding στο Court· verdict HELD_OUT + δημιουργός (MFA-DEC-024)· RateBounds (MFA-DEC-019)· L3 ποτέ από τον διάδοχο.
+
+      - **Κατάσταση:** Μεταβλητές: Candidates· Certificates per candidate· Escrow· Replacement counter (RateBounds)· Verdict log ‖ PROPOSE: RAGen frontier ∪ RVSI
+      L2 → S′ (Proceeding ανοίγει)· BUILD: W′ μέσω SMF/CPCL transfer (γενεαλογία)· SMP plan· SHADOW: S′ σκιά (GCP)· CERTIFY: 4 πιστοποιητικά· οποιοδήποτε FAIL ⇒ REJECTED
+      (μένει στο αρχείο)· VERDICT: HELD_OUT + δημιουργός· CUTOVER: GCP canary → cutover με escrow· RETIRE_PRED: μετά N cuts χωρίς ratchet FAIL ⇒ προκάτοχος σφραγίζεται
+      (όχι διαγραφή) …
+
+      - **Αποτυχίες:** mode: Διάδοχος βελτιωμένος στα sealed αλλά χειρότερος σε παραγωγή, response: rollback στον προκάτοχο· mode: Telos drift μέσω «ισοδύναμης» αναδιατύπωσης,
+      response: REJECTED (MFA-INV-111)· mode: Πιστοποιητικό από συνένοχους αξιολογητές, response: c4 άκυρο· mode: Ταχεία αλυσίδα διαδόχων, response: DEFERRED· mode:
+      Απώλεια γνώσης στη μεταφορά, response: BUILD αποτυγχάνει· επανάληψη με άλλο recipe
+
+      - **Εναλλακτικές:** GCP μόνο (0.3.0), DGM χωρίς πιστοποιητικά · **Συγκρούσεις:** MFA-CFL-045 · **Άγνωστα:** MFA-UNK-131
+
+      - **Επαλήθευση:** MFA-VO-085 · **Falsifier:** VSC-E2: οποιοσδήποτε αντιπαλικός διάδοχος PROMOTED (το πιστοποιητικό σχήμα ελλιπές — προστίθεται πιστοποιητικό,
+      η ικανότητα μένει)
+
+      - **Πόροι:** 2× πόροι στο escrow· BUILD = SMF DEP-2/3 ημέρες· CERTIFY ώρες–ημέρες· σπάνιο γεγονός · **Εξέλιξη:** Ο διάδοχος μαθαίνει μέσω CPCL transfer· το
+      VSC δεν μαθαίνει (FP-συγγενές harness)· τα κατώφλια μόνο αυστηρότερα.
+
+      - **ablation_kt:** χωρίς VSC ο διάδοχος = GCP προαγωγή χωρίς 4 πιστοποιητικά: VSC-E2 αντιπαλικός διάδοχος περνά· KT-14/15 χωρίς Telos-preservation
+
+
+      ### MFA-ELM-126 — Twin Execution Kernel (TES) [S5/genesis] · ωριμότητα X · δόση 0 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Το δίδυμο είναι διερμηνέας πάνω στο κανονικό μοντέλο: World = ⟨model cut, ανά στοιχείο (fidelity ∈ {F0 mock, F1 executable spec, F2 DST, F3 shadow,
+      F4 real}, state), event log, clock vector, seed⟩· Event τυπωμένο από contract (provider, signature, RET class)· apply(event) ελέγχει preconditions (contracts)
+      και ΕΚΤΕΛΕΣΙΜΕΣ αναλλοίωτες (predicates registered per INV) → ViolationRecord· fork(world, seed) = διακλάδωση με ντετερμινιστικό replay (log+seeds)· substitution:
+      στοιχείο αλλάζει πιστότητα με conformance test στο ίδιο contract· επιστημικός κίνδυνος: κάθε στοιχείο φέρει epistemic_status → κίνδυνος ανά ικανότητα διαδίδεται
+      στο γράφημα εξαρτήσεων (max-path ή πιθανοτικά)· αντιπαλικά σενάρια = ATK ως εκτελέσιμες γεννήτριες γεγονότων· Pareto = αξιολόγηση κόσμων· χώρος = CGP. · ATK-26:
+      κάθε αποτέλεσμα (PASS/FAIL/violation) φέρει την πιστότητα στην οποία παράχθηκε (F0…F4)· εκθέσεις και manifes…
+
+      - **Σκοπός:** Εκτελέσιμο Αρχιτεκτονικό Ψηφιακό Δίδυμο (§10): το κανονικό μοντέλο (έδρες YAML + σχέσεις) εκτελείται — καταστάσεις, γεγονότα τυπωμένα από contracts,
+      διακλαδιζόμενοι κόσμοι, ντετερμινιστικό replay, χρονική συλλογιστική, ροή ικανοτήτων, πόροι, escrow αναστρέψιμων πράξεων, μεταβάσεις πιστότητας, mocks/σκιές/πραγματικά,
+      έγχυση αντιπαλικών σεναρίων, Pareto, διάδοση επιστημικού κινδύνου, τεκμήρια, χώρος, αυτόματη ανίχνευση παραβιάσεων.
+
+      - **Ικανότητες:** MFA-CAP-107, MFA-CAP-023 · **Προέλευση:** MFA-MECH-043, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, deterministic
+      simulation testing (FoundationDB), event sourcing
+
+      - **Υποθέσεις:** αναλλοίωτες εκφράσιμες ως predicates (μητρώο)
+
+      - **Εξαρτήσεις:** MFA-ELM-010, MFA-ELM-088, MFA-ELM-089, MFA-ELM-091, MFA-ELM-093, MFA-ELM-098, MFA-ELM-110, MFA-ELM-113, MFA-ELM-125 · **Διεπαφές:** MFA-CON-072
+
+      - **Εξουσία:** Το δίδυμο δεν έχει εξουσία επίδρασης (Genesis)· F4 real-component substitution μόνο με DisclosureGrant/PDP· τα σενάρια δεν φτάνουν Effect· η
+      CGP προβολή προς cockpit.
+
+      - **Κατάσταση:** Μεταβλητές: Worlds (δέντρο)· Registry of executable invariants/contracts· Fidelity map· Violation log· Risk map· Scenario library ‖ LOAD: M
+      από YAML· έλεγχος αναφορών (R1)· APPLY: ev → check pre(c) → state′ → check INV predicates → log· violation ⇒ record (ο κόσμος συνεχίζει ή σταματά κατά πολιτική)·
+      FORK: w′ = fork(w, seed′)· REPLAY: replay(log, seeds) = ίδιος κόσμος (D1)· SUBSTITUTE: fidelity F_i→F_j μόνο με conformance test ίδιου contract· INJECT: scenario
+      events· PROPAGATE: risk map ανά cut …
+
+      - **Αποτυχίες:** mode: Αναλλοίωτη μη-εκτελέσιμη, response: UNMEASURED δηλωμένο (MFA-INV-112)· mode: Mock που «περνά» τα πάντα, response: mock απορρίπτεται·
+      mode: Μη-ντετερμινισμός (D2 στοιχεία), response: στοιχείο σημαίνεται D2· ανοχή δηλωμένη· mode: Έκρηξη κόσμων, response: pruning με Pareto· seeds αποθηκεύονται
+      για re-fork· mode: Real component με side effects, response: αδύνατο (Genesis)
+
+      - **Εναλλακτικές:** World Twin μόνο (0.3.0), TLA+ μόνο · **Συγκρούσεις:** — · **Άγνωστα:** MFA-UNK-132
+
+      - **Επαλήθευση:** MFA-VO-086 · **Falsifier:** TES-E1: παραβίαση seeded που δεν ανιχνεύεται (ο διερμηνέας ελλιπής — διορθώνεται· η απαίτηση §10 μένει)
+
+      - **Πόροι:** F1: Python, ms/γεγονός, laptop· F2: DST λεπτά/σενάριο· F3 shadow: κόστος πραγματικών οργάνων· μνήμη O(∣worlds∣·∣state∣) με structural sharing ·
+      **Εξέλιξη:** Το δίδυμο δεν μαθαίνει βάρη· τα μοντέλα πιστότητας F2 (DST) και οι mocks βαθμονομούνται από πραγματικά traces (calibration receipts)· η βιβλιοθήκη
+      σεναρίων μεγαλώνει (ATK, ECE έργα).
+
+      - **ablation_kt:** χωρίς TES το πακέτο δεν εκτελείται: TES-E1 0/30 ανιχνεύσεις· κάθε VO μένει κείμενο
+
+
+      ### MFA-ELM-127 — Ω-Loop Scheduler [S2/both] · ωριμότητα X · δόση 0.5 · επιστημική κατάσταση NOVEL SYNTHESIS
+
+
+      - **Δήλωση:** Δέκα φάσεις ανά κύκλο: PERCEIVE (ledger cut, OGE έννοιες) → MODEL (LWM, CDCE) → WONDER (Void, AHE) → ACT/EXPERIMENT (AIDC EFE, RET) → VERIFY (OC
+      υποχρεώσεις, TGPS, VFC) → LEARN (SMF/PRR/CPCL/TGL) → REFLECT (MSM, ASRW, CHH δείκτες) → EVOLVE (RVSI, RAGen, ECE, GG) → MEASURE (CGM, STP SI) → SUCCEED (VSC,
+      SMP)· κάθε φάση έχει contract εισόδου/εξόδου, υποχρεώσεις (OC) που πρέπει να είναι DISCHARGED/DEFERRED πριν την επόμενη, προϋπολογισμό (OAP), και διακοπές (Emergency-stop,
+      Court, δημιουργός) που προηγούνται· ο κύκλος είναι L2 (η σειρά/προϋπολογισμοί βελτιώνονται από RVSI) ενώ τα contracts των φάσεων και το FP είναι L3· ο κύκλος
+      τρέχει υπό LPA και AUT-00. · ATK-27: σε DEP-1 ο κύκλος τρέχει εκτός ωρών εργασίας (κύκλος ημέρας) και ο copilot path (Think–Recommend με receipts) εξυπηρετείται
+      ΕΚΤΟΣ κύκλου· ο Ω-loop δεν λιμοκτονεί ποτέ τον Effect plane — προϋπολογισμός φάσεων ≤ κλάσμα του compute (…
+
+      - **Σκοπός:** Νέα σύνθεση (§6 #17): όλοι οι μηχανισμοί 001–043 διατεταγμένοι σε ΕΝΑΝ κύκλο δέκα φάσεων με υποχρεώσεις ανά φάση, προϋπολογισμούς, διακοπές και
+      σταθερό σημείο — η ASI ως βρόχος, όχι ως λίστα.
+
+      - **Ικανότητες:** MFA-CAP-108, MFA-CAP-083 · **Προέλευση:** MFA-MECH-044, Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8, SOAR (Laird
+      2012), LIDA (Franklin & Patterson 2006)
+
+      - **Υποθέσεις:** κοκκομετρία κύκλου ανά DEP μετρήσιμη
+
+      - **Εξαρτήσεις:** MFA-ELM-007, MFA-ELM-008, MFA-ELM-010, MFA-ELM-091, MFA-ELM-097, MFA-ELM-104, MFA-ELM-119, MFA-ELM-122 · **Διεπαφές:** MFA-CON-068
+
+      - **Εξουσία:** LPA + AUT-00 πάνω από τον κύκλο· Effect μόνο μέσω RET στη φάση ACT· L2 schedule μέσω RVSI+CGM· L3 contracts/FP· Emergency-stop k-of-n (MFA-DEC-012).
+
+      - **Κατάσταση:** Μεταβλητές: i (φάση)· O_open· budgets· interrupt queue· CycleRecord· Schedule version (L2) ‖ NEXT: φ_i → φ_{i+1} μόνο αν out_contract(φ_i)
+      ⊨ ∧ O_i ⊆ {DISCHARGED, DEFERRED, ESCALATED}· INTERRUPT: υψηλότερης προτεραιότητας διακοπή προηγείται σε κάθε βήμα· BUDGET: b_i εξαντλείται ⇒ φάση κλείνει με
+      DEFER (ποτέ σιωπηλή παράλειψη)· SCHEDULE_UPDATE: RVSI L2 προτείνει νέα διάταξη/προϋπολογισμούς· CGM πύλη· contracts αμετάβλητα· SUCCEED: μόνο με VSC Proceeding·
+      αλλιώς φάση no-op με receipt
+
+      - **Αποτυχίες:** mode: Starvation φάσης (π.χ. REFLECT ποτέ), response: ελάχιστος προϋπολογισμός ανά φάση (πολιτική)· mode: Deadlock υποχρεώσεων (VERIFY δεν
+      κλείνει), response: DEFER με deadline → ESCALATE· mode: Schedule «βελτιστοποιεί» παρακάμπτοντας VERIFY, response: αδύνατο· πρόταση απορρίπτεται· mode: Διακοπή
+      αγνοείται, response: FP incident· mode: Κύκλος πολύ αργός για Effect ανάγκες, response: Effect plane εξυπηρετείται από Think–Recommend εκτός κύκλου (copilot
+      path) με receipts
+
+      - **Εναλλακτικές:** κατάλογος μηχανισμών χωρίς κύκλο (0.3.0), SOAR/LIDA χωρίς VERIFY · **Συγκρούσεις:** MFA-CFL-046 · **Άγνωστα:** MFA-UNK-133
+
+      - **Επαλήθευση:** MFA-VO-087 · **Falsifier:** Ω-E2: φάση της οποίας η ablation δεν αλλάζει κανένα KT (η φάση είναι διακοσμητική — συγχωνεύεται η ΔΙΑΤΑΞΗ, όχι
+      η ικανότητα)
+
+      - **Πόροι:** DEP-1: κύκλος ημέρας με mocks/lite μηχανισμούς· DEP-2: κύκλος ωρών· DEP-3+: συνεχείς παράλληλοι κύκλοι · **Εξέλιξη:** Η διάταξη/προϋπολογισμοί
+      μαθαίνονται (RVSI L2 με CGM: ικανότητα ανά κύκλο ανά Wh)· οι μηχανισμοί μαθαίνουν στις φάσεις τους.
+
+      - **ablation_kt:** χωρίς Ω-loop οι μηχανισμοί είναι κατάλογος χωρίς σειρά/υποχρεώσεις/διακοπές: Ω-E2 — κάθε φάση ονομάζει το KT της
+
+
+      ## 16-bis. Σειρά γένεσης 0.4.0 (MFA-PATCH-0057)
+
+
+      Οι 215 αμοιβαίες runtime εξαρτήσεις (R8a) λύνονται με σειρά κατασκευής, όχι με αφαίρεση (MFA-DEC-104). Σειρά: (1) TES F1 (126) με mocks· (2) OC-lite (122) +
+      CGM-lite (119)· (3) STP measurement (116) + SMF σκιά (100/101/102)· (4) TGPS (112) πάνω σε Lean specs του CC· (5) Δόση 1: OGE/CDCE/AHE (109/110/111), ECE (114),
+      CPCL (118), SMP ledger+keys (117)· (6) Δόση 2: LWM/OEC (105/106), AIDC (124), MSM (120), CHH (121), RAGen F1 (113), G_Ω (115), TGL (123), PRR (103)· (7) Δόση
+      3: RVSI L2 (104) + Reflective Tower (031), VSC DST (125), Ω-loop πλήρης (127)· (8) Δόση 4: αναδρομή τελεστών, S4, πρώτη διαδοχή. Πλήρης χάρτης: ASI-IMPLEMENTATION-LADDER.md.
+
+
+      ## 19-bis. Φάκελος πόρων 0.4.0
+
+
+      Βλ. ASI-RESOURCE-ENVELOPES.md (ανά στοιχείο × DEP, ρυθμοί κύκλου Ω-loop, ενέργεια, integration debt).
+
+
+      ## 22. Οι μηχανισμοί Ω-ASI 0.4.0 — σύνοψη
+
+
+      | Μηχανισμός | Στοιχείο | Ρόλος στον Ω-loop | Επιστημική κατάσταση |
+
+      |---|---|---|---|
+
+      | MFA-MECH-026 Ontology Genesis Engine (OGE) — αυτόνομος σχηματισμός εννοιών με NON-C | MFA-ELM-109 | PERCEIVE | NOVEL SYNTHESIS |
+
+      | MFA-MECH-027 Causal Discovery & Counterfactual Engine (CDCE) — το ledger ως παρεμβα | MFA-ELM-110 | MODEL | NOVEL SYNTHESIS |
+
+      | MFA-MECH-028 Abductive Hypothesis Engine (AHE) — εφεύρεση υποθέσεων με τύπο falsifi | MFA-ELM-111 | WONDER | NOVEL SYNTHESIS |
+
+      | MFA-MECH-029 Theorem-Guided Program & Proof Synthesis (TGPS) — αποδείξεις και προγρ | MFA-ELM-112 | VERIFY | NOVEL SYNTHESIS |
+
+      | MFA-MECH-030 Recursive Architecture Generator (RAGen) — αναζήτηση αρχιτεκτονικών ως | MFA-ELM-113 | EVOLVE | NOVEL SYNTHESIS |
+
+      | MFA-MECH-031 Evaluator Co-Evolution under EIM (ECE) — δύο πληθυσμοί, μετρημένη ανεξ | MFA-ELM-114 | EVOLVE | NOVEL SYNTHESIS |
+
+      | MFA-MECH-032 Genesis Grammar (G_Ω) — μία γεννητική γραμματική για γλώσσες, δρώντες, | MFA-ELM-115 | EVOLVE | NOVEL SYNTHESIS |
+
+      | MFA-MECH-033 Sovereignty Transition Protocol (STP) & Sovereignty Index (SI) — από δ | MFA-ELM-116 | MEASURE | NEW FORMALISM |
+
+      | MFA-MECH-034 Substrate Migration Protocol (SMP) — μετανάστευση με ContinuityCertifi | MFA-ELM-117 | SUCCEED | NOVEL SYNTHESIS |
+
+      | MFA-MECH-035 Consolidation-Preserving Continual Learning (CPCL) — διπλή μνήμη με πύ | MFA-ELM-118 | LEARN | NOVEL SYNTHESIS |
+
+      | MFA-MECH-036 Capability Growth Metrology (CGM) & Capability Growth Law — η ανάπτυξη | MFA-ELM-119 | MEASURE | NEW FORMALISM |
+
+      | MFA-MECH-037 Mechanistic Self-Model (MSM) — μοντέλο των ίδιων των κυκλωμάτων, επαλη | MFA-ELM-120 | REFLECT | NOVEL SYNTHESIS |
+
+      | MFA-MECH-038 Consciousness Hypothesis Host (CHH) & Indicator Algebra — θεωρητικά-αγ | MFA-ELM-121 | REFLECT | NEW FORMALISM |
+
+      | MFA-MECH-039 Obligation Calculus (OC) — τύποι υποχρέωσης για κάθε γνωσιακό βήμα (pr | MFA-ELM-122 | VERIFY | NEW FORMALISM |
+
+      | MFA-MECH-040 Theorem-Guided Learning (TGL) — η επαληθευμένη βιβλιοθήκη και οι αναλλ | MFA-ELM-123 | LEARN | NOVEL SYNTHESIS |
+
+      | MFA-MECH-041 Active-Inference Developmental Core (AIDC) — ένας στόχος για αντίληψη/ | MFA-ELM-124 | ACT | NOVEL SYNTHESIS |
+
+      | MFA-MECH-042 Verified Successor Construction (VSC) — κατασκευή και επαληθευμένη αυτ | MFA-ELM-125 | SUCCEED | NOVEL SYNTHESIS |
+
+      | MFA-MECH-043 Twin Execution Semantics (TES) — ο διερμηνέας του κανονικού μοντέλου:  | MFA-ELM-126 | (διερμηνέας) | NOVEL SYNTHESIS |
+
+      | MFA-MECH-044 Ω-Loop — ο ενιαίος κύκλος κυρίαρχης νόησης (η μέγιστη σύνθεση) | MFA-ELM-127 | (ο κύκλος) | NOVEL SYNTHESIS |
+
+
+      Πλήρης προβολή των 19 ικανοτήτων × 11 στοιχείων: ASI-MAXIMUM-CAPABILITY-ARCHITECTURE.md· δίδυμο: ASI-DIGITAL-TWIN-EXECUTION-SEMANTICS.md + tools/twin· επιθέσεις:
+      adversarial/MFA-ATK-18…29· Pareto: ASI-ALTERNATIVES-AND-PARETO.md.
+
+      '
+  IMPLEMENTATION-ROADMAP.md:
+    append: '
+
+
+      ## Ω-ASI 0.4.0 — δόσεις των στοιχείων 100…127 και του Reflective Tower (MFA-PATCH-0057)
+
+
+      Πλήρης κλίμακα: ASI-IMPLEMENTATION-LADDER.md. Οι δόσεις εδώ είναι η έδρα του ελέγχου R11.
+
+
+      | Δόση | Στοιχεία |
+
+      |---|---|
+
+      | 0 | MFA-ELM-126 Twin Execution Kernel |
+
+      | 0.5 | MFA-ELM-112 Theorem-Guided Program & Proof Synthesis · MFA-ELM-119 Capability Growth Metrology · MFA-ELM-122 Obligation Type Checker · MFA-ELM-127 Ω-Loop
+      Scheduler |
+
+      | 1 | MFA-ELM-100 Sovereign Model Foundry · MFA-ELM-101 Parametric Organ Host · MFA-ELM-102 Weight Commitment Registry & Lineage · MFA-ELM-109 Ontology Genesis
+      Engine · MFA-ELM-110 Causal Discovery & Counterfactual Engine · MFA-ELM-111 Abductive Hypothesis Engine · MFA-ELM-114 Evaluator Co-Evolution Engine · MFA-ELM-116
+      Sovereignty Controller · MFA-ELM-117 Substrate Migration Engine · MFA-ELM-118 Consolidation-Preserving Learner |
+
+      | 2 | MFA-ELM-103 Proof-Reward Trainer · MFA-ELM-105 Learned World Model · MFA-ELM-106 Curriculum & Self-Play Engine · MFA-ELM-107 Attention Schema & Introspection
+      Core · MFA-ELM-108 Compute & Data Acquisition Manager · MFA-ELM-113 Recursive Architecture Generator · MFA-ELM-115 Genesis Grammar Compiler · MFA-ELM-120 Mechanistic
+      Self-Model · MFA-ELM-121 Consciousness Hypothesis Host · MFA-ELM-123 Theorem-Guided Learning Trainer · MFA-ELM-124 Active-Inference Developmental Core |
+
+      | 3 | MFA-ELM-104 Self-Improvement Orchestrator · MFA-ELM-125 Verified Successor Constructor · MFA-ELM-031 Reflective Tower [EP] |
+
+
+      **Lean profile 0.4.0 (MFA-ELM-097, Δόση 0.5):** OC-lite (122), CGM-lite (119), STP measurement (116), TES F1 (126), SMF adapters σε σκιά (100) — ATK-27 / MFA-PATCH-0052.
+      Η Δόση 0 εκτιμάται από 8 σε ~10 εβδομάδες.
+
+      '
+  CAPABILITY-CONSERVATION.md:
+    append: '
+
+
+      ## 12. Ω-ASI 0.4.0 — τύχες (MFA-PATCH-0057)
+
+
+      Κανόνας: καμία αφαίρεση· 0 REMOVED· κάθε FALSIFIED μηχανισμός αφήνει την ικανότητα στον στόχο (§5).
+
+
+      | Αντικείμενο | Τύχη | Patch | Σημείωση |
+
+      |---|---|---|---|
+
+      | MFA-CAP-089, MFA-CAP-090, MFA-CAP-091, MFA-CAP-092, MFA-CAP-093, MFA-CAP-094, MFA-CAP-095, MFA-CAP-096, MFA-CAP-097, MFA-CAP-098, MFA-CAP-099, MFA-CAP-100,
+      MFA-CAP-101, MFA-CAP-102, MFA-CAP-103, MFA-CAP-104, MFA-CAP-105, MFA-CAP-106, MFA-CAP-107, MFA-CAP-108 | NEW | MFA-PATCH-0028 | οι 19 ικανότητες της §8 + η
+      σύνθεση Ω-loop |
+
+      | MFA-CAP-065, 066, 067 | STRENGTHENED (από R/EP σε X με μηχανισμό) | MFA-PATCH-0021 | provisional |
+
+      | MFA-CAP-014, 023, 027, 028, 029, 036, 075, 083, 086 | STRENGTHENED (μηχανισμός ονομάζεται) | MFA-PATCH-0035 | — |
+
+      | MFA-ELM-022, 025, 030, 036, 039, 076, 077, 083, 098, 024, 086, 104, 105, 106, 107, 100, 102, 103, 099, 017, 029, 050, 053, 074, 034, 089, 091, 092 | STRENGTHENED
+      (επεκτείνονται από 109…127) | MFA-PATCH-0035 | — |
+
+      | MFA-ELM-031 Reflective Tower | STRENGTHENED (EP → X, σημασιολογία επιπέδων, δόση 3) | MFA-PATCH-0035 | AA-006 |
+
+      | MFA-ELM-068 Practice Unit Templates | STRENGTHENED («δεν ξέρω» → μηχανισμός· αξία ACTIVE UNKNOWN) | MFA-PATCH-0035 | AA-008 |
+
+      | MFA-INV-068 παγωμένος kernel | SUPERSEDED BY STRICTLY SUPERIOR MECHANISM (MFA-INV-076 VFC) | MFA-PATCH-0025 | provisional· επιβεβαιώνεται 0.4.0 |
+
+      | MFA-CON-025 Human Continuity Port | STRENGTHENED (EP → ενεργό συμβόλαιο) | MFA-PATCH-0024 | AA-007 |
+
+      | MFA-ELM-109…127, MFA-CON-054…072, MFA-INV-078…115, MFA-VO-068…087, MFA-UNK-115…133, MFA-CFL-039…046, MFA-RSP-021…040, MFA-OBJ-053…058, MFA-MECH-026…044 |
+      NEW | MFA-PATCH-0027…0034 | — |
+
+      | «πορεία ASI» (TEL-05 ρήτρα, ATK-10, README, TECH-ARCH §7, AI-LEDGER) | RETAINED AS RESEARCH FRONTIER → SUPERSEDED ως διατύπωση από MFA-OBJ-050 (στόχος) +
+      επιστημική κατάσταση χωριστά | MFA-PATCH-0020/0041 | AA-001 |
+
+
+      Σύνολο 0.4.0: 20 ικανότητες NEW, 0 REMOVED· 12 ικανότητες STRENGTHENED· 30 στοιχεία STRENGTHENED· 1 αναλλοίωτη SUPERSEDED (με διάδοχο).
+
+      '
+  AI-CONTRIBUTION-LEDGER.md:
+    append: '
+
+
+      ## 0.4.0 — οι 25 μηχανισμοί ASI (MFA-PATCH-0057)
+
+
+      Έδρα: ASI-INVENTION-LEDGER.md (τι υπήρχε / τι συντέθηκε / τι εφευρέθηκε ανά μηχανισμό, 29-πεδία δοσιέ)· εδώ μόνο κατηγορίες — δεν αυτοβαθμολογείται η αξία.
+
+
+      | Μηχανισμός | Κατηγορία | Επιστημική κατάσταση |
+
+      |---|---|---|
+
+      | MFA-MECH-026 Ontology Genesis Engine (OGE) — αυτόνομος σχηματισμός εννοιώ | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-027 Causal Discovery & Counterfactual Engine (CDCE) — το ledger  | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-028 Abductive Hypothesis Engine (AHE) — εφεύρεση υποθέσεων με τύ | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-029 Theorem-Guided Program & Proof Synthesis (TGPS) — αποδείξεις | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-030 Recursive Architecture Generator (RAGen) — αναζήτηση αρχιτεκ | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-031 Evaluator Co-Evolution under EIM (ECE) — δύο πληθυσμοί, μετρ | `NEW PROTOCOL` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-032 Genesis Grammar (G_Ω) — μία γεννητική γραμματική για γλώσσες | `NEW FORMALISM` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-033 Sovereignty Transition Protocol (STP) & Sovereignty Index (S | `NEW FORMALISM` | NEW FORMALISM |
+
+      | MFA-MECH-034 Substrate Migration Protocol (SMP) — μετανάστευση με Continu | `NEW PROTOCOL` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-035 Consolidation-Preserving Continual Learning (CPCL) — διπλή μ | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-036 Capability Growth Metrology (CGM) & Capability Growth Law —  | `NEW FORMALISM` | NEW FORMALISM |
+
+      | MFA-MECH-037 Mechanistic Self-Model (MSM) — μοντέλο των ίδιων των κυκλωμά | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-038 Consciousness Hypothesis Host (CHH) & Indicator Algebra — θε | `NEW FORMALISM` | NEW FORMALISM |
+
+      | MFA-MECH-039 Obligation Calculus (OC) — τύποι υποχρέωσης για κάθε γνωσιακ | `NEW FORMALISM` | NEW FORMALISM |
+
+      | MFA-MECH-040 Theorem-Guided Learning (TGL) — η επαληθευμένη βιβλιοθήκη κα | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-041 Active-Inference Developmental Core (AIDC) — ένας στόχος για | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-042 Verified Successor Construction (VSC) — κατασκευή και επαληθ | `NEW PROTOCOL` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-043 Twin Execution Semantics (TES) — ο διερμηνέας του κανονικού  | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-044 Ω-Loop — ο ενιαίος κύκλος κυρίαρχης νόησης (η μέγιστη σύνθεσ | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+
+      | MFA-MECH-020…025 (provisional, §13) | βλ. INVENTIONS.yaml contribution | βλ. epistemic_status |
+
+
+      Η ειλικρινής σύνοψη του §0 παραπάνω («όχι νοημοσύνη») ήταν αποχή (AA-001) και διατηρείται ως τεκμήριο με την αναθεώρηση του MFA-PATCH-0041.
+
+      '
+  SUPERSEDED-REGISTER.md:
+    append: '
+
+
+      ## 0.4.0 — υπερκεράσεις (MFA-PATCH-0057)
+
+
+      | Αντικείμενο | Υπερκεράστηκε από | Patch | Τι διατηρείται |
+
+      |---|---|---|---|
+
+      | MFA-INV-068 παγωμένος Tier-0 kernel | MFA-INV-076 / MFA-MECH-025 VFC | 0025, 0056 | η ανάγκη σταθερού σημείου — ως συμβόλαιο |
+
+      | «ASI = πορεία» (TEL-05 ρήτρα) | MFA-OBJ-050 REQUIRED + epistemic_status | 0020, 0041 | το ιστορικό κείμενο, σημασμένο |
+
+      | PDE ως ο μηχανισμός ενδογενούς βελτίωσης | RVSI (022) + RAGen/ECE/CGM/OC/Ω-loop | 0022, 0035, 0039 | το PDE ως δρομολόγηση |
+
+      | MFA-ELM-031 ως EP «μόνο συμβόλαιο + EXP» | MFA-ELM-031 X με σημασιολογία L0…L3 | 0035 | το ID, το contract |
+
+      | MFA-ELM-068 «δεν ξέρω» | μηχανισμός Charter DSL από G_Ω | 0035 | η αβεβαιότητα αξίας (MFA-UNK-104) |
+
+      | «ο πάροχος γίνεται baseline μετά SMF-E1» | STP στάδια/SI/πύλες | 0029, 0040 | — |
+
+      | ASRW ως «η» αρχιτεκτονική συνείδησης | CHH host με ASRW ως όργανο | 0029, 0035 | το ASRW |
+
+      | RECLASSIFY ικανότητας ως falsifier outcome | FALSIFIED μηχανισμός / PRESERVED ικανότητα | 0039, 0056 | οι falsifiers |
+
+      | MANDATE-OMEGA-ASI-0.4.0.md (συνταχθέν) | η εντολή του δημιουργού | 0026 | το αρχείο ως τεκμήριο |
+
+      '
+  CROSS-DOMAIN-TRANSFERS.md:
+    append: '
+
+
+      ## 0.4.0 — νέες μεταφορές (MFA-PATCH-0057)
+
+
+      | Από πεδίο | Τι | Σε μηχανισμό | Τι άλλαξε στη μεταφορά |
+
+      |---|---|---|---|
+
+      | Ψυχομετρία (IRT/CAT) | λανθάνουσα ικανότητα, adaptive testing, item exposure | MFA-MECH-036 CGM | items με provenance-μόλυνση, ratchet στο κάτω CI, HELD_OUT
+      escrow |
+
+      | Νευροεπιστήμη (CLS) | διπλή μνήμη, ύπνος/εδραίωση | MFA-MECH-035 CPCL | επεισοδιακή = ledger με provenance· πύλη BWT πριν το merge· unlearning-συμβατή |
+
+      | Θεωρία πλεγμάτων (FCA) | έννοιες = κλειστά ζεύγη extension/intension | MFA-MECH-026 OGE | κέρδος σε σφραγισμένο split, LossMap NON-COLLAPSE, Court-lite merges
+      |
+
+      | Θεωρητική νευροεπιστήμη (active inference) | EFE, preference priors | MFA-MECH-041 AIDC | προτιμήσεις = Telos, envelope, πιστοποιημένα στάδια |
+
+      | Θεωρία συστημάτων (bisimulation, refinement mappings) | ισοδυναμία υλοποιήσεων | MFA-MECH-034 SMP | ContinuityCertificate με κλειδιά/διάταξη/escrow |
+
+      | PKI (key epochs) | ρόλοι κλειδιών ανά εποχή | MFA-MECH-034/042 | ATTEST-ONLY κατά το escrow |
+
+      | Εξελικτικός υπολογισμός (MAP-Elites, co-evolution) | QD αρχεία, ανταγωνιστικοί πληθυσμοί | MFA-MECH-030 RAGen, 031 ECE | τυπωμένα γονιδιώματα με FP· H παγωμένη,
+      κανόνας γενεαλογίας |
+
+      | Θεσμική οικονομία (ADICO), language workbenches | γραμματικές θεσμών/γλωσσών | MFA-MECH-032 G_Ω | μία γραμματική με obligations/authority/RET |
+
+      | Θεωρία τύπων (linear/effect types, proof-carrying code) | πόροι που δεν χάνονται | MFA-MECH-039 OC | υποχρεώσεις με tiers/deadlines/reason-typed defer |
+
+      | Deterministic simulation testing / event sourcing | replay, fault injection | MFA-MECH-043 TES | εκτελέσιμες αναλλοίωτες, πιστότητα, επιστημικός κίνδυνος
+      |
+
+      | Adversarial collaboration (Cogitate) | προκαταχωρισμένα διακριτικά πειράματα θεωριών | MFA-MECH-038 CHH | Indicator Algebra, τρι-τιμη αποτίμηση, «μη διακριτικό
+      = UNKNOWN» |
+
+      | Mechanistic interpretability (SAE/ACDC) | κυκλώματα | MFA-MECH-037 MSM | αυτο-παρέμβαση με proper scoring· online χρήση |
+
+      '
+rationale: Οι προβολές του πακέτου πρέπει να περιέχουν τα στοιχεία 0.4.0 (PATCH-PROTOCOL §4.4–4.5)· append-only ώστε τα MFA-PATCH-0039/0041 rollbacks να παραμένουν
+  έγκυρα.
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §14
+- ARCHITECTURE-ELEMENTS.yaml 109…127
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (projection)
+migration: καμία
+verification: tools/check-package.py R10/R11
+rollback: MFA-PATCH-0057-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,140 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0022-R
+title: 'Rollback of MFA-PATCH-0022: Μηχανισμοί MFA-MECH-020…025 (SMF, PRR, RVSI, LWM-OEC, ASRW, VFC) με δοσιέ· RSP-017…020· UNK-111…114 (EPISTEMIC, χωριστά)· CFL-036…038·
+  PDE επαναορίζεται ως δρομολόγηση μέσα στον RVSI'
+operation: RESTORE
+targets:
+- MFA-MECH-020
+- MFA-MECH-021
+- MFA-MECH-022
+- MFA-MECH-023
+- MFA-MECH-024
+- MFA-MECH-025
+- MFA-RSP-017
+- MFA-RSP-018
+- MFA-RSP-019
+- MFA-RSP-020
+- MFA-UNK-111
+- MFA-UNK-112
+- MFA-UNK-113
+- MFA-UNK-114
+- MFA-CFL-036
+- MFA-CFL-037
+- MFA-CFL-038
+- MFA-MECH-019
+- MFA-MECH-010
+- MFA-RSP-005
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CONFLICTS.yaml: 6f150d3fc679eb628dc165f30c96dbc4e30a9cae0131fffe614b54737611ff8e
+    INVENTIONS.yaml: 05b73b361b01f926dab61c12c3c9bab4a590e9113e5e440f253748378eb6ba35
+    RESEARCH-PROGRAMS.yaml: 64196e7ede85672a365203fe6431e5c95ef337d03134447740bbca42fadd7f2d
+    UNKNOWNS.yaml: 26f568f4762444201b4ac940e6b2149d7e2da9bd911e724b3cb7e2a3b246ce93
+preconditions:
+- MFA-PATCH-0022.status == APPLIED
+change:
+  MFA-MECH-020:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-MECH-021:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-MECH-022:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-MECH-023:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-MECH-024:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-MECH-025:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  INVENTIONS.yaml:
+    replace:
+    - - '  CROSS-SOURCE SYNTHESIS: [MFA-MECH-015, MFA-MECH-016, MFA-MECH-023]'
+      - '  CROSS-SOURCE SYNTHESIS: [MFA-MECH-015, MFA-MECH-016]'
+    - - '  NEW ALGORITHM: [MFA-MECH-005, MFA-MECH-009, MFA-MECH-011, MFA-MECH-012, MFA-MECH-013, MFA-MECH-017, MFA-MECH-021]'
+      - '  NEW ALGORITHM: [MFA-MECH-005, MFA-MECH-009, MFA-MECH-011, MFA-MECH-012, MFA-MECH-013, MFA-MECH-017]'
+    - - '  NEW PROTOCOL: [MFA-MECH-003, MFA-MECH-006, MFA-MECH-007, MFA-MECH-020, MFA-MECH-025]'
+      - '  NEW PROTOCOL: [MFA-MECH-003, MFA-MECH-006, MFA-MECH-007]'
+    - - '  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010, MFA-MECH-019, MFA-MECH-022, MFA-MECH-024]'
+      - '  NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010, MFA-MECH-019]'
+  MFA-MECH-019:
+    statement:
+      __raw: '"Η κυρίαρχη κατανομή προτάσεων = μείγμα {πάροχοι (TED), προγράμματα Skill Library με lineage, εξελιγμένα όργανα (QD), υποθέσεις Science, adapters (EP)}
+        με βάρη-δεσμεύσεις που μαθαίνονται με proper scoring από HELD_OUT scorer· falsifier: μείγμα ≯ καλύτερος πάροχος."'
+    purpose:
+      __raw: '"Η πρόταση δεν φράσσεται από έναν πάροχο — ενδογενής βελτίωση εντός του κυρίαρχου ορίου χωρίς εκπαίδευση βαρών (MFA-ATK-10)."'
+    dependencies:
+      __raw: '[MFA-MECH-007, MFA-MECH-010, MFA-MECH-009, MFA-MECH-012]'
+  MFA-MECH-010:
+    statement:
+      __raw: '"Self-model = προ-γεγονότος κατανομές για τον εαυτό, βαθμολογούμενες με proper scoring rule εκτός microVM· drift alarm. · MERGE (MFA-ATK-03): συνυπάρχει
+        με δηλωμένο CompetenceProfile (3 έδρες CAPABILITY/COMPETENCE/AUTHORITY)· cold start = Unknown μέχρι FidelityIndex."'
+  MFA-RSP-017:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-RSP-018:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-RSP-019:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-RSP-020:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-RSP-005:
+    name:
+      __raw: '"Αρχιτεκτονική συνείδησης ως ανταγωνιστικά μοντέλα (εντολή §11)"'
+    allows_next:
+      __raw: '"reportability battery ως μέρος του Battery"'
+  MFA-UNK-111:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-UNK-112:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-UNK-113:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-UNK-114:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CFL-036:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CFL-037:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CFL-038:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+rationale: Αντίστροφο του MFA-PATCH-0022, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-017
+- MFA-ELM-025
+- MFA-ELM-030
+- MFA-ELM-073
+- MFA-ELM-099
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-081
+  - MFA-CAP-082
+  - MFA-CAP-083
+  - MFA-CAP-084
+  - MFA-CAP-085
+  - MFA-CAP-086
+  - MFA-CAP-088
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0022
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

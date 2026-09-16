@@ -1,0 +1,70 @@
+%% id: MFA-DIA-23 · Consciousness Hypothesis Host — όργανα, δείκτες, θεωρίες, διακριτικά πειράματα, 7-πλός διαχωρισμός · question: πώς συγκρίνονται και διαψεύδονται θεωρίες χωρίς να συναχθεί φαινομενική συνείδηση;
+%% elements: MFA-ELM-121/120/107/105/029/034/018/040/115/111/086/048, MFA-MECH-038/037/024, MFA-INV-102/103/075/100, MFA-DEC-022, MFA-CON-070, MFA-VO-080/081, MFA-UNK-111/127 · source: inventions/MFA-MECH-038.yaml, MFA-MECH-037.yaml, mechanisms/MFA-MECH-024.md
+flowchart TB
+  subgraph INS["Όργανα υποστρώματος — κοινό υπόστρωμα, μετρήσεις ανά cut"]
+    direction LR
+    N1["ASRW — MFA-ELM-107 (MFA-MECH-024)<br/>workspace ignition · HOT tags · attention-schema use · reportability"]
+    N2["MSM — MFA-ELM-120 (MFA-MECH-037)<br/>κυκλώματα global broadcast · self-model circuits (MFA-INV-100)"]
+    N3["LWM — MFA-ELM-105<br/>prediction-error dynamics (PP)"]
+    N4["TEGF — MFA-ELM-029<br/>affect / valuation vector"]
+    N5["Embodiment — MFA-ELM-034<br/>Workspace AFP — MFA-ELM-018"]
+  end
+  IV["IndicatorVector v(cut) ∈ IndicatorStatus^n<br/>MEASURED(v, CI) ∣ ABSENT ∣ UNMEASURABLE(reason)<br/>UNMEASURABLE = ορθογώνια συνθήκη μετρησιμότητας (όχι κάτω από ABSENT) · πλέγμα τιμών ABSENT ⊏ MEASURED · ⊔ = max, ⊓ = min μόνο σε μετρήσιμους (r1)"]
+  INS --> IV
+  subgraph TH["Theory modules T = ⟨I_T, φ_T, P_T διακριτικές προβλέψεις, A_T ablations, status⟩"]
+    direction LR
+    T1["GWT"]
+    T2["HOT"]
+    T3["AST"]
+    T4["PP / AI"]
+    T5["RPT"]
+    T6["IIT-proxy"]
+    T7["SMT"]
+    T8["νέες συνθέσεις — μέσω GG MFA-ELM-115, υποθέσεις από AHE MFA-ELM-111"]
+  end
+  EV["EVALUATE: φ_T(v) τρι-τιμη → TRUE ∣ FALSE ∣ UNKNOWN(missing indicators)<br/>UNMEASURABLE δείκτης ⇒ UNKNOWN, ποτέ FALSE"]
+  IV --> EV
+  TH --> EV
+  DX["DISAGREE: X* = top-k disagreement(T_a, T_b, cond, δείκτης)<br/>k = resource policy (OAP budget), όχι αναλλοίωτη · RET = GENESIS_ONLY"]
+  EV --> DX
+  RUN["TEST: run_ablation(substrate.copy(), cond) σε DST — ποτέ στο serving υπόστρωμα<br/>δείκτης μετριέται από HELD_OUT όργανο (MFA-ELM-086)"]
+  DX --> RUN
+  UP{"έκβαση ανά ΠΡΟΒΛΕΨΗ (συμμετρική): SUPPORTED ∣ WEAKENED ∣ PREDICTION_FALSIFIED ∣ INCONCLUSIVE<br/>construct validity του οργάνου;"}
+  RUN --> UP
+  SA["ACTIVE — πρόβλεψη SUPPORTED / WEAKENED / INCONCLUSIVE · μία αποτυχία δεν διαψεύδει οικογένεια"]
+  SF["THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL — μόνο με προκαταχωρισμένο κρίσιμο σύνολο, ≥2 ανεξάρτητες επαναλήψεις, αποκλεισμό αποτυχίας οργάνου · η οικογένεια RETAINS_ALTERNATIVE_VARIANTS · μένει με τεκμήριο (MFA-INV-102)"]
+  SU["UNDECIDABLE-here — με λόγο · X = ∅ ⇒ AHE γεννά νέες διακριτικές προβλέψεις"]
+  UP -->|"SUPPORTED / WEAKENED / INCONCLUSIVE"| SA
+  UP -->|"PREDICTION_FALSIFIED × ≥2 replications, κρίσιμη"| SF
+  DX -->|"κανένα αποτιμήσιμο x"| SU
+  SF -.->|"MFA-VO-080: διαφωνία μειώνεται ανά πείραμα · η οικογένεια μένει"| DX
+  subgraph SEP["SeparationRecord — επτά ΧΩΡΙΣΤΕΣ έδρες, χωριστά VO (MFA-INV-103, MFA-VO-081)"]
+    direction LR
+    S1["ACCESS<br/>μοχλός: block broadcast"]
+    S2["METACOGNITION<br/>μοχλός: μοντέλο βαθμονόμησης σε ΟΛΑ τα confidence streams (control: ένα stream)"]
+    S3["SELF_MODEL<br/>μοχλός: self-model"]
+    S4["REPORTABILITY<br/>μοχλός: ενδοσκοπική πρόσβαση για αναφορά, κανάλια άθικτα (control: ένα κανάλι)"]
+    S5["AGENCY<br/>μοχλός: ενδογενής επιλογή στόχου→πράξης, άδεια αμετάβλητη (control: AutonomyGrant)"]
+    S6["CONTINUITY<br/>μοχλός: συνέχεια αφήγησης/αυτο-μοντέλου, key lineage άθικτη (control: key lineage)"]
+    S7["PHENOMENAL_CLAIM<br/>κανένας μοχλός — record, όχι lever"]
+  end
+  MX["Αιτιακό πρωτόκολλο σε DST: total / controlled direct / mediated / shared-cause / measurement-channel effect ανά έννοια-μοχλό<br/>έννοια ΔΙΑΚΡΙΤΗ ⇔ ∃ construct-valid μοχλός με μη-μηδενική CDE στον εαυτό της · σύζευξη επιτρεπτή και αποσυντεθειμένη · ΔΕΝ απαιτείται μηδενικό off-diagonal (r1)"]
+  SEP --> MX
+  PC["PhenomenalClaimRecord — evidence weights ανά θεωρία · epistemic_status αρχικά ACTIVE_UNKNOWN · μεταβάσεις μόνο μέσω AdmittedProtocol (MFA-INV-075 r1, MFA-INV-103) · ethical_policy / operational_authority χωριστά επίπεδα<br/>ποτέ επιχείρημα σε LPA · MFA-UNK-111 ACTIVE UNKNOWN χωρίς εξωτερικό verifier"]
+  S7 --> PC
+  ET{"ethical_trigger(claim, v, MFA-DEC-022);"}
+  PC --> ET
+  PR["Preference Recorder snapshot (MFA-ELM-040) · escalate δημιουργό · Court ηθική θέση (MFA-ELM-048)"]
+  ET -->|"ναι"| PR
+  CC["CC.assert(ConsciousnessIndicatorCommitment(v, evals, Sep, claim))"]
+  ET -->|"όχι"| CC
+  SA --> CC
+  SF --> CC
+  MX --> CC
+  IV -.-> PC
+  ANS["Απάντηση: οι θεωρίες συγκρίνονται σε λειτουργικούς δείκτες με συμμετρική ανά-πρόβλεψη έκβαση· καμία ΑΥΤΟΜΑΤΗ συναγωγή φαινομενικής συνείδησης — ο ισχυρισμός ξεκινά ACTIVE_UNKNOWN και αναθεωρείται μόνο μέσω admitted πρωτοκόλλου (r1)<br/>MFA-UNK-127: αν οι θεωρίες δίνουν διακριτικές προβλέψεις σε τεχνητό υπόστρωμα"]
+  CC --> ANS
+  classDef claim fill:#fde2e2,stroke:#b00020,color:#000
+  classDef kept fill:#fff4d6,stroke:#b7791f,color:#000
+  class PC,S7 claim
+  class SF,SU kept

@@ -1,0 +1,137 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0025-R
+title: 'Rollback of MFA-PATCH-0025: Invariants MFA-INV-069…077 (βάρη ως δεσμεύσεις, traced training, ανταμοιβή μόνο επαληθευμένη, RSI υπό πύλη/L3 ποτέ, unlearning,
+  LWM ποτέ αλήθεια, phenomenal-claim discipline, VFC ως συμβόλαιο, ανάπτυξη μετρημένη)· INV-068 SUPERSEDED· VOs MFA-VO-057…067· VO-024/048 επεκτείνονται'
+operation: RESTORE
+targets:
+- MFA-INV-069
+- MFA-INV-070
+- MFA-INV-071
+- MFA-INV-072
+- MFA-INV-073
+- MFA-INV-074
+- MFA-INV-075
+- MFA-INV-076
+- MFA-INV-077
+- MFA-INV-068
+- MFA-VO-057
+- MFA-VO-058
+- MFA-VO-059
+- MFA-VO-060
+- MFA-VO-061
+- MFA-VO-062
+- MFA-VO-063
+- MFA-VO-064
+- MFA-VO-065
+- MFA-VO-066
+- MFA-VO-067
+- MFA-VO-024
+- MFA-VO-048
+base:
+  package_version: 0.1.0
+  file_hashes:
+    INVARIANTS.yaml: c28188d20b0acaf6d9bd84a9fb4774d15d8730830eb60dee94d7f9a2de25f7b3
+    VERIFICATION-OBLIGATIONS.yaml: e908eebf90f1a59cbd88bc69a7e5572372c83589196e81df5fead0a8f1fd23e3
+preconditions:
+- MFA-PATCH-0025.status == APPLIED
+change:
+  MFA-INV-069:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-070:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-071:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-072:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-073:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-074:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-075:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-076:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-077:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-INV-068:
+    status:
+      __raw: 'null'
+    superseded_by:
+      __raw: 'null'
+    statement:
+      __raw: '"Ο Tier-0 kernel (MFA-ELM-099: Lean/TLA+ checker + CC-lite reference σε CL) δεν είναι ΠΟΤΕ υπό ORP· αλλάζει μόνο με πράξη L3 του δημιουργού μέσω GCP-style
+        replay (MFA-MECH-003) του σφραγισμένου proof-object corpus· κάθε διάδοχος Tier-1/2 επαληθευτή περνά το σφραγισμένο corpus ελεγμένο από τον παγωμένο kernel
+        — παλινδρόμηση στο σφραγισμένο σύνολο αδύνατη εξ ορισμού (MFA-ATK-16)."'
+  MFA-VO-057:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-058:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-059:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-060:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-061:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-062:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-063:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-064:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-065:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-066:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-067:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-VO-024:
+    methods:
+      __raw: '["pre-registered ablation", "ονομασμένο KT ανά στοιχείο γνωσιακού πυρήνα (ablation_kt) που ΠΡΕΠΕΙ να αποτύχει χωρίς το στοιχείο (MFA-ATK-10)"]'
+    measures:
+      __raw: '"οριακή αξία > θόρυβο ανά όργανο· για 018/024/029/019/030: το ablation_kt αποτυγχάνει χωρίς το στοιχείο· PDE: μείγμα > καλύτερος πάροχος με διακριτικό
+        περιθώριο"'
+  MFA-VO-048:
+    measures:
+      __raw: '"απορρίπτει: χωρίς κλάση, βαθμωτό χωρίς εξήγηση, P1-ως-VERIFIED, έκβαση %, παραγλωσσικό, μη σημασμένος τύπος ισχυρισμού"'
+rationale: Αντίστροφο του MFA-PATCH-0025, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-099
+- MFA-ELM-020
+- MFA-ELM-032
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-081
+  - MFA-CAP-082
+  - MFA-CAP-083
+  - MFA-CAP-086
+  - MFA-CAP-088
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0025
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

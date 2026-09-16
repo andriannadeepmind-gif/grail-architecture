@@ -1,0 +1,69 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0054-R
+title: 'Rollback of MFA-PATCH-0054: ATK-29 (δεύτερος γύρος, σταθερό σημείο): IV έλεγχος υποχρεωτικός για NAT ακμές (VO-069)· fidelity tags στο manifest (ELM-088)·
+  ημερολόγιο σταθερού σημείου Κύκλος 4 στο DECISION-LOG'
+operation: RESTORE
+targets:
+- DECISION-LOG.md
+- MFA-ELM-088
+- MFA-VO-069
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: f490779c0d177636314ffe5105e7e0b621c69022a9a0cb23640fa1384f3e6ebb
+    DECISION-LOG.md: 404bb4e4e60a70289f96047cfaccb5728fa61aaf7eb1f8170401ed4b7d9dd3c3
+    VERIFICATION-OBLIGATIONS.yaml: 5ce6d14ca90324df6684f8f1a4ccb4502448520de8cf8b4e594b42e49079fba3
+preconditions:
+- MFA-PATCH-0054.status == APPLIED
+change:
+  MFA-VO-069:
+    methods:
+      __raw: '["DST: 100 τυχαία SCM (n=30, d≤3)· ledger με 10³ παρατηρήσεις + k παρεμβάσεις που το CDCE ΕΠΙΛΕΓΕΙ (VOI) έναντι τυχαίων", "World Twin δρώντες από docket·
+        αντιπαραγοντικά «αν είχε κατατεθεί X» σε HELD_OUT υποθέσεις με γνωστή έκβαση", "property tests στο tools/twin (F1)", "ATK-19: CDCE-E3 — NAT ακμές από συνθετικά
+        φυσικά πειράματα με γνωστή αλήθεια· SHD(NAT) < SHD(OBS-only)· 0 NAT→INT χωρίς IV έλεγχο"]'
+  MFA-ELM-088:
+    statement:
+      __raw: '"ΑΝΤΙΚΑΘΙΣΤΑ την «SysML v2 έδρα + SysON»: έδρα = το serialization-independent υπόστρωμα (αυτό το πακέτο → CC Schemas), SysML/SysON/YAML/Mermaid = παραγόμενες
+        προβολές με round-trip VO· τα εργαλεία (SysON, checkers) όργανα υπό ORP· η αλλαγή σχεδίου = InstitutionalAct· DEC-X-01 (κείμενο στο git, εργαλεία φακοί) εφαρμοσμένο.
+        · SPLIT (MFA-ATK-03): έδρα → το υπόστρωμα (κρατιέται: το SysON ΠΟΤΕ έδρα λόγω silent truncation)· έλεγχος τύπων → το SysON (ή η reference υλοποίηση SysML
+        v2) ως Tier-1 VERIFIER ORGAN των προβολών: η SysML προβολή ελέγχεται τυπικά (KerML) και αποτυχία τύπων = SEMANTIC-LOSS της προβολής (μπλοκάρει, MFA-INV-052).
+        DEC-PLT-01 superseded ως έδρα, όχι ως εργαλείο. · Πεδία-στόχοι patches δομημένα (PATCH-PROTOCOL §7)· string πεδία ολόκληρα, ένα patch ανά έκδοση. · 0.4.0/ATK-27:
+        η σειρά γένεσης (TECHNICAL-ARCHITECTURE §16) και ο χάρτης δόσεων αναγεννώνται με τα στοιχεία 109…127 (ASI-IMPLEMENTATION-LADDER)· οι 211 αμοιβαίες εξαρτήσεις
+        λύνονται με τη σειρά γένεσης (MFA-DEC-104), όχι με αφαίρεση."'
+  DECISION-LOG.md:
+    replace:
+    - - '### Κύκλος 4 — Ω-ASI 0.4.0 (MFA-PATCH-0026…0054)
+
+
+        | Γύρος | Επιθέσεις | Patches | Αποτέλεσμα |
+
+        |---|---|---|---|
+
+        | 4.1 | MFA-ATK-18…28 (11 επιθέσεις στη σύνθεση 0.4.0 + ALT-8…14 + ανταγωνιστής) | MFA-PATCH-0043…0053 | κάθε επίθεση παρήγαγε τροποποίηση μηχανισμού/κατωφλίωσης/δήλωσης·
+        0 αφαιρέσεις ικανότητας |
+
+        | 4.2 | MFA-ATK-29 (επανεπίθεση στα 0043…0053) | MFA-PATCH-0054 (2 κριτήρια: IV έλεγχος για NAT ακμές· fidelity tags στο manifest) | **σταθερό σημείο του
+        εξετασμένου χώρου** |
+
+
+        Επιζώντες κίνδυνοι (δηλωμένη επιστημική κατάσταση, όχι αποχή): ATK-18 οικονομία κυριαρχίας (ACTIVE UNKNOWN με τιμή σε compute — ο ισχυρότερος), ATK-27 integration
+        debt (NOVEL SYNTHESIS χωρίς εμπειρικό τεκμήριο), ATK-25 κόστος OC (MFA-UNK-128), ATK-24 κυκλικότητα δεικτών (MFA-UNK-127), ATK-19 πυκνότητα φυσικών πειραμάτων
+        (MFA-UNK-116). Το σταθερό σημείο αφορά τον εξετασμένο χώρο ALT-1…14 / ATK-01…29· νέα επίθεση = νέος γύρος.
+
+
+        ## 3. Τι χρειάζεται «εγκρίνω» πριν από τη Φάση Β (σειρά)'
+      - '## 3. Τι χρειάζεται «εγκρίνω» πριν από τη Φάση Β (σειρά)'
+rationale: Αντίστροφο του MFA-PATCH-0054, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0054
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

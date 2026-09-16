@@ -1,0 +1,58 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0052-R
+title: 'Rollback of MFA-PATCH-0052: ATK-27 (κατάρρευση πολυπλοκότητας, εμπλοκή δημιουργού): lean profile 0.4.0 με lite σκέλη (OC/CGM/STP/TES/SMF-shadow) στη Δόση
+  0.5· Ω-loop copilot-path ρήτρα· OAP awareness· αναγέννηση σειράς γένεσης'
+operation: RESTORE
+targets:
+- MFA-ELM-088
+- MFA-ELM-090
+- MFA-ELM-097
+- MFA-ELM-127
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 7b28a027268adf159c40bc0b619809771840c47867d77ef16f1b2d0ca71c9175
+preconditions:
+- MFA-PATCH-0052.status == APPLIED
+change:
+  MFA-ELM-097:
+    statement:
+      __raw: '"MFA-ALT-6 ενσωματωμένος: robust substrate + 017 (ένας πάροχος, TED) + 059/062/065 (corpus, retrieval, 5-σκελής verifier) + 058 + 069 + 091 (2D/text)
+        — το ελάχιστο σύνολο που ο OAP επιλέγει για matter τυπικού γραφείου· ίδιοι τύποι εξόδου, 13ος νόμος, receipts από την πρώτη εβδομάδα. · ΔΟΣΗ 0 (MFA-ATK-15/17):
+        «ο copilot που δίνει receipts» — CC-lite (ASSERT/OBSERVE/DERIVE/REVOKE), ingestion με attestation, verifier παραπομπών σκέλη 1–3, emission barrier 4 κλάσεων,
+        receipts στον Principal, ένας πάροχος (TED D2), ένα πραγματικό matter· 8 εβδομάδες· μετράται πρώτα έναντι του competitor baseline (MFA-VO-014)."'
+    dependencies:
+      __raw: '[MFA-ELM-096, MFA-ELM-017, MFA-ELM-059, MFA-ELM-062, MFA-ELM-065, MFA-ELM-058, MFA-ELM-069, MFA-ELM-091, MFA-ELM-013]'
+  MFA-ELM-127:
+    statement:
+      __raw: '"Δέκα φάσεις ανά κύκλο: PERCEIVE (ledger cut, OGE έννοιες) → MODEL (LWM, CDCE) → WONDER (Void, AHE) → ACT/EXPERIMENT (AIDC EFE, RET) → VERIFY (OC υποχρεώσεις,
+        TGPS, VFC) → LEARN (SMF/PRR/CPCL/TGL) → REFLECT (MSM, ASRW, CHH δείκτες) → EVOLVE (RVSI, RAGen, ECE, GG) → MEASURE (CGM, STP SI) → SUCCEED (VSC, SMP)· κάθε
+        φάση έχει contract εισόδου/εξόδου, υποχρεώσεις (OC) που πρέπει να είναι DISCHARGED/DEFERRED πριν την επόμενη, προϋπολογισμό (OAP), και διακοπές (Emergency-stop,
+        Court, δημιουργός) που προηγούνται· ο κύκλος είναι L2 (η σειρά/προϋπολογισμοί βελτιώνονται από RVSI) ενώ τα contracts των φάσεων και το FP είναι L3· ο κύκλος
+        τρέχει υπό LPA και AUT-00."'
+  MFA-ELM-088:
+    statement:
+      __raw: '"ΑΝΤΙΚΑΘΙΣΤΑ την «SysML v2 έδρα + SysON»: έδρα = το serialization-independent υπόστρωμα (αυτό το πακέτο → CC Schemas), SysML/SysON/YAML/Mermaid = παραγόμενες
+        προβολές με round-trip VO· τα εργαλεία (SysON, checkers) όργανα υπό ORP· η αλλαγή σχεδίου = InstitutionalAct· DEC-X-01 (κείμενο στο git, εργαλεία φακοί) εφαρμοσμένο.
+        · SPLIT (MFA-ATK-03): έδρα → το υπόστρωμα (κρατιέται: το SysON ΠΟΤΕ έδρα λόγω silent truncation)· έλεγχος τύπων → το SysON (ή η reference υλοποίηση SysML
+        v2) ως Tier-1 VERIFIER ORGAN των προβολών: η SysML προβολή ελέγχεται τυπικά (KerML) και αποτυχία τύπων = SEMANTIC-LOSS της προβολής (μπλοκάρει, MFA-INV-052).
+        DEC-PLT-01 superseded ως έδρα, όχι ως εργαλείο. · Πεδία-στόχοι patches δομημένα (PATCH-PROTOCOL §7)· string πεδία ολόκληρα, ένα patch ανά έκδοση."'
+  MFA-ELM-090:
+    statement:
+      __raw: '"Το PATCH-PROTOCOL.md εκτελέσιμο: εννέα πράξεις, base hashes, preconditions, capability impact, rollback patch, CPEG έλεγχος, manifest rebuild, check-package·
+        patches ως δεσμεύσεις τύπου Patch· ποτέ διαγραφή ιστορίας. · F0 = git + tools/apply-patch.py (υπογραφές git, §7)· F2+ = ledger-native (patches ως δεσμεύσεις
+        CC, MFA-INV-064 επιβάλλεται από τον Gate) (MFA-ATK-14)."'
+rationale: Αντίστροφο του MFA-PATCH-0052, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0052
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

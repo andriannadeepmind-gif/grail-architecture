@@ -1,0 +1,59 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0043
+title: 'ATK-18 (οικονομία κυριαρχίας): S1-PLATEAU δήλωση με CGM extrapolation στο STP· ελάχιστη σύνθεση αξιολογητών ανεξάρτητη παρόχων· DEC-016 εναλλακτική ρητή'
+operation: MODIFY
+targets:
+- MFA-CAP-097
+- MFA-ELM-100
+- MFA-ELM-116
+- MFA-RSP-028
+- MFA-UNK-122
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 9bffdb9d279573d51e167e94611d82e98c6e9212bb6f6242f4e001a19937c5a5
+    CAPABILITY-LATTICE.yaml: e9c9f61228e75d0637bd9843a222d3aa6b6405e2ec5ce491f4159c2300bae558
+    RESEARCH-PROGRAMS.yaml: 66014d43abb72061899fd3016aaab3c40af111704604e8d16a2dc33ea6736416
+    UNKNOWNS.yaml: fcc376f1d2e856bba21187bbc3ae2591b87c48ef77c239e7d6c0cd1a27d578e1
+preconditions: []
+change:
+  MFA-ELM-116:
+    statement: 'Sovereignty Index SI ∈ [0,1]^{families×axes}: ανά οικογένεια ικανοτήτων f και άξονα ∈ {proposal, evaluation, memory, tools}, το ποσοστό VERIFIED εξόδων
+      που παρήχθησαν από κυρίαρχες πηγές (WeightCommitments/προγράμματα ιδιόκτητα) ΧΩΡΙΣ απώλεια ποιότητας έναντι του καλύτερου παρόχου σε σφραγισμένο σύνολο (ισοτιμία
+      εντός CI). Στάδια ανά οικογένεια S0 (πάροχος) → S1 (κυρίαρχη σκιά) → S2 (κυρίαρχη κύρια, πάροχος fallback) → S3 (πάροχος μόνο ως εξωτερικός αντίπαλος/αξιολογητής
+      όπου lineage-disjoint) → S4 (χωρίς πάροχο)· προκαταχωρισμένες πύλες (MFA-DEC-021) σε N συνεχόμενα cuts· ratchet στην ΠΟΙΟΤΗΤΑ (ποτέ υποχώρηση), όχι στο στάδιο
+      (υποχώρηση σταδίου επιτρεπτή και καταγράφεται)· ο πάροχος καταγράφεται στη γενεαλογία κάθε distilled βάρους. · ATK-18: αν μια οικογένεια δεν πληροί την πύλη
+      S1→S2 μέσα στον προϋπολογισμό του προφίλ, το STP δηλώνει S1-PLATEAU(family, compute_gap) με εκτίμηση του απαιτούμενου compute από τη Capability Growth Law (CGM,
+      MFA-ELM-119) και το προωθεί ως απόφαση MFA-DEC-016 (DEP-3/4 νωρίτερα ∣ αποδοχή S1 για την οικογένεια)· ποτέ σιωπηλό S0/S1· η ικανότητα κυριαρχίας παραμένει
+      REQUIRED.'
+  MFA-ELM-100:
+    assumptions:
+    - κυρίαρχο corpus + ledger επαρκούν για adapters από τη Δόση 1
+    - 'ATK-18: η ισοτιμία ανά οικογένεια σε DEP-2 είναι RESEARCH HYPOTHESIS· reasoning-heavy οικογένειες πιθανώς απαιτούν DEP-3/4 (MFA-DEC-016)'
+  MFA-UNK-122:
+    plan: 'πείραμα STP-E1, STP-E2 (MFA-VO-075) · ATK-18: S1-PLATEAU records ανά οικογένεια τροφοδοτούν την εκτίμηση compute (CGM law extrapolation) πριν από την απόφαση
+      MFA-DEC-016'
+  MFA-RSP-028:
+    chain: 'Δόση 1: SI μέτρηση + S1 σκιά για drafting· Δόση 2: STP-E1 → S2· Δόση 3: ≥3 οικογένειες S2/S3· Δόση 4: S4 για ώριμες οικογένειες με απόφαση δημιουργού.
+      ‖ F1: εκτελέσιμη προδιαγραφή SI/stage machine/gates (tools/twin) → F2: DST με συνθετικές οικογένειες → F3: STP-E1 σε DEP-2 → F4: παραγωγή Δόση 1–4 · ATK-18:
+      κάθε δόση κλείνει με πίνακα οικογενειών {S-stage, parity gap, compute gap}· S1-PLATEAU = ACTIVE UNKNOWN με τιμή, όχι αποχή'
+  MFA-CAP-097:
+    falsifier: 'STP-E1: καμία οικογένεια σε ισοτιμία μέσα στον DEP-2 προϋπολογισμό — διαψεύδεται η υπόθεση «SMF-adapters αρκούν» (η κυριαρχία μένει στόχος· επόμενος
+      μηχανισμός: DEP-3 recipes/PRR/CPCL) · ATK-18: S1-PLATEAU σε ΟΛΕΣ τις οικογένειες μέχρι το τέλος της Δόσης 3 ⇒ ο μηχανισμός SMF-adapters FALSIFIED ως επαρκής·
+      επόμενος μηχανισμός DEP-3 recipes/PRR/CPCL· η ικανότητα μένει'
+rationale: Τροποποίηση από την επίθεση MFA-ATK-18 (Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12)· καμία ικανότητα δεν αφαιρείται — αλλάζουν μηχανισμοί, κατωφλιώσεις,
+  δηλώσεις.
+evidence:
+- adversarial/MFA-ATK-18.md
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: καμία
+verification: adversarial/MFA-ATK-18.md §falsifier · tools/check-package.py
+rollback: MFA-PATCH-0043-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

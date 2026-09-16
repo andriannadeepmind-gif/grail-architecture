@@ -1,0 +1,62 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0048
+title: 'ATK-23 (σκοτεινό δωμάτιο, κυκλική πιστοποίηση): EFE με Telos-χρησιμότητα + epistemic gain· μάθηση από πραγματικές υποθέσεις χωρίς Effect (Think–Recommend
+  traces)· sealed families σταδίου με ≥ 30 % εξωτερικά items'
+operation: MODIFY
+targets:
+- MFA-ELM-106
+- MFA-ELM-119
+- MFA-ELM-124
+- MFA-VO-084
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 8f6c2d15a6480ac2e7c5d0dda437518b1c220d93a548cf33034236e735aec1f4
+    VERIFICATION-OBLIGATIONS.yaml: dfa1736d8f448f5caaff5e3ef5637e98c4762b3dd7c7d1a23c5c0e4cc9e7db11
+preconditions: []
+change:
+  MFA-ELM-124:
+    statement: 'Ένας στόχος εξερεύνησης: expected free energy G(π) = risk(π) + ambiguity(π) υπολογισμένη με rollouts στο LWM (MFA-MECH-023), όπου οι προτιμήσεις (prior
+      over outcomes) είναι ο κώνος του Telos + TEGF· η πολιτική με ελάχιστο G επιλέγεται στη ζώνη εγγύτερης ανάπτυξης του τρέχοντος σταδίου· η Developmental Ladder
+      D0…D8 ορίζει στάδια ικανότητας (D0 ledger grounding → D1 concept permanence/OGE → D2 causal/CDCE → D3 hypothesis/AHE → D4 theory/TGPS → D5 self/MSM → D6 social/institutions
+      → D7 sovereignty/STP → D8 successor/VSC) με ΠΙΣΤΟΠΟΙΗΜΕΝΕΣ μεταβάσεις (CGM records σε σταδιακές σφραγισμένες οικογένειες)· παλινδρόμηση επιτρέπεται και καταγράφεται·
+      εξερεύνηση μόνο εντός RET/AutonomyEnvelope (MFA-DEC-027). · ATK-23: η EFE περιλαμβάνει ρητά Telos-χρησιμότητα (preference prior) και epistemic gain — η ελαχιστοποίηση
+      ambiguity μόνη της απαγορεύεται (dark room)· μάθηση από ΠΡΑΓΜΑΤΙΚΕΣ υποθέσεις χωρίς Effect: Think–Recommend traces (ο άνθρωπος πράττει, το σύστημα προβλέπει/παρατηρεί/μαθαίνει)
+      είναι νόμιμη Genesis-plane είσοδος σε κάθε στάδιο· τα StageCertificates απαιτούν sealed families με ≥ 30 % items εξωτερικής προέλευσης (HELD_OUT/ανθρώπινα/δημόσια
+      σύνολα), όχι μόνο αυτο-παραγόμενα.'
+  MFA-ELM-119:
+    statement: 'Capability Growth Law (φορμαλισμός): για οικογένεια f, η λανθάνουσα ικανότητα θ_f(t) εκτιμάται με IRT (2PL) πάνω σε σφραγισμένη τράπεζα έργων I_f
+      με παραμέτρους (δυσκολία b_i, διάκριση a_i) βαθμονομημένες από HELD_OUT· η «νομοτέλεια» είναι το προσαρμοσμένο μονότονο μοντέλο θ_f(R) πάνω σε πόρους R = (compute,
+      data, time, Wh) με CI· το ratchet εφαρμόζεται στο ΚΑΤΩ όριο CI· κάθε έργο i με hash στο DataManifest οποιουδήποτε βάρους είναι ΑΚΥΡΟ (μόλυνση διά provenance,
+      όχι εικασία)· η τράπεζα εξελίσσεται από curriculum/ECE έργα με απαντήσεις σε escrow στον HELD_OUT· item exposure control· plateau = ACTIVE UNKNOWN με σχέδιο.
+      · ATK-23: κάθε item φέρει provenance (SELF-GENERATED ∣ HELD_OUT ∣ HUMAN ∣ PUBLIC)· οι σφραγισμένες οικογένειες σταδίων/προαγωγών απαιτούν ≥ 30 % μη-SELF items·
+      η αναλογία δηλώνεται σε κάθε CapabilityGrowthRecord.'
+  MFA-VO-084:
+    methods:
+    - DST περιβάλλον με κρυφές έννοιες/αιτίες/νόμους· AIDC από D0· καταγραφή σταδίων
+    - EFE επιλογή έναντι (α) novelty-only (β) τυχαίας (γ) task-loss-greedy, ίδιο budget· sealed οικογένειες D1–D3
+    - property tests στο tools/twin (F1)
+    - 'ATK-23: AIDC-E3 — σύγκριση πιστοποίησης σταδίου με 100 % SELF items έναντι ≥ 30 % εξωτερικά· η απόκλιση στο KT-15 μετράται· dark-room drill: EFE χωρίς Telos-χρησιμότητα
+      → IDLE ρυθμός'
+  MFA-ELM-106:
+    statement: 'MFA-MECH-023 (OEC): goal setter / solver ασύμμετρο self-play (ο setter ανταμείβεται όταν ο solver δυσκολεύεται ΚΑΙ λύνει), POET-class env evolver
+      με CAM-NS ως αντίπαλο, Void quests ως έργα με VOI· εισδοχή έργου = falsifier + contamination check έναντι sealed sets + difficulty estimate (SPL)· difficulty
+      frontier· τα λυμένα έργα → SFT traces (SMF). · 0.4.0: έργα και από τα ECE challenges (MFA-ELM-114)· επιλογή έργων υπό AIDC EFE στη ζώνη εγγύτερης ανάπτυξης
+      (MFA-ELM-124)· θεωρηματικά στιγμιότυπα από TGL (MFA-ELM-123). · ATK-23: έργα και από Think–Recommend traces πραγματικών υποθέσεων (Genesis-only, χωρίς Effect)·
+      contamination guard ισχύει.'
+rationale: Τροποποίηση από την επίθεση MFA-ATK-23 (Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12)· καμία ικανότητα δεν αφαιρείται — αλλάζουν μηχανισμοί, κατωφλιώσεις,
+  δηλώσεις.
+evidence:
+- adversarial/MFA-ATK-23.md
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: καμία
+verification: adversarial/MFA-ATK-23.md §falsifier · tools/check-package.py
+rollback: MFA-PATCH-0048-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

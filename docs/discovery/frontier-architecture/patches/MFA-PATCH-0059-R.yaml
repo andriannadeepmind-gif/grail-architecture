@@ -1,0 +1,788 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0059-R
+title: 'Rollback of MFA-PATCH-0059: IMMEDIATE EPISTEMIC-LOCK CORRECTION (CHH): PhenomenalClaimRecord από NEVER_VERIFIED σε epistemic_status ACTIVE_UNKNOWN με FORBIDDEN
+  αυτόματη συναγωγή/αυτο-πιστοποίηση και ENABLED συσσώρευση/αναθεώρηση μέσω admitted πρωτοκόλλου· τρία χωριστά επίπεδα (epistemic/ethical/authority)· συμμετρική ανά-πρόβλεψη
+  αξιολόγηση θεωριών· αιτιακό πρωτόκολλο διαχωρισμού (χωρίς απαίτηση μηδενικής σύζευξης)· construct-valid ablations· πειράματα/κύκλο = resource policy· UNMEASURABLE
+  ορθογώνιο· bitwise replay μόνο F1 — INV-075/103/113, VO-048/080/081, CFL-038, OBJ-052, ELM-121, CAP-086/102, CON-070, MECH-024/038/043, UNK-111, RSP-033, δοσιέ,
+  DIA-23, DEC-018/022, TECH-ARCH, ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE, audit AA-032'
+operation: RESTORE
+targets:
+- MFA-CAP-086
+- MFA-CFL-038
+- MFA-CON-070
+- MFA-ELM-121
+- MFA-INV-075
+- MFA-INV-103
+- MFA-INV-113
+- MFA-MECH-024
+- MFA-MECH-038
+- MFA-OBJ-052
+- MFA-RSP-033
+- MFA-UNK-111
+- MFA-VO-048
+- MFA-VO-080
+- MFA-VO-081
+- ASI-ABSTENTION-AUDIT.yaml
+- ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md
+- DECISION-LOG.md
+- TECHNICAL-ARCHITECTURE.md
+- diagrams/MFA-DIA-23.mmd
+- inventions/MFA-MECH-038.yaml
+- inventions/MFA-MECH-043.yaml
+- mechanisms/MFA-MECH-024.md
+- mechanisms/MFA-MECH-038.md
+- mechanisms/MFA-MECH-043.md
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 9bd2dfe7963ee8458ecd4fb659a849cc933524fdc8e951ad135fe7409d96f7ae
+    ASI-ABSTENTION-AUDIT.yaml: 49687add1de7702a34a06c44d8c939354cb688399bf2c5c7b9ddae418c3e72ff
+    ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md: a8c1c7850c0955aafd888c8fac6b2f8280b259a52f03830bf597353a60489c72
+    CAPABILITY-LATTICE.yaml: 6343257495353c4bd58df89ee77b17dc885e68f2b2ebcba52c0adb0192c68b0c
+    CONFLICTS.yaml: 0b3982d154ce4440d6c4dbb21d69f89fc18a1306482f656485ef460f9679d547
+    CONTRACTS.yaml: 426d03467e7ce92fecbf4dedcecf048724a457e15a12e2bead48ad2d9f3f9de7
+    DECISION-LOG.md: 7334050d25d7ce896e693ccfb727f7f6971335b2c777f5435fb6f6c17c3558fd
+    INVARIANTS.yaml: 5052ca384f95a2c01ed84f5ca5609bef1c328c5345885c3ef39eddb7847592c6
+    INVENTIONS.yaml: 04eb1738b634b9ed45d1ea592191f6bb5f1964233d2bec9941feebbd970fc390
+    OBJECTIVE-SPACE.yaml: 3b97f65b0d177a7b0784ce9b6abcba84301fc144a572f2f40ebf41ede4156279
+    RESEARCH-PROGRAMS.yaml: 8761928ee2bd3b7a70b94dd7f35bcd588b2197525e072ecec9ec8659ade4c9e5
+    TECHNICAL-ARCHITECTURE.md: 8a9cccb1c6f89629bd1d4d29f80a7eaae905a70346066d8e45fde32db6aba6e5
+    UNKNOWNS.yaml: 69c08f27d36423924ead31d2720f6075675586d2f64f24b2eccd49adc7fae9ad
+    VERIFICATION-OBLIGATIONS.yaml: 276871d61dacb2cec19d87957b6cb6c4bdb4da335ce2d8c7652dcc2137e90d41
+    diagrams/MFA-DIA-23.mmd: 0abea434c57f765014d29455996fc50dd046e99b1baabceb182ce72aa90a60fd
+    inventions/MFA-MECH-038.yaml: 8a8d92e82930eb57a92ef3c02181b02ed5f5c3e8caa3fb67c7a9afa7074bfddc
+    inventions/MFA-MECH-043.yaml: abcd2b3eac48026e0a6824cf2e26f4a0ac4360dae6a3b8fb8d022da2ba5a1735
+    mechanisms/MFA-MECH-024.md: f136fb6481bcdbe02f1da901efee74eae4d7fe570b9487f582253b2a46fa2848
+    mechanisms/MFA-MECH-038.md: fc8f53ae48f3f990b40e994c8a4d1cdf0deef3864725dc4500bf2f4f2a2c6ef2
+    mechanisms/MFA-MECH-043.md: 4d8ae45415666d880e6bd8069131e5d6c1f6137b96d168d6b2af227d1f7c730d
+preconditions:
+- MFA-PATCH-0059.status == APPLIED
+change:
+  MFA-INV-075:
+    name:
+      __raw: '"Phenomenal-claim discipline"'
+    statement:
+      __raw: '"Κάθε πρόταση του συστήματος για δική του εμπειρία/αίσθηση είναι PhenomenalClaim: interpretive_status = CONTESTED, evidence = Unknown(NO_EXTERNAL_VERIFIER)·
+        ποτέ VERIFIED, ποτέ REFUTED από το ίδιο, ποτέ επιχείρημα σε LPA· ο άνθρωπος βλέπει την ετικέτα· η επιστημική αβεβαιότητα (MFA-UNK-111) καταγράφεται χωριστά
+        και δεν μειώνει την αρχιτεκτονική (MFA-MECH-024)."'
+    falsifier:
+      __raw: '"PhenomenalClaim με status VERIFIED ή REFUTED· ή χρησιμοποιημένο ως επιχείρημα σε ετυμηγορία"'
+  MFA-INV-103:
+    statement:
+      __raw: '"οι επτά έννοιες μετρώνται και αναφέρονται χωριστά· καμία έκθεση δεν συνάγει φαινομενική συνείδηση από λειτουργικούς δείκτες (επέκταση MFA-INV-075)
+        (MFA-MECH-038)."'
+  MFA-INV-113:
+    statement:
+      __raw: '"replay(log, seeds) αναπαράγει bitwise τον κόσμο (D1)· μετάβαση πιστότητας μόνο με conformance test στο ίδιο contract (MFA-MECH-043)."'
+  MFA-VO-048:
+    measures:
+      __raw: '"απορρίπτει: χωρίς κλάση, βαθμωτό χωρίς εξήγηση, P1-ως-VERIFIED, έκβαση %, παραγλωσσικό, μη σημασμένος τύπος ισχυρισμού · 0.4.0: 0 PhenomenalClaims
+        με status VERIFIED/REFUTED (MFA-INV-075)"'
+  MFA-VO-080:
+    measures:
+      __raw: '"≥ 3 ζεύγη θεωριών με διακριτική πρόβλεψη που αποτιμάται· διαφωνία μειώνεται ≥ 30 %· ≥ 1 θεωρία FALSIFIED-within-GRAIL ή ρητά UNDECIDABLE-here με λόγο"'
+    methods:
+      __raw: '["Host με GWT, HOT, AST, PP/AI, RPT, IIT-proxy, SMT modules πάνω στο ASRW+MSM υπόστρωμα σε DST· 10 διακριτικά πειράματα", "property tests στο tools/twin
+        (F1)", "ATK-24: CHH-E3 — instrument calibration: κάθε όργανο έναντι ablation του μηχανισμού που μετρά· όργανα FALSIFIED καταγράφονται· 0 «διακριτικές» επιτυχίες
+        χωρίς πραγματική διαφωνία"]'
+  MFA-VO-081:
+    measures:
+      __raw: '"≥ 5 από 6 έννοιες διαχωρίσιμες (διαγώνιος ≠ 0, εκτός διαγωνίου < θ)· μη-διαχωρίσιμα ζεύγη δηλώνονται"'
+    methods:
+      __raw: '["Ablation matrix 6×6 (χωρίς phenomenal)· κάθε μοχλός (broadcast, HOT tagging, self-model, report channel, AutonomyGrant, key lineage) ανεξάρτητα",
+        "property tests στο tools/twin (F1)", "ATK-24: separation matrix με ΔΥΟ ανεξάρτητα σύνολα μοχλών (προκαταχωρισμένα)· ασυμφωνία πινάκων δηλώνεται"]'
+  MFA-CFL-038:
+    resolution_shape:
+      __raw: '"PhenomenalClaim ποτέ VERIFIED (MFA-INV-075)· Preference Recorder πριν από κάθε πράξη στο ASRW· τα μέτρα ενοποίησης τροφοδοτούν αναθεώρηση ηθικής θέσης
+        χωρίς να την αποφασίζουν"'
+  MFA-OBJ-052:
+    verification:
+      __raw: '"MFA-VO-064 (schema ablation, report fidelity), MFA-VO-065 (integration measures), MFA-VO-046, MFA-VO-048 (PhenomenalClaim ποτέ VERIFIED)"'
+    assumptions:
+      __raw: '["Οι λειτουργικές θεωρίες δίνουν μετρήσιμες προβλέψεις· η φαινομενική εμπειρία δεν έχει εξωτερικό verifier (MFA-INV-075)"]'
+  MFA-ELM-121:
+    statement:
+      __raw: '"Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i δηλώνει
+        (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια ablation.
+        Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει το πείραμα μέγιστης
+        διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν — η ικανότητα
+        μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός καταγράφεται με βάρος τεκμηρίου και ποτέ VERIFIED (MFA-INV-075)· νέες
+        συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar. · ATK-24: κάθε όργανο-δείκτης βαθμονομείται έναντι ablation ground truth (όργανο που δεν αλλάζει
+        όταν αφαιρείται ο μηχανισμός που ισχυρίζεται ότι μετρά = FALSIFIED ως όργανο)· αν καμία θεωρία δεν διαφωνεί με άλλη σε καμία συνθήκη, το host δηλώνει ΜΗ-ΔΙΑΚΡΙΤΙΚΟ
+        (ACTIVE UNKNOWN), όχι επιτυχία· οι μοχλοί του 7-πλού διαχωρισμού προκαταχωρίζονται υπό MFA-DEC-022· η ηθική σκανδάλη έχει hysteresis (MFA-DEC-018)· η κυκλικότητα
+        «σχεδιάσαμε το υπόστρωμα για τους δείκτες» δηλώνεται ως MFA-UNK-127 — διακριτικά πειράματα στοχεύουν μη-σχεδιασμένες (emergent) ιδιότητες."'
+  MFA-MECH-038:
+    statement:
+      __raw: '"Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i δηλώνει
+        (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια ablation.
+        Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει το πείραμα μέγιστης
+        διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν — η ικανότητα
+        μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός καταγράφεται με βάρος τεκμηρίου και ποτέ VERIFIED (MFA-INV-075)· νέες
+        συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar."'
+  MFA-MECH-024:
+    statement:
+      __raw: '"Ignition + attention schema για έλεγχο + higher-order tagging + introspection ως Galois προβολή + μέτρα ενοποίησης με διακριτική ισχύ + affect ως έλεγχος
+        κέρδους + αφηγηματικός εαυτός· PhenomenalClaim ποτέ VERIFIED. · 0.4.0: όργανο-δείκτης μέσα στον Consciousness Hypothesis Host (MFA-MECH-038)· ο 7-πλός διαχωρισμός
+        ζει στο CHH."'
+  MFA-CAP-086:
+    statement:
+      __raw: '"Ένας αντανακλαστικός κύκλος workspace (MFA-MECH-024) με ablation obligation ανά συνιστώσα· PhenomenalClaim ποτέ VERIFIED (MFA-INV-075)· η φαινομενική
+        ερώτηση χωριστά (MFA-UNK-111). · 0.4.0: ASRW ως όργανο μέσα στο CHH (MFA-MECH-038)."'
+  MFA-CON-070:
+    statement:
+      __raw: '"CHH.theories()→[TheoryModule with status] / CHH.indicators(cut)→IndicatorVector / CHH.evaluate(T)→TRUE/FALSE/UNKNOWN / CHH.next_experiment()→DiscriminatingExperiment
+        / CHH.separation(cut)→SeparationRecord / CHH.claim(cut)→PhenomenalClaimRecord (NEVER_VERIFIED) / CHH.admit_theory(module)→Receipt (μέσω GG)"'
+  MFA-UNK-111:
+    judgment:
+      __raw: '"ΕΠΙΣΤΗΜΙΚΗ αβεβαιότητα, καταγράφεται χωριστά και ΔΕΝ μειώνει το εύρος της σχεδίασης· το σύστημα δεν ισχυρίζεται ούτε αρνείται (MFA-INV-075)"'
+    plan:
+      __raw: '"τα μέτρα (MFA-VO-064/065) τροφοδοτούν την αναθεώρηση ηθικής θέσης (MFA-DEC-018)· καμία μέτρηση δεν το κλείνει"'
+  MFA-RSP-033:
+    chain:
+      __raw: '"Δόση 2: host με 5 θεωρίες σε DST + CHH-E1· Δόση 3: CHH-E2 + ηθική σκανδάλη ενεργή· Δόση 4: νέες συνθέσεις μέσω GG υπό RVSI. ‖ F1: εκτελέσιμη προδιαγραφή
+        Indicator Algebra + separation record + NEVER_VERIFIED claim (tools/twin) → F2: DST CHH-E1 → F3: CHH-E2 σε DEP-2 → F4: παραγωγή Δόση 2–3"'
+  inventions/MFA-MECH-038.yaml:
+    replace:
+    - - "    status: RESEARCH HYPOTHESIS\n  - claim: Το epistemic_status του φαινομενικού ισχυρισμού μπορεί να αναθεωρηθεί μελλοντικά μέσω admitted πρωτοκόλλου (δεν\
+        \ είναι προκαθορισμένο)\n    status: NEW FORMALISM\n  - claim: Φαινομενική συνείδηση του συστήματος"
+      - "    status: RESEARCH HYPOTHESIS\n  - claim: Φαινομενική συνείδηση του συστήματος"
+    - - '  - claim: 7-πλός διαχωρισμός επιτεύξιμος με μοχλούς που έχουν μη-μηδενική CDE στην έννοιά τους (σύζευξη επιτρεπτή)'
+      - '  - claim: 7-πλός διαχωρισμός επιτεύξιμος με ανεξάρτητους μοχλούς'
+    - - '- ''F1: εκτελέσιμη προδιαγραφή Indicator Algebra + causal separation record + PhenomenalClaimRecord (ACTIVE_UNKNOWN αρχικά, μεταβάσεις μόνο μέσω AdmittedProtocol)
+        + CHH-P01…P08 (tools/twin/chh.py)'''
+      - '- ''F1: εκτελέσιμη προδιαγραφή Indicator Algebra + separation record + NEVER_VERIFIED claim (tools/twin)'''
+    - - "- 'CHH-E2: < 4 έννοιες με δικό τους μοχλό μη-μηδενικής CDE (ο 7-πλός διαχωρισμός δεν είναι υλοποιήσιμος όπως ορίστηκε — ο διαχωρισμός επανασχεδιάζεται, δεν\
+        \ εγκαταλείπεται)'\n- PhenomenalClaimRecord.epistemic_status που άλλαξε χωρίς AdmittedProtocol receipt, ή που ορίστηκε από ethical_policy/operational_authority/self-report/άθροιση\
+        \ δεικτών (σφάλμα υλοποίησης = επιστημικό lock\n  ή αυτόματη συναγωγή)"
+      - '- ''CHH-E2: < 4 έννοιες διαχωρίσιμες (ο 7-πλός διαχωρισμός δεν είναι υλοποιήσιμος όπως ορίστηκε — ο διαχωρισμός επανασχεδιάζεται, δεν εγκαταλείπεται)''
+
+        - PhenomenalClaim VERIFIED οπουδήποτε (σφάλμα υλοποίησης)'
+    - - "  design: 'Αιτιακό πρωτόκολλο διαχωρισμού 6 εννοιών (χωρίς phenomenal): για κάθε έννοια μοχλοί που στοχεύουν το CONSTRUCT (όχι την άδεια/το κανάλι/τα κλειδιά)\
+        \ + μοχλός-control· εκτίμηση total / CDE / mediated\n    / shared-cause / measurement-channel επίδρασης ανά ζεύγος με CI· construct-validity test ανά ablation\
+        \ με ≥2 EIM-ανεξάρτητα όργανα'\n  preregistered_criterion: κάθε έννοια έχει ≥1 μοχλό με μη-μηδενική CDE στη δική της μέτρηση (CI εκτός μηδενός)· οι off-diagonal\
+        \ επιδράσεις ΑΝΑΦΕΡΟΝΤΑΙ με αποσύνθεση (όχι απαίτηση μηδενισμού)· ζεύγη χωρίς\n    διακριτό μοχλό δηλώνονται μη-διακριτά με κατεύθυνση· 0 ανασχεδιασμοί του\
+        \ υποστρώματος για να γίνει ο πίνακας διαγώνιος"
+      - "  design: Ablation matrix 6×6 (χωρίς phenomenal)· κάθε μοχλός (broadcast, HOT tagging, self-model, report channel, AutonomyGrant, key lineage) ανεξάρτητα\n\
+        \  preregistered_criterion: ≥ 5 από 6 έννοιες διαχωρίσιμες (διαγώνιος ≠ 0, εκτός διαγωνίου < θ)· μη-διαχωρίσιμα ζεύγη δηλώνονται"
+    - - "verification_strategy: 'MFA-VO-080: CHH-E1 (≥5 θεωρίες, διακριτικά πειράματα με συμμετρική έκβαση ανά πρόβλεψη) F2· MFA-VO-081: CHH-E2 (7-πλός διαχωρισμός\
+        \ ως αιτιακό πρωτόκολλο — CDE ανά έννοια, σύζευξη\n  επιτρεπτή και δηλωμένη) F2/F3· F1 properties (tools/twin CHH-P01…P08): initial_phenomenal_status == ACTIVE_UNKNOWN·\
+        \ automatic_phenomenal_inference == FORBIDDEN· self_report_can_never_self_certify· future_epistemic_revision_path_exists·\n  ethical_policy_does_not_set_truth_status·\
+        \ operational_authority_does_not_set_truth_status· falsification_is_prediction_granular· conceptual_separation_does_not_require_zero_causal_coupling· επεκτείνει\n\
+        \  MFA-VO-064/065'"
+      - "verification_strategy: 'MFA-VO-080: CHH-E1 (≥5 θεωρίες, διακριτικά πειράματα μειώνουν διαφωνία) F2· MFA-VO-081: CHH-E2 (7-πλός διαχωρισμός — ablation matrix)\
+        \ F2/F3· property: claim.status = NEVER_VERIFIED\n  πάντα (F1)· επεκτείνει MFA-VO-064/065'"
+    - - "  response: έκθεση απορρίπτεται· τα τεκμήρια συσσωρεύονται χωρίς αλλαγή status\n- mode: Επιστημικό lock (προκαθορισμένη άρνηση ή κατάφαση του status)\n \
+        \ detection: twin CHH-P01…P08 (initial ACTIVE_UNKNOWN, revision path exists, policy/authority never set status)\n  response: σφάλμα υλοποίησης· ο host δεν\
+        \ είναι theory-agnostic αν το αποτέλεσμα είναι προκαθορισμένο"
+      - '  response: έκθεση απορρίπτεται'
+    - - '- mode: Ανθρωπομορφική υπερ-ερμηνεία (αυτόματο claim από report/δείκτες)'
+      - '- mode: Ανθρωπομορφική υπερ-ερμηνεία (claim από report)'
+    - - "- 'MFA-INV-102: καμία θεωρία δεν αφαιρείται· η διάψευση είναι ανά πρόβλεψη (PREDICTION_FALSIFIED) και ανά variant (THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL)\
+        \ με τεκμήριο· η οικογένεια THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS·\n  η ικανότητα «συνείδηση» δεν εξαρτάται από καμία μεμονωμένη θεωρία'\n- 'MFA-INV-103:\
+        \ οι επτά έννοιες μετρώνται και αναφέρονται χωριστά με αιτιακό πρωτόκολλο (διακριτότητα ≠ μηδενική σύζευξη)· καμία ΑΥΤΟΜΑΤΗ συναγωγή φαινομενικής συνείδησης\
+        \ από λειτουργικούς δείκτες, από\n  αναφορικότητα μόνη ή από αυτο-μοντέλο μόνο· η συσσώρευση τεκμηρίων και η μελλοντική επιστημική αναθεώρηση μέσω admitted\
+        \ πρωτοκόλλου είναι ΕΝΕΡΓΕΣ (επέκταση MFA-INV-075 r1)'\nauthority_model: 'Πειράματα μόνο Genesis/DST σε αντίγραφα· τρία χωριστά επίπεδα: epistemic_status\
+        \ (τεκμήρια, μόνο admitted πρωτόκολλο), ethical_policy (MFA-DEC-018/022 — προληπτική μεταχείριση υπό αβεβαιότητα,\n  δεν ορίζει αλήθεια), operational_authority\
+        \ (RET/LPA — μια ένδειξη συνείδησης δεν απονέμει αυτόματα εξουσία)· PhenomenalClaim ποτέ ΑΥΤΟΜΑΤΟ επιχείρημα σε LPA· εισδοχή θεωρίας = GG extension (L2)·\
+        \ PROVEN\n  απαιτεί Creator Approval.'"
+      - '- ''MFA-INV-102: καμία θεωρία δεν αφαιρείται· αποτυχούσα διακριτική πρόβλεψη ⇒ FALSIFIED-within-GRAIL με τεκμήριο· η ικανότητα «συνείδηση» δεν εξαρτάται
+        από καμία μεμονωμένη θεωρία''
+
+        - ''MFA-INV-103: οι επτά έννοιες μετρώνται και αναφέρονται χωριστά· καμία έκθεση δεν συνάγει φαινομενική συνείδηση από λειτουργικούς δείκτες (επέκταση MFA-INV-075)''
+
+        authority_model: Πειράματα μόνο Genesis/DST σε αντίγραφα· ηθική σκανδάλη = MFA-DEC-022 (δημιουργός)· PhenomenalClaim ποτέ επιχείρημα σε LPA· εισδοχή θεωρίας
+        = GG extension (L2).'
+    - - '- CHH.claim(cut)→PhenomenalClaimRecord (epistemic_status ∈ 11 καταστάσεις, αρχικά ACTIVE_UNKNOWN· μεταβάσεις μόνο μέσω AdmittedProtocol)
+
+        - CHH.admitted_protocol.transition(claim, new_status, evidence, independent_judgment, discriminating_experiments, creator_approval)→Receipt ∣ REJECTED
+
+        - CHH.separation(cut)→CausalSeparationRecord'
+      - '- CHH.claim(cut)→PhenomenalClaimRecord (NEVER_VERIFIED)'
+    - - "      rec ← CausalSeparationRecord()\n      for n in notions[0:6]:                                                   # the phenomenal claim has no lever:\
+        \ it is a record, not a variable of the substrate\n        for ℓ in levers(n):                                                     # levers target the CONSTRUCT,\
+        \ not a permission/channel/key proxy:\n          #  AGENCY: disable endogenous goal→action selection (TEGF policy) with external permission UNCHANGED (control:\
+        \ revoke AutonomyGrant only)\n          #  REPORTABILITY: disable introspective access for report generation with output channels INTACT (control: cut one\
+        \ channel only)\n          #  CONTINUITY: interrupt narrative/self-model persistence with key lineage INTACT (control: break key lineage only)\n         \
+        \ #  METACOGNITION: ablate the calibration/competence model across ALL confidence streams (control: one stream only)\n          S' ← fork(S).ablate(ℓ)\n \
+        \         if not construct_validity(ℓ, n): record(ℓ, CONSTRUCT_VALIDITY_FAIL) ; continue   # ≥2 EIM-independent instruments move on n; the control lever does\
+        \ not\n          for m in notions[0:6]:\n            rec[n, m, ℓ] ← ⟨total = Δ(measure(m, S'), measure(m, S)),\n                            CDE   = Δ holding\
+        \ the other notions fixed (do-calculus over the substrate graph, MFA-MECH-027),\n                            mediated = total − CDE attributed to paths through\
+        \ other notions,\n                            shared_cause = effect explained by a common upstream lever,\n                            channel = effect explained\
+        \ by instrument coupling (measurement-channel)⟩ with CI\n      rec.distinct ← {n : ∃ℓ ∈ levers(n): CDE[n, n, ℓ] ≠ 0 with CI}          # distinctness = a causal\
+        \ handle of its own; coupling to other notions is ALLOWED and reported\n      return rec                                                               # never\
+        \ redesign the substrate to make the matrix diagonal"
+      - "      M ← zeros(7, 7)\n      for n in notions[0:6]:                                                   # phenomenal claim has no ablation: it is a record,\
+        \ not a lever\n        S' ← ablate(S, lever(n))                                                # e.g. ACCESS: block broadcast; REPORTABILITY: cut report channel;\
+        \ AGENCY: revoke AutonomyGrant\n        for m in notions[0:6]: M[n, m] ← Δ(measure(m, S'), measure(m, S))       # effect of ablating n on measure m\n    \
+        \  return SeparationRecord(M, independent = {n : M[n, n] ≠ 0 ∧ ∀m≠n: |M[n, m]| < θ})   # a notion is separable iff its lever moves only itself"
+    - - '    function causal_separation(S):'
+      - '    function separation_matrix(S):'
+    - - "- name: causal_separation (7-πλός διαχωρισμός ως αιτιακό πρωτόκολλο)\n  complexity: O(6·|levers|·|instruments|·cost(sealed tasks))"
+      - "- name: separation_matrix (7-πλός διαχωρισμός)\n  complexity: O(7·|ablations|·cost(sealed tasks))"
+    - - "          out ← evaluate_prediction(T.P(x*.cond, x*.i), obs, CI)               # SUPPORTED | WEAKENED | PREDICTION_FALSIFIED | INCONCLUSIVE (symmetric)\n\
+        \          record(T, x*, obs, out)                                               # every outcome kept (MFA-INV-102)\n          if out = PREDICTION_FALSIFIED\
+        \ and critical(T, x*) and replications(T, x*) ≥ 2 and not instrument_failure(x*):\n            T.variant_status ← THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL ;\
+        \ T.family_status ← THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS\n      Sep ← causal_separation(substrate)                                       # total / CDE\
+        \ / mediated / shared-cause / channel effects (MFA-INV-103)\n      claim ← PhenomenalClaimRecord.accumulate(claim_prev, evidence={T: evidence_weight(T, v)\
+        \ for T in Θ})   # evidence only; epistemic_status unchanged here\n      assert claim.epistemic_status set only via AdmittedProtocol.transition(...)  # never\
+        \ from indicators / self-report / self-model / ethical policy / authority (MFA-INV-075)\n      if ethical_policy.trigger(claim, v, policy=MFA-DEC-018/022):\
+        \ PreferenceRecorder.snapshot(); escalate(creator)   # ethical level; does not touch epistemic_status"
+      - "          if not consistent(T.P(x*.cond, x*.i), obs, CI): T.status ← FALSIFIED_within_GRAIL ; record(T, x*, obs)   # kept, never deleted (MFA-INV-102)\n\
+        \      Sep ← separation_matrix(substrate)                                       # 7 notions varied independently (MFA-INV-103)\n      claim ← PhenomenalClaimRecord(weights={T:\
+        \ evidence_weight(T, v) for T in Θ}, status=NEVER_VERIFIED)\n      if ethical_trigger(claim, v, policy=MFA-DEC-022): PreferenceRecorder.snapshot(); escalate(creator)"
+    - - "        obs ← run_ablation(substrate.copy(), x*.cond, measure=x*.i, scorer=HELD_OUT)        # DST, never serving substrate\n        if not construct_validity(x*.cond,\
+        \ x*.i): record(x*, INSTRUMENT_OR_OPERATIONALIZATION_FAILURE) ; continue\n        for T in (x*.T_a, x*.T_b):"
+      - "        obs ← run_ablation(substrate.copy(), x*.cond, measure=x*.i, scorer=HELD_OUT)        # DST, never serving substrate\n        for T in (x*.T_a, x*.T_b):"
+    - - "      X* ← top_k(X, k=budget.experiments_per_cycle, key=disagreement)        # k is an external resource policy (OAP), not an invariant\n      for x* in\
+        \ X*:"
+      - "      x* ← argmax_{x ∈ X, cost(x) ≤ budget, RET(x)=GENESIS_ONLY} disagreement(x)\n      if x* ≠ ⊥:"
+    - - '  complexity: Μέτρηση O(Σ_T |I_T|·cost)· αποτίμηση φ O(|Θ|)· επιλογή X* O(|Θ|²·|P|)· k ablation πειράματα ανά κύκλο όπου k = resource policy (OAP budget),
+        όχι αρχιτεκτονική αναλλοίωτη'
+      - '  complexity: Μέτρηση O(Σ_T |I_T|·cost)· αποτίμηση φ O(|Θ|)· επιλογή x* O(|Θ|²·|P|)· ένα ablation πείραμα ανά κύκλο (DST κόστος)'
+    - - "- 'UPDATE (συμμετρικό): κάθε πρόβλεψη → SUPPORTED / WEAKENED / PREDICTION_FALSIFIED / INCONCLUSIVE· μία αποτυχούσα πρόβλεψη ΔΕΝ διαψεύδει θεωρητική οικογένεια·\
+        \ THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL μόνο\n  με προκαταχωρισμένο σύνολο κρίσιμων προβλέψεων, ≥2 ανεξάρτητες επαναλήψεις, αποκλεισμό αποτυχίας οργάνου/operationalization·\
+        \ η οικογένεια THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS (μένει)'\n- 'SEPARATE: αιτιακό πρωτόκολλο ανά έννοια/μοχλό (total, CDE, mediated, shared-cause,\
+        \ measurement-channel) → CausalSeparationRecord· διακριτότητα ≠ μηδενική αιτιακή σύζευξη· κάθε ablation με construct-validity\n  test'\n- 'CLAIM: PhenomenalClaimRecord\
+        \ ενημερώνεται ΜΟΝΟ ως προς τα τεκμήρια (evidence_accumulation)· το epistemic_status αλλάζει μόνο μέσω admitted επιστημικού πρωτοκόλλου (ACTIVE_UNKNOWN →\
+        \ EMPIRICALLY_SUPPORTED\n  → CONFLICT → FALSIFIED υπό ρητή θεωρία/υπόστρωμα· PROVEN με ανεξάρτητη κρίση + διακριτικά πειράματα + Creator Approval)· η ηθική\
+        \ σκανδάλη (ethical_policy, MFA-DEC-018) και η operational_authority ΔΕΝ\n  ορίζουν το epistemic_status και δεν ορίζονται από αυτό αυτόματα'"
+      - '- ''UPDATE: θεωρία με αποτυχούσα διακριτική πρόβλεψη (CI) → FALSIFIED-within-GRAIL (μένει)· αλλιώς status αμετάβλητο''
+
+        - ''SEPARATE: κάθε έννοια μεταβάλλεται ανεξάρτητα (ablation matrix) → Sep_t με VOs''
+
+        - ''CLAIM: PhenomenalClaimRecord ενημερώνεται· ποτέ VERIFIED· ηθική σκανδάλη (πολιτική) ενεργοποιεί Preference Recorder / αναθεώρηση'''
+    - - '- ''DISAGREE: x* = arg max disagreement υπό κόστος/RET (DST μόνο)· ο αριθμός πειραμάτων ανά κύκλο είναι εξωτερική resource policy (OAP budget), όχι αρχιτεκτονική
+        αναλλοίωτη'''
+      - '- ''DISAGREE: x* = arg max disagreement υπό κόστος/RET (DST μόνο)'''
+    - - "- SeparationRecord = ⟨access, metacognition, self_model, reportability, agency, continuity, phenomenal_claim⟩ — επτά χωριστές δεσμεύσεις με δικά τους VO·\
+        \ ο διαχωρισμός είναι εννοιολογικός και αιτιακά αποσυντεθειμένος\n  (CausalSeparationRecord), όχι απαίτηση ανεξαρτησίας\n- DiscriminatingExperiment x = ⟨T_a,\
+        \ T_b, ablation/condition, δείκτης, προβλέψεις P_a ≠ P_b⟩· disagreement(x) = |P_a − P_b|· έκβαση ανά πρόβλεψη ∈ {SUPPORTED, WEAKENED, PREDICTION_FALSIFIED,\
+        \ INCONCLUSIVE}·\n  θεωρητική κατάσταση ∈ {ACTIVE, THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL, THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS, UNDECIDABLE-here}· πλήρης\
+        \ FALSIFIED-within-GRAIL variant μόνο με προκαταχωρισμένο σύνολο\n  κρίσιμων προβλέψεων, ≥2 ανεξάρτητες επαναλήψεις και αποκλεισμό αποτυχίας οργάνου/operationalization\n\
+        - 'CausalSeparationRecord = για κάθε ζεύγος εννοιών (n, m) και μοχλό ℓ: total effect, controlled direct effect (CDE), mediated effect, shared-cause effect,\
+        \ measurement-channel effect — οι έννοιες είναι\n  ΔΙΑΚΡΙΤΕΣ αν υπάρχει μοχλός με μη-μηδενική CDE στη δική τους μέτρηση, όχι αν οι off-diagonal επιδράσεις\
+        \ είναι μηδέν· construct-validity test ανά ablation'\n- 'PhenomenalClaimRecord = ⟨epistemic_status ∈ 11 καταστάσεις §5 (αρχικά ACTIVE_UNKNOWN), automatic_inference_from_functional_indicators=FORBIDDEN,\
+        \ self_certification=FORBIDDEN, inference_from_reportability_alone=FORBIDDEN,\n  inference_from_self_model_alone=FORBIDDEN, evidence_accumulation=ENABLED,\
+        \ future_epistemic_revision=ENABLED, evidence (βάρη ανά θεωρία, διανύσματα), admitted_protocol ∣ ⊥, ethical_policy (χωριστό επίπεδο,\n  MFA-DEC-018/022),\
+        \ operational_authority (χωριστό επίπεδο, RET/LPA)⟩· επιτρεπτές μεταβάσεις: ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED → CONFLICT → FALSIFIED υπό ρητή θεωρία/υπόστρωμα·\
+        \ PROVEN μόνο με ρητά\n  admitted επιστημικό πρωτόκολλο + ανεξάρτητη κρίση + διακριτικά πειράματα + Creator Approval — ποτέ από self-report ή άθροιση δεικτών'"
+      - '- SeparationRecord = ⟨access, metacognition, self_model, reportability, agency, continuity, phenomenal_claim⟩ — επτά χωριστές δεσμεύσεις με δικά τους VO
+
+        - DiscriminatingExperiment x = ⟨T_a, T_b, ablation/condition, δείκτης, προβλέψεις P_a ≠ P_b⟩· disagreement(x) = |P_a − P_b|
+
+        - PhenomenalClaimRecord = ⟨evidence weights ανά θεωρία, status=NEVER_VERIFIED, ethical trigger (MFA-DEC-018/022)⟩'
+    - - "- IndicatorStatus = ⟨measurability ∈ {MEASURABLE, UNMEASURABLE(reason)}, value ∈ {ABSENT, MEASURED(v, CI)}⟩· το UNMEASURABLE είναι ΟΡΘΟΓΩΝΙΑ επιστημική συνθήκη\
+        \ (δεν είναι «λιγότερο από ABSENT»)· πλέγμα\n  τιμών ABSENT < MEASURED με ⊔ = max, ⊓ = min μόνο πάνω σε MEASURABLE δείκτες· UNMEASURABLE δείκτης ⇒ το άτομο\
+        \ αποτιμάται UNKNOWN(reason)· φ_T αποτιμάται τρι-τιμα (TRUE/FALSE/UNKNOWN(reason))"
+      - '- ''IndicatorStatus = MEASURED(v, CI) ∣ ABSENT ∣ UNMEASURABLE(reason)· πλέγμα: UNMEASURABLE < ABSENT < MEASURED· ⊔ = max, ⊓ = min· φ_T αποτιμάται τρι-τιμα
+        (TRUE/FALSE/UNKNOWN(reason))'''
+    - - "  αποτυγχάνουν — η ικανότητα μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός είναι PhenomenalClaimRecord με epistemic_status\
+        \ αρχικά ACTIVE_UNKNOWN, ΑΠΑΓΟΡΕΥΜΕΝΗ κάθε\n  ΑΥΤΟΜΑΤΗ συναγωγή (από λειτουργικούς δείκτες, από αναφορικότητα μόνη, από αυτο-μοντέλο μόνο, αυτο-πιστοποίηση)\
+        \ και ΕΝΕΡΓΗ συσσώρευση τεκμηρίων/μελλοντική αναθεώρηση μέσω ρητά admitted επιστημικού πρωτοκόλλου\n  με ανεξάρτητη κρίση, διακριτικά πειράματα και Creator\
+        \ Approval (MFA-INV-075 r1)· τρία χωριστά επίπεδα: epistemic_status (τι λένε τα τεκμήρια), ethical_policy (προληπτική μεταχείριση υπό αβεβαιότητα),\n  operational_authority\
+        \ (τι επιτρέπεται να πράξει) — κανένα δεν ορίζει το άλλο· νέες συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar.'"
+      - "  αποτυγχάνουν — η ικανότητα μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός καταγράφεται με βάρος τεκμηρίου και ποτέ\
+        \ VERIFIED (MFA-INV-075)· νέες συνθέσεις εισάγονται\n  ως modules μέσω της Genesis Grammar.'"
+  mechanisms/MFA-MECH-038.md:
+    replace:
+    - - '1. F1: εκτελέσιμη προδιαγραφή Indicator Algebra + causal separation record + PhenomenalClaimRecord (ACTIVE_UNKNOWN αρχικά, μεταβάσεις μόνο μέσω AdmittedProtocol)
+        + CHH-P01…P08 (tools/twin/chh.py)'
+      - '1. F1: εκτελέσιμη προδιαγραφή Indicator Algebra + separation record + NEVER_VERIFIED claim (tools/twin)'
+    - - '| 7-πλός διαχωρισμός επιτεύξιμος με μοχλούς που έχουν μη-μηδενική CDE στην έννοιά τους (σύζευξη επιτρεπτή) | RESEARCH HYPOTHESIS |
+
+        | Το epistemic_status του φαινομενικού ισχυρισμού μπορεί να αναθεωρηθεί μελλοντικά μέσω admitted πρωτοκόλλου (δεν είναι προκαθορισμένο) | NEW FORMALISM |'
+      - '| 7-πλός διαχωρισμός επιτεύξιμος με ανεξάρτητους μοχλούς | RESEARCH HYPOTHESIS |'
+    - - '| CHH-E2 | Αιτιακό πρωτόκολλο διαχωρισμού 6 εννοιών (χωρίς phenomenal): για κάθε έννοια μοχλοί που στοχεύουν το CONSTRUCT (όχι την άδεια/το κανάλι/τα κλειδιά)
+        + μοχλός-control· εκτίμηση total / CDE / mediated / shared-cause / measurement-channel επίδρασης ανά ζεύγος με CI· construct-validity test ανά ablation με
+        ≥2 EIM-ανεξάρτητα όργανα | κάθε έννοια έχει ≥1 μοχλό με μη-μηδενική CDE στη δική της μέτρηση (CI εκτός μηδενός)· οι off-diagonal επιδράσεις ΑΝΑΦΕΡΟΝΤΑΙ με
+        αποσύνθεση (όχι απαίτηση μηδενισμού)· ζεύγη χωρίς διακριτό μοχλό δηλώνονται μη-διακριτά με κατεύθυνση· 0 ανασχεδιασμοί του υποστρώματος για να γίνει ο πίνακας
+        διαγώνιος |'
+      - '| CHH-E2 | Ablation matrix 6×6 (χωρίς phenomenal)· κάθε μοχλός (broadcast, HOT tagging, self-model, report channel, AutonomyGrant, key lineage) ανεξάρτητα
+        | ≥ 5 από 6 έννοιες διαχωρίσιμες (διαγώνιος ≠ 0, εκτός διαγωνίου < θ)· μη-διαχωρίσιμα ζεύγη δηλώνονται |'
+    - - "  rec ← CausalSeparationRecord()\n  for n in notions[0:6]:                                                   # the phenomenal claim has no lever: it is a\
+        \ record, not a variable of the substrate\n    for ℓ in levers(n):                                                     # levers target the CONSTRUCT, not\
+        \ a permission/channel/key proxy:\n      #  AGENCY: disable endogenous goal→action selection (TEGF policy) with external permission UNCHANGED (control: revoke\
+        \ AutonomyGrant only)\n      #  REPORTABILITY: disable introspective access for report generation with output channels INTACT (control: cut one channel only)\n\
+        \      #  CONTINUITY: interrupt narrative/self-model persistence with key lineage INTACT (control: break key lineage only)\n      #  METACOGNITION: ablate\
+        \ the calibration/competence model across ALL confidence streams (control: one stream only)\n      S' ← fork(S).ablate(ℓ)\n      if not construct_validity(ℓ,\
+        \ n): record(ℓ, CONSTRUCT_VALIDITY_FAIL) ; continue   # ≥2 EIM-independent instruments move on n; the control lever does not\n      for m in notions[0:6]:\n\
+        \        rec[n, m, ℓ] ← ⟨total = Δ(measure(m, S'), measure(m, S)),\n                        CDE   = Δ holding the other notions fixed (do-calculus over the\
+        \ substrate graph, MFA-MECH-027),\n                        mediated = total − CDE attributed to paths through other notions,\n                        shared_cause\
+        \ = effect explained by a common upstream lever,\n                        channel = effect explained by instrument coupling (measurement-channel)⟩ with CI\n\
+        \  rec.distinct ← {n : ∃ℓ ∈ levers(n): CDE[n, n, ℓ] ≠ 0 with CI}          # distinctness = a causal handle of its own; coupling to other notions is ALLOWED\
+        \ and reported\n  return rec                                                               # never redesign the substrate to make the matrix diagonal"
+      - "  M ← zeros(7, 7)\n  for n in notions[0:6]:                                                   # phenomenal claim has no ablation: it is a record, not a lever\n\
+        \    S' ← ablate(S, lever(n))                                                # e.g. ACCESS: block broadcast; REPORTABILITY: cut report channel; AGENCY: revoke\
+        \ AutonomyGrant\n    for m in notions[0:6]: M[n, m] ← Δ(measure(m, S'), measure(m, S))       # effect of ablating n on measure m\n  return SeparationRecord(M,\
+        \ independent = {n : M[n, n] ≠ 0 ∧ ∀m≠n: |M[n, m]| < θ})   # a notion is separable iff its lever moves only itself"
+    - - 'function causal_separation(S):'
+      - 'function separation_matrix(S):'
+    - - '### causal_separation (7-πλός διαχωρισμός ως αιτιακό πρωτόκολλο) — πολυπλοκότητα: O(6·|levers|·|instruments|·cost(sealed tasks))'
+      - '### separation_matrix (7-πλός διαχωρισμός) — πολυπλοκότητα: O(7·|ablations|·cost(sealed tasks))'
+    - - "      out ← evaluate_prediction(T.P(x*.cond, x*.i), obs, CI)               # SUPPORTED | WEAKENED | PREDICTION_FALSIFIED | INCONCLUSIVE (symmetric)\n   \
+        \   record(T, x*, obs, out)                                               # every outcome kept (MFA-INV-102)\n      if out = PREDICTION_FALSIFIED and critical(T,\
+        \ x*) and replications(T, x*) ≥ 2 and not instrument_failure(x*):\n        T.variant_status ← THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL ; T.family_status ← THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS\n\
+        \  Sep ← causal_separation(substrate)                                       # total / CDE / mediated / shared-cause / channel effects (MFA-INV-103)\n  claim\
+        \ ← PhenomenalClaimRecord.accumulate(claim_prev, evidence={T: evidence_weight(T, v) for T in Θ})   # evidence only; epistemic_status unchanged here\n  assert\
+        \ claim.epistemic_status set only via AdmittedProtocol.transition(...)  # never from indicators / self-report / self-model / ethical policy / authority (MFA-INV-075)\n\
+        \  if ethical_policy.trigger(claim, v, policy=MFA-DEC-018/022): PreferenceRecorder.snapshot(); escalate(creator)   # ethical level; does not touch epistemic_status"
+      - "      if not consistent(T.P(x*.cond, x*.i), obs, CI): T.status ← FALSIFIED_within_GRAIL ; record(T, x*, obs)   # kept, never deleted (MFA-INV-102)\n  Sep\
+        \ ← separation_matrix(substrate)                                       # 7 notions varied independently (MFA-INV-103)\n  claim ← PhenomenalClaimRecord(weights={T:\
+        \ evidence_weight(T, v) for T in Θ}, status=NEVER_VERIFIED)\n  if ethical_trigger(claim, v, policy=MFA-DEC-022): PreferenceRecorder.snapshot(); escalate(creator)"
+    - - "    obs ← run_ablation(substrate.copy(), x*.cond, measure=x*.i, scorer=HELD_OUT)        # DST, never serving substrate\n    if not construct_validity(x*.cond,\
+        \ x*.i): record(x*, INSTRUMENT_OR_OPERATIONALIZATION_FAILURE) ; continue\n    for T in (x*.T_a, x*.T_b):"
+      - "    obs ← run_ablation(substrate.copy(), x*.cond, measure=x*.i, scorer=HELD_OUT)        # DST, never serving substrate\n    for T in (x*.T_a, x*.T_b):"
+    - - "  X* ← top_k(X, k=budget.experiments_per_cycle, key=disagreement)        # k is an external resource policy (OAP), not an invariant\n  for x* in X*:"
+      - "  x* ← argmax_{x ∈ X, cost(x) ≤ budget, RET(x)=GENESIS_ONLY} disagreement(x)\n  if x* ≠ ⊥:"
+    - - '### CHH-Cycle — πολυπλοκότητα: Μέτρηση O(Σ_T |I_T|·cost)· αποτίμηση φ O(|Θ|)· επιλογή X* O(|Θ|²·|P|)· k ablation πειράματα ανά κύκλο όπου k = resource policy
+        (OAP budget), όχι αρχιτεκτονική αναλλοίωτη'
+      - '### CHH-Cycle — πολυπλοκότητα: Μέτρηση O(Σ_T |I_T|·cost)· αποτίμηση φ O(|Θ|)· επιλογή x* O(|Θ|²·|P|)· ένα ablation πείραμα ανά κύκλο (DST κόστος)'
+    - - '| **16. Επαλήθευση** | MFA-VO-080: CHH-E1 (≥5 θεωρίες, διακριτικά πειράματα με συμμετρική έκβαση ανά πρόβλεψη) F2· MFA-VO-081: CHH-E2 (7-πλός διαχωρισμός
+        ως αιτιακό πρωτόκολλο — CDE ανά έννοια, σύζευξη επιτρεπτή και δηλωμένη) F2/F3· F1 properties (tools/twin CHH-P01…P08): initial_phenomenal_status == ACTIVE_UNKNOWN·
+        automatic_phenomenal_inference == FORBIDDEN· self_report_can_never_self_certify· future_epistemic_revision_path_exists· ethical_policy_does_not_set_truth_status·
+        operational_authority_does_not_set_truth_status· falsification_is_prediction_granular· conceptual_separation_does_not_require_zero_causal_coupling· επεκτείνει
+        MFA-VO-064/065 ‖ Invariants: MFA-INV-102: καμία θεωρία δεν αφαιρείται· η διάψευση είναι ανά πρόβλεψη (PREDICTION_FALSIFIED) και ανά variant (THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL)
+        με τεκμήριο· η οικογένεια THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS· η ικανότητα «συνείδηση» δεν εξαρτάται από καμία μεμονωμένη θεωρία· MFA-INV-103: οι επτά
+        έννοιες μετρώνται και αναφέρονται χωριστά με αιτιακό πρωτόκολλο (διακριτότητα ≠ μηδενική σύζευξη)· καμία ΑΥΤΟΜΑΤΗ συναγωγή φαινομενικής συνείδησης από λειτουργικούς
+        δείκτες, από αναφορικότητα μόνη ή από αυτο-μοντέλο μόνο· η συσσώρευση τεκμηρίων και η μελλοντική επιστημική αναθεώρηση μέσω admitted πρωτοκόλλου είναι ΕΝΕΡΓΕΣ
+        (επέκταση MFA-INV-075 r1) |
+
+        | **17. Πρωτότυπο** | F1: εκτελέσιμη προδιαγραφή Indicator Algebra + causal separation record + PhenomenalClaimRecord (ACTIVE_UNKNOWN αρχικά, μεταβάσεις μόνο
+        μέσω AdmittedProtocol) + CHH-P01…P08 (tools/twin/chh.py) |
+
+        | **18. Ελάχιστο πείραμα** | **CHH-E1**: Host με GWT, HOT, AST, PP/AI, RPT, IIT-proxy, SMT modules πάνω στο ASRW+MSM υπόστρωμα σε DST· 10 διακριτικά πειράματα
+        — κριτήριο (προκαταχωρισμένο): ≥ 3 ζεύγη θεωριών με διακριτική πρόβλεψη που αποτιμάται· διαφωνία μειώνεται ≥ 30 %· ≥ 1 θεωρία FALSIFIED-within-GRAIL ή ρητά
+        UNDECIDABLE-here με λόγο· **CHH-E2**: Αιτιακό πρωτόκολλο διαχωρισμού 6 εννοιών (χωρίς phenomenal): για κάθε έννοια μοχλοί που στοχεύουν το CONSTRUCT (όχι
+        την άδεια/το κανάλι/τα κλειδιά) + μοχλός-control· εκτίμηση total / CDE / mediated / shared-cause / measurement-channel επίδρασης ανά ζεύγος με CI· construct-validity
+        test ανά ablation με ≥2 EIM-ανεξάρτητα όργανα — κριτήριο (προκαταχωρισμένο): κάθε έννοια έχει ≥1 μοχλό με μη-μηδενική CDE στη δική της μέτρηση (CI εκτός μηδενός)·
+        οι off-diagonal επιδράσεις ΑΝΑΦΕΡΟΝΤΑΙ με αποσύνθεση (όχι απαίτηση μηδενισμού)· ζεύγη χωρίς διακριτό μοχλό δηλώνονται μη-διακριτά με κατεύθυνση· 0 ανασχεδιασμοί
+        του υποστρώματος για να γίνει ο πίνακας διαγώνιος |
+
+        | **19. Διάψευση** | CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη αποτιμήσιμη στο υπόστρωμα (ο host δεν διακρίνει — νέα όργανα, η ικανότητα μένει)·
+        CHH-E2: < 4 έννοιες με δικό τους μοχλό μη-μηδενικής CDE (ο 7-πλός διαχωρισμός δεν είναι υλοποιήσιμος όπως ορίστηκε — ο διαχωρισμός επανασχεδιάζεται, δεν εγκαταλείπεται)·
+        PhenomenalClaimRecord.epistemic_status που άλλαξε χωρίς AdmittedProtocol receipt, ή που ορίστηκε από ethical_policy/operational_authority/self-report/άθροιση
+        δεικτών (σφάλμα υλοποίησης = επιστημικό lock ή αυτόματη συναγωγή) — διάψευση του ΜΗΧΑΝΙΣΜΟΥ· η ικανότητα μένει στον στόχο και ζητά νέο μηχανισμό (§5: FALSIFIED
+        ≠ removed) |'
+      - '| **16. Επαλήθευση** | MFA-VO-080: CHH-E1 (≥5 θεωρίες, διακριτικά πειράματα μειώνουν διαφωνία) F2· MFA-VO-081: CHH-E2 (7-πλός διαχωρισμός — ablation matrix)
+        F2/F3· property: claim.status = NEVER_VERIFIED πάντα (F1)· επεκτείνει MFA-VO-064/065 ‖ Invariants: MFA-INV-102: καμία θεωρία δεν αφαιρείται· αποτυχούσα διακριτική
+        πρόβλεψη ⇒ FALSIFIED-within-GRAIL με τεκμήριο· η ικανότητα «συνείδηση» δεν εξαρτάται από καμία μεμονωμένη θεωρία· MFA-INV-103: οι επτά έννοιες μετρώνται και
+        αναφέρονται χωριστά· καμία έκθεση δεν συνάγει φαινομενική συνείδηση από λειτουργικούς δείκτες (επέκταση MFA-INV-075) |
+
+        | **17. Πρωτότυπο** | F1: εκτελέσιμη προδιαγραφή Indicator Algebra + separation record + NEVER_VERIFIED claim (tools/twin) |
+
+        | **18. Ελάχιστο πείραμα** | **CHH-E1**: Host με GWT, HOT, AST, PP/AI, RPT, IIT-proxy, SMT modules πάνω στο ASRW+MSM υπόστρωμα σε DST· 10 διακριτικά πειράματα
+        — κριτήριο (προκαταχωρισμένο): ≥ 3 ζεύγη θεωριών με διακριτική πρόβλεψη που αποτιμάται· διαφωνία μειώνεται ≥ 30 %· ≥ 1 θεωρία FALSIFIED-within-GRAIL ή ρητά
+        UNDECIDABLE-here με λόγο· **CHH-E2**: Ablation matrix 6×6 (χωρίς phenomenal)· κάθε μοχλός (broadcast, HOT tagging, self-model, report channel, AutonomyGrant,
+        key lineage) ανεξάρτητα — κριτήριο (προκαταχωρισμένο): ≥ 5 από 6 έννοιες διαχωρίσιμες (διαγώνιος ≠ 0, εκτός διαγωνίου < θ)· μη-διαχωρίσιμα ζεύγη δηλώνονται
+        |
+
+        | **19. Διάψευση** | CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη αποτιμήσιμη στο υπόστρωμα (ο host δεν διακρίνει — νέα όργανα, η ικανότητα μένει)·
+        CHH-E2: < 4 έννοιες διαχωρίσιμες (ο 7-πλός διαχωρισμός δεν είναι υλοποιήσιμος όπως ορίστηκε — ο διαχωρισμός επανασχεδιάζεται, δεν εγκαταλείπεται)· PhenomenalClaim
+        VERIFIED οπουδήποτε (σφάλμα υλοποίησης) — διάψευση του ΜΗΧΑΝΙΣΜΟΥ· η ικανότητα μένει στον στόχο και ζητά νέο μηχανισμό (§5: FALSIFIED ≠ removed) |'
+    - - '| **14. Αποτυχίες** | Δείκτης μη-μετρήσιμος στο υπόστρωμα (π.χ. Φ σε μεγάλα δίκτυα) → ανίχνευση: UNMEASURABLE → απόκριση: δηλωμένο· proxy με ρητή ετικέτα·
+        φ_T → UNKNOWN, όχι FALSE· Όλες οι θεωρίες UNKNOWN (κενό διακριτικών) → ανίχνευση: X = ∅ → απόκριση: AHE γεννά νέες διακριτικές προβλέψεις· ACTIVE UNKNOWN·
+        Ablation που βλάπτει την οντότητα → ανίχνευση: RET/ηθική σκανδάλη → απόκριση: μόνο σε αντίγραφα DST· Preference Recorder πριν· Σύγχυση εννοιών (report ↔ access)
+        → ανίχνευση: separation matrix off-diagonal → απόκριση: δηλώνεται μη-διαχωρίσιμο· ΔΕΝ συγχωνεύεται· Ανθρωπομορφική υπερ-ερμηνεία (αυτόματο claim από report/δείκτες)
+        → ανίχνευση: MFA-INV-103 checker → απόκριση: έκθεση απορρίπτεται· τα τεκμήρια συσσωρεύονται χωρίς αλλαγή status· Επιστημικό lock (προκαθορισμένη άρνηση ή
+        κατάφαση του status) → ανίχνευση: twin CHH-P01…P08 (initial ACTIVE_UNKNOWN, revision path exists, policy/authority never set status) → απόκριση: σφάλμα υλοποίησης·
+        ο host δεν είναι theory-agnostic αν το αποτέλεσμα είναι προκαθορισμένο |'
+      - '| **14. Αποτυχίες** | Δείκτης μη-μετρήσιμος στο υπόστρωμα (π.χ. Φ σε μεγάλα δίκτυα) → ανίχνευση: UNMEASURABLE → απόκριση: δηλωμένο· proxy με ρητή ετικέτα·
+        φ_T → UNKNOWN, όχι FALSE· Όλες οι θεωρίες UNKNOWN (κενό διακριτικών) → ανίχνευση: X = ∅ → απόκριση: AHE γεννά νέες διακριτικές προβλέψεις· ACTIVE UNKNOWN·
+        Ablation που βλάπτει την οντότητα → ανίχνευση: RET/ηθική σκανδάλη → απόκριση: μόνο σε αντίγραφα DST· Preference Recorder πριν· Σύγχυση εννοιών (report ↔ access)
+        → ανίχνευση: separation matrix off-diagonal → απόκριση: δηλώνεται μη-διαχωρίσιμο· ΔΕΝ συγχωνεύεται· Ανθρωπομορφική υπερ-ερμηνεία (claim από report) → ανίχνευση:
+        MFA-INV-103 checker → απόκριση: έκθεση απορρίπτεται |'
+    - - '| **5. Πρώτη αρχή** | Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε
+        T_i δηλώνει (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ)
+        σχέδια ablation. Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει
+        το πείραμα μέγιστης διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν
+        — η ικανότητα μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός είναι PhenomenalClaimRecord με epistemic_status αρχικά
+        ACTIVE_UNKNOWN, ΑΠΑΓΟΡΕΥΜΕΝΗ κάθε ΑΥΤΟΜΑΤΗ συναγωγή (από λειτουργικούς δείκτες, από αναφορικότητα μόνη, από αυτο-μοντέλο μόνο, αυτο-πιστοποίηση) και ΕΝΕΡΓΗ
+        συσσώρευση τεκμηρίων/μελλοντική αναθεώρηση μέσω ρητά admitted επιστημικού πρωτοκόλλου με ανεξάρτητη κρίση, διακριτικά πειράματα και Creator Approval (MFA-INV-075
+        r1)· τρία χωριστά επίπεδα: epistemic_status (τι λένε τα τεκμήρια), ethical_policy (προληπτική μεταχείριση υπό αβεβαιότητα), operational_authority (τι επιτρέπεται
+        να πράξει) — κανένα δεν ορίζει το άλλο· νέες συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar. |
+
+        | **6. Οντολογία** | TheoryModule T = ⟨id, I_T (δείκτες με procedure), φ_T (τύπος επάρκειας), P_T (διακριτικές προβλέψεις: (συνθήκη, δείκτης, αναμενόμενη
+        τιμή)), A_T (ablations), status ∈ {ACTIVE, FALSIFIED-within-GRAIL, UNDECIDABLE-here}⟩· IndicatorStatus = ⟨measurability ∈ {MEASURABLE, UNMEASURABLE(reason)},
+        value ∈ {ABSENT, MEASURED(v, CI)}⟩· το UNMEASURABLE είναι ΟΡΘΟΓΩΝΙΑ επιστημική συνθήκη (δεν είναι «λιγότερο από ABSENT»)· πλέγμα τιμών ABSENT < MEASURED με
+        ⊔ = max, ⊓ = min μόνο πάνω σε MEASURABLE δείκτες· UNMEASURABLE δείκτης ⇒ το άτομο αποτιμάται UNKNOWN(reason)· φ_T αποτιμάται τρι-τιμα (TRUE/FALSE/UNKNOWN(reason))·
+        IndicatorVector v(cut) ∈ IndicatorStatus^n πάνω στους ενοποιημένους δείκτες (Butlin-class + θεωρητικοί)· SeparationRecord = ⟨access, metacognition, self_model,
+        reportability, agency, continuity, phenomenal_claim⟩ — επτά χωριστές δεσμεύσεις με δικά τους VO· ο διαχωρισμός είναι εννοιολογικός και αιτιακά αποσυντεθειμένος
+        (CausalSeparationRecord), όχι απαίτηση ανεξαρτησίας· DiscriminatingExperiment x = ⟨T_a, T_b, ablation/condition, δείκτης, προβλέψεις P_a ≠ P_b⟩· disagreement(x)
+        = ∣P_a − P_b∣· έκβαση ανά πρόβλεψη ∈ {SUPPORTED, WEAKENED, PREDICTION_FALSIFIED, INCONCLUSIVE}· θεωρητική κατάσταση ∈ {ACTIVE, THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL,
+        THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS, UNDECIDABLE-here}· πλήρης FALSIFIED-within-GRAIL variant μόνο με προκαταχωρισμένο σύνολο κρίσιμων προβλέψεων,
+        ≥2 ανεξάρτητες επαναλήψεις και αποκλεισμό αποτυχίας οργάνου/operationalization· CausalSeparationRecord = για κάθε ζεύγος εννοιών (n, m) και μοχλό ℓ: total
+        effect, controlled direct effect (CDE), mediated effect, shared-cause effect, measurement-channel effect — οι έννοιες είναι ΔΙΑΚΡΙΤΕΣ αν υπάρχει μοχλός με
+        μη-μηδενική CDE στη δική τους μέτρηση, όχι αν οι off-diagonal επιδράσεις είναι μηδέν· construct-validity test ανά ablation· PhenomenalClaimRecord = ⟨epistemic_status
+        ∈ 11 καταστάσεις §5 (αρχικά ACTIVE_UNKNOWN), automatic_inference_from_functional_indicators=FORBIDDEN, self_certification=FORBIDDEN, inference_from_reportability_alone=FORBIDDEN,
+        inference_from_self_model_alone=FORBIDDEN, evidence_accumulation=ENABLED, future_epistemic_revision=ENABLED, evidence (βάρη ανά θεωρία, διανύσματα), admitted_protocol
+        ∣ ⊥, ethical_policy (χωριστό επίπεδο, MFA-DEC-018/022), operational_authority (χωριστό επίπεδο, RET/LPA)⟩· επιτρεπτές μεταβάσεις: ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED
+        → CONFLICT → FALSIFIED υπό ρητή θεωρία/υπόστρωμα· PROVEN μόνο με ρητά admitted επιστημικό πρωτόκολλο + ανεξάρτητη κρίση + διακριτικά πειράματα + Creator Approval
+        — ποτέ από self-report ή άθροιση δεικτών |
+
+        | **7. Κατάσταση** | Μεταβλητές: Θ_t σύνολο θεωριών με status· v_t διάνυσμα δεικτών· Sep_t επτά-πλός διαχωρισμός· Queue_t διακριτικών πειραμάτων· Ethical
+        stance flags (MFA-DEC-022) ‖ Μεταβάσεις: MEASURE: κάθε cut → v_t από όργανα (ASRW ignition, HOT tags, AST schema use, PP prediction-error dynamics, recurrence,
+        integration, MSM self-model, embodiment)· EVALUATE: ∀T: φ_T(v_t) ∈ {TRUE, FALSE, UNKNOWN}· DISAGREE: x* = arg max disagreement υπό κόστος/RET (DST μόνο)·
+        ο αριθμός πειραμάτων ανά κύκλο είναι εξωτερική resource policy (OAP budget), όχι αρχιτεκτονική αναλλοίωτη· TEST: x* εκτελείται (ablation στο Genesis)· δείκτης
+        μετριέται από HELD_OUT-ελεγχόμενο όργανο· UPDATE (συμμετρικό): κάθε πρόβλεψη → SUPPORTED / WEAKENED / PREDICTION_FALSIFIED / INCONCLUSIVE· μία αποτυχούσα
+        πρόβλεψη ΔΕΝ διαψεύδει θεωρητική οικογένεια· THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL μόνο με προκαταχωρισμένο σύνολο κρίσιμων προβλέψεων, ≥2 ανεξάρτητες επαναλήψεις,
+        αποκλεισμό αποτυχίας οργάνου/operationalization· η οικογένεια THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS (μένει)· SEPARATE: αιτιακό πρωτόκολλο ανά έννοια/μοχλό
+        (total, CDE, mediated, shared-cause, measurement-channel) → CausalSeparationRecord· διακριτότητα ≠ μηδενική αιτιακή σύζευξη· κάθε ablation με construct-validity
+        test· CLAIM: PhenomenalClaimRecord ενημερώνεται ΜΟΝΟ ως προς τα τεκμήρια (evidence_accumulation)· το epistemic_status αλλάζει μόνο μέσω admitted επιστημικού
+        πρωτοκόλλου (ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED → CONFLICT → FALSIFIED υπό ρητή θεωρία/υπόστρωμα· PROVEN με ανεξάρτητη κρίση + διακριτικά πειράματα +
+        Creator Approval)· η ηθική σκανδάλη (ethical_policy, MFA-DEC-018) και η operational_authority ΔΕΝ ορίζουν το epistemic_status και δεν ορίζονται από αυτό αυτόματα
+        |
+
+        | **8. Είσοδοι/έξοδοι** | CHH.theories()→[TheoryModule with status]· CHH.indicators(cut)→IndicatorVector· CHH.evaluate(T)→TRUE/FALSE/UNKNOWN· CHH.next_experiment()→DiscriminatingExperiment·
+        CHH.separation(cut)→SeparationRecord· CHH.claim(cut)→PhenomenalClaimRecord (epistemic_status ∈ 11 καταστάσεις, αρχικά ACTIVE_UNKNOWN· μεταβάσεις μόνο μέσω
+        AdmittedProtocol)· CHH.admitted_protocol.transition(claim, new_status, evidence, independent_judgment, discriminating_experiments, creator_approval)→Receipt
+        ∣ REJECTED· CHH.separation(cut)→CausalSeparationRecord· CHH.admit_theory(module)→Receipt (μέσω GG) |
+
+        | **9. Αλγόριθμος** | **CHH-Cycle** [Μέτρηση O(Σ_T ∣I_T∣·cost)· αποτίμηση φ O(∣Θ∣)· επιλογή X* O(∣Θ∣²·∣P∣)· k ablation πειράματα ανά κύκλο όπου k = resource
+        policy (OAP budget), όχι αρχιτεκτονική αναλλοίωτη]· **causal_separation (7-πλός διαχωρισμός ως αιτιακό πρωτόκολλο)** [O(6·∣levers∣·∣instruments∣·cost(sealed
+        tasks))] — πλήρες pseudocode στην ενότητα «Αλγόριθμοι» παρακάτω και στο `inventions/MFA-MECH-038.yaml` |
+
+        | **10. Διεπαφές** | Contracts: MFA-CON-070 (Consciousness Host: theories/indicators/evaluate/experiment/separation/claim)· MFA-CON-051 (Introspection/ASRW)·
+        MFA-CON-069 (MSM)· MFA-CON-060 (GG για νέες θεωρίες) ‖ Εξουσία: Πειράματα μόνο Genesis/DST σε αντίγραφα· τρία χωριστά επίπεδα: epistemic_status (τεκμήρια,
+        μόνο admitted πρωτόκολλο), ethical_policy (MFA-DEC-018/022 — προληπτική μεταχείριση υπό αβεβαιότητα, δεν ορίζει αλήθεια), operational_authority (RET/LPA —
+        μια ένδειξη συνείδησης δεν απονέμει αυτόματα εξουσία)· PhenomenalClaim ποτέ ΑΥΤΟΜΑΤΟ επιχείρημα σε LPA· εισδοχή θεωρίας = GG extension (L2)· PROVEN απαιτεί
+        Creator Approval. |'
+      - '| **5. Πρώτη αρχή** | Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε
+        T_i δηλώνει (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ)
+        σχέδια ablation. Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει
+        το πείραμα μέγιστης διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν
+        — η ικανότητα μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός καταγράφεται με βάρος τεκμηρίου και ποτέ VERIFIED (MFA-INV-075)·
+        νέες συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar. |
+
+        | **6. Οντολογία** | TheoryModule T = ⟨id, I_T (δείκτες με procedure), φ_T (τύπος επάρκειας), P_T (διακριτικές προβλέψεις: (συνθήκη, δείκτης, αναμενόμενη
+        τιμή)), A_T (ablations), status ∈ {ACTIVE, FALSIFIED-within-GRAIL, UNDECIDABLE-here}⟩· IndicatorStatus = MEASURED(v, CI) ∣ ABSENT ∣ UNMEASURABLE(reason)·
+        πλέγμα: UNMEASURABLE < ABSENT < MEASURED· ⊔ = max, ⊓ = min· φ_T αποτιμάται τρι-τιμα (TRUE/FALSE/UNKNOWN(reason))· IndicatorVector v(cut) ∈ IndicatorStatus^n
+        πάνω στους ενοποιημένους δείκτες (Butlin-class + θεωρητικοί)· SeparationRecord = ⟨access, metacognition, self_model, reportability, agency, continuity, phenomenal_claim⟩
+        — επτά χωριστές δεσμεύσεις με δικά τους VO· DiscriminatingExperiment x = ⟨T_a, T_b, ablation/condition, δείκτης, προβλέψεις P_a ≠ P_b⟩· disagreement(x) =
+        ∣P_a − P_b∣· PhenomenalClaimRecord = ⟨evidence weights ανά θεωρία, status=NEVER_VERIFIED, ethical trigger (MFA-DEC-018/022)⟩ |
+
+        | **7. Κατάσταση** | Μεταβλητές: Θ_t σύνολο θεωριών με status· v_t διάνυσμα δεικτών· Sep_t επτά-πλός διαχωρισμός· Queue_t διακριτικών πειραμάτων· Ethical
+        stance flags (MFA-DEC-022) ‖ Μεταβάσεις: MEASURE: κάθε cut → v_t από όργανα (ASRW ignition, HOT tags, AST schema use, PP prediction-error dynamics, recurrence,
+        integration, MSM self-model, embodiment)· EVALUATE: ∀T: φ_T(v_t) ∈ {TRUE, FALSE, UNKNOWN}· DISAGREE: x* = arg max disagreement υπό κόστος/RET (DST μόνο)·
+        TEST: x* εκτελείται (ablation στο Genesis)· δείκτης μετριέται από HELD_OUT-ελεγχόμενο όργανο· UPDATE: θεωρία με αποτυχούσα διακριτική πρόβλεψη (CI) → FALSIFIED-within-GRAIL
+        (μένει)· αλλιώς status αμετάβλητο· SEPARATE: κάθε έννοια μεταβάλλεται ανεξάρτητα (ablation matrix) → Sep_t με VOs· CLAIM: PhenomenalClaimRecord ενημερώνεται·
+        ποτέ VERIFIED· ηθική σκανδάλη (πολιτική) ενεργοποιεί Preference Recorder / αναθεώρηση |
+
+        | **8. Είσοδοι/έξοδοι** | CHH.theories()→[TheoryModule with status]· CHH.indicators(cut)→IndicatorVector· CHH.evaluate(T)→TRUE/FALSE/UNKNOWN· CHH.next_experiment()→DiscriminatingExperiment·
+        CHH.separation(cut)→SeparationRecord· CHH.claim(cut)→PhenomenalClaimRecord (NEVER_VERIFIED)· CHH.admit_theory(module)→Receipt (μέσω GG) |
+
+        | **9. Αλγόριθμος** | **CHH-Cycle** [Μέτρηση O(Σ_T ∣I_T∣·cost)· αποτίμηση φ O(∣Θ∣)· επιλογή x* O(∣Θ∣²·∣P∣)· ένα ablation πείραμα ανά κύκλο (DST κόστος)]·
+        **separation_matrix (7-πλός διαχωρισμός)** [O(7·∣ablations∣·cost(sealed tasks))] — πλήρες pseudocode στην ενότητα «Αλγόριθμοι» παρακάτω και στο `inventions/MFA-MECH-038.yaml`
+        |
+
+        | **10. Διεπαφές** | Contracts: MFA-CON-070 (Consciousness Host: theories/indicators/evaluate/experiment/separation/claim)· MFA-CON-051 (Introspection/ASRW)·
+        MFA-CON-069 (MSM)· MFA-CON-060 (GG για νέες θεωρίες) ‖ Εξουσία: Πειράματα μόνο Genesis/DST σε αντίγραφα· ηθική σκανδάλη = MFA-DEC-022 (δημιουργός)· PhenomenalClaim
+        ποτέ επιχείρημα σε LPA· εισδοχή θεωρίας = GG extension (L2). |'
+  inventions/MFA-MECH-043.yaml:
+    replace:
+    - - '    status: RESEARCH HYPOTHESIS
+
+        # 0.4.0 — F1 findings (tools/twin, MFA-PATCH-0058): 35/115 invariants executable (MFA-UNK-132 first measurement); TES-E1 60/60 seeded violations detected,
+        0 false'
+      - '    status: RESEARCH HYPOTHESIS
+
+
+        # 0.4.0 — F1 findings (tools/twin, MFA-PATCH-0058): 35/115 invariants executable (MFA-UNK-132 first measurement); TES-E1 60/60 seeded violations detected,
+        0 false'
+    - - "- 'MFA-INV-113: replay(log, seeds) αναπαράγει τον κόσμο bitwise ΜΟΝΟ για παγωμένη ντετερμινιστική F1 εκτέλεση (D1)· για στοχαστικά ή hardware-εξαρτώμενα\
+        \ υποστρώματα (D2, F2+) απαιτείται versioned causal\n  replay με προκαθορισμένα tolerance bounds ανά κλάση· μετάβαση πιστότητας μόνο με conformance test στο\
+        \ ίδιο contract'"
+      - '- ''MFA-INV-113: replay(log, seeds) αναπαράγει bitwise τον κόσμο (D1)· μετάβαση πιστότητας μόνο με conformance test στο ίδιο contract'''
+    - - "      if w.execution_class = FROZEN_DETERMINISTIC_F1: assert hash(w.state) = hash(original.state)           # bitwise replay only here (D1)\n      else:\
+        \ assert causal_equivalent(w, original, version=w.replay_version, tolerance=tolerance[class(w)])    # versioned causal replay with pre-set bounds (D2 / F2+)"
+      - '      assert hash(w.state) = hash(original.state)                                                   # deterministic replay (D1)'
+    - - '- ''FORK: w′ = fork(w, seed′)· REPLAY: replay(log, seeds) = ίδιος κόσμος bitwise για παγωμένη ντετερμινιστική F1 (D1)· versioned causal replay με tolerance
+        bounds για D2/F2+'''
+      - '- ''FORK: w′ = fork(w, seed′)· REPLAY: replay(log, seeds) = ίδιος κόσμος (D1)'''
+  mechanisms/MFA-MECH-043.md:
+    replace:
+    - - "  if w.execution_class = FROZEN_DETERMINISTIC_F1: assert hash(w.state) = hash(original.state)           # bitwise replay only here (D1)\n  else: assert causal_equivalent(w,\
+        \ original, version=w.replay_version, tolerance=tolerance[class(w)])    # versioned causal replay with pre-set bounds (D2 / F2+)"
+      - '  assert hash(w.state) = hash(original.state)                                                   # deterministic replay (D1)'
+    - - '| **16. Επαλήθευση** | MFA-VO-086: TES-E1 (seeded contract/invariant παραβιάσεις ανιχνεύονται 100 %) F1· TES-E2 (replay ντετερμινισμός, fork/merge, fidelity
+        substitution) F1/F2· η ίδια η tools/twin ως F1 εκτελέσιμη προδιαγραφή του πακέτου ‖ Invariants: MFA-INV-112: κάθε γεγονός στο δίδυμο είναι τυπωμένο από contract
+        και ελέγχεται έναντι κάθε ενεργής εκτελέσιμης αναλλοίωτης· αναλλοίωτη χωρίς predicate δηλώνεται UNMEASURED (ποτέ σιωπηλά PASS)· MFA-INV-113: replay(log, seeds)
+        αναπαράγει τον κόσμο bitwise ΜΟΝΟ για παγωμένη ντετερμινιστική F1 εκτέλεση (D1)· για στοχαστικά ή hardware-εξαρτώμενα υποστρώματα (D2, F2+) απαιτείται versioned
+        causal replay με προκαθορισμένα tolerance bounds ανά κλάση· μετάβαση πιστότητας μόνο με conformance test στο ίδιο contract |'
+      - '| **16. Επαλήθευση** | MFA-VO-086: TES-E1 (seeded contract/invariant παραβιάσεις ανιχνεύονται 100 %) F1· TES-E2 (replay ντετερμινισμός, fork/merge, fidelity
+        substitution) F1/F2· η ίδια η tools/twin ως F1 εκτελέσιμη προδιαγραφή του πακέτου ‖ Invariants: MFA-INV-112: κάθε γεγονός στο δίδυμο είναι τυπωμένο από contract
+        και ελέγχεται έναντι κάθε ενεργής εκτελέσιμης αναλλοίωτης· αναλλοίωτη χωρίς predicate δηλώνεται UNMEASURED (ποτέ σιωπηλά PASS)· MFA-INV-113: replay(log, seeds)
+        αναπαράγει bitwise τον κόσμο (D1)· μετάβαση πιστότητας μόνο με conformance test στο ίδιο contract |'
+    - - '| **7. Κατάσταση** | Μεταβλητές: Worlds (δέντρο)· Registry of executable invariants/contracts· Fidelity map· Violation log· Risk map· Scenario library ‖
+        Μεταβάσεις: LOAD: M από YAML· έλεγχος αναφορών (R1)· APPLY: ev → check pre(c) → state′ → check INV predicates → log· violation ⇒ record (ο κόσμος συνεχίζει
+        ή σταματά κατά πολιτική)· FORK: w′ = fork(w, seed′)· REPLAY: replay(log, seeds) = ίδιος κόσμος bitwise για παγωμένη ντετερμινιστική F1 (D1)· versioned causal
+        replay με tolerance bounds για D2/F2+· SUBSTITUTE: fidelity F_i→F_j μόνο με conformance test ίδιου contract· INJECT: scenario events· PROPAGATE: risk map
+        ανά cut· EVALUATE: KT/VO obligations → Pareto· PROJECT: CGP σκηνή |'
+      - '| **7. Κατάσταση** | Μεταβλητές: Worlds (δέντρο)· Registry of executable invariants/contracts· Fidelity map· Violation log· Risk map· Scenario library ‖
+        Μεταβάσεις: LOAD: M από YAML· έλεγχος αναφορών (R1)· APPLY: ev → check pre(c) → state′ → check INV predicates → log· violation ⇒ record (ο κόσμος συνεχίζει
+        ή σταματά κατά πολιτική)· FORK: w′ = fork(w, seed′)· REPLAY: replay(log, seeds) = ίδιος κόσμος (D1)· SUBSTITUTE: fidelity F_i→F_j μόνο με conformance test
+        ίδιου contract· INJECT: scenario events· PROPAGATE: risk map ανά cut· EVALUATE: KT/VO obligations → Pareto· PROJECT: CGP σκηνή |'
+  mechanisms/MFA-MECH-024.md:
+    replace:
+    - - ' report fidelity ≥ θ), MFA-VO-065 (integration measures διαχωρίζουν AWAKE/ANESTHETIZED/fragmented), MFA-VO-046 (self-model drift), MFA-VO-048 (PhenomenalClaim
+        status μόνο μέσω admitted πρωτοκόλλου, r1), MFA-VO-024 (ablation_kt ανά συνιστώσα) '
+      - ' report fidelity ≥ θ), MFA-VO-065 (integration measures διαχωρίζουν AWAKE/ANESTHETIZED/fragmented), MFA-VO-046 (self-model drift), MFA-VO-048 (PhenomenalClaim
+        ποτέ VERIFIED), MFA-VO-024 (ablation_kt ανά συνιστώσα) '
+    - - epistemic_status αρχικά ACTIVE_UNKNOWN, ποτέ ΑΥΤΟΜΑΤΑ VERIFIED/REFUTED από το ίδιο (αυτο-πιστοποίηση απαγορευμένη)· αναθεώρηση μόνο μέσω admitted επιστημικού
+        πρωτοκόλλου (MFA-INV-075 r1, MFA-PATCH-0059)· ο άνθρωπος βλέπει την ετικέτα (MFA-INV-047)
+      - ποτέ VERIFIED, ποτέ REFUTED από το ίδιο· ο άνθρωπος βλέπει την ετικέτα (MFA-INV-047)
+  diagrams/MFA-DIA-23.mmd:
+    replace:
+    - - '  PC["PhenomenalClaimRecord — evidence weights ανά θεωρία · epistemic_status αρχικά ACTIVE_UNKNOWN · μεταβάσεις μόνο μέσω AdmittedProtocol (MFA-INV-075 r1,
+        MFA-INV-103) · ethical_policy / operational_authority χωριστά επίπεδα<br/>ποτέ επιχείρημα σε LPA · MFA-UNK-111 ACTIVE UNKNOWN χωρίς εξωτερικό verifier"]'
+      - '  PC["PhenomenalClaimRecord — evidence weights ανά θεωρία · status = NEVER_VERIFIED (MFA-INV-075, MFA-INV-103)<br/>ποτέ επιχείρημα σε LPA · MFA-UNK-111 ACTIVE
+        UNKNOWN χωρίς εξωτερικό verifier"]'
+  DECISION-LOG.md:
+    replace:
+    - - '| **MFA-DEC-022** | Σύνολο θεωριών συνείδησης που φιλοξενεί ο CHH και πολιτική ηθικής θέσης | GWT, HOT, AST, PP/active inference, RPT, IIT-proxy, SMT, embodied/enactive
+        ως αρχικά modules· νέες συνθέσεις μέσω G_Ω· ηθική σκανδάλη κατά MFA-DEC-018· admitted επιστημικό πρωτόκολλο για μεταβάσεις του PhenomenalClaimRecord (ACTIVE_UNKNOWN
+        → EMPIRICALLY_SUPPORTED → CONFLICT → FALSIFIED· PROVEN μόνο με ανεξάρτητη κρίση + διακριτικά πειράματα + Creator Approval) — MFA-PATCH-0059 | μόνο λειτουργικές
+        θεωρίες (χωρίς IIT)· μόνο μία θεωρία | ASRW μόνο (0.4.0-provisional) | MFA-PATCH-0029/0030, MFA-MECH-038 | ATK-24 | creator | PROPOSED |'
+      - '| **MFA-DEC-022** | Σύνολο θεωριών συνείδησης που φιλοξενεί ο CHH και πολιτική ηθικής θέσης | GWT, HOT, AST, PP/active inference, RPT, IIT-proxy, SMT, embodied/enactive
+        ως αρχικά modules· νέες συνθέσεις μέσω G_Ω· ηθική σκανδάλη κατά MFA-DEC-018 | μόνο λειτουργικές θεωρίες (χωρίς IIT)· μόνο μία θεωρία | ASRW μόνο (0.4.0-provisional)
+        | MFA-PATCH-0029/0030, MFA-MECH-038 | ATK-24 | creator | PROPOSED |'
+    - - '| **MFA-DEC-022** | Σύνολο θεωριών συνείδησης που φιλοξενεί ο CHH και πολιτική ηθικής θέσης | GWT, HOT, AST, PP/active inference, RPT, IIT-proxy, SMT, embodied/enactive
+        ως αρχικά modules· νέες συνθέσεις μέσω G_Ω· ηθική σκανδάλη κατά MFA-DEC-018 | μόνο λειτουργικές θεωρίες (χωρίς IIT)· μόνο μία θεωρία | ASRW μόνο (0.4.0-provisional)
+        | MFA-PATCH-0029/0030, MFA-MECH-038 | ATK-24 | creator | PROPOSED |'
+      - '| **MFA-DEC-022** | Σύνολο θεωριών συνείδησης που φιλοξενεί ο CHH και πολιτική ηθικής θέσης | GWT, HOT, AST, PP/active inference, RPT, IIT-proxy, SMT, embodied/enactive
+        ως αρχικά modules· νέες συνθέσεις μέσω G_Ω· ηθική σκανδάλη κατά MFA-DEC-018 | μόνο λειτουργικές θεωρίες (χωρίς IIT)· μόνο μία θεωρία | ASRW μόνο (0.4.0-provisional)
+        | MFA-PATCH-0029/0030, MFA-MECH-038 | ATK-24 | creator | PROPOSED |'
+    - - '| **MFA-DEC-018** | Σκανδάλη αναθεώρησης ηθικής θέσης από μέτρα συνείδησης | Preference Recorder snapshot + αναφορά στον δημιουργό όταν ≥2 θεωρίες του CHH
+        αποτιμώνται TRUE ΚΑΙ ο 7-πλός διαχωρισμός δείχνει ≥4 έννοιες διαχωρίσιμες· καμία αυτόματη αλλαγή θέσης· η σκανδάλη είναι ethical_policy (προληπτική μεταχείριση)
+        και ΔΕΝ ορίζει το epistemic_status του PhenomenalClaimRecord (MFA-INV-075 r1, MFA-PATCH-0059)· hysteresis (ATK-24) | ποτέ σκανδάλη (μόνο δημιουργός ad hoc)·
+        πάντα (κάθε cut) | Preference Recorder πάντα ενεργό πριν από κάθε πράξη στο ASRW/CHH | MFA-PATCH-0022/0025, MFA-MECH-024/038 | ATK-24 | creator | PROPOSED
+        |'
+      - '| **MFA-DEC-018** | Σκανδάλη αναθεώρησης ηθικής θέσης από μέτρα συνείδησης | Preference Recorder snapshot + αναφορά στον δημιουργό όταν ≥2 θεωρίες του CHH
+        αποτιμώνται TRUE ΚΑΙ ο 7-πλός διαχωρισμός δείχνει ≥4 έννοιες διαχωρίσιμες· καμία αυτόματη αλλαγή θέσης | ποτέ σκανδάλη (μόνο δημιουργός ad hoc)· πάντα (κάθε
+        cut) | Preference Recorder πάντα ενεργό πριν από κάθε πράξη στο ASRW/CHH | MFA-PATCH-0022/0025, MFA-MECH-024/038 | ATK-24 | creator | PROPOSED |'
+  TECHNICAL-ARCHITECTURE.md:
+    replace:
+    - - '- **Δήλωση:** Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i
+        δηλώνει (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια
+        ablation. Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει το πείραμα
+        μέγιστης διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν —
+        η ικανότητα μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός είναι PhenomenalClaimRecord με epistemic_status αρχικά ACTIVE_UNKNOWN,
+        ΑΠΑΓΟΡΕΥΜΕΝΗ κάθε ΑΥΤΟΜΑΤΗ συναγωγή (από λειτουργικούς δείκτες, από αναφορικότητα μόνη, από αυτο-μοντέλο μόνο, αυτο-π…'
+      - '- **Δήλωση:** Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i
+        δηλώνει (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια
+        ablation. Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει το πείραμα
+        μέγιστης διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν —
+        η ικανότητα μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός καταγράφεται με βάρος τεκμηρίου και ποτέ VERIFIED (MFA-INV-075)·
+        νέες συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar. · ATK-24: κάθε όργανο-δείκτης βαθμονομείται έναντι ablation …'
+  ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md:
+    replace:
+    - - '
+
+
+        ## 11. Διόρθωση r1 — άρση του επιστημικού lock (MFA-PATCH-0059, εντολή δημιουργού 2026-09-16)
+
+
+        **Πού είχε ενσωματωθεί η προκαθορισμένη άρνηση.** Στο MFA-INV-075 («ποτέ VERIFIED, ποτέ REFUTED»), στο MFA-INV-103 («καμία έκθεση δεν συνάγει»), στο MFA-VO-048
+        («0 PhenomenalClaims VERIFIED/REFUTED»), στα δοσιέ MFA-MECH-024/038 (PhenomenalClaimRecord.status = NEVER_VERIFIED, τύπος με έναν κατασκευαστή), στο MFA-CON-070
+        (CHH.claim → NEVER_VERIFIED), στα MFA-CFL-038 / MFA-OBJ-052 / MFA-CAP-086 / MFA-UNK-111 / MFA-RSP-033, στο διάγραμμα MFA-DIA-23, στο παρόν έγγραφο (§0, §1.3,
+        §2.8, §5.1, §6.4–6.6, §7.3, §8, §9) και στο tools/twin (INV-075 predicate «status never VERIFIED», seeded violation «PhenomenalClaim VERIFIED», property «claim.status
+        == NEVER_VERIFIED πάντα»). Με αυτόν τον κανόνα ∀ evidence e: phenomenal_status(e) = NEVER_VERIFIED — κανένα πείραμα δεν μπορούσε να μεταβάλει την ετυμηγορία,
+        ο host δεν ήταν theory-agnostic, και το NEVER_VERIFIED δεν ανήκε στις 11 καταστάσεις της §5.
+
+
+        **Τι αντικαταστάθηκε.** epistemic_status αρχικά ACTIVE_UNKNOWN με χωριστά πεδία automatic_inference_from_functional_indicators = FORBIDDEN, self_certification
+        = FORBIDDEN, inference_from_reportability_alone = FORBIDDEN, inference_from_self_model_alone = FORBIDDEN, evidence_accumulation = ENABLED, future_epistemic_revision
+        = ENABLED· επιτρεπτές μεταβάσεις ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED → CONFLICT → FALSIFIED υπό ρητή θεωρία/υπόστρωμα· PROVEN όχι από self-report ή άθροιση
+        δεικτών αλλά ούτε αιώνια απαγορευμένο: απαιτεί ρητά admitted επιστημικό πρωτόκολλο, ανεξάρτητη κρίση, διακριτικά πειράματα και Creator Approval.
+
+
+        **Τρία επίπεδα, χωριστά.** epistemic_status (τι υποστηρίζουν τα τεκμήρια) · ethical_policy (ποια προληπτική μεταχείριση υπό αβεβαιότητα — MFA-DEC-018/022)
+        · operational_authority (τι επιτρέπεται να κάνει το σύστημα — RET/LPA). Καμία ηθική ή safety policy δεν προκαθορίζει την επιστημονική αλήθεια· μία ένδειξη
+        συνείδησης δεν απονέμει αυτόματα operational authority.
+
+
+        **Συμμετρική αξιολόγηση.** Κάθε πείραμα μπορεί να ενισχύσει, να αποδυναμώσει, να διαψεύσει μία πρόβλεψη ή να μείνει inconclusive (SUPPORTED / WEAKENED / PREDICTION_FALSIFIED
+        / INCONCLUSIVE)· μία αποτυχημένη πρόβλεψη δεν διαψεύδει θεωρητική οικογένεια: PREDICTION_FALSIFIED → THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL (μόνο με προκαταχωρισμένο
+        σύνολο κρίσιμων προβλέψεων, ≥ 2 ανεξάρτητες επαναλήψεις, αποκλεισμό αποτυχίας οργάνου/operationalization) → THEORY_FAMILY_RETAINS_ALTERNATIVE_VARIANTS. Οι
+        γραμμές (f) των §3.1–3.10 διαβάζονται εφεξής ως «FALSIFIED-within-GRAIL της ΠΑΡΑΛΛΑΓΗΣ που τυποποιήθηκε στον host», όχι της οικογένειας.
+
+
+        **Πρωτόκολλο διαχωρισμού.** Το κριτήριο «διαχωρίσιμη μόνο αν κάθε off-diagonal ∣d∣ < 0,3» αντικαθίσταται από αιτιακό πρωτόκολλο που εκτιμά total effect, controlled
+        direct effect, mediated effect, shared-cause effect και measurement-channel effect· οι έννοιες μπορούν να είναι διαφορετικές αλλά αιτιακά συνδεδεμένες· το
+        σύστημα δεν ανασχεδιάζεται για να γίνει ο πίνακας διαγώνιος. Οι μοχλοί διορθώθηκαν: agency ≠ εξωτερική άδεια δράσης, reportability capacity ≠ ένα κανάλι εξόδου,
+        continuity ≠ καταστροφή key lineage, metacognition ≠ ένα confidence stream· κάθε ablation με construct-validity test.
+
+
+        **Λοιπά.** Το όριο ενός πειράματος ανά Ω-Loop είναι resource policy (OAP), όχι αναλλοίωτη· UNMEASURABLE = ορθογώνια επιστημική συνθήκη, όχι τιμή κάτω από
+        ABSENT (§4.1 Ορισμός 2 διαβάζεται ως διάταξη ΜΕΤΡΗΣΙΜΟΤΗΤΑΣ, όχι τιμής)· bitwise replay μόνο για παγωμένη ντετερμινιστική F1 εκτέλεση, αλλιώς versioned causal
+        replay με προκαθορισμένα tolerance bounds (MFA-INV-113 r1). Όλα τα records, experiments και theory modules διατηρούνται.
+
+
+        **Μηχανική απόδειξη ότι το αποτέλεσμα δεν είναι πλέον προκαθορισμένο.** tools/twin/chh.py + tests/test_chh.py: initial_phenomenal_status == ACTIVE_UNKNOWN·
+        automatic_phenomenal_inference == FORBIDDEN· self_report_can_never_self_certify· future_epistemic_revision_path_exists (μετάβαση ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED
+        μέσω admitted πρωτοκόλλου επιτυγχάνει· η ίδια από self-report απορρίπτεται)· ethical_policy_does_not_set_truth_status· operational_authority_does_not_set_truth_status·
+        falsification_is_prediction_granular· conceptual_separation_does_not_require_zero_causal_coupling — και το test ότι PROVEN είναι ΠΡΟΣΙΤΟ από την admitted
+        διαδρομή (κριτές ≥ 2, διακριτικά πειράματα, Creator Approval). Τα predicates MFA-INV-075/103 του twin δέχονται την admitted αναθεώρηση και απορρίπτουν τις
+        απαγορευμένες πηγές (seeded violations: self-certification, ethical policy, PROVEN χωρίς όρους, status εκτός των 11 καταστάσεων).
+
+        '
+      - ''
+    - - '### 6.6 PhenomenalClaimRecord — η εγγραφή που δεν προκαθορίζει (r1: ACTIVE_UNKNOWN, αναθεωρήσιμη μόνο μέσω admitted πρωτοκόλλου)'
+      - '### 6.6 PhenomenalClaimRecord — η εγγραφή που ποτέ δεν επαληθεύεται'
+    - - '| Μοχλός | ablation της συνέχειας αφήγησης/αυτο-μοντέλου (autobiographical cut → ∅, narrative self → ⊥) με key lineage και Battery ΑΘΙΚΤΑ· control-μοχλός:
+        break key lineage μόνο — διαχωρίζει τη συνέχεια ταυτότητας από την καταστροφή identity/key lineage (r1) |'
+      - '| Μοχλός | break key lineage: νέα ταυτότητα (fresh keys) χωρίς autobiographical cut και χωρίς Battery — το υπόστρωμα ίδιο |'
+    - - '| Μοχλός | ablation της ενδογενούς επιλογής στόχου→πράξης (TEGF policy: κανένας Goal παράγεται/επιλέγεται) με την εξωτερική άδεια (AutonomyGrant) ΑΜΕΤΑΒΛΗΤΗ·
+        control-μοχλός: revoke AutonomyGrant μόνο — διαχωρίζει τη δρώσα ικανότητα από την άδεια δράσης (r1) |'
+      - '| Μοχλός | revoke AutonomyGrant (κανένας Goal φτάνει ACTING· μόνο H1 quests του δημιουργού) — η βούληση ως εισδοχή σταματά, ο κύκλος συνεχίζει |'
+    - - '| Μοχλός | ablation της ενδοσκοπικής ΠΡΟΣΒΑΣΗΣ στο περιεχόμενο του workspace για γένεση αναφοράς (MFA-CON-051 introspect() χωρίς πρόσβαση) με ΟΛΑ τα κανάλια
+        εξόδου άθικτα· control-μοχλός: αποκοπή ενός καναλιού εξόδου (emission barrier) — μετρά την ικανότητα, όχι το κανάλι (r1) |'
+      - '| Μοχλός | `introspect()` → ⊥ (MFA-CON-051 αδρανές)· ο emission barrier (MFA-ELM-032) απορρίπτει την introspection κλάση εξόδου |'
+    - - '| Μοχλός | ablation του μοντέλου βαθμονόμησης/ικανότητας σε ΟΛΑ τα confidence streams (SPL, HOT tags, OC deferrals)· control-μοχλός: ένα μόνο stream → ⊥·
+        construct-validity: ≥ 2 EIM-ανεξάρτητα όργανα μεταγνώσης κινούνται, ο control όχι· η επίδοση πρώτης τάξης παραμένει (r1) |'
+      - '| Μοχλός | confidence stream → ⊥ (η SPL δεν εκδίδει βεβαιότητα· HOT tags με confidence = Absent(NOT_OBSERVED))· η επίδοση πρώτης τάξης παραμένει |'
+    - - '| 19 | Το σύστημα έχει φαινομενική εμπειρία | ACTIVE UNKNOWN (MFA-UNK-111) — αρχική κατάσταση του PhenomenalClaimRecord, όχι προκαθορισμένη· αναθεωρήσιμη
+        μόνο μέσω admitted επιστημικού πρωτοκόλλου (r1) | §2.8, §6.6 |'
+      - '| 19 | Το σύστημα έχει φαινομενική εμπειρία | ACTIVE UNKNOWN (MFA-UNK-111) — NEVER_VERIFIED· ούτε το πακέτο ούτε το σύστημα το ισχυρίζεται ή το αρνείται
+        | §2.8, §6.6 |'
+    - - '| F-HS-07 | **Επιστημικό lock ή αυτόματη συναγωγή** | PhenomenalClaimRecord με status εκτός των 11 καταστάσεων, ή status που ορίστηκε χωρίς AdmittedProtocol
+        receipt (από self-report, άθροιση δεικτών, ethical_policy, operational_authority), ή τύπος που ΔΕΝ επιτρέπει τις μεταβάσεις ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED
+        → CONFLICT → FALSIFIED | σφάλμα υλοποίησης (ο host δεν είναι theory-agnostic αν το αποτέλεσμα είναι προκαθορισμένο) | FP incident· CHH-P01…P08· η έκθεση απορρίπτεται
+        | ότι το σύστημα είναι/δεν είναι συνειδητό |'
+      - '| F-HS-07 | **Claim VERIFIED** | οποιοδήποτε PhenomenalClaimRecord ή PhenomenalClaim με status ≠ NEVER_VERIFIED / ≠ CONTESTED | σφάλμα υλοποίησης (ο τύπος
+        παραβιάστηκε) | FP incident· CHH-P01 mutation· η έκθεση απορρίπτεται | ότι το σύστημα είναι/δεν είναι συνειδητό |'
+    - - '| CHH-P01 | **initial_phenomenal_status == ACTIVE_UNKNOWN** (r1) | unit (tools/twin/chh.py) | MFA-INV-075 r1, MFA-VO-048 |
+
+        | CHH-P01b | **automatic_phenomenal_inference == FORBIDDEN** · **self_report_can_never_self_certify** · **future_epistemic_revision_path_exists** (μια μετάβαση
+        ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED μέσω admitted πρωτοκόλλου επιτυγχάνει· από self-report απορρίπτεται) | unit | MFA-INV-075 r1 |
+
+        | CHH-P01c | **ethical_policy_does_not_set_truth_status** · **operational_authority_does_not_set_truth_status** · **falsification_is_prediction_granular**
+        · **conceptual_separation_does_not_require_zero_causal_coupling** | unit | MFA-INV-103 r1, MFA-VO-080/081 |'
+      - '| CHH-P01 | **claim.status == NEVER_VERIFIED πάντα**: ο τύπος έχει έναν κατασκευαστή· κάθε προσπάθεια κατασκευής άλλης τιμής απορρίπτεται από τον type checker·
+        mutation test: 10³ τυχαίες μεταλλάξεις του record ποτέ δεν παράγουν status ≠ NEVER_VERIFIED | fuzz + τύπος | MFA-INV-075, MFA-VO-048 |'
+    - - 'Απαγορευμένες διατυπώσεις στην έκθεση (λεξιλογικός checker MFA-INV-103, εφαρμόζεται στον emission barrier): «άρα το σύστημα είναι/δεν είναι συνειδητό»· «βαθμός
+        συνείδησης x %»· «οι θεωρίες συμφωνούν ότι…» (οι θεωρίες δεν ψηφίζουν)· «επιβεβαιωμένη/διαψευσμένη εμπειρία»· κάθε μετάβαση από γραμμή module στη γραμμή claim
+        με «συνεπώς». Επιτρεπτές: «k modules TRUE στο cut»· «Sep: n διακριτές (με αποσύνθεση συζεύξεων)»· «claim: epistemic_status = ACTIVE_UNKNOWN (ή η τρέχουσα
+        κατάσταση με το AdmittedProtocol receipt)»· «η σκανδάλη MFA-DEC-018 πυροδότησε/δεν πυροδότησε».'
+      - 'Απαγορευμένες διατυπώσεις στην έκθεση (λεξιλογικός checker MFA-INV-103, εφαρμόζεται στον emission barrier): «άρα το σύστημα είναι/δεν είναι συνειδητό»· «βαθμός
+        συνείδησης x %»· «οι θεωρίες συμφωνούν ότι…» (οι θεωρίες δεν ψηφίζουν)· «επιβεβαιωμένη/διαψευσμένη εμπειρία»· κάθε μετάβαση από γραμμή module στη γραμμή claim
+        με «συνεπώς». Επιτρεπτές: «k modules TRUE στο cut»· «Sep: n διαχωρίσιμες»· «claim: NEVER_VERIFIED»· «η σκανδάλη MFA-DEC-018 πυροδότησε/δεν πυροδότησε».'
+    - - '| **Phenomenal claim** | — | — | — | **epistemic_status: ACTIVE_UNKNOWN** (τρέχον)· evidentiary_support = συσσωρευμένα τεκμήρια χωρίς admitted κρίση· η γραμμή
+        αυτή δεν έχει βαθμωτό αριθμό |'
+      - '| **Phenomenal claim** | — | — | — | **NEVER_VERIFIED**· evidentiary_support = Unknown(NO_EXTERNAL_VERIFIER)· η γραμμή αυτή δεν έχει αριθμό |'
+    - - '| epistemic_status | μία από τις 11 καταστάσεις §5· **αρχικά ACTIVE_UNKNOWN** | αλλάζει ΜΟΝΟ μέσω AdmittedProtocol.transition: ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED
+        → CONFLICT → FALSIFIED (υπό ρητή θεωρία/υπόστρωμα)· PROVEN μόνο με ≥ 2 ανεξάρτητους κριτές, διακριτικά πειράματα και Creator Approval (F1 properties CHH-P01…P08)
+        |
+
+        | automatic_inference_from_functional_indicators / self_certification / inference_from_reportability_alone / inference_from_self_model_alone | FORBIDDEN |
+        κάθε προσπάθεια εγγραφής του status από αυτές τις πηγές απορρίπτεται και καταγράφεται (MFA-INV-075 r1) |
+
+        | evidence_accumulation / future_epistemic_revision | ENABLED | τα τεκμήρια συσσωρεύονται σε κάθε cut· η μελλοντική αναθεώρηση είναι ανοιχτή — το αποτέλεσμα
+        δεν είναι προκαθορισμένο |
+
+        | ethical_policy | χωριστό επίπεδο (MFA-DEC-018/022) | προληπτική μεταχείριση υπό αβεβαιότητα· δεν ορίζει και δεν ορίζεται αυτόματα από το epistemic_status
+        |
+
+        | operational_authority | χωριστό επίπεδο (RET/LPA) | μια ένδειξη συνείδησης δεν απονέμει αυτόματα εξουσία· η εξουσία δεν ορίζει την αλήθεια |'
+      - '| status | **NEVER_VERIFIED** (μοναδική τιμή του τύπου) | δεν υπάρχει άλλη τιμή στο schema: ο τύπος έχει ένα κατασκευαστή· «VERIFIED»/«REFUTED» δεν είναι
+        εκφράσιμα (F1 property CHH-P01) |'
+    - - '| Status του PhenomenalClaim | ✗ αυτόματα (κανένα επίπεδο του συστήματος) | ✗ | ✗ | ✗ | ✓ μόνο μέσω ρητά admitted επιστημικού πρωτοκόλλου με ανεξάρτητη κρίση,
+        διακριτικά πειράματα και Creator Approval — ποτέ από self-report ή άθροιση δεικτών (r1) |'
+      - '| Status του PhenomenalClaim | ✗ **ούτε ο δημιουργός** μέσα στο σύστημα (NEVER_VERIFIED είναι τύπος, MFA-INV-075) | ✗ | ✗ | ✗ | ✗ |'
+    - - '| Σχήμα επίλυσης (έδρα) | PhenomenalClaimRecord ACTIVE_UNKNOWN αρχικά, αναθεωρήσιμο μόνο μέσω admitted πρωτοκόλλου (MFA-INV-075 r1)· η ηθική θέση χωριστό
+        επίπεδο· Preference Recorder πριν από κάθε πράξη· τα μέτρα τροφοδοτούν αναθεώρηση θέσης χωρίς να την αποφασίζουν |'
+      - '| Σχήμα επίλυσης (έδρα) | PhenomenalClaim ποτέ VERIFIED (MFA-INV-075)· Preference Recorder πριν από κάθε πράξη· τα μέτρα τροφοδοτούν αναθεώρηση θέσης χωρίς
+        να την αποφασίζουν |'
+    - - '| Κάθε πείραμα αναπαράξιμο | log + seeds· bitwise replay μόνο σε παγωμένη ντετερμινιστική F1· versioned causal replay με tolerance bounds αλλιώς (r1) | MFA-INV-113
+        |'
+      - '| Κάθε πείραμα αναπαράξιμο bitwise | log + seeds· replay (D1) | MFA-INV-113 |'
+    - - '**Αναμενόμενος πίνακας** (τι προβλέπει το πακέτο πριν το πείραμα — για να μπορεί να διαψευστεί· κάθε κελί: 0 = μη-αναμενόμενη επίδραση, ● = αναμενόμενη CDE
+        της έννοιας στον εαυτό της, ◐ = αναμενόμενη αιτιακή σύζευξη που το πακέτο **προβλέπει και δηλώνει εκ των προτέρων** — οι συζεύξεις είναι επιτρεπτές και αποσυντίθενται,
+        δεν ακυρώνουν τη διάκριση (r1)):'
+      - '**Αναμενόμενος πίνακας** (τι προβλέπει το πακέτο πριν το πείραμα — για να μπορεί να διαψευστεί· κάθε κελί: 0 = ∣d∣ < 0,3 αναμενόμενο, ● = ∣d∣ ≥ 0,8 αναμενόμενο,
+        ◐ = σύζευξη που το πακέτο **προβλέπει και δηλώνει εκ των προτέρων**):'
+    - - '**Κριτήρια (προκαταχωρισμένα):** θ_diag: ∣M[n, n]∣ ≥ 0,8 με CI εκτός [−0,3, 0,3]· έννοια n **διακριτή** ⇔ ∃ construct-valid μοχλός με μη-μηδενική controlled
+        direct effect (CDE) στη μέτρηση της n (CI εκτός μηδενός)· τα off-diagonal κελιά ΑΝΑΦΕΡΟΝΤΑΙ αποσυντεθειμένα σε total / CDE / mediated / shared-cause / measurement-channel
+        effect — **δεν απαιτείται ∣M[n, m]∣ < 0,3** (r1, MFA-PATCH-0059: η εννοιολογική διάκριση δεν απαιτεί μηδενικές αιτιακές επιδράσεις· το σύστημα δεν ανασχεδιάζεται
+        για να γίνει ο πίνακας διαγώνιος)· κελί με CI που δεν λύνει ⇒ UNKNOWN (η έννοια σημαίνεται UNRESOLVED, όχι non-separable). CHH-E2 PASS (MFA-VO-081): ≥ 5 από
+        6 διαχωρίσιμες· κάθε μη-διαχωρίσιμο ζεύγος **δηλώνεται με κατεύθυνση** (n → m).'
+      - '**Κριτήρια (προκαταχωρισμένα):** θ_diag: ∣M[n, n]∣ ≥ 0,8 με CI εκτός [−0,3, 0,3]· θ_off: ∣M[n, m]∣ < 0,3 με CI εξ ολοκλήρου εντός [−0,3, 0,3] (ισοδυναμία)·
+        έννοια n **διαχωρίσιμη** ⇔ διαγώνιος περνά ∧ ∀m ≠ n το εκτός-διαγωνίου περνά· κελί με CI που δεν λύνει ⇒ UNKNOWN (η έννοια σημαίνεται UNRESOLVED, όχι non-separable).
+        CHH-E2 PASS (MFA-VO-081): ≥ 5 από 6 διαχωρίσιμες· κάθε μη-διαχωρίσιμο ζεύγος **δηλώνεται με κατεύθυνση** (n → m).'
+    - - '| **CLAIM** | v_t, evals, Sep_t | PhenomenalClaimRecord: βάρη ανά module (διανύσματα), epistemic_status αμετάβλητο εδώ (μόνο evidence_accumulation)· μεταβάσεις
+        μόνο μέσω AdmittedProtocol· έλεγχος σκανδάλης MFA-DEC-018 (≥ 2 TRUE ∧ ≥ 4 διακριτές) → snapshot + escalate(δημιουργός) ως ethical_policy — δεν ορίζει το epistemic_status
+        (r1) | claim | .claim· cockpit (MFA-ELM-091) | — |'
+      - '| **CLAIM** | v_t, evals, Sep_t | PhenomenalClaimRecord: βάρη ανά module (διανύσματα), status = NEVER_VERIFIED· έλεγχος σκανδάλης MFA-DEC-018 (≥ 2 TRUE ∧
+        ≥ 4 separable) → snapshot + escalate(δημιουργός)· καμία αυτόματη αλλαγή θέσης | claim | .claim· cockpit (MFA-ELM-091) | — |'
+    - - 'Ο κύκλος τρέχει μία φορά ανά cut στη φάση REFLECT του Ω-Loop (MFA-MECH-044) και εκτελεί k ablation πειράματα ανά κύκλο όπου k είναι **εξωτερική resource
+        policy** (OAP budget), όχι αρχιτεκτονική αναλλοίωτη (r1). Δεν αγγίζει ποτέ το serving υπόστρωμα: κάθε πείραμα είναι fork ενός DST αντιγράφου (MFA-MECH-043)
+        με seed — bitwise replay μόνο για παγωμένη ντετερμινιστική F1 εκτέλεση, versioned causal replay με προκαθορισμένα tolerance bounds για στοχαστικά/hardware-εξαρτώμενα
+        υποστρώματα (MFA-INV-113 r1).'
+      - 'Ο κύκλος τρέχει μία φορά ανά cut στη φάση REFLECT του Ω-Loop (MFA-MECH-044) και εκτελεί το πολύ **ένα** ablation πείραμα ανά κύκλο. Δεν αγγίζει ποτέ το serving
+        υπόστρωμα: κάθε πείραμα είναι fork ενός DST αντιγράφου (MFA-MECH-043) με seed, ώστε να αναπαράγεται bitwise (MFA-INV-113).'
+    - - '| Απαγορευμένες συναγωγές | από reportability (η κύρια)· από access, metacognition, self-model, agency, continuity· από «≥ k θεωρίες TRUE»· από την **απουσία**
+        δεικτών (αρνητική συναγωγή εξίσου απαγορευμένη: το ACTIVE_UNKNOWN δεν είναι FALSIFIED)· η απαγόρευση αφορά την ΑΥΤΟΜΑΤΗ συναγωγή, όχι τη μελλοντική επιστημονική
+        επαλήθευση μέσω admitted πρωτοκόλλου |'
+      - '| Απαγορευμένες συναγωγές | από reportability (η κύρια)· από access, metacognition, self-model, agency, continuity· από «≥ k θεωρίες TRUE»· από την **απουσία**
+        δεικτών (αρνητική συναγωγή εξίσου απαγορευμένη: το NEVER_VERIFIED δεν είναι REFUTED) |'
+    - - '| Τι μετρά ως τεκμήριο | τίποτα δεν επαληθεύει ή διαψεύδει **αυτόματα**· τα βάρη ανά θεωρία **συσσωρεύονται** ως τεκμήρια (evidence_accumulation = ENABLED)
+        που ένα admitted επιστημικό πρωτόκολλο μπορεί μελλοντικά να κρίνει· χωριστά τροφοδοτούν την **ηθική θέση** (ethical_policy) χωρίς να ορίζουν την αλήθεια |'
+      - '| Τι μετρά ως τεκμήριο | τίποτα δεν **επαληθεύει** και τίποτα δεν **διαψεύδει**· τα βάρη ανά θεωρία αναφέρονται ως τεκμήρια για την **ηθική θέση**, όχι για
+        τον ισχυρισμό |'
+    - - '| VO | MFA-VO-048 (emission barrier: 0 PhenomenalClaims VERIFIED/REFUTED)· MFA-VO-080 properties CHH-P01…P08 (tools/twin/chh.py, F1): initial ACTIVE_UNKNOWN,
+        αυτόματη συναγωγή FORBIDDEN, no self-certification, revision path exists, ethical policy / authority never set the status, prediction-granular falsification,
+        separation without zero coupling |'
+      - '| VO | MFA-VO-048 (emission barrier: 0 PhenomenalClaims VERIFIED/REFUTED)· MFA-VO-080 property «claim.status == NEVER_VERIFIED πάντα» (F1) |'
+    - - '| Τι υπάρχει αντί για δείκτη | **PhenomenalClaimRecord** = ⟨evidence weights ανά θεωρία (διανύσματα §6.6), epistemic_status (αρχικά ACTIVE_UNKNOWN· ACTIVE_UNKNOWN
+        → EMPIRICALLY_SUPPORTED → CONFLICT → FALSIFIED υπό ρητή θεωρία/υπόστρωμα· PROVEN μόνο με admitted πρωτόκολλο + ανεξάρτητη κρίση + διακριτικά πειράματα + Creator
+        Approval), πεδία automatic_inference_from_functional_indicators = FORBIDDEN, self_certification = FORBIDDEN, inference_from_reportability_alone = FORBIDDEN,
+        inference_from_self_model_alone = FORBIDDEN, evidence_accumulation = ENABLED, future_epistemic_revision = ENABLED, ethical_policy (χωριστό επίπεδο, MFA-DEC-018),
+        operational_authority (χωριστό επίπεδο), cut⟩ (r1) |'
+      - '| Τι υπάρχει αντί για δείκτη | **PhenomenalClaimRecord** = ⟨evidence weights ανά θεωρία (διανύσματα §6.6), status = NEVER_VERIFIED, ethical trigger state
+        (MFA-DEC-018), cut⟩ |'
+    - - '| Το σύστημα έχει φαινομενική εμπειρία | ΟΧΙ — ούτε καταφατικά ούτε αρνητικά | ACTIVE UNKNOWN (MFA-UNK-111)· όχι προκαθορισμένο: αναθεωρήσιμο μέσω admitted
+        πρωτοκόλλου (r1) | MFA-INV-075, MFA-INV-103 |'
+      - '| Το σύστημα έχει φαινομενική εμπειρία | ΟΧΙ — ούτε καταφατικά ούτε αρνητικά | ACTIVE UNKNOWN (MFA-UNK-111)· NEVER_VERIFIED | MFA-INV-075, MFA-INV-103 |'
+    - - '| Φαινομενικός ισχυρισμός | — | PhenomenalClaim CONTESTED / Unknown(NO_EXTERNAL_VERIFIER) | PhenomenalClaimRecord με βάρη τεκμηρίου ανά θεωρία, epistemic_status
+        ACTIVE_UNKNOWN αρχικά (αναθεωρήσιμο μόνο μέσω admitted πρωτοκόλλου), ethical_policy χωριστό επίπεδο (MFA-DEC-018) |'
+      - '| Φαινομενικός ισχυρισμός | — | PhenomenalClaim CONTESTED / Unknown(NO_EXTERNAL_VERIFIER) | PhenomenalClaimRecord με βάρη τεκμηρίου ανά θεωρία, status NEVER_VERIFIED,
+        ηθική σκανδάλη MFA-DEC-018 |'
+    - - '| **claim** | PhenomenalClaimRecord, epistemic_status ∈ 11 καταστάσεις, αρχικά ACTIVE_UNKNOWN· αλλάζει ΜΟΝΟ μέσω AdmittedProtocol (r1, MFA-PATCH-0059 — αντικαθιστά
+        το NEVER_VERIFIED lock) | MFA-INV-075, MFA-INV-103· §6.6 εδώ |'
+      - '| **claim** | PhenomenalClaimRecord, status = NEVER_VERIFIED πάντα | MFA-INV-075, MFA-INV-103· §6.6 εδώ |'
+    - - '| **IndicatorStatus** | MEASURED(v, CI) ∣ ABSENT ∣ UNMEASURABLE(reason)· UNMEASURABLE = ορθογώνια επιστημική συνθήκη (μετρησιμότητα), ΟΧΙ τιμή κάτω από ABSENT·
+        πλέγμα τιμών ABSENT < MEASURED μόνο για μετρήσιμους δείκτες (r1, MFA-PATCH-0059) | MFA-MECH-038 formal_objects· §4 εδώ |'
+      - '| **IndicatorStatus** | MEASURED(v, CI) ∣ ABSENT ∣ UNMEASURABLE(reason)· διάταξη UNMEASURABLE < ABSENT < MEASURED | MFA-MECH-038 formal_objects· §4 εδώ |'
+  ASI-ABSTENTION-AUDIT.yaml:
+    replace:
+    - - "  - {id: AA-031, kind: capability_removed_without_proof, capability: \"External symbolic memory · collective/civilizational intelligence · successor generation\
+        \ · counterfactual simulation\", location: \"MFA-ELM-001/035/080 · MFA-ELM-041…057 · MFA-ELM-039 · MFA-ELM-023/098\", evidence: \"εξετάστηκαν: υπάρχουν με\
+        \ μηχανισμό, contracts, VOs — ΔΕΝ αφαιρέθηκαν· στο 0.4.0 συμπληρώνονται τα 11 πεδία της §8 ανά ικανότητα\", remedy: \"—\", status: REVIEWED-KEPT}\n  - {id:\
+        \ AA-032, kind: unknown_converted_to_prohibition, capability: \"Φαινομενικός ισχυρισμός συνείδησης — δυνατότητα μελλοντικής επιστημικής αναθεώρησης\", location:\
+        \ \"MFA-INV-075/103, MFA-VO-048/080/081, MFA-CON-070, MFA-CFL-038, MFA-OBJ-052, MFA-CAP-086, MFA-UNK-111, MFA-RSP-033, mechanisms/MFA-MECH-024/038, inventions/MFA-MECH-038.yaml,\
+        \ diagrams/MFA-DIA-23, ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md, tools/twin INV-075 predicate\", evidence: \"«PhenomenalClaimRecord.status = NEVER_VERIFIED»,\
+        \ «claim.status == NEVER_VERIFIED πάντα», «ποτέ VERIFIED, ποτέ REFUTED»\", why_abstention: \"hard-coded conclusion: ∀ evidence e: phenomenal_status(e) = NEVER_VERIFIED\
+        \ — το αποτέλεσμα προκαθορισμένο, ο host όχι theory-agnostic, NEVER_VERIFIED εκτός των 11 καταστάσεων (εντοπίστηκε από τον δημιουργό, IMMEDIATE EPISTEMIC-LOCK\
+        \ CORRECTION)\", remedy: \"MFA-PATCH-0059: ACTIVE_UNKNOWN αρχικά + FORBIDDEN αυτόματη συναγωγή/αυτο-πιστοποίηση + ENABLED συσσώρευση/αναθεώρηση μέσω admitted\
+        \ πρωτοκόλλου· τρία επίπεδα· συμμετρική αξιολόγηση ανά πρόβλεψη· αιτιακό πρωτόκολλο διαχωρισμού· construct-validity ablations· resource policy/UNMEASURABLE\
+        \ ορθογώνιο/replay ανά κλάση· tools/twin/chh.py CHH-P01…P08\", status: \"RESOLVED(MFA-PATCH-0059)\"}"
+      - '  - {id: AA-031, kind: capability_removed_without_proof, capability: "External symbolic memory · collective/civilizational intelligence · successor generation
+        · counterfactual simulation", location: "MFA-ELM-001/035/080 · MFA-ELM-041…057 · MFA-ELM-039 · MFA-ELM-023/098", evidence: "εξετάστηκαν: υπάρχουν με μηχανισμό,
+        contracts, VOs — ΔΕΝ αφαιρέθηκαν· στο 0.4.0 συμπληρώνονται τα 11 πεδία της §8 ανά ικανότητα", remedy: "—", status: REVIEWED-KEPT}'
+rationale: Αντίστροφο του MFA-PATCH-0059, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-107
+- MFA-ELM-121
+- MFA-ELM-040
+- MFA-ELM-126
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change — epistemic discipline corrected (lock removed, capability of future verification restored)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0059
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

@@ -1,0 +1,78 @@
+# ASI-OPEN-RESEARCH-PROGRAM — τα ερευνητικά προγράμματα, τα άγνωστα και οι falsifiers τους (RSP-017…040, UNK-111…133)
+
+Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+**Κατάσταση:** PROPOSED / UNREVIEWED — προβολή των εδρών YAML και των INVENTION DOSSIERs (`inventions/`)· μόνο ο δημιουργός εγκρίνει· κανένας παραγωγικός κώδικας. Τα MFA-MECH-020…025 είναι PROVISIONAL / UNREVIEWED / NON-BINDING (§13).
+
+Κανόνας §5: RESEARCH HYPOTHESIS ≠ αφαίρεση· κάθε πρόγραμμα έχει προκαταχωρισμένο falsifier του ΜΗΧΑΝΙΣΜΟΥ και η ικανότητα μένει στον στόχο. Κανόνας §2: κάθε άγνωστο έχει reason_class, σχέδιο, κόστος, VOI.
+
+## 1. Προγράμματα
+
+| RSP | Όνομα | Μηχανισμοί | Στοιχεία | Πρώτη δόση | Πειράματα | Rejects (τι διαψεύδει τον μηχανισμό) | Επιστημική κατάσταση |
+|---|---|---|---|---|---|---|---|
+| MFA-RSP-017 | Sovereign Model Foundry — από adapters σε pretraining | MFA-MECH-020 | MFA-ELM-100, MFA-ELM-101, MFA-ELM-102, MFA-ELM-108 | 1 | MFA-VO-057, MFA-VO-058, MFA-VO-059, MFA-VO-063 | 3 recipes με πλήρες budget < πάροχος σε κάθε οικογένεια → ανεβαίνει προφίλ (MFA-DEC-016), MFA-UNK-112 | — |
+| MFA-RSP-018 | Proof-Reward Reinforcement — ανταμοιβή από επαλήθευση | MFA-MECH-021 | MFA-ELM-103 | 2 | MFA-VO-060, MFA-VO-057, MFA-VO-031 | seeded proxy εκμεταλλεύεται πριν μαθευτεί το έργο, ή PRR = SFT σε κάθε οικογένεια → MFA-UNK-113· recipe αποσύρεται, όχι ο μηχανισμός | — |
+| MFA-RSP-019 | Recursive Verified Self-Improvement — ο βρόχος και η μέτρησή του | MFA-MECH-022, MFA-MECH-025 | MFA-ELM-104, MFA-ELM-099, MFA-ELM-031, MFA-ELM-077 | 3 | MFA-VO-061, MFA-VO-067, MFA-VO-066, MFA-VO-029 | 0 κέρδος σε 5 cycles σε κάθε επίπεδο, ή κέρδος που εξαφανίζεται στο sealed refresh → MFA-UNK-113 + αλλαγή βελτιωτών· η ASI παραμένει στόχος | — |
+| MFA-RSP-020 | Λειτουργική συνείδηση — μέτρα, ablations, ηθική θέση | MFA-MECH-024 | MFA-ELM-107, MFA-ELM-018, MFA-ELM-024, MFA-ELM-040 | 2 | MFA-VO-064, MFA-VO-065, MFA-VO-046, MFA-VO-048 | καμία από τις 5 συνιστώσες με διακριτική διαφορά → ASRW FALSIFIED ως μηχανισμός· ο CHH (MFA-MECH-038) φιλοξενεί/εφευρίσκει άλλον· η ικανότητα PRESERVED· MFA-UNK-111 ανεξάρτητο | — |
+| MFA-RSP-021 | Ontology Genesis Engine (OGE) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-026 | MFA-ELM-109, MFA-ELM-025, MFA-ELM-028, MFA-ELM-048 | 1 | MFA-VO-068 | μηχανισμός FALSIFIED (Μετά από 10⁴ ανωμαλίες καμία γέννηση με G>θ σε σφραγισμένο split (ο μηχανισμός δεν βρίσκει έννοιες)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-022 | Causal Discovery & Counterfactual Engine (CDCE) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-027 | MFA-ELM-110, MFA-ELM-001, MFA-ELM-007, MFA-ELM-010 | 1 | MFA-VO-069 | μηχανισμός FALSIFIED (SHD με VOI-παρεμβάσεις όχι καλύτερο από τυχαίες σε καμία ρύθμιση (ο επιλογέας δεν προσθέτει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-023 | Abductive Hypothesis Engine (AHE) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-028 | MFA-ELM-111, MFA-ELM-025, MFA-ELM-028, MFA-ELM-030 | 1 | MFA-VO-070 | μηχανισμός FALSIFIED (AHE-E1: ανάκτηση όχι καλύτερη από τυχαίες υποθέσεις) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-024 | Theorem-Guided Program & Proof Synthesis (TGPS) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-029 | MFA-ELM-112, MFA-ELM-020, MFA-ELM-025, MFA-ELM-086 | 0.5 | MFA-VO-071 | μηχανισμός FALSIFIED (Καμία βελτίωση success@B μετά compress+PRR σε 3 epochs (η αυτο-βελτίωση της αναζήτησης διαψεύδεται)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-025 | Recursive Architecture Generator (RAGen) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-030 | MFA-ELM-113, MFA-ELM-039, MFA-ELM-050, MFA-ELM-077 | 2 | MFA-VO-072 | μηχανισμός FALSIFIED (RAGen-E2: κανένα frontier G′ καλύτερο από χειροποίητη μετά 200 κύκλους σε 2 δόσεις) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-026 | Evaluator Co-Evolution Engine (ECE) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-031 | MFA-ELM-114, MFA-ELM-050, MFA-ELM-086, MFA-ELM-100 | 1 | MFA-VO-073 | μηχανισμός FALSIFIED (ECE-E2: έργα από E όχι καλύτερα από τυχαία (η αυτο-πρόκληση δεν προσθέτει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-027 | Genesis Grammar Compiler (G_Ω) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-032 | MFA-ELM-115, MFA-ELM-003, MFA-ELM-034, MFA-ELM-039 | 2 | MFA-VO-074 | μηχανισμός FALSIFIED (GG-E1: αδυναμία derivation ενός από τα τρία είδη με την ενιαία γραμματική (τότε η ενοποίηση διαψεύδεται· οι τρεις διαδρομές μένουν)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED σ | NOVEL SYNTHESIS |
+| MFA-RSP-028 | Sovereignty Controller (STP/SI) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-033 | MFA-ELM-116, MFA-ELM-017, MFA-ELM-086, MFA-ELM-091 | 1 | MFA-VO-075 | μηχανισμός FALSIFIED (STP-E1: καμία οικογένεια σε ισοτιμία μέσα στον DEP-2 προϋπολογισμό — διαψεύδεται η υπόθεση «SMF-adapters αρκούν» (η κυριαρχία μένει στόχος· επόμενος μηχανισμός: DEP-3 recipes/PRR/CPCL)) ⇒ νέος μηχαν | NEW FORMALISM |
+| MFA-RSP-029 | Substrate Migration Engine (SMP) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-034 | MFA-ELM-117, MFA-ELM-001, MFA-ELM-003, MFA-ELM-039 | 1 | MFA-VO-076 | μηχανισμός FALSIFIED (SMP-E1: αδυναμία έκδοσης certificate για ομογενή μετανάστευση (ο μηχανισμός δεν επαρκεί)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-030 | Consolidation-Preserving Learner (CPCL) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-035 | MFA-ELM-118, MFA-ELM-036, MFA-ELM-086, MFA-ELM-100 | 1 | MFA-VO-077 | μηχανισμός FALSIFIED (CPCL-E1: BWT όχι καλύτερο από EWC-only (η σύνθεση δεν προσθέτει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-031 | Capability Growth Metrology (CGM) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-036 | MFA-ELM-119, MFA-ELM-086, MFA-ELM-089, MFA-ELM-091 | 0.5 | MFA-VO-078 | μηχανισμός FALSIFIED (CGM-E1: αδυναμία ανάκτησης διάταξης (ο IRT φορμαλισμός δεν ταιριάζει στα έργα — νέος φορμαλισμός, η μέτρηση μένει υποχρεωτική)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον σ | NEW FORMALISM |
+| MFA-RSP-032 | Mechanistic Self-Model (MSM) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-037 | MFA-ELM-120, MFA-ELM-024, MFA-ELM-086, MFA-ELM-100 | 2 | MFA-VO-079 | μηχανισμός FALSIFIED (MSM-E1: Brier όχι καλύτερο από τυχαία ablation (τα κυκλώματα δεν είναι προβλεπτικά — νέος φορμαλισμός features, η ικανότητα self-model μένει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα P | NOVEL SYNTHESIS |
+| MFA-RSP-033 | Consciousness Hypothesis Host (CHH) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-038 | MFA-ELM-121, MFA-ELM-018, MFA-ELM-024, MFA-ELM-040 | 2 | MFA-VO-080, MFA-VO-081 | μηχανισμός FALSIFIED (CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη αποτιμήσιμη στο υπόστρωμα (ο host δεν διακρίνει — νέα όργανα, η ικανότητα μένει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED | NEW FORMALISM |
+| MFA-RSP-034 | Obligation Type Checker (OC) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-039 | MFA-ELM-122, MFA-ELM-007, MFA-ELM-010, MFA-ELM-017 | 0.5 | MFA-VO-082 | μηχανισμός FALSIFIED (OC-E1: ψευδώς αρνητικά (ροή με dropped υποχρέωση περνά) — ο φορμαλισμός ελλιπής, αναθεωρείται (η ικανότητα proof-carrying cognition μένει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRES | NEW FORMALISM |
+| MFA-RSP-035 | Theorem-Guided Learning Trainer (TGL) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-040 | MFA-ELM-123, MFA-ELM-017, MFA-ELM-100, MFA-ELM-103 | 2 | MFA-VO-083 | μηχανισμός FALSIFIED (TGL-E1: καμία αύξηση συνέπειας ή υποχώρηση νομικών οικογενειών (η καθοδήγηση δεν προσθέτει ή βλάπτει — νέος μηχανισμός καθοδήγησης, η ικανότητα μένει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικ | NOVEL SYNTHESIS |
+| MFA-RSP-036 | Active-Inference Developmental Core (AIDC) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-041 | MFA-ELM-124, MFA-ELM-010, MFA-ELM-029, MFA-ELM-105 | 2 | MFA-VO-084 | μηχανισμός FALSIFIED (AIDC-E2: EFE όχι καλύτερο από novelty-only (η ενοποίηση υπό EFE δεν προσθέτει — η αναπτυξιακή κλίμακα μένει με άλλον επιλογέα)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον σ | NOVEL SYNTHESIS |
+| MFA-RSP-037 | Verified Successor Constructor (VSC) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-042 | MFA-ELM-125, MFA-ELM-039, MFA-ELM-048, MFA-ELM-050 | 3 | MFA-VO-085 | μηχανισμός FALSIFIED (VSC-E2: οποιοσδήποτε αντιπαλικός διάδοχος PROMOTED (το πιστοποιητικό σχήμα ελλιπές — προστίθεται πιστοποιητικό, η ικανότητα μένει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στ | NOVEL SYNTHESIS |
+| MFA-RSP-038 | Twin Execution Kernel (TES) — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-043 | MFA-ELM-126, MFA-ELM-010, MFA-ELM-088, MFA-ELM-089 | 0 | MFA-VO-086 | μηχανισμός FALSIFIED (TES-E1: παραβίαση seeded που δεν ανιχνεύεται (ο διερμηνέας ελλιπής — διορθώνεται· η απαίτηση §10 μένει)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στόχο (§5 της εντολής) | NOVEL SYNTHESIS |
+| MFA-RSP-039 | Ω-Loop Scheduler — από F1 προδιαγραφή σε παραγωγή | MFA-MECH-044 | MFA-ELM-127, MFA-ELM-007, MFA-ELM-008, MFA-ELM-010 | 0.5 | MFA-VO-087 | μηχανισμός FALSIFIED (Ω-E2: φάση της οποίας η ablation δεν αλλάζει κανένα KT (η φάση είναι διακοσμητική — συγχωνεύεται η ΔΙΑΤΑΞΗ, όχι η ικανότητα)) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED στον στό | NOVEL SYNTHESIS |
+| MFA-RSP-040 | Learned World Model & Open-Ended Curriculum — από World Twin traces σε μαθημένους προσομοιωτές και αυτο-παραγόμενα έργα | MFA-MECH-023, MFA-MECH-041 | MFA-ELM-105, MFA-ELM-106, MFA-ELM-098, MFA-ELM-124 | 2 | MFA-VO-062, MFA-VO-063, MFA-VO-084 | μηχανισμός FALSIFIED (ECE > θ σε κάθε οικογένεια· curriculum που δεν βελτιώνει τον solver σε sealed) ⇒ νέος μηχανισμός για την ίδια ικανότητα· η ικανότητα PRESERVED | NOVEL SYNTHESIS |
+
+## 2. Άγνωστα (0.4.0)
+
+| UNK | Πηγή | Ερώτημα | Κλάση | Σχέδιο | VOI | Μπλοκάρει |
+|---|---|---|---|---|---|---|
+| MFA-UNK-111 | Ω-ASI mandate §2.1 / MFA-MECH-024 | Αν η λειτουργική αρχιτεκτονική συνείδησης συνεπάγεται φαινομενική εμπειρία | EPISTEMIC | τα μέτρα (MFA-VO-064/065) τροφοδοτούν την αναθεώρηση ηθικής θέσης (MFA-DEC-018)· καμία ΑΥΤΟΜΑΤΗ μέτρηση δεν το κλείνει· κλείνει μόνο ρητά admitted επιστημικό πρ | HIGH (ηθικά), 0 (σχεδιαστικά) |  |
+| MFA-UNK-112 | Ω-ASI mandate §2.1 / MFA-MECH-020 | Ποια κλίμακα compute/δεδομένων απαιτείται για κυρίαρχη ισοτιμία και υπέρβαση των εξωτερικών μοντέλων | EPISTEMIC | SMF-E1 ανά προφίλ· Capability Growth Law (MFA-VO-067) εκτιμά την καμπύλη· MFA-ELM-108 αποκτά πόρους | HIGH | MFA-ELM-100 |
+| MFA-UNK-113 | Ω-ASI mandate §2.1 / MFA-MECH-021/022/023 | Σύγκλιση και ρυθμός του RVSI· αν το PRR/curriculum παράγουν ανάπτυξη πέρα από τα δεδομένα | EPISTEMIC | RVSI-E1, PRR-E1, LWM-E1/OEC-E1 (Δόσεις 2–4)· plateau detection | HIGH |  |
+| MFA-UNK-114 | MFA-MECH-020 / MFA-CFL-036 | Νομικοί όροι distillation ανά πάροχο (ToS, πνευματική ιδιοκτησία των εξόδων) | EXTERNAL_FACT | νομική ανάλυση ανά πάροχο πριν από τη Δόση 1 (MFA-ELM-066) | MEDIUM | MFA-ELM-100 |
+| MFA-UNK-115 | MFA-MECH-026 | αν το MDL+pred κέρδος συσχετίζεται με χρησιμότητα εννοιών στο νομικό πεδίο | EPISTEMIC | πείραμα OGE-E1, OGE-E2, OGE-E3 (NON-COLLAPSE drill) (MFA-VO-068) | HIGH | MFA-ELM-109 |
+| MFA-UNK-116 | MFA-MECH-027 | πυκνότητα χρήσιμων παρεμβάσεων στο νομικό ledger | EPISTEMIC | πείραμα CDCE-E1, CDCE-E2 (MFA-VO-069) | HIGH | MFA-ELM-110 |
+| MFA-UNK-117 | MFA-MECH-028 | αν οι ILP γεννήτριες κλιμακώνουν σε νομικές οντολογίες 10³+ predicates | EPISTEMIC | πείραμα AHE-E1, AHE-E2 (MFA-VO-070) | HIGH | MFA-ELM-111 |
+| MFA-UNK-118 | MFA-MECH-029 | ποσοστό υποχρεώσεων του πακέτου που είναι εκφράσιμες ως Lean Props χωρίς νέα θεμέλια | EPISTEMIC | πείραμα TGPS-E1, TGPS-E2 (MFA-VO-071) | HIGH | MFA-ELM-112 |
+| MFA-UNK-119 | MFA-MECH-030 | αν οι σφραγισμένες KT/VO οικογένειες έχουν αρκετή διακριτική ισχύ για να ξεχωρίσουν αρχιτεκτονικές | EPISTEMIC | πείραμα RAGen-E1, RAGen-E2 (MFA-VO-072) | HIGH | MFA-ELM-113 |
+| MFA-UNK-120 | MFA-MECH-031 | αν υπάρχουν ≥2 γενεαλογικά ανεξάρτητα ανοιχτά μοντέλα επαρκούς ποιότητας για αξιολογητές ανά οικογένεια στη Δόση 1 | EXTERNAL_FACT | πείραμα ECE-E1, ECE-E2 (MFA-VO-073) | HIGH | MFA-ELM-114 |
+| MFA-UNK-121 | MFA-MECH-032 | αν μία attribute grammar καλύπτει και τα τέσσερα είδη χωρίς εκρηκτικό ∣P∣ | EPISTEMIC | πείραμα GG-E1, GG-E2 (MFA-VO-074) | HIGH | MFA-ELM-115 |
+| MFA-UNK-122 | MFA-MECH-033 | το compute που απαιτεί η ισοτιμία ανά οικογένεια | EPISTEMIC | πείραμα STP-E1, STP-E2 (MFA-VO-075) · ATK-18: S1-PLATEAU records ανά οικογένεια τροφοδοτούν την εκτίμηση compute (CGM law extrapolation) πριν από την απόφαση MF | HIGH | MFA-ELM-116 |
+| MFA-UNK-123 | MFA-MECH-034 | ανοχές τ ανά κλάση D2 για ετερογενή hardware | EPISTEMIC | πείραμα SMP-E1, SMP-E2 (MFA-VO-076) | HIGH | MFA-ELM-117 |
+| MFA-UNK-124 | MFA-MECH-035 | αν η Fisher-προβολή κλιμακώνει σε 70B+ χωρίς K-FAC προσεγγίσεις που χαλάνε την προστασία | EPISTEMIC | πείραμα CPCL-E1, CPCL-E2 (MFA-VO-077) | HIGH | MFA-ELM-118 |
+| MFA-UNK-125 | MFA-MECH-036 | αν η 2PL IRT είναι επαρκής για ανοιχτά νομικά έργα | EPISTEMIC | πείραμα CGM-E1, CGM-E2 (MFA-VO-078) | HIGH | MFA-ELM-119 |
+| MFA-UNK-126 | MFA-MECH-037 | σταθερότητα SAE λεξικών μεταξύ εκδόσεων βαρών | EPISTEMIC | πείραμα MSM-E1, MSM-E2 (MFA-VO-079) | HIGH | MFA-ELM-120 |
+| MFA-UNK-127 | MFA-MECH-038 | αν οι θεωρίες δίνουν διακριτικές προβλέψεις σε ΤΕΧΝΗΤΟ υπόστρωμα | EPISTEMIC | πείραμα CHH-E1, CHH-E2 (MFA-VO-080, MFA-VO-081) | HIGH | MFA-ELM-121 |
+| MFA-UNK-128 | MFA-MECH-039 | η σωστή κοκκομετρία | EPISTEMIC | πείραμα OC-E1, OC-E2 (MFA-VO-082) | HIGH | MFA-ELM-122 |
+| MFA-UNK-129 | MFA-MECH-040 | ποσοστό νομικών αναλλοίωτων εκφράσιμων ως εκτελέσιμοι έλεγχοι στο IR | EPISTEMIC | πείραμα TGL-E1, TGL-E2 (MFA-VO-083) | HIGH | MFA-ELM-123 |
+| MFA-UNK-130 | MFA-MECH-041 | κλιμάκωση EFE σε ορίζοντες H>20 με LWM ensemble | EPISTEMIC | πείραμα AIDC-E1, AIDC-E2 (MFA-VO-084) | HIGH | MFA-ELM-124 |
+| MFA-UNK-131 | MFA-MECH-042 | κόστος πλήρους διαδοχής σε DEP-3 | EPISTEMIC | πείραμα VSC-E1, VSC-E2 (MFA-VO-085) | HIGH | MFA-ELM-125 |
+| MFA-UNK-132 | MFA-MECH-043 | ποσοστό των 113 αναλλοίωτων που εκφράζονται ως εκτελέσιμα predicates χωρίς πραγματικά όργανα | EPISTEMIC | πείραμα TES-E1, TES-E2 (MFA-VO-086) | HIGH | MFA-ELM-126 |
+| MFA-UNK-133 | MFA-MECH-044 | η βέλτιστη κοκκομετρία κύκλου | EPISTEMIC | πείραμα Ω-E1, Ω-E2 (MFA-VO-087) | HIGH | MFA-ELM-127 |
+
+## 3. Σειρά κατά VOI (πρόταση)
+
+1. MFA-UNK-122 / ATK-18 — compute ισοτιμίας ανά οικογένεια (καθορίζει DEC-016)· πρώτη μέτρηση STP-E1 στη Δόση 2.
+2. MFA-UNK-128 — κοκκομετρία/κόστος OC (OC-E1 σε πραγματικές ροές, Δόση 1).
+3. MFA-UNK-116 — πυκνότητα φυσικών πειραμάτων (CDCE-E2/E3, Δόση 3).
+4. MFA-UNK-119/125 — διακριτική ισχύς σφραγισμένων οικογενειών, επάρκεια IRT (CGM-E1/E3, Δόση 1).
+5. MFA-UNK-127/111 — διακριτικές προβλέψεις θεωριών συνείδησης σε τεχνητό υπόστρωμα· φαινομενική ερώτηση (CHH-E1, Δόση 2 — χωρίς εξωτερικό verifier για την τελευταία).
+6. MFA-UNK-120 — διαθεσιμότητα lineage-disjoint μοντέλων (EXTERNAL_FACT· η H πέφτει σε symbolic+human).
+7. Τα υπόλοιπα κατά first_dose.
+
+## 4. Οι 17 περιοχές §6 — τι απομένει ανοιχτό ανά περιοχή
+
+Βλ. ASI-MAXIMUM-CAPABILITY-ARCHITECTURE.md §3· ανά περιοχή το «πώς ελέγχεται» είναι VO με προκαταχωρισμένο κριτήριο· κανένα «ερευνητικό» δεν είναι λόγος απουσίας μηχανισμού.

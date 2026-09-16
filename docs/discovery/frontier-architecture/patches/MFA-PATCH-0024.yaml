@@ -1,0 +1,185 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0024
+title: Contracts MFA-CON-047…053 (Parametric Learning = DEC-X-19 συμβόλαιο ενεργό, Proof-Reward, RVSI, LWM/Curriculum, Introspection, VFC, Compute & Data)· CON-025
+  και CON-030 ευθυγραμμίζονται
+operation: ADD
+targets:
+- MFA-CON-047
+- MFA-CON-048
+- MFA-CON-049
+- MFA-CON-050
+- MFA-CON-051
+- MFA-CON-052
+- MFA-CON-053
+- MFA-CON-025
+- MFA-CON-030
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CONTRACTS.yaml: c4f459791c675e8e2192c7bf4f2f7abe656c95af2bbf2a816b488502f5918775
+preconditions: []
+change:
+  MFA-CON-047:
+    _add: true
+    corresponds_to: null
+    name: Parametric Learning Contract (DEC-X-19 πρότυπο EP — ενεργό)
+    provider: MFA-ELM-100 (+ 101 host, 102 registry)
+    consumers: RVSI, PDE, TED, Skill Library, GCP
+    delta: NEW
+    statement: cut(filters)→DataManifest / admit(recipe)→RecipeCommitment ∣ deny / train(recipe, manifest, budget)→WeightCommitment / eval(w)→EvalReceipt / promote(w)→ORP
+      / unlearn(w, cids)→w′ + MembershipReceipt / lineage(w)→DAG.
+    state_semantics: WeightCommitments append-only· obligations queue· serving weights αμετάβλητα
+    failure_semantics: train σε δεσμεύσεις χωρίς προέλευση → ERR_INVALID (MFA-INV-070)· serve βάρος χωρίς γενεαλογία → ERR_UNAUTHORIZED_CAPABILITY (MFA-INV-069)·
+      obligation ληγμένη → βάρος εκτός serving· contamination → recipe REJECTED
+    exec_type: D1 (recipes/lineage) · D2/P1 (εξαγωγή)
+    conformance:
+    - MFA-VO-057
+    - MFA-VO-058
+    - MFA-VO-059
+    - MFA-VO-063
+    activation_gate: 'Δόση 1: adapters επιτρέπονται όταν (α) γενεαλογία πλήρης, (β) sealed eval PASS με διακριτικό περιθώριο έναντι bootstrap, (γ) EIM PASS, (δ) unlearning
+      plan δηλωμένο· Δόση 2+: continued pretraining/πλήρη μοντέλα με τα ίδια + forgetting guard'
+    experiment: 'SMF-E1 (MFA-VO-057) προκαταχωρισμένο: επιτυχία = κυρίαρχο ≥ πάροχος με διακριτικό περιθώριο σε 200 sealed έργα· θανάτωση = < πάροχος μετά budget
+      B ⇒ το recipe αποσύρεται, όχι η ικανότητα'
+    invariants_when_active:
+    - MFA-INV-069
+    - MFA-INV-070
+    - MFA-INV-073
+    - MFA-INV-014
+    - MFA-INV-034
+    drill: 'τριμηνιαίο: retrain-from-lineage αναπαράγει συμπεριφορική ισοδυναμία (Battery) και unlearning drill σε seeded shredded πηγή (MFA-VO-058)'
+  MFA-CON-048:
+    _add: true
+    corresponds_to: null
+    name: Proof-Reward Interface
+    provider: MFA-ELM-103
+    consumers: SMF (update), RVSI, Curriculum, Cockpit (reward ledger)
+    delta: NEW
+    statement: collect(policy, tasks, env)→[Episode] / verify(episode)→RewardVector + receipts / update(policy, batch, constraints)→policy′ / reward_ledger(cut).
+    state_semantics: RewardVectors ως δεσμεύσεις· batches με seeded proxies
+    failure_semantics: ανταμοιβή από μη επαληθευμένο αντικείμενο (preference-only) → ERR_INVALID (MFA-INV-071)· ενημέρωση προς παραβίαση Tier-0 → projection, receipt·
+      seeded proxy εκμεταλλεύτηκε → batch REJECTED
+    exec_type: D1 (reward) · P1 (rollouts)
+    conformance:
+    - MFA-VO-060
+    - MFA-VO-031
+  MFA-CON-049:
+    _add: true
+    corresponds_to: null
+    name: Self-Improvement Orchestration (RVSI)
+    provider: MFA-ELM-104
+    consumers: SMF, PRR, LWM, Curriculum, Evolution, Architecture Forge, GCP, Cockpit, Safe-Halt
+    delta: NEW
+    statement: propose(level)→[ImprovementProposal] / cycle(budget)→MetaCycle / growth(cut)→[CapabilityGrowthRecord] / plateau(level)→bool / halt().
+    state_semantics: MetaCycle ως InstitutionalAct· Capability Growth Ledger
+    failure_semantics: promote χωρίς HELD_OUT+EIM+gate → ERR_UNAUTHORIZED_CAPABILITY (MFA-INV-072)· πρόταση που αγγίζει L3 ID-set → CPEG REJECT + δημιουργός· κέρδος
+      χωρίς σφραγισμένη μέτρηση → δεν καταγράφεται (MFA-INV-077)
+    exec_type: 'D1 · H1 (L2 αρχιτεκτονικές: δημιουργός + HELD_OUT)'
+    conformance:
+    - MFA-VO-061
+    - MFA-VO-067
+  MFA-CON-050:
+    _add: true
+    corresponds_to: null
+    name: Learned World Model & Curriculum
+    provider: MFA-ELM-105 · 106
+    consumers: Deliberation, PRR, TEGF, Void, Cockpit
+    delta: NEW
+    statement: LWM.train(cut)→WeightCommitment / plan(root, budget)→Plan / predict(z, a)→(z′, RewardVector, uncertainty) / OEC.generate(k)→[Task] / admit(task)→accepted
+      ∣ rejected(reason).
+    state_semantics: LWM versions ως βάρη· curriculum queue
+    failure_semantics: πρόβλεψη χωρίς calibration receipt → δεν φτάνει σε Recommend/Execute (MFA-INV-074)· έργο χωρίς falsifier → ERR_INVALID· contamination → REJECT
+    exec_type: P1 (προβλέψεις) · D1 (admission)
+    conformance:
+    - MFA-VO-062
+    - MFA-VO-063
+  MFA-CON-051:
+    _add: true
+    corresponds_to: null
+    name: Introspection & Reportability (ASRW)
+    provider: MFA-ELM-107
+    consumers: Explanation Projector, Cockpit, SPL, TEGF, Emission Barrier, Preference Recorder
+    delta: NEW
+    statement: cycle()→WorkspaceState / schema()→AttentionSchema / attend(request)→accepted ∣ denied(reason) / introspect(depth)→IntrospectionReport(provenance, omitted_count)
+      / integration()→[IntegrationMeasure] / affect()→AffectiveState.
+    state_semantics: cycle traces ως δεσμεύσεις· schema + HOT tags + metrics
+    failure_semantics: report χωρίς provenance → ERR_INVALID· PhenomenalClaim με status ≠ CONTESTED/Unknown → ERR_INVALID (MFA-INV-075)· attend εκτός MetaBounds →
+      denied
+    exec_type: D1 (προβολή) · P1 (μαθημένο schema)
+    conformance:
+    - MFA-VO-064
+    - MFA-VO-065
+    - MFA-VO-048
+  MFA-CON-052:
+    _add: true
+    corresponds_to: null
+    name: Verification Fixed-Point Contract (VFC)
+    provider: MFA-ELM-099
+    consumers: Verification Suite (kernel_checked), RVSI, PRR (Tier-0 reward), Court, CQ, GCP
+    delta: NEW
+    statement: verify(proof)→Verdict[] (ομοφωνία ∣ UNKNOWN) / candidate(checker)→ReplayReceipt / admit(checker, L3_signature) / retire(checker) / corpus(cut)→SealedProofCorpus
+      / core_measure(checker)→TrustedCoreReport.
+    state_semantics: contract FROZEN· checkers state machine· corpus μονότονο
+    failure_semantics: διαφωνία ελεγκτών → UNKNOWN (ποτέ pass)· admit χωρίς replay 100 % + EIM + L3 → ERR_UNAUTHORIZED_CAPABILITY (MFA-INV-076)· retire κάτω από min
+      → denied
+    exec_type: D1
+    conformance:
+    - MFA-VO-066
+    - MFA-VO-053
+    - MFA-VO-054
+  MFA-CON-053:
+    _add: true
+    corresponds_to: null
+    name: Compute & Data Acquisition
+    provider: MFA-ELM-108
+    consumers: SMF, RVSI, OAP, Ingestion
+    delta: NEW
+    statement: acquire_compute(spec, attestation)→lease + receipt / acquire_data(source, license ∣ attestation)→DataManifest entries με provenance / energy_budget(profile)→envelope
+      / inventory(cut).
+    state_semantics: inventory ως δεσμεύσεις· leases
+    failure_semantics: burst χωρίς attestation → ERR_UNAUTHORIZED_CAPABILITY· δεδομένα χωρίς προέλευση → ERR_INVALID (MFA-INV-070)· envelope υπέρβαση → OAP υποχώρηση
+      εύρους
+    exec_type: D1
+    conformance:
+    - MFA-VO-067
+    - MFA-VO-050
+  MFA-CON-025:
+    activation_gate: Ενεργοποιείται μόνο με L3 πράξη του δημιουργού όταν υπάρχει (α) contract-conformant διεπαφή, (β) EXP με προκαταχωρισμένα κριτήρια, (γ) οι invariants
+      MFA-INV-005/012/033 σε ισχύ· μέχρι τότε stub interface μόνο
+    experiment: 'HCP-E1 (προκαταχωρείται πριν από ενεργοποίηση): συνέχεια ταυτότητας (Battery) και μηδενική αλλαγή του capability set του πυρήνα· θανάτωση = οποιαδήποτε
+      παραβίαση MFA-INV-005'
+    invariants_when_active:
+    - MFA-INV-005
+    - MFA-INV-012
+    - MFA-INV-033
+    - MFA-INV-059
+    drill: 'ετήσιο stub drill: η διεπαφή δέχεται και απορρίπτει σωστά (contract test) χωρίς ενεργοποίηση'
+    statement: 'BindHumanIdentity/ImportConsentedCorpus/RevokeConsent — μόνο συμβόλαιο. · 0.4.0: DEC-X-19 πρότυπο EP εφαρμοσμένο (activation_gate, experiment, invariants_when_active,
+      drill).'
+  MFA-CON-030:
+    provider: 'MFA-ELM-020 (Tier-1/2· εγγεγραμμένοι: 061, 065, 067, 022, 024, 075) · MFA-ELM-099 (Tier-0 = Verification Fixed-Point contract, MFA-CON-052)'
+    statement: 'Verify(claim, class)→ProofObject(grade) ∣ Refuted ∣ Unknown(reason)· grade από τη μία κλίμακα· independence attestation (EIM). · tier ανά verifier·
+      kernel_checked: bool (ο verifier πέρασε το σφραγισμένο corpus από MFA-ELM-099)· Tier-0 = μόνο kernel. · 0.4.0: kernel_checked σημαίνει «πέρασε το σφραγισμένο
+      corpus από τους ACTIVE ελεγκτές του VFC», όχι από συγκεκριμένο toolchain.'
+rationale: 'MANDATE-OMEGA-ASI-0.4.0 §4.4–§4.6: κάθε νέο στοιχείο με contract (state/failure semantics)· DEC-X-19 κατά γράμμα: activation_gate, experiment, invariants_when_active,
+  drill — και για το υπάρχον EP MFA-CON-025.'
+evidence:
+- DEC-X-19
+- mechanisms/MFA-MECH-020…025.md
+affected_dependencies:
+- MFA-ELM-017
+- MFA-ELM-020
+- MFA-ELM-092
+capability_impact:
+  gained:
+  - MFA-CAP-081
+  - MFA-CAP-083
+  - MFA-CAP-086
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: Καμία.
+verification: tools/check-package.py R3a/R14
+rollback: MFA-PATCH-0024-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

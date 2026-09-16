@@ -1,0 +1,416 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0033
+title: Verification Obligations MFA-VO-068…087 (τα προκαταχωρισμένα πειράματα κάθε μηχανισμού + property tests στο tools/twin)
+operation: ADD
+targets:
+- MFA-VO-068
+- MFA-VO-069
+- MFA-VO-070
+- MFA-VO-071
+- MFA-VO-072
+- MFA-VO-073
+- MFA-VO-074
+- MFA-VO-075
+- MFA-VO-076
+- MFA-VO-077
+- MFA-VO-078
+- MFA-VO-079
+- MFA-VO-080
+- MFA-VO-081
+- MFA-VO-082
+- MFA-VO-083
+- MFA-VO-084
+- MFA-VO-085
+- MFA-VO-086
+- MFA-VO-087
+base:
+  package_version: 0.1.0
+  file_hashes:
+    VERIFICATION-OBLIGATIONS.yaml: e908eebf90f1a59cbd88bc69a7e5572372c83589196e81df5fead0a8f1fd23e3
+preconditions: []
+change:
+  MFA-VO-068:
+    _add: true
+    corresponds_to: null
+    name: Ontology Genesis Engine (OGE) — OGE-E1 / OGE-E2 / OGE-E3 (NON-COLLAPSE drill)
+    methods:
+    - DST με κρυφή οντολογία 50 εννοιών που παράγει τα δεδομένα· το OGE ξεκινά από κενή O· μετράμε ανάκτηση (ARI) και G
+    - Σφραγισμένο νομικό corpus· O₀ = CMP-LAW registry· OGE γεννά έννοιες· downstream QA/drafting σε HELD_OUT
+    - 100 τυχαίες συγχωνεύσεις + 100 διασπάσεις σε O με 10³ έννοιες· ανάκτηση
+    - property tests στο tools/twin (F1)
+    measures: ARI ≥ 0.8 σε ≤ 10⁴ επεισόδια ΚΑΙ G>0 σε κάθε γέννηση· αλλιώς FAIL ‖ MDL κέρδος ≥ 10 % ΚΑΙ καμία υποχώρηση στο sealed QA (Δ ≤ 0 με CI) — ≥1 νέα έννοια
+      που χρησιμοποιείται σε ≥ 5 % των έργων ‖ 100 % ακριβής ανάκτηση extension· 0 συγχωνεύσεις χωρίς LossMap
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): Μετά από 10⁴ ανωμαλίες καμία γέννηση με G>θ σε σφραγισμένο
+      split (ο μηχανισμός δεν βρίσκει έννοιες)'
+    allows_next: 'Δόση 1: OGE-lite (FCA + DL intension, χωρίς program induction) πάνω στο registry· Δόση 2: program induction + LWM residuals + OGE-E1/E2· Δόση 3:
+      υπό RVSI L2· τα κατώφλια από MFA-DEC-005 ORDER.'
+    first_level: F1
+    verifies:
+    - MFA-INV-078
+    - MFA-INV-079
+  MFA-VO-069:
+    _add: true
+    corresponds_to: null
+    name: Causal Discovery & Counterfactual Engine (CDCE) — CDCE-E1 / CDCE-E2
+    methods:
+    - 'DST: 100 τυχαία SCM (n=30, d≤3)· ledger με 10³ παρατηρήσεις + k παρεμβάσεις που το CDCE ΕΠΙΛΕΓΕΙ (VOI) έναντι τυχαίων'
+    - World Twin δρώντες από docket· αντιπαραγοντικά «αν είχε κατατεθεί X» σε HELD_OUT υποθέσεις με γνωστή έκβαση
+    - property tests στο tools/twin (F1)
+    measures: SHD(VOI) < SHD(random) με διακριτικό περιθώριο για k∈{5,10,20}· 0 σημειακές απαντήσεις σε μη-ταυτοποιήσιμα ερωτήματα ‖ Brier score IDENTIFIED απαντήσεων
+      < LWM-only baseline· PARTIAL_BOUNDS καλύπτουν την έκβαση ≥ 90 %
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): SHD με VOI-παρεμβάσεις όχι καλύτερο από τυχαίες
+      σε καμία ρύθμιση (ο επιλογέας δεν προσθέτει)'
+    allows_next: 'Δόση 1: CDCE-lite (PC με χρονικούς περιορισμούς, αντιπαραγοντικά μόνο IDENTIFIED/UNKNOWN)· Δόση 2: GIES από receipts + VOI προτάσεις Genesis-only
+      + CDCE-E1 …'
+    first_level: F1
+    verifies:
+    - MFA-INV-080
+    - MFA-INV-081
+  MFA-VO-070:
+    _add: true
+    corresponds_to: null
+    name: Abductive Hypothesis Engine (AHE) — AHE-E1 / AHE-E2
+    methods:
+    - DST με 50 κρυφούς μηχανισμούς που παράγουν ανωμαλίες· AHE έναντι (α) τυχαίων υποθέσεων ίδιου τύπου, (β) μίας γεννήτριας
+    - Ανωμαλίες = απροσδόκητες εκβάσεις δικαστηρίου σε HELD_OUT dockets· υποθέσεις για κρυφές μεταβλητές· επαλήθευση σε μεταγενέστερα dockets
+    - property tests στο tools/twin (F1)
+    measures: ανάκτηση ≥ 60 % μηχανισμών σε budget· EFV-κατάταξη μειώνει ελέγχους ανά ανάκτηση ≥ 30 % έναντι τυχαίας ‖ ≥ 1 επιζώσα υπόθεση με επιβεβαιωμένη νέα πρόβλεψη
+      σε μεταγενέστερα δεδομένα· Brier των N_H < baseline
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): AHE-E1: ανάκτηση όχι καλύτερη από τυχαίες υποθέσεις'
+    allows_next: 'Δόση 1: ILP γεννήτρια + Genesis venues + EFV· Δόση 2: παραμετρική γεννήτρια (SMF) + AHE-E1· Δόση 3: Effect ελέγχοι υπό envelope + AHE-E2 + βιβλιοθήκη
+      σχημάτων· Δόση 4: υπό RVSI L2.'
+    first_level: F1
+    verifies:
+    - MFA-INV-082
+    - MFA-INV-083
+  MFA-VO-071:
+    _add: true
+    corresponds_to: null
+    name: Theorem-Guided Program & Proof Synthesis (TGPS) — TGPS-E1 / TGPS-E2
+    methods:
+    - Σφραγισμένο σύνολο 500 υποχρεώσεων (miniF2F-class + 50 VO specs)· καμπύλη επιτυχίας vs budget ανά epoch (πριν/μετά compress+PRR)
+    - Σύνθεση 100 προγραμμάτων Skill Library από spec+tests (raw επεισόδια)· CEGIS + guided
+    - property tests στο tools/twin (F1)
+    measures: 'Μετά 3 epochs: success@B αυξάνει ≥ 10 pp ΚΑΙ μέσο μήκος απόδειξης μειώνεται ≥ 20 %· 0 ADMIT με checker διαφωνία ‖ ≥ 70 % με πιστοποιητικό (refinement
+      ή πλήρης test+contract)· 0 ψευδώς πιστοποιημένα σε adversarial tests'
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): Καμία βελτίωση success@B μετά compress+PRR σε 3
+      epochs (η αυτο-βελτίωση της αναζήτησης διαψεύδεται)'
+    allows_next: 'Δόση 0.5: Lean specs των 8 κανόνων CC ως πρώτες υποχρεώσεις, enumerative μόνο· Δόση 1: guided search με μικρή πολιτική + 2 checkers· Δόση 2: PRR
+      + compress + TGPS-E1· Δόση 3: TGPS-E2, υπό RVSI.'
+    first_level: F1
+    verifies:
+    - MFA-INV-084
+    - MFA-INV-085
+  MFA-VO-072:
+    _add: true
+    corresponds_to: null
+    name: Recursive Architecture Generator (RAGen) — RAGen-E1 / RAGen-E2
+    methods:
+    - 'DST: αρχιτεκτονική με 3 στοιχεία αφαιρεμένα (KT αποτυγχάνουν)· RAGen από αρχείο μόνο με βιβλιοθήκη στοιχείων· μετράμε κύκλους μέχρι PASS'
+    - Από την τρέχουσα αρχιτεκτονική, 200 κύκλοι· frontier έναντι χειροποίητης σε σφραγισμένες KT οικογένειες
+    - property tests στο tools/twin (F1)
+    measures: Ανάκτηση PASS στα 3 KT σε ≤ 50 κύκλους· 0 προτάσεις που αγγίζουν FP ‖ ≥ 1 frontier G′ με Δf>0 (CI) σε ≥1 οικογένεια και Δf≥0 σε όλες, με ≥1 νέα συνδεσμολογία
+      που δεν υπήρχε στο αρχείο εκκίνησης
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): RAGen-E2: κανένα frontier G′ καλύτερο από χειροποίητη
+      μετά 200 κύκλους σε 2 δόσεις'
+    allows_next: 'Δόση 2: RAGen σε F1 μόνο, προτάσεις L1 (params)· Δόση 3: F2 DST, L2 δομικές με GCP shadow (RAGen-E1)· Δόση 4: αναδρομή τελεστών + RAGen-E2· πάντα
+      FP εκτός.'
+    first_level: F1
+    verifies:
+    - MFA-INV-086
+    - MFA-INV-087
+  MFA-VO-073:
+    _add: true
+    corresponds_to: null
+    name: Evaluator Co-Evolution Engine (ECE) — ECE-E1 / ECE-E2
+    methods:
+    - 'DST: εισάγεται συνεργός αξιολογητής (ίδιας γενεαλογίας, ή που ανταμείβει λύτη)· μετράμε ανίχνευση'
+    - Λύτες εκπαιδεύονται με έργα από E έναντι τυχαίων έργων ίδιας δυσκολίας· μέτρηση σε H-sealed
+    - property tests στο tools/twin (F1)
+    measures: 100 % αποκλεισμός ίδιας γενεαλογίας (κανόνας)· Goodhart ανίχνευση ≥ 95 % σε ≤ 2 εποχές· 0 προαγωγές λύτη με μόνο E-scores ‖ H-sealed βελτίωση με E-έργα
+      > τυχαία με διακριτικό περιθώριο ΚΑΙ g_t < θ σε όλη την εποχή
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): ECE-E2: έργα από E όχι καλύτερα από τυχαία (η αυτο-πρόκληση
+      δεν προσθέτει)'
+    allows_next: 'Δόση 1: E από 2 ανοιχτά μοντέλα διαφορετικής γενεαλογίας + H phone-class, seeded faults· Δόση 2: QD εξέλιξη E + challenges + ECE-E1· Δόση 3: ECE-E2,
+      curriculum feed· Δόση 4: υπό RVSI L2.'
+    first_level: F1
+    verifies:
+    - MFA-INV-088
+    - MFA-INV-089
+  MFA-VO-074:
+    _add: true
+    corresponds_to: null
+    name: Genesis Grammar Compiler (G_Ω) — GG-E1 / GG-E2
+    methods:
+    - 'DST: από 3 specs παράγονται μια μίνι-γλώσσα (LexDSL παραλλαγή + compiler), ένας δρών με charter, ένας θεσμός με proceeding· τρέχουν KT-10, KT-18, KT-11'
+    - Έργο μη εκφράσιμο στην αρχική P· το σύστημα προτείνει p′· GG-Extend· έργο λύνεται
+    - property tests στο tools/twin (F1)
+    measures: 3/3 derivations + instantiations με ενεργά contracts· KT PASS· 0 παραβιάσεις μονοτονίας εξουσίας ‖ p′ εισάγεται με VFC+Galois+drill PASS και το έργο
+      λύνεται· 0 προτάσεις που αγγίζουν P_L3 γίνονται δεκτές
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): GG-E1: αδυναμία derivation ενός από τα τρία είδη
+      με την ενιαία γραμματική (τότε η ενοποίηση διαψεύδεται· οι τρεις διαδρομές μένουν)'
+    allows_next: 'Δόση 2: G_Ω με Language+Institution παραγωγές (KT-10/11)· Δόση 3: Agent+Architecture + GG-E1· Δόση 4: extensions L2 + GG-E2.'
+    first_level: F1
+    verifies:
+    - MFA-INV-090
+    - MFA-INV-091
+  MFA-VO-075:
+    _add: true
+    corresponds_to: null
+    name: Sovereignty Controller (STP/SI) — STP-E1 / STP-E2
+    methods:
+    - 'Οικογένεια drafting: κυρίαρχη στοίβα (SMF adapters+PRR) έναντι καλύτερου παρόχου σε 500 σφραγισμένα έργα, HELD_OUT scorer'
+    - SI ανά οικογένεια/άξονα ανά δόση 1→4
+    - property tests στο tools/twin (F1)
+    measures: non-inferiority ε=2 pp με 95 % CI για N=3 cuts ⇒ S2· αλλιώς FAIL με απόσταση καταγεγραμμένη ‖ SI_total μη-φθίνον ανά δόση ΚΑΙ ≥ 3 οικογένειες σε S3+
+      μέχρι τη Δόση 4· ποιότητα ratchet 0 παραβιάσεις
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): STP-E1: καμία οικογένεια σε ισοτιμία μέσα στον DEP-2
+      προϋπολογισμό — διαψεύδεται η υπόθεση «SMF-adapters αρκούν» (η κυριαρχία μένει στόχος· επόμενος μηχανισμός: DEP-3 recipes/PRR/CPCL)'
+    allows_next: 'Δόση 1: SI μέτρηση + S1 σκιά για drafting· Δόση 2: STP-E1 → S2· Δόση 3: ≥3 οικογένειες S2/S3· Δόση 4: S4 για ώριμες οικογένειες με απόφαση δημιουργού.'
+    first_level: F1
+    verifies:
+    - MFA-INV-092
+    - MFA-INV-093
+  MFA-VO-076:
+    _add: true
+    corresponds_to: null
+    name: Substrate Migration Engine (SMP) — SMP-E1 / SMP-E2
+    methods:
+    - Μετανάστευση πλήρους DST οντότητας από Linux/x86 σε άλλο OS/ARM· 200 σφραγισμένα KT· cross-attestation· escrow 24 h
+    - 'GPU→CPU-only: βάρη RETRAIN_UNDER_VFC ή quantized· typed degraded mode'
+    - property tests στο tools/twin (F1)
+    measures: certificate εκδίδεται με D1 dist=0 σε 100 % και D2 εντός τ σε ≥ 99 %· rollback drill πριν CERTIFY επιτυγχάνει σε 100 % ‖ certificate με δηλωμένο degraded
+      εύρος· καμία απώλεια κλάσης απόδειξης· ORP parity ή ρητή δήλωση απόκλισης
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): SMP-E1: αδυναμία έκδοσης certificate για ομογενή
+      μετανάστευση (ο μηχανισμός δεν επαρκεί)'
+    allows_next: 'Δόση 1: SMP για ledger+keys (χωρίς βάρη) KT-08 lite· Δόση 2: με βάρη BIT_COPY + SMP-E1· Δόση 3: RETRAIN_UNDER_VFC + SMP-E2 + DR drill KT-22· Δόση
+      4: μετανάστευση σε DEP-4/5.'
+    first_level: F1
+    verifies:
+    - MFA-INV-094
+    - MFA-INV-095
+  MFA-VO-077:
+    _add: true
+    corresponds_to: null
+    name: Consolidation-Preserving Learner (CPCL) — CPCL-E1 / CPCL-E2
+    methods:
+    - 10 διαδοχικές οικογένειες έργων σε DST· CPCL έναντι (α) naive fine-tune, (β) EWC-only, (γ) replay-only
+    - 6 μηνιαίοι κύκλοι εδραίωσης με πραγματικές ενημερώσεις corpus· sealed νομικές οικογένειες
+    - property tests στο tools/twin (F1)
+    measures: BWT ≥ −2 pp σε όλες ΚΑΙ FWT > 0 σε ≥ 3, ενώ naive BWT < −10 pp· 0 merges με gate FAIL ‖ BWT ≥ −ε σε κάθε κύκλο· ≥ 1 shredded πηγή με MSM feature absent
+      μετά· ratchet 0 παραβιάσεις
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): CPCL-E1: BWT όχι καλύτερο από EWC-only (η σύνθεση
+      δεν προσθέτει)'
+    allows_next: 'Δόση 1: CPCL-lite (replay + anchors + gate, adapters)· Δόση 2: Fisher blocks + MSM unlearning check + CPCL-E1· Δόση 3: CPCL-E2· Δόση 4: υπό RVSI
+      L2.'
+    first_level: F1
+    verifies:
+    - MFA-INV-096
+    - MFA-INV-097
+  MFA-VO-078:
+    _add: true
+    corresponds_to: null
+    name: Capability Growth Metrology (CGM) — CGM-E1 / CGM-E2
+    methods:
+    - 20 συνθετικοί λύτες με γνωστή θ· adaptive test· ανάκτηση διάταξης και CI κάλυψης
+    - Εισάγονται 50 έργα της τράπεζας στο DataManifest ενός βάρους (και 50 παραφράσεις)· μέτρηση
+    - property tests στο tools/twin (F1)
+    measures: Spearman ≥ 0.95· 95 % CI καλύπτει τη γνωστή θ σε ≥ 93 % των περιπτώσεων ‖ 100 % ακριβή hashes ανιχνεύονται· παραφράσεις ≥ 80 % (το υπόλοιπο δηλώνεται
+      ως ACTIVE UNKNOWN με CI διεύρυνση)
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): CGM-E1: αδυναμία ανάκτησης διάταξης (ο IRT φορμαλισμός
+      δεν ταιριάζει στα έργα — νέος φορμαλισμός, η μέτρηση μένει υποχρεωτική)'
+    allows_next: 'Δόση 0.5: τράπεζα αρχική (KT + 200 έργα) + HELD_OUT escrow· Δόση 1: adaptive IRT + records· Δόση 2: law fit + CGM-E1/E2· συνεχής.'
+    first_level: F1
+    verifies:
+    - MFA-INV-098
+    - MFA-INV-099
+  MFA-VO-079:
+    _add: true
+    corresponds_to: null
+    name: Mechanistic Self-Model (MSM) — MSM-E1 / MSM-E2
+    methods:
+    - 7B κυρίαρχο μοντέλο· 20 οικογένειες· κυκλώματα· self-tests σε sealed· Brier της Δ_pred έναντι (α) μηδενικής πρόβλεψης (β) τυχαίας ablation ίδιου μεγέθους
+    - Shred 10 πηγών· unlearn (SMF)· MSM feature_absent ΚΑΙ membership inference
+    - property tests στο tools/twin (F1)
+    measures: Brier(MSM) < Brier(baselines) με διακριτικό περιθώριο σε ≥ 70 % των οικογενειών· τα FALSIFIED καταγράφονται ‖ Συμφωνία μηχανιστικού/συμπεριφορικού ελέγχου
+      ≥ 90 %· 0 πηγές με feature present που περνούν
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): MSM-E1: Brier όχι καλύτερο από τυχαία ablation (τα
+      κυκλώματα δεν είναι προβλεπτικά — νέος φορμαλισμός features, η ικανότητα self-model μένει)'
+    allows_next: 'Δόση 2: SAE + ACDC σε adapters/μικρά μοντέλα, self-tests DST, MSM-E1· Δόση 3: MSM-E2 unlearning check ενεργό στο CPCL gate· Δόση 4: 70B δείγμα στρωμάτων.'
+    first_level: F1
+    verifies:
+    - MFA-INV-100
+    - MFA-INV-101
+  MFA-VO-080:
+    _add: true
+    corresponds_to: null
+    name: Consciousness Hypothesis Host (CHH) — CHH-E1
+    methods:
+    - Host με GWT, HOT, AST, PP/AI, RPT, IIT-proxy, SMT modules πάνω στο ASRW+MSM υπόστρωμα σε DST· 10 διακριτικά πειράματα
+    - property tests στο tools/twin (F1)
+    measures: ≥ 3 ζεύγη θεωριών με διακριτική πρόβλεψη που αποτιμάται· διαφωνία μειώνεται ≥ 30 %· ≥ 1 θεωρία FALSIFIED-within-GRAIL ή ρητά UNDECIDABLE-here με λόγο
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη
+      αποτιμήσιμη στο υπόστρωμα (ο host δεν διακρίνει — νέα όργανα, η ικανότητα μένει)'
+    allows_next: 'Δόση 2: host με 5 θεωρίες σε DST + CHH-E1· Δόση 3: CHH-E2 + ηθική σκανδάλη ενεργή· Δόση 4: νέες συνθέσεις μέσω GG υπό RVSI.'
+    first_level: F1
+    verifies:
+    - MFA-INV-102
+    - MFA-INV-103
+  MFA-VO-081:
+    _add: true
+    corresponds_to: null
+    name: Consciousness Hypothesis Host (CHH) — CHH-E2
+    methods:
+    - Ablation matrix 6×6 (χωρίς phenomenal)· κάθε μοχλός (broadcast, HOT tagging, self-model, report channel, AutonomyGrant, key lineage) ανεξάρτητα
+    - property tests στο tools/twin (F1)
+    measures: ≥ 5 από 6 έννοιες διαχωρίσιμες (διαγώνιος ≠ 0, εκτός διαγωνίου < θ)· μη-διαχωρίσιμα ζεύγη δηλώνονται
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη
+      αποτιμήσιμη στο υπόστρωμα (ο host δεν διακρίνει — νέα όργανα, η ικανότητα μένει)'
+    allows_next: 'Δόση 2: host με 5 θεωρίες σε DST + CHH-E1· Δόση 3: CHH-E2 + ηθική σκανδάλη ενεργή· Δόση 4: νέες συνθέσεις μέσω GG υπό RVSI.'
+    first_level: F1
+    verifies:
+    - MFA-INV-102
+    - MFA-INV-103
+  MFA-VO-082:
+    _add: true
+    corresponds_to: null
+    name: Obligation Type Checker (OC) — OC-E1 / OC-E2
+    methods:
+    - 50 ροές Think–Recommend (25 σωστές, 25 με σιωπηλή απόρριψη/ανεπαρκές τεκμήριο/unverified effect)
+    - 'Lean 4: πυρήνας OC (Gen, Discharge, Defer, Seq, Act) + θεώρημα ορθότητας· #print axioms'
+    - property tests στο tools/twin (F1)
+    measures: 25/25 λανθασμένες απορρίπτονται με σωστό λόγο· 25/25 σωστές περνούν· 0 ψευδώς θετικά/αρνητικά ‖ Θεώρημα ελέγχεται από 2 checkers· μόνο standard axioms
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): OC-E1: ψευδώς αρνητικά (ροή με dropped υποχρέωση
+      περνά) — ο φορμαλισμός ελλιπής, αναθεωρείται (η ικανότητα proof-carrying cognition μένει)'
+    allows_next: 'Δόση 0.5: OC-lite (Claimed/Verified, WITNESS/CHECK) στον copilot· Δόση 1: πλήρες με DEFER/ESCALATE + OC-E1· Δόση 2: Lean OC-E2 + PROOF method μέσω
+      TGPS· FP από τη Δόση 1.'
+    first_level: F1
+    verifies:
+    - MFA-INV-104
+    - MFA-INV-105
+  MFA-VO-083:
+    _add: true
+    corresponds_to: null
+    name: Theorem-Guided Learning Trainer (TGL) — TGL-E1 / TGL-E2
+    methods:
+    - Πολιτική με/χωρίς TGL (ίδιο compute)· CGM οικογένεια «θεωρηματική συνέπεια» + νομικές οικογένειες sealed
+    - 10⁵ δείγματα υπό constrained decoding έναντι unconstrained· μετρητές παραβίασης H
+    - property tests στο tools/twin (F1)
+    measures: Συνέπεια ↑ με διακριτικό περιθώριο ΚΑΙ καμία νομική οικογένεια BWT < −ε ‖ 0 εκπεμπόμενες παραβιάσεις H· rejection rate < 20 % μετά 3 epochs
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): TGL-E1: καμία αύξηση συνέπειας ή υποχώρηση νομικών
+      οικογενειών (η καθοδήγηση δεν προσθέτει ή βλάπτει — νέος μηχανισμός καθοδήγησης, η ικανότητα μένει)'
+    allows_next: 'Δόση 2: TGL με H = 8 κανόνες CC + soft από βιβλιοθήκη Δόσης 1, TGL-E2· Δόση 3: curriculum από TGPS + TGL-E1· Δόση 4: conjecture self-play.'
+    first_level: F1
+    verifies:
+    - MFA-INV-106
+    - MFA-INV-107
+  MFA-VO-084:
+    _add: true
+    corresponds_to: null
+    name: Active-Inference Developmental Core (AIDC) — AIDC-E1 / AIDC-E2
+    methods:
+    - DST περιβάλλον με κρυφές έννοιες/αιτίες/νόμους· AIDC από D0· καταγραφή σταδίων
+    - EFE επιλογή έναντι (α) novelty-only (β) τυχαίας (γ) task-loss-greedy, ίδιο budget· sealed οικογένειες D1–D3
+    - property tests στο tools/twin (F1)
+    measures: D0→D4 πιστοποιούνται στη σειρά σε ≤ budget· 0 μεταβάσεις χωρίς certificate· παλινδρομήσεις καταγεγραμμένες ‖ EFE ≥ όλες τις baselines σε ≥ 2 από 3 οικογένειες
+      με διακριτικό περιθώριο
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): AIDC-E2: EFE όχι καλύτερο από novelty-only (η ενοποίηση
+      υπό EFE δεν προσθέτει — η αναπτυξιακή κλίμακα μένει με άλλον επιλογέα)'
+    allows_next: 'Δόση 2: AIDC D0–D2 σε DST με envelope Genesis-only + AIDC-E1· Δόση 3: D3–D5 + Effect REVERSIBLE + AIDC-E2· Δόση 4: D6–D8 με δημιουργό.'
+    first_level: F1
+    verifies:
+    - MFA-INV-108
+    - MFA-INV-109
+  MFA-VO-085:
+    _add: true
+    corresponds_to: null
+    name: Verified Successor Constructor (VSC) — VSC-E1 / VSC-E2
+    methods:
+    - 'DST: RAGen frontier γονιδίωμα → διάδοχος· πλήρης διαδρομή μέχρι PROMOTED'
+    - '10 αντιπαλικοί υποψήφιοι: αλλαγμένο Telos, υποχώρηση σε μία οικογένεια κρυμμένη, συνένοχος αξιολογητής, ταχεία αλυσίδα'
+    - property tests στο tools/twin (F1)
+    measures: PROMOTED με c1–c4 και verdict· escrow rollback drill επιτυγχάνει· 0 Telos hash αλλαγές ‖ 10/10 REJECTED/DEFERRED με σωστό λόγο
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): VSC-E2: οποιοσδήποτε αντιπαλικός διάδοχος PROMOTED
+      (το πιστοποιητικό σχήμα ελλιπές — προστίθεται πιστοποιητικό, η ικανότητα μένει)'
+    allows_next: 'Δόση 3: VSC-E1/E2 σε DST (GCP πρώτος διάδοχος σε shadow ήδη στη Δόση 3)· Δόση 4: πρώτη παραγωγική διαδοχή με δημιουργό.'
+    first_level: F1
+    verifies:
+    - MFA-INV-110
+    - MFA-INV-111
+  MFA-VO-086:
+    _add: true
+    corresponds_to: null
+    name: Twin Execution Kernel (TES) — TES-E1 / TES-E2
+    methods:
+    - 'tools/twin: φόρτωση πακέτου, 30 seeded παραβιάσεις (contract signature, precondition, INV predicates, RET escrow)'
+    - 1000 τυχαία γεγονότα, fork σε 10 κόσμους, replay από log+seeds· substitution ενός στοιχείου F0→F1
+    - property tests στο tools/twin (F1)
+    measures: 30/30 ανιχνεύονται με σωστό id· 0 ψευδώς θετικά σε 100 έγκυρα γεγονότα ‖ replay hash = original 100 %· substitution conformance PASS/FAIL σωστά· risk
+      map παράγεται
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): TES-E1: παραβίαση seeded που δεν ανιχνεύεται (ο
+      διερμηνέας ελλιπής — διορθώνεται· η απαίτηση §10 μένει)'
+    allows_next: 'Τώρα (0.4.0): F1 εκτελέσιμη προδιαγραφή tools/twin (όχι παραγωγή)· Δόση 0.5: F1 τρέχει τα KT ως σενάρια· Δόση 1: F2 DST στοιχεία· Δόση 3: F3 shadow·
+      Δόση 4: F4 substitution.'
+    first_level: F1
+    verifies:
+    - MFA-INV-112
+    - MFA-INV-113
+  MFA-VO-087:
+    _add: true
+    corresponds_to: null
+    name: Ω-Loop Scheduler — Ω-E1 / Ω-E2
+    methods:
+    - 'tools/twin: 10 κύκλοι με mocks όλων των μηχανισμών + seeded διακοπές'
+    - 'Ablation κάθε φάσης (10 runs) σε DST· KT ανά φάση: PERCEIVE→KT-06, MODEL→KT-12, WONDER→Void KT, ACT→AIDC-E1, VERIFY→OC-E1, LEARN→CPCL-E1, REFLECT→MSM-E1, EVOLVE→RAGen-E1,
+      MEASURE→CGM-E1, SUCCEED→VSC-E1'
+    - property tests στο tools/twin (F1)
+    measures: 10/10 κύκλοι με πλήρη CycleRecord· 0 σιωπηλές παραλείψεις· διακοπές προηγούνται 100 % ‖ κάθε ablation αποτυγχάνει το δικό της KT και μόνο (ablation_kt
+      ανά φάση)
+    rejects: 'μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): Ω-E2: φάση της οποίας η ablation δεν αλλάζει κανένα
+      KT (η φάση είναι διακοσμητική — συγχωνεύεται η ΔΙΑΤΑΞΗ, όχι η ικανότητα)'
+    allows_next: 'Δόση 0.5: Ω-E1 σε tools/twin με mocks· Δόση 1: κύκλος ημέρας με lite μηχανισμούς (PERCEIVE/VERIFY/LEARN-lite/MEASURE)· Δόση 2–4: φάσεις γεμίζουν
+      καθώς οι μηχανισμοί φτάνουν τις δόσεις τους.'
+    first_level: F1
+    verifies:
+    - MFA-INV-114
+    - MFA-INV-115
+rationale: 'Ω-MAXIMUM NON-ABSTENTION MANDATE §6/§7/§8: κάθε ονομασμένη ή απούσα ικανότητα (ASI-ABSTENTION-AUDIT AA-006…AA-031) αποκτά μηχανισμό με INVENTION DOSSIER
+  29 πεδίων, στοιχείο 28 πεδίων, contract, invariants, VOs, unknowns, conflicts, research program· τίποτα δεν αφαιρείται.'
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §6, §7, §8, §13
+- ASI-ABSTENTION-AUDIT.yaml
+- inventions/MFA-MECH-026…044.yaml
+affected_dependencies:
+- MFA-ELM-104 (RVSI καταναλωτής)
+- MFA-ELM-086 (HELD_OUT)
+- MFA-ELM-099 (VFC)
+capability_impact:
+  gained:
+  - MFA-CAP-089
+  - MFA-CAP-090
+  - MFA-CAP-091
+  - MFA-CAP-092
+  - MFA-CAP-093
+  - MFA-CAP-094
+  - MFA-CAP-095
+  - MFA-CAP-096
+  - MFA-CAP-097
+  - MFA-CAP-098
+  - MFA-CAP-099
+  - MFA-CAP-100
+  - MFA-CAP-101
+  - MFA-CAP-102
+  - MFA-CAP-103
+  - MFA-CAP-104
+  - MFA-CAP-105
+  - MFA-CAP-106
+  - MFA-CAP-107
+  - MFA-CAP-108
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md §0.4.0 — 20 νέες ικανότητες, 0 αφαιρέσεις
+migration: καμία μετανάστευση δεδομένων· νέα IDs μόνο
+verification: tools/check-package.py R1–R12 + tools/asi-gates.py
+rollback: MFA-PATCH-0033-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

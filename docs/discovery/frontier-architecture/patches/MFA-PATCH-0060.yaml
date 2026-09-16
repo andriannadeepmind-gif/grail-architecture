@@ -1,0 +1,68 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0060
+title: 'DIA-23 (Consciousness Hypothesis Host) ευθυγράμμιση με τη διόρθωση r1: UNMEASURABLE ορθογώνιο, k πειράματα = resource policy, συμμετρική ανά-πρόβλεψη έκβαση
+  και THEORY_VARIANT/FAMILY διάκριση, construct-valid μοχλοί, αιτιακό πρωτόκολλο διαχωρισμού, απάντηση χωρίς αυτόματη συναγωγή'
+operation: MODIFY
+targets:
+- diagrams/MFA-DIA-23.mmd
+base:
+  package_version: 0.1.0
+  file_hashes:
+    diagrams/MFA-DIA-23.mmd: 0abea434c57f765014d29455996fc50dd046e99b1baabceb182ce72aa90a60fd
+preconditions: []
+change:
+  diagrams/MFA-DIA-23.mmd:
+    replace:
+    - - πλέγμα UNMEASURABLE ⊏ ABSENT ⊏ MEASURED · ⊔ = max, ⊓ = min
+      - UNMEASURABLE = ορθογώνια συνθήκη μετρησιμότητας (όχι κάτω από ABSENT) · πλέγμα τιμών ABSENT ⊏ MEASURED · ⊔ = max, ⊓ = min μόνο σε μετρήσιμους (r1)
+    - - 'DX["DISAGREE: x* = arg max disagreement(T_a, T_b, cond, δείκτης)<br/>cost ≤ budget ∧ RET = GENESIS_ONLY"]'
+      - 'DX["DISAGREE: X* = top-k disagreement(T_a, T_b, cond, δείκτης)<br/>k = resource policy (OAP budget), όχι αναλλοίωτη · RET = GENESIS_ONLY"]'
+    - - UP{"P_T(cond, δείκτης) συνεπής με obs (CI);"}
+      - 'UP{"έκβαση ανά ΠΡΟΒΛΕΨΗ (συμμετρική): SUPPORTED ∣ WEAKENED ∣ PREDICTION_FALSIFIED ∣ INCONCLUSIVE<br/>construct validity του οργάνου;"}'
+    - - SA["ACTIVE"]
+      - SA["ACTIVE — πρόβλεψη SUPPORTED / WEAKENED / INCONCLUSIVE · μία αποτυχία δεν διαψεύδει οικογένεια"]
+    - - SF["FALSIFIED-within-GRAIL — μένει με τεκμήριο, δεν αφαιρείται (MFA-INV-102)"]
+      - SF["THEORY_VARIANT_FALSIFIED_WITHIN_GRAIL — μόνο με προκαταχωρισμένο κρίσιμο σύνολο, ≥2 ανεξάρτητες επαναλήψεις, αποκλεισμό αποτυχίας οργάνου · η οικογένεια
+        RETAINS_ALTERNATIVE_VARIANTS · μένει με τεκμήριο (MFA-INV-102)"]
+    - - UP -->|"ναι"| SA
+      - UP -->|"SUPPORTED / WEAKENED / INCONCLUSIVE"| SA
+    - - UP -->|"όχι"| SF
+      - UP -->|"PREDICTION_FALSIFIED × ≥2 replications, κρίσιμη"| SF
+    - - 'S2["METACOGNITION<br/>μοχλός: HOT tagging"]'
+      - 'S2["METACOGNITION<br/>μοχλός: μοντέλο βαθμονόμησης σε ΟΛΑ τα confidence streams (control: ένα stream)"]'
+    - - 'S4["REPORTABILITY<br/>μοχλός: report channel"]'
+      - 'S4["REPORTABILITY<br/>μοχλός: ενδοσκοπική πρόσβαση για αναφορά, κανάλια άθικτα (control: ένα κανάλι)"]'
+    - - 'S5["AGENCY<br/>μοχλός: AutonomyGrant"]'
+      - 'S5["AGENCY<br/>μοχλός: ενδογενής επιλογή στόχου→πράξης, άδεια αμετάβλητη (control: AutonomyGrant)"]'
+    - - 'S6["CONTINUITY<br/>μοχλός: key lineage"]'
+      - 'S6["CONTINUITY<br/>μοχλός: συνέχεια αφήγησης/αυτο-μοντέλου, key lineage άθικτη (control: key lineage)"]'
+    - - 'MX["Ablation matrix 6×6 σε DST: έννοια διαχωρίσιμη ⇔ ο μοχλός της κινεί μόνο τον εαυτό της<br/>μη-διαχωρίσιμα ζεύγη δηλώνονται, ΔΕΝ συγχωνεύονται"]'
+      - 'MX["Αιτιακό πρωτόκολλο σε DST: total / controlled direct / mediated / shared-cause / measurement-channel effect ανά έννοια-μοχλό<br/>έννοια ΔΙΑΚΡΙΤΗ ⇔ ∃
+        construct-valid μοχλός με μη-μηδενική CDE στον εαυτό της · σύζευξη επιτρεπτή και αποσυντεθειμένη · ΔΕΝ απαιτείται μηδενικό off-diagonal (r1)"]'
+    - - 'ANS["Απάντηση: οι θεωρίες συγκρίνονται μόνο σε λειτουργικούς δείκτες και διαψεύδονται μέσα στο GRAIL· καμία έκθεση δεν συνάγει φαινομενική συνείδηση από
+        λειτουργικούς δείκτες<br/>MFA-UNK-127: αν οι θεωρίες δίνουν διακριτικές προβλέψεις σε τεχνητό υπόστρωμα"]'
+      - 'ANS["Απάντηση: οι θεωρίες συγκρίνονται σε λειτουργικούς δείκτες με συμμετρική ανά-πρόβλεψη έκβαση· καμία ΑΥΤΟΜΑΤΗ συναγωγή φαινομενικής συνείδησης — ο ισχυρισμός
+        ξεκινά ACTIVE_UNKNOWN και αναθεωρείται μόνο μέσω admitted πρωτοκόλλου (r1)<br/>MFA-UNK-127: αν οι θεωρίες δίνουν διακριτικές προβλέψεις σε τεχνητό υπόστρωμα"]'
+    - - classDef never fill:#fde2e2,stroke:#b00020,color:#000
+      - classDef claim fill:#fde2e2,stroke:#b00020,color:#000
+    - - class PC,S7 never
+      - class PC,S7 claim
+    - - 'SF -.->|"MFA-VO-080: διαφωνία μειώνεται ανά πείραμα"| DX'
+      - 'SF -.->|"MFA-VO-080: διαφωνία μειώνεται ανά πείραμα · η οικογένεια μένει"| DX'
+rationale: Το διάγραμμα είναι προβολή των MFA-MECH-038/INV-075/INV-103 μετά το MFA-PATCH-0059· τα υπόλοιπα κελιά του (πλέγμα, όριο πειραμάτων, διάψευση, μοχλοί, κριτήριο
+  διαχωρισμού) κωδικοποιούσαν ακόμη την προηγούμενη σημασιολογία.
+evidence:
+- IMMEDIATE EPISTEMIC-LOCK CORRECTION (δημιουργός, 2026-09-16)
+- MFA-PATCH-0059
+affected_dependencies:
+- MFA-ELM-121
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (projection)
+migration: καμία
+verification: Mermaid Chart plugin validate+render · diagrams/rendered/INDEX.md
+rollback: MFA-PATCH-0060-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,51 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0046-R
+title: 'Rollback of MFA-PATCH-0046: ATK-21 (παράδοξο escrow): key-epoch διαχωρισμός εξουσιών κατά το escrow, Owner-Root απόδειξη ελέγχου του νέου υποστρώματος, τ
+  ratchet και ORP parity για ποιότητα'
+operation: RESTORE
+targets:
+- MFA-ELM-003
+- MFA-ELM-117
+- MFA-INV-094
+- MFA-VO-076
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: ee7f7fe27134c62545ba3773b18e396680b760b9be4a947ba2d50f4fd0deb203
+    INVARIANTS.yaml: 80dd5dc80688a9893bece52f27de9b9001d4fbec60617ff9b92b0a16513ad93e
+    VERIFICATION-OBLIGATIONS.yaml: 009f5cd48c31c58608b38db2ab4bfcefc8809371fd7a442cb8fcb21edf87a651
+preconditions:
+- MFA-PATCH-0046.status == APPLIED
+change:
+  MFA-ELM-117:
+    statement:
+      __raw: '"Μετανάστευση = refinement mapping ImplMap: S_old → S_new που διατηρεί (α) το commitment log bitwise (hash chain ισότητα), (β) τη γενεαλογία κλειδιών
+        (νέα κλειδιά επικυρώνονται από τα παλιά ΚΑΙ αντίστροφα — αμφίδρομη cross-attestation με epoch), (γ) τη συμπεριφορική ταυτότητα σε σφραγισμένα KT (bisimulation
+        έως ανοχή ανά κλάση εκτέλεσης D1/D2), (δ) τις αναλλοίωτες διάταξης/χρόνου (event ordering, clock invariants)· η μεταγωγή (cutover) είναι IRREVERSIBLE-PREAUTHORIZED
+        με escrow: το παλιό υπόστρωμα μένει ζωντανό και αυθεντικό μέχρι ContinuityCertificate από HELD_OUT + δημιουργό (MFA-DEC-023)· μέχρι τότε rollback = επιστροφή
+        στο παλιό χωρίς απώλεια."'
+  MFA-INV-094:
+    statement:
+      __raw: '"κανένα RETIRE του παλιού υποστρώματος πριν από ContinuityCertificate· μέχρι τότε το παλιό είναι αυθεντικό fallback (escrow) (MFA-MECH-034)."'
+  MFA-VO-076:
+    methods:
+      __raw: '["Μετανάστευση πλήρους DST οντότητας από Linux/x86 σε άλλο OS/ARM· 200 σφραγισμένα KT· cross-attestation· escrow 24 h", "GPU→CPU-only: βάρη RETRAIN_UNDER_VFC
+        ή quantized· typed degraded mode", "property tests στο tools/twin (F1)"]'
+  MFA-ELM-003:
+    statement:
+      __raw: '"Charters, threshold root offline/HSM, delegated body keys με lease, pre-rotation, verifier-ordered revocation με fencing epoch, post-revocation quarantine+taint
+        (DEC-X-10), recovery KT-23."'
+rationale: Αντίστροφο του MFA-PATCH-0046, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0046
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

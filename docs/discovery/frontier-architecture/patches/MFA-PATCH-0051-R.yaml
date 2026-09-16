@@ -1,0 +1,55 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0051-R
+title: 'Rollback of MFA-PATCH-0051: ATK-26 (ψευδαίσθηση πιστότητας, εξάντληση σφραγισμένων): κάθε αποτέλεσμα διδύμου με ετικέτα πιστότητας· risk map = POLICY, ποτέ
+  μόνη πύλη· item generation ≥ exposure· MIRT εναλλακτική'
+operation: RESTORE
+targets:
+- MFA-ELM-119
+- MFA-ELM-126
+- MFA-VO-078
+- MFA-VO-086
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 51d4d4b9aaf27ac961f22245241ca75714d165bd52cd50dba54316ac521a6876
+    VERIFICATION-OBLIGATIONS.yaml: 245f58d863269beded863e51e20f75f097320314470deaaa11a984b6192a3562
+preconditions:
+- MFA-PATCH-0051.status == APPLIED
+change:
+  MFA-ELM-126:
+    statement:
+      __raw: '"Το δίδυμο είναι διερμηνέας πάνω στο κανονικό μοντέλο: World = ⟨model cut, ανά στοιχείο (fidelity ∈ {F0 mock, F1 executable spec, F2 DST, F3 shadow,
+        F4 real}, state), event log, clock vector, seed⟩· Event τυπωμένο από contract (provider, signature, RET class)· apply(event) ελέγχει preconditions (contracts)
+        και ΕΚΤΕΛΕΣΙΜΕΣ αναλλοίωτες (predicates registered per INV) → ViolationRecord· fork(world, seed) = διακλάδωση με ντετερμινιστικό replay (log+seeds)· substitution:
+        στοιχείο αλλάζει πιστότητα με conformance test στο ίδιο contract· επιστημικός κίνδυνος: κάθε στοιχείο φέρει epistemic_status → κίνδυνος ανά ικανότητα διαδίδεται
+        στο γράφημα εξαρτήσεων (max-path ή πιθανοτικά)· αντιπαλικά σενάρια = ATK ως εκτελέσιμες γεννήτριες γεγονότων· Pareto = αξιολόγηση κόσμων· χώρος = CGP."'
+  MFA-ELM-119:
+    statement:
+      __raw: '"Capability Growth Law (φορμαλισμός): για οικογένεια f, η λανθάνουσα ικανότητα θ_f(t) εκτιμάται με IRT (2PL) πάνω σε σφραγισμένη τράπεζα έργων I_f με
+        παραμέτρους (δυσκολία b_i, διάκριση a_i) βαθμονομημένες από HELD_OUT· η «νομοτέλεια» είναι το προσαρμοσμένο μονότονο μοντέλο θ_f(R) πάνω σε πόρους R = (compute,
+        data, time, Wh) με CI· το ratchet εφαρμόζεται στο ΚΑΤΩ όριο CI· κάθε έργο i με hash στο DataManifest οποιουδήποτε βάρους είναι ΑΚΥΡΟ (μόλυνση διά provenance,
+        όχι εικασία)· η τράπεζα εξελίσσεται από curriculum/ECE έργα με απαντήσεις σε escrow στον HELD_OUT· item exposure control· plateau = ACTIVE UNKNOWN με σχέδιο.
+        · ATK-23: κάθε item φέρει provenance (SELF-GENERATED ∣ HELD_OUT ∣ HUMAN ∣ PUBLIC)· οι σφραγισμένες οικογένειες σταδίων/προαγωγών απαιτούν ≥ 30 % μη-SELF items·
+        η αναλογία δηλώνεται σε κάθε CapabilityGrowthRecord."'
+  MFA-VO-086:
+    methods:
+      __raw: '["tools/twin: φόρτωση πακέτου, 30 seeded παραβιάσεις (contract signature, precondition, INV predicates, RET escrow)", "1000 τυχαία γεγονότα, fork σε
+        10 κόσμους, replay από log+seeds· substitution ενός στοιχείου F0→F1", "property tests στο tools/twin (F1)"]'
+  MFA-VO-078:
+    methods:
+      __raw: '["20 συνθετικοί λύτες με γνωστή θ· adaptive test· ανάκτηση διάταξης και CI κάλυψης", "Εισάγονται 50 έργα της τράπεζας στο DataManifest ενός βάρους (και
+        50 παραφράσεις)· μέτρηση", "property tests στο tools/twin (F1)"]'
+rationale: Αντίστροφο του MFA-PATCH-0051, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0051
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

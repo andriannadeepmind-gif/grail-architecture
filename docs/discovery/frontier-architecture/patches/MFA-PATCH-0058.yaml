@@ -1,0 +1,75 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0058
+title: Ευρήματα της F1 εκτελέσιμης προδιαγραφής (tools/twin) στα δοσιέ MFA-MECH-039 (Act αυστηρότερο) και MFA-MECH-043 (κάλυψη αναλλοίωτων 35/115, SCC 89, UNMEASURED)
+  — append-only
+operation: ANNOTATE
+targets:
+- mechanisms/MFA-MECH-039.md
+- inventions/MFA-MECH-039.yaml
+- inventions/MFA-MECH-043.yaml
+base:
+  package_version: 0.1.0
+  file_hashes:
+    inventions/MFA-MECH-039.yaml: ba95886ab3e6948aa33ee8340ba3ded173e43d4dc4359e3a6c3f753aa576201c
+    inventions/MFA-MECH-043.yaml: 48becde813716849f7522fc5783a05f808046b666ce69a27260ca2ca8f14d286
+    mechanisms/MFA-MECH-039.md: 61a3c98654974a3f395bcec4896cd4d24b313e50c41e1032d3c1d085f31bea9a
+preconditions: []
+change:
+  mechanisms/MFA-MECH-039.md:
+    append: '
+
+
+      ## 0.4.0 — Ευρήματα της F1 εκτελέσιμης προδιαγραφής (tools/twin/oc.py, MFA-PATCH-0058)
+
+
+      1. **Act αυστηρότερο από το pseudocode:** ο κανόνας `Act(e1)` δέχεται μόνο `Verified[τ]` ή `Claimed[τ]` με DEFER εγκεκριμένο από RET για ΑΝΑΣΤΡΕΨΙΜΗ/αντισταθμίσιμη
+      κλάση επίδρασης· τιμή τύπου `Unknown[reason]` ή `Base` που φτάνει στο Effect plane είναι `UNVERIFIED_EFFECT`. Η κυριολεκτική συνθήκη του πεδίου `algorithms[0]`
+      άφηνε μία λανθασμένη ροή (OC-E1) να περάσει· η αυστηρή μορφή είναι η ισχύουσα (MFA-INV-105).
+
+      2. **Κοκκομετρία:** μία υποχρέωση ανά δέσμευση/κλάση επίδρασης (MFA-PATCH-0050, ATK-25) — επιβεβαιώνεται στο OC-E1 (≈10 υποχρεώσεις ανά ροή).
+
+      3. **Πιστοποιητικά:** ο stub VFC με δύο ανεξάρτητους checkers και τον κανόνα γενεαλογίας (MFA-INV-089) απορρίπτει cert από checker ίδιας γενεαλογίας με τη γεννήτρια.
+
+      4. **Μετρήσεις F1:** 25/25 σωστές ροές δεκτές, 25/25 λανθασμένες απορριφθείσες με λόγο (DROPPED_OBLIGATIONS, INSUFFICIENT_EVIDENCE, INVALID_DEFER, NO_SUCH_OBLIGATION,
+      UNVERIFIED_EFFECT)· 0 ψευδώς θετικά/αρνητικά (MFA-VO-082, επίπεδο F1).
+
+      '
+  inventions/MFA-MECH-039.yaml:
+    append: '
+
+      # 0.4.0 — F1 finding (tools/twin/oc.py, MFA-PATCH-0058): the Act rule is STRICTER than the pseudocode above — only Verified[τ], or Claimed[τ] with a
+
+      # RET-approved DEFER for a reversible/compensable effect class, may reach the Effect plane; Unknown[reason]/Base values are UNVERIFIED_EFFECT (MFA-INV-105).
+
+      # The literal condition let one flawed OC-E1 flow through; the strict form is the binding one. Measured at F1: 25/25 accepted, 25/25 rejected with reason.
+
+      '
+  inventions/MFA-MECH-043.yaml:
+    append: '
+
+      # 0.4.0 — F1 findings (tools/twin, MFA-PATCH-0058): 35/115 invariants executable (MFA-UNK-132 first measurement); TES-E1 60/60 seeded violations detected, 0
+      false
+
+      # positives; TES-E2 replay hash equal 10/10; one dependency SCC of 89 elements collapses runtime-graph risk propagation to 0.6 for most elements — the F2
+
+      # improvement is propagation along the genesis (build) order rather than the runtime graph; contract operation vocabularies are parsed from prose (F2 fix:
+
+      # explicit `operations` field in CONTRACTS.yaml via a later patch). Resources, shadow/real substitution, Pareto, spatial projection: UNMEASURED at F1, declared.
+
+      '
+rationale: 'Η F1 εκτελέσιμη προδιαγραφή είναι πείραμα του δοσιέ· τα ευρήματά της καταγράφονται στο δοσιέ (PATCH-PROTOCOL: κάθε αλλαγή = patch)· η αυστηρότερη μορφή
+  του Act είναι η ισχύουσα.'
+evidence:
+- tools/twin/run-report.py (F1, 43 tests OK)
+- ASI-DIGITAL-TWIN-EXECUTION-SEMANTICS.md §3–§4
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: καμία
+verification: tools/twin tests · tools/check-package.py R15
+rollback: MFA-PATCH-0058-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

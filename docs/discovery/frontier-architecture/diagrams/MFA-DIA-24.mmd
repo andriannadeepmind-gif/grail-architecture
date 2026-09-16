@@ -1,0 +1,69 @@
+%% id: MFA-DIA-24 · Twin Execution Semantics — ο διερμηνέας του κανονικού μοντέλου · question: τι ελέγχεται σε κάθε γεγονός και τι δηλώνεται UNMEASURED;
+%% elements: MFA-ELM-126/098/093/091/010/089, MFA-MECH-043/008, MFA-INV-112/113, MFA-CON-072, MFA-VO-086, MFA-UNK-132 · source: inventions/MFA-MECH-043.yaml
+flowchart TB
+  LD["TES.load(package) → Model M = ⟨ELM, CON, INV, CAP, OBJ, UNK, CFL, RSP, RELATIONS⟩<br/>έλεγχος αναφορών (R1) · μητρώο ExecutableInvariant ⟨INV id, predicate(world)⟩"]
+  WD["World w = ⟨M cut, σ: ELM → (fidelity, state), log, clock vector, seed, parent⟩"]
+  LD --> WD
+  EV["Event ev = ⟨contract c, op, args, actor, ret_class, time⟩"]
+  WD --> EV
+  subgraph AP["TES.apply(w, ev) — MFA-CON-072"]
+    C1{"1 ev ⊨ signature(c);"}
+    X1["Violation(CONTRACT_SIGNATURE, ev)"]
+    C2{"2 pre(c, ev, w);"}
+    X2["Violation(CONTRACT_PRECONDITION, ev, pre_trace)"]
+    C3{"3 ret_class IRREVERSIBLE ή IRREVERSIBLE_PREAUTHORIZED ⇒ escrow_ok(w, ev); (RET MFA-ELM-010)"}
+    X3["Violation(RET_ESCROW, ev)"]
+    ST["4 βήμα στοιχείου κατά πιστότητα: w′.σ[provider(c)] ← impl(provider, fidelity).step(ev, state)"]
+    subgraph FID["Κλίμακα πιστότητας — ίδιο contract σε κάθε βαθμίδα"]
+      direction LR
+      F0["F0 mock"]
+      F1["F1 executable spec (tools/twin)"]
+      F2["F2 DST"]
+      F3["F3 shadow"]
+      F4["F4 real — μόνο με DisclosureGrant/PDP"]
+    end
+    LG["5 log.append(ev) · clock ← tick(clock, ev)"]
+    IN["6 για κάθε ενεργή ExecutableInvariant του provider: r ← inv.predicate(w′)"]
+    R1["r = True → συνεχίζει"]
+    R2["r = False → ViolationRecord(inv.id, ev, evidence = inv.explain(w′))<br/>ο κόσμος συνεχίζει ή σταματά κατά πολιτική"]
+    R3["r = UNKNOWN(reason) → unmeasured.append(inv.id, reason)<br/>αναλλοίωτη χωρίς predicate = UNMEASURED, δηλωμένο — ποτέ σιωπηλά PASS (MFA-INV-112)"]
+    C1 -->|"όχι"| X1
+    C1 -->|"ναι"| C2
+    C2 -->|"όχι"| X2
+    C2 -->|"ναι"| C3
+    C3 -->|"όχι"| X3
+    C3 -->|"ναι"| ST
+    ST -.-> FID
+    ST --> LG
+    LG --> IN
+    IN --> R1
+    IN --> R2
+    IN --> R3
+  end
+  EV --> C1
+  W2["w′ — νέος κόσμος (structural sharing) · violations · unmeasured"]
+  R1 --> W2
+  R2 --> W2
+  R3 --> W2
+  FK["TES.fork(w, seed′) → δέντρο κόσμων"]
+  RP["TES.replay(log, seeds) — hash(state) = original, D1 bitwise (MFA-INV-113)<br/>D2 στοιχεία: ανοχή δηλωμένη"]
+  SB["TES.substitute(elm, F_i → F_j) — μόνο με conformance suite στο ίδιο contract (MFA-INV-113)"]
+  INJ["TES.inject(scenario) — ATK ως εκτελέσιμες γεννήτριες γεγονότων (adversarial/), seed"]
+  W2 --> FK
+  W2 --> RP
+  FID -.-> SB
+  INJ -.-> EV
+  RK["TES.risk(M): risk(epistemic_status) PROVEN 0 … RESEARCH HYPOTHESIS 0.6 … ACTIVE UNKNOWN 0.8 … FALSIFIED 1<br/>max-path με decay πάνω σε SCC-συμπυκνωμένο γράφημα εξαρτήσεων → cap.risk"]
+  LD --> RK
+  PA["TES.pareto(worlds) — μη-κυριαρχούμενοι στο (KT pass, cost, risk)<br/>KT/VO obligations ως αξιολόγηση (MFA-ELM-089)"]
+  FK --> PA
+  RK --> PA
+  PJ["TES.project(world) → SceneGraph CGP (MFA-ELM-093, MFA-MECH-008) → cockpit MFA-ELM-091<br/>violations, unmeasured, risk map ορατά"]
+  PA --> PJ
+  W2 --> PJ
+  NOTE["Δίδυμο χωρίς εξουσία επίδρασης (Genesis) · World Twin MFA-ELM-098 = μοντέλο δρώντων μέσα στο δίδυμο<br/>MFA-VO-086: seeded παραβιάσεις ανιχνεύονται 30/30, replay hash ίσο 100/100 · MFA-UNK-132: ποσοστό INV με predicate"]
+  PJ -.-> NOTE
+  classDef viol fill:#fde2e2,stroke:#b00020,color:#000
+  classDef unm fill:#fff4d6,stroke:#b7791f,color:#000
+  class X1,X2,X3,R2 viol
+  class R3 unm

@@ -1,0 +1,65 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0044-R
+title: 'Rollback of MFA-PATCH-0044: ATK-19 (ψευδαίσθηση εννοιών/αιτιών/υποθέσεων): OGE διπλή επιβεβαίωση residual· CDCE φυσικά πειράματα με ετικέτα NAT και World
+  Twin πιστότητα· AHE venue-feasibility'
+operation: RESTORE
+targets:
+- MFA-ELM-109
+- MFA-ELM-110
+- MFA-ELM-111
+- MFA-VO-068
+- MFA-VO-069
+- MFA-VO-070
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 9d98e52e88c9f025853f105a60b3480507f02e1b04edafd8422f175a68a2443a
+    VERIFICATION-OBLIGATIONS.yaml: 904f87f3f3f75e2e37793bb319c488228adf18a4e50a816d5c0de6eda482314e
+preconditions:
+- MFA-PATCH-0044.status == APPLIED
+change:
+  MFA-ELM-109:
+    statement:
+      __raw: '"Η έννοια είναι δέσμευση: γεννιέται όταν ένα υποψήφιο intension (πρόγραμμα ή λογικός ορισμός) πάνω σε extension (σύνολο δεσμεύσεων) αποδίδει μετρήσιμο
+        κέρδος περιγραφής+πρόβλεψης G>θ σε σφραγισμένο split· κάθε συγχώνευση/διάσπαση είναι ΠΡΟΣΦΥΓΗ (Court-lite, EIM-ανεξάρτητοι αξιολογητές) με LossMap δεσμευμένο,
+        ώστε η έκταση κάθε καταργημένης έννοιας να είναι ανακτήσιμη — NON-COLLAPSE ως θεώρημα της γενεαλογίας, όχι ως ελπίδα."'
+  MFA-ELM-110:
+    statement:
+      __raw: '"Το ledger είναι παρεμβατικό dataset: κάθε Effect με receipt είναι do(X=x) με γνωστό στόχο και χρόνο· κάθε Genesis-plane διακλάδωση είναι παρατηρησιακό
+        στρώμα· η αιτιακή δομή είναι ΔΕΣΜΕΥΣΗ (CausalGraphCommitment) με επιστημική κατάσταση ανά ακμή (OBSERVATIONAL / INTERVENTION-SUPPORTED / REFUTED / UNDETERMINED)·
+        οι νέες παρεμβάσεις προτείνονται ως Effects με VOI/κόστος και περνούν από RET (πρώτα Genesis/LWM, μετά REVERSIBLE στο Effect plane, ποτέ IRREVERSIBLE χωρίς
+        AutonomyEnvelope)· κάθε αντιπαραγοντική απάντηση φέρει τύπο αβεβαιότητας και επιστρέφει UNKNOWN(CAUSAL_UNDERDETERMINED) με σχέδιο παρεμβάσεων όταν το ερώτημα
+        δεν ταυτοποιείται."'
+  MFA-ELM-111:
+    statement:
+      __raw: '"Υπόθεση = τυπωμένη δέσμευση H = ⟨explanandum, μοντέλο/πρόγραμμα, falsifier, νέες προβλέψεις, κόστος ελέγχου⟩· χωρίς falsifier δεν εισάγεται (η απόρριψη
+        καταγράφεται). Τρεις EIM-ανεξάρτητες γεννήτριες (ILP πάνω στην οντολογία, αναζήτηση προγραμμάτων στο Skill Library, παραμετρική πρόταση από κυρίαρχο μοντέλο)
+        ανταγωνίζονται· κατάταξη με Expected Falsification Value EFV(H) = P(διάψευση)·InfoGain / cost· έλεγχος Genesis-first (LWM/World Twin/DST) και μετά υπό RET·
+        επιζώσες υποθέσεις προάγονται μηχανικά σε OGE (έννοιες) ή CDCE (ακμές)· επαναλαμβανόμενα εξηγητικά σχήματα συμπιέζονται (anti-unification) σε βιβλιοθήκη."'
+  MFA-VO-068:
+    methods:
+      __raw: '["DST με κρυφή οντολογία 50 εννοιών που παράγει τα δεδομένα· το OGE ξεκινά από κενή O· μετράμε ανάκτηση (ARI) και G", "Σφραγισμένο νομικό corpus· O₀
+        = CMP-LAW registry· OGE γεννά έννοιες· downstream QA/drafting σε HELD_OUT", "100 τυχαίες συγχωνεύσεις + 100 διασπάσεις σε O με 10³ έννοιες· ανάκτηση", "property
+        tests στο tools/twin (F1)"]'
+  MFA-VO-069:
+    methods:
+      __raw: '["DST: 100 τυχαία SCM (n=30, d≤3)· ledger με 10³ παρατηρήσεις + k παρεμβάσεις που το CDCE ΕΠΙΛΕΓΕΙ (VOI) έναντι τυχαίων", "World Twin δρώντες από docket·
+        αντιπαραγοντικά «αν είχε κατατεθεί X» σε HELD_OUT υποθέσεις με γνωστή έκβαση", "property tests στο tools/twin (F1)"]'
+  MFA-VO-070:
+    methods:
+      __raw: '["DST με 50 κρυφούς μηχανισμούς που παράγουν ανωμαλίες· AHE έναντι (α) τυχαίων υποθέσεων ίδιου τύπου, (β) μίας γεννήτριας", "Ανωμαλίες = απροσδόκητες
+        εκβάσεις δικαστηρίου σε HELD_OUT dockets· υποθέσεις για κρυφές μεταβλητές· επαλήθευση σε μεταγενέστερα dockets", "property tests στο tools/twin (F1)"]'
+rationale: Αντίστροφο του MFA-PATCH-0044, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0044
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

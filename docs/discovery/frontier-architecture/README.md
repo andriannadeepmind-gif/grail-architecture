@@ -30,3 +30,8 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 ## Πώς αλλάζει
 
 Μόνο με patch (`PATCH-PROTOCOL.md`): `python3 tools/apply-patch.py patches/MFA-PATCH-nnnn.yaml` → `python3 tools/check-package.py` → `python3 tools/build-manifest.py <version>`. Το `-R` γράφεται από το εργαλείο. Το Telos, μια απόφαση, ένα στοιχείο: όλα IDs, όλα patch.
+
+
+## Ω-ASI 0.4.0 — επέκταση (working tree, PROPOSED / UNREVIEWED, no commit)
+
+Με την **Ω-MAXIMUM NON-ABSTENTION ARCHITECTURE MANDATE 0.4.0** του δημιουργού (2026-09-16) το πακέτο παύει να αντιμετωπίζει την ASI ως «πορεία»: 25 μηχανισμοί (MFA-MECH-020…044), 20 ικανότητες (MFA-CAP-089…108), 19 στοιχεία (MFA-ELM-109…127), 19 contracts, 38 invariants, 20 VOs, 19 unknowns, 8 conflicts, 20 research programs, 6 επιδιώξεις (MFA-OBJ-053…058) — όλα μέσω patches MFA-PATCH-0026…. Είσοδοι: `ASI-ABSTENTION-AUDIT.md` (τι ήταν αποχή), `ASI-MAXIMUM-CAPABILITY-ARCHITECTURE.md` (οι 19 ικανότητες × 11 στοιχεία και οι 17 περιοχές), `ASI-INVENTION-LEDGER.md`, `inventions/` (INVENTION DOSSIERs 29 πεδίων), `ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md`, `ASI-DIGITAL-TWIN-EXECUTION-SEMANTICS.md` + `tools/twin/`, `ASI-ALTERNATIVES-AND-PARETO.md`, `ACCEPTANCE-GATES.yaml` (`tools/asi-gates.py`), `OMEGA-ASI-0.4.0-DELTA-REPORT.md`. Τα MFA-PATCH-0020…0025 / MFA-MECH-020…025 είναι PROVISIONAL / UNREVIEWED / NON-BINDING (§13)· το `MANDATE-OMEGA-ASI-0.4.0.md` είναι SUPERSEDED. Μόνο ο δημιουργός εγκρίνει.

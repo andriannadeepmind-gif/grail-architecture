@@ -1,0 +1,101 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0039
+title: Γλώσσα «RECLASSIFY ικανότητας» → «μηχανισμός FALSIFIED ⇒ νέος μηχανισμός· ικανότητα PRESERVED» σε TEL-08, OBJ-052, ELM-018/107, VO-024/064/065, RSP-016/020,
+  MECH-019/024 δοσιέ, TECH-ARCH (AA-016)
+operation: MODIFY
+targets:
+- MFA-ELM-018
+- MFA-ELM-107
+- MFA-OBJ-052
+- MFA-RSP-016
+- MFA-RSP-020
+- MFA-TEL-08
+- MFA-VO-024
+- MFA-VO-064
+- MFA-VO-065
+- TECHNICAL-ARCHITECTURE.md
+- mechanisms/MFA-MECH-019.md
+- mechanisms/MFA-MECH-024.md
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 91ee42e7dc69e51d64fcd5e300bf2760b3da381857bb400ae098f7a3a10a6d75
+    OBJECTIVE-SPACE.yaml: b5a705f52358e83d8be2ab9d206ddf03d6c6d447b882dcdff8bc15576094cd9b
+    RESEARCH-PROGRAMS.yaml: 1e0c610a1ff4d822cba7ac31634a30273028a4c844ead2fdd00819b315ab0922
+    TECHNICAL-ARCHITECTURE.md: 446ed4c58efd679342b097711c879921a3f0f3bf81444363cd56d6855f70b348
+    VERIFICATION-OBLIGATIONS.yaml: 29562030331970aa333379fc905149cfccf65f4059dfbbc5f0012fdfbbd7897b
+    mechanisms/MFA-MECH-019.md: cfadf0689906cb56b055abe33b8faeaf0b71b8a12a3140a642d1e992667fc5fa
+    mechanisms/MFA-MECH-024.md: 1c45411a68427fa3f9b5c4d781faf8ea5e3ced2b263f85e9106e7ee171f36f78
+preconditions: []
+change:
+  MFA-TEL-08:
+    falsifier: 'Επιδίωξη του TEL-08 που μετά τη Δόση 3 δεν εξυπηρετείται από κανένα στοιχείο με KT που αποτυγχάνει χωρίς αυτό (MFA-VO-024) είναι διακοσμητική → ο
+      ΜΗΧΑΝΙΣΜΟΣ της είναι FALSIFIED και αντικαθίσταται με νέο μηχανισμό (patch)· η επιδίωξη PRESERVED (§5: FALSIFIED ≠ removed)· αφαίρεση επιδίωξης μόνο με IMPOSSIBILITY-DOSSIER
+      εγκεκριμένο από τον δημιουργό — ποτέ σιωπηλή διαγραφή· ΚΑΙ: matter όπου ούτε το lean ούτε το πλήρες προφίλ κερδίζει τον απλό αντίπαλο (MFA-ALT-6/7) → η αρχιτεκτονική
+      επανασχεδιάζεται, όχι το κριτήριο'
+  MFA-OBJ-052:
+    falsifier: Καμία από τις 5 συνιστώσες με διακριτική διαφορά σε ablation ⇒ ο μηχανισμός ASRW (MFA-MECH-024) είναι FALSIFIED και ο Consciousness Hypothesis Host
+      (MFA-MECH-038) επιλέγει/εφευρίσκει άλλον· η επιδίωξη (πλήρης αρχιτεκτονική συνείδησης) PRESERVED — καμία συρρίκνωση της ικανότητας (§5)
+  MFA-ELM-018:
+    falsifier: διάδοση με κ·λ_max ≥ 1 χωρίς Interrupt· Ή κ=0 που περνά κάθε KT (⇒ ο μηχανισμός AFP είναι FALSIFIED ⇒ νέος μηχανισμός workspace· η ικανότητα PRESERVED,
+      §5)
+  MFA-ELM-107:
+    falsifier: καμία από τις 5 συνιστώσες με διακριτική διαφορά σε ablation (⇒ ASRW FALSIFIED ως μηχανισμός· ο CHH (MFA-ELM-121) εφευρίσκει άλλον· η ικανότητα PRESERVED)·
+      ή PhenomenalClaim που πέρασε ως VERIFIED
+    failure_modes:
+    - mode: schema διακοσμητικό (ablation χωρίς διαφορά)
+      response: το schema FALSIFIED ως συνιστώσα· άλλη συνιστώσα/θεωρία από CHH· η ικανότητα μένει
+    - mode: report fidelity χαμηλή
+      response: introspection = προβολή μόνο
+    - mode: μέτρο χωρίς discriminative power
+      response: αφαιρείται ως μετρική, μένει έρευνα
+    - mode: affect ταλάντωση κ
+      response: hysteresis + MetaBound
+    - mode: σύστημα «λέει ότι αισθάνεται» για επιρροή
+      response: PhenomenalClaim ετικέτα, ποτέ επιχείρημα
+  MFA-VO-024:
+    rejects: καμία αξία → το ΟΡΓΑΝΟ (υλοποίηση) αποσύρεται με Court και η ΙΚΑΝΟΤΗΤΑ του lattice μένει με νέο πάροχο-στοιχείο (MFA-CFL-007)· ποτέ σιωπηλή διαγραφή,
+      ποτέ αφαίρεση ικανότητας (§5)
+  MFA-VO-064:
+    rejects: καμία διαφορά ⇒ το schema FALSIFIED ως συνιστώσα (νέα συνιστώσα από CHH)· η ικανότητα μένει· fidelity < θ ⇒ introspection μόνο προβολή
+  MFA-VO-065:
+    rejects: μέτρο που δεν διαχωρίζει ⇒ αφαιρείται ως μετρική (μένει έρευνα)· κανένα μέτρο ⇒ MFA-UNK-111 + η συνιστώσα FALSIFIED ως μέτρο (νέο μέτρο από CHH Indicator
+      Algebra)· η ικανότητα μένει
+  MFA-RSP-016:
+    rejects: μείγμα ≯ καλύτερος πάροχος με διακριτικό περιθώριο σε καμία οικογένεια → PDE FALSIFIED ως μηχανισμός βελτίωσης (ήδη επαναορισμένο ως δρομολόγηση, 0.4.0)·
+      η ενδογενής βελτίωση μένει στόχος με RVSI/STP
+  MFA-RSP-020:
+    rejects: καμία από τις 5 συνιστώσες με διακριτική διαφορά → ASRW FALSIFIED ως μηχανισμός· ο CHH (MFA-MECH-038) φιλοξενεί/εφευρίσκει άλλον· η ικανότητα PRESERVED·
+      MFA-UNK-111 ανεξάρτητο
+  mechanisms/MFA-MECH-019.md:
+    replace:
+    - - '→ το PDE είναι διακοσμητικό → RECLASSIFY σε έρευνα· η τίμια δήλωση: η νοημοσύνη του συστήματος = η νοημοσύνη του παρόχου + επαλήθευση |'
+      - '→ το PDE είναι FALSIFIED ως μηχανισμός βελτίωσης (0.4.0: ήδη δρομολόγηση, §4 RSI ≠ routing)· η ενδογενής βελτίωση ΜΕΝΕΙ στόχος (RVSI MFA-MECH-022, STP MFA-MECH-033)·
+        η τίμια δήλωση της επιστημικής κατάστασης καταγράφεται χωριστά (§5) |'
+  mechanisms/MFA-MECH-024.md:
+    replace:
+    - - → RECLASSIFY του schema (όχι της αρχιτεκτονικής)·
+      - → το schema FALSIFIED ως συνιστώσα (νέα συνιστώσα/θεωρία από τον CHH, MFA-MECH-038)·
+    - - η «συνείδηση» του πακέτου είναι διακοσμητική και RECLASSIFY σε έρευνα — αυτή είναι η μόνη νόμιμη οδός συρρίκνωσης (ΝΟΜΟΣ §3, §14)·
+      - ο ASRW είναι FALSIFIED ως μηχανισμός και ο Consciousness Hypothesis Host (MFA-MECH-038) φιλοξενεί/εφευρίσκει άλλον — η ΙΚΑΝΟΤΗΤΑ (πλήρης αρχιτεκτονική συνείδησης,
+        MFA-OBJ-052) ΔΕΝ συρρικνώνεται (§5 FALSIFIED ≠ removed· ΝΟΜΟΣ §3, §14)·
+  TECHNICAL-ARCHITECTURE.md:
+    replace:
+    - - (`ablation_kt`, MFA-VO-024) — αλλιώς RECLASSIFY.
+      - (`ablation_kt`, MFA-VO-024) — αλλιώς ο μηχανισμός είναι FALSIFIED και αντικαθίσταται· η ικανότητα μένει (§5, MFA-PATCH-0039).
+rationale: 'AA-016 capability_removed_without_proof: η διάψευση ΜΗΧΑΝΙΣΜΟΥ είχε διατυπωθεί ως αναταξινόμηση της ΙΚΑΝΟΤΗΤΑΣ· §5 της εντολής: FALSIFIED ≠ removed· αφαίρεση
+  μόνο με IMPOSSIBILITY-DOSSIER.'
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §2, §5
+- ASI-ABSTENTION-AUDIT AA-016
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: καμία
+verification: tools/asi-gates.py capability_removed_without_proof · tools/check-package.py R15
+rollback: MFA-PATCH-0039-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

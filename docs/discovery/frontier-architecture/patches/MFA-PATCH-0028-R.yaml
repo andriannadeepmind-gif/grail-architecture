@@ -1,0 +1,211 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0028-R
+title: 'Rollback of MFA-PATCH-0028: Ικανότητες MFA-CAP-089…108 (οι 19 ικανότητες ASI της §8 και οι συνθέσεις της §6) με πάροχο-μηχανισμό, VO και falsifier· concern_coverage
+  ενημερώνεται'
+operation: RESTORE
+targets:
+- CAPABILITY-LATTICE.yaml
+- MFA-CAP-089
+- MFA-CAP-090
+- MFA-CAP-091
+- MFA-CAP-092
+- MFA-CAP-093
+- MFA-CAP-094
+- MFA-CAP-095
+- MFA-CAP-096
+- MFA-CAP-097
+- MFA-CAP-098
+- MFA-CAP-099
+- MFA-CAP-100
+- MFA-CAP-101
+- MFA-CAP-102
+- MFA-CAP-103
+- MFA-CAP-104
+- MFA-CAP-105
+- MFA-CAP-106
+- MFA-CAP-107
+- MFA-CAP-108
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CAPABILITY-LATTICE.yaml: 5636e1b52791eff1783c8278c3e9ee36145c1048e98061aaf37ca6a96d631602
+preconditions:
+- MFA-PATCH-0028.status == APPLIED
+change:
+  MFA-CAP-089:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-090:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-091:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-092:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-093:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-094:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-095:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-096:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-097:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-098:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-099:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-100:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-101:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-102:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-103:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-104:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-105:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-106:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-107:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-108:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  CAPABILITY-LATTICE.yaml:
+    replace:
+    - - '  "Full-system testing": [MFA-CAP-038, MFA-CAP-074, MFA-CAP-107]
+
+        '
+      - '  "Full-system testing": [MFA-CAP-038, MFA-CAP-074]
+
+        '
+    - - '  "Successor generation": [MFA-CAP-027, MFA-CAP-106]
+
+        '
+      - '  "Successor generation": [MFA-CAP-027]
+
+        '
+    - - '  "Volition/goal formation": [MFA-CAP-018, MFA-CAP-105]
+
+        '
+      - '  "Volition/goal formation": [MFA-CAP-018]
+
+        '
+    - - '  "Self-model": [MFA-CAP-017, MFA-CAP-065, MFA-CAP-086, MFA-CAP-101, MFA-CAP-102]
+
+        '
+      - '  "Self-model": [MFA-CAP-017, MFA-CAP-065, MFA-CAP-086]
+
+        '
+    - - '  "Memory": [MFA-CAP-009, MFA-CAP-057, MFA-CAP-099]
+
+        '
+      - '  "Memory": [MFA-CAP-009, MFA-CAP-057]
+
+        '
+    - - '  "Long-horizon migration": [MFA-CAP-036, MFA-CAP-098]
+
+        '
+      - '  "Long-horizon migration": [MFA-CAP-036]
+
+        '
+    - - '  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067, MFA-CAP-081, MFA-CAP-082, MFA-CAP-083, MFA-CAP-097, MFA-CAP-104]
+
+        '
+      - '  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067, MFA-CAP-081, MFA-CAP-082, MFA-CAP-083]
+
+        '
+    - - '  "Evaluation and benchmark evolution": [MFA-CAP-029, MFA-CAP-095, MFA-CAP-100]
+
+        '
+      - '  "Evaluation and benchmark evolution": [MFA-CAP-029]
+
+        '
+    - - '  "Language/compiler/architecture forge": [MFA-CAP-028, MFA-CAP-094, MFA-CAP-096]
+
+        '
+      - '  "Language/compiler/architecture forge": [MFA-CAP-028]
+
+        '
+    - - '  "Formal verification": [MFA-CAP-022, MFA-CAP-075, MFA-CAP-093, MFA-CAP-103]
+
+        '
+      - '  "Formal verification": [MFA-CAP-022, MFA-CAP-075]
+
+        '
+    - - '  "Deliberation": [MFA-CAP-015, MFA-CAP-049, MFA-CAP-068, MFA-CAP-073, MFA-CAP-092, MFA-CAP-108]
+
+        '
+      - '  "Deliberation": [MFA-CAP-015, MFA-CAP-049, MFA-CAP-068, MFA-CAP-073]
+
+        '
+    - - '  "Causal and counterfactual reasoning": [MFA-CAP-014, MFA-CAP-090, MFA-CAP-091]
+
+        '
+      - '  "Causal and counterfactual reasoning": [MFA-CAP-014]
+
+        '
+    - - '  "Knowledge representation": [MFA-CAP-010, MFA-CAP-045, MFA-CAP-089]
+
+        '
+      - '  "Knowledge representation": [MFA-CAP-010, MFA-CAP-045]
+
+        '
+rationale: Αντίστροφο του MFA-PATCH-0028, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-104 (RVSI καταναλωτής)
+- MFA-ELM-086 (HELD_OUT)
+- MFA-ELM-099 (VFC)
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-089
+  - MFA-CAP-090
+  - MFA-CAP-091
+  - MFA-CAP-092
+  - MFA-CAP-093
+  - MFA-CAP-094
+  - MFA-CAP-095
+  - MFA-CAP-096
+  - MFA-CAP-097
+  - MFA-CAP-098
+  - MFA-CAP-099
+  - MFA-CAP-100
+  - MFA-CAP-101
+  - MFA-CAP-102
+  - MFA-CAP-103
+  - MFA-CAP-104
+  - MFA-CAP-105
+  - MFA-CAP-106
+  - MFA-CAP-107
+  - MFA-CAP-108
+  ledger_entry: CAPABILITY-CONSERVATION.md §0.4.0 — 20 νέες ικανότητες, 0 αφαιρέσεις
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0028
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

@@ -1,0 +1,56 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0043-R
+title: 'Rollback of MFA-PATCH-0043: ATK-18 (οικονομία κυριαρχίας): S1-PLATEAU δήλωση με CGM extrapolation στο STP· ελάχιστη σύνθεση αξιολογητών ανεξάρτητη παρόχων·
+  DEC-016 εναλλακτική ρητή'
+operation: RESTORE
+targets:
+- MFA-CAP-097
+- MFA-ELM-100
+- MFA-ELM-116
+- MFA-RSP-028
+- MFA-UNK-122
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 3556a7eeae5c9a17c8b2706e31e2692ad1b2b5f491734905695eda13f327bb33
+    CAPABILITY-LATTICE.yaml: 9ee3f6d02f98b5f0d34aaeb71ebc9739fbb900b78ccd516954779d528253a8b0
+    RESEARCH-PROGRAMS.yaml: 29bd0856b70225e810fcedc43d5cb1703397c72f022f844f62e95441cd0069e0
+    UNKNOWNS.yaml: 033118a9a81aeecf5f47bb6acc10bd4db45e914df2ee5f0ba9362967c714198f
+preconditions:
+- MFA-PATCH-0043.status == APPLIED
+change:
+  MFA-ELM-116:
+    statement:
+      __raw: '"Sovereignty Index SI ∈ [0,1]^{families×axes}: ανά οικογένεια ικανοτήτων f και άξονα ∈ {proposal, evaluation, memory, tools}, το ποσοστό VERIFIED εξόδων
+        που παρήχθησαν από κυρίαρχες πηγές (WeightCommitments/προγράμματα ιδιόκτητα) ΧΩΡΙΣ απώλεια ποιότητας έναντι του καλύτερου παρόχου σε σφραγισμένο σύνολο (ισοτιμία
+        εντός CI). Στάδια ανά οικογένεια S0 (πάροχος) → S1 (κυρίαρχη σκιά) → S2 (κυρίαρχη κύρια, πάροχος fallback) → S3 (πάροχος μόνο ως εξωτερικός αντίπαλος/αξιολογητής
+        όπου lineage-disjoint) → S4 (χωρίς πάροχο)· προκαταχωρισμένες πύλες (MFA-DEC-021) σε N συνεχόμενα cuts· ratchet στην ΠΟΙΟΤΗΤΑ (ποτέ υποχώρηση), όχι στο στάδιο
+        (υποχώρηση σταδίου επιτρεπτή και καταγράφεται)· ο πάροχος καταγράφεται στη γενεαλογία κάθε distilled βάρους."'
+  MFA-ELM-100:
+    assumptions:
+      __raw: '["κυρίαρχο corpus + ledger επαρκούν για adapters από τη Δόση 1"]'
+  MFA-UNK-122:
+    plan:
+      __raw: '"πείραμα STP-E1, STP-E2 (MFA-VO-075)"'
+  MFA-RSP-028:
+    chain:
+      __raw: '"Δόση 1: SI μέτρηση + S1 σκιά για drafting· Δόση 2: STP-E1 → S2· Δόση 3: ≥3 οικογένειες S2/S3· Δόση 4: S4 για ώριμες οικογένειες με απόφαση δημιουργού.
+        ‖ F1: εκτελέσιμη προδιαγραφή SI/stage machine/gates (tools/twin) → F2: DST με συνθετικές οικογένειες → F3: STP-E1 σε DEP-2 → F4: παραγωγή Δόση 1–4"'
+  MFA-CAP-097:
+    falsifier:
+      __raw: '"STP-E1: καμία οικογένεια σε ισοτιμία μέσα στον DEP-2 προϋπολογισμό — διαψεύδεται η υπόθεση «SMF-adapters αρκούν» (η κυριαρχία μένει στόχος· επόμενος
+        μηχανισμός: DEP-3 recipes/PRR/CPCL)"'
+rationale: Αντίστροφο του MFA-PATCH-0043, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0043
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

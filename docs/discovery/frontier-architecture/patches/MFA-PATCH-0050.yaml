@@ -1,0 +1,55 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0050
+title: 'ATK-25 (φόρος επαλήθευσης): κοκκομετρία υποχρεώσεων ανά δέσμευση/κλάση επίδρασης· κόστος OC μέσα στον eval_cost_ratio· DEFER(reason) στο Effect = κλάση UNKNOWN(reason)
+  υπό RET'
+operation: MODIFY
+targets:
+- MFA-CON-071
+- MFA-ELM-013
+- MFA-ELM-122
+- MFA-VO-082
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 4669b6c22c62b408d748c6a5d768aae102e7f3521f97af9aba98d04a9872bc20
+    CONTRACTS.yaml: 57ce3c53eb306862a71b86b896509ad8ae86459f7cdcb115e6ac3a8c0b724647
+    VERIFICATION-OBLIGATIONS.yaml: 5c3dda3661ca115e913aad014ff8c17833b2e60de5ee2a8c531380418b05e952
+preconditions: []
+change:
+  MFA-ELM-122:
+    statement: 'Κάθε έκφραση e του γνωσιακού βρόχου έχει κρίση Γ ⊢ e : τ ! O — τύπο τ και ΕΚΚΡΕΜΕΙΣ ΥΠΟΧΡΕΩΣΕΙΣ O (πολυσύνολο Ob⟨claim, tier, evidence_class, deadline,
+      method⟩)· τιμή τύπου Verified[τ] κατασκευάζεται ΜΟΝΟ με discharge· οι υποχρεώσεις είναι γραμμικοί πόροι: κάθε μία καταλήγει σε DISCHARGED(cert) ∣ DEFERRED(reason,
+      plan, deadline) ∣ ESCALATED(to) — ποτέ dropped· θεώρημα ορθότητας: αν ⊢ p : τ ! ∅ τότε κάθε ισχυρισμός στο p φέρει τεκμήριο της απαιτούμενης κλάσης (ή ρητή
+      αναβολή)· ο έλεγχος είναι αμφίδρομος και το κόστος discharge δρομολογείται ανά tier. · ATK-25: κοκκομετρία = μία υποχρέωση ανά ΔΕΣΜΕΥΣΗ (CC atomic unit) και
+      ανά κλάση επίδρασης — όχι ανά πρόταση/token· ~10 υποχρεώσεις ανά ροή Think–Recommend· Tier-2 υποχρεώσεις στο Effect REVERSIBLE δέχονται DEFER(reason, plan)
+      υπό RET (MFA-INV-105) — αυτή είναι η υπάρχουσα κλάση εξόδου UNKNOWN(reason), όχι μη-επαλήθευση· το κόστος discharge μετριέται και μπαίνει στον eval_cost_ratio
+      του OAP (MFA-INV-065).'
+  MFA-CON-071:
+    failure_semantics: 'Έκρηξη υποχρεώσεων (κάθε token ένα claim) → granularity policy: claims ανά πρόταση/δέσμευση, όχι ανά token· batching· Deferred που δεν λήγουν
+      ποτέ → ESCALATE (MFA-INV-104)· Cert από checker ίδιας γενεαλογίας με γεννήτρια → cert άκυρο· Type checker bug → FP incident· Πρόγραμμα παρακάμπτει τον checker
+      → αδύνατο εξ ορισμού ‖ containment: Checker στο FP· Effect plane δέχεται μόνο Verified/approved-DEFER· Court escalation. · ATK-25: obligation storm (|O| > RateBound)
+      → granularity coarsening σε επίπεδο δέσμευσης, ποτέ drop'
+  MFA-VO-082:
+    measures: '25/25 λανθασμένες απορρίπτονται με σωστό λόγο· 25/25 σωστές περνούν· 0 ψευδώς θετικά/αρνητικά ‖ Θεώρημα ελέγχεται από 2 checkers· μόνο standard axioms
+      · ATK-25: κόστος OC / κόστος σκέψης ≤ 10 % σε DEP-2 ροές (μετράται)· υπέρβαση ⇒ νέα κοκκομετρία, ποτέ κατάργηση'
+  MFA-ELM-013:
+    statement: 'Namespaces, placement, residency, typed budgets (χρόνος/tokens/ενέργεια/χρήμα), accounting + Organ Activation Planner (MFA-MECH-013): ελάχιστο σύνολο
+      οργάνων ανά matter/deployment με veto κλάσης απόδειξης. · Περιορισμοί ανά προφίλ: λόγος κόστους αξιολόγησης (MFA-INV-065) και energy_envelope (Wh/matter)· υποχωρεί
+      εύρος, ποτέ κλάση απόδειξης (MFA-ATK-13). · 0.4.0/ATK-25: ο eval_cost_ratio περιλαμβάνει το κόστος discharge του Obligation Calculus (MFA-ELM-122)· ο OAP γνωρίζει
+      τα στοιχεία 109…127 και τα lite σκέλη τους.'
+rationale: Τροποποίηση από την επίθεση MFA-ATK-25 (Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12)· καμία ικανότητα δεν αφαιρείται — αλλάζουν μηχανισμοί, κατωφλιώσεις,
+  δηλώσεις.
+evidence:
+- adversarial/MFA-ATK-25.md
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: καμία
+verification: adversarial/MFA-ATK-25.md §falsifier · tools/check-package.py
+rollback: MFA-PATCH-0050-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -1,0 +1,165 @@
+# INVENTION DOSSIER MFA-MECH-039 — Obligation Calculus (OC) — τύποι υποχρέωσης για κάθε γνωσιακό βήμα (proof-carrying cognition) (Ω-MAXIMUM NON-ABSTENTION MANDATE §7, 29 πεδία)
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+# status: PROPOSED / UNREVIEWED — μόνο ο δημιουργός εγκρίνει. Έδρα: αυτό το αρχείο· mechanisms/<id>.md είναι προβολή 22 πεδίων.
+invention_id: MFA-MECH-039
+name: Obligation Calculus (OC) — τύποι υποχρέωσης για κάθε γνωσιακό βήμα (proof-carrying cognition)
+required_capability:
+  caps:
+  - MFA-CAP-103
+  text: 'Proof-carrying cognition (§6 #3, §8 #11 υποδομή): κάθε βήμα σκέψης/ανάκτησης/γένεσης/πρότασης φέρει τύπο υποχρέωσης (τι τεκμήριο οφείλει, ποιου tier, μέχρι πότε, πώς εκπληρώνεται)· οι υποχρεώσεις
+    είναι γραμμικές — δεν χάνονται σιωπηλά.'
+why_known_methods_are_insufficient: 'Το Commitment Calculus (MFA-MECH-001) τυπώνει ΔΕΣΜΕΥΣΕΙΣ· τα exec types (TED) τυπώνουν εκτέλεση· δεν υπάρχει τύπος που να λέει τι ΟΦΕΙΛΕΙ κάθε γνωσιακό βήμα (AA-028).
+  Αφετηρίες: proof-carrying code (Necula 1997), refinement types (Liquid Haskell, Vazou 2014), effect systems (Lucassen & Gifford 1988), linear/session types (Wadler 1990· Honda 1993), gradual verification,
+  typed holes/obligations σε proof assistants, evidence-based programming. Όρια: αφορούν κώδικα, όχι βήματα νόησης πάνω σε εξόδους γεννητριών· δεν έχουν tiers/προθεσμίες/reason-typed αναβολή· δεν συνδέονται
+  με VFC checkers και Court· καμία γραμμικότητα υποχρέωσης (discharge ∣ defer(reason) ∣ escalate) ως θεώρημα.'
+preserved_objective: MFA-OBJ-056 (proof-carrying cognition) · MFA-OBJ-007 (αλήθεια) · MFA-CAP-022 · MFA-INV-072 (RSI υπό πύλη) · MFA-TEL-08
+new_principle: 'Κάθε έκφραση e του γνωσιακού βρόχου έχει κρίση Γ ⊢ e : τ ! O — τύπο τ και ΕΚΚΡΕΜΕΙΣ ΥΠΟΧΡΕΩΣΕΙΣ O (πολυσύνολο Ob⟨claim, tier, evidence_class, deadline, method⟩)· τιμή τύπου Verified[τ] κατασκευάζεται
+  ΜΟΝΟ με discharge· οι υποχρεώσεις είναι γραμμικοί πόροι: κάθε μία καταλήγει σε DISCHARGED(cert) ∣ DEFERRED(reason, plan, deadline) ∣ ESCALATED(to) — ποτέ dropped· θεώρημα ορθότητας: αν ⊢ p : τ ! ∅ τότε
+  κάθε ισχυρισμός στο p φέρει τεκμήριο της απαιτούμενης κλάσης (ή ρητή αναβολή)· ο έλεγχος είναι αμφίδρομος και το κόστος discharge δρομολογείται ανά tier.'
+formal_objects:
+- Ob = ⟨claim c, tier ∈ {0,1,2}, evidence_class ∈ {PROOF, CHECK, TEST, WITNESS}, deadline, method ∈ {PROOF(Lean), CHECK(verifier), TEST(sealed), WITNESS(receipt), DEFER(reason)}⟩
+- Types τ ::= Base ∣ Verified[τ] ∣ Claimed[τ] ∣ Unknown[reason] ∣ τ → τ′ ! O
+- 'Judgment Γ ⊢ e : τ ! O· κανόνες: T-Gen (γεννήτρια: Claimed[τ] ! {Ob(c, tier(c), class(tier))}), T-Discharge (Claimed[τ] ! O ∪ {ob} + cert(ob) ⇒ Verified[τ] ! O), T-Seq (O₁ ⊎ O₂), T-Defer (ob ⇒ DEFERRED(reason,
+  plan) — παραμένει στο O ως marked), T-Escalate'
+- 'Linear discipline: O ως πολυσύνολο γραμμικών πόρων· weakening απαγορεύεται (καμία απόρριψη υποχρέωσης)'
+- 'DischargeScheduler: ουρές ανά tier με budgets (TGPS για PROOF, verifiers για CHECK, CGM sealed για TEST)'
+- 'Soundness theorem (Lean): ⊢ p : τ ! ∅ ⟹ ∀ claim ∈ p: evidence(claim) ⊒ class(tier(claim)) ∨ deferred_with_reason(claim)'
+state_variables:
+- Context Γ
+- Obligation ledger O_t (γραμμικό)
+- Certificates
+- Deferred with deadlines
+- Escalations
+transition_rules:
+- 'GEN: γεννήτρια παράγει Claimed[τ] με υποχρεώσεις κατά tier του claim (Tier από LPA/Constitution)'
+- 'DISCHARGE: cert από method ⇒ Verified'
+- 'DEFER: reason ∈ {BUDGET, NOT_YET_OBSERVABLE, AWAITING_CREATOR} με plan+deadline'
+- 'ESCALATE: deadline πέρασε ⇒ Court/δημιουργός'
+- 'ACT: Effect plane δέχεται μόνο τιμές Verified[τ] ή Claimed με DEFER εγκεκριμένο για την κλάση επίδρασης (RET)'
+- 'NEVER_DROP: type checker απορρίπτει προγράμματα με weakening σε O'
+algorithms:
+- name: OC-TypeCheck (αμφίδρομος)
+  complexity: Γραμμικός στο μέγεθος του προγράμματος/ίχνους O(|e|)· discharge = κόστος method
+  pseudocode: |
+    function infer(Γ, e):
+      match e:
+        Gen(g, x):        (τ, _) ← infer(Γ, x) ; c ← claim_of(g, x)
+                          return (Claimed[τ], {Ob(c, tier(c), required_class(tier(c)), deadline(c), method=default(tier(c)))})
+        Discharge(e1, cert): (τ, O) ← infer(Γ, e1) ; ob ← O.find(cert.claim)
+                          if ob = ⊥: error(NO_SUCH_OBLIGATION)
+                          if not VFC.verify(cert) or class(cert) < ob.evidence_class: error(INSUFFICIENT_EVIDENCE)
+                          return (Verified[τ] if O \ {ob} = ∅ else Claimed[τ], O \ {ob})
+        Defer(e1, ob, reason, plan): (τ, O) ← infer(Γ, e1)
+                          return (τ, (O \ {ob}) ∪ {ob.marked(DEFERRED, reason, plan, deadline)})     # stays in O, never dropped
+        Seq(e1, e2):      (τ1, O1) ← infer(Γ, e1) ; (τ2, O2) ← infer(Γ + (x:τ1), e2) ; return (τ2, O1 ⊎ O2)
+        Act(e1):          (τ, O) ← infer(Γ, e1)
+                          if τ ≠ Verified[_] and not RET.allows_deferred(O, effect_class(e1)): error(UNVERIFIED_EFFECT)
+                          return (Unit, O)
+    function check_program(p):
+      (τ, O) ← infer(∅, p)
+      live ← {ob ∈ O : ob.status ∉ {DISCHARGED, DEFERRED, ESCALATED}}
+      if live ≠ ∅: error(DROPPED_OBLIGATIONS, live)                        # linear discipline (MFA-INV-104)
+      return (τ, O)
+- name: DischargeScheduler
+  complexity: O(|O| log |O|) priority queue· κόστος ανά method
+  pseudocode: |
+    procedure DischargeScheduler(O, budgets):
+      for ob in O.sorted_by(tier asc, deadline asc):
+        match ob.method:
+          PROOF:   cert ← TGPS.solve(ob.claim, budget=budgets[ob.tier])
+          CHECK:   cert ← Verifier.check(ob.claim)
+          TEST:    cert ← CGM.sealed_test(ob.claim)
+          WITNESS: cert ← Ledger.receipt(ob.claim)
+        if cert: ob.status ← DISCHARGED(cert)
+        elif budgets[ob.tier] exhausted: ob.status ← DEFERRED(BUDGET, plan=retry_next_cut, deadline=ob.deadline)
+        if now > ob.deadline and ob.status ≠ DISCHARGED: ob.status ← ESCALATED(Court if ob.tier ≤ 1 else Owner)
+interfaces:
+- OC.infer(program)→(type, obligations)
+- OC.check(program)→OK ∣ error
+- OC.discharge(ob, cert)→Receipt
+- OC.defer(ob, reason, plan)→Receipt
+- OC.ledger(cut)→O_t
+- OC.schedule(budgets)→Report
+contracts:
+- 'MFA-CON-071 (Obligation Calculus: infer/check/discharge/defer/ledger)'
+- MFA-CON-003 (CC — επέκταση τύπων)
+- MFA-CON-052 (VFC certs)
+- MFA-CON-057 (TGPS)
+invariants:
+- 'MFA-INV-104: καμία υποχρέωση δεν απορρίπτεται (γραμμικότητα)· κάθε μία DISCHARGED ∣ DEFERRED(reason, plan, deadline) ∣ ESCALATED — ο type checker απορρίπτει weakening'
+- 'MFA-INV-105: το Effect plane δέχεται μόνο Verified τιμές ή DEFER εγκεκριμένο από RET για την κλάση επίδρασης (επέκταση NoActWithoutAnswer)'
+authority_model: Tier από Constitution/LPA· budgets ανά tier = πολιτική· ESCALATE → Court (Tier ≤1) ή owner· ο checker είναι μέρος του σταθερού σημείου (FP, L3)· η γλώσσα επεκτείνεται μόνο μέσω GG με Lean
+  απόδειξη διατήρησης ορθότητας.
+learning_model: 'Ο OC δεν μαθαίνει· τροφοδοτεί μάθηση: obligation traces = process rewards για PRR (βήματα που εκπληρώνουν υποχρεώσεις), TGL (θεωρήματα ως constraints)· τα default methods ανά tier υπό RVSI
+  L2 μόνο προς αυστηρότερα.'
+failure_modes:
+- mode: Έκρηξη υποχρεώσεων (κάθε token ένα claim)
+  detection: '|O| > RateBound'
+  response: 'granularity policy: claims ανά πρόταση/δέσμευση, όχι ανά token· batching'
+- mode: Deferred που δεν λήγουν ποτέ
+  detection: deadline
+  response: ESCALATE (MFA-INV-104)
+- mode: Cert από checker ίδιας γενεαλογίας με γεννήτρια
+  detection: EIM
+  response: cert άκυρο
+- mode: Type checker bug
+  detection: Lean soundness + 2 checkers (VFC)
+  response: FP incident
+- mode: Πρόγραμμα παρακάμπτει τον checker
+  detection: 'TED: εκτέλεση μόνο type-checked IR'
+  response: αδύνατο εξ ορισμού
+containment: Checker στο FP· Effect plane δέχεται μόνο Verified/approved-DEFER· Court escalation.
+reversibility_class: REVERSIBLE (υποχρεώσεις = δεσμεύσεις)
+resource_complexity: 'Type checking γραμμικό (ms)· discharge = κόστος verifiers/TGPS/tests· DEP-1: Tier-0 PROOF μόνο για CC κανόνες· DEP-2+: PROOF ευρύτερα'
+scaling_law: Κόστος ~ |O|·mean(cost(method))· η βιβλιοθήκη TGPS μειώνει το PROOF κόστος· η CGM οικογένεια «obligation discharge rate» = MFA-VO-082.
+verification_strategy: 'MFA-VO-082: OC-E1 (κωδικοποίηση 8 κανόνων CC + Think–Recommend ροή· απόρριψη ροών με dropped υποχρεώσεις) F1/F2· OC-E2 (Lean μηχανοποίηση ορθότητας πυρήνα) F1· property: check ⇒
+  no live obligations (tools/twin)'
+experiments:
+- id: OC-E1
+  design: 50 ροές Think–Recommend (25 σωστές, 25 με σιωπηλή απόρριψη/ανεπαρκές τεκμήριο/unverified effect)
+  preregistered_criterion: 25/25 λανθασμένες απορρίπτονται με σωστό λόγο· 25/25 σωστές περνούν· 0 ψευδώς θετικά/αρνητικά
+- id: OC-E2
+  design: 'Lean 4: πυρήνας OC (Gen, Discharge, Defer, Seq, Act) + θεώρημα ορθότητας· #print axioms'
+  preregistered_criterion: Θεώρημα ελέγχεται από 2 checkers· μόνο standard axioms
+falsifiers:
+- 'OC-E1: ψευδώς αρνητικά (ροή με dropped υποχρέωση περνά) — ο φορμαλισμός ελλιπής, αναθεωρείται (η ικανότητα proof-carrying cognition μένει)'
+- Granularity policy που κάνει το κόστος ελέγχου > 10 % του κόστους σκέψης σε DEP-2 (τότε νέα granularity, όχι κατάργηση)
+known_dependencies:
+- MFA-MECH-001 CC
+- MFA-ELM-017 TED
+- MFA-ELM-099 VFC
+- MFA-ELM-112 TGPS
+- MFA-ELM-119 CGM
+- MFA-ELM-007/MFA-ELM-010 PDP/RET
+- MFA-ELM-048 Court
+- MFA-ELM-020 Lean
+unknown_dependencies:
+- 'MFA-UNK-128: η σωστή κοκκομετρία (granularity) των claims σε φυσική γλώσσα (EPISTEMIC· OC-E1 σε πραγματικές ροές)'
+integration_points:
+- MFA-ELM-122 (νέο στοιχείο OC, S0/S3)
+- MFA-ELM-017 TED (εκτέλεση μόνο type-checked)
+- MFA-ELM-103 PRR (process rewards)
+- MFA-ELM-123 TGL
+- MFA-ELM-104 RVSI (κάθε πρόταση με υποχρεώσεις)
+- MFA-ELM-127 Ω-loop (φάση VERIFY)
+migration_path: 'Δόση 0.5: OC-lite (Claimed/Verified, WITNESS/CHECK) στον copilot· Δόση 1: πλήρες με DEFER/ESCALATE + OC-E1· Δόση 2: Lean OC-E2 + PROOF method μέσω TGPS· FP από τη Δόση 1.'
+implementation_sequence:
+- 'F1: εκτελέσιμη προδιαγραφή του type checker (tools/twin/oc.py) + OC-E1 test set'
+- 'F2: Lean μηχανοποίηση OC-E2'
+- 'F3: ενσωμάτωση σε TED IR σε DEP-1'
+- 'F4: παραγωγή Δόση 1'
+epistemic_status:
+  overall: NEW FORMALISM
+  per_claim:
+  - claim: Γραμμικοί/effect τύποι επιβάλλουν μη-απόρριψη πόρων
+    status: PROVEN
+  - claim: Obligation Calculus ως τύποι γνωσιακών βημάτων με tiers/deadlines/reason-typed defer
+    status: NEW FORMALISM
+  - claim: Θεώρημα ορθότητας του πυρήνα
+    status: RESEARCH HYPOTHESIS
+  - claim: Κόστος ελέγχου αμελητέο έναντι σκέψης
+    status: ACTIVE UNKNOWN
+
+# 0.4.0 — F1 finding (tools/twin/oc.py, MFA-PATCH-0058): the Act rule is STRICTER than the pseudocode above — only Verified[τ], or Claimed[τ] with a
+# RET-approved DEFER for a reversible/compensable effect class, may reach the Effect plane; Unknown[reason]/Base values are UNVERIFIED_EFFECT (MFA-INV-105).
+# The literal condition let one flawed OC-E1 flow through; the strict form is the binding one. Measured at F1: 25/25 accepted, 25/25 rejected with reason.

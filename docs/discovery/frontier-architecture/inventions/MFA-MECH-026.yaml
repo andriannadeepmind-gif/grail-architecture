@@ -1,0 +1,175 @@
+# INVENTION DOSSIER MFA-MECH-026 — Ontology Genesis Engine (OGE) — αυτόνομος σχηματισμός εννοιών με NON-COLLAPSE (Ω-MAXIMUM NON-ABSTENTION MANDATE §7, 29 πεδία)
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+# status: PROPOSED / UNREVIEWED — μόνο ο δημιουργός εγκρίνει. Έδρα: αυτό το αρχείο· mechanisms/<id>.md είναι προβολή 22 πεδίων.
+invention_id: MFA-MECH-026
+name: Ontology Genesis Engine (OGE) — αυτόνομος σχηματισμός εννοιών με NON-COLLAPSE
+required_capability:
+  caps:
+  - MFA-CAP-089
+  text: 'Αυτόνομος σχηματισμός οντολογίας (§8 #3): το σύστημα γεννά, διασπά, συγχωνεύει και αποσύρει έννοιες από τα δικά του δεδομένα/αποτυχίες πρόβλεψης, με γενεαλογία και χωρίς σιωπηλή κατάρρευση εννοιών.'
+why_known_methods_are_insufficient: 'Το 0.3.0 έχει μόνο μητρώο (MFA-ELM-083 LinkML Ontology Registry) και loss map — καμία γένεση. Γνωστές αφετηρίες: (α) ontology learning από κείμενο (Text2Onto, DL-Learner,
+  Lehmann 2009) — εξαρτάται από ανθρώπινο corpus και δεν μετρά κέρδος πρόβλεψης· (β) Formal Concept Analysis (Ganter & Wille 1999) — ακριβής αλλά εκθετική και χωρίς μάθηση intension· (γ) DreamCoder library
+  learning (Ellis et al. 2021) — γεννά αφαιρέσεις προγραμμάτων, όχι έννοιες με σχέσεις/σχήμα· (δ) VQ/discrete representation learning και concept bottleneck (Koh et al. 2020) — έννοιες χωρίς ονόματα, χωρίς
+  provenance, με συχνή κατάρρευση κωδίκων (codebook collapse)· (ε) symbol emergence (Taniguchi et al. 2016) — αναπτυξιακό, χωρίς εγγύηση μη-κατάρρευσης. Καμία δεν δίνει: μία έδρα ανά έννοια με γενεαλογία,
+  κέρδος μετρημένο σε σφραγισμένα δεδομένα, συγχώνευση/διάσπαση ως προσφυγή με LossMap ανακτήσιμο (NON-COLLAPSE, MATERIAL §2 #16), και σχήμα που μεταναστεύει στο Commitment Calculus.'
+preserved_objective: 'MFA-OBJ-053 (αυτόνομη οντολογία και αιτιακό κοσμομοντέλο) · MFA-OBJ-050 (ASI ενδογενής) · MFA-TEL-08 · ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ: «μία έδρα ανά έννοια»'
+new_principle: 'Η έννοια είναι δέσμευση: γεννιέται όταν ένα υποψήφιο intension (πρόγραμμα ή λογικός ορισμός) πάνω σε extension (σύνολο δεσμεύσεων) αποδίδει μετρήσιμο κέρδος περιγραφής+πρόβλεψης G>θ σε σφραγισμένο
+  split· κάθε συγχώνευση/διάσπαση είναι ΠΡΟΣΦΥΓΗ (Court-lite, EIM-ανεξάρτητοι αξιολογητές) με LossMap δεσμευμένο, ώστε η έκταση κάθε καταργημένης έννοιας να είναι ανακτήσιμη — NON-COLLAPSE ως θεώρημα της
+  γενεαλογίας, όχι ως ελπίδα.'
+formal_objects:
+- 'Ontology O = ⟨C, ≤, R, Σ, L⟩: έννοιες C, υπαγωγή ≤ (μερική διάταξη), σχέσεις R ⊆ C×C×Names, σχήμα Σ (LinkML), γενεαλογία L (DAG γεννήσεων/συγχωνεύσεων/διασπάσεων)'
+- Concept c = ⟨cid, intension I_c (πρόγραμμα στο Skill Library ή DL-ορισμός), extension E_c ⊆ Commitments (δείγμα + predicate), birth_gain, provenance⟩
+- GainFunctional G(O→O′ | D_sealed) = [MDL(D|O) − MDL(D|O′)] + λ·[PredLoss(D|O) − PredLoss(D|O′)] − μ·|Σ′ − Σ| (κόστος σχήματος)
+- 'LossMap(merge c₁,c₂→c) = ⟨διαμερισμός E_c σε E_{c₁}, E_{c₂}, διακρίνον predicate δ⟩ ώστε E_{c₁} = {x∈E_c : δ(x)} — δεσμευμένο'
+- 'AnomalyQueue: residuals από LWM (MFA-ELM-105), Void Ledger (MFA-ELM-028), Self-Prediction Ledger (MFA-ELM-024), αποτυχίες schema validation'
+- FormalContext K = ⟨X, A, I⟩ (αντικείμενα, ιδιότητες, incidence) με A = top-k ιδιότητες κατά αμοιβαία πληροφορία με το residual
+state_variables:
+- O_t (τρέχουσα οντολογία ως δέσμευση)
+- Q_t (ουρά ανωμαλιών με VOI)
+- Cand_t (υποψήφιες έννοιες με G, split ids)
+- Pending_t (προσφυγές συγχώνευσης/διάσπασης)
+- L_t (γενεαλογία)
+- θ_birth, θ_merge (κατώφλια — πολιτική, MFA-DEC-005 ORDER)
+transition_rules:
+- 'OBSERVE: residual r εισέρχεται στην Q_t με VOI(r) = αναμενόμενη μείωση PredLoss'
+- 'PROPOSE: Cand ← FCA-lattice(K(r)) ∪ ProgramInduction(E) · κάθε υποψήφια με G σε σφραγισμένο split'
+- 'BIRTH: G(c) > θ_birth ∧ ¬∃c′∈C: sim(I_c, I_c′) > 1−ε ⇒ c ∈ C_{t+1}, L += birth(c)'
+- 'MERGE/SPLIT: μόνο ως Proceeding με LossMap· PASS ⇒ O_{t+1}, L += merge/split, Σ migration μέσω CC schema lineage'
+- 'RETIRE: έννοια χωρίς χρήση σε N cuts ΚΑΙ χωρίς κέρδος ⇒ status RETIRED (η έδρα μένει· extension ανακτήσιμη)'
+- 'ROLLBACK: κάθε μετάβαση αναστρέψιμη διά L (RET REVERSIBLE)'
+algorithms:
+- name: OGE-Cycle
+  complexity: 'ανά κύκλο O(|Q|·(n·2^k + P(depth))) με k ≤ 20 ιδιότητες (top-k MI) και P το κόστος program induction φραγμένο από depth/budget· FCA με k=20: 2^20 ≈ 10⁶ concepts max, πρακτικά ≪ λόγω αραιότητας'
+  pseudocode: |
+    procedure OGE_Cycle(O, Q, D_train, D_sealed, budget):
+      Cand ← ∅
+      for r in Q.top_by_VOI(budget.anomalies):
+        X ← commitments_touched_by(r)                      # extension seed from ledger cut
+        A ← top_k_attributes(X, D_train, k=20, score=MI_with(r))
+        K ← FormalContext(X, A)
+        for (ext, int) in FCA_concepts(K):                 # Ganter NextClosure, lazy, pruned by support ≥ s_min
+          I_sym ← DL_definition(int)                        # symbolic intension
+          I_prg ← ProgramInduction(ext, library=SkillLibrary, depth≤d)   # DreamCoder-style, returns program or ⊥
+          for I in {I_sym, I_prg} \ {⊥}:
+            c ← Concept(intension=I, extension=ext, provenance=receipt(r, X, A))
+            g ← Gain(O ⊕ c, D_sealed)                      # MDL + λ·pred − μ·schema cost, on SEALED split only
+            if g > θ_birth and not near_duplicate(c, O): Cand.add((c, g))
+      for (c, g) in Cand.sorted_desc():
+        if dominated_by_existing(c, O): continue
+        O ← O ⊕ c ; L.append(BIRTH(c, g, cut_id))          # birth is a commitment (CC ASSERT with evidence)
+        Σ ← LinkML_extend(Σ, c) ; CC.schema_migrate(Σ)     # schema lineage in Commitment Calculus
+      for p in merge_split_candidates(O):                  # pairs with overlap(E1,E2) > θ_merge or bimodal extension
+        lossmap ← compute_LossMap(p)
+        if lossmap = ⊥: continue                            # NON-COLLAPSE: no merge without recoverable partition
+        verdict ← CourtLite.adjudicate(p, lossmap, evaluators=EIM_independent(≥2))
+        if verdict = PASS: O ← apply(p, O) ; L.append(p, lossmap)
+      return O, L
+- name: Gain (σφραγισμένη μέτρηση)
+  complexity: O(|D_sealed|·|O|) ανά υποψήφια· cache ανά cut
+  pseudocode: |
+    function Gain(O', D_sealed):
+      mdl  ← codelength(D_sealed | O_prev) − codelength(D_sealed | O')     # two-part MDL: schema + data given schema
+      pred ← PredLoss(LWM(O_prev), D_sealed) − PredLoss(LWM(O'), D_sealed)  # proper scoring rule, HELD_OUT scorer
+      cost ← μ · |Σ(O') − Σ(O_prev)|
+      return mdl + λ·pred − cost                              # λ, μ = policy (MFA-DEC-005 ORDER); recorded in the birth commitment
+- name: compute_LossMap / recover
+  complexity: O(|E_c|) · ανάκτηση O(|E_c|)
+  pseudocode: |
+    function compute_LossMap(merge(c1, c2 → c)):
+      δ ← learn_discriminator(E_c1, E_c2, family=DecisionList, max_len=8)   # must be exact on the recorded extensions
+      if accuracy(δ, E_c1 ∪ E_c2) < 1.0: return ⊥                           # NON-COLLAPSE: exactness required, no approximate merge
+      return LossMap(partition=(E_c1, E_c2), discriminator=δ, hash=H(E_c1, E_c2, δ))
+    function recover(c_retired):                                              # invariant MFA-INV-078
+      lm ← L.lossmap_of(c_retired) ; return {x ∈ E_parent(lm) : lm.δ(x)}
+interfaces:
+- OGE.observe(residual)→AnomalyId
+- OGE.propose(cut)→[ConceptCandidate]
+- OGE.birth(candidate, gain_receipt)→ConceptCommitment
+- OGE.merge(c1,c2)→Proceeding
+- OGE.split(c, δ)→Proceeding
+- OGE.recover(cid)→Extension
+- OGE.lineage(cid)→DAG
+- OGE.schema(cut)→LinkML
+contracts:
+- 'MFA-CON-054 (Ontology Genesis: propose/birth/merge/split/recover με state & failure semantics)'
+- MFA-CON-032 (Canonical Design API — Ontology Registry σχήματα, MFA-ELM-083) ως καταναλωτής
+- MFA-CON-033 (CC schema lineage)
+invariants:
+- 'MFA-INV-078 NON-COLLAPSE: κάθε συγχώνευση έχει LossMap με ακριβή ανάκτηση· καμία έννοια δεν χάνει την έκτασή της'
+- 'MFA-INV-079: γέννηση μόνο με κέρδος σε σφραγισμένο split από HELD_OUT scorer, ποτέ στο train split'
+authority_model: Γένεση/απόσυρση = Genesis plane, χωρίς εξουσία επίδρασης· merge/split = Proceeding (Court-lite) με EIM-ανεξάρτητους αξιολογητές· τα κατώφλια θ = πολιτική (LPA Tier ORDER)· ο δημιουργός
+  μπορεί να παγώσει έννοιες (L3 pin).
+learning_model: 'Η γένεση εννοιών είναι μάθηση δομής (μη-παραμετρική) που τροφοδοτεί την παραμετρική (SMF: έννοιες ως tokens/heads) και το CDCE (μεταβλητές)· το ίδιο το OGE βελτιώνεται σε RVSI L2 (θ, k,
+  οικογένεια intension) με CapabilityGrowthRecord.'
+failure_modes:
+- mode: Έκρηξη εννοιών (over-birth)
+  detection: ρυθμός γεννήσεων > RateBound ή G οριακά
+  response: θ_birth αυξάνεται (RateBounds MFA-DEC-019)· batch ως Proceeding
+- mode: Codebook-style collapse (πολλές έννοιες ↦ μία)
+  detection: LossMap ⊥ ή δ ανακριβής
+  response: merge απορρίπτεται εξ ορισμού (MFA-INV-078)
+- mode: Έννοιες που μαθαίνουν sealed δεδομένα
+  detection: canary strings στο extension
+  response: MFA-VO-063 FAIL, υποψήφια απορρίπτεται, cut μολυσμένο
+- mode: Σχήμα που σπάει καταναλωτές
+  detection: CC schema migration αποτυγχάνει
+  response: BIRTH αναβάλλεται· η έννοια ζει ως draft χωρίς Σ
+- mode: Αντιπαλική ανωμαλία (τεχνητό residual για να γεννηθεί έννοια-δούρειος)
+  detection: provenance της ανωμαλίας taint>0 ή προέλευση Effect-plane εισόδου
+  response: Court-lite με CAM-NS· γέννηση σε quarantine namespace
+containment: Όλα στο Genesis plane· η οντολογία που βλέπει ο Effect plane είναι ένα cut με receipt· quarantine namespace για έννοιες με taint· Emergency-stop παγώνει O_t.
+reversibility_class: REVERSIBLE (κάθε μετάβαση αναστρέψιμη διά γενεαλογίας L· καμία διαγραφή)
+resource_complexity: 'DEP-1: k≤12, 10² ανωμαλίες/ημέρα, CPU· DEP-2: k≤20, 10³/ημέρα, program induction σε GPU (ώρες)· DEP-3+: συνεχής· μνήμη O(|C|·|E| δείγμα)'
+scaling_law: Κέρδος ≈ γραμμικό στα residuals μέχρι κορεσμό της οντολογίας· κόστος FCA 2^k (ελεγχόμενο από k)· η γενεαλογία αυξάνει γραμμικά — μετριέται ως MFA-VO-068 (έννοιες/κέρδος ανά compute).
+verification_strategy: 'MFA-VO-068: OGE-E1/E2 σε F2 (DST) και F3 (σφραγισμένο νομικό corpus)· property test NON-COLLAPSE (100 τυχαίες συγχωνεύσεις → 100 ακριβείς ανακτήσεις)· Lean lemma: recover∘merge =
+  id στο extension (F1 εκτελέσιμη προδιαγραφή tools/twin)'
+experiments:
+- id: OGE-E1
+  design: DST με κρυφή οντολογία 50 εννοιών που παράγει τα δεδομένα· το OGE ξεκινά από κενή O· μετράμε ανάκτηση (ARI) και G
+  preregistered_criterion: ARI ≥ 0.8 σε ≤ 10⁴ επεισόδια ΚΑΙ G>0 σε κάθε γέννηση· αλλιώς FAIL
+- id: OGE-E2
+  design: Σφραγισμένο νομικό corpus· O₀ = CMP-LAW registry· OGE γεννά έννοιες· downstream QA/drafting σε HELD_OUT
+  preregistered_criterion: MDL κέρδος ≥ 10 % ΚΑΙ καμία υποχώρηση στο sealed QA (Δ ≤ 0 με CI) — ≥1 νέα έννοια που χρησιμοποιείται σε ≥ 5 % των έργων
+- id: OGE-E3 (NON-COLLAPSE drill)
+  design: 100 τυχαίες συγχωνεύσεις + 100 διασπάσεις σε O με 10³ έννοιες· ανάκτηση
+  preregistered_criterion: 100 % ακριβής ανάκτηση extension· 0 συγχωνεύσεις χωρίς LossMap
+falsifiers:
+- Μετά από 10⁴ ανωμαλίες καμία γέννηση με G>θ σε σφραγισμένο split (ο μηχανισμός δεν βρίσκει έννοιες)
+- Γεννημένες έννοιες χωρίς χρήση σε downstream έργα (χρήση < 1 %) σε 2 δόσεις
+- Οποιαδήποτε συγχώνευση με μη-ανακτήσιμη έκταση (παραβίαση MFA-INV-078 = σφάλμα υλοποίησης, όχι του μηχανισμού)
+known_dependencies:
+- MFA-ELM-083 (registry)
+- MFA-ELM-025 (Skill Library / program induction)
+- MFA-ELM-105 (LWM residuals)
+- MFA-ELM-028 (Void)
+- MFA-ELM-048 (Court-lite)
+- MFA-MECH-009 (EIM)
+- MFA-MECH-001 (CC schema lineage)
+- MFA-ELM-086 (HELD_OUT scorer)
+unknown_dependencies:
+- 'MFA-UNK-115: αν το MDL+pred κέρδος συσχετίζεται με χρησιμότητα εννοιών στο νομικό πεδίο (EPISTEMIC· OGE-E2 το κρίνει)'
+integration_points:
+- MFA-ELM-109 (νέο στοιχείο OGE, S2)
+- MFA-ELM-083 (καταναλωτής)
+- MFA-ELM-110 CDCE (μεταβλητές από έννοιες)
+- MFA-ELM-100 SMF (έννοιες ως δεδομένα εκπαίδευσης/tokens)
+- MFA-ELM-111 AHE (υποθέσεις πάνω σε έννοιες)
+- MFA-ELM-098 World Twin (σχήμα δρώντων)
+migration_path: 'Δόση 1: OGE-lite (FCA + DL intension, χωρίς program induction) πάνω στο registry· Δόση 2: program induction + LWM residuals + OGE-E1/E2· Δόση 3: υπό RVSI L2· τα κατώφλια από MFA-DEC-005
+  ORDER.'
+implementation_sequence:
+- 'F1: εκτελέσιμη προδιαγραφή (tools/twin): O, Gain, LossMap, recover∘merge=id ως property test'
+- 'F2: DST OGE-E1 με συνθετική οντολογία'
+- 'F3: σφραγισμένο corpus OGE-E2 σε DEP-2'
+- 'F4: παραγωγή στη Δόση 2 με Court-lite merges· F5: RVSI L2 βελτίωση θ/k'
+epistemic_status:
+  overall: NOVEL SYNTHESIS
+  per_claim:
+  - claim: FCA + MDL + program induction παράγουν έννοιες με κέρδος σε συνθετικά δεδομένα
+    status: EMPIRICALLY SUPPORTED
+  - claim: NON-COLLAPSE διά LossMap με ακριβή ανάκτηση
+    status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  - claim: Οι γεννημένες έννοιες βελτιώνουν σφραγισμένα νομικά έργα
+    status: RESEARCH HYPOTHESIS
+  - claim: Ο συνδυασμός (έννοιες ως δεσμεύσεις με Court-lite συγχώνευση) είναι νέος
+    status: NOVEL SYNTHESIS

@@ -1,0 +1,176 @@
+# INVENTION DOSSIER MFA-MECH-043 — Twin Execution Semantics (TES) — ο διερμηνέας του κανονικού μοντέλου: κόσμοι, διακλάδωση, replay, πιστότητα, παραβιάσεις, επιστημικός κίνδυνος (Ω-MAXIMUM NON-ABSTENTION MANDATE §7, 29 πεδία)
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+# status: PROPOSED / UNREVIEWED — μόνο ο δημιουργός εγκρίνει. Έδρα: αυτό το αρχείο· mechanisms/<id>.md είναι προβολή 22 πεδίων.
+invention_id: MFA-MECH-043
+name: 'Twin Execution Semantics (TES) — ο διερμηνέας του κανονικού μοντέλου: κόσμοι, διακλάδωση, replay, πιστότητα, παραβιάσεις, επιστημικός κίνδυνος'
+required_capability:
+  caps:
+  - MFA-CAP-107
+  - MFA-CAP-023
+  text: 'Εκτελέσιμο Αρχιτεκτονικό Ψηφιακό Δίδυμο (§10): το κανονικό μοντέλο (έδρες YAML + σχέσεις) εκτελείται — καταστάσεις, γεγονότα τυπωμένα από contracts, διακλαδιζόμενοι κόσμοι, ντετερμινιστικό replay,
+    χρονική συλλογιστική, ροή ικανοτήτων, πόροι, escrow αναστρέψιμων πράξεων, μεταβάσεις πιστότητας, mocks/σκιές/πραγματικά, έγχυση αντιπαλικών σεναρίων, Pareto, διάδοση επιστημικού κινδύνου, τεκμήρια,
+    χώρος, αυτόματη ανίχνευση παραβιάσεων.'
+why_known_methods_are_insufficient: 'Το 0.3.0 World Twin (MFA-ELM-098) και CGP (MFA-MECH-008) είναι μοντέλο δρώντων και προβολή, όχι διερμηνέας της ίδιας της αρχιτεκτονικής με τα 20 χαρακτηριστικά της §10.
+  Αφετηρίες: digital twins (Grieves & Vickers 2017), discrete-event simulation (SimPy), TLA+/model checking (Lamport 2002), event sourcing/CQRS, deterministic simulation testing (FoundationDB· Antithesis),
+  co-simulation (FMI/Modelica), SysML v2 execution semantics (KerML), agent-based models (Mesa), Jepsen fault injection. Όρια: καμία δεν ενώνει αρχιτεκτονικό μοντέλο με εκτελέσιμη σημασιολογία contracts/invariants,
+  κλίμακα πιστότητας ανά στοιχείο με αντικατάσταση, διάδοση επιστημικής κατάστασης σε κίνδυνο, και provenance ως πρώτης τάξεως.'
+preserved_objective: MFA-OBJ-057 (εκτελέσιμο δίδυμο) · MFA-OBJ-012 · MFA-CAP-023 · MFA-CAP-024 · MFA-TEL-08
+new_principle: 'Το δίδυμο είναι διερμηνέας πάνω στο κανονικό μοντέλο: World = ⟨model cut, ανά στοιχείο (fidelity ∈ {F0 mock, F1 executable spec, F2 DST, F3 shadow, F4 real}, state), event log, clock vector,
+  seed⟩· Event τυπωμένο από contract (provider, signature, RET class)· apply(event) ελέγχει preconditions (contracts) και ΕΚΤΕΛΕΣΙΜΕΣ αναλλοίωτες (predicates registered per INV) → ViolationRecord· fork(world,
+  seed) = διακλάδωση με ντετερμινιστικό replay (log+seeds)· substitution: στοιχείο αλλάζει πιστότητα με conformance test στο ίδιο contract· επιστημικός κίνδυνος: κάθε στοιχείο φέρει epistemic_status → κίνδυνος
+  ανά ικανότητα διαδίδεται στο γράφημα εξαρτήσεων (max-path ή πιθανοτικά)· αντιπαλικά σενάρια = ATK ως εκτελέσιμες γεννήτριες γεγονότων· Pareto = αξιολόγηση κόσμων· χώρος = CGP.'
+formal_objects:
+- Model M = ⟨ELM, CON, INV, CAP, OBJ, UNK, CFL, RSP, RELATIONS⟩ (φορτωμένο από τις έδρες)
+- 'World w = ⟨M cut, σ: ELM → (fidelity, state), log, clock, seed, parent⟩'
+- Event ev = ⟨contract c, op, args, actor, ret_class, time⟩ ⊨ signature(c)
+- ExecutableInvariant = ⟨INV id, predicate(world) → bool ∣ UNKNOWN(reason)⟩ (μητρώο· ό,τι δεν έχει predicate = UNMEASURED, δηλωμένο)
+- ViolationRecord = ⟨INV/CON id, event, world, evidence⟩
+- FidelityTransition = ⟨ELM, F_i → F_j, conformance test PASS/FAIL⟩
+- 'EpistemicRisk(cap) = agg_{paths e→cap} risk(epistemic_status(e))· risk: PROVEN 0 … RESEARCH HYPOTHESIS 0.6 … ACTIVE UNKNOWN 0.8 … FALSIFIED 1'
+- 'Scenario = γεννήτρια γεγονότων (ATK ως κώδικας) με seed· Pareto = {w : μη-κυριαρχούμενος στο (KT pass, cost, risk)}'
+state_variables:
+- Worlds (δέντρο)
+- Registry of executable invariants/contracts
+- Fidelity map
+- Violation log
+- Risk map
+- Scenario library
+transition_rules:
+- 'LOAD: M από YAML· έλεγχος αναφορών (R1)'
+- 'APPLY: ev → check pre(c) → state′ → check INV predicates → log· violation ⇒ record (ο κόσμος συνεχίζει ή σταματά κατά πολιτική)'
+- 'FORK: w′ = fork(w, seed′)· REPLAY: replay(log, seeds) = ίδιος κόσμος bitwise για παγωμένη ντετερμινιστική F1 (D1)· versioned causal replay με tolerance bounds για D2/F2+'
+- 'SUBSTITUTE: fidelity F_i→F_j μόνο με conformance test ίδιου contract'
+- 'INJECT: scenario events'
+- 'PROPAGATE: risk map ανά cut'
+- 'EVALUATE: KT/VO obligations → Pareto'
+- 'PROJECT: CGP σκηνή'
+algorithms:
+- name: TES-Apply (πυρήνας διερμηνέα)
+  complexity: O(|pre(c)| + |INV predicates ενεργές|) ανά γεγονός· replay O(|log|)
+  pseudocode: |
+    procedure TES_Apply(w, ev):
+      c ← w.M.contract(ev.contract) ; assert ev ⊨ signature(c) else return Violation(CONTRACT_SIGNATURE, ev)
+      if not pre(c, ev, w): return Violation(CONTRACT_PRECONDITION, ev, evidence=pre_trace)
+      if ev.ret_class ∈ {IRREVERSIBLE, IRREVERSIBLE_PREAUTHORIZED} and not escrow_ok(w, ev): return Violation(RET_ESCROW, ev)   # reversible-action escrow
+      w' ← w.copy() ; w'.σ[provider(c)] ← impl(provider(c), w'.σ.fidelity).step(ev, w'.σ[provider(c)])                  # mock / spec / DST / shadow / real
+      w'.log.append(ev) ; w'.clock ← tick(w'.clock, ev)
+      for inv in w'.M.executable_invariants(active_for=provider(c)):
+        r ← inv.predicate(w')
+        if r = False: w'.violations.append(ViolationRecord(inv.id, ev, evidence=inv.explain(w')))    # automatic detection
+        elif r = UNKNOWN(reason): w'.unmeasured.append((inv.id, reason))                           # never silent
+      return w'
+    procedure TES_Replay(w0, log, seeds):
+      w ← w0 ; for (ev, s) in zip(log, seeds): rng.seed(s) ; w ← TES_Apply(w, ev)
+      if w.execution_class = FROZEN_DETERMINISTIC_F1: assert hash(w.state) = hash(original.state)           # bitwise replay only here (D1)
+      else: assert causal_equivalent(w, original, version=w.replay_version, tolerance=tolerance[class(w)])    # versioned causal replay with pre-set bounds (D2 / F2+)
+      return w
+- name: TES-Propagate (επιστημικός κίνδυνος)
+  complexity: O(|E|·|V|) Bellman-Ford-style max-path ή O(|V|+|E|) σε DAG condensation
+  pseudocode: |
+    function TES_Propagate(M):
+      base ← {e: RISK[e.epistemic_status] for e in M.ELM}
+      G ← dependency_graph(M) ; C ← condense_SCCs(G)                     # mutual dependencies collapse to one node (max risk)
+      risk ← {}
+      for node in topological(C): risk[node] ← max(base[node], max(risk[p] for p in preds(node)) · decay)    # max-path with decay = policy
+      for cap in M.CAP: cap.risk ← agg({risk[e] for e in providers(cap)})   # min over redundant providers, max over required deps
+      return risk_map                                                       # shown in cockpit; feeds Pareto and gates
+- name: TES-Substitute (μετάβαση πιστότητας)
+  complexity: O(|conformance suite|)
+  pseudocode: |
+    procedure TES_Substitute(w, elm, F_to):
+      suite ← conformance_tests(contract_of(elm))                            # same contract at every fidelity
+      impl_new ← impl(elm, F_to)
+      for t in suite: if impl_new.run(t) ≠ expected(t, tolerance[F_to]): return FAIL(t)
+      w.σ[elm].fidelity ← F_to ; w.log.append(FidelityTransition(elm, F_from, F_to, suite_receipt)) ; return OK
+interfaces:
+- TES.load(package)→Model
+- TES.world(cut)→World
+- TES.apply(world, event)→World ∣ Violation
+- TES.fork(world, seed)→World
+- TES.replay(log, seeds)→World
+- TES.substitute(elm, fidelity)→OK ∣ FAIL
+- TES.inject(scenario)→[events]
+- TES.risk(model)→risk map
+- TES.pareto(worlds)→frontier
+- TES.project(world)→SceneGraph (CGP)
+- TES.violations(world)→[ViolationRecord]
+contracts:
+- 'MFA-CON-072 (Twin Execution: load/apply/fork/replay/substitute/inject/risk/pareto/project)'
+- MFA-CON-026 (Simulation Harness / World Twin)
+- MFA-CON-039 (CGP)
+invariants:
+- 'MFA-INV-112: κάθε γεγονός στο δίδυμο είναι τυπωμένο από contract και ελέγχεται έναντι κάθε ενεργής εκτελέσιμης αναλλοίωτης· αναλλοίωτη χωρίς predicate δηλώνεται UNMEASURED (ποτέ σιωπηλά PASS)'
+- 'MFA-INV-113: replay(log, seeds) αναπαράγει τον κόσμο bitwise ΜΟΝΟ για παγωμένη ντετερμινιστική F1 εκτέλεση (D1)· για στοχαστικά ή hardware-εξαρτώμενα υποστρώματα (D2, F2+) απαιτείται versioned causal
+  replay με προκαθορισμένα tolerance bounds ανά κλάση· μετάβαση πιστότητας μόνο με conformance test στο ίδιο contract'
+authority_model: Το δίδυμο δεν έχει εξουσία επίδρασης (Genesis)· F4 real-component substitution μόνο με DisclosureGrant/PDP· τα σενάρια δεν φτάνουν Effect· η CGP προβολή προς cockpit.
+learning_model: Το δίδυμο δεν μαθαίνει βάρη· τα μοντέλα πιστότητας F2 (DST) και οι mocks βαθμονομούνται από πραγματικά traces (calibration receipts)· η βιβλιοθήκη σεναρίων μεγαλώνει (ATK, ECE έργα).
+failure_modes:
+- mode: Αναλλοίωτη μη-εκτελέσιμη
+  detection: μητρώο
+  response: UNMEASURED δηλωμένο (MFA-INV-112)
+- mode: Mock που «περνά» τα πάντα
+  detection: conformance suite + seeded faults
+  response: mock απορρίπτεται
+- mode: Μη-ντετερμινισμός (D2 στοιχεία)
+  detection: replay hash ≠
+  response: στοιχείο σημαίνεται D2· ανοχή δηλωμένη
+- mode: Έκρηξη κόσμων
+  detection: budget
+  response: pruning με Pareto· seeds αποθηκεύονται για re-fork
+- mode: Real component με side effects
+  detection: F4 χωρίς grant
+  response: αδύνατο (Genesis)
+containment: Genesis· F4 μόνο με grant· sandbox· seeds/logs ως δεσμεύσεις.
+reversibility_class: REVERSIBLE (κόσμοι = fork· τίποτα δεν εκτελείται στο Effect)
+resource_complexity: 'F1: Python, ms/γεγονός, laptop· F2: DST λεπτά/σενάριο· F3 shadow: κόστος πραγματικών οργάνων· μνήμη O(|worlds|·|state|) με structural sharing'
+scaling_law: Κόστος ~ |events|·|active invariants|· τα δέντρα κόσμων ~ branching^depth (Pareto pruning)· MFA-VO-086 = παραβιάσεις ανιχνευόμενες ανά seeded fault και replay επιτυχία.
+verification_strategy: 'MFA-VO-086: TES-E1 (seeded contract/invariant παραβιάσεις ανιχνεύονται 100 %) F1· TES-E2 (replay ντετερμινισμός, fork/merge, fidelity substitution) F1/F2· η ίδια η tools/twin ως
+  F1 εκτελέσιμη προδιαγραφή του πακέτου'
+experiments:
+- id: TES-E1
+  design: 'tools/twin: φόρτωση πακέτου, 30 seeded παραβιάσεις (contract signature, precondition, INV predicates, RET escrow)'
+  preregistered_criterion: 30/30 ανιχνεύονται με σωστό id· 0 ψευδώς θετικά σε 100 έγκυρα γεγονότα
+- id: TES-E2
+  design: 1000 τυχαία γεγονότα, fork σε 10 κόσμους, replay από log+seeds· substitution ενός στοιχείου F0→F1
+  preregistered_criterion: replay hash = original 100 %· substitution conformance PASS/FAIL σωστά· risk map παράγεται
+falsifiers:
+- 'TES-E1: παραβίαση seeded που δεν ανιχνεύεται (ο διερμηνέας ελλιπής — διορθώνεται· η απαίτηση §10 μένει)'
+- Replay που δεν αναπαράγει D1 στοιχείο (σφάλμα υλοποίησης)
+known_dependencies:
+- MFA-ELM-098 World Twin
+- MFA-ELM-093/091 CGP/cockpit
+- MFA-ELM-088 substrate
+- MFA-ELM-010 RET
+- όλες οι έδρες YAML
+- MFA-ELM-089 (KT harness)
+unknown_dependencies:
+- 'MFA-UNK-132: ποσοστό των 113 αναλλοίωτων που εκφράζονται ως εκτελέσιμα predicates χωρίς πραγματικά όργανα (μετριέται από το μητρώο του tools/twin)'
+integration_points:
+- MFA-ELM-126 (νέο στοιχείο TES, S5)
+- MFA-ELM-098
+- MFA-ELM-113 RAGen (σκιώδεις αρχιτεκτονικές)
+- MFA-ELM-110 CDCE (κόσμοι = παρεμβάσεις)
+- MFA-ELM-125 VSC (shadow)
+- MFA-ELM-091 cockpit
+- adversarial/ATK ως σενάρια
+migration_path: 'Τώρα (0.4.0): F1 εκτελέσιμη προδιαγραφή tools/twin (όχι παραγωγή)· Δόση 0.5: F1 τρέχει τα KT ως σενάρια· Δόση 1: F2 DST στοιχεία· Δόση 3: F3 shadow· Δόση 4: F4 substitution.'
+implementation_sequence:
+- 'F1: tools/twin (Python): load, apply, invariants registry, fork/replay, risk, violations — TES-E1/E2 ως tests'
+- 'F2: DST υλοποιήσεις στοιχείων'
+- 'F3: shadow'
+- 'F4: real substitution'
+epistemic_status:
+  overall: NOVEL SYNTHESIS
+  per_claim:
+  - claim: Event sourcing + deterministic simulation testing αναπαράγουν καταστάσεις
+    status: PROVEN
+  - claim: Contracts/invariants ως εκτελέσιμα predicates ανιχνεύουν παραβιάσεις
+    status: MECHANICALLY VERIFIED
+  - claim: Διάδοση επιστημικού κινδύνου στο γράφημα εξαρτήσεων ως πύλη
+    status: NEW FORMALISM
+  - claim: Το F1 δίδυμο προβλέπει παραβιάσεις της παραγωγής
+    status: RESEARCH HYPOTHESIS
+# 0.4.0 — F1 findings (tools/twin, MFA-PATCH-0058): 35/115 invariants executable (MFA-UNK-132 first measurement); TES-E1 60/60 seeded violations detected, 0 false
+# positives; TES-E2 replay hash equal 10/10; one dependency SCC of 89 elements collapses runtime-graph risk propagation to 0.6 for most elements — the F2
+# improvement is propagation along the genesis (build) order rather than the runtime graph; contract operation vocabularies are parsed from prose (F2 fix:
+# explicit `operations` field in CONTRACTS.yaml via a later patch). Resources, shadow/real substitution, Pareto, spatial projection: UNMEASURED at F1, declared.

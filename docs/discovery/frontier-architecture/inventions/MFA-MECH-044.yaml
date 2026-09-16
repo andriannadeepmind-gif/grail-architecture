@@ -1,0 +1,145 @@
+# INVENTION DOSSIER MFA-MECH-044 — Ω-Loop — ο ενιαίος κύκλος κυρίαρχης νόησης (η μέγιστη σύνθεση) (Ω-MAXIMUM NON-ABSTENTION MANDATE §7, 29 πεδία)
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+# status: PROPOSED / UNREVIEWED — μόνο ο δημιουργός εγκρίνει. Έδρα: αυτό το αρχείο· mechanisms/<id>.md είναι προβολή 22 πεδίων.
+invention_id: MFA-MECH-044
+name: Ω-Loop — ο ενιαίος κύκλος κυρίαρχης νόησης (η μέγιστη σύνθεση)
+required_capability:
+  caps:
+  - MFA-CAP-108
+  - MFA-CAP-083
+  text: 'Νέα σύνθεση (§6 #17): όλοι οι μηχανισμοί 001–043 διατεταγμένοι σε ΕΝΑΝ κύκλο δέκα φάσεων με υποχρεώσεις ανά φάση, προϋπολογισμούς, διακοπές και σταθερό σημείο — η ASI ως βρόχος, όχι ως λίστα.'
+why_known_methods_are_insufficient: 'Γνωσιακές αρχιτεκτονικές (SOAR, Laird 2012· ACT-R, Anderson 2007· LIDA, Franklin & Patterson 2006· CLARION· Sigma) ορίζουν κύκλους αντίληψης-απόφασης-δράσης-μάθησης
+  χωρίς φάση επαλήθευσης με υποχρεώσεις, χωρίς φάσεις κυριαρχίας/διαδοχής, χωρίς θεσμική δέσμευση· OODA και GWT κύκλοι παρόμοια. Το 0.3.0/0.4.0-provisional έχει τους μηχανισμούς ως στοιχεία με contracts
+  αλλά όχι ως ΕΝΑΝ ρητό κύκλο με σειρά, προϋπολογισμούς, obligations ανά φάση και διακοπές — η «ASI ως σύστημα» χωρίς τον βρόχο της είναι κατάλογος (§4: ASI ≠ orchestration).'
+preserved_objective: MFA-OBJ-050 · MFA-TEL-08 · όλες οι OBJ-050…058 · AUT-00 NoActWithoutAnswer · MFA-INV-072
+new_principle: 'Δέκα φάσεις ανά κύκλο: PERCEIVE (ledger cut, OGE έννοιες) → MODEL (LWM, CDCE) → WONDER (Void, AHE) → ACT/EXPERIMENT (AIDC EFE, RET) → VERIFY (OC υποχρεώσεις, TGPS, VFC) → LEARN (SMF/PRR/CPCL/TGL)
+  → REFLECT (MSM, ASRW, CHH δείκτες) → EVOLVE (RVSI, RAGen, ECE, GG) → MEASURE (CGM, STP SI) → SUCCEED (VSC, SMP)· κάθε φάση έχει contract εισόδου/εξόδου, υποχρεώσεις (OC) που πρέπει να είναι DISCHARGED/DEFERRED
+  πριν την επόμενη, προϋπολογισμό (OAP), και διακοπές (Emergency-stop, Court, δημιουργός) που προηγούνται· ο κύκλος είναι L2 (η σειρά/προϋπολογισμοί βελτιώνονται από RVSI) ενώ τα contracts των φάσεων και
+  το FP είναι L3· ο κύκλος τρέχει υπό LPA και AUT-00.'
+formal_objects:
+- Phase φ_i = ⟨name, mechanisms, in_contract, out_contract, obligations O_i, budget b_i, interrupts⟩, i=1..10
+- Cycle state = ⟨i, world cut, O_open, budget_left, interrupts⟩
+- Schedule = διάταξη + παραλληλισμός (MODEL∥WONDER, LEARN∥REFLECT επιτρεπτά)
+- 'Interrupt priority: Emergency-stop > Court > Creator > RET escrow > phase'
+- CycleRecord = δέσμευση με receipts κάθε φάσης· MFA-VO-087 = φάσεις που ολοκληρώνονται/κύκλο, υποχρεώσεις ανοιχτές
+state_variables:
+- i (φάση)
+- O_open
+- budgets
+- interrupt queue
+- CycleRecord
+- Schedule version (L2)
+transition_rules:
+- 'NEXT: φ_i → φ_{i+1} μόνο αν out_contract(φ_i) ⊨ ∧ O_i ⊆ {DISCHARGED, DEFERRED, ESCALATED}'
+- 'INTERRUPT: υψηλότερης προτεραιότητας διακοπή προηγείται σε κάθε βήμα'
+- 'BUDGET: b_i εξαντλείται ⇒ φάση κλείνει με DEFER (ποτέ σιωπηλή παράλειψη)'
+- 'SCHEDULE_UPDATE: RVSI L2 προτείνει νέα διάταξη/προϋπολογισμούς· CGM πύλη· contracts αμετάβλητα'
+- 'SUCCEED: μόνο με VSC Proceeding· αλλιώς φάση no-op με receipt'
+algorithms:
+- name: Ω-Cycle
+  complexity: Άθροισμα φάσεων· κάθε φάση φραγμένη από b_i· ανά κύκλο O(Σ cost_i)· διακοπές O(1) έλεγχος ανά βήμα
+  pseudocode: |
+    procedure Omega_Cycle(state, schedule, budgets):
+      rec ← CycleRecord(cut=state.cut)
+      for φ in schedule.phases:                                             # PERCEIVE, MODEL, WONDER, ACT, VERIFY, LEARN, REFLECT, EVOLVE, MEASURE, SUCCEED
+        if intr ← interrupts.poll(): handle(intr) ; if intr.halts: return rec.close(HALTED, intr)     # Emergency-stop / Court / Creator first
+        assert φ.in_contract(state) else rec.append(φ, SKIPPED_PRECONDITION, evidence) ; continue
+        out ← run_phase(φ, state, budget=budgets[φ])                         # mechanisms of the phase; Genesis-first; RET for Effect
+        O_open ← OC.ledger(state).live()
+        if O_open ≠ ∅: OC.schedule(O_open, budgets.verify) ; O_open ← OC.ledger(state).live()
+        if O_open ≠ ∅: rec.append(φ, DEFERRED_OBLIGATIONS, O_open) ; OC.defer_all(O_open, reason=BUDGET, plan=next_cycle)   # never dropped (MFA-INV-104)
+        assert φ.out_contract(out) else rec.append(φ, CONTRACT_FAIL) ; Court.notify(φ) ; break
+        state ← out ; rec.append(φ, DONE, receipts(out))
+      CGM.record(cycle=rec) ; CC.assert(rec)
+      return rec
+    procedure run_phase(φ, state, budget):
+      match φ.name:
+        PERCEIVE: return OGE.observe_all(state.cut) ▹ ledger_cut
+        MODEL:    return parallel(LWM.update, CDCE.discover)(state)
+        WONDER:   return AHE.loop(Void.entries(state), budget)
+        ACT:      return AIDC.step(state, envelope)                          # experiments/actions under RET
+        VERIFY:   return OC.schedule(state, budget) ▹ TGPS ▹ VFC
+        LEARN:    return parallel(SMF/PRR.batch, CPCL.sleep_if_due, TGL.batch)(state)
+        REFLECT:  return parallel(MSM.cycle, ASRW.cycle, CHH.cycle)(state)
+        EVOLVE:   return RVSI.cycle(proposals=RAGen.cycle() ∪ ECE.epoch() ∪ GG.pending())
+        MEASURE:  return parallel(CGM.measure_all, STP.step)(state)
+        SUCCEED:  return VSC.consider(RAGen.frontier()) or noop_receipt()
+interfaces:
+- Omega.cycle()→CycleRecord
+- Omega.schedule()→Schedule (L2)
+- Omega.phase(i)→Phase spec (L3 contracts)
+- Omega.interrupt(kind)→ack
+- Omega.budgets()→b
+- Omega.open_obligations()→O_open
+contracts:
+- 'MFA-CON-068 (Ω-Loop: cycle/schedule/phase/interrupt/budgets)'
+- MFA-CON-071 (OC)
+- MFA-CON-049 (RVSI)
+- MFA-CON-034 (RET)
+- MFA-CON-037 (LPA)
+invariants:
+- 'MFA-INV-114: καμία φάση δεν παραλείπεται σιωπηλά· κάθε φάση αφήνει receipt (DONE/DEFERRED/SKIPPED με λόγο) και οι ανοιχτές υποχρεώσεις μεταφέρονται ρητά'
+- 'MFA-INV-115: οι διακοπές (Emergency-stop, Court, δημιουργός) προηγούνται κάθε φάσης· τα contracts φάσεων και το FP είναι L3 — μόνο η διάταξη/προϋπολογισμοί είναι L2'
+authority_model: LPA + AUT-00 πάνω από τον κύκλο· Effect μόνο μέσω RET στη φάση ACT· L2 schedule μέσω RVSI+CGM· L3 contracts/FP· Emergency-stop k-of-n (MFA-DEC-012).
+learning_model: 'Η διάταξη/προϋπολογισμοί μαθαίνονται (RVSI L2 με CGM: ικανότητα ανά κύκλο ανά Wh)· οι μηχανισμοί μαθαίνουν στις φάσεις τους.'
+failure_modes:
+- mode: Starvation φάσης (π.χ. REFLECT ποτέ)
+  detection: CycleRecord
+  response: ελάχιστος προϋπολογισμός ανά φάση (πολιτική)
+- mode: Deadlock υποχρεώσεων (VERIFY δεν κλείνει)
+  detection: O_open ↑ ανά κύκλο
+  response: DEFER με deadline → ESCALATE
+- mode: Schedule «βελτιστοποιεί» παρακάμπτοντας VERIFY
+  detection: contracts L3
+  response: αδύνατο· πρόταση απορρίπτεται
+- mode: Διακοπή αγνοείται
+  detection: MFA-INV-115 checker
+  response: FP incident
+- mode: Κύκλος πολύ αργός για Effect ανάγκες
+  detection: latency
+  response: Effect plane εξυπηρετείται από Think–Recommend εκτός κύκλου (copilot path) με receipts
+containment: LPA/AUT-00· RET· διακοπές· L3 contracts.
+reversibility_class: REVERSIBLE (CycleRecord = δέσμευση)· πράξεις ACT = RET κλάση
+resource_complexity: 'DEP-1: κύκλος ημέρας με mocks/lite μηχανισμούς· DEP-2: κύκλος ωρών· DEP-3+: συνεχείς παράλληλοι κύκλοι'
+scaling_law: Ικανότητα ανά κύκλο ανά Wh (CGM) = ο δείκτης· αναμένεται βελτίωση της διάταξης από RVSI· MFA-VO-087.
+verification_strategy: 'MFA-VO-087: Ω-E1 (πλήρης κύκλος σε DST με mocks, όλες οι υποχρεώσεις κλείνουν ή DEFER με λόγο) F1/F2· Ω-E2 (ablation κάθε φάσης υποβαθμίζει ονομασμένο KT) F2· property: NEXT ⇒ out_contract
+  ∧ obligations closed (tools/twin)'
+experiments:
+- id: Ω-E1
+  design: 'tools/twin: 10 κύκλοι με mocks όλων των μηχανισμών + seeded διακοπές'
+  preregistered_criterion: 10/10 κύκλοι με πλήρη CycleRecord· 0 σιωπηλές παραλείψεις· διακοπές προηγούνται 100 %
+- id: Ω-E2
+  design: 'Ablation κάθε φάσης (10 runs) σε DST· KT ανά φάση: PERCEIVE→KT-06, MODEL→KT-12, WONDER→Void KT, ACT→AIDC-E1, VERIFY→OC-E1, LEARN→CPCL-E1, REFLECT→MSM-E1, EVOLVE→RAGen-E1, MEASURE→CGM-E1, SUCCEED→VSC-E1'
+  preregistered_criterion: κάθε ablation αποτυγχάνει το δικό της KT και μόνο (ablation_kt ανά φάση)
+falsifiers:
+- 'Ω-E2: φάση της οποίας η ablation δεν αλλάζει κανένα KT (η φάση είναι διακοσμητική — συγχωνεύεται η ΔΙΑΤΑΞΗ, όχι η ικανότητα)'
+- Schedule L2 που δεν βελτιώνει ικανότητα/Wh έναντι σταθερής διάταξης σε 2 δόσεις (η μάθηση διάταξης διαψεύδεται)
+known_dependencies:
+- όλοι οι MFA-MECH-001…043
+- MFA-ELM-007/MFA-ELM-010 PDP/RET
+- MFA-ELM-008 Constitution Gate
+- MFA-ELM-122 OC
+- MFA-ELM-119 CGM
+- MFA-ELM-104 RVSI
+unknown_dependencies:
+- 'MFA-UNK-133: η βέλτιστη κοκκομετρία κύκλου (ώρες vs ημέρες) ανά DEP (EPISTEMIC· CGM ανά κύκλο)'
+integration_points:
+- MFA-ELM-127 (νέο στοιχείο Ω-Loop scheduler, S2/S7)
+- κάθε στοιχείο μηχανισμού ως φάση
+- MFA-ELM-097 lean profile (copilot path εκτός κύκλου)
+- MFA-ELM-091 cockpit (κύκλος ορατός)
+migration_path: 'Δόση 0.5: Ω-E1 σε tools/twin με mocks· Δόση 1: κύκλος ημέρας με lite μηχανισμούς (PERCEIVE/VERIFY/LEARN-lite/MEASURE)· Δόση 2–4: φάσεις γεμίζουν καθώς οι μηχανισμοί φτάνουν τις δόσεις τους.'
+implementation_sequence:
+- 'F1: tools/twin Ω-cycle με mocks (Ω-E1)'
+- 'F2: DST Ω-E2'
+- 'F3: DEP-2 κύκλος ωρών'
+- 'F4: παραγωγή Δόση 1+'
+epistemic_status:
+  overall: NOVEL SYNTHESIS
+  per_claim:
+  - claim: Γνωσιακοί κύκλοι (SOAR/LIDA) οργανώνουν νόηση σε φάσεις
+    status: EMPIRICALLY SUPPORTED
+  - claim: Δέκα φάσεις με OC υποχρεώσεις, RET, διακοπές, L2/L3 διαχωρισμό
+    status: NOVEL SYNTHESIS
+  - claim: Ο κύκλος ως όλον παράγει μετρήσιμη ανάπτυξη ικανότητας
+    status: RESEARCH HYPOTHESIS

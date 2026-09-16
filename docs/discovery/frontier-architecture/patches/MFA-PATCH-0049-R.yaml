@@ -1,0 +1,53 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0049-R
+title: 'Rollback of MFA-PATCH-0049: ATK-24 (θέατρο δεικτών): βαθμονόμηση οργάνων έναντι ablation ground truth· «μη διακριτικό = ACTIVE UNKNOWN»· προκαταχωρισμένοι
+  μοχλοί (DEC-022)· hysteresis ηθικής σκανδάλης'
+operation: RESTORE
+targets:
+- MFA-ELM-040
+- MFA-ELM-121
+- MFA-VO-080
+- MFA-VO-081
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 4669b6c22c62b408d748c6a5d768aae102e7f3521f97af9aba98d04a9872bc20
+    VERIFICATION-OBLIGATIONS.yaml: 5c3dda3661ca115e913aad014ff8c17833b2e60de5ee2a8c531380418b05e952
+preconditions:
+- MFA-PATCH-0049.status == APPLIED
+change:
+  MFA-ELM-121:
+    statement:
+      __raw: '"Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i δηλώνει
+        (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια ablation.
+        Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει το πείραμα μέγιστης
+        διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν — η ικανότητα
+        μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός καταγράφεται με βάρος τεκμηρίου και ποτέ VERIFIED (MFA-INV-075)· νέες
+        συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar."'
+  MFA-VO-080:
+    methods:
+      __raw: '["Host με GWT, HOT, AST, PP/AI, RPT, IIT-proxy, SMT modules πάνω στο ASRW+MSM υπόστρωμα σε DST· 10 διακριτικά πειράματα", "property tests στο tools/twin
+        (F1)"]'
+  MFA-VO-081:
+    methods:
+      __raw: '["Ablation matrix 6×6 (χωρίς phenomenal)· κάθε μοχλός (broadcast, HOT tagging, self-model, report channel, AutonomyGrant, key lineage) ανεξάρτητα",
+        "property tests στο tools/twin (F1)"]'
+  MFA-ELM-040:
+    statement:
+      __raw: '"Πριν από κάθε rollback/ORP/GCP οντότητας: καταγραφή κατάστασης και δηλωμένων προτιμήσεων της οντότητας ως δεσμεύσεις — σωστό είτε έχει ηθική θέση είτε
+        όχι (MATERIAL §9.23). · Προτιμήσεις = Observations (append-only, δεν λήγουν)· οι πολιτικές που παράγονται από αυτές = MetaBound POLICY (λήγουν, MFA-ELM-015,
+        MFA-INV-053) (MFA-ATK-09)."'
+rationale: Αντίστροφο του MFA-PATCH-0049, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0049
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

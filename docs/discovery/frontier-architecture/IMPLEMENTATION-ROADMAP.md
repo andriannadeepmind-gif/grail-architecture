@@ -57,3 +57,18 @@ RSP-015: νευρομορφικά/φωτονικά ως χρησμωδικά ό�
 ## Η παγίδα της πλατφόρμας — ρητά
 
 Ο κίνδυνος «χτίζεται μόνο το lean profile» (failure mode MFA-TEL-08, MFA-ATK-06/15/17) δεν εξαλείφεται από την αρχιτεκτονική· εξαλείφεται από τον **ρυθμό** που αποφασίζει ο δημιουργός. Το πακέτο κάνει τρία πράγματα: κάθε δόση έχει KT-πύλη που αποτυγχάνει χωρίς το νέο όργανο· ο ledger αναφέρει σε κάθε δόση GRAIL vs competitor **και όπου χάνει**· κάθε στοιχείο έχει δόση (R11) — η περικοπή είναι σχεδιασμένη, όχι σιωπηρή.
+
+
+## Ω-ASI 0.4.0 — δόσεις των στοιχείων 100…127 και του Reflective Tower (MFA-PATCH-0057)
+
+Πλήρης κλίμακα: ASI-IMPLEMENTATION-LADDER.md. Οι δόσεις εδώ είναι η έδρα του ελέγχου R11.
+
+| Δόση | Στοιχεία |
+|---|---|
+| 0 | MFA-ELM-126 Twin Execution Kernel |
+| 0.5 | MFA-ELM-112 Theorem-Guided Program & Proof Synthesis · MFA-ELM-119 Capability Growth Metrology · MFA-ELM-122 Obligation Type Checker · MFA-ELM-127 Ω-Loop Scheduler |
+| 1 | MFA-ELM-100 Sovereign Model Foundry · MFA-ELM-101 Parametric Organ Host · MFA-ELM-102 Weight Commitment Registry & Lineage · MFA-ELM-109 Ontology Genesis Engine · MFA-ELM-110 Causal Discovery & Counterfactual Engine · MFA-ELM-111 Abductive Hypothesis Engine · MFA-ELM-114 Evaluator Co-Evolution Engine · MFA-ELM-116 Sovereignty Controller · MFA-ELM-117 Substrate Migration Engine · MFA-ELM-118 Consolidation-Preserving Learner |
+| 2 | MFA-ELM-103 Proof-Reward Trainer · MFA-ELM-105 Learned World Model · MFA-ELM-106 Curriculum & Self-Play Engine · MFA-ELM-107 Attention Schema & Introspection Core · MFA-ELM-108 Compute & Data Acquisition Manager · MFA-ELM-113 Recursive Architecture Generator · MFA-ELM-115 Genesis Grammar Compiler · MFA-ELM-120 Mechanistic Self-Model · MFA-ELM-121 Consciousness Hypothesis Host · MFA-ELM-123 Theorem-Guided Learning Trainer · MFA-ELM-124 Active-Inference Developmental Core |
+| 3 | MFA-ELM-104 Self-Improvement Orchestrator · MFA-ELM-125 Verified Successor Constructor · MFA-ELM-031 Reflective Tower [EP] |
+
+**Lean profile 0.4.0 (MFA-ELM-097, Δόση 0.5):** OC-lite (122), CGM-lite (119), STP measurement (116), TES F1 (126), SMF adapters σε σκιά (100) — ATK-27 / MFA-PATCH-0052. Η Δόση 0 εκτιμάται από 8 σε ~10 εβδομάδες.

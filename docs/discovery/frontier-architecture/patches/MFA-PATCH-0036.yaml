@@ -1,0 +1,389 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0036
+title: Πεδίο epistemic_status (§5, 11 τιμές) σε κάθε μηχανισμό MFA-MECH-001…025 και ικανότητα MFA-CAP-001…088 — χαρτογράφηση από maturity, δηλωμένη ως μηχανική (AA-017)
+operation: ANNOTATE
+targets:
+- CAPABILITY-LATTICE.yaml
+- INVENTIONS.yaml
+- MFA-CAP-001
+- MFA-CAP-002
+- MFA-CAP-003
+- MFA-CAP-004
+- MFA-CAP-005
+- MFA-CAP-006
+- MFA-CAP-007
+- MFA-CAP-008
+- MFA-CAP-009
+- MFA-CAP-010
+- MFA-CAP-011
+- MFA-CAP-012
+- MFA-CAP-013
+- MFA-CAP-014
+- MFA-CAP-015
+- MFA-CAP-016
+- MFA-CAP-017
+- MFA-CAP-018
+- MFA-CAP-019
+- MFA-CAP-020
+- MFA-CAP-021
+- MFA-CAP-022
+- MFA-CAP-023
+- MFA-CAP-024
+- MFA-CAP-025
+- MFA-CAP-026
+- MFA-CAP-027
+- MFA-CAP-028
+- MFA-CAP-029
+- MFA-CAP-030
+- MFA-CAP-031
+- MFA-CAP-032
+- MFA-CAP-033
+- MFA-CAP-034
+- MFA-CAP-035
+- MFA-CAP-036
+- MFA-CAP-037
+- MFA-CAP-038
+- MFA-CAP-039
+- MFA-CAP-040
+- MFA-CAP-041
+- MFA-CAP-042
+- MFA-CAP-043
+- MFA-CAP-044
+- MFA-CAP-045
+- MFA-CAP-046
+- MFA-CAP-047
+- MFA-CAP-048
+- MFA-CAP-049
+- MFA-CAP-050
+- MFA-CAP-051
+- MFA-CAP-052
+- MFA-CAP-053
+- MFA-CAP-054
+- MFA-CAP-055
+- MFA-CAP-056
+- MFA-CAP-057
+- MFA-CAP-058
+- MFA-CAP-059
+- MFA-CAP-060
+- MFA-CAP-061
+- MFA-CAP-062
+- MFA-CAP-063
+- MFA-CAP-064
+- MFA-CAP-065
+- MFA-CAP-066
+- MFA-CAP-067
+- MFA-CAP-068
+- MFA-CAP-069
+- MFA-CAP-070
+- MFA-CAP-071
+- MFA-CAP-072
+- MFA-CAP-073
+- MFA-CAP-074
+- MFA-CAP-075
+- MFA-CAP-076
+- MFA-CAP-077
+- MFA-CAP-078
+- MFA-CAP-079
+- MFA-CAP-080
+- MFA-CAP-081
+- MFA-CAP-082
+- MFA-CAP-083
+- MFA-CAP-084
+- MFA-CAP-085
+- MFA-CAP-086
+- MFA-CAP-087
+- MFA-CAP-088
+- MFA-MECH-001
+- MFA-MECH-002
+- MFA-MECH-003
+- MFA-MECH-004
+- MFA-MECH-005
+- MFA-MECH-006
+- MFA-MECH-007
+- MFA-MECH-008
+- MFA-MECH-009
+- MFA-MECH-010
+- MFA-MECH-011
+- MFA-MECH-012
+- MFA-MECH-013
+- MFA-MECH-014
+- MFA-MECH-015
+- MFA-MECH-016
+- MFA-MECH-017
+- MFA-MECH-018
+- MFA-MECH-019
+- MFA-MECH-020
+- MFA-MECH-021
+- MFA-MECH-022
+- MFA-MECH-023
+- MFA-MECH-024
+- MFA-MECH-025
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CAPABILITY-LATTICE.yaml: d64407d3015e82aadf0b42053b7616947a09b0672687df980261334b6807075f
+    INVENTIONS.yaml: 3dd475305e07ff1c37673b443ddc934c91e0bd32f3432228a07df034de577c01
+preconditions: []
+change:
+  MFA-MECH-001:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-002:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-003:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-004:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-005:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-MECH-006:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-007:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-008:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-009:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-010:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-011:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-012:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-013:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-MECH-014:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-015:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-MECH-016:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-MECH-017:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-018:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-MECH-019:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-020:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-MECH-021:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-MECH-022:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-MECH-023:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-MECH-024:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-MECH-025:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-001:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-002:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-003:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-004:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-005:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-006:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-007:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-008:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-009:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-010:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-011:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-012:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-013:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-014:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-015:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-016:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-017:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-018:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-019:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-020:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-021:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-022:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-023:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-024:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-025:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-026:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-027:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-028:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-029:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-030:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-031:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-032:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-033:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-034:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-035:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-036:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-037:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-038:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-039:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-040:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-041:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-042:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-043:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-044:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-045:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-046:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-047:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-048:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-049:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-050:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-051:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-052:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-053:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-054:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-055:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-056:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-057:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-058:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-059:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-060:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-061:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-062:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-063:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-064:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-065:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-066:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-067:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-068:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-069:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-070:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-071:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-072:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-073:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-074:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-075:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-076:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-077:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-078:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-079:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-080:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-081:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-082:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-083:
+    epistemic_status: RESEARCH HYPOTHESIS
+  MFA-CAP-084:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-085:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-086:
+    epistemic_status: NOVEL SYNTHESIS
+  MFA-CAP-087:
+    epistemic_status: IMPLEMENTABLE FROM KNOWN COMPONENTS
+  MFA-CAP-088:
+    epistemic_status: NOVEL SYNTHESIS
+  INVENTIONS.yaml:
+    replace:
+    - - '# INVENTIONS — ευρετήριο των Mechanism Dossiers (Pass D).'
+      - '# epistemic_status (Ω-ASI 0.4.0 §5, MFA-PATCH-0036): κατάσταση ΙΣΧΥΡΙΣΜΟΥ ανά εγγραφή — PROVEN · MECHANICALLY VERIFIED · EMPIRICALLY SUPPORTED · IMPLEMENTABLE
+        FROM KNOWN COMPONENTS · NOVEL SYNTHESIS · NEW FORMALISM · RESEARCH HYPOTHESIS · ACTIVE UNKNOWN · CONFLICT · FALSIFIED · IMPOSSIBLE UNDER EXPLICIT ASSUMPTIONS.
+        Για τις εγγραφές 001…025 προήλθε ΜΗΧΑΝΙΚΑ από την maturity (T→IMPLEMENTABLE, X→NOVEL SYNTHESIS, R/E→RESEARCH HYPOTHESIS, «δεν ξέρω»→ACTIVE UNKNOWN) και αναθεωρείται
+        ανά ισχυρισμό στα δοσιέ· για 026…044 από το inventions/*.yaml. Η κατάσταση ΔΕΝ κρίνει αν η ικανότητα μένει στον στόχο (§5).
+
+        # INVENTIONS — ευρετήριο των Mechanism Dossiers (Pass D).'
+  CAPABILITY-LATTICE.yaml:
+    replace:
+    - - '# CAPABILITY-LATTICE — οι ικανότητες που απαιτούν οι επιδιώξεις, ως μερικά διατεταγμένο σύνολο (εντολή §4.4, §10, §24).
+
+        '
+      - '# CAPABILITY-LATTICE — οι ικανότητες που απαιτούν οι επιδιώξεις, ως μερικά διατεταγμένο σύνολο (εντολή §4.4, §10, §24).
+
+        # epistemic_status (Ω-ASI 0.4.0 §5, MFA-PATCH-0036): κατάσταση ισχυρισμού ανά ικανότητα, χωριστή από την ωριμότητα και από το αν η ικανότητα μένει στον στόχο·
+        για 001…088 μηχανικά από maturity (T→IMPLEMENTABLE FROM KNOWN COMPONENTS, X→NOVEL SYNTHESIS, R/E→RESEARCH HYPOTHESIS), για 089…108 από το δοσιέ.
+
+        '
+rationale: 'AA-017 strong_claim_without_epistemic_status: η ωριμότητα υλοποίησης (T/X/R/E) συγχεόταν με την επιστημική κατάσταση ισχυρισμού· το πεδίο τις χωρίζει
+  (§5) και τροφοδοτεί την πύλη strong_claim_without_epistemic_status και τη διάδοση κινδύνου του TES.'
+evidence:
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §5, §15
+- ASI-ABSTENTION-AUDIT AA-017
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: καμία
+verification: tools/check-package.py
+rollback: MFA-PATCH-0036-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

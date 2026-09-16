@@ -52,6 +52,25 @@ out.append('id_namespace: MFA-*')
 out.append('element_counts:')
 for k, v in sorted(ids.items()): out.append(f'  {k}: {v}')
 out.append(f'  total: {sum(ids.values())}')
+# evidence fidelity (Ω-ASI 0.4.0, MFA-ATK-29 / MFA-PATCH-0054): verification obligations by the fidelity of their first evidence,
+# and the F1 twin report if present — "green at F1" is never read as architectural verification (MFA-ELM-088, MFA-INV-112)
+try:
+    import yaml as _yaml
+    vos = _yaml.safe_load((PKG / 'VERIFICATION-OBLIGATIONS.yaml').read_text(encoding='utf-8'))['obligations']
+    lv = collections.Counter(str(v.get('first_level', 'UNSPECIFIED')) for v in vos)
+    out.append('evidence_fidelity:')
+    out.append('  note: "first_level = the lowest fidelity at which the obligation can first be discharged; nothing here is a claim that it was discharged"')
+    for k in sorted(lv): out.append(f'  {k}: {lv[k]}')
+    inv = _yaml.safe_load((PKG / 'INVARIANTS.yaml').read_text(encoding='utf-8'))['invariants']
+    twin = PKG / 'tools' / 'twin' / 'invariants.py'
+    if twin.exists():
+        src = twin.read_text(encoding='utf-8')
+        exe = sorted(set(re.findall(r'@executable\(\s*["\'](MFA-INV-\d{3})["\']', src)))
+        out.append(f'  twin_F1_executable_invariants: {len(exe)}')
+        out.append(f'  twin_F1_unmeasured_invariants: {len(inv) - len(exe)}')
+        out.append('  twin_F1_note: "tools/twin (F1 executable specification): UNMEASURED invariants are declared, never PASS (MFA-INV-112)"')
+except Exception as ex:
+    out.append(f'evidence_fidelity: {{error: "{ex}"}}')
 out.append('files:')
 for p in files + extra:
     rel = p.relative_to(PKG) if p.is_relative_to(PKG) else pathlib.Path('..') / p.name

@@ -1,0 +1,246 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0038-R
+title: 'Rollback of MFA-PATCH-0038: Πεδίο epistemic_status σε κάθε επιδίωξη MFA-OBJ-001…052 (AA-017)'
+operation: RESTORE
+targets:
+- MFA-OBJ-001
+- MFA-OBJ-002
+- MFA-OBJ-003
+- MFA-OBJ-004
+- MFA-OBJ-005
+- MFA-OBJ-006
+- MFA-OBJ-007
+- MFA-OBJ-008
+- MFA-OBJ-009
+- MFA-OBJ-010
+- MFA-OBJ-011
+- MFA-OBJ-012
+- MFA-OBJ-013
+- MFA-OBJ-014
+- MFA-OBJ-015
+- MFA-OBJ-016
+- MFA-OBJ-017
+- MFA-OBJ-018
+- MFA-OBJ-019
+- MFA-OBJ-020
+- MFA-OBJ-021
+- MFA-OBJ-022
+- MFA-OBJ-023
+- MFA-OBJ-024
+- MFA-OBJ-025
+- MFA-OBJ-026
+- MFA-OBJ-027
+- MFA-OBJ-028
+- MFA-OBJ-029
+- MFA-OBJ-030
+- MFA-OBJ-031
+- MFA-OBJ-032
+- MFA-OBJ-033
+- MFA-OBJ-034
+- MFA-OBJ-035
+- MFA-OBJ-036
+- MFA-OBJ-037
+- MFA-OBJ-038
+- MFA-OBJ-039
+- MFA-OBJ-040
+- MFA-OBJ-041
+- MFA-OBJ-042
+- MFA-OBJ-043
+- MFA-OBJ-044
+- MFA-OBJ-045
+- MFA-OBJ-046
+- MFA-OBJ-047
+- MFA-OBJ-048
+- MFA-OBJ-049
+- MFA-OBJ-050
+- MFA-OBJ-051
+- MFA-OBJ-052
+- OBJECTIVE-SPACE.yaml
+base:
+  package_version: 0.1.0
+  file_hashes:
+    OBJECTIVE-SPACE.yaml: b5a705f52358e83d8be2ab9d206ddf03d6c6d447b882dcdff8bc15576094cd9b
+preconditions:
+- MFA-PATCH-0038.status == APPLIED
+change:
+  MFA-OBJ-001:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-002:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-003:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-004:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-005:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-006:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-007:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-008:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-009:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-010:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-011:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-012:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-013:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-014:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-015:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-016:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-017:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-018:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-019:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-020:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-021:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-022:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-023:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-024:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-025:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-026:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-027:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-028:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-029:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-030:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-031:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-032:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-033:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-034:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-035:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-036:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-037:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-038:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-039:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-040:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-041:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-042:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-043:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-044:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-045:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-046:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-047:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-048:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-049:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-050:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-051:
+    epistemic_status:
+      __raw: 'null'
+  MFA-OBJ-052:
+    epistemic_status:
+      __raw: 'null'
+  OBJECTIVE-SPACE.yaml:
+    replace:
+    - - '# OBJECTIVE-SPACE — ο πλήρης χώρος επιδιώξεων, οι αντιφάσεις του, το πλέγμα υποψηφίων Telos, το Pareto μέτωπο,
+
+        # epistemic_status (Ω-ASI 0.4.0 §5, MFA-PATCH-0038) για επιδιώξεις = κατάσταση του ισχυρισμού «η επιδίωξη προέρχεται από τον δημιουργό/το corpus»: stated/explicit→EMPIRICALLY
+        SUPPORTED (υπάρχει το κείμενο), derived→NOVEL SYNTHESIS, proposed→RESEARCH HYPOTHESIS· η επιτευξιμότητα κρίνεται στους μηχανισμούς, όχι εδώ.
+
+        '
+      - '# OBJECTIVE-SPACE — ο πλήρης χώρος επιδιώξεων, οι αντιφάσεις του, το πλέγμα υποψηφίων Telos, το Pareto μέτωπο,
+
+        '
+rationale: Αντίστροφο του MFA-PATCH-0038, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0038
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

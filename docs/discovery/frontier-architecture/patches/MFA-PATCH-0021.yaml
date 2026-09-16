@@ -1,0 +1,234 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0021
+title: Ικανότητες MFA-CAP-081…088 (παραμετρική μάθηση, PRR, RVSI, LWM, curriculum, συνείδηση, compute/data, γενεαλογία βαρών)· 065/066/067 από R/EP σε X με μηχανισμό
+operation: ADD
+targets:
+- MFA-CAP-081
+- MFA-CAP-082
+- MFA-CAP-083
+- MFA-CAP-084
+- MFA-CAP-085
+- MFA-CAP-086
+- MFA-CAP-087
+- MFA-CAP-088
+- MFA-CAP-065
+- MFA-CAP-066
+- MFA-CAP-067
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CAPABILITY-LATTICE.yaml: 5d583acf9371c859164882a064eb545b0ffeaf0edb1d2c8d205e62518d26ae25
+preconditions: []
+change:
+  MFA-CAP-081:
+    _add: true
+    name: 'Κυρίαρχη παραμετρική μάθηση: βάρη ως δεσμεύσεις με πλήρη γενεαλογία, εκπαίδευση υπό πύλη/ORP, distillation ως απεξάρτηση'
+    concern: Evolution
+    maturity: X
+    statement: Η γνώση σε ιδιόκτητα βάρη (adapters → continued pretraining → πλήρη μοντέλα → pretraining), ανά confidentiality domain, με forgetting guard και unlearning
+      υποχρέωση· ο πάροχος γίνεται baseline (MFA-MECH-020).
+    refines:
+    - MFA-CAP-066
+    requires:
+    - MFA-CAP-003
+    - MFA-CAP-007
+    - MFA-CAP-029
+    measured_by: 'MFA-VO-057: κυρίαρχο μοντέλο ≥ bootstrap πάροχος σε sealed οικογένεια με διακριτικό περιθώριο· MFA-VO-058/059'
+    corpus_refs:
+    - DEC-X-19
+    - 'MATERIAL §2 #8'
+    - MFA-OBJ-051
+    falsifier: Βάρος σε serving χωρίς WeightCommitment· ή 3 recipes με πλήρες budget χωρίς ≥ πάροχο σε καμία οικογένεια (⇒ ανεβαίνει προφίλ, MFA-UNK-112)
+  MFA-CAP-082:
+    _add: true
+    name: 'Μάθηση από επαληθευμένη ανταμοιβή: διανυσματική, λεξικογραφική, από verifier εκτός closure (PRR)'
+    concern: Evolution
+    maturity: X
+    statement: Ανταμοιβή = αντικείμενα απόδειξης/ετυμηγορίες/KT/receipts σε διάνυσμα κατά Tier· περιορισμοί Tier-0 σκληροί· seeded proxies μόνιμα· UNKNOWN = 0 (η
+      άγνοια δεν τιμωρείται, το ψεύδος ναι) (MFA-MECH-021).
+    refines:
+    - MFA-CAP-081
+    requires:
+    - MFA-CAP-022
+    - MFA-CAP-049
+    - MFA-CAP-075
+    measured_by: MFA-VO-060 (0 seeded hacks χωρίς ανίχνευση), MFA-VO-057 (PRR > SFT-only)
+    corpus_refs:
+    - MFA-INV-058
+    - MFA-INV-048
+    - MFA-OBJ-050
+    falsifier: Policy που εκμεταλλεύεται seeded proxy χωρίς ανίχνευση από HELD_OUT
+  MFA-CAP-083:
+    _add: true
+    name: 'Αναδρομική επαληθευμένη αυτο-βελτίωση (RVSI): L0 έξοδοι, L1 μοντέλα/προγράμματα/όργανα, L2 βελτιωτές και αρχιτεκτονική πυρήνα, L3 ποτέ'
+    concern: Evolution
+    maturity: R
+    statement: Κάθε επίπεδο βελτιώνει το από κάτω του και τον εαυτό του υπό την ίδια πύλη (HELD_OUT + EIM + LPA), με προβλεπόμενο-πριν-δοκιμαστεί κέρδος, σφραγισμένη
+      μέτρηση ανάπτυξης ανά πόρο και escalation στο plateau· το σταθερό σημείο (VFC, Telos, gate) δεν βελτιώνεται από μέσα (MFA-MECH-022).
+    refines:
+    - MFA-CAP-025
+    requires:
+    - MFA-CAP-081
+    - MFA-CAP-082
+    - MFA-CAP-027
+    - MFA-CAP-029
+    - MFA-CAP-002
+    measured_by: MFA-VO-061 (meta-cycle drill), MFA-VO-067 (Capability Growth Law με CI)
+    corpus_refs:
+    - MFA-INV-031
+    - MFA-INV-001
+    - MFA-OBJ-050
+    falsifier: Προαγωγή χωρίς HELD_OUT+EIM+gate· ή 5 cycles χωρίς κέρδος σε κανένα επίπεδο (⇒ MFA-UNK-113 + escalation)
+  MFA-CAP-084:
+    _add: true
+    name: Μαθημένα μοντέλα κόσμου και σχεδιασμός σε λανθάνοντα χώρο, με βαθμονόμηση και Unknown regions
+    concern: World models and alternative worlds
+    maturity: X
+    statement: Λανθάνουσα δυναμική από επεισόδια + World Twin· MCTS σε latent με verifier checkpoints· προβλέψεις = Observations με calibration receipt, ποτέ αλήθεια
+      (MFA-INV-074)· επιστημική αβεβαιότητα → Void (MFA-MECH-023).
+    refines:
+    - MFA-CAP-024
+    requires:
+    - MFA-CAP-081
+    - MFA-CAP-039
+    - MFA-CAP-015
+    measured_by: MFA-VO-062 (ECE ≤ θ, Unknown regions με VOI), LWM-E1 (ίδιο VERIFIED-rate με ≤ 1/3 verifier κλήσεις)
+    corpus_refs:
+    - MFA-ELM-098
+    - EXP-23
+    - MFA-OBJ-050
+    falsifier: ECE > θ σε κάθε οικογένεια· ή πρόβλεψη του LWM που έφτασε σε Execute χωρίς calibration receipt
+  MFA-CAP-085:
+    _add: true
+    name: 'Ανοιχτό curriculum: αυτο-παραγόμενα έργα με falsifier (self-play, env evolution, Void quests) υπό contamination guard'
+    concern: World models and alternative worlds
+    maturity: X
+    statement: Goal setter/solver ασύμμετρο, POET-class περιβάλλοντα με CAM-NS αντίπαλο, Void quests· εισδοχή έργου = falsifier + contamination check + VOI (MFA-MECH-023).
+    refines:
+    - MFA-CAP-048
+    requires:
+    - MFA-CAP-084
+    - MFA-CAP-045
+    - MFA-CAP-020
+    measured_by: MFA-VO-063 (0 contamination), OEC-E1 (βελτίωση solver σε sealed set από αυτο-παραγόμενα έργα)
+    corpus_refs:
+    - MFA-MECH-002
+    - MFA-MECH-012
+    - MFA-OBJ-050
+    falsifier: Sealed έργο στο curriculum· ή curriculum που δεν βελτιώνει τον solver στο sealed set
+  MFA-CAP-086:
+    _add: true
+    name: 'Λειτουργική συνείδηση: ignition, attention schema για έλεγχο, higher-order tagging, reportability με provenance, μέτρα ενοποίησης με διακριτική ισχύ, affect
+      ως έλεγχος κέρδους, αφηγηματικός εαυτός'
+    concern: Metacognition / self-model
+    maturity: X
+    statement: Ένας αντανακλαστικός κύκλος workspace (MFA-MECH-024) με ablation obligation ανά συνιστώσα· PhenomenalClaim ποτέ VERIFIED (MFA-INV-075)· η φαινομενική
+      ερώτηση χωριστά (MFA-UNK-111).
+    refines:
+    - MFA-CAP-065
+    requires:
+    - MFA-CAP-073
+    - MFA-CAP-017
+    - MFA-CAP-018
+    - MFA-CAP-009
+    measured_by: MFA-VO-064 (schema ablation, report fidelity), MFA-VO-065 (AWAKE/ANESTHETIZED/fragmented διαχωρίζονται)
+    corpus_refs:
+    - MFA-RSP-005
+    - MFA-OBJ-052
+    falsifier: Καμία συνιστώσα με διακριτική διαφορά σε ablation· ή PhenomenalClaim που πέρασε ως VERIFIED
+  MFA-CAP-087:
+    _add: true
+    name: 'Απόκτηση compute και δεδομένων ως ικανότητα: κλιμάκωση προς DEP-4, confidential computing για burst, δεδομένα με προέλευση (licensed, scouts, synthetic),
+      ενέργεια ως προϋπολογισμός'
+    concern: Resource management
+    maturity: T
+    statement: 'Ο βρόχος ανάπτυξης δεν φράσσεται από τυχαία διαθεσιμότητα: ο Compute & Data Acquisition Manager (MFA-ELM-108) σχεδιάζει την απόκτηση υπό DisclosureGrant-ισοδύναμο
+      για compute (attestation) και ετικέτες προέλευσης για δεδομένα.'
+    refines:
+    - MFA-CAP-032
+    requires:
+    - MFA-CAP-033
+    - MFA-CAP-077
+    - MFA-CAP-007
+    measured_by: MFA-VO-067 (ικανότητα ανά πόρο), MFA-VO-050 (λόγοι κόστους), receipts απόκτησης
+    corpus_refs:
+    - MFA-DEP-1…5
+    - MFA-OBJ-030
+    - MFA-OBJ-050
+    falsifier: Training run εκτός boundary χωρίς attestation receipt· ή δεδομένα εκπαίδευσης χωρίς προέλευση
+  MFA-CAP-088:
+    _add: true
+    name: 'Γενεαλογία βαρών και unlearning: κάθε βάρος ανάγεται σε επεισόδια· shred πηγής ⇒ unlearning/retrain εντός Δ με membership-inference φράγμα'
+    concern: Organ replacement / successor
+    maturity: X
+    statement: WeightCommitment DAG· UnlearningObligation υπολογίσιμη λόγω γενεαλογίας· forgetting guard· τα βάρη μεταφέρονται στον διάδοχο ως δεσμεύσεις (G4 κληρονομήσιμο)
+      (MFA-MECH-020).
+    refines:
+    - MFA-CAP-057
+    requires:
+    - MFA-CAP-081
+    - MFA-CAP-007
+    measured_by: MFA-VO-058 (membership inference ≤ bound), MFA-VO-059 (retro sealed set ≥ θ)
+    corpus_refs:
+    - MFA-CFL-035
+    - 'MATERIAL §2 #8'
+    - MFA-OBJ-051
+    falsifier: Shredded πηγή με παράγωγα βάρη ανεπηρέαστα μετά Δ
+  MFA-CAP-065:
+    maturity: X
+    statement: 'Λειτουργικός ορισμός (master §8.12) + reportability = συνέπεια αναφορών με το self-model ledger· phenomenal claims δεν είναι παραδοτέο· ΓΩΤ/IIT/HOT/AST
+      συγκρίνονται ως μοντέλα με προκαταχωρισμένα πειράματα· η αδυναμία απόδειξης phenomenal claim δεν αφαιρεί μηχανισμό. · 0.4.0: όχι πλέον «ερευνητικό πρόγραμμα»
+      — πλήρης αρχιτεκτονική MFA-MECH-024 με ablation ανά συνιστώσα· η φαινομενική ερώτηση χωριστά (MFA-UNK-111).'
+  MFA-CAP-066:
+    maturity: X
+    statement: 'Μάθηση επιτρέπεται στη γεννήτρια χωρίς όριο, στην κατανομή αναζήτησης, και σε adapters ανά οντότητα που ξαναχτίζονται από επεισόδια· απαγορεύεται
+      στον evaluator και στο μεταβατικό κλείσιμό του· subliminal learning και διαγραφή καλύπτονται από συμβόλαιο. · 0.4.0: προγράμματα ΚΑΙ βάρη (MFA-MECH-020) — το
+      DEC-X-19 ως συμβόλαιο MFA-CON-047 ενεργό από τη Δόση 1, όχι EP.'
+  MFA-CAP-067:
+    maturity: X
+    statement: 'Νέος μηχανισμός/τεχνολογία = Mechanism Dossier που παράγει το ίδιο το σύστημα (ίδια 22 πεδία) και εισέρχεται ως ισχυρισμός με falsifier· η επινόηση
+      περνά ORP όπως κάθε όργανο. · 0.4.0: μηχανισμός = RVSI (MFA-MECH-022) + PRR + LWM-OEC — η επινόηση ως έξοδος ενός βρόχου που μαθαίνει, όχι ενός router.'
+  CAPABILITY-LATTICE.yaml:
+    replace:
+    - - '  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067]'
+      - '  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067, MFA-CAP-081, MFA-CAP-082, MFA-CAP-083]'
+    - - '  "World models and alternative worlds": [MFA-CAP-024]'
+      - '  "World models and alternative worlds": [MFA-CAP-024, MFA-CAP-084, MFA-CAP-085]'
+    - - '  "Self-model": [MFA-CAP-017, MFA-CAP-065]'
+      - '  "Self-model": [MFA-CAP-017, MFA-CAP-065, MFA-CAP-086]'
+    - - '  "Resource management": [MFA-CAP-032, MFA-CAP-054]'
+      - '  "Resource management": [MFA-CAP-032, MFA-CAP-054, MFA-CAP-087]'
+    - - '  "Organ replacement": [MFA-CAP-026, MFA-CAP-080]'
+      - '  "Organ replacement": [MFA-CAP-026, MFA-CAP-080, MFA-CAP-088]'
+rationale: 'MANDATE-OMEGA-ASI-0.4.0 §4.2: κάθε επιδίωξη του frontier χρειάζεται ικανότητες με πάροχο-στοιχείο και falsifier.'
+evidence:
+- MANDATE-OMEGA-ASI-0.4.0.md
+- mechanisms/MFA-MECH-020…025.md
+affected_dependencies:
+- MFA-ELM-100
+- MFA-ELM-101
+- MFA-ELM-102
+- MFA-ELM-103
+- MFA-ELM-104
+- MFA-ELM-105
+- MFA-ELM-106
+- MFA-ELM-107
+- MFA-ELM-108
+capability_impact:
+  gained:
+  - MFA-CAP-081
+  - MFA-CAP-082
+  - MFA-CAP-083
+  - MFA-CAP-084
+  - MFA-CAP-085
+  - MFA-CAP-086
+  - MFA-CAP-087
+  - MFA-CAP-088
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: Καμία· προσθήκες.
+verification: tools/check-package.py R2a/R8b
+rollback: MFA-PATCH-0021-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

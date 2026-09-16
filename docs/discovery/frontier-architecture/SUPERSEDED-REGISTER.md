@@ -324,3 +324,18 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 ## 5. Η λέξη «strictly superior» στο πακέτο
 
 Χρησιμοποιείται μόνο για: MFA-INV-031 (§2.1)· τους μηχανισμούς με κενό loss map έναντι του corpus (INVENTIONS.yaml — NEW, όχι REPLACE)· και **πουθενά** για τον ανταγωνιστή (MFA-ATK-17: καμία κυριαρχία προς καμία κατεύθυνση).
+
+
+## 0.4.0 — υπερκεράσεις (MFA-PATCH-0057)
+
+| Αντικείμενο | Υπερκεράστηκε από | Patch | Τι διατηρείται |
+|---|---|---|---|
+| MFA-INV-068 παγωμένος Tier-0 kernel | MFA-INV-076 / MFA-MECH-025 VFC | 0025, 0056 | η ανάγκη σταθερού σημείου — ως συμβόλαιο |
+| «ASI = πορεία» (TEL-05 ρήτρα) | MFA-OBJ-050 REQUIRED + epistemic_status | 0020, 0041 | το ιστορικό κείμενο, σημασμένο |
+| PDE ως ο μηχανισμός ενδογενούς βελτίωσης | RVSI (022) + RAGen/ECE/CGM/OC/Ω-loop | 0022, 0035, 0039 | το PDE ως δρομολόγηση |
+| MFA-ELM-031 ως EP «μόνο συμβόλαιο + EXP» | MFA-ELM-031 X με σημασιολογία L0…L3 | 0035 | το ID, το contract |
+| MFA-ELM-068 «δεν ξέρω» | μηχανισμός Charter DSL από G_Ω | 0035 | η αβεβαιότητα αξίας (MFA-UNK-104) |
+| «ο πάροχος γίνεται baseline μετά SMF-E1» | STP στάδια/SI/πύλες | 0029, 0040 | — |
+| ASRW ως «η» αρχιτεκτονική συνείδησης | CHH host με ASRW ως όργανο | 0029, 0035 | το ASRW |
+| RECLASSIFY ικανότητας ως falsifier outcome | FALSIFIED μηχανισμός / PRESERVED ικανότητα | 0039, 0056 | οι falsifiers |
+| MANDATE-OMEGA-ASI-0.4.0.md (συνταχθέν) | η εντολή του δημιουργού | 0026 | το αρχείο ως τεκμήριο |

@@ -1,0 +1,61 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0045
+title: 'ATK-20 (ξέπλυμα χώρου αναζήτησης): calibration record ανά τελεστή RAGen έναντι F3 shadow· F3 πριν από L2 δομικές προαγωγές· το harness εξελίσσεται (από ποιον,
+  όχι αν)'
+operation: MODIFY
+targets:
+- MFA-ELM-086
+- MFA-ELM-113
+- MFA-INV-087
+- MFA-VO-072
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: 9d98e52e88c9f025853f105a60b3480507f02e1b04edafd8422f175a68a2443a
+    INVARIANTS.yaml: 7cf4c3381a72ca225596c33ccae9d2d7be45f79a88a0479663bcff8baa5bc7c2
+    VERIFICATION-OBLIGATIONS.yaml: 904f87f3f3f75e2e37793bb319c488228adf18a4e50a816d5c0de6eda482314e
+preconditions: []
+change:
+  MFA-ELM-113:
+    statement: 'Η αρχιτεκτονική είναι τυπωμένο γονιδίωμα G στη Genesis Grammar (MFA-MECH-032): στοιχεία με contracts, invariants, συνδεσμολογία, παραμέτρους ΚΑΙ τελεστές
+      αναζήτησης. Το RAGen κάνει Quality-Diversity αναζήτηση (MAP-Elites με περιγραφητές = συντεταγμένες του capability lattice + κόστος + κλάση απόδειξης), κάθε
+      υποψήφιο instantiated ως σκιώδης αρχιτεκτονική στο δίδυμο (TES, MFA-MECH-043) σε πιστότητα F1/F2, αξιολογείται σε ΣΦΡΑΓΙΣΜΕΝΕΣ υποχρεώσεις (KT/VO) από HELD_OUT,
+      μπαίνει σε Pareto αρχείο, και προάγεται ΜΟΝΟ μέσω RVSI L2 → GCP shadow→canary→cutover. Αναδρομή: οι τελεστές μετάλλαξης είναι γονιδιώματα επιπέδου L2 με fitness
+      = ρυθμός βελτίωσης απογόνων· το harness αξιολόγησης, το VFC και το Telos είναι L3 (σταθερό σημείο) — ποτέ στον χώρο. · ATK-20: κάθε τελεστής μ κρατά OperatorCalibrationRecord
+      (predicted Δf από F1/F2 vs realized Δf σε F3 shadow, από HELD_OUT)· τελεστές με calibration κάτω από θ αποσύρονται (η έδρα μένει)· καμία L2 δομική πρόταση προς
+      GCP χωρίς F3 shadow αξιολόγηση· οι τελεστές ΔΕΝ βλέπουν F3/H δεδομένα (ανήκουν στη H).'
+  MFA-INV-087:
+    statement: 'καμία αρχιτεκτονική προαγωγή χωρίς Pareto μη-υποχώρηση (ratchet) σε ΟΛΕΣ τις σφραγισμένες οικογένειες + GCP shadow/canary (MFA-MECH-030). · ATK-20:
+      η Pareto μη-υποχώρηση μετριέται σε F3 shadow (όχι μόνο F1/F2) πριν από L2 δομική προαγωγή.'
+  MFA-VO-072:
+    methods:
+    - 'DST: αρχιτεκτονική με 3 στοιχεία αφαιρεμένα (KT αποτυγχάνουν)· RAGen από αρχείο μόνο με βιβλιοθήκη στοιχείων· μετράμε κύκλους μέχρι PASS'
+    - Από την τρέχουσα αρχιτεκτονική, 200 κύκλοι· frontier έναντι χειροποίητης σε σφραγισμένες KT οικογένειες
+    - property tests στο tools/twin (F1)
+    - 'ATK-20: RAGen-E3 — απόκλιση shadow-vs-harness ανά τελεστή· τελεστές που βελτιώνουν harness χωρίς shadow αποσύρονται· μετράται ο ρυθμός ανανέωσης harness που
+      κρατά την απόκλιση < θ'
+  MFA-ELM-086:
+    statement: 'Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+      τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+      δεν ανήκουν εδώ (CLAIMS H4). · Στο DP-1/2 ο HELD_OUT ρόλος του harness τρέχει σε ξεχωριστή συσκευή (scorer + sealed sets) (MFA-ATK-13). · Φιλοξενεί τον COMPETITOR
+      BASELINE (MFA-ATK-17): το υβρίδιο MFA-ALT-6/7 ως script (πάροχος + document store + prompt)· κάθε δόση αναφέρει GRAIL vs competitor σε σφραγισμένα έργα (HELD_OUT),
+      συμπεριλαμβανομένων των έργων όπου ο ανταγωνιστής νικά. · 0.4.0 (AA-015): κανόνας γενεαλογίας EIM — distilled(P) ⇒ lineage(student) ∋ P· αξιολογητής της ίδιας
+      γενεαλογίας με τον αξιολογούμενο δεν τον βαθμολογεί (MFA-INV-089)· η HELD_OUT υποομάδα H περιστρέφεται και δεν εκπαιδεύεται ποτέ μέσα στην εποχή (ECE, MFA-ELM-114)·
+      η μετρολογία ανάπτυξης = CGM (MFA-ELM-119). · ATK-20: το harness ΔΕΝ είναι στατικό ταβάνι — εξελίσσεται (α) με νέα items από ECE/curriculum (MFA-ELM-114/106)
+      υπό HELD_OUT escrow και (β) με L3 patches του δημιουργού με drill· το σταθερό σημείο (MFA-INV-086) κλειδώνει ΠΟΙΟΣ αλλάζει το harness, όχι ΑΝ αλλάζει.'
+rationale: Τροποποίηση από την επίθεση MFA-ATK-20 (Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12)· καμία ικανότητα δεν αφαιρείται — αλλάζουν μηχανισμοί, κατωφλιώσεις,
+  δηλώσεις.
+evidence:
+- adversarial/MFA-ATK-20.md
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: καμία
+verification: adversarial/MFA-ATK-20.md §falsifier · tools/check-package.py
+rollback: MFA-PATCH-0045-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

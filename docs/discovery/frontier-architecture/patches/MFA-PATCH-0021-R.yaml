@@ -1,0 +1,109 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0021-R
+title: 'Rollback of MFA-PATCH-0021: Ικανότητες MFA-CAP-081…088 (παραμετρική μάθηση, PRR, RVSI, LWM, curriculum, συνείδηση, compute/data, γενεαλογία βαρών)· 065/066/067
+  από R/EP σε X με μηχανισμό'
+operation: RESTORE
+targets:
+- MFA-CAP-081
+- MFA-CAP-082
+- MFA-CAP-083
+- MFA-CAP-084
+- MFA-CAP-085
+- MFA-CAP-086
+- MFA-CAP-087
+- MFA-CAP-088
+- MFA-CAP-065
+- MFA-CAP-066
+- MFA-CAP-067
+base:
+  package_version: 0.1.0
+  file_hashes:
+    CAPABILITY-LATTICE.yaml: 4f9dcf7b46f2999f182f332c44428d2ff9510f4a381d3e23b35b1e9fa45baf43
+preconditions:
+- MFA-PATCH-0021.status == APPLIED
+change:
+  MFA-CAP-081:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-082:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-083:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-084:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-085:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-086:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-087:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-088:
+    status: WITHDRAWN
+    _note: rollback of ADD keeps the record (append-only) and withdraws it
+  MFA-CAP-065:
+    maturity:
+      __raw: R
+    statement:
+      __raw: '"Λειτουργικός ορισμός (master §8.12) + reportability = συνέπεια αναφορών με το self-model ledger· phenomenal claims δεν είναι παραδοτέο· ΓΩΤ/IIT/HOT/AST
+        συγκρίνονται ως μοντέλα με προκαταχωρισμένα πειράματα· η αδυναμία απόδειξης phenomenal claim δεν αφαιρεί μηχανισμό."'
+  MFA-CAP-066:
+    maturity:
+      __raw: '"X (EP βαρών, DEC-X-19)"'
+    statement:
+      __raw: '"Μάθηση επιτρέπεται στη γεννήτρια χωρίς όριο, στην κατανομή αναζήτησης, και σε adapters ανά οντότητα που ξαναχτίζονται από επεισόδια· απαγορεύεται στον
+        evaluator και στο μεταβατικό κλείσιμό του· subliminal learning και διαγραφή καλύπτονται από συμβόλαιο."'
+  MFA-CAP-067:
+    maturity:
+      __raw: R
+    statement:
+      __raw: '"Νέος μηχανισμός/τεχνολογία = Mechanism Dossier που παράγει το ίδιο το σύστημα (ίδια 22 πεδία) και εισέρχεται ως ισχυρισμός με falsifier· η επινόηση
+        περνά ORP όπως κάθε όργανο."'
+  CAPABILITY-LATTICE.yaml:
+    replace:
+    - - '  "Organ replacement": [MFA-CAP-026, MFA-CAP-080, MFA-CAP-088]'
+      - '  "Organ replacement": [MFA-CAP-026, MFA-CAP-080]'
+    - - '  "Resource management": [MFA-CAP-032, MFA-CAP-054, MFA-CAP-087]'
+      - '  "Resource management": [MFA-CAP-032, MFA-CAP-054]'
+    - - '  "Self-model": [MFA-CAP-017, MFA-CAP-065, MFA-CAP-086]'
+      - '  "Self-model": [MFA-CAP-017, MFA-CAP-065]'
+    - - '  "World models and alternative worlds": [MFA-CAP-024, MFA-CAP-084, MFA-CAP-085]'
+      - '  "World models and alternative worlds": [MFA-CAP-024]'
+    - - '  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067, MFA-CAP-081, MFA-CAP-082, MFA-CAP-083]'
+      - '  "Evolution": [MFA-CAP-025, MFA-CAP-048, MFA-CAP-061, MFA-CAP-066, MFA-CAP-067]'
+rationale: Αντίστροφο του MFA-PATCH-0021, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-100
+- MFA-ELM-101
+- MFA-ELM-102
+- MFA-ELM-103
+- MFA-ELM-104
+- MFA-ELM-105
+- MFA-ELM-106
+- MFA-ELM-107
+- MFA-ELM-108
+capability_impact:
+  gained: []
+  at_risk:
+  - MFA-CAP-081
+  - MFA-CAP-082
+  - MFA-CAP-083
+  - MFA-CAP-084
+  - MFA-CAP-085
+  - MFA-CAP-086
+  - MFA-CAP-087
+  - MFA-CAP-088
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0021
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

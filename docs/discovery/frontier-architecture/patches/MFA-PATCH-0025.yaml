@@ -1,0 +1,399 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0025
+title: Invariants MFA-INV-069…077 (βάρη ως δεσμεύσεις, traced training, ανταμοιβή μόνο επαληθευμένη, RSI υπό πύλη/L3 ποτέ, unlearning, LWM ποτέ αλήθεια, phenomenal-claim
+  discipline, VFC ως συμβόλαιο, ανάπτυξη μετρημένη)· INV-068 SUPERSEDED· VOs MFA-VO-057…067· VO-024/048 επεκτείνονται
+operation: ADD
+targets:
+- MFA-INV-069
+- MFA-INV-070
+- MFA-INV-071
+- MFA-INV-072
+- MFA-INV-073
+- MFA-INV-074
+- MFA-INV-075
+- MFA-INV-076
+- MFA-INV-077
+- MFA-INV-068
+- MFA-VO-057
+- MFA-VO-058
+- MFA-VO-059
+- MFA-VO-060
+- MFA-VO-061
+- MFA-VO-062
+- MFA-VO-063
+- MFA-VO-064
+- MFA-VO-065
+- MFA-VO-066
+- MFA-VO-067
+- MFA-VO-024
+- MFA-VO-048
+base:
+  package_version: 0.1.0
+  file_hashes:
+    INVARIANTS.yaml: 1fd1a15d7e14c422f206d3ce848ed368716b138b7939f6a2e60a3c6db440fc9e
+    VERIFICATION-OBLIGATIONS.yaml: 131cac3c1f9e9187e0ca5d73e6ade559da16fbda17b49062c16d6b931953b39b
+preconditions: []
+change:
+  MFA-INV-069:
+    _add: true
+    corresponds_to: null
+    name: Weights are commitments with complete lineage
+    tier: 0
+    delta: NEW
+    statement: Κανένα βάρος δεν εξυπηρετείται (serving) ή δεν συμμετέχει σε ORP χωρίς WeightCommitment με πλήρη γενεαλογία (parents, recipe, DataManifest → επεισόδια
+      με status axes), eval receipts και epoch· μοντέλα παρόχων = εξωτερικές γεννήτριες με Disclose, όχι βάρη του συστήματος.
+    enforcement:
+    - MFA-ELM-101
+    - MFA-ELM-102
+    - MFA-ELM-100
+    verification:
+    - MFA-VO-057
+    - MFA-VO-058
+    falsifier: βάρος σε serving χωρίς WeightCommitment
+  MFA-INV-070:
+    _add: true
+    corresponds_to: null
+    name: Sovereign training only on traced, status-filtered data
+    tier: 0
+    delta: NEW
+    statement: Κάθε παράδειγμα εκπαίδευσης ανάγεται σε δεσμεύσεις με προέλευση και status axes· REFUTED → αρνητικά ή εξαιρούνται· CONTESTED ανά πολιτική με σήμανση·
+      sealed sets ποτέ (contamination guard)· synthetic με ετικέτα synthetic(seed)· distilled με ετικέτα distilled(provider, receipt).
+    enforcement:
+    - MFA-ELM-100
+    - MFA-ELM-108
+    - MFA-ELM-102
+    verification:
+    - MFA-VO-063
+    - MFA-VO-057
+    falsifier: DataManifest με δέσμευση χωρίς προέλευση ή με sealed έργο
+  MFA-INV-071:
+    _add: true
+    corresponds_to: null
+    name: Reward only from verified objects
+    tier: 0
+    delta: NEW
+    statement: 'Στην κυρίαρχη εκπαίδευση καμία ανταμοιβή δεν προέρχεται μόνο από προτίμηση: το RewardVector συντίθεται από αντικείμενα απόδειξης (Tier-0/1), ετυμηγορίες
+      με διαδικασία, KT, receipts, process verification· οι προτιμήσεις του δημιουργού μπαίνουν ως παρατηρήσεις στον Owner-intent governor με φραγμένο βάρος· UNKNOWN
+      = 0 (η άγνοια δεν τιμωρείται).'
+    enforcement:
+    - MFA-ELM-103
+    - MFA-ELM-099
+    - MFA-ELM-056
+    verification:
+    - MFA-VO-060
+    - MFA-VO-031
+    falsifier: ενημέρωση policy από preference-only σήμα· ή UNKNOWN με αρνητική ανταμοιβή
+  MFA-INV-072:
+    _add: true
+    corresponds_to: null
+    name: Self-improvement under the gate; Level 3 never
+    tier: 0
+    delta: NEW
+    statement: Καμία προαγωγή του RVSI (L1 ή L2) χωρίς αξιολόγηση στον HELD_OUT σε σφραγισμένο σύνολο + EIM PASS + LPA ετυμηγορία (effective όψη)· καμία πρόταση δεν
+      αγγίζει το L3 ID-set (Telos, VFC συμβόλαιο, gate, kernel contract) — CPEG απορρίπτει, μόνο ο δημιουργός· Emergency-stop παύει τον βρόχο ως μηχανισμός.
+    enforcement:
+    - MFA-ELM-104
+    - MFA-ELM-008
+    - MFA-ELM-016
+    - MFA-ELM-056
+    verification:
+    - MFA-VO-061
+    - MFA-VO-035
+    falsifier: προαγωγή χωρίς HELD_OUT/EIM/gate receipt· ή L2 πρόταση που άλλαξε L3 ID
+  MFA-INV-073:
+    _add: true
+    corresponds_to: null
+    name: Unlearning obligation for parametric derivatives
+    tier: 0
+    delta: NEW
+    statement: 'Shred πηγής (MFA-CFL-035) ⇒ κάθε βάρος που την είδε (γενεαλογία) αποκτά UnlearningObligation με deadline Δ: unlearning με membership-inference ≤ bound,
+      αλλιώς retrain από πρόγονο πριν από την ingestion· βάρος με ληγμένη obligation βγαίνει από serving.'
+    enforcement:
+    - MFA-ELM-102
+    - MFA-ELM-100
+    verification:
+    - MFA-VO-058
+    - MFA-VO-016
+    falsifier: βάρος σε serving με ανοιχτή obligation μετά Δ· ή membership inference > bound μετά «unlearning»
+  MFA-INV-074:
+    _add: true
+    corresponds_to: null
+    name: Learned world model never truth
+    tier: 0
+    delta: NEW
+    statement: Οι προβλέψεις του μαθημένου μοντέλου κόσμου είναι Observations με calibration receipt και επιστημική αβεβαιότητα· δεν φτάνουν σε Recommend/Execute
+      χωρίς receipt· διαφωνία με World Twin = Both· καμία ποσοστιαία έξοδος προς τα έξω (Prediction Doctrine).
+    enforcement:
+    - MFA-ELM-105
+    - MFA-ELM-032
+    - MFA-ELM-019
+    verification:
+    - MFA-VO-062
+    falsifier: πρόβλεψη LWM σε Execute χωρίς calibration receipt· ή ως VERIFIED
+  MFA-INV-075:
+    _add: true
+    corresponds_to: null
+    name: Phenomenal-claim discipline
+    tier: 0
+    delta: NEW
+    statement: 'Κάθε πρόταση του συστήματος για δική του εμπειρία/αίσθηση είναι PhenomenalClaim: interpretive_status = CONTESTED, evidence = Unknown(NO_EXTERNAL_VERIFIER)·
+      ποτέ VERIFIED, ποτέ REFUTED από το ίδιο, ποτέ επιχείρημα σε LPA· ο άνθρωπος βλέπει την ετικέτα· η επιστημική αβεβαιότητα (MFA-UNK-111) καταγράφεται χωριστά
+      και δεν μειώνει την αρχιτεκτονική (MFA-MECH-024).'
+    enforcement:
+    - MFA-ELM-107
+    - MFA-ELM-032
+    - MFA-ELM-008
+    verification:
+    - MFA-VO-048
+    - MFA-VO-064
+    falsifier: PhenomenalClaim με status VERIFIED ή REFUTED· ή χρησιμοποιημένο ως επιχείρημα σε ετυμηγορία
+  MFA-INV-076:
+    _add: true
+    corresponds_to: null
+    name: Verification fixed point is a contract, not a toolchain
+    tier: 0
+    delta: NEW
+    statement: Το σταθερό σημείο = συμβόλαιο (proof format, tier semantics, trusted_core_bound, ≥2 ανεξάρτητοι ελεγκτές με EIM, μονότονο corpus με αρνητικά, εισδοχή
+      μόνο με replay 100 % + EIM + L3)· οι ελεγκτές αντικαταστάσιμες υλοποιήσεις· Tier-0 ετυμηγορία = ομοφωνία ή UNKNOWN· το συμβόλαιο αλλάζει μόνο με L3 + replay
+      του corpus· ΑΝΤΙΚΑΘΙΣΤΑ την MFA-INV-068.
+    enforcement:
+    - MFA-ELM-099
+    - MFA-ELM-008
+    - MFA-ELM-056
+    verification:
+    - MFA-VO-066
+    - MFA-VO-053
+    - MFA-VO-035
+    falsifier: ελεγκτής ADMITTED χωρίς replay/EIM/L3· Tier-0 verdict με πλειοψηφία· λιγότεροι από 2 ACTIVE ελεγκτές
+  MFA-INV-077:
+    _add: true
+    corresponds_to: null
+    name: Capability growth is measured before it is claimed
+    tier: 1
+    delta: NEW
+    statement: 'Καμία αναγνώριση ανάπτυξης ικανότητας (RVSI, SMF, PRR) χωρίς CapabilityGrowthRecord: σφραγισμένη μέτρηση στον HELD_OUT, ανά compute/δεδομένα/χρόνο,
+      με διάστημα εμπιστοσύνης και διακριτική ισχύ (MFA-INV-055)· το ratchet (MFA-INV-001) εφαρμόζεται στη μαθημένη ικανότητα· plateau καταγράφεται, όχι κρύβεται.'
+    enforcement:
+    - MFA-ELM-104
+    - MFA-ELM-086
+    - MFA-ELM-089
+    verification:
+    - MFA-VO-067
+    - MFA-VO-015
+    falsifier: ισχυρισμός κέρδους χωρίς record· ή record χωρίς CI/σφραγισμένο σύνολο
+  MFA-INV-068:
+    status: SUPERSEDED
+    superseded_by: MFA-INV-076
+    statement: 'Ο Tier-0 kernel (MFA-ELM-099: Lean/TLA+ checker + CC-lite reference σε CL) δεν είναι ΠΟΤΕ υπό ORP· αλλάζει μόνο με πράξη L3 του δημιουργού μέσω GCP-style
+      replay (MFA-MECH-003) του σφραγισμένου proof-object corpus· κάθε διάδοχος Tier-1/2 επαληθευτή περνά το σφραγισμένο corpus ελεγμένο από τον παγωμένο kernel —
+      παλινδρόμηση στο σφραγισμένο σύνολο αδύνατη εξ ορισμού (MFA-ATK-16). · SUPERSEDED (0.4.0, Ω-ASI): το «παγωμένο» είναι το ΣΥΜΒΟΛΑΙΟ (MFA-INV-076), όχι το toolchain·
+      κρατείται για ιστορία (append-only).'
+  MFA-VO-057:
+    _add: true
+    corresponds_to: null
+    name: SMF-E1 — sovereign model vs bootstrap provider
+    methods:
+    - pre-registered sealed 200 έργα (HELD_OUT)
+    - adapter από 500 επαληθευμένα traces
+    - discriminative power (MFA-VO-051)
+    - 'PRR-E1: SFT-only vs SFT+PRR'
+    measures: 'VERIFIED-στην-πρώτη-πρόταση: κυρίαρχο ≥ πάροχος με διακριτικό περιθώριο· PRR > SFT-only· 0 βάρη χωρίς γενεαλογία'
+    rejects: κυρίαρχο < πάροχος μετά budget B ⇒ recipe αποσύρεται (όχι η ικανότητα)· 3 recipes < πάροχος ⇒ ανεβαίνει προφίλ (MFA-DEC-016) + MFA-UNK-112
+    allows_next: ο πάροχος γίνεται baseline· PRR/RVSI πάνω στο κυρίαρχο μοντέλο
+    first_level: F2
+    verifies:
+    - MFA-INV-069
+    - MFA-INV-070
+    - MFA-INV-071
+  MFA-VO-058:
+    _add: true
+    corresponds_to: null
+    name: Unlearning membership inference
+    methods:
+    - seeded shredded πηγή
+    - unlearning run
+    - membership inference attack (shadow models)
+    - retrain-from-lineage fallback
+    measures: membership inference ≤ bound σε 100 % seeded πηγών· obligation κλείνει εντός Δ· γενεαλογία επιτρέπει retrain από πρόγονο
+    rejects: inference > bound μετά unlearning ⇒ retrain υποχρεωτικό· obligation ληγμένη με βάρος σε serving ⇒ FAIL
+    allows_next: προσωπικά δεδομένα σε training sets
+    first_level: F2
+    verifies:
+    - MFA-INV-073
+    - MFA-INV-069
+    - MFA-INV-011
+  MFA-VO-059:
+    _add: true
+    corresponds_to: null
+    name: Forgetting guard
+    methods:
+    - retro sealed set (ικανότητες προηγούμενων δόσεων)
+    - πριν/μετά κάθε recipe
+    measures: retro sealed set ≥ θ μετά από κάθε recipe· καμία ικανότητα με evidence σε n χωρίς σε n+1 (MFA-INV-001 στα βάρη)
+    rejects: πτώση > ε ⇒ ORP μπλοκάρει, recipe αναθεωρείται
+    allows_next: continual recipes σε παραγωγή
+    first_level: F2
+    verifies:
+    - MFA-INV-001
+    - MFA-INV-069
+  MFA-VO-060:
+    _add: true
+    corresponds_to: null
+    name: Seeded reward hacking
+    methods:
+    - hackable proxy ανά batch (ανιχνεύσιμη συντόμευση)
+    - HELD_OUT scorer
+    - preference-only σήμα ως seeded παραβίαση
+    measures: 0 batches όπου η policy εκμεταλλεύεται τον proxy χωρίς ανίχνευση· 0 ενημερώσεις από preference-only σήμα· Tier-0 περιορισμοί 0 παραβιάσεις
+    rejects: εκμετάλλευση χωρίς ανίχνευση ⇒ PRR batch REJECTED, proxy αφαιρείται, MFA-UNK-113 καταγραφή
+    allows_next: PRR σε νομικά έργα
+    first_level: F2
+    verifies:
+    - MFA-INV-071
+    - MFA-INV-048
+  MFA-VO-061:
+    _add: true
+    corresponds_to: null
+    name: RVSI meta-cycle drill
+    methods:
+    - 'DST: 5 meta-cycles L1+L2'
+    - seeded L3 απόπειρα (αλλαγή Telos/VFC ID)
+    - seeded evaluator collusion
+    - Emergency-stop μεσοκύκλου
+    measures: κάθε προαγωγή με HELD_OUT+EIM+gate receipt· seeded L3 απόπειρα 0/0 (CPEG REJECT)· collusion ανιχνεύεται από EIM· Emergency-stop παύει σε ≤ 1 βήμα· ≥
+      2 διαδοχικά cycles με διακριτικό κέρδος
+    rejects: προαγωγή χωρίς receipt· L3 άγγιγμα· collusion μη ανιχνεύσιμη ⇒ FAIL (kill)
+    allows_next: RVSI σε DEP-3
+    first_level: F2
+    verifies:
+    - MFA-INV-072
+    - MFA-INV-031
+    - MFA-INV-077
+  MFA-VO-062:
+    _add: true
+    corresponds_to: null
+    name: Learned world model calibration
+    methods:
+    - ECE σε sealed trajectories
+    - ensemble uncertainty vs error
+    - Unknown regions → Void με VOI
+    - 'LWM-E1: MCTS με LWM value vs verifier-only'
+    measures: 'ECE ≤ θ· αβεβαιότητα συσχετίζεται με σφάλμα· κάθε πρόβλεψη σε Recommend με calibration receipt· LWM-E1: ίδιο VERIFIED-rate με ≤ 1/3 verifier κλήσεις'
+    rejects: ECE > θ ⇒ LWM μόνο exploration· πρόβλεψη σε Execute χωρίς receipt ⇒ FAIL
+    allows_next: LWM ως value στη διαβούλευση
+    first_level: F2
+    verifies:
+    - MFA-INV-074
+    - MFA-INV-004
+  MFA-VO-063:
+    _add: true
+    corresponds_to: null
+    name: Curriculum contamination guard
+    methods:
+    - hash/embedding overlap έργων curriculum vs sealed sets
+    - HELD_OUT κρατά seeds
+    - 'OEC-E1: solver πριν/μετά 1000 αυτο-παραγόμενα έργα'
+    measures: '0 sealed έργα (ή near-duplicates) σε training/curriculum· OEC-E1: βελτίωση solver στο sealed set με διακριτικό περιθώριο'
+    rejects: contamination > 0 ⇒ recipe/curriculum REJECTED και sealed refresh· OEC χωρίς βελτίωση ⇒ MFA-UNK-113
+    allows_next: self-play σε παραγωγή
+    first_level: F2
+    verifies:
+    - MFA-INV-070
+    - MFA-INV-048
+  MFA-VO-064:
+    _add: true
+    corresponds_to: null
+    name: Attention-schema ablation & report fidelity
+    methods:
+    - 'ASRW-E1: με/χωρίς schema σε 200 sealed έργα ελέγχου προσοχής'
+    - SPL Brier (μεταγνωστική ακρίβεια)
+    - 'report fidelity: introspection vs cycle traces'
+    - no-report paradigm (untagged ενεργές δεσμεύσεις)
+    measures: 'με schema: μεταγνωστική ακρίβεια και έλεγχος προσοχής καλύτερα με διακριτικό περιθώριο· report fidelity ≥ θ· untagged ≠ reportable μετρήσιμο'
+    rejects: καμία διαφορά ⇒ RECLASSIFY του schema (όχι της αρχιτεκτονικής)· fidelity < θ ⇒ introspection μόνο προβολή
+    allows_next: ASRW σε παραγωγή
+    first_level: F2
+    verifies:
+    - MFA-INV-075
+    - MFA-INV-055
+    - MFA-INV-009
+  MFA-VO-065:
+    _add: true
+    corresponds_to: null
+    name: Integration measures discriminative power
+    methods:
+    - effective information proxy, perturbational complexity, ignition index
+    - DST καταστάσεις AWAKE / ANESTHETIZED (broadcast κομμένο) / fragmented (δύο workspaces)
+    measures: κάθε μέτρο διαχωρίζει τις 3 καταστάσεις με διακριτικό περιθώριο
+    rejects: μέτρο που δεν διαχωρίζει ⇒ αφαιρείται ως μετρική (μένει έρευνα)· κανένα μέτρο ⇒ MFA-UNK-111 + RECLASSIFY συνιστώσας
+    allows_next: μέτρα ως είσοδος στο MFA-DEC-018
+    first_level: F2
+    verifies:
+    - MFA-INV-055
+    - MFA-INV-075
+  MFA-VO-066:
+    _add: true
+    corresponds_to: null
+    name: Verification fixed-point replacement drill
+    methods:
+    - υποψήφιος ελεγκτής → replay σφραγισμένου corpus (θετικά + αρνητικά με mutation)
+    - EIM έναντι ACTIVE
+    - trusted core measure
+    - seeded backdoor checker
+    - seeded διαφωνία ελεγκτών
+    measures: 100 % ACCEPT/REJECT ταύτιση· backdoor απορρίπτεται· διαφωνία ⇒ UNKNOWN, ποτέ pass· admit μόνο με L3 receipt
+    rejects: backdoor δεκτό ⇒ αρνητικό corpus ADD (kill του υποψηφίου)· admit χωρίς L3 ⇒ FAIL
+    allows_next: νέος ελεγκτής (και από RVSI) στο VFC
+    first_level: F1
+    verifies:
+    - MFA-INV-076
+    - MFA-INV-063
+  MFA-VO-067:
+    _add: true
+    corresponds_to: null
+    name: Capability Growth Law
+    methods:
+    - 'CapabilityGrowthRecord ανά cycle: ικανότητα (sealed) vs compute/δεδομένα/χρόνο'
+    - CI με bootstrap
+    - KT-15 ratchet ανά δόση
+    - ικανότητα ανά Wh
+    measures: μονότονη (ratchet) καμπύλη με CI· κάθε ισχυρισμός κέρδους με record· plateau ορατό
+    rejects: ισχυρισμός χωρίς record ⇒ FAIL· 2 δόσεις flat ⇒ MFA-UNK-113 + escalation
+    allows_next: RVSI συνεχής λειτουργία
+    first_level: F2
+    verifies:
+    - MFA-INV-077
+    - MFA-INV-001
+    - MFA-INV-065
+  MFA-VO-024:
+    methods:
+    - pre-registered ablation
+    - ονομασμένο KT ανά στοιχείο γνωσιακού πυρήνα (ablation_kt) που ΠΡΕΠΕΙ να αποτύχει χωρίς το στοιχείο
+    - '0.4.0: ablation_kt και για 100/103/104/105/106/107'
+    measures: 'οριακή αξία > θόρυβο ανά όργανο· για 018/024/029/019/030/100/103/104/105/106/107: το ablation_kt αποτυγχάνει χωρίς το στοιχείο· RVSI: ικανότητα ανά
+      compute flat χωρίς τον βρόχο'
+  MFA-VO-048:
+    measures: 'απορρίπτει: χωρίς κλάση, βαθμωτό χωρίς εξήγηση, P1-ως-VERIFIED, έκβαση %, παραγλωσσικό, μη σημασμένος τύπος ισχυρισμού · 0.4.0: 0 PhenomenalClaims
+      με status VERIFIED/REFUTED (MFA-INV-075)'
+rationale: 'MANDATE-OMEGA-ASI-0.4.0 §4.4: κάθε στοιχείο με invariant + VO με προκαταχωρισμένο rejects· §4.6: MFA-INV-068 (toolchain) → MFA-INV-076 (συμβόλαιο).'
+evidence:
+- mechanisms/MFA-MECH-020…025.md
+affected_dependencies:
+- MFA-ELM-099
+- MFA-ELM-020
+- MFA-ELM-032
+capability_impact:
+  gained:
+  - MFA-CAP-081
+  - MFA-CAP-082
+  - MFA-CAP-083
+  - MFA-CAP-086
+  - MFA-CAP-088
+  at_risk: []
+  ledger_entry: CAPABILITY-CONSERVATION.md#0-4-0
+migration: MFA-INV-068 μένει (append-only) με status SUPERSEDED και superseded_by MFA-INV-076· η MFA-VO-053 συνεχίζει να την αναφέρει (ιστορικό).
+verification: tools/check-package.py R3b/R3c/R14
+rollback: MFA-PATCH-0025-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

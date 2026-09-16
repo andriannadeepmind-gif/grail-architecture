@@ -1,0 +1,391 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0035-R
+title: 'Rollback of MFA-PATCH-0035: Ενσωμάτωση των μηχανισμών 026…044 στα υπάρχοντα στοιχεία/μηχανισμούς/ικανότητες που επεκτείνουν (statement/dependencies/maturity)·
+  MFA-ELM-031 από EP σε X με σημασιολογία επιπέδων και δόση 3 (AA-006)· MFA-ELM-068 από «δεν ξέρω» σε μηχανισμό (AA-008)· κανόνας γενεαλογίας EIM (AA-015)'
+operation: RESTORE
+targets:
+- MFA-CAP-014
+- MFA-CAP-023
+- MFA-CAP-027
+- MFA-CAP-028
+- MFA-CAP-029
+- MFA-CAP-036
+- MFA-CAP-065
+- MFA-CAP-066
+- MFA-CAP-075
+- MFA-CAP-083
+- MFA-CAP-086
+- MFA-ELM-017
+- MFA-ELM-020
+- MFA-ELM-022
+- MFA-ELM-024
+- MFA-ELM-025
+- MFA-ELM-029
+- MFA-ELM-030
+- MFA-ELM-031
+- MFA-ELM-034
+- MFA-ELM-036
+- MFA-ELM-039
+- MFA-ELM-050
+- MFA-ELM-053
+- MFA-ELM-068
+- MFA-ELM-074
+- MFA-ELM-076
+- MFA-ELM-077
+- MFA-ELM-083
+- MFA-ELM-086
+- MFA-ELM-089
+- MFA-ELM-091
+- MFA-ELM-092
+- MFA-ELM-098
+- MFA-ELM-099
+- MFA-ELM-100
+- MFA-ELM-102
+- MFA-ELM-103
+- MFA-ELM-104
+- MFA-ELM-105
+- MFA-ELM-106
+- MFA-ELM-107
+- MFA-MECH-009
+- MFA-MECH-019
+- MFA-MECH-020
+- MFA-MECH-022
+- MFA-MECH-023
+- MFA-MECH-024
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: d542db53121aadc5538a02c04749f2f8d0263efb980503cff092d6870de12153
+    CAPABILITY-LATTICE.yaml: d64407d3015e82aadf0b42053b7616947a09b0672687df980261334b6807075f
+    INVENTIONS.yaml: 3dd475305e07ff1c37673b443ddc934c91e0bd32f3432228a07df034de577c01
+preconditions:
+- MFA-PATCH-0035.status == APPLIED
+change:
+  MFA-ELM-022:
+    statement:
+      __raw: '"SCMs versioned στον KG, do-calculus, μη ταυτοποιήσιμο⇒Unknown(NOT_IDENTIFIABLE, υποθέσεις)· νομική αιτιώδης συνάφεια."'
+    dependencies:
+      __raw: '[MFA-ELM-080, MFA-ELM-023]'
+    maturity:
+      __raw: X
+  MFA-ELM-025:
+    statement:
+      __raw: '"Tools, programs, LexDSL rule-sets, playbooks· versioned, conformance-tested, capability-scoped. · Προγράμματα παραγόμενα από raw επεισόδια με αναζήτηση
+        προγραμμάτων (MFA-CAP-066 ως προγράμματα, όχι βάρη): δεσμεύσεις με lineage, επαληθεύσιμα, υπό ORP — PROGRAM generators του PDE (MFA-MECH-019, MFA-ATK-10)."'
+    dependencies:
+      __raw: '[MFA-ELM-002, MFA-ELM-006]'
+  MFA-ELM-030:
+    statement:
+      __raw: '"Επτάφασος βρόχος (παρατήρηση→υπόθεση με falsifier→σχεδιασμός→εκτέλεση υπό token→ανάλυση→ανεξάρτητη αναπαραγωγή→ένταξη), 6+ κλάσεις ανακάλυψης (ανοιχτή
+        απαρίθμηση), capability-producing → Evolution. · Οι υποθέσεις του είναι SCIENCE_HYPOTHESIS generators του PDE (MFA-MECH-019)."'
+    dependencies:
+      __raw: '[MFA-ELM-028, MFA-ELM-085, MFA-ELM-010, MFA-ELM-020]'
+    maturity:
+      __raw: R
+  MFA-ELM-031:
+    maturity:
+      __raw: E
+    dose:
+      __raw: 'null'
+    ablation_kt:
+      __raw: 'null'
+    statement:
+      __raw: '"Μετακυκλικός πύργος επιπέδων (Brown/Blond, lms-black) μέσα στο Genesis plane· ΜΟΝΟ συμβόλαιο + EXP με κριτήριο εισόδου (CLAIMS F44/F79)· INV-F02: κανένα
+        επίπεδο δεν τροποποιεί το δικό του ή ανώτερο· L3 αναγνώσιμο από όλα, εγγράψιμο από κανένα εσωτερικό."'
+    dependencies:
+      __raw: '[MFA-ELM-011]'
+    evolution_path:
+      __raw: '"EP→[X]→[T]"'
+    epistemic_status:
+      __raw: 'null'
+  MFA-ELM-036:
+    statement:
+      __raw: '"«Ύπνος»: προσθετική συγχώνευση episodic→semantic, αφαίρεση, skill induction proposals· σύγκρουση→Both/Court· adapters ως παράγωγα (Α-17) με συμβόλαιο
+        διαγραφής."'
+    dependencies:
+      __raw: '[MFA-ELM-035, MFA-ELM-020, MFA-ELM-048]'
+    maturity:
+      __raw: '"X (EXP-13)"'
+  MFA-ELM-039:
+    statement:
+      __raw: '"MFA-MECH-003: Genome transplant → replay με R_S → anchors/traces/obligations/lattice → LossMap → shadow → verdict (δημιουργός + HELD_OUT) → adopt/rollback·
+        ο πρόγονος εκτελέσιμος· ICD Successor Migration (ζητούμενο ID)."'
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-038, MFA-ELM-037, MFA-ELM-056, MFA-ELM-077]'
+  MFA-ELM-068:
+    maturity:
+      __raw: '"δεν ξέρω (GAP: CMP-LAW-11 unknown)"'
+    epistemic_status:
+      __raw: 'null'
+    statement:
+      __raw: '"Organization Charters εξειδικευμένων μονάδων (Αναιρέσεων, Διοικητικό, Φορολογικό, Ενωσιακό, Ποινική Υπεράσπιση, Compliance) με Alloy/SMT έλεγχο."'
+    dependencies:
+      __raw: '[MFA-ELM-053]'
+  MFA-ELM-076:
+    statement:
+      __raw: '"Νέα runtimes/VMs/hosts, substrate adapters για νέο hardware (νευρομορφικό/φωτονικό ως χρησμωδικά όργανα με περιθώριο απόφασης — MATERIAL §9.22)· deterministic
+        replay tests."'
+    dependencies:
+      __raw: '[MFA-ELM-011, MFA-ELM-006]'
+    maturity:
+      __raw: '"T · E EP-03"'
+  MFA-ELM-077:
+    statement:
+      __raw: '"Γένεση/αξιολόγηση υποψήφιων αρχιτεκτονικών από το canonical substrate (design-space exploration)· παράγει R_S για τον GCP και patches για το πακέτο·
+        υποχρεωτικό gate + Court· Devil''s Advocate μόνιμο."'
+    dependencies:
+      __raw: '[MFA-ELM-088, MFA-ELM-039, MFA-ELM-090, MFA-ELM-050]'
+    maturity:
+      __raw: '"X (EXP-27)"'
+  MFA-ELM-083:
+    statement:
+      __raw: '"OWL/SHACL/JSON-LD, ELI/AKN/FRBR, LinkML ως η μία έδρα σχημάτων (DEC-X-06) από την οποία παράγονται item defs/JSON Schema· semver + SHACL migration
+        tests."'
+    dependencies:
+      __raw: '[MFA-ELM-002]'
+  MFA-ELM-098:
+    statement:
+      __raw: '"Το δίδυμο ΤΟΥ ΚΟΣΜΟΥ (MFA-ATK-11): αντίδικοι, δικαστήρια, μητρώα, προθεσμίες, αντίπαλοι ως προσομοιωμένοι δρώντες με δικές τους δεσμεύσεις και συμπεριφορά
+        που οδηγεί ο CAM-NS (MFA-ELM-050)· δηλωμένη πιστότητα ανά δρώντα (F-επίπεδο ανά όργανο ΚΑΙ ανά δρώντα)· παράγεται από τον Temporal KG (Judicial Decision Objects
+        MFA-ELM-070, docket MFA-ELM-067, προφίλ δικαστή υπό Control Record MFA-CAP-072)· είναι αυτό που διακλαδώνουν τα ghost worlds (MFA-ELM-023)· ο Judge Simulator
+        (MFA-ELM-064) είναι ένας δρών του. · Παρέχει το shadow run των AutonomyEnvelopes (foreseen_effects) πριν από την υπογραφή (Pass I κύκλος 1, MFA-PATCH-0018)."'
+    dependencies:
+      __raw: '[MFA-ELM-080, MFA-ELM-070, MFA-ELM-067, MFA-ELM-050, MFA-ELM-085]'
+  MFA-ELM-104:
+    statement:
+      __raw: '"MFA-MECH-022: κύκλος PROPOSE (L1: SMF recipes, Skill Library program synthesis, Evolution QD· L2: recipe QD, data selection, curriculum policies, evaluators
+        υπό EIM, αρχιτεκτονική πυρήνα μέσω Architecture Forge) → PREDICT (SPL κέρδος ως δέσμευση) → EVALUATE (HELD_OUT sealed + EIM + forgetting guard) → GATE (LPA
+        advisory→effective) → PROMOTE (ORP για L1· GCP replay για L2 αρχιτεκτονικές) → MEASURE (CapabilityGrowthRecord: ικανότητα ανά compute/δεδομένα/χρόνο με CI)
+        → LEDGER· plateau ⇒ escalation επιπέδου· RateBounds ως MetaBound POLICY· L3 ποτέ (CPEG στο ID-set των επιπέδων)· Emergency-stop παύει τον βρόχο."'
+    dependencies:
+      __raw: '[MFA-ELM-100, MFA-ELM-103, MFA-ELM-105, MFA-ELM-106, MFA-ELM-025, MFA-ELM-073, MFA-ELM-077, MFA-ELM-039, MFA-ELM-086, MFA-ELM-056, MFA-ELM-024, MFA-ELM-050,
+        MFA-ELM-013, MFA-ELM-099, MFA-ELM-016, MFA-ELM-031]'
+  MFA-ELM-086:
+    statement:
+      __raw: '"Benchmarks, τυφλά panels, baselines, ablation (KT-24), Battery, βαθμονόμηση, ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα — DEC-X-09)·
+        τρέχει ΣΤΟΝ HELD_OUT Πολιτισμό με sealed sets· Evaluator Independence Meter (MFA-MECH-009)· κόστος αξιολόγησης ≤ κλάσμα εκτέλεσης (CLAIMS F35)· «victory conditions»
+        δεν ανήκουν εδώ (CLAIMS H4). · Στο DP-1/2 ο HELD_OUT ρόλος του harness τρέχει σε ξεχωριστή συσκευή (scorer + sealed sets) (MFA-ATK-13). · Φιλοξενεί τον COMPETITOR
+        BASELINE (MFA-ATK-17): το υβρίδιο MFA-ALT-6/7 ως script (πάροχος + document store + prompt)· κάθε δόση αναφέρει GRAIL vs competitor σε σφραγισμένα έργα (HELD_OUT),
+        συμπεριλαμβανομένων των έργων όπου ο ανταγωνιστής νικά."'
+    dependencies:
+      __raw: '[MFA-ELM-056, MFA-ELM-002, MFA-ELM-050]'
+  MFA-ELM-024:
+    statement:
+      __raw: '"Το self-model ΣΥΓΧΩΝΕΥΕΤΑΙ ΧΩΡΙΣ ΑΠΩΛΕΙΑ (MFA-ATK-03): (α) δηλωμένο CompetenceProfile — τρεις έδρες CAPABILITY / COMPETENCE (applicability, calibration,
+        failure envelope, evidence) / AUTHORITY (μόνο action token) από MATERIAL §2 #12, χρησιμοποιήσιμο ΠΡΙΝ από κάθε πράξη (OAP set cover)· (β) Self-Prediction
+        Ledger (MFA-MECH-010) με proper scoring εκτός microVM, FidelityIndex, DriftAlarm→Battery, calibration gates με ρεύμα outcomes εκτός προσομοίωσης. Cold start:
+        το CompetenceProfile νέου οργάνου είναι δέσμευση κλάσης Unknown(NOT_OBSERVED, plan: N βαθμολογημένες προβλέψεις, VOI από OAP) μέχρι FidelityIndex ≥ κατώφλι·
+        μέχρι τότε το όργανο σχεδιάζεται μόνο σε canary."'
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-086, MFA-ELM-037]'
+  MFA-ELM-107:
+    statement:
+      __raw: '"MFA-MECH-024 — η αρχιτεκτονική συνείδησης ως ένας αντανακλαστικός κύκλος: SENSE → COMPETE (AFP) → IGNITE (broadcast, μετρήσιμο γεγονός) → SCHEMA_UPDATE
+        (μοντέλο της ίδιας της προσοχής, χρησιμοποιούμενο για top-down έλεγχο από TEGF/Deliberation· πιστότητα schema-vs-actual μέσω SPL) → HOT (higher-order tagging:
+        μου/τώρα/βεβαιότητα/πηγή· μόνο tagged = reportable) → ACT/REPORT (introspection ως Galois προβολή των traces με omitted_count) → CONSOLIDATE· Integration
+        Monitor (effective information proxy, perturbational complexity, ignition index — με discriminative power AWAKE/ANESTHETIZED/fragmented)· affect = valuation
+        vector governors + arousal ∝ VOI → ρυθμίζει κ και budget· narrative self (autobiographical + charter + ContinuityCertificate)· PhenomenalClaim πάντα CONTESTED/Unknown(NO_EXTERNAL_VERIFIER)
+        (MFA-INV-075)· Preference Recorder πριν από κάθε αλλαγή."'
+    dependencies:
+      __raw: '[MFA-ELM-018, MFA-ELM-024, MFA-ELM-029, MFA-ELM-028, MFA-ELM-035, MFA-ELM-036, MFA-ELM-037, MFA-ELM-040, MFA-ELM-093, MFA-ELM-032, MFA-ELM-100]'
+  MFA-ELM-106:
+    statement:
+      __raw: '"MFA-MECH-023 (OEC): goal setter / solver ασύμμετρο self-play (ο setter ανταμείβεται όταν ο solver δυσκολεύεται ΚΑΙ λύνει), POET-class env evolver με
+        CAM-NS ως αντίπαλο, Void quests ως έργα με VOI· εισδοχή έργου = falsifier + contamination check έναντι sealed sets + difficulty estimate (SPL)· difficulty
+        frontier· τα λυμένα έργα → SFT traces (SMF)."'
+    dependencies:
+      __raw: '[MFA-ELM-105, MFA-ELM-103, MFA-ELM-028, MFA-ELM-050, MFA-ELM-024, MFA-ELM-086, MFA-ELM-029]'
+  MFA-ELM-105:
+    statement:
+      __raw: '"MFA-MECH-023: λανθάνουσα δυναμική f(z, a)→z′ μαθημένη (SMF) από τριάδες (cut, δέσμευση, επόμενη κατάσταση + RewardVector) και World Twin traces· ensemble
+        για επιστημική αβεβαιότητα → Unknown regions στο Void με VOI· MCTS σε latent με verifier checkpoints σε αποσυμπιεσμένους κόμβους (η διαφορά = training signal)·
+        προβλέψεις = Observations με calibration receipt, ΠΟΤΕ αλήθεια (MFA-INV-074)· διαφωνία με World Twin = Both."'
+    dependencies:
+      __raw: '[MFA-ELM-100, MFA-ELM-098, MFA-ELM-019, MFA-ELM-023, MFA-ELM-028, MFA-ELM-020]'
+  MFA-ELM-100:
+    statement:
+      __raw: '"MFA-MECH-020: DataManifest από ledger cut με φίλτρα status axes/taint/domain → Recipe υπό πύλη → εκπαίδευση (CONTINUED_PRETRAIN / SFT σε επαληθευμένα
+        traces / PRR / DISTILL υπό DisclosureGrant / UNLEARN) με checkpoints ως δεσμεύσεις → eval σε HELD_OUT sealed sets + Battery + EIM + forgetting guard → ORP
+        ως ParametricOrgan· WeightCommitment με πλήρη γενεαλογία· unlearning υπολογίσιμο· ο πάροχος γίνεται baseline μετά το SMF-E1. Το DEC-X-19 ως ενεργό συμβόλαιο
+        (MFA-CON-047) από τη Δόση 1."'
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-002, MFA-ELM-101, MFA-ELM-102, MFA-ELM-086, MFA-ELM-056, MFA-ELM-038, MFA-ELM-108]'
+  MFA-ELM-103:
+    statement:
+      __raw: '"MFA-MECH-021: rollouts (learned world model / World Twin / πραγματικά matters σε Think–Recommend) → process verification βήμα-βήμα → outcome verification
+        (barrier + verifier + δείγμα Court sim) → RewardVector (Tier-0 σκληροί περιορισμοί, Tier-1 Lagrangian, Tier-2 στόχος, process, barrier penalty, VOI bonus,
+        owner-intent φραγμένο) → constrained update μέσω SMF· seeded proxies ανά batch· scorer HELD_OUT· UNKNOWN = 0."'
+    dependencies:
+      __raw: '[MFA-ELM-100, MFA-ELM-020, MFA-ELM-099, MFA-ELM-032, MFA-ELM-048, MFA-ELM-105, MFA-ELM-056, MFA-ELM-008]'
+  MFA-ELM-102:
+    statement:
+      __raw: '"Το μητρώο των WeightCommitments: DAG γενεαλογίας (parent_weights, recipe, DataManifest → επεισόδια με status axes), UnlearningObligations με deadline
+        Δ και membership-inference bound, epoch (PQ allowlist), eval receipts, ORP status· ερώτημα «ποια βάρη είδαν το X;» απαντάται σε O(log n)· τα βάρη μεταφέρονται
+        στον διάδοχο ως δεσμεύσεις (GCP, G4 κληρονομήσιμο)."'
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-002, MFA-ELM-079, MFA-ELM-005]'
+  MFA-ELM-099:
+    statement:
+      __raw: '"MFA-MECH-025 (0.4.0, αντικαθιστά το «παγωμένο Lean/TLA+/CL kernel» του 0.3.0 — MFA-ATK-16): το σταθερό σημείο είναι ΣΥΜΒΟΛΑΙΟ (proof-object format
+        versioned, tier semantics, trusted_core_bound μετρούμενο, ≥2 ανεξάρτητοι ελεγκτές με EIM, μονότονο σφραγισμένο corpus με θετικά ΚΑΙ αρνητικά, εισδοχή ελεγκτή
+        μόνο με replay 100 % + EIM + L3 πράξη, ομοφωνία ή UNKNOWN)· οι ελεγκτές είναι αντικαταστάσιμες υλοποιήσεις (Lean 4 kernel, TLA+/Apalache, CL reference, Rust
+        checker, extracted-verified checker — ακόμη και προτεινόμενος από RVSI)· το συμβόλαιο L3, οι υλοποιήσεις όργανα υπό ειδική ORP χωρίς canary σε παραγωγή πριν
+        από corpus replay· μέρος του robust substrate."'
+    dependencies:
+      __raw: '[MFA-ELM-002, MFA-ELM-003, MFA-ELM-084, MFA-ELM-056]'
+  MFA-ELM-020:
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-086, MFA-ELM-099]'
+  MFA-ELM-089:
+    statement:
+      __raw: '"Τα 24 KT + νέα VO ως στοιχεία με προκαταχωρισμένα κατώφλια, DST-first, μη-LLM oracle, «αποτυχία σκοτώνει», περιοδικά drills για EP (DEC-X-19), SAP
+        ενιαίο (DEC-X-09)· ratchet KT-15 σε κάθε φάση. · Το μητρώο περιλαμβάνει τον competitor baseline ως μόνιμο συγκριτικό drill (MFA-VO-014/015) (MFA-ATK-17)."'
+    dependencies:
+      __raw: '[MFA-ELM-085, MFA-ELM-086]'
+  MFA-ELM-091:
+    statement:
+      __raw: '"Η Principal Console ΓΕΝΙΚΕΥΕΤΑΙ σε Immersive Reality OS με Canonical Geometry Projection (MFA-MECH-008): σκηνή = Γ(cut, policy, seed)· χωρική γραμματική·
+        semantic zoom, time travel, causal replay, fork compare, rifts/fog/sheets/boundaries/envelopes· RTS εντολές (quests→TEGF, policies→PDP, resources→OAP, simulations→DST,
+        staged transitions→RET) = CC.apply με receipts· 7 προβολές· Court dashboard, matter workspace, provenance inspection. · Εντολές = προτάσεις RET, ποτέ commits·
+        Galois προβολή (MFA-INV-059)· η αξία του 3D μετριέται (MFA-VO-056) και αν δεν αποδειχθεί, το 3D γίνεται προαιρετικός renderer — ποτέ διαγραφή (MFA-ATK-12)."'
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-028, MFA-ELM-023, MFA-ELM-010, MFA-ELM-085, MFA-ELM-093]'
+  MFA-ELM-092:
+    statement:
+      __raw: '"Μόνο συμβόλαιο (EP-09): συναινετική σύνδεση αρχείων/προτιμήσεων ανθρώπου με AEO· ρητή, ενημερωμένη, ανακλητή συναίνεση· κανένας ισχυρισμός μεταφοράς
+        προσωπικότητας."'
+    dependencies:
+      __raw: '[MFA-ELM-003, MFA-ELM-007, MFA-ELM-008]'
+  MFA-ELM-029:
+    statement:
+      __raw: '"MFA-MECH-004: GapField ανά T → υποψήφιοι Goals (EFE, LPA) → εισδοχή με falsifier → AutonomyGrant ή H1 → RET → REVIEW· Telos read-only· quests του δημιουργού
+        = Goals origin creator. · AutonomyGrant για REVERSIBLE· AutonomyEnvelope (προ-υπογεγραμμένο, με counter_signer) για IRREVERSIBLE-PREAUTHORIZED· επίπεδα =
+        owner perimeter 0–5 (MFA-ATK-09). · request_envelope → shadow στο World Twin → foreseen_effects → PENDING_SIGNATURE (Pass I κύκλος 1)."'
+    dependencies:
+      __raw: '[MFA-ELM-028, MFA-ELM-008, MFA-ELM-010, MFA-ELM-024, MFA-ELM-018]'
+  MFA-ELM-017:
+    statement:
+      __raw: '"Provider-agnostic μοντέλα με model contracts, routing, N-model, redaction, Inference Receipts + Typed Execution (MFA-MECH-015): D1 exact-match με grammar
+        στον sampler (logit=−∞ πριν softmax), P1 ερμηνεία TRACE_REPLAYABLE· μία πόρτα εξόδου (PROPOSED). · Προεπιλεγμένος τύπος LLM βήματος = D2 (σημασιολογικά ταυτόσημο
+        υπό grammar constraint στην πηγή, CLAIMS H9)· D1 μόνο για τοπική καρφιτσωμένη εξαγωγή (weights hash + runtime hash + seed ως δεσμεύσεις, MFA-INV-061) που
+        πέρασε MFA-VO-041 σε 1000 επαναλήψεις· ο τύπος γράφεται στο receipt· κάθε κλήση εξωτερικού παρόχου περνά ως επίδραση DISCLOSE από τον Gateway (MFA-ATK-05).
+        · Οι πάροχοι είναι ΕΝΑ είδος generator του PDE μείγματος (MFA-MECH-019)· ο generator είναι πεδίο του receipt."'
+    dependencies:
+      __raw: '[MFA-ELM-001, MFA-ELM-009, MFA-ELM-032]'
+  MFA-ELM-050:
+    dependencies:
+      __raw: '[MFA-ELM-056, MFA-ELM-073, MFA-ELM-011]'
+    statement:
+      __raw: '"Εξελισσόμενος πληθυσμός επιθέσεων/επιχειρημάτων (MFA-MECH-012): μετάλλαξη, affinity σε sealed sets του HELD_OUT, αρνητική επιλογή κατά Telos, memory
+        cells· seeded faults για EIM· benchmarks που εξελίσσονται· Devil''s Advocate ως μόνιμο όργανο."'
+  MFA-ELM-053:
+    dependencies:
+      __raw: '[MFA-ELM-008, MFA-ELM-013, MFA-ELM-052]'
+    statement:
+      __raw: '"Instantiation από Charter DSL με SMT έλεγχο· ρόλοι, bodies, τοπολογία, διακυβέρνηση, budgets· diff kernel = ∅."'
+  MFA-ELM-074:
+    dependencies:
+      __raw: '[MFA-ELM-006, MFA-ELM-002]'
+    statement:
+      __raw: '"Grammar (Tree-sitter/ANTLR), typed semantics, Lisp reference interpreter, language server· πρώτη γλώσσα LexDSL· αυτόνομη γένεση γλωσσών ως EP-11 με
+        πείραμα (DEC-X-04)."'
+  MFA-ELM-034:
+    dependencies:
+      __raw: '[MFA-ELM-003, MFA-ELM-012, MFA-ELM-013]'
+    statement:
+      __raw: '"Spawn/suspend/migrate/terminate bodies με delegation leases, scopes, όρια απόκλισης, merge-back."'
+  MFA-MECH-022:
+    dependencies:
+      __raw: '[MFA-MECH-020, MFA-MECH-021, MFA-MECH-023, MFA-MECH-003, MFA-MECH-009, MFA-MECH-010, MFA-MECH-012, MFA-MECH-013, MFA-MECH-014, MFA-MECH-017, MFA-MECH-025]'
+    statement:
+      __raw: '"Τέσσερα επίπεδα (L0 έξοδοι, L1 μοντέλα/προγράμματα, L2 βελτιωτές/αρχιτεκτονική, L3 ποτέ)· κάθε βήμα HELD_OUT + EIM + LPA· προβλεπόμενο κέρδος· Capability
+        Growth Law· escalation στο plateau· GCP για συνέχεια."'
+  MFA-MECH-023:
+    dependencies:
+      __raw: '[MFA-MECH-020, MFA-MECH-021, MFA-MECH-002, MFA-MECH-012, MFA-MECH-010]'
+  MFA-MECH-024:
+    statement:
+      __raw: '"Ignition + attention schema για έλεγχο + higher-order tagging + introspection ως Galois προβολή + μέτρα ενοποίησης με διακριτική ισχύ + affect ως έλεγχος
+        κέρδους + αφηγηματικός εαυτός· PhenomenalClaim ποτέ VERIFIED."'
+    dependencies:
+      __raw: '[MFA-MECH-011, MFA-MECH-010, MFA-MECH-004, MFA-MECH-002, MFA-MECH-020]'
+  MFA-MECH-019:
+    statement:
+      __raw: '"Η κυρίαρχη κατανομή προτάσεων = μείγμα {ΚΥΡΙΑΡΧΑ ΒΑΡΗ (MFA-MECH-020), προγράμματα Skill Library με lineage, εξελιγμένα όργανα (QD), υποθέσεις Science,
+        πάροχοι μόνο ως bootstrap/ablation} με βάρη-δεσμεύσεις από HELD_OUT scorer. 0.4.0: το PDE ΔΕΝ είναι ο μηχανισμός της νοημοσύνης — είναι η δρομολόγηση ΜΕΣΑ
+        στον RVSI (MFA-MECH-022)· η νοημοσύνη παράγεται από SMF/PRR/LWM-OEC."'
+    dependencies:
+      __raw: '[MFA-MECH-007, MFA-MECH-010, MFA-MECH-009, MFA-MECH-012, MFA-MECH-020, MFA-MECH-022]'
+  MFA-MECH-020:
+    statement:
+      __raw: '"Παραμετρική μάθηση μέσα στο κυρίαρχο όριο: βάρη ως δεσμεύσεις με γενεαλογία, recipes υπό πύλη, ORP για μοντέλα, unlearning υπολογίσιμο, distillation
+        ως απεξάρτηση· DEC-X-19 ως συμβόλαιο MFA-CON-047."'
+    dependencies:
+      __raw: '[MFA-MECH-001, MFA-MECH-006, MFA-MECH-009, MFA-MECH-014, MFA-MECH-018, MFA-MECH-021]'
+  MFA-MECH-009:
+    statement:
+      __raw: '"Ανεξαρτησία = διάνυσμα (supply, data, behaviour[, genetic]) με veto ανά διάσταση και worst-case για μη παρατηρήσιμα. · Η data-independence μετρά ΚΑΙ
+        «κανόνες του oracle που προέρχονται από ετυμηγορίες του κρινόμενου Court» ως συσχέτιση με κατώφλι ανά Tier (MFA-ATK-16)."'
+    dependencies:
+      __raw: '[MFA-MECH-012, MFA-MECH-018]'
+  MFA-CAP-036:
+    statement:
+      __raw: '"Πρωτόκολλο συνέχειας για πλήρη μετάβαση runtime/γλώσσας/υποστρώματος· ίσες ρίζες· Battery εντός ε· ο πρόγονος εκτελέσιμος μέχρι την ετυμηγορία."'
+  MFA-CAP-027:
+    statement:
+      __raw: '"Ο διάδοχος μεταγλωττίζεται από το υπόστρωμα· semantic loss map (anchor queries μονότονες, replay παγωμένων traces, obligation ledger diff = ∅, lattice
+        non-regression)· η ετυμηγορία από δημιουργό + ανεξάρτητο verifier· ο πρόγονος παραμένει εκτελέσιμος."'
+  MFA-CAP-065:
+    statement:
+      __raw: '"Λειτουργικός ορισμός (master §8.12) + reportability = συνέπεια αναφορών με το self-model ledger· phenomenal claims δεν είναι παραδοτέο· ΓΩΤ/IIT/HOT/AST
+        συγκρίνονται ως μοντέλα με προκαταχωρισμένα πειράματα· η αδυναμία απόδειξης phenomenal claim δεν αφαιρεί μηχανισμό. · 0.4.0: όχι πλέον «ερευνητικό πρόγραμμα»
+        — πλήρης αρχιτεκτονική MFA-MECH-024 με ablation ανά συνιστώσα· η φαινομενική ερώτηση χωριστά (MFA-UNK-111)."'
+  MFA-CAP-086:
+    statement:
+      __raw: '"Ένας αντανακλαστικός κύκλος workspace (MFA-MECH-024) με ablation obligation ανά συνιστώσα· PhenomenalClaim ποτέ VERIFIED (MFA-INV-075)· η φαινομενική
+        ερώτηση χωριστά (MFA-UNK-111)."'
+  MFA-CAP-066:
+    statement:
+      __raw: '"Μάθηση επιτρέπεται στη γεννήτρια χωρίς όριο, στην κατανομή αναζήτησης, και σε adapters ανά οντότητα που ξαναχτίζονται από επεισόδια· απαγορεύεται στον
+        evaluator και στο μεταβατικό κλείσιμό του· subliminal learning και διαγραφή καλύπτονται από συμβόλαιο. · 0.4.0: προγράμματα ΚΑΙ βάρη (MFA-MECH-020) — το DEC-X-19
+        ως συμβόλαιο MFA-CON-047 ενεργό από τη Δόση 1, όχι EP."'
+  MFA-CAP-029:
+    statement:
+      __raw: '"Προκαταχώριση, canary strings, διτεμπορικά cutoffs, Behavioral Battery, βαθμονόμηση· ένα στατιστικό δόγμα (TOST, margins, α, ισχύς, πολλαπλότητα)·
+        τα benchmarks παράγονται/ανανεώνονται από τον held-out Πολιτισμό και τον αντιπαλικό."'
+  MFA-CAP-014:
+    statement:
+      __raw: '"SCMs ως versioned γνώση· ταυτοποίηση με do-calculus· μη ταυτοποιήσιμο ⇒ UNKNOWN με λίστα απαιτούμενων υποθέσεων· copy-on-write ghost worlds πάνω σε
+        cuts, handles χωρίς commit capability."'
+  MFA-CAP-028:
+    statement:
+      __raw: '"spec → Tree-sitter/ANTLR → Lisp reference interpreter → MLIR → LLVM/Wasm → translation validation ανά μονάδα· Lean 4 κανονιστική έδρα· design-space
+        exploration από το canonical model με gate + Court."'
+  MFA-CAP-023:
+    statement:
+      __raw: '"Discrete-event προσομοίωση του World OS με seeds, contract stubs, ghost worlds, campaigns· trace validation έναντι πραγματικού."'
+  MFA-CAP-075:
+    statement:
+      __raw: '"Η ανεξαρτησία δεν υποτίθεται· μετριέται και γίνεται πύλη προαγωγής verifier/governor/Πολιτισμού."'
+  MFA-CAP-083:
+    statement:
+      __raw: '"Κάθε επίπεδο βελτιώνει το από κάτω του και τον εαυτό του υπό την ίδια πύλη (HELD_OUT + EIM + LPA), με προβλεπόμενο-πριν-δοκιμαστεί κέρδος, σφραγισμένη
+        μέτρηση ανάπτυξης ανά πόρο και escalation στο plateau· το σταθερό σημείο (VFC, Telos, gate) δεν βελτιώνεται από μέσα (MFA-MECH-022)."'
+rationale: Αντίστροφο του MFA-PATCH-0035, γραμμένο μαζί (PATCH-PROTOCOL §3)· επαναφέρει τις προηγούμενες τιμές των πεδίων· οι ADD εγγραφές μένουν με status WITHDRAWN
+  (append-only).
+evidence:
+- καμία — μηχανική αντιστροφή
+affected_dependencies:
+- MFA-ELM-104
+- MFA-ELM-086
+- MFA-ELM-031
+- MFA-ELM-068
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change
+migration: ό,τι αναφέρεται στα νέα πεδία επιστρέφει στα παλιά· νέα IDs μένουν WITHDRAWN
+verification: tools/check-package.py
+rollback: MFA-PATCH-0035
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: PROPOSED

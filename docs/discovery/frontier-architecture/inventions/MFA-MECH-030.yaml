@@ -1,0 +1,160 @@
+# INVENTION DOSSIER MFA-MECH-030 — Recursive Architecture Generator (RAGen) — αναζήτηση αρχιτεκτονικών ως τυπωμένων γονιδιωμάτων υπό πύλη επαλήθευσης (Ω-MAXIMUM NON-ABSTENTION MANDATE §7, 29 πεδία)
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+# status: PROPOSED / UNREVIEWED — μόνο ο δημιουργός εγκρίνει. Έδρα: αυτό το αρχείο· mechanisms/<id>.md είναι προβολή 22 πεδίων.
+invention_id: MFA-MECH-030
+name: Recursive Architecture Generator (RAGen) — αναζήτηση αρχιτεκτονικών ως τυπωμένων γονιδιωμάτων υπό πύλη επαλήθευσης
+required_capability:
+  caps:
+  - MFA-CAP-094
+  text: 'Αναζήτηση αρχιτεκτονικής και αναδρομική γένεση αρχιτεκτονικής (§8 #10, §6 #5/#7): το σύστημα προτείνει, ελέγχει και προάγει παραλλαγές της ίδιας της αρχιτεκτονικής του (στοιχεία, συνδεσμολογία,
+    μηχανισμοί, παράμετροι) — και των ίδιων των τελεστών αναζήτησης — χωρίς να αγγίζει το σταθερό σημείο.'
+why_known_methods_are_insufficient: 'Το 0.3.0 έχει Architecture Forge (MFA-ELM-077) ως «X (EXP-27)» χωρίς genome, χώρο αναζήτησης ή σημασιολογία πρότασης. Αφετηρίες: NAS (Zoph & Le 2017· DARTS, Liu et al.
+  2019), εξελικτική NAS (Real et al. 2019), AutoML-Zero (Real et al. 2020), Quality-Diversity/MAP-Elites (Mouret & Clune 2015), POET (Wang et al. 2019), ADAS — Automated Design of Agentic Systems (Hu et
+  al. 2024), Darwin Gödel Machine (Zhang et al. 2025: αρχείο αυτο-τροποποιούμενων agents), FunSearch. Όρια: ο χώρος είναι νευρωνικές αρχιτεκτονικές ή prompts/κώδικας agent, όχι ΘΕΣΜΙΚΗ+ΓΝΩΣΙΑΚΗ αρχιτεκτονική
+  με contracts/invariants/RET· η προαγωγή δεν περνά από πύλη επαλήθευσης σε σφραγισμένες υποχρεώσεις με HELD_OUT· οι τελεστές μετάλλαξης δεν είναι μέρος του χώρου υπό σταθερό σημείο (η DGM τροποποιεί τον
+  εαυτό της χωρίς τυπικό όριο L3)· καμία αρχιτεκτονική δεν είναι δέσμευση με γενεαλογία.'
+preserved_objective: MFA-OBJ-050 · MFA-OBJ-018 (Moving Horizon) · MFA-CAP-028 (forge) · MFA-CAP-083 (RVSI) · MFA-TEL-08
+new_principle: 'Η αρχιτεκτονική είναι τυπωμένο γονιδίωμα G στη Genesis Grammar (MFA-MECH-032): στοιχεία με contracts, invariants, συνδεσμολογία, παραμέτρους ΚΑΙ τελεστές αναζήτησης. Το RAGen κάνει Quality-Diversity
+  αναζήτηση (MAP-Elites με περιγραφητές = συντεταγμένες του capability lattice + κόστος + κλάση απόδειξης), κάθε υποψήφιο instantiated ως σκιώδης αρχιτεκτονική στο δίδυμο (TES, MFA-MECH-043) σε πιστότητα
+  F1/F2, αξιολογείται σε ΣΦΡΑΓΙΣΜΕΝΕΣ υποχρεώσεις (KT/VO) από HELD_OUT, μπαίνει σε Pareto αρχείο, και προάγεται ΜΟΝΟ μέσω RVSI L2 → GCP shadow→canary→cutover. Αναδρομή: οι τελεστές μετάλλαξης είναι γονιδιώματα
+  επιπέδου L2 με fitness = ρυθμός βελτίωσης απογόνων· το harness αξιολόγησης, το VFC και το Telos είναι L3 (σταθερό σημείο) — ποτέ στον χώρο.'
+formal_objects:
+- Genome G = ⟨Elems, Contracts, Wiring, Params, Ops⟩ ⊨ G_Ω (Genesis Grammar)· κάθε G έχει CID και γενεαλογία
+- 'BehaviourDescriptor b(G) ∈ ℝ^k: κάλυψη capability lattice ανά concern, κόστος (Wh, latency), κλάση απόδειξης, TCB μέγεθος'
+- 'Fitness f(G) ∈ ℝ^m: διάνυσμα PASS-rate σε σφραγισμένες KT/VO οικογένειες (HELD_OUT) — Pareto, ποτέ scalar χωρίς πολιτική'
+- 'Archive A: MAP-Elites κελιά στο b-χώρο, κάθε κελί κρατά τον Pareto-μη-κυριαρχούμενο G'
+- 'Mutation op μ: G→G′ με υποχρέωση: contracts διατηρούνται ή νέο contract με VO (TGPS-ελεγμένο refactoring)'
+- ArchitectureProposal = ⟨G′, predicted Δf (από LWM/twin), cost, level ∈ {L1 params, L2 structure}, rollback⟩
+- 'Fixed point: FP = {harness, VFC, Telos, HELD_OUT, RET, LPA Tier-0} — L3, εκτός χώρου (MFA-INV-086)'
+state_variables:
+- A_t αρχείο
+- Ops_t τελεστές (L2 γονιδιώματα) με fitness
+- Frontier_t Pareto
+- Pending_t προτάσεις προς RVSI/GCP
+- Budget_t (twin evaluations ανά κύκλο)
+transition_rules:
+- 'SELECT: γονείς από A κατά curiosity (κελιά με λίγες επισκέψεις) + elite'
+- 'MUTATE: G′ = μ(G)· type-check ⊨ G_Ω· contract compatibility (Galois, GCP)· απορρίπτεται αν παραβιάζει invariant statically'
+- 'INSTANTIATE: twin shadow σε F1 (mocks) → F2 (DST) αν υπόσχεται'
+- 'EVALUATE: f(G′) σε σφραγισμένα από HELD_OUT· CapabilityGrowthRecord'
+- 'INSERT: MAP-Elites/Pareto· ποτέ αντικατάσταση χωρίς κυριαρχία'
+- 'PROPOSE: frontier G′ με Δf>0 σε ≥1 οικογένεια και Δf≥0 σε όλες (ratchet) → RVSI L2'
+- 'RECURSE: Ops fitness ← ρυθμός βελτίωσης· Ops μεταλλάσσονται στο ίδιο πλαίσιο· FP αμετάβλητο'
+algorithms:
+- name: RAGen-Cycle
+  complexity: O(P·(typecheck + Galois + twin_eval))· twin_eval κυριαρχεί (F1 ms, F2 λεπτά)· αρχείο φραγμένο |A| ≤ cells· ανά κύκλο
+  pseudocode: |
+    procedure RAGen_Cycle(A, Ops, budget):
+      parents ← curiosity_sample(A, n=P/2) ∪ elite_sample(A, n=P/2)
+      children ← []
+      for G in parents:
+        μ ← sample(Ops, by=fitness)                                  # operators are L2 genomes
+        G' ← μ(G)
+        if not conforms(G', GenesisGrammar): continue
+        if GCP.galois_conflict(G'.contracts, G'.invariants) ≠ ∅: continue        # static contract/invariant clash
+        if touches(G', FixedPoint): reject_and_record(G', reason=L3_VIOLATION)   # MFA-INV-086, never silent
+        G'.provenance ← ⟨parent=G.cid, op=μ.cid, cut⟩
+        children.append(G')
+      for G' in children:
+        if budget.twin_evals = 0: break
+        r1 ← Twin.instantiate(G', fidelity=F1).evaluate(sealed=HELD_OUT.obligations(F1))
+        if not promising(r1): continue
+        r2 ← Twin.instantiate(G', fidelity=F2).evaluate(sealed=HELD_OUT.obligations(F2)) ; budget.twin_evals −= 1
+        f ← fitness_vector(r2) ; b ← behaviour_descriptor(G', r2)
+        A.insert(cell(b), G', f) if pareto_nondominated(f, A.cell(b)) else archive_only(G')
+        CGM.record(G', f, resources)                                 # MFA-VO-072 growth record
+        if Δf(G', current) ≥ 0 ∀families and > 0 ∃family: RVSI.propose(L2, ArchitectureProposal(G', predicted=Δf, rollback=current))
+      for μ in Ops: μ.fitness ← improvement_rate(offspring_of(μ))    # recursion on operators
+      Ops ← QD_update(Ops, mutate_ops(Ops), keep=FixedPoint_untouched)
+- name: conforms / behaviour_descriptor
+  complexity: conforms O(|G|)· descriptor O(|CAP|)
+  pseudocode: |
+    function conforms(G, G_Ω):
+      return parse(G, G_Ω) ≠ ⊥ ∧ ∀e ∈ G.Elems: has_contract(e) ∧ has_verification(e) ∧ ∀c ∈ G.Contracts: provider(c) ∈ G.Elems
+    function behaviour_descriptor(G, r):
+      return ⟨coverage_by_concern(G, CapabilityLattice), r.energy_Wh, r.latency_p95, proof_class(G), TCB_size(G)⟩
+interfaces:
+- RAGen.cycle(budget)→[ArchitectureProposal]
+- RAGen.archive(cut)→A
+- RAGen.frontier()→Pareto set
+- RAGen.lineage(G)→DAG
+- RAGen.operators()→Ops with fitness
+- RAGen.fixed_point()→FP (read-only)
+contracts:
+- 'MFA-CON-058 (Architecture Generation: cycle/archive/frontier/propose)'
+- MFA-CON-049 (RVSI)
+- MFA-CON-040 (GCP)
+- MFA-CON-072 (Twin Execution)
+invariants:
+- 'MFA-INV-086: το σταθερό σημείο FP (harness, VFC, Telos, HELD_OUT, RET, LPA Tier-0) δεν ανήκει ποτέ στον χώρο αναζήτησης· κάθε πρόταση που το αγγίζει απορρίπτεται και καταγράφεται'
+- 'MFA-INV-087: καμία αρχιτεκτονική προαγωγή χωρίς Pareto μη-υποχώρηση (ratchet) σε ΟΛΕΣ τις σφραγισμένες οικογένειες + GCP shadow/canary'
+authority_model: Αναζήτηση = Genesis plane· προτάσεις = RVSI L2· προαγωγή = GCP (shadow→canary→cutover) με verdict HELD_OUT + δημιουργός για L2 δομικές αλλαγές (MFA-DEC-024)· L3 ποτέ.
+learning_model: QD αρχείο (μη-παραμετρικό)· τελεστές μαθαίνονται εξελικτικά (L2)· πρόβλεψη Δf από LWM/twin εκπαιδεύεται (SMF) — calibration ως PRR ανταμοιβή· η μετρολογία CGM κλείνει τον βρόχο.
+failure_modes:
+- mode: Reward hacking του harness (αρχιτεκτονική που «περνά» KT χωρίς ικανότητα)
+  detection: HELD_OUT + seeded faults + CAM-NS αντίπαλος στο harness
+  response: FP εκτός χώρου· harness ανανεώνεται μόνο L3
+- mode: Αρχείο συγκλίνει (μηδενική ποικιλία)
+  detection: QD coverage ↓
+  response: curiosity sampling· νέοι τελεστές
+- mode: Κόστος twin evals
+  detection: budget
+  response: F1 προεπιλογή· F2 μόνο promising
+- mode: Πρόταση που σπάει runtime contract αόρατα στα mocks
+  detection: F2 DST + GCP shadow
+  response: προαγωγή μπλοκάρεται· MFA-INV-087
+- mode: Τελεστής που μαθαίνει να παρακάμπτει τον έλεγχο conforms
+  detection: conforms ∈ FP (L3)
+  response: αδύνατο εξ ορισμού· απόπειρα καταγράφεται
+containment: Ο χώρος αναζήτησης ⊂ Genesis· FP L3· προαγωγή μόνο διά GCP με rollback· twin sandbox· Emergency-stop.
+reversibility_class: REVERSIBLE (αρχείο = δεσμεύσεις)· προαγωγές = GCP κλάση (rollback μέχρι cutover, IRREVERSIBLE-PREAUTHORIZED μετά με continuity certificate)
+resource_complexity: 'DEP-1: P=8, F1 μόνο, CPU λεπτά/κύκλο· DEP-2: P=32, F2 DST ώρες/κύκλο, εβδομαδιαίοι κύκλοι· DEP-3: ημερήσιοι· DEP-4: συνεχείς με παράλληλα twins'
+scaling_law: QD κάλυψη ~ log(evals)· ρυθμός frontier βελτίωσης φθίνει (κορεσμός) — η αναδρομή στους τελεστές μετατοπίζει την καμπύλη (DGM-class evidence)· μετριέται MFA-VO-072.
+verification_strategy: 'MFA-VO-072: RAGen-E1 (ανάκτηση από υποβαθμισμένη αρχιτεκτονική) F2· RAGen-E2 (frontier > χειροποίητη σε σφραγισμένο KT) F2/F3· property: FP untouched (F1 tools/twin)· GCP drill σε
+  κάθε προαγωγή'
+experiments:
+- id: RAGen-E1
+  design: 'DST: αρχιτεκτονική με 3 στοιχεία αφαιρεμένα (KT αποτυγχάνουν)· RAGen από αρχείο μόνο με βιβλιοθήκη στοιχείων· μετράμε κύκλους μέχρι PASS'
+  preregistered_criterion: Ανάκτηση PASS στα 3 KT σε ≤ 50 κύκλους· 0 προτάσεις που αγγίζουν FP
+- id: RAGen-E2
+  design: Από την τρέχουσα αρχιτεκτονική, 200 κύκλοι· frontier έναντι χειροποίητης σε σφραγισμένες KT οικογένειες
+  preregistered_criterion: ≥ 1 frontier G′ με Δf>0 (CI) σε ≥1 οικογένεια και Δf≥0 σε όλες, με ≥1 νέα συνδεσμολογία που δεν υπήρχε στο αρχείο εκκίνησης
+falsifiers:
+- 'RAGen-E2: κανένα frontier G′ καλύτερο από χειροποίητη μετά 200 κύκλους σε 2 δόσεις'
+- Αναδρομή στους τελεστές δεν αυξάνει ρυθμό βελτίωσης έναντι σταθερών τελεστών
+- Οποιαδήποτε προαγωγή χωρίς GCP gate (σφάλμα υλοποίησης)
+known_dependencies:
+- MFA-ELM-077 (Architecture Forge — γίνεται ο εκτελεστής)
+- MFA-ELM-115 GG (grammar)
+- MFA-ELM-126 TES (twin)
+- MFA-ELM-104 RVSI
+- MFA-ELM-039 GCP
+- MFA-ELM-086 HELD_OUT
+- MFA-ELM-119 CGM
+- MFA-ELM-112 TGPS (refactoring με απόδειξη)
+unknown_dependencies:
+- 'MFA-UNK-119: αν οι σφραγισμένες KT/VO οικογένειες έχουν αρκετή διακριτική ισχύ για να ξεχωρίσουν αρχιτεκτονικές (EPISTEMIC· CGM μετρά)'
+integration_points:
+- MFA-ELM-113 (νέο στοιχείο RAGen, S7)
+- MFA-ELM-077
+- MFA-ELM-104 RVSI L2 (καταναλωτής προτάσεων)
+- MFA-ELM-039 GCP
+- MFA-ELM-126 twin
+- MFA-ELM-050 CAM-NS (αντίπαλος στο harness)
+migration_path: 'Δόση 2: RAGen σε F1 μόνο, προτάσεις L1 (params)· Δόση 3: F2 DST, L2 δομικές με GCP shadow (RAGen-E1)· Δόση 4: αναδρομή τελεστών + RAGen-E2· πάντα FP εκτός.'
+implementation_sequence:
+- 'F1: εκτελέσιμη προδιαγραφή (tools/twin): Genome, conforms, FP guard, Pareto archive'
+- 'F2: DST RAGen-E1 σε DEP-2'
+- 'F3: RAGen-E2 + GCP drill'
+- 'F4: παραγωγή Δόση 3–4'
+epistemic_status:
+  overall: NOVEL SYNTHESIS
+  per_claim:
+  - claim: QD/MAP-Elites και εξελικτική αναζήτηση βρίσκουν μη-προφανείς αρχιτεκτονικές
+    status: EMPIRICALLY SUPPORTED
+  - claim: Αυτο-τροποποιούμενα agents βελτιώνονται με αρχείο (DGM)
+    status: EMPIRICALLY SUPPORTED
+  - claim: Τυπωμένο θεσμικό+γνωσιακό γονιδίωμα με FP L3 και GCP πύλη
+    status: NOVEL SYNTHESIS
+  - claim: Το RAGen ξεπερνά τη χειροποίητη αρχιτεκτονική σε σφραγισμένα KT
+    status: RESEARCH HYPOTHESIS

@@ -1,0 +1,69 @@
+%% id: MFA-DIA-25 · Obligation Calculus — τύποι, κρίσεις, τερματικές καταστάσεις, μέθοδοι discharge · question: πού μπορεί να χαθεί μια υποχρέωση; (απάντηση: πουθενά)
+%% elements: MFA-ELM-122/112/099/119/048/017/010/103/123/020, MFA-MECH-039/001/009, MFA-INV-104/105, MFA-CON-071, MFA-VO-082 · source: inventions/MFA-MECH-039.yaml
+flowchart TB
+  subgraph TY["Τύποι τ ::= Base ∣ Verified[τ] ∣ Claimed[τ] ∣ Unknown[reason] ∣ τ → τ′ ! O"]
+    direction LR
+    TB0["Base"]
+    TC0["Claimed[τ]<br/>έξοδος γεννήτριας — φέρει υποχρεώσεις"]
+    TV0["Verified[τ]<br/>κατασκευάζεται ΜΟΝΟ με discharge όλων των Ob"]
+    TU0["Unknown[reason]<br/>τίμια άγνοια με λόγο"]
+    TF0["τ → τ′ ! O<br/>συνάρτηση με λανθάνουσες υποχρεώσεις"]
+  end
+  J["Κρίση Γ ⊢ e : τ ! O<br/>O = πολυσύνολο Ob⟨claim, tier 0/1/2, evidence_class PROOF/CHECK/TEST/WITNESS, deadline, method⟩<br/>O = γραμμικοί πόροι — weakening απαγορεύεται"]
+  TY --> J
+  subgraph RL["Κανόνες — αμφίδρομος έλεγχος, γραμμικός στο μέγεθος του προγράμματος"]
+    direction LR
+    R_GEN["T-Gen: γεννήτρια ⇒ Claimed[τ] ! Ob(c, tier(c), class(tier)) — tier από LPA/Constitution"]
+    R_DIS["T-Discharge: Claimed[τ] ! O ∪ ob + cert(ob) ⇒ Verified[τ] ! O"]
+    R_SEQ["T-Seq: O₁ ⊎ O₂ (πολυσύνολο, τίποτα δεν συγχωνεύεται σιωπηλά)"]
+    R_DEF["T-Defer: ob ⇒ marked DEFERRED(reason, plan, deadline) — παραμένει στο O"]
+    R_ESC["T-Escalate: ob ⇒ ESCALATED(to)"]
+    R_ACT["T-Act: Effect μόνο με Verified[τ] ή DEFER εγκεκριμένο από RET για την κλάση επίδρασης (MFA-INV-105, MFA-ELM-010)"]
+  end
+  J --> RL
+  OB["Ob ζωντανή"]
+  R_GEN --> OB
+  SCH["DischargeScheduler — ουρές ανά tier (asc), deadline (asc), budgets ανά tier"]
+  OB --> SCH
+  subgraph ME["Μέθοδοι discharge"]
+    direction LR
+    MP["PROOF — TGPS MFA-ELM-112 (Lean MFA-ELM-020)"]
+    MC["CHECK — verifier / VFC MFA-ELM-099"]
+    MT["TEST — CGM sealed MFA-ELM-119"]
+    MW["WITNESS — Ledger receipt"]
+  end
+  SCH --> ME
+  CERT{"cert ∧ VFC.verify(cert) ∧ class(cert) ≥ ob.evidence_class ∧ checker lineage ≠ γεννήτρια (EIM MFA-MECH-009);"}
+  ME --> CERT
+  D1["DISCHARGED(cert) → Verified[τ] όταν O ∖ ob = ∅"]
+  CERT -->|"ναι"| D1
+  BUD{"budget του tier εξαντλήθηκε;"}
+  CERT -->|"όχι cert"| BUD
+  D2["DEFERRED(reason ∈ BUDGET ∣ NOT_YET_OBSERVABLE ∣ AWAITING_CREATOR, plan, deadline) — μένει marked στο O"]
+  BUD -->|"ναι"| D2
+  BUD -->|"όχι"| SCH
+  DL{"now πέρασε το deadline ∧ όχι DISCHARGED;"}
+  D2 --> DL
+  D3["ESCALATED(to) — Court MFA-ELM-048 αν tier ≤ 1, αλλιώς owner"]
+  DL -->|"ναι"| D3
+  DL -->|"όχι"| D2
+  ERR["error(INSUFFICIENT_EVIDENCE) ∣ error(NO_SUCH_OBLIGATION) — ο έλεγχος απορρίπτει, η Ob μένει ζωντανή"]
+  CERT -->|"cert ανεπαρκές ή άγνωστο"| ERR
+  ERR --> OB
+  subgraph TERM["check_program(p): live = Ob χωρίς status ∈ DISCHARGED/DEFERRED/ESCALATED"]
+    DROP["live ≠ ∅ ⇒ error(DROPPED_OBLIGATIONS, live) — ΤΟ ΠΡΟΓΡΑΜΜΑ ΑΠΟΡΡΙΠΤΕΤΑΙ (MFA-INV-104)<br/>«dropped» δεν είναι τερματική κατάσταση της Ob, είναι type error"]
+    OK["⊢ p : τ ! ∅ ⇒ soundness (Lean, OC-E2): κάθε claim φέρει τεκμήριο ⊒ class(tier) ∨ deferred_with_reason"]
+  end
+  D1 --> TERM
+  D2 --> TERM
+  D3 --> TERM
+  TED["TED MFA-ELM-017: εκτελείται μόνο type-checked IR — παράκαμψη του checker αδύνατη εξ ορισμού · ο checker είναι μέρος του FP (L3) · CC MFA-MECH-001 επεκτείνεται"]
+  TERM --> TED
+  FEED["Obligation traces → process rewards PRR MFA-ELM-103 · θεωρήματα ως constraints TGL MFA-ELM-123 · MFA-VO-082 discharge rate (CGM)"]
+  TERM -.-> FEED
+  ANS["Απάντηση: ΠΟΥΘΕΝΑ — κάθε Ob καταλήγει DISCHARGED ∣ DEFERRED(reason, plan, deadline) ∣ ESCALATED(to) · weakening = type error · Effect δέχεται μόνο Verified ή RET-εγκεκριμένο DEFER"]
+  TED --> ANS
+  classDef term fill:#e8f5e9,stroke:#2e7d32,color:#000
+  classDef rej fill:#fde2e2,stroke:#b00020,color:#000
+  class D1,D2,D3 term
+  class DROP,ERR rej

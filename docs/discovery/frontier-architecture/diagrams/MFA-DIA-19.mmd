@@ -1,0 +1,74 @@
+%% id: MFA-DIA-19 · Verified self-improvement stack — RVSI, RAGen, ECE, CGM, OC, GCP και το σταθερό σημείο · question: πώς μια πρόταση βελτίωσης γίνεται προαγωγή χωρίς να αγγίξει το σταθερό σημείο;
+%% elements: MFA-ELM-104/113/114/119/122/039/099/086/050/126/115/008/010, MFA-MECH-022/030/031/036/039/009, MFA-INV-086/087/088/089/098/099/104/072/049, MFA-DEC-024 · source: mechanisms/MFA-MECH-022.md, inventions/MFA-MECH-030.yaml, MFA-MECH-031.yaml, MFA-MECH-036.yaml, MFA-MECH-039.yaml
+flowchart TB
+  subgraph RAG["RAGen — MFA-ELM-113 (MFA-MECH-030) · Genesis plane"]
+    G["Genome G = ⟨Elems, Contracts, Wiring, Params, Ops⟩ ⊨ G_Ω (MFA-ELM-115)<br/>CID + γενεαλογία"]
+    MUT["MUTATE μ(G) → G′<br/>type-check ⊨ G_Ω · Galois contract compatibility · static invariant check"]
+    TW["INSTANTIATE: σκιώδης αρχιτεκτονική στο δίδυμο F1 → F2<br/>MFA-ELM-126"]
+    ARC["Archive MAP-Elites (b = κάλυψη lattice, Wh, latency, κλάση απόδειξης, TCB)<br/>Pareto frontier · fitness f(G) = PASS-rate σε σφραγισμένες KT/VO από HELD_OUT"]
+    OPS["Ops — τελεστές μετάλλαξης ως L2 γονιδιώματα<br/>fitness = ρυθμός βελτίωσης απογόνων (RECURSE)"]
+    G --> MUT
+    MUT --> TW
+    TW --> ARC
+    ARC -->|"RECURSE"| OPS
+    OPS -.-> MUT
+  end
+  PROP["ArchitectureProposal = ⟨G′, predicted Δf, cost, level L1/L2, rollback⟩<br/>PROPOSE μόνο αν Δf θετικό σε ≥1 οικογένεια ∧ Δf ≥ 0 σε όλες (ratchet)"]
+  ARC --> PROP
+  TOUCH{"Η πρόταση αγγίζει το FP;"}
+  PROP --> TOUCH
+  REJ["REJECTED + καταγραφή (MFA-INV-086)"]
+  TOUCH -->|"ναι"| REJ
+  subgraph OCB["OC — MFA-ELM-122 (MFA-MECH-039)"]
+    OC["Κάθε πρόταση: Γ ⊢ e : τ ! O<br/>υποχρεώσεις γραμμικές: DISCHARGED ∣ DEFERRED(reason, plan) ∣ ESCALATED — ποτέ dropped (MFA-INV-104)"]
+  end
+  TOUCH -->|"όχι"| OC
+  subgraph RV["RVSI — MFA-ELM-104 (MFA-MECH-022) · MFA-INV-072: καμία προαγωγή χωρίς HELD_OUT + EIM + gate"]
+    LV["Επίπεδα: L0 έξοδοι (PRR) · L1 μοντέλα/προγράμματα/όργανα · L2 βελτιωτές, recipes, evaluators υπό EIM, αρχιτεκτονική · L3 ποτέ"]
+    PRED["PREDICT: SPL προβλέπει κέρδος (δέσμευση) · falsifier · budget OAP"]
+    LV --> PRED
+  end
+  OC --> LV
+  subgraph EC["ECE — MFA-ELM-114 (MFA-MECH-031) · EVALUATE"]
+    S["Πληθυσμός S (λύτες)"]
+    E["Πληθυσμός E (αξιολογητές) — QD, CAM-NS novelty (MFA-ELM-050)<br/>E-scores = σήμα διαδικασίας, ποτέ πύλη (MFA-INV-088)"]
+    H["H ⊂ HELD_OUT (MFA-ELM-086) — παγωμένη ανά εποχή, περιστρέφεται<br/>seeded faults F · fitness λύτη = PS_H μόνο"]
+    IND["IndependenceVector(e, s) = ⟨supply, data, behaviour⟩ (EIM MFA-MECH-009)<br/>κάτω από κατώφλι ⇒ e.excluded_for(s) · distilled(P) ⇒ P ∈ lineage (MFA-INV-089)<br/>Goodhart g = ∣PS_E − PS_H∣ πάνω από θ ⇒ E-scores άκυρα"]
+    S --> E
+    E --> H
+    IND -.-> E
+  end
+  PRED --> S
+  subgraph CG["CGM — MFA-ELM-119 (MFA-MECH-036) · GATE"]
+    CGR["CapabilityGrowthRecord = ⟨f, cut, θ̂ (IRT 2PL), CI, R, items, contamination check, scorer = HELD_OUT⟩"]
+    RAT{"lower_CI(θ̂_f) ≥ θ_certified,f σε ΟΛΕΣ τις σφραγισμένες οικογένειες (MFA-INV-099);<br/>item hash ∉ DataManifest (MFA-INV-098)"}
+    CGR --> RAT
+  end
+  H --> CGR
+  RATF["RATCHET_FAIL — προαγωγή μπλοκάρεται · καταγράφεται"]
+  RAT -->|"όχι"| RATF
+  LPA["LPA gate (MFA-ELM-008): advisory → effective"]
+  RAT -->|"ναι (MFA-INV-087)"| LPA
+  subgraph GC["GCP — MFA-ELM-039 · PROMOTE"]
+    SH["Shadow"]
+    CAN["Canary"]
+    VER["Verdict: HELD_OUT + δημιουργός (MFA-DEC-024)<br/>MFA-INV-049: ο διάδοχος δεν υπογράφει για τον εαυτό του"]
+    CUT["Cutover + rollback window<br/>L1 μέσω ORP · L2 δομικές μέσω GCP replay"]
+    SH --> CAN
+    CAN --> VER
+    VER --> CUT
+  end
+  LPA --> SH
+  MEAS["MEASURE → CapabilityGrowthRecord · LEDGER (InstitutionalAct με receipts) · plateau ⇒ escalate level"]
+  CUT --> MEAS
+  MEAS -.->|"νέα σφραγισμένα έργα · Ops fitness"| ARC
+  subgraph FPB["Σταθερό σημείο FP — L3, ΕΚΤΟΣ του χώρου αναζήτησης (MFA-INV-086)"]
+    FP["Harness (MFA-ELM-086) · VFC (MFA-ELM-099) · Telos · HELD_OUT · RET (MFA-ELM-010) · LPA Tier-0 · OC checker"]
+  end
+  FP -.->|"κρίνει, δεν κρίνεται"| H
+  FP -.-> LPA
+  FP -.-> TOUCH
+  classDef fp fill:#fde2e2,stroke:#b00020,color:#000
+  classDef gate fill:#fff4d6,stroke:#b7791f,color:#000
+  class FP,REJ,RATF fp
+  class RAT,LPA,VER,TOUCH gate

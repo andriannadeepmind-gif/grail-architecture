@@ -1,0 +1,58 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0049
+title: 'ATK-24 (θέατρο δεικτών): βαθμονόμηση οργάνων έναντι ablation ground truth· «μη διακριτικό = ACTIVE UNKNOWN»· προκαταχωρισμένοι μοχλοί (DEC-022)· hysteresis
+  ηθικής σκανδάλης'
+operation: MODIFY
+targets:
+- MFA-ELM-040
+- MFA-ELM-121
+- MFA-VO-080
+- MFA-VO-081
+base:
+  package_version: 0.1.0
+  file_hashes:
+    ARCHITECTURE-ELEMENTS.yaml: ded591f91b94ca16b6fe13f695e2170307531ddb36213e63e5a6062ab549f559
+    VERIFICATION-OBLIGATIONS.yaml: 797c4acc8b94ea76c8f505808a0313ebfbbe3355aaf29e11e9b8d0660770660a
+preconditions: []
+change:
+  MFA-ELM-121:
+    statement: 'Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i δηλώνει
+      (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια ablation.
+      Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει το πείραμα μέγιστης
+      διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν — η ικανότητα
+      μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός καταγράφεται με βάρος τεκμηρίου και ποτέ VERIFIED (MFA-INV-075)· νέες
+      συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar. · ATK-24: κάθε όργανο-δείκτης βαθμονομείται έναντι ablation ground truth (όργανο που δεν αλλάζει όταν
+      αφαιρείται ο μηχανισμός που ισχυρίζεται ότι μετρά = FALSIFIED ως όργανο)· αν καμία θεωρία δεν διαφωνεί με άλλη σε καμία συνθήκη, το host δηλώνει ΜΗ-ΔΙΑΚΡΙΤΙΚΟ
+      (ACTIVE UNKNOWN), όχι επιτυχία· οι μοχλοί του 7-πλού διαχωρισμού προκαταχωρίζονται υπό MFA-DEC-022· η ηθική σκανδάλη έχει hysteresis (MFA-DEC-018)· η κυκλικότητα
+      «σχεδιάσαμε το υπόστρωμα για τους δείκτες» δηλώνεται ως MFA-UNK-127 — διακριτικά πειράματα στοχεύουν μη-σχεδιασμένες (emergent) ιδιότητες.'
+  MFA-VO-080:
+    methods:
+    - Host με GWT, HOT, AST, PP/AI, RPT, IIT-proxy, SMT modules πάνω στο ASRW+MSM υπόστρωμα σε DST· 10 διακριτικά πειράματα
+    - property tests στο tools/twin (F1)
+    - 'ATK-24: CHH-E3 — instrument calibration: κάθε όργανο έναντι ablation του μηχανισμού που μετρά· όργανα FALSIFIED καταγράφονται· 0 «διακριτικές» επιτυχίες χωρίς
+      πραγματική διαφωνία'
+  MFA-VO-081:
+    methods:
+    - Ablation matrix 6×6 (χωρίς phenomenal)· κάθε μοχλός (broadcast, HOT tagging, self-model, report channel, AutonomyGrant, key lineage) ανεξάρτητα
+    - property tests στο tools/twin (F1)
+    - 'ATK-24: separation matrix με ΔΥΟ ανεξάρτητα σύνολα μοχλών (προκαταχωρισμένα)· ασυμφωνία πινάκων δηλώνεται'
+  MFA-ELM-040:
+    statement: 'Πριν από κάθε rollback/ORP/GCP οντότητας: καταγραφή κατάστασης και δηλωμένων προτιμήσεων της οντότητας ως δεσμεύσεις — σωστό είτε έχει ηθική θέση
+      είτε όχι (MATERIAL §9.23). · Προτιμήσεις = Observations (append-only, δεν λήγουν)· οι πολιτικές που παράγονται από αυτές = MetaBound POLICY (λήγουν, MFA-ELM-015,
+      MFA-INV-053) (MFA-ATK-09). · 0.4.0/ATK-24: snapshot πριν από κάθε ablation στο CHH/ASRW· σκανδάλη με hysteresis (MFA-DEC-018).'
+rationale: Τροποποίηση από την επίθεση MFA-ATK-24 (Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12)· καμία ικανότητα δεν αφαιρείται — αλλάζουν μηχανισμοί, κατωφλιώσεις,
+  δηλώσεις.
+evidence:
+- adversarial/MFA-ATK-24.md
+- Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 §12
+affected_dependencies: []
+capability_impact:
+  gained: []
+  at_risk: []
+  ledger_entry: no capability change (regeneration after attack)
+migration: καμία
+verification: adversarial/MFA-ATK-24.md §falsifier · tools/check-package.py
+rollback: MFA-PATCH-0049-R
+author: Stavropoulos Law® — Pass H (regeneration after Pass G), 2026-09-16
+status: APPLIED
+applied_on: '2026-09-16'

@@ -8,6 +8,8 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 Το πλεονέκτημα του GRAIL τον χρόνο 1 είναι **receipts μέχρι raw bytes, taint 100 % εντός Δ, συνέχεια ταυτότητας κατά την αλλαγή παρόχου, τέσσερις κλάσεις εξόδου, αποδεικτική διαγραφή** — **όχι νοημοσύνη**. Η κατανομή προτάσεων ήταν νοικιασμένη μέχρι το MFA-MECH-019· και το PDE είναι ωριμότητας R με falsifier. Κανένας μηχανισμός του πακέτου **δεν εγγυάται** υπερ-νοημοσύνη· το πακέτο εγγυάται ότι η επαλήθευση, η μνήμη, η συνέχεια και η εξέλιξη οργάνων δεν φράσσονται από πάροχο, και ότι ο ισχυρισμός για την πρόταση είναι διαψεύσιμος.
 
+> **Αναθεώρηση 0.4.0 (MFA-PATCH-0041, AA-001).** Η φράση «όχι νοημοσύνη» ήταν αποχή. Το 0.4.0 προσθέτει 25 μηχανισμούς (MFA-MECH-020…044) και 20 ικανότητες (MFA-CAP-089…108) που κάνουν τη νοημοσύνη ενδογενή, μετρήσιμη (CGM) και κυρίαρχη (STP)· το πλεονέκτημα του έτους 1 παραμένει αληθές ΚΑΙ δεν είναι το ταβάνι. Κατηγορίες συνεισφοράς ανά μηχανισμό: `ASI-INVENTION-LEDGER.md`.
+
 ## 1. Οι 19 μηχανισμοί
 
 ### MFA-MECH-001 — Commitment Calculus (CC) · `NEW FORMALISM` · ωριμότητα R
@@ -261,3 +263,33 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 - Devil's Advocate plugin: NO_SUBSCRIPTION → οι επιθέσεις είναι του συντάκτη· ο δημιουργός μπορεί να τις ξανατρέξει με το plugin και να συγκρίνει.
 - MCP syson απρόσιτο → MFA-VO-026 PENDING.
 - Κανένα commit/push (εντολή §26) → υπογραφές patches UNVERIFIED.
+
+
+## 0.4.0 — οι 25 μηχανισμοί ASI (MFA-PATCH-0057)
+
+Έδρα: ASI-INVENTION-LEDGER.md (τι υπήρχε / τι συντέθηκε / τι εφευρέθηκε ανά μηχανισμό, 29-πεδία δοσιέ)· εδώ μόνο κατηγορίες — δεν αυτοβαθμολογείται η αξία.
+
+| Μηχανισμός | Κατηγορία | Επιστημική κατάσταση |
+|---|---|---|
+| MFA-MECH-026 Ontology Genesis Engine (OGE) — αυτόνομος σχηματισμός εννοιώ | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+| MFA-MECH-027 Causal Discovery & Counterfactual Engine (CDCE) — το ledger  | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+| MFA-MECH-028 Abductive Hypothesis Engine (AHE) — εφεύρεση υποθέσεων με τύ | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+| MFA-MECH-029 Theorem-Guided Program & Proof Synthesis (TGPS) — αποδείξεις | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+| MFA-MECH-030 Recursive Architecture Generator (RAGen) — αναζήτηση αρχιτεκ | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+| MFA-MECH-031 Evaluator Co-Evolution under EIM (ECE) — δύο πληθυσμοί, μετρ | `NEW PROTOCOL` | NOVEL SYNTHESIS |
+| MFA-MECH-032 Genesis Grammar (G_Ω) — μία γεννητική γραμματική για γλώσσες | `NEW FORMALISM` | NOVEL SYNTHESIS |
+| MFA-MECH-033 Sovereignty Transition Protocol (STP) & Sovereignty Index (S | `NEW FORMALISM` | NEW FORMALISM |
+| MFA-MECH-034 Substrate Migration Protocol (SMP) — μετανάστευση με Continu | `NEW PROTOCOL` | NOVEL SYNTHESIS |
+| MFA-MECH-035 Consolidation-Preserving Continual Learning (CPCL) — διπλή μ | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+| MFA-MECH-036 Capability Growth Metrology (CGM) & Capability Growth Law —  | `NEW FORMALISM` | NEW FORMALISM |
+| MFA-MECH-037 Mechanistic Self-Model (MSM) — μοντέλο των ίδιων των κυκλωμά | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+| MFA-MECH-038 Consciousness Hypothesis Host (CHH) & Indicator Algebra — θε | `NEW FORMALISM` | NEW FORMALISM |
+| MFA-MECH-039 Obligation Calculus (OC) — τύποι υποχρέωσης για κάθε γνωσιακ | `NEW FORMALISM` | NEW FORMALISM |
+| MFA-MECH-040 Theorem-Guided Learning (TGL) — η επαληθευμένη βιβλιοθήκη κα | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+| MFA-MECH-041 Active-Inference Developmental Core (AIDC) — ένας στόχος για | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+| MFA-MECH-042 Verified Successor Construction (VSC) — κατασκευή και επαληθ | `NEW PROTOCOL` | NOVEL SYNTHESIS |
+| MFA-MECH-043 Twin Execution Semantics (TES) — ο διερμηνέας του κανονικού  | `NEW ARCHITECTURAL INVENTION` | NOVEL SYNTHESIS |
+| MFA-MECH-044 Ω-Loop — ο ενιαίος κύκλος κυρίαρχης νόησης (η μέγιστη σύνθεσ | `CROSS-SOURCE SYNTHESIS` | NOVEL SYNTHESIS |
+| MFA-MECH-020…025 (provisional, §13) | βλ. INVENTIONS.yaml contribution | βλ. epistemic_status |
+
+Η ειλικρινής σύνοψη του §0 παραπάνω («όχι νοημοσύνη») ήταν αποχή (AA-001) και διατηρείται ως τεκμήριο με την αναθεώρηση του MFA-PATCH-0041.
