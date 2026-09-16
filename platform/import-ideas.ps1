@@ -190,6 +190,19 @@ function Get-Inventory([string]$Root, [switch]$Hydrate) {
     return [pscustomobject]@{ Items = $items.ToArray(); Failures = $failures.ToArray(); Cloud = $cloudLeft }
 }
 
+function Find-OneDrive {
+    # OneDrive is per-machine on current Windows and per-user on older installs.
+    $candidates = @(
+        (Join-Path $env:ProgramFiles 'Microsoft OneDrive\OneDrive.exe'),
+        (Join-Path ${env:ProgramFiles(x86)} 'Microsoft OneDrive\OneDrive.exe'),
+        (Join-Path $env:LOCALAPPDATA 'Microsoft\OneDrive\OneDrive.exe')
+    )
+    foreach ($candidate in $candidates) {
+        if ($candidate -and (Test-Path -LiteralPath $candidate -PathType Leaf)) { return $candidate }
+    }
+    return $null
+}
+
 function Stop-OnUnreadable([object[]]$Failures, [string]$Root) {
     Warn "$($Failures.Count) file(s) could not be read:"
     foreach ($failure in ($Failures | Select-Object -First 25)) {
@@ -205,7 +218,9 @@ function Stop-OnUnreadable([object[]]$Failures, [string]$Root) {
         Note "  $($cloudy.Count) of them are still only in the cloud, so OneDrive is not delivering them."
         Note "  $stepNumber. Restart OneDrive and wait until it reports \"Up to date\":"
         Note '         Get-Process OneDrive -ErrorAction SilentlyContinue | Stop-Process -Force'
-        Note '         Start-Process "$env:LOCALAPPDATA\Microsoft\OneDrive\OneDrive.exe"'
+        $onedrive = Find-OneDrive
+        if ($onedrive) { Note ('         Start-Process "' + $onedrive + '"') }
+        else { Note '         OneDrive.exe was not found in Program Files or AppData: reinstall it, or use step 4.' }
         Note '     Then run this script again.'
         $stepNumber++
         Note "  $stepNumber. In File Explorer, right-click the folder -> \"Always keep on this device\","
