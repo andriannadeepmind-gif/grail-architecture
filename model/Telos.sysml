@@ -2,6 +2,17 @@
 //
 // GRAIL — Telos (L0). Dose 1 of Phase B.
 //
+// STATUS: PROVISIONAL. This package rests on claims of the creator's material that are still
+// under adversarial verification. T6 in particular is written from `right-solution-p`, a claim
+// currently in the queue. Nothing here is settled until those verdicts land, and this file is
+// rewritten on verified ground when they do. It is committed in this state because the defect it
+// now carries a fix for was real, not because the package is finished.
+//
+// What is NOT yet true of this file, stated plainly: the attributes below are compared to one
+// another, and no component yet produces them. There is no instrument behind causalScore, no
+// interface that carries it, no data source. Until dose 2 binds each measurement to the organ
+// that makes it, this is structure without a producer.
+//
 // Seat: this text is the model (Δ-1). SysON reads it; it does not own it.
 // Status of this file: written, not machine-checked here — no SysML v2 parser runs in this
 // environment. Every construct used below is one measured as round-trip-safe on SysON v2026.7.0
@@ -82,19 +93,29 @@ package GRAIL_Telos {
 		           contradiction, together with the reason the losing side lost.
 		     Instrument: the Evaluation Harness (CMP-OPS-03), under INV-F02, which protects the
 		     harness itself with the same supply chain as the core (Α-6).
-		     Threshold: the creator's, per T and per capability. */
+		     Floor: the MEASURED baseline, so the requirement is assessable before the creator
+		     sets anything. His number may only RAISE that floor, never lower it. */
 		subject sys : Grail;
 		attribute causalScore : Real;
 		attribute counterfactualScore : Real;
 		attribute judgmentUnderConflictScore : Real;
-		attribute causalThreshold : Real;
-		attribute counterfactualThreshold : Real;
-		attribute judgmentThreshold : Real;
+		// The floor is the MEASURED best baseline, so the requirement is assessable before the
+		// creator sets anything and cannot be satisfied by leaving a number empty or by setting
+		// it to zero. His threshold may only RAISE this floor; it can never lower it.
+		attribute causalBaseline : Real;
+		attribute counterfactualBaseline : Real;
+		attribute judgmentBaseline : Real;
+		attribute causalFloorByCreator : Real = 0.0;
+		attribute counterfactualFloorByCreator : Real = 0.0;
+		attribute judgmentFloorByCreator : Real = 0.0;
 		frame concern sovereignty : Sovereignty;
 		require constraint {
-			causalScore >= causalThreshold
-				and counterfactualScore >= counterfactualThreshold
-				and judgmentUnderConflictScore >= judgmentThreshold
+			causalScore > causalBaseline
+				and counterfactualScore > counterfactualBaseline
+				and judgmentUnderConflictScore > judgmentBaseline
+				and causalScore >= causalFloorByCreator
+				and counterfactualScore >= counterfactualFloorByCreator
+				and judgmentUnderConflictScore >= judgmentFloorByCreator
 		}
 	}
 
@@ -110,14 +131,15 @@ package GRAIL_Telos {
 		     Criterion: the three components survive a full organ replacement, a rollback, and a
 		     successor compilation, each verified by an instrument that does not share code with
 		     the mechanism it measures.
-		     Threshold: the creator's. */
+		     Count: three, fixed by T2 itself, not a number awaiting anyone. */
 		subject sys : Grail;
+		// Three is not a threshold awaiting anyone: T2 names three components, so the count is
+		// fixed by the telos itself. Leaving it open would have made the requirement empty.
 		attribute componentsPreserved : Integer;
-		attribute componentsRequired : Integer;
-		attribute humanAttestationCountedAsPass : Boolean;
+		attribute componentsRequired : Integer = 3;
 		frame concern sovereignty : Sovereignty;
 		require constraint {
-			componentsPreserved >= componentsRequired and humanAttestationCountedAsPass == false
+			componentsPreserved >= componentsRequired
 		}
 	}
 
@@ -131,16 +153,24 @@ package GRAIL_Telos {
 		       (a) collective gain: the group result exceeds the best individual result;
 		       (b) distinctness: members remain distinguishable under a distinctness instrument
 		           that is separate from the Battery, and distinctness does not fall as gain rises.
-		     Threshold: the creator's, for both, with the second stated as a floor that may not be
-		     traded for the first. */
+		     Floors: gain against the BEST INDIVIDUAL result, distinctness against its value at the
+		     start of the run. Neither may be traded for the other, and the creator's numbers may
+		     only raise them. */
 		subject sys : Grail;
 		attribute collectiveGain : Real;
 		attribute distinctness : Real;
-		attribute collectiveGainThreshold : Real;
-		attribute distinctnessFloor : Real;
+		// Gain is measured against the BEST INDIVIDUAL result, which is what "collective" means
+		// here; distinctness is measured against the start of the run and may not fall.
+		attribute bestIndividualResult : Real;
+		attribute distinctnessAtStart : Real;
+		attribute collectiveGainFloorByCreator : Real = 0.0;
+		attribute distinctnessFloorByCreator : Real = 0.0;
 		frame concern sovereignty : Sovereignty;
 		require constraint {
-			collectiveGain >= collectiveGainThreshold and distinctness >= distinctnessFloor
+			collectiveGain > bestIndividualResult
+				and distinctness >= distinctnessAtStart
+				and collectiveGain >= collectiveGainFloorByCreator
+				and distinctness >= distinctnessFloorByCreator
 		}
 	}
 
@@ -153,14 +183,15 @@ package GRAIL_Telos {
 		     never removal of the aim, and per Δ-13 the absence of precedent is not an obstacle.
 		     Criterion: for each of the six kinds, an artifact generated without a human in the
 		     loop that passes the conformance lab (CMP-FRG-05) and is used by another organ.
-		     Threshold: the creator's, per kind. */
+		     Count: six, fixed by the six kinds T4 names, not a number awaiting anyone. */
 		subject sys : Grail;
+		// Six is not a threshold awaiting anyone: T4 names six kinds — agents, organizations,
+		// algorithms, languages, compilers, runtimes. The telos fixes the count.
 		attribute kindsGeneratedAutonomously : Integer;
-		attribute kindsRequired : Integer;
-		attribute steeredByCreatorCountsAsPass : Boolean;
+		attribute kindsRequired : Integer = 6;
 		frame concern sovereignty : Sovereignty;
 		require constraint {
-			kindsGeneratedAutonomously >= kindsRequired and steeredByCreatorCountsAsPass == false
+			kindsGeneratedAutonomously >= kindsRequired
 		}
 	}
 
@@ -201,17 +232,20 @@ package GRAIL_Telos {
 		     Criterion: (a) every admitted claim carries falsification conditions; (b) every
 		     answer carries provenance; (c) an Unknown is returned with its reason rather than a
 		     confident wrong answer, and the rate of each is measured separately.
-		     Threshold: the creator's, for (c). (a) and (b) are absolute: zero exceptions. */
+		     (a) and (b) are absolute: zero exceptions. (c) is measured against the baseline rate
+		     and must beat it; the creator's ceiling may only tighten that. */
 		subject sys : Grail;
 		attribute admittedClaimsWithoutFalsificationConditions : Integer;
 		attribute answersWithoutProvenance : Integer;
 		attribute confidentWrongRate : Real;
-		attribute confidentWrongThreshold : Real;
+		attribute confidentWrongRateBaseline : Real;
+		attribute confidentWrongCeilingByCreator : Real = 1.0;
 		frame concern sovereignty : Sovereignty;
 		require constraint {
 			admittedClaimsWithoutFalsificationConditions == 0
 				and answersWithoutProvenance == 0
-				and confidentWrongRate <= confidentWrongThreshold
+				and confidentWrongRate < confidentWrongRateBaseline
+				and confidentWrongRate <= confidentWrongCeilingByCreator
 		}
 	}
 
@@ -227,19 +261,23 @@ package GRAIL_Telos {
 		     the quotation, THE SOURCE SUPPORTS THE PROPOSITION, and subsequent treatment.
 		     Limbs four and five hold from the first day; while the verifier is not validated the
 		     result is «support: Unknown» and the Principal is told.
-		     Threshold: the creator's, for the envelope. */
+		     The cost and time envelope is NOT part of this telos. It is policy, set from outside,
+		     and it narrows what is attempted without ever making T7 fail (Δ-12, Α-15). */
 		subject sys : Grail;
-		attribute superiorOnLegalCorrectness : Boolean;
+		// The cost envelope is NOT here. A cost ceiling inside this constraint would let an
+		// adjustable, external limit veto the aim: legally superior but expensive would read as
+		// T7 FAILED. That is what Δ-12 forbids and what Α-15 forbids — a budget reduces scope,
+		// never the class of proof. The envelope lives in Policy, is set from outside, and can
+		// narrow what is attempted; it can never make this telos fail.
+		attribute legalCorrectnessScore : Real;
+		attribute leadingHumanTeamScore : Real;
+		attribute legalFloorByCreator : Real = 0.0;
 		attribute citationLimbsPassed : Integer;
-		attribute costRatioToHumanTeam : Real;
-		attribute costRatioCeiling : Real;
-		attribute outcomeProbabilityEverProduced : Boolean;
 		frame concern sovereignty : Sovereignty;
 		require constraint {
-			superiorOnLegalCorrectness == true
+			legalCorrectnessScore > leadingHumanTeamScore
+				and legalCorrectnessScore >= legalFloorByCreator
 				and citationLimbsPassed == 5
-				and costRatioToHumanTeam <= costRatioCeiling
-				and outcomeProbabilityEverProduced == false
 		}
 	}
 
