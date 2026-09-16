@@ -12,5 +12,5 @@ The architecture is modelled in **SysON** (SysML v2), running locally, and edite
 | Earlier draft (unverified, pre-platform) | `docs/architecture-draft/` — `spine-vocab.md` holds the ID set (114 REQ, 75 CMP — its heading says 76, 32 ICD, 40 INV, 24 KT) to be modelled |
 | Phase A discovery (state of the art, gaps, decisions) | `docs/discovery/` |
 | Raw material of the creator (verbatim, with SHA-256 manifest) | `docs/ideas-raw/` — imported by `pwsh -File platform/import-ideas.ps1 -Source '<folder>' -Push` |
-| When OneDrive will not deliver a file | `pwsh -File platform/stage-local-copy.ps1 -Source '<OneDrive folder>' -Destination C:\IDEES` — copies what is really on the disk and names what must be fetched from onedrive.com |
+| When OneDrive will not deliver a file | `pwsh -File platform/stage-local-copy.ps1 -Source '<OneDrive folder>' -Destination C:\IDEES` — copies what is really on the disk and names what must be fetched from onedrive.com. Import a staged copy with `-CompareWith '<the original folder>'`, which refuses to import while a file of the original is absent or renamed. |
 | Model exports (SysML v2 text) | `model/` — committed at every milestone; produced by `pwsh -File platform/export-model.ps1 -Project GRAIL-World-OS` (one `.sysml` per SysON document + byte-exact SysON JSON in `model/.syson/`) |

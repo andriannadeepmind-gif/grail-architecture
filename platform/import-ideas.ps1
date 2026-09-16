@@ -31,6 +31,9 @@ Checks that stop the run before anything is copied, all reported together:
   nested .git directory   git would store it as a submodule link and lose its contents
                           -> -ExcludeNestedGit (recorded in the manifest), or archive that repo
   unreadable file         the material would be incomplete -> the run prints what to do
+  -CompareWith missing    a file of the original folder is absent from the source being imported;
+                          use it whenever the source is a staged copy, so that a file left behind
+                          by hand cannot pass unnoticed
 
 .EXAMPLE
 pwsh -File platform/import-ideas.ps1 -Source 'C:\Users\David Spiridon\OneDrive\Desktop\IDEES' -InventoryOnly
@@ -44,6 +47,7 @@ param(
     [string]$Name,
     [string]$Repo = (Split-Path $PSScriptRoot -Parent),
     [string]$Branch,
+    [string]$CompareWith,
     [int]$HydrationTimeoutMinutes = 60,
     [switch]$InventoryOnly,
     [switch]$ExcludeNestedGit,
@@ -264,6 +268,31 @@ if ($sourceFiles.Count -eq 0) { Fail "the source folder is empty: $Source" }
 
 $totalBytes = ($sourceFiles | Measure-Object -Property Bytes -Sum).Sum
 Note ("{0} files, {1:N1} MB, all readable" -f $sourceFiles.Count, ($totalBytes / 1MB))
+
+if ($CompareWith) {
+    # A staged copy is only as complete as the hand that filled it. Compare it against the folder
+    # it came from, by relative path, so that a file left behind cannot pass unnoticed.
+    Step "Comparing against $CompareWith"
+    if (-not (Test-Path -LiteralPath $CompareWith -PathType Container)) { Fail "folder to compare against not found: $CompareWith" }
+    $originalRoot = (Resolve-Path -LiteralPath $CompareWith).Path.TrimEnd('\', '/')
+    $originalFiles = @(Get-ChildItem -LiteralPath $originalRoot -Recurse -File -Force -ErrorAction SilentlyContinue)
+    $present = @{}
+    foreach ($file in $sourceFiles) { $present[$file.Path] = $true }
+    $absent = @($originalFiles | Where-Object {
+        -not $present.ContainsKey($_.FullName.Substring($originalRoot.Length + 1).Replace('\', '/'))
+    })
+    if ($absent.Count -gt 0) {
+        Warn "$($absent.Count) file(s) of the original are NOT in what is about to be imported:"
+        foreach ($file in ($absent | Sort-Object -Property Length -Descending | Select-Object -First 40)) {
+            Note ("  {0,10:N0} bytes  {1}" -f $file.Length, $file.FullName.Substring($originalRoot.Length + 1).Replace('\', '/'))
+        }
+        Write-Host ''
+        Warn 'Fetch each one and put it in the source folder under the same name and path, then run this again.'
+        Note 'A name that differs, even by an added extension, counts as missing: the material keeps the names it had.'
+        Fail 'nothing was copied: the material would have been incomplete.'
+    }
+    Note "$($originalFiles.Count) files in the original, every one of them present."
+}
 $sourceFiles |
     Group-Object { $ext = [IO.Path]::GetExtension($_.Path).ToLowerInvariant(); if ($ext) { $ext } else { '(no extension)' } } |
     Sort-Object Count -Descending | Select-Object -First 12 |
