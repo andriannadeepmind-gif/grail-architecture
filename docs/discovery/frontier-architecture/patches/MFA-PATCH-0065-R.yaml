@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0065-R
+reverses: MFA-PATCH-0065
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, MFA-CON-078, MFA-INV-121, MFA-INV-122, MFA-INV-123, MFA-INV-124, MFA-VO-094, MFA-VO-095, MFA-VO-096, MFA-UNK-136, MFA-UNK-137, MFA-CFL-048, MFA-CFL-049, MFA-CFL-050]
+change: {restore: "0.4.0 evaluator/reward/risk semantics", retire_added_records: [MFA-CON-078, MFA-INV-121, MFA-INV-122, MFA-INV-123, MFA-INV-124, MFA-VO-094, MFA-VO-095, MFA-VO-096, MFA-UNK-136, MFA-UNK-137, MFA-CFL-048, MFA-CFL-049, MFA-CFL-050]}
+capability_impact: {gained: [], at_risk: ["independent promotion and multidimensional risk"], ledger_entry: "Rollback restores self-certification risk"}
+verification: "Exact diff against source commit 6768c6c"
+rollback: MFA-PATCH-0065
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED

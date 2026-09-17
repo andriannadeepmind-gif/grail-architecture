@@ -142,3 +142,51 @@ unknowns:
      judgment: "η ικανότητα μένει στον στόχο· ο μηχανισμός τρέχει με το άγνωστο δηλωμένο", plan: "πείραμα Ω-E1, Ω-E2 (MFA-VO-087)", cost: "το κόστος του πειράματος (δοσιέ πεδίο resource_complexity)",
      voi: HIGH, blocks: [MFA-ELM-127], reason_class: EPISTEMIC,
      version: 1, change_history: [{patch: MFA-PATCH-0034, op: ADD, date: "2026-09-16", summary: "Unknowns MFA-UNK-115…133 (EPISTEMIC/EXTERNAL_FACT, χωριστά από τον στόχο), Conflicts MFA-CFL-039…046 (με resolution condition), Research Programs MFA-RSP-021…040 (ένα ανά μηχανισμό + LWM-OEC για ELM-105/106, AA-020)"}]}
+  - <<: *d
+    id: MFA-UNK-134
+    source: MFA-PATCH-0061
+    name: "Canonical exact creator mandate for the 0.4.0 ASI design cycle"
+    reason: "Το package περιέχει παράγωγες αναφορές σε creator-authorized mandate αλλά όχι κανονική exact-text έδρα με digest, signer και scope."
+    judgment: "Οι ικανότητες και τα σχέδια διατηρούνται· οι εξαρτώμενοι authority claims παραμένουν PROVISIONAL μέχρι exact receipt."
+    plan: "Καταχώριση του πρωτοτύπου χωρίς ανακατασκευή ή παράφραση και έλεγχος MFA-VO-089."
+    cost: "μία provenance πράξη"
+    voi: HIGH
+    blocks: [MFA-ELM-088]
+    reason_class: MISSING_CANONICAL_TEXT
+    change_history: [{patch: MFA-PATCH-0061, op: ADD, date: "2026-09-17", summary: "Mandate provenance gap"}]
+  - <<: *d
+    id: MFA-UNK-135
+    source: MFA-PATCH-0062
+    name: "Minimality and completeness of the proposed Root property set"
+    reason: "Οι οκτώ ιδιότητες είναι ισχυρό υποψήφιο σύνολο, αλλά δεν υπάρχει ακόμη independence/minimality theorem ούτε countermodel για κάθε αφαίρεση."
+    judgment: "Το Root boundary είναι SPECIFIED αλλά όχι αποδεδειγμένο architecture ceiling."
+    plan: "Independence matrix, one-property-removal countermodels και MFA-VO-088."
+    cost: "F0 formal analysis και F1 mutation models"
+    voi: HIGH
+    blocks: [MFA-ELM-051, MFA-ELM-099]
+    reason_class: EPISTEMIC
+    change_history: [{patch: MFA-PATCH-0062, op: ADD, date: "2026-09-17", summary: "Root minimality remains open"}]
+  - <<: *d
+    id: MFA-UNK-136
+    source: MFA-PATCH-0065
+    name: "Empirical calibration of the multidimensional risk model"
+    reason: "Dimensions and composition semantics can be specified now, but probabilities, correlations, thresholds and cost projections require domain traces."
+    judgment: "The vector model is usable for explicit uncertainty; numeric authority remains uncalibrated policy."
+    plan: "Collect F2/F3 traces, preregister calibration metrics and run MFA-VO-095 sensitivity analysis."
+    cost: "F2 simulation plus F3 shadow evidence"
+    voi: HIGH
+    blocks: [MFA-ELM-010, MFA-ELM-126]
+    reason_class: EPISTEMIC
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Risk calibration remains empirical"}]
+  - <<: *d
+    id: MFA-UNK-137
+    source: MFA-PATCH-0065
+    name: "Optimal protected floors, admissible debt and recovery horizons by capability family"
+    reason: "A universal no-regression scalar would freeze useful trade-offs, while unconstrained debt would hide capability loss; the correct bounds are domain-dependent."
+    judgment: "Creator-designated irreducible floors are absolute; all other floors/debt/horizons remain explicit research parameters."
+    plan: "Per-family Pareto histories, temporary-regression experiments and MFA-VO-096."
+    cost: "F2/F3 longitudinal evaluation"
+    voi: HIGH
+    blocks: [MFA-ELM-038, MFA-ELM-119, MFA-ELM-125]
+    reason_class: EPISTEMIC
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Growth floors and recovery bounds remain open"}]

@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0062-R
+reverses: MFA-PATCH-0062
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, OBJECTIVE-SPACE.yaml, MFA-CON-073, MFA-INV-116, MFA-INV-117, MFA-VO-088, MFA-UNK-135, MFA-CFL-047]
+change: {restore: "0.4.0 fixed-point/Telos/tool boundary", retire_added_records: [MFA-CON-073, MFA-INV-116, MFA-INV-117, MFA-VO-088, MFA-UNK-135, MFA-CFL-047]}
+capability_impact: {gained: [], at_risk: ["open-ended realization replacement"], ledger_entry: "Rollback restores identified lock-in"}
+verification: "Exact diff against source commit 6768c6c"
+rollback: MFA-PATCH-0062
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED

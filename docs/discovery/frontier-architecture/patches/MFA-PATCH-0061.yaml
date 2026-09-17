@@ -1,0 +1,22 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0061
+title: "Authority, provenance and orthogonal status normalization"
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, MFA-CON-075, MFA-INV-119, MFA-VO-090, MFA-UNK-134]
+base: {package_version: 0.4.0, source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239}
+preconditions: ["MFA-PATCH-0020…0025 and their history remain byte-preserved", "Absent creator mandate is recorded as MISSING_CANONICAL_TEXT, never reconstructed"]
+change:
+  add: ["six orthogonal architecture status axes", "five independent patch-status axes", MFA-CON-075, MFA-INV-119, MFA-VO-090, MFA-UNK-134]
+  historical_disposition: {range: MFA-PATCH-0020…0025, mechanical_state: APPLIED, authority_state: PROVISIONAL, review_state: IN_REVIEW, replay_state: NON_REPLAYABLE_HISTORICAL}
+rationale: "Prevent applied/spec/F1/required states from being misreported as approved/implemented/F2+/proven."
+evidence: ["ANTI-LOCK-AUDIT AL-014…016", "ARCHITECTURE-METAMODEL.yaml"]
+affected_dependencies: [MFA-ELM-006, MFA-ELM-008, MFA-ELM-088]
+capability_impact: {gained: [], at_risk: [], ledger_entry: "No capability removed or reduced"}
+migration: "Populate each axis independently; unresolved old authority remains PROVISIONAL."
+verification: MFA-VO-090
+rollback: MFA-PATCH-0061-R
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED
+mechanical_state: APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

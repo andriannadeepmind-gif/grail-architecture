@@ -1,0 +1,22 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0065
+title: "Open-ended measurement, learning, risk and promotion correction"
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, MFA-CON-078, MFA-INV-121, MFA-INV-122, MFA-INV-123, MFA-INV-124, MFA-VO-094, MFA-VO-095, MFA-VO-096, MFA-UNK-136, MFA-UNK-137, MFA-CFL-048, MFA-CFL-049, MFA-CFL-050]
+base: {package_version: 0.4.0, source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239}
+preconditions: ["Consciousness definition is out of scope", "No capability is removed when a mechanism fails"]
+change:
+  semantics: ["truth ≠ authority", "exploration ≠ promotion", "self-score ≠ adjudication", "risk vector ≠ scalar authority", "improvement requires CI/loss/debt/recovery"]
+  add: [MFA-CON-078, MFA-INV-121, MFA-INV-122, MFA-INV-123, MFA-INV-124, MFA-VO-094, MFA-VO-095, MFA-VO-096, MFA-UNK-136, MFA-UNK-137, MFA-CFL-048, MFA-CFL-049, MFA-CFL-050]
+rationale: "Open-ended search requires broad exploration and independent promotion, not self-certifying reward loops."
+evidence: ["ANTI-LOCK-AUDIT AL-005…008, AL-010, AL-013"]
+affected_dependencies: [MFA-ELM-008, MFA-ELM-086, MFA-ELM-103, MFA-ELM-104, MFA-ELM-114, MFA-ELM-119, MFA-ELM-125]
+capability_impact: {gained: ["open exploration with independent promotion"], at_risk: [], ledger_entry: "ASI target preserved"}
+migration: "Keep all exploration signals; remove only their unilateral truth/promotion/effect authority."
+verification: [MFA-VO-094, MFA-VO-095, MFA-VO-096]
+rollback: MFA-PATCH-0065-R
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED
+mechanical_state: APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

@@ -206,3 +206,81 @@ contracts:
      consumers: "όλα τα στοιχεία μηχανισμών· Lean Profile (097)· cockpit (091)", delta: NEW, statement: "Omega.cycle()→CycleRecord / Omega.schedule()→Schedule (L2) / Omega.phase(i)→Phase spec (L3 contracts) / Omega.interrupt(kind)→ack / Omega.budgets()→b / Omega.open_obligations()→O_open",
      state_semantics: "NEXT: φ_i → φ_{i+1} μόνο αν out_contract(φ_i) ⊨ ∧ O_i ⊆ {DISCHARGED, DEFERRED, ESCALATED}· INTERRUPT: υψηλότερης προτεραιότητας διακοπή προηγείται σε κάθε βήμα· BUDGET: b_i εξαντλείται ⇒ φάση κλείνει με DEFER (ποτέ σιωπηλή παράλειψη)· SCHEDULE_UPDATE: RVSI L2 προτείνει νέα διάταξη/προϋπολογισμούς· CGM πύλη· contracts αμετάβλητα· SUCCEED: μόνο με VSC Proceeding· αλλιώς φάση no-op με receipt", failure_semantics: "Starvation φάσης (π.χ. REFLECT ποτέ) → ελάχιστος προϋπολογισμός ανά φάση (πολιτική)· Deadlock υποχρεώσεων (VERIFY δεν κλείνει) → DEFER με deadline → ESCALATE· Schedule «βελτιστοποιεί» παρακάμπτοντας VERIFY → αδύνατο· πρόταση απορρίπτεται· Διακοπή αγνοείται → FP incident· Κύκλος πολύ αργός για Effect ανάγκες → Effect plane εξυπηρετείται από Think–Recommend εκτός κύκλου (copilot path) με receipts ‖ containment: LPA/AUT-00· RET· διακοπές· L3 contracts.", exec_type: D1,
      conformance: [MFA-VO-087], version: 1, change_history: [{patch: MFA-PATCH-0031, op: ADD, date: "2026-09-16", summary: "Contracts MFA-CON-054…072 (ένα ανά νέο στοιχείο) με state & failure semantics και conformance VOs"}]}
+  - <<: *d
+    id: MFA-CON-073
+    corresponds_to: null
+    name: "Root Boundary and Amendment"
+    provider: MFA-ELM-051
+    consumers: "Creator authority, Constitution Gate, GCP, VSC, Canonical Design Platform"
+    delta: NEW
+    statement: "classify(change)→ROOT_PROPERTY|TELOS_AMENDMENT|REALIZATION_REPLACEMENT / propose(change, evidence)→DEFER|REJECT|PROCEEDING / admit(proceeding, authority_receipt)→VersionedCut. Root properties, active Telos και realizations είναι διαφορετικοί τύποι."
+    state_semantics: "Root properties αλλάζουν μόνο με ξεχωριστή συνταγματική πράξη· Telos με signed TelosAmendmentReceipt· realization με refinement, replay, loss map και fallback."
+    failure_semantics: "Ασαφής ταξινόμηση, ελλιπής πηγή/απόδειξη/εξουσία ή κρυφή αλλαγή Telos μέσα σε replacement/succession ⇒ DEFER ή REJECT, ποτέ admission."
+    exec_type: D1
+    conformance: [MFA-VO-088, MFA-VO-089]
+    change_history: [{patch: MFA-PATCH-0062, op: ADD, date: "2026-09-17", summary: "Minimal property-root, versioned Telos and replaceable realizations"}]
+  - <<: *d
+    id: MFA-CON-074
+    corresponds_to: null
+    name: "Fail-Closed Evidence Receipt"
+    provider: MFA-ELM-099
+    consumers: "Verification Suite, every VO, acceptance gates, Court, GCP, VSC"
+    delta: NEW
+    statement: "issue(subject, method, input_cut, tool, exit, output_digests, predicate, scope, fidelity, signer)→EvidenceReceipt / validate(receipt, current_cut)→VALID|STALE|INCOMPLETE|INVALID."
+    state_semantics: "VO verdict PASS is derivable only from VALID receipts whose scope covers the exact predicate and whose fidelity meets the VO floor."
+    failure_semantics: "Missing, failed, stale, incomplete, partial-as-total or unparseable evidence ⇒ INDETERMINATE or FAIL; never PASS."
+    exec_type: D1
+    conformance: [MFA-VO-089, MFA-VO-093]
+    change_history: [{patch: MFA-PATCH-0063, op: ADD, date: "2026-09-17", summary: "Verification lifecycle and fail-closed evidence contract"}]
+  - <<: *d
+    id: MFA-CON-075
+    corresponds_to: null
+    name: "Orthogonal Architecture Status"
+    provider: MFA-ELM-088
+    consumers: "all canonical seats, patch protocol, cockpit, manifest and projections"
+    delta: NEW
+    statement: "set(axis, value, authority, evidence)→StatusEvent / project(subject)→{target, design, fidelity, evidence, authority, scope}. Each axis has its own writer and transition law."
+    state_semantics: "Status updates are append-only events; derived views cannot write the source axes."
+    failure_semantics: "Any implicit cross-axis promotion—especially APPLIED⇒APPROVED, F1⇒F2+, REQUIRED⇒PROVEN—returns ERR_INVALID and opens a conflict record."
+    exec_type: D1
+    conformance: [MFA-VO-090]
+    change_history: [{patch: MFA-PATCH-0061, op: ADD, date: "2026-09-17", summary: "Authority, provenance and orthogonal status normalization"}]
+  - <<: *d
+    id: MFA-CON-076
+    corresponds_to: null
+    name: "Typed Dependency and Readiness"
+    provider: MFA-ELM-088
+    consumers: "Architecture Elements, TES, build order, deployment profiles, Cockpit"
+    delta: NEW
+    statement: "declare(from,to,type,readiness,failure,degraded_mode)→Edge / bootstrap(cut)→TopologicalWitness|BLOCKED / admit_scc(component,liveness_receipt)→ADMITTED|REJECTED."
+    state_semantics: "Hard/authority/verification edges form DAGs; runtime SCCs are admitted only with async semantics, bounds, timeout, isolation and named degraded mode."
+    failure_semantics: "Untyped legacy edge ⇒ UNCLASSIFIED_BLOCKING; hard cycle without witness or runtime SCC without liveness/isolation ⇒ BLOCKED."
+    exec_type: D1
+    conformance: [MFA-VO-092]
+    change_history: [{patch: MFA-PATCH-0064, op: ADD, date: "2026-09-17", summary: "Typed dependency graph and proved bootstrap order"}]
+  - <<: *d
+    id: MFA-CON-077
+    corresponds_to: null
+    name: "Claim Disposition"
+    provider: MFA-ELM-088
+    consumers: "CLAIMS verdict, requirements, contracts, invariants, VOs, decision log"
+    delta: NEW
+    statement: "record(claim, source_verdict, residue, destinations, patches, obligations, statuses, reviewer, receipts)→ClaimDisposition / close(id)→CLOSED|BLOCKED."
+    state_semantics: "Exactly one canonical disposition per H/F/U claim; source text and residue remain immutable while destinations and evidence evolve by append-only review events."
+    failure_semantics: "Missing record, erased FAIL residue, UNPROVEN coerced to false, dangling destination or mechanical candidate presented as semantic mapping ⇒ BLOCKED."
+    exec_type: D1
+    conformance: [MFA-VO-091]
+    change_history: [{patch: MFA-PATCH-0066, op: ADD, date: "2026-09-17", summary: "First-class ClaimDisposition seat for all 113 verdict claims"}]
+  - <<: *d
+    id: MFA-CON-078
+    corresponds_to: null
+    name: "Evaluator Evolution and Promotion Separation"
+    provider: MFA-ELM-114
+    consumers: "RVSI, PRR, SMF, CGM, VSC, Court and Effect Gate"
+    delta: NEW
+    statement: "explore(signal,envelope)→Candidate / evaluate(candidate, independent_protocol)→Evidence / promote(candidate,evidence,authority)→PROCEEDING|REJECTED."
+    state_semantics: "Novelty, uncertainty reduction, VOI, preferences and self-score guide sandbox/shadow exploration; independent admitted evidence writes epistemic status; signed authority controls promotion/effects."
+    failure_semantics: "Self-score or exploration signal attempting to write truth, promotion or Effect authority ⇒ ERR_UNAUTHORIZED_CAPABILITY; evaluator overlap above threshold ⇒ verdict INDETERMINATE."
+    exec_type: D1
+    conformance: [MFA-VO-094, MFA-VO-095, MFA-VO-096]
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Open-ended measurement, learning and autonomy corrections"}]

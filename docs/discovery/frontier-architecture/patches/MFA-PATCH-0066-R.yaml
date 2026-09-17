@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0066-R
+reverses: MFA-PATCH-0066
+operation: MODIFY
+targets: [CLAIM-DISPOSITIONS.yaml, MFA-CON-077, MFA-VO-091]
+change: {restore: "0.4.0 prose-only claims trace", retire_added_records: [MFA-CON-077, MFA-VO-091], archive: CLAIM-DISPOSITIONS.yaml}
+capability_impact: {gained: [], at_risk: ["claim traceability"], ledger_entry: "Source claims remain preserved outside package"}
+verification: "113 source claims still present in CLAIMS-VERDICT.md"
+rollback: MFA-PATCH-0066
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED

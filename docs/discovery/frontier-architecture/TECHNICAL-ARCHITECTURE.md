@@ -2,11 +2,11 @@
 
 Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
-Αυτό το αρχείο είναι **προβολή**: κάθε στοιχείο, contract, invariant, υποχρέωση, μηχανισμός και απόφαση ζει στα YAML/MD έδρες του πακέτου με σταθερό ID· εδώ συντίθενται σε ένα ενιαίο τεχνικό σχέδιο με τα 25 σημεία βάθους της εντολής §9 ανά υποσύστημα. Όπου η προβολή και το YAML διαφωνούν, ισχύει το YAML. Έκδοση πακέτου 0.3.0 (μετά MFA-PATCH-0001…0019, Pass I σταθερό σημείο).
+Αυτό το αρχείο είναι **προβολή**: κάθε στοιχείο, contract, invariant, υποχρέωση, μηχανισμός και απόφαση ζει στις YAML/MD έδρες του πακέτου με σταθερό ID· εδώ συντίθενται σε ένα ενιαίο τεχνικό σχέδιο με τα 25 σημεία βάθους της εντολής §9 ανά υποσύστημα. Όπου η προβολή και το YAML διαφωνούν, ισχύει το YAML. Frozen source: 0.4.0. Η παρούσα τοπική εκδοχή είναι design-correction draft 0.4.1, χωρίς Creator ratification, commit ή operational authority.
 
 ## Περιεχόμενα
 
-0. Πώς διαβάζονται τα 25 σημεία · 1. Πλαίσιο συστήματος · 2. Δύο planes, έντεκα στρώματα · 3. Κανονικό υπόστρωμα · 4. Εξουσία και επιδράσεις · 5. Μοντέλο δεδομένων και συμβάντων · 6. Μηχανές καταστάσεων · 7. Γνωσιακή αρχιτεκτονική / πορεία ASI · 8. Ψηφιακό δίδυμο · 9. Συλλογικό και Πολιτισμοί · 10. LAWMAX · 11. Εξέλιξη και διάδοχος · 12. Cockpit · 13. Ιστός επαλήθευσης · 14. Ασφάλεια και TCB · 15. Προφίλ ανάπτυξης MFA-DEP-1…5 · 16. Σειρά γένεσης (bootstrap) · 17. Υποβαθμισμένες λειτουργίες και ανάκαμψη · 18. Παρατηρησιμότητα · 19. Φάκελος πόρων · 20. Ανοιχτά ερευνητικά ερωτήματα · 21. Κατάλογος στοιχείων ανά στρώμα (τα 25 σημεία ανά στοιχείο) · 22. Διαγράμματα · 23. Ευρήματα Devil's Advocate
+0. Πώς διαβάζονται τα 25 σημεία · 0A. Master map · 1. Πλαίσιο συστήματος · 2. Δύο planes, έντεκα στρώματα · 3. Κανονικό υπόστρωμα · 4. Εξουσία και επιδράσεις · 5. Μοντέλο δεδομένων και συμβάντων · 6. Μηχανές καταστάσεων · 7. Γνωσιακή αρχιτεκτονική / ASI · 8. Ψηφιακό δίδυμο · 9. Συλλογικό, λειτουργικοί Πολιτισμοί και trust domains · 10. LAWMAX · 11. Εξέλιξη και διάδοχος · 12. Cockpit · 13. Ιστός επαλήθευσης · 14. Ασφάλεια και TCB · 15. Προφίλ ανάπτυξης MFA-DEP-1…5 · 16. Typed bootstrap · 17. Υποβαθμισμένες λειτουργίες και ανάκαμψη · 18. Παρατηρησιμότητα · 19. Φάκελος πόρων · 20. Ανοιχτά ερευνητικά ερωτήματα · 21. Κατάλογος στοιχείων ανά στρώμα · 22. Διαγράμματα · 23. Ευρήματα Devil's Advocate
 
 ## 0. Πώς διαβάζονται τα 25 σημεία της εντολής §9 ανά υποσύστημα
 
@@ -38,9 +38,19 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | 24 | Mermaid | diagrams/ (§22) |
 | 25 | Devil's Advocate | adversarial/ (§23)· κάθε στοιχείο στόχος ≥ 1 επίθεσης (R9) |
 
+## 0A. Master map — τι δείχνει το «όλο μοντέλο»
+
+Το GRAIL δεν είναι ορθά αναπαραστάσιμο ως ένα επίπεδο κουτί-βέλος διάγραμμα: έχει ανεξάρτητες διαστάσεις (Root/Telos, λειτουργικοί Πολιτισμοί, strata, Genesis/Effect planes, trust domains, fidelity και status axes). Το `MFA-DIA-00` είναι η **πλήρης μακροσκοπική όψη** και τα `MFA-DIA-01…25` είναι οι αναλυτικές προβολές της. Κανένα μεμονωμένο διάγραμμα δεν υποκαθιστά τις canonical έδρες.
+
+Κρίσιμη διάκριση: οι πέντε λειτουργικοί Πολιτισμοί `{Formal, Cognitive, Evolutionary, Adversarial, Institutional}` είναι αρχιτεκτονικοί ρόλοι. Τα `N=3f+1` voting και `h≥1` held-out trust domains είναι ανεξάρτητη τοπολογία αξιοπιστίας. Δεν είναι τα ίδια πέντε πράγματα και δεν επιτρέπεται να συγχωνεύονται.
+
 ## 1. Πλαίσιο συστήματος
 
 Το GRAIL είναι ένα **κυρίαρχο γνωσιακό και θεσμικό υπερσύστημα** που ξεκινά ως εκτελέσιμο ψηφιακό δίδυμο και εξελίσσει κάθε όργανό του, χωρίς να χάνει το Telos του· το LAWMAX είναι η πρώτη νομική του έκφραση. Οι δρώντες γύρω του: ο **δημιουργός** (μόνος κάτοχος L3· Owner Root offline/HSM· εγκρίνει με υπογραφή)· οι **Principals** (δικηγόροι που υπογράφουν παραδοτέα, H1)· οι **πελάτες** (μέσω Client Portal, MFA-ELM-069)· οι **πάροχοι** inference (εκτός sovereign boundary, μόνο μέσω DisclosureGrant)· οι **πηγές** (ΦΕΚ, αποφάσεις, έγγραφα — με attestation)· οι **αντίδικοι/δικαστήρια** (πραγματικοί: μόνο μέσω μη αναστρέψιμων πράξεων με envelope ή H1· προσομοιωμένοι: World Twin)· ο **ανταγωνιστής** (ALT-6/7 baseline μέσα στο harness). Το Telos: MFA-TEL-08 συνιστώμενο, με διάταξη αντιφάσεων· χτίζεται πρώτα η τομή (robust substrate MFA-ELM-096). Διάγραμμα: MFA-DIA-02.
+
+**Root ≠ Telos ≠ policy.** Ο αμετάβλητος Root προστατεύει μόνο provenance/lineage, σειρά γεγονότων και replay semantics, identity/key lineage, καθολική διαμεσολάβηση εξουσίας, admission/amendment semantics, μη διαγραφή Unknown/Conflict/counterevidence, Creator root authority με scoped delegation και maximum-frontier non-diminution. Το ενεργό Telos είναι υπογεγραμμένη **έκδοση** και αλλάζει μόνο με ξεχωριστό TelosAmendmentReceipt· harnesses, corpora, metrics, checkers, runtimes, models, architectures, grammar productions, topology και thresholds είναι αντικαταστάσιμες realizations, όχι Root.
+
+Κάθε εγγραφή φέρει έξι ανεξάρτητους άξονες: `target_status`, `design_status`, `realization_fidelity`, `evidence_status`, `authority_status`, `operational_scope`. Απαγορεύονται οι σιωπηλές συνεπαγωγές `APPLIED⇒APPROVED`, `SPECIFIED⇒IMPLEMENTED`, `F1⇒F2/F3/F4`, `REQUIRED⇒PROVEN` και `Creator Approval⇒empirical truth`.
 
 ## 2. Δύο planes, έντεκα στρώματα
 
@@ -52,16 +62,16 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 | Στρώμα | Περιγραφή | Στοιχεία |
 |---|---|---|
-| S0 | Substrate — robust, ίδιο σε κάθε υποψήφιο Telos | 001, 002, 003, 004, 005, 099 (6) |
+| S0 | Substrate — robust, ίδιο σε κάθε υποψήφιο Telos | 001–005, 099, 122 (7) |
 | S1 | Authority & Effect plane | 006, 007, 008, 009, 010, 011, 012, 013, 014, 015, 016 (11) |
-| S2 | Genesis plane — νόηση χωρίς όριο, μέσα στο trust boundary | 017, 018, 019, 020, 021, 022, 023, 024, 025, 026, 027, 028, 029, 030, 031, 032, 098 (17) |
-| S3 | Entity (AEO) | 033, 034, 035, 036, 037, 038, 039, 040 (8) |
+| S2 | Genesis plane — νόηση χωρίς όριο, μέσα στο trust boundary | 017–032, 098, 101, 105–107, 109–111, 120–121, 124, 127 (28) |
+| S3 | Entity (AEO) | 033–040, 112 (9) |
 | S4 | Collective (Epistemic Commons) | 041, 042, 043, 044, 045, 046, 047 (7) |
-| S5 | Institutions & Civilizations | 048, 049, 050, 051, 052, 053, 054, 055, 056, 057 (10) |
-| S6 | LAWMAX (G1) | 058, 059, 060, 061, 062, 063, 064, 065, 066, 067, 068, 069, 070, 071, 072 (15) |
-| S7 | Evolution & Forge (Meta) | 073, 074, 075, 076, 077, 078 (6) |
-| S8 | Knowledge & Provenance (εγκάρσιο) | 079, 080, 081, 082, 083 (5) |
-| S9 | Operations & Verification (εγκάρσιο) | 084, 085, 086, 087, 088, 089, 090 (7) |
+| S5 | Institutions & Civilizations | 048–057, 126 (11) |
+| S6 | LAWMAX (G1) | 058–072, 115 (16) |
+| S7 | Evolution & Forge (Meta) | 073–078, 100, 103–104, 113–114, 116, 118, 123 (14) |
+| S8 | Knowledge & Provenance (εγκάρσιο) | 079–083, 102, 117, 125 (8) |
+| S9 | Operations & Verification (εγκάρσιο) | 084–090, 108, 119 (9) |
 | S10 | Human & Spatial | 091, 092, 093 (3) |
 | SX | Composites | 094, 095, 096, 097 (4) |
 
@@ -93,6 +103,10 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | Verdict | MFA-ELM-044/048 | ⟨proceeding_cid, standard_of_proof (Tier), vector, dissent, appeal_path, re_verifiable⟩ | CID (BFT-ordered cross-site) |
 | Prediction | MFA-ELM-024 | ⟨predictor, target, horizon, score_at, outcome⟩ | CID |
 | Patch | MFA-ELM-090 | PATCH-PROTOCOL §3 | MFA-PATCH-nnnn (F0 git· F2+ δέσμευση) |
+| ArchitectureStatus | ARCHITECTURE-METAMODEL | ⟨target, design, fidelity, evidence, authority, operational_scope⟩· axes ανεξάρτητοι | subject ID + status event CID |
+| EvidenceReceipt | MFA-CON-074 | source/method/input/tool/exit/stdout/stderr/predicate/scope/fidelity/time/signer | content digest + signer |
+| DependencyEdge | MFA-CON-076 | ⟨from,to,type,readiness,failure,degraded_mode⟩ | edge CID |
+| ClaimDisposition | MFA-CON-077 | source verdict + immutable residue + reviewed destinations/patches/VOs/statuses/receipts | claim_id H/F/U |
 | Scene | MFA-ELM-091 | Γ(cut, policy, seed) — Galois (α, γ) | SceneGraph hash |
 | Event | MFA-ELM-014 | versioned subjects· transport only· event_cid correlation | — (ποτέ αλήθεια) |
 | Trace/metric/log | MFA-ELM-087 | OTel + event_cid· αποφάσεις δειγματοληψίας ως Observations | — |
@@ -110,7 +124,7 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | GCP (διάδοχος) | ProposedS → Compiling → Replaying → Diffing → ShadowS → VerdictPending → Adopted ∣ RejectedS → RolledBack | MFA-MECH-003 | MFA-DIA-11 |
 | Court (proceeding) | FILED → CHALLENGED → EVIDENCE → EXAMINATION → DELIBERATION → VERDICT(vector, standard) → DISSENT_RECORDED → APPEAL ∣ FINAL | MFA-ELM-048 | MFA-DIA-07 |
 | Safe-Halt | RUNNING → FROZEN (TimeFreeze με receipt) → HALTED → RUNNING | MFA-ELM-016 | MFA-DIA-05 |
-| Πολιτισμός | VOTING ∣ HELD_OUT ∣ (ARCHIVE = ADD)· rotation | MFA-MECH-018 | MFA-DIA-07 |
+| Trust-domain role | VOTING ∣ HELD_OUT ∣ ARCHIVED· rotation | MFA-MECH-018 | MFA-DIA-07 |
 | Fidelity ladder | F0 (IDs/contracts) → F1 (executable spec) → F2 (DST stubs) → F3 (real organs, sim world) → F4 (real world, canary) → F5 (πλήρες)· behavioural identity ανά σκαλί | MFA-MECH-015 | MFA-DIA-08 |
 | Πράξη μεταγλώττισης πηγής (LSC) | S0 attest → S1 layout → S2 segment → S3 front-end P1 → S4 validate D1 → S5 back-end D2 → S6 differential → S7 admission· CompilationError(locus) | MFA-MECH-016 | MFA-DIA-12 |
 
@@ -126,9 +140,25 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 Δύο δίδυμα: **του οργανισμού** (DST, MFA-ELM-085: seeds, stubs, fault injection, campaigns, trace validation sim/real· 24 KT πρώτα σε F2) και **του κόσμου** (World Twin, MFA-ELM-098: αντίδικοι, δικαστήρια, μητρώα, προθεσμίες, αντίπαλοι ως δρώντες με δηλωμένη πιστότητα, οδηγούμενοι από CAM-NS, παραγόμενοι από τον Temporal KG — MFA-ATK-11). Κλίμακα πιστότητας F0–F5 (MFA-MECH-015) με ίδια IDs/contracts/invariants ΚΑΙ **συμπεριφορική** ταυτότητα: ίδια ετυμηγορία στο σφραγισμένο KT σύνολο + ίδιος loss map· KT PASS σε F_k / FAIL σε F_{k+1} = fidelity-gap δέσμευση που διαψεύδει το stub και ακυρώνει τα PASS που στηρίζονταν σε αυτό (MFA-INV-060). Ghost worlds διακλαδώνουν (ledger cut, world state, actors). Seeds και είσοδοι είναι δεσμεύσεις (MFA-INV-061). Το F-επίπεδο είναι διάνυσμα ανά όργανο/δρώντα (OAP). Διάγραμμα: MFA-DIA-08.
 
-## 9. Συλλογικό και Πολιτισμοί
+## 9. Συλλογικό, λειτουργικοί Πολιτισμοί και trust domains
 
-**Epistemic Commons** (MFA-ELM-041…047): τέσσερα επίπεδα — μαρτυρία (G-Set, συγκλίνει), ισχυρισμοί (γράφος με ακμές 2ης τάξης), στάσεις (μόνο από τον κάτοχο), ετυμηγορίες (μόνο με διαδικασία)· typed speech acts, καμία free-text διαδρομή· coordination market + economy (EXP-25). **Epistemic Court** (MFA-ELM-048): proceeding state machine, standard of proof ↔ Tier (MFA-INV-063), ≥ 1 μη-LLM oracle με δηλωμένη γενεαλογία κανόνων (EIM μετρά εξάρτηση από ετυμηγορίες του ίδιου Court, MFA-ATK-16), dissent διατηρείται, appeal. **Civilization Quorum** (MFA-ELM-056, MFA-MECH-018): N = 3f+1 VOTING + h HELD_OUT Πολιτισμοί ως trust domains (δική τους supply chain, κλειδιά, evaluators)· ο HELD_OUT κρατά όλα τα sealed sets, ποτέ δεν ψηφίζει (MFA-INV-050), υπογράφει GCP verdicts· σχήμα ανά προφίλ: DP-1/2 = 1 VOTING + 1 HELD_OUT σε **ξεχωριστή φυσική συσκευή** (MFA-ATK-13) — αλλιώς προαγωγές EIM-UNVERIFIED/canary-only. **EIM** (MFA-MECH-009): ανεξαρτησία = διάνυσμα (supply, data, behaviour, verdict-lineage) με veto ανά διάσταση. **Trust-Domain Import Gate** (MFA-ELM-057): ετυμηγορίες από άλλο domain εισάγονται μόνο με receipt και επανα-standard. Διάγραμμα: MFA-DIA-07.
+**Epistemic Commons** (MFA-ELM-041…047): τέσσερα επίπεδα — μαρτυρία (G-Set, συγκλίνει), ισχυρισμοί (γράφος με ακμές 2ης τάξης), στάσεις (μόνο από τον κάτοχο), ετυμηγορίες (μόνο με διαδικασία)· typed speech acts, καμία ανεξέλεγκτη free-text διαδρομή· coordination market + economy. **Epistemic Court** (MFA-ELM-048): proceeding state machine, standard of proof ↔ Tier, dissent και appeal.
+
+Οι **πέντε λειτουργικοί Πολιτισμοί** είναι ορθογώνιες αρμοδιότητες και όχι μηχανές ή deployment replicas:
+
+| Πολιτισμός | Αποκλειστική ευθύνη | Κύρια strata/όργανα | Τι δεν δικαιούται μόνος του |
+|---|---|---|---|
+| Formal | τύποι, αποδείξεις, obligations, model checking, verification semantics | S0, S2 Verification Suite, S9, OC/VFC | να ορίζει Telos ή να εκτελεί Effect |
+| Cognitive | perception, attention, world/self model, deliberation, volition, science | S2–S3 | να αυτο-πιστοποιεί την αλήθεια ή την προαγωγή του |
+| Evolutionary | learning, forge, architecture search, successor, substrate migration | S7–S8 | να αλλάζει Root ή να προάγει τον εαυτό του |
+| Adversarial | attacks, countermodels, competitor baselines, falsifiers, seeded faults | S4–S5, CAM-NS, ECE | να γράφει τελική ετυμηγορία ή Effect authority |
+| Institutional | Court, constitution, authority, admission, appeal, professional/legal acts | S1, S5–S6 | να μετατρέπει authority decision σε empirical truth |
+
+Κάθε δέσμευση διασχίζει Πολιτισμούς με typed speech act και receipt. Ένα Dynamic Quest μπορεί να ενεργοποιήσει και τους πέντε, αλλά κανένας δεν είναι υποχρεωτικό «στάδιο» αν το dependency/VO graph δεν τον απαιτεί. Οι μεταξύ τους συγκρούσεις παραμένουν first-class και καταλήγουν σε vector verdict ή Pareto forks, όχι σε πρόωρο scalar collapse.
+
+Η **τοπολογία ανεξαρτησίας** είναι ξεχωριστή: `N=3f+1` VOTING trust domains + `h≥1` HELD_OUT evaluation domains, καθένα με δική του supply chain, κλειδιά, evaluator lineage και εγκατάσταση του ίδιου συντάγματος. Ένας λειτουργικός Πολιτισμός μπορεί να έχει instances σε πολλά trust domains και ένα trust domain μπορεί να φιλοξενεί φραγμένα instances πολλών Πολιτισμών. Ο HELD_OUT είναι ρόλος επαλήθευσης, όχι «έκτος Πολιτισμός», δεν ψηφίζει και δεν εκπαιδεύεται μέσα στην ίδια evaluation epoch. Το MFA-ELM-056 ονομάζεται πλέον `Trust-Domain Quorum`· το `Civilization Quorum` διατηρείται μόνο ως legacy alias για ιστορική αναπαραγωγή.
+
+**EIM** (MFA-MECH-009): ανεξαρτησία = διάνυσμα `(supply, data, behaviour, verdict-lineage)` με veto ανά διάσταση. **Trust-Domain Import Gate** (MFA-ELM-057): κάθε εισαγωγή από άλλο domain χρειάζεται receipt, lineage και επαναξιολόγηση στο standard του καταναλωτή. Αναλυτικό διάγραμμα: MFA-DIA-07. Master διάγραμμα: MFA-DIA-00.
 
 ## 10. LAWMAX (G1)
 
@@ -251,9 +281,13 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 Τεχνικές μη-υποβάθμισης (εντολή §22): semantic-equivalent reduced-fidelity profile (lean, MFA-ELM-097)· remote/cluster acceleration (offloading)· deferred simulations (World Twin, shadow runs)· selective organ activation (OAP)· level of detail (CGP LOD)· lazy materialization (indexes παράγωγα, rebuild από ledger)· workload scheduling (OAP + budgets ανά κύκλο TEGF).
 
-## 16. Σειρά γένεσης (bootstrap) — πώς σπάνε οι 16 αμοιβαίες εξαρτήσεις
+## 16. Typed bootstrap — από κύκλους σε αποδεδειγμένη σειρά γένεσης
 
-Οι κύκλοι που αναφέρει το `tools/check-package.py` (R8a) είναι **αμοιβαίες εξαρτήσεις χρόνου εκτέλεσης**, όχι σφάλματα: σπάνε με κατάσταση GENESIS του ενός άκρου (δεσμεύσεις σημασμένες Absent(reason) στον σχετικό άξονα) και **αναδρομική βεβαίωση** μόλις υπάρξει το άλλο άκρο (MFA-ATK-15).
+Το frozen graph έχει 127 στοιχεία, 617 untyped dependency edges, 38 SCCs, δύο μη τετριμμένα SCCs και ένα SCC 89 στοιχείων/439 εσωτερικών ακμών. Ο checker απαριθμεί 215 simple cycles. Επομένως η παλαιά δήλωση ότι οι κύκλοι είναι απλώς runtime και «σπάνε» με 16 recipes είναι **UNPROVEN**: πριν κριθεί ένας κύκλος πρέπει κάθε ακμή να ταξινομηθεί ως `BOOTSTRAP_HARD`, `SCHEMA_IMPORT`, `AUTHORITY_PREREQUISITE`, `VERIFICATION_PREREQUISITE`, `RUNTIME_CALL`, `DATA_SUBSCRIPTION`, `OBSERVABILITY`, `OPTIONAL_AUGMENTATION`, `EVOLUTION_FEEDBACK`, `RESOURCE_PROVIDER`, `HUMAN_DECISION` ή `PROJECTION_ONLY`.
+
+Οι hard, authority και verification υπογράφοι πρέπει να είναι DAGs. Runtime SCC επιτρέπεται μόνο με δηλωμένα readiness protocol, initialization state, timeout, bounded queues/recursion, fault isolation και degraded mode. `UNCLASSIFIED` σημαίνει blocking. Η ελάχιστη σειρά είναι `B0 receipts/root declaration → B1 ανεξάρτητα Identity/Time roots → B2 ledger/read-only substrate/authority mediation → B3 VFC-bootstrap/obligations → B4 gate/effect/patch admission → B5 organs σε degraded mode → B6 twin/evaluators/cockpit/evolution feedback`.
+
+Ο ακόλουθος πίνακας διατηρεί τις 16 ιστορικές bootstrap recipes ως υποψήφιες υλοποιήσεις· καμία δεν αποτελεί απόδειξη μέχρι να ταξινομηθούν οι αντίστοιχες ακμές και να περάσουν τα παραπάνω graph obligations.
 
 | # | Κύκλος | Ζεύγος | Κανόνας γένεσης |
 |---|---|---|---|
@@ -353,7 +387,7 @@ OTel traces/metrics/logs με `event_cid` correlation· **μη αυθεντικ�
 | MFA-ELM-053 Organization Genesis | Elixir + DSL |
 | MFA-ELM-054 Institutions Runtime | Elixir |
 | MFA-ELM-055 Knowledge Transmission | CL/Python |
-| MFA-ELM-056 Civilization Quorum | DP-1/2: 1 VOTING + 1 HELD_OUT remote (scorer-only)· DP-3: 4 VOTING σε ≥2 hosts + 1 HELD_OUT remote· DP-4: 5 sites· «5 microVMs στο laptop» απορρίφθηκε ως μυθοπλασία ανεξαρτησίας (MFA-ATK-13) |
+| MFA-ELM-056 Trust-Domain Quorum | DP-1/2: 1 VOTING + 1 HELD_OUT remote (scorer-only)· DP-3: 4 VOTING σε ≥2 hosts + 1 HELD_OUT remote· DP-4: 5 sites· «5 microVMs στο laptop» απορρίφθηκε ως μυθοπλασία ανεξαρτησίας (MFA-ATK-13) |
 | MFA-ELM-057 Trust-Domain Import Gate | αμελητέο |
 | MFA-ELM-058 Matter Management | Elixir + TS |
 | MFA-ELM-059 Legal Corpus Compiler (LSC) & Temporal Semantics | CL (as-built) + Rust |
@@ -1247,18 +1281,18 @@ OTel traces/metrics/logs με `event_cid` correlation· **μη αυθεντικ�
 - **Πόροι:** CL/Python · **Εξέλιξη:** R-A
 - **Άγνωστα / συγκρούσεις:** — / — · **Προέλευση:** CMP-CIV-06 · **Παραδοχές:** —
 
-#### MFA-ELM-056 · Civilization Quorum · plane both · delta NEW · maturity X · v2 · δόση 2
+#### MFA-ELM-056 · Trust-Domain Quorum · plane both · delta NEW · maturity X · v4 · δόση 2
 
-- **Σκοπός / δήλωση:** Ο λόγος του «5» και η ανεξαρτησία ως δομή. — MFA-MECH-018: N=3f+1 VOTING + h HELD_OUT Πολιτισμοί ως trust domains με ίδιο σύνταγμα, δική τους supply chain/κλειδιά/evaluators· EIM πύλη ανά ζεύγος· sealed sets (Battery, AnchorSet ±, AffinityTest, SeededFaults) μόνο στον HELD_OUT· rotation· BFT μόνο για Verdicts. ΣΧΗΜΑ ΑΝΑ ΠΡΟΦΙΛ (MFA-ATK-13): DP-1/2 = {1 VOTING, 1 HELD_OUT σε ΞΕΧΩΡΙΣΤΗ ΦΥΣΙΚΗ ΣΥΣΚΕΥΗ υπό κλειδιά δημιουργού (phone-class αρκεί: scorer + sealed sets, κανένα μοντέλο, MFA-INV-050)}· DP-3 = {4 VOTING σε ≥2 hosts, 1 HELD_OUT remote}· DP-4 = 5 sites (πλήρες)· χωρίς ξεχωριστή συσκευή: promotion = EIM-UNVERIFIED → canary-only, ποτέ cutover (MFA-INV-048 απόλυτη).
+- **Σκοπός / δήλωση:** Ανεξαρτησία κρίσης και Byzantine fault tolerance ως trust topology — όχι ορισμός των λειτουργικών Πολιτισμών. MFA-MECH-018: `N=3f+1` VOTING + `h` HELD_OUT trust domains με κοινό σύνταγμα αλλά ανεξάρτητη supply chain/κλειδιά/evaluators· ορθογώνια προς `{Formal, Cognitive, Evolutionary, Adversarial, Institutional}`. ΣΧΗΜΑ ΑΝΑ ΠΡΟΦΙΛ (MFA-ATK-13): DP-1/2 = {1 VOTING, 1 HELD_OUT σε ξεχωριστή φυσική συσκευή}· DP-3 = {4 VOTING σε ≥2 hosts, 1 HELD_OUT remote}· DP-4 = 5 sites· χωρίς ξεχωριστή συσκευή: promotion = EIM-UNVERIFIED → canary-only, ποτέ cutover.
 - **Ικανότητες:** MFA-CAP-075, MFA-CAP-035, MFA-CAP-056
-- **Διεπαφές:** MFA-CON-042, MFA-CON-014
+- **Διεπαφές:** MFA-CON-042, MFA-CON-014, MFA-CON-076
 - **Εξουσία:** f,h = L3
 - **Κατάσταση:** quorum config + EIM matrix
 - **Εξαρτήσεις:** MFA-ELM-003, MFA-ELM-086, MFA-ELM-050, MFA-ELM-057
 - **Αποτυχίες:** HELD_OUT εκτός→προαγωγές παγώνουν
-- **Εναλλακτικές:** ένας Πολιτισμός N-version
-- **Επαλήθευση:** MFA-VO-044, MFA-VO-004, MFA-VO-019 · **Falsifier:** verdict από HELD_OUT
-- **Πόροι:** DP-1/2: 1 VOTING + 1 HELD_OUT remote (scorer-only)· DP-3: 4 VOTING σε ≥2 hosts + 1 HELD_OUT remote· DP-4: 5 sites· «5 microVMs στο laptop» απορρίφθηκε ως μυθοπλασία ανεξαρτησίας (MFA-ATK-13) · **Εξέλιξη:** ADD ρόλος
+- **Εναλλακτικές:** ένα trust domain με N-version αξιολογητές
+- **Επαλήθευση:** MFA-VO-044, MFA-VO-004, MFA-VO-019, MFA-VO-092 · **Falsifier:** verdict από HELD_OUT
+- **Πόροι:** DP-1/2: 1 VOTING + 1 HELD_OUT remote (scorer-only)· DP-3: 4 VOTING σε ≥2 hosts + 1 HELD_OUT remote· DP-4: 5 sites· «5 microVMs στο laptop» απορρίφθηκε ως μυθοπλασία ανεξαρτησίας (MFA-ATK-13) · **Εξέλιξη:** ADD trust domain ή αλλαγή topology χωρίς αλλαγή λειτουργικών Πολιτισμών
 - **Άγνωστα / συγκρούσεις:** MFA-UNK-006 / — · **Προέλευση:** προοίμιο, MFA-MECH-018, ADR-0031 · **Παραδοχές:** f=1, h=1 πλήρες σχήμα μόνο DP-3+, ο HELD_OUT χρειάζεται scorer + sealed sets, όχι μοντέλο — γι' αυτό χωρά σε φθηνή δεύτερη συσκευή
 
 #### MFA-ELM-057 · Trust-Domain Import Gate · plane effect · delta NEW · maturity X · v1 · δόση 2
@@ -1847,10 +1881,11 @@ OTel traces/metrics/logs με `event_cid` correlation· **μη αυθεντικ�
 - **Πόροι:** laptop DP-1 · **Εξέλιξη:** OAP
 - **Άγνωστα / συγκρούσεις:** — / MFA-CFL-008 · **Προέλευση:** MFA-ALT-6, εντολή §15 · **Παραδοχές:** —
 
-## 22. Διαγράμματα (17, επικυρωμένα με το Mermaid Chart plugin)
+## 22. Διαγράμματα (26 συνολικά· MFA-DIA-00 master + 25 αναλυτικές προβολές)
 
 | ID | Ερώτηση που απαντά |
 |---|---|
+| MFA-DIA-00 | Whole-system master map: Root, versioned Telos, πέντε λειτουργικοί Πολιτισμοί, strata, planes, twin, trust domains, cockpit και πραγματικός κόσμος. |
 | MFA-DIA-01 | MFA-DIA-01 · Objective/Telos lattice · question: ποιοι υποψήφιοι Telos υπάρχουν, ποιος κυριαρχεί ποιον, και ποιο είναι το ανθεκτικό υπόστρωμα; |
 | MFA-DIA-02 | MFA-DIA-02 · Complete system context · question: ποιος βρίσκεται έξω από το GRAIL, από ποιο σύνορο περνά, και με ποιο receipt; |
 | MFA-DIA-03 | MFA-DIA-03 · Architecture strata/domains · question: ποιο στοιχείο ανήκει πού, και ποιο plane; κριτήριο ένταξης = καταναλώνει contracts του στρώματος χωρίς να εκθέτει υλοποίηση προς τα κάτω |
@@ -1868,6 +1903,14 @@ OTel traces/metrics/logs με `event_cid` correlation· **μη αυθεντικ�
 | MFA-DIA-15 | MFA-DIA-15 · Patch/update mechanism · question: πώς αλλάζει το πακέτο (και αργότερα το ζωντανό σχέδιο) χωρίς ολική επανεγγραφή; |
 | MFA-DIA-16 | MFA-DIA-16 · Verification web · question: ποιος ελέγχει ποιον — invariants, obligations, held-out, EIM — και πού είναι η κλίμακα απόδειξης; |
 | MFA-DIA-17 | MFA-DIA-17 · 3D cockpit spatial ontology · question: ποιο είδος δέσμευσης/σχέσης/κατάστασης γίνεται ποιο γεωμετρικό αντικείμενο, και από ποια συνάρτηση; |
+| MFA-DIA-18 | Ενιαίος Ω-loop δέκα φάσεων και λωρίδα διακοπών. |
+| MFA-DIA-19 | Verified self-improvement stack: RVSI, RAGen, ECE, CGM, OC και GCP. |
+| MFA-DIA-20 | Sovereignty Transition Protocol ανά capability family. |
+| MFA-DIA-21 | Substrate migration και verified successor construction. |
+| MFA-DIA-22 | Endogenous science loop: ανωμαλία → έννοια/αιτία/υπόθεση/θεώρημα. |
+| MFA-DIA-23 | Consciousness Hypothesis Host και Indicator Algebra. |
+| MFA-DIA-24 | Twin Execution Semantics και executable invariants. |
+| MFA-DIA-25 | Obligation Calculus, discharge και μη απώλεια υποχρέωσης. |
 
 ## 23. Ευρήματα Devil's Advocate (17 επιθέσεις, 19 patches)
 
@@ -2185,7 +2228,17 @@ OTel traces/metrics/logs με `event_cid` correlation· **μη αυθεντικ�
 
 ## 16-bis. Σειρά γένεσης 0.4.0 (MFA-PATCH-0057)
 
-Οι 215 αμοιβαίες runtime εξαρτήσεις (R8a) λύνονται με σειρά κατασκευής, όχι με αφαίρεση (MFA-DEC-104). Σειρά: (1) TES F1 (126) με mocks· (2) OC-lite (122) + CGM-lite (119)· (3) STP measurement (116) + SMF σκιά (100/101/102)· (4) TGPS (112) πάνω σε Lean specs του CC· (5) Δόση 1: OGE/CDCE/AHE (109/110/111), ECE (114), CPCL (118), SMP ledger+keys (117)· (6) Δόση 2: LWM/OEC (105/106), AIDC (124), MSM (120), CHH (121), RAGen F1 (113), G_Ω (115), TGL (123), PRR (103)· (7) Δόση 3: RVSI L2 (104) + Reflective Tower (031), VSC DST (125), Ω-loop πλήρης (127)· (8) Δόση 4: αναδρομή τελεστών, S4, πρώτη διαδοχή. Πλήρης χάρτης: ASI-IMPLEMENTATION-LADDER.md.
+Η παλαιά ακολουθία 0.4.0 είναι **bootstrap candidate**, όχι απόδειξη ότι οι 215 κύκλοι λύθηκαν. Η δεσμευτική απαίτηση της 0.4.1 είναι MFA-CON-076 / MFA-INV-120 / MFA-VO-092: 617/617 ακμές τυποποιούνται, τα hard/authority/verification subgraphs αποκτούν topological witness και κάθε runtime SCC αποδεικνύει readiness, bounds, timeout, isolation και degraded mode. Μόνο τότε η λεπτομερής ακολουθία TES→OC/CGM→STP/SMF→TGPS→Dose 1…4 μπορεί να αναβαθμιστεί από candidate σε admitted bootstrap.
+
+**Τρέχουσα μετανάστευση MFA-PATCH-0064:** 617/617 legacy ακμές έχουν πλέον σημασιολογικό τύπο και επιλυόμενο τρίπτυχο readiness/failure/degraded mode· `UNCLASSIFIED_BLOCKING = 0`. Καλύπτονται ο constitutional/bootstrap κορμός, cognition→verification→admission→Twin, entity→collective→institutional→legal→evolution→knowledge, οι χωρικές προβολές/structural composites και οι βρόχοι sovereign learning→self-improvement→consciousness→successor. Τα επαναλαμβανόμενα semantics μπορούν να προέρχονται από το ονομασμένο profile του τύπου ακμής, αλλά κάθε ακμή διατηρεί δικό της `context` και επιτρέπεται να τα αυστηροποιεί με overrides. Η πλήρης ταξινόμηση **δεν** είναι ακόμη bootability/liveness verdict: απομένει η μηχανική topological witness των prerequisite ακμών και η admission/rejection κάθε runtime SCC.
+
+Η φαινομενική αναδρομή VFC↔OC διασπάται χωρίς απόκρυψη: το `MFA-ELM-099.bootstrap_contract` εισάγει ως αδρανή schema seed τους ελάχιστους τύπους υποχρέωσης του `MFA-ELM-122.static_obligation_schema_seed`, ενώ το `MFA-ELM-122.runtime_checker` εξαρτάται αργότερα από το ήδη διαθέσιμο `MFA-ELM-099.bootstrap_contract` για πραγματική απαλλαγή υποχρεώσεων. Αντίστοιχα, τα αμφίδρομα TES↔World-Twin και Kill-Test-Registry↔TES δηλώνονται ως runtime συνεργασίες διαφορετικών facets, με φραγμένες ουρές, deadlines και συγκεκριμένο F1/deferred degraded mode· δεν μεταμφιέζονται σε bootstrap ακμές.
+
+Το prerequisite υπογράφημα (136 ακμές `BOOTSTRAP_HARD`/`AUTHORITY_PREREQUISITE`/`VERIFICATION_PREREQUISITE`, 89 κόμβοι) έχει μηχανικά παραχθεί σε 7 prerequisites-first στρώματα P0…P6 και έχει 0 κύκλους, τόσο coarse όσο και με τα ονομασμένα facets. Στο required runtime γράφημα υπάρχουν ακριβώς δύο SCCs: το `RTSCC-01` (32 κόμβοι/95 εσωτερικές ακμές), που είναι epochal asynchronous feedback loop του γνωσιακού/μαθησιακού/εξελικτικού κύκλου, και το `RTSCC-02` (MFA-ELM-024↔037), που διασπάται χρονικά ως profile(e−1)→external certificate(e)→metacognition(e). Τα πλήρη contracts βρίσκονται στο `ARCHITECTURE-ELEMENTS.yaml#dependency_migration.runtime_scc_analysis`.
+
+Οι ακμές `OPTIONAL_AUGMENTATION` δεν ενεργοποιούνται σιωπηρά: κάθε σύνολο ενεργών optionals είναι νέα configuration και απαιτεί επανυπολογισμό SCC + `ConfigurationLivenessReceipt`. Έτσι το θεωρητικό SCC 58 κόμβων που προκύπτει αν ενεργοποιηθούν όλα μαζί δεν βαφτίζεται «ασφαλές». Τα δύο required SCCs είναι μόνο **PROVISIONALLY_ADMISSIBLE / UNPROVEN_AT_F1**· μέχρι τα F1 liveness receipts, η MFA-VO-092 κρατά την implementation readiness σε BLOCKED.
+
+Το υφιστάμενο `tools/check-package.py` της 0.4.0 εξακολουθεί να εμφανίζει `R8a: 215` επειδή διαβάζει μόνο τα ακατέργαστα `elements[].dependencies` και απαριθμεί simple cycles χωρίς τύπο, facet ή χρονική σημασιολογία. Αυτό παραμένει χρήσιμο ως regression alarm, αλλά **δεν** είναι typed SCC analysis και δεν αναιρεί ούτε αντικαθιστά τα δύο παραπάνω SCC records. Η μελλοντική υλοποίηση του MFA-VO-092 οφείλει να επαληθεύει το canonical `dependency_migration`, όχι να βαφτίσει το coarse warning επιτυχία.
 
 ## 19-bis. Φάκελος πόρων 0.4.0
 

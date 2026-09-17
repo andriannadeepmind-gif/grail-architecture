@@ -1,0 +1,2767 @@
+# CLAIM-DISPOSITIONS — first-class disposition seat for the 113 adversarial verdict claims.
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+document:
+  title: Canonical Claim Dispositions — 113 verdict claims
+  schema: ARCHITECTURE-METAMODEL.yaml#claim_disposition_schema
+  source: docs/discovery/CLAIMS-VERDICT.md
+  source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239
+  design_revision: 0.4.1
+  status: PROPOSED
+  authority_status: DRAFT
+  semantic_closure: false
+rules:
+- No FAILS residue may disappear.
+- HOLDS does not imply implemented or empirically replicated.
+- UNPROVEN remains first-class and is never coerced to false.
+- Legacy explicit trace is evidence of a textual link, not semantic adjudication.
+- Mechanical candidate IDs were intentionally omitted as non-semantic noise.
+counts:
+  total: 113
+  HOLDS: 13
+  FAILS: 97
+  UNPROVEN: 3
+  with_legacy_explicit_trace: 60
+  without_legacy_explicit_trace: 53
+  semantically_adjudicated: 0
+claims:
+- claim_id: H1
+  source_verdict: HOLDS
+  source_line: 114
+  claim_text: '**METROPOLIS** — Το ίδιο σύνταγμα εγκαθίσταται σε δύο επίπεδα: στον πυρήνα ως μηχανισμός και στον οργανισμό ως κανόνας. Δύο εγκαταστάσεις,
+    ένα κείμενο.'
+  source_basis_or_failure: 'Η αρχή είναι δομική, όχι εμπειρική: το ίδιο σύνολο περιορισμών επιβάλλεται μία φορά από τον επιβλέποντα (kernel) και
+    μία φορά από τον επιβλεπόμενο (organ), με το δεύτερο να μην μπορεί να χαλαρώσει το πρώτο. Αντιστοιχεί στο καθιερωμένο σχήμα reference monitor
+    + policy decision point.'
+  preserved_residue_or_action: Το ίδιο το κείμενο· η αντιστοιχία με `CMP-KRN-01` (kernel constitution) και `INV-C04` (ένα κείμενο, δύο επιβολές)
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:80
+  - AI-CONTRIBUTION-LEDGER.md:222
+  - ARCHITECTURE-ELEMENTS.yaml:123
+  - ARCHITECTURE-ELEMENTS.yaml:434
+  - TECHNICAL-ARCHITECTURE.md:581
+  - TECHNICAL-ARCHITECTURE.md:1182
+  - diagrams/MFA-DIA-10.mmd:21
+  - diagrams/rendered/MFA-DIA-10.svg:1
+  - mechanisms/MFA-MECH-006.md:28
+  - mechanisms/MFA-MECH-018.md:15
+  - patches/MFA-PATCH-0005-R.yaml:33
+  - patches/MFA-PATCH-0005.yaml:39
+  - patches/MFA-PATCH-0007-R.yaml:75
+  - patches/MFA-PATCH-0007.yaml:159
+  - patches/MFA-PATCH-0009-R.yaml:40
+  - patches/MFA-PATCH-0009.yaml:62
+  - patches/MFA-PATCH-0018-R.yaml:43
+  - patches/MFA-PATCH-0018.yaml:43
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 8e838f5242fe22c244121070976fbf57893931113414fe6d0c181bac0b42f2de
+- claim_id: H2
+  source_verdict: HOLDS
+  source_line: 115
+  claim_text: '**METROPOLIS** — Κάθε αντικείμενο που διασχίζει όριο **φέρει** το αποδεικτικό του, με σχήμα δέκα πεδίων.'
+  source_basis_or_failure: 'Ο Α΄ γύρος το απέρριψε διαβάζοντας «αποδεικτικό» ως *proof* (μαθηματική απόδειξη) και απαιτώντας κάτι που το κείμενο
+    δεν υπόσχεται. Στα ελληνικά και στη νομική γλώσσα «αποδεικτικό» είναι **απόδειξη παραλαβής/προέλευσης** — receipt, attestation. Το ρήμα «φέρει»
+    επιβεβαιώνει: το αντικείμενο μεταφέρει, δεν αποδεικνύει. Με αυτή την ανάγνωση ο ισχυρισμός είναι όχι μόνο συνεπής αλλά υλοποιήσιμος σήμερα.'
+  preserved_residue_or_action: 'Η γρ. 874 του εγγράφου δίνει ρητά τη βάση για υπογραφή και ανάκληση, με κανόνα μη-κυκλικότητας. Εξωτερική επιβεβαίωση:
+    in-toto attestation envelope (ανοίχτηκε απευθείας), SLSA provenance, Sigstore.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:618
+  - CROSS-DOMAIN-TRANSFERS.md:23
+  - TECHNICAL-ARCHITECTURE.md:1580
+  - TECHNICAL-ARCHITECTURE.md:1590
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 403d4d2076f7dfaee94cb0fcb1e78ae5016026cdf7cb5c89e527920ad2cd6916
+- claim_id: H3
+  source_verdict: HOLDS
+  source_line: 116
+  claim_text: '**METROPOLIS** — Νόμος φραγμένης διάδοσης: καμία διέγερση δεν διαδίδεται χωρίς όριο.'
+  source_basis_or_failure: 'Η απόρριψη του Α΄ αυτοαναιρέθηκε: παρέθεσε τη γρ. 678 ως αντιπαράδειγμα, ενώ η δεύτερη πρόταση της ίδιας γραμμής είναι
+    **συζευκτική** — κάθε pulse φέρει visited set **ΚΑΙ** budget **ΚΑΙ** typed termination. Τρεις ανεξάρτητοι φραγμοί, όχι ένας ελλιπής.'
+  preserved_residue_or_action: Γρ. 678 του εγγράφου, ανάγνωση ολόκληρης της περιόδου. Αντιστοιχεί σε `INV-C06` (bounded propagation) και στο μετρημένο
+    εύρημα του §3 για το Neural Luminescence (α·λ_max < 1)
+  legacy_explicit_trace_refs:
+  - INVARIANTS.yaml:26
+  - patches/MFA-PATCH-0004-R.yaml:40
+  - patches/MFA-PATCH-0004.yaml:39
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 6f5ee52e27961b223a35e63d8e9961e3fdac0ea6f108b6bd356c6f72e072e89a
+- claim_id: H4
+  source_verdict: HOLDS
+  source_line: 117
+  claim_text: '**OMEGA-GUIDE** — Οι συνθήκες νίκης δεν ανήκουν στον evaluator.'
+  source_basis_or_failure: 'Διαχωρισμός αρμοδιοτήτων με σαφή λόγο: ο evaluator κρίνει *κατάσταση*, ο ορισμός της νίκης είναι **τελεολογική** επιλογή
+    που ανήκει στο Telos. Αν ο evaluator ορίζει τι είναι νίκη, κρίνει τον εαυτό του — η κλασική διάβρωση κάθε μετρικής.'
+  preserved_residue_or_action: Το ίδιο το κείμενο· αντιστοιχεί στη διάκριση `Telos` vs `Verification` της Φάσης Β και στο «μία έδρα ανά έννοια»
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:662
+  - ARCHITECTURE-ELEMENTS.yaml:663
+  - TECHNICAL-ARCHITECTURE.md:1680
+  - TECHNICAL-ARCHITECTURE.md:1690
+  - patches/MFA-PATCH-0013-R.yaml:65
+  - patches/MFA-PATCH-0013.yaml:62
+  - patches/MFA-PATCH-0017-R.yaml:22
+  - patches/MFA-PATCH-0017.yaml:20
+  - patches/MFA-PATCH-0035-R.yaml:167
+  - patches/MFA-PATCH-0035.yaml:213
+  - patches/MFA-PATCH-0045-R.yaml:38
+  - patches/MFA-PATCH-0045.yaml:40
+  - patches/MFA-PATCH-0047-R.yaml:31
+  - patches/MFA-PATCH-0047.yaml:30
+  - patches/MFA-PATCH-0053-R.yaml:22
+  - patches/MFA-PATCH-0053.yaml:19
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 0599302b1141d3e2425b0dea229510c0884da040ec3aa23dec03ce4e777ca27e
+- claim_id: H5
+  source_verdict: HOLDS
+  source_line: 118
+  claim_text: '**OMEGA-GUIDE** — Κατάλογος μη αναστρέψιμων διεπαφών: ό,τι εκτίθεται μία φορά, δεν αποσύρεται.'
+  source_basis_or_failure: 'Ο Α΄ έκρινε **άλλον** ισχυρισμό — έκρινε την *πληρότητα* του καταλόγου αντί για τον *χρονικό* κανόνα που διατυπώνεται.
+    Ο νόμος του Hyrum δεν είναι θεώρημα (Δ-13): είναι εμπειρική παρατήρηση. Και κρίσιμα, τα τεκμήρια που προσκόμισε ο Α΄ είναι **υπέρ** του κανόνα,
+    όχι εναντίον του.'
+  preserved_residue_or_action: 'draft-iab-use-it-or-lose-it / RFC 9170 (ανοίχτηκε απευθείας): τα πεδία πρωτοκόλλων που δεν χρησιμοποιούνται οστεοποιούνται.
+    Αντιστοιχεί σε `EXP-07`, `ADR-0010`'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: ABSENT
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 0061e68c26295331e198209c22bf5638f04c4a0affc1c6f8311ba05eb6702da5
+- claim_id: H6
+  source_verdict: HOLDS
+  source_line: 119
+  claim_text: '**SYNTHESIS-1** — Οι προηγούμενες συνθέσεις είναι ανεπαρκείς για τον σκοπό· απαιτείται νέα.'
+  source_basis_or_failure: Η **διαπίστωση ανεπάρκειας** τεκμηριώνεται ρητά στο κείμενο με ονομασμένα κενά. Αυτό είναι το ωφέλιμο φορτίο και επιβιώνει
+    ακέραιο.
+  preserved_residue_or_action: Το ίδιο το κείμενο. **Αφαιρείται** ο υπερθετικός «ισχυρότερη» (UNPROVEN, καμία σύγκριση δεν διεξήχθη) και **απορρίπτονται**
+    τα ποσοστά 17–33% ως απαγορευμένη προβολή κατά `DECISIONS-FOR-CREATOR.md` γρ. 148
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: ABSENT
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: cdb055e8962beb987d9ac9a28e320431d730c6d0b58d61069a59ecfe5e022b9d
+- claim_id: H7
+  source_verdict: HOLDS
+  source_line: 120
+  claim_text: '**SYNTHESIS-1** — `admission_risk` και `StrategicSilence` ως ρητά αντικείμενα του μοντέλου.'
+  source_basis_or_failure: 'Η σιωπή ως **επιλογή με κόστος** αντί για απουσία εξόδου είναι ουσιώδης για νομικό πλαίσιο: η μη-δήλωση έχει συνέπειες
+    και πρέπει να μοντελοποιείται, όχι να προκύπτει από την απουσία κλάδου.'
+  preserved_residue_or_action: Το ίδιο το κείμενο· αντιστοιχεί σε `CMP-LAW-03`, `REQ-ADV-003`
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:494
+  - TECHNICAL-ARCHITECTURE.md:1310
+  - TECHNICAL-ARCHITECTURE.md:1320
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 9737d515bbf117cb54a613c85a84c74e1aa4534e200fe9fa2f136d47fffe309a
+- claim_id: H8
+  source_verdict: HOLDS
+  source_line: 121
+  claim_text: '**SYNTHESIS-1** — Η αξιολόγηση καταγράφεται σε άξονες, ποτέ σε ένα βαθμωτό μέγεθος.'
+  source_basis_or_failure: 'Ως **κανόνας καταγραφής** τεκμηριώνεται τρεις φορές μέσα στο ίδιο έγγραφο και εφαρμόζεται συνεπώς. Η αιτία είναι ορθή:
+    η συμπίεση σε βαθμωτό καταστρέφει την πληροφορία της σύγκρουσης πριν αυτή κριθεί.'
+  preserved_residue_or_action: §23 γρ. 1291 · §19.3 γρ. 1012 · §16.3 γρ. 868. **Πέφτει** ο αριθμός «10» (κλειστή απαρίθμηση → ανοιχτή) και η καθολική
+    απαγόρευση βαθμωτού σε κάθε στάδιο
+  legacy_explicit_trace_refs:
+  - INVARIANTS.yaml:90
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 3c4589374727276bc09d07479988037691ee755dcf118e87bfe3b798d1dfa74a
+- claim_id: H9
+  source_verdict: HOLDS
+  source_line: 122
+  claim_text: '**MERCURY** — Ο περιορισμός γραμματικής επιβάλλεται στην **πηγή** της δειγματοληψίας, όχι εκ των υστέρων.'
+  source_basis_or_failure: '**Μετρημένο, όχι συμπερασμένο.** Ανοίχθηκε ο πηγαίος κώδικας: `cur_p->data[reject.index].logit = -INFINITY` εκτελείται
+    **πριν** το softmax. Οι απαγορευμένες συνέχειες παίρνουν μηδενική πιθανότητα, δεν φιλτράρονται μετά. Η διαφορά είναι ουσιώδης: το φιλτράρισμα
+    εκ των υστέρων μπορεί να αδειάσει το σύνολο επιλογών· ο φραγμός στην πηγή δεν μπορεί.'
+  preserved_residue_or_action: '`llama-grammar.cpp`, ανάγνωση πηγαίου κώδικα'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:186
+  - ARCHITECTURE-ELEMENTS.yaml:185
+  - ARCHITECTURE-ELEMENTS.yaml:186
+  - ARCHITECTURE-ELEMENTS.yaml:776
+  - CAPABILITY-CONSERVATION.md:306
+  - TECHNICAL-ARCHITECTURE.md:684
+  - TECHNICAL-ARCHITECTURE.md:694
+  - adversarial/MFA-ATK-05.md:51
+  - alternatives/MFA-ALT-6.md:24
+  - mechanisms/MFA-MECH-015.md:15
+  - patches/MFA-PATCH-0005.yaml:53
+  - patches/MFA-PATCH-0005.yaml:89
+  - patches/MFA-PATCH-0010-R.yaml:62
+  - patches/MFA-PATCH-0010.yaml:184
+  - patches/MFA-PATCH-0023.yaml:103
+  - patches/MFA-PATCH-0035-R.yaml:270
+  - patches/MFA-PATCH-0035.yaml:406
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 12db4e5372e64715771c799380a0b0ec2cc01f28562c025bf3453657d8510d37
+- claim_id: H10
+  source_verdict: HOLDS
+  source_line: 123
+  claim_text: '**MERCURY** — Zero-copy ring μεταξύ απομονωμένων περιοχών.'
+  source_basis_or_failure: 'Υπάρχει σε **παραγωγή**, σε τρία ανεξάρτητα συστήματα: Xen grant tables, virtio, io_uring. Επιπλέον, το αντεπιχείρημα
+    του Α΄ («το read-only mapping είναι αναξιόπιστο») είναι **ψευδές στο Linux** και μετρήθηκε: εγγραφή σε σελίδα με `PROT_READ` μέσω `mprotect`
+    επιστρέφει `EACCES`.'
+  preserved_residue_or_action: Μετρημένη εκτέλεση· τεκμηρίωση Xen/virtio/io_uring. **Όρος που κρατείται:** ισχύει για αμοιβαία μη-έμπιστες περιοχές
+    μόνο με ρητό έλεγχο ιδιοκτησίας σελίδας — γι' αυτό «HOLDS υπό όρους»
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:135
+  - CAPABILITY-CONSERVATION.md:323
+  - CROSS-DOMAIN-TRANSFERS.md:10
+  - TECHNICAL-ARCHITECTURE.md:607
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 722c4e87425aa27b5be650e9ac5b6b64006e9fc1b03ecd03df97d417d488c9fd
+- claim_id: H11
+  source_verdict: HOLDS
+  source_line: 124
+  claim_text: '**ANSWERS** — Απαιτείται παρασυνεπής λογική: το σύστημα πρέπει να λειτουργεί με αντιφατικά δεδομένα χωρίς κατάρρευση.'
+  source_basis_or_failure: 'Καθιερωμένο και αναγκαίο: σε κλασική λογική μία αντίφαση συνεπάγεται τα πάντα (ex falso quodlibet), που για σώμα νομολογίας
+    με αντικρουόμενες αποφάσεις είναι θανατηφόρο. LP/FDE δίνουν συνεπή σημασιολογία.'
+  preserved_residue_or_action: Priest, LP· Belnap, FDE (τετράτιμη). Αντιστοιχεί σε `CMP-LAW-04`, `INV-C07`
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:218
+  - CROSS-DOMAIN-TRANSFERS.md:20
+  - TECHNICAL-ARCHITECTURE.md:750
+  - UNKNOWNS.yaml:38
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 9310a9771ca25317379a1b2ed2e6dbf3c3a20630dfec209816cf4b7530e3ac11
+- claim_id: H12
+  source_verdict: HOLDS
+  source_line: 125
+  claim_text: '**ANSWERS** — Υπέρθεση: μια πρόταση κρατιέται ταυτόχρονα σε πολλαπλές τιμές αλήθειας μέχρι την κρίση.'
+  source_basis_or_failure: 'Είναι η άμεση συνέπεια του H11 και όχι ανεξάρτητος ισχυρισμός φυσικής: «υπέρθεση» εδώ σημαίνει η τιμή **Both** της
+    FDE, τεχνικά ορισμένη. Επιτρέπει να κρατηθεί η αντίφαση ως αντικείμενο μέχρι να υπάρξει λόγος να κριθεί.'
+  preserved_residue_or_action: Belnap FDE· belief merging. **Ρητός όρος:** ο όρος «υπέρθεση» αποσύρεται από την ορολογία του μοντέλου υπέρ του
+    `Both`, γιατί η κβαντική αναλογία δεν ισχύει και θα παραπλανούσε
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:218
+  - CROSS-DOMAIN-TRANSFERS.md:20
+  - CROSS-DOMAIN-TRANSFERS.md:42
+  - TECHNICAL-ARCHITECTURE.md:750
+  - UNKNOWNS.yaml:38
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: SKETCHED
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: f70a0d3739953ce3f83ff5c1c7c425fb84a36ca48d620c81b02b6c6284ee9ac1
+- claim_id: H13
+  source_verdict: HOLDS
+  source_line: 126
+  claim_text: '**ANSWERS** — Το σχήμα του invariant επιβάλλεται με **επανέλεγχο** και όχι με εφάπαξ έλεγχο κατά τη δημιουργία.'
+  source_basis_or_failure: 'Ο ίδιος ο Α΄ ελεγκτής έγραψε για αυτόν «ΕΠΙΒΙΩΝΕΙ ΑΚΕΡΑΙΟ, ΜΕ ΜΕΤΡΗΜΕΝΟ ΤΕΚΜΗΡΙΟ» και παρ'' όλα αυτά τον κατέταξε
+    FAILS — εσωτερική αντίφαση της ετυμηγορίας. Το «ανώτερο» που προσκομίστηκε ως ανταγωνιστής (`monitoring.lisp`) έχει **μηδέν** επανέλεγχο και
+    είχε ήδη αποκλίνει: 4 έλεγχοι έναντι 3.'
+  preserved_residue_or_action: Μετρημένη εκτέλεση στο `monitoring.lisp`. Αντιστοιχεί σε `INV-F02`, `VT-705`
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: REQUIRED
+  design_status: ABSENT
+  evidence_status: PARTIAL
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 63bf54008fe3d4927fd4e7dc733ede213e480a6f9c5c43b9aec795ecf07955a7
+- claim_id: F1
+  source_verdict: FAILS
+  source_line: 140
+  claim_text: «Το συμβόλαιο παρόχου έχει **22 πεδία**, με νόμο ανά πεδίο.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος.** Ανοίχθηκε το `word/document.xml` του `.docx`: ο πίνακας έχει 18 `w:tr`, δηλαδή επικεφαλίδα +
+    **17 πεδία**. Ο πίνακας capabilities έχει 17 γραμμές = επικεφαλίδα + 16, που επιβεβαιώνει τη διατύπωση «16 άδεια δωμάτια».'
+  preserved_residue_or_action: '**Τα 17 πεδία υπάρχουν και είναι το ωφέλιμο φορτίο.** Το «νόμος ανά πεδίο» είναι η σωστή αρχή: κάθε πεδίο του
+    συμβολαίου φέρει τον δικό του κανόνα εγκυρότητας αντί για καθολική επικύρωση στο τέλος. Τα 17 πεδία εισάγονται στο Organ ABI. **Ενεργό ελάττωμα:**
+    το `MATERIAL-SYNTHESIS.md` επαναλαμβάνει το «22» στις γρ. 42, 118 και **228**, όπου δίνει και εντολή σχεδιασμού — διορθώνεται πριν τη Φάση
+    Β (§6).'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:84
+  - ARCHITECTURE-ELEMENTS.yaml:85
+  - TECHNICAL-ARCHITECTURE.md:522
+  - TECHNICAL-ARCHITECTURE.md:532
+  - VERIFICATION-OBLIGATIONS.yaml:104
+  - patches/MFA-PATCH-0005-R.yaml:57
+  - patches/MFA-PATCH-0005.yaml:64
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 07e629e3f1e147ba6dd2e66c7e257e1db80e90b69bee48a0fcb145aecf3a9204
+- claim_id: F2
+  source_verdict: FAILS
+  source_line: 141
+  claim_text: «Τα 16 άδεια δωμάτια είναι σημεία επέκτασης που γεμίζουν αργότερα χωρίς αλλαγή του συμβολαίου.»
+  source_basis_or_failure: 'Το κείμενο δηλώνει τα κενά αλλά **δεν ορίζει κανόνα συμβατότητας**: τι σημαίνει «γεμίζω» ένα δωμάτιο, ποιος το επιτρέπει,
+    τι συμβαίνει σε παλιούς καταναλωτές. Χωρίς αυτό, η υπόσχεση μη-αλλαγής δεν είναι ελέγξιμη.'
+  preserved_residue_or_action: '**Η αρχιτεκτονική πρόθεση είναι ορθή και σπάνια:** δηλωμένα, ονομασμένα κενά είναι ανώτερα από σιωπηλή επεκτασιμότητα.
+    Επιβιώνει ως `EXP-09` με προσθήκη του κανόνα που λείπει: κάθε άδειο δωμάτιο φέρει `fill_policy` (ποιος, με ποια έγκριση) και `compat_rule`
+    (τι βλέπει ο παλιός καταναλωτής).'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:84
+  - ARCHITECTURE-ELEMENTS.yaml:85
+  - TECHNICAL-ARCHITECTURE.md:522
+  - TECHNICAL-ARCHITECTURE.md:532
+  - UNKNOWNS.yaml:38
+  - VERIFICATION-OBLIGATIONS.yaml:105
+  - VERIFICATION-OBLIGATIONS.yaml:110
+  - patches/MFA-PATCH-0005-R.yaml:57
+  - patches/MFA-PATCH-0005.yaml:64
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 75a7936d42782fb79525be9289ce53291d290262523bd1f172c40379cbc2761e
+- claim_id: F3
+  source_verdict: FAILS
+  source_line: 142
+  claim_text: «Η μετάβαση από τη Μητρόπολη στο LAWMAX είναι συνεχής — ίδια αρχιτεκτονική, άλλη κλίμακα.»
+  source_basis_or_failure: Ισχυρισμός χωρίς κριτήριο. «Ίδια αρχιτεκτονική» δεν ορίζεται· καμία αντιστοίχιση συστατικών δεν δίνεται. Δεν είναι
+    ψευδής — είναι **ανέλεγκτος όπως διατυπώνεται**, και ως τέτοιος δεν μπορεί να χρησιμοποιηθεί ως αιτιολόγηση σχεδιασμού.
+  preserved_residue_or_action: '**Η ανάγκη επιβιώνει ολόκληρη:** χρειάζεται ρητή αντιστοίχιση Μητρόπολης ↔ LAWMAX, συστατικό προς συστατικό. Αυτό
+    γίνεται παραδοτέο της Φάσης Β: πίνακας `crosswalk` στο `LogicalArchitecture`, με κάθε γραμμή είτε «ίδιο», είτε «αντίστοιχο με διαφορά», είτε
+    «δεν υπάρχει».'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 54843a1ba9a60375df4c4e757da906266505f5c284e4bec47a5bd6246d7de520
+- claim_id: F4
+  source_verdict: FAILS
+  source_line: 143
+  claim_text: «Η πόλη ως αρχιτεκτονική μεταφορά δίνει τη σωστή διαίρεση αρμοδιοτήτων.»
+  source_basis_or_failure: Η μεταφορά **δεν είναι επιχείρημα**. Το ότι μια πόλη έχει δρόμους και κτίρια δεν συνεπάγεται ότι το σύστημα πρέπει
+    να έχει τα αντίστοιχα. Όπου η μεταφορά παρήγαγε σωστές διαιρέσεις, τις παρήγαγε για ανεξάρτητους λόγους.
+  preserved_residue_or_action: '**Επιβιώνει ως γλώσσα επικοινωνίας, όχι ως πηγή σχεδιασμού.** Η αξία της είναι πραγματική και δεν πρέπει να πεταχτεί:
+    δίνει στον άνθρωπο μια σταθερή χωρική διαίσθηση για ένα σύστημα με πολλά επίπεδα. Κρατείται στο `Stakeholders`/τεκμηρίωση, **απαγορεύεται**
+    ως αιτιολογία σε `ADR`.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 1bc297d96d7a9fce051eec532014f94cd69f4118fb8b136ebb4369ffe567e5ab
+- claim_id: F5
+  source_verdict: FAILS
+  source_line: 144
+  claim_text: «Ο πυρήνας επιβάλλει το σύνταγμα χωρίς να το ερμηνεύει.»
+  source_basis_or_failure: 'Αντιφατικό όπως διατυπώνεται: κάθε επιβολή περιλαμβάνει ελάχιστη ερμηνεία (ποιος κανόνας εφαρμόζεται, σε ποιο αντικείμενο).
+    Το κείμενο δεν διακρίνει «ερμηνεία» από «αποτίμηση κατηγορήματος».'
+  preserved_residue_or_action: '**Ο πυρήνας της διάκρισης είναι σωστός και σημαντικός:** ο πυρήνας αποτιμά *κλειστά, αποφασίσιμα* κατηγορήματα·
+    η *ανοιχτή* ερμηνεία (αναλογία, στάθμιση αρχών) ανήκει στο LAWMAX. Επαναδιατυπώνεται ως `INV-C08`: «ο πυρήνας αποτιμά μόνο αποφασίσιμα κατηγορήματα
+    φραγμένου κόστους». Έτσι γίνεται ελέγξιμο.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:102
+  - ARCHITECTURE-ELEMENTS.yaml:103
+  - INVARIANTS.yaml:30
+  - INVARIANTS.yaml:103
+  - TECHNICAL-ARCHITECTURE.md:550
+  - TECHNICAL-ARCHITECTURE.md:560
+  - patches/MFA-PATCH-0005-R.yaml:61
+  - patches/MFA-PATCH-0005.yaml:67
+  - patches/MFA-PATCH-0009-R.yaml:74
+  - patches/MFA-PATCH-0009.yaml:133
+  - patches/MFA-PATCH-0016-R.yaml:58
+  - patches/MFA-PATCH-0016.yaml:112
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 9a5bf1e6bf8a0e052fb04ee3b8cfdc2eeaf094be6e9e6123f7e315dd32e0feb4
+- claim_id: F6
+  source_verdict: FAILS
+  source_line: 145
+  claim_text: «Κάθε διάβαση ορίου καταγράφεται σε αμετάβλητο μητρώο.»
+  source_basis_or_failure: Η «αμεταβλητότητα» δηλώνεται χωρίς μηχανισμό. Χωρίς δομή δέσμευσης (append-only log με αποδείξεις συμπερίληψης) και
+    χωρίς μάρτυρες, ένα μητρώο είναι αμετάβλητο μόνο κατά δήλωση του κατόχου του.
+  preserved_residue_or_action: '**Η απαίτηση επιβιώνει και έχει ώριμη λύση σήμερα.** Υλοποιείται με Merkle transparency log: RFC 6962 / RFC 9162,
+    C2SP tlog-tiles, checkpoint, cosignature, witness. Μετατρέπεται σε `INV-ONE-ENVELOPE` + `CMP-KRN-11`, με μετρήσιμο τεστ αντί για δήλωση.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: b4a6bfa500be3f985c3d96da165a9d6db9a444e211f8702caf65edbf637c1f3c
+- claim_id: F7
+  source_verdict: FAILS
+  source_line: 146
+  claim_text: «Οι οργανισμοί δεν επικοινωνούν παρά μέσω του πυρήνα.»
+  source_basis_or_failure: Το κείμενο το δηλώνει ως αρχή αλλά περιγράφει και διαύλους (shared ring, pulses) που παρακάμπτουν τη διατύπωση. Αντίφαση
+    εσωτερική, όχι εξωτερική.
+  preserved_residue_or_action: '**Επιβιώνει η σωστή, ασθενέστερη μορφή:** οι οργανισμοί δεν επικοινωνούν παρά με **εξουσιοδότηση** του πυρήνα
+    — ο δίαυλος μπορεί να είναι άμεσος, η *άδεια* όχι. Αυτό είναι ακριβώς το μοντέλο grant tables (βλ. H10) και το μοντέλο capability (Cedar,
+    Biscuit, SPIFFE). Διορθώνει τη διατύπωση χωρίς να χάνει τίποτα.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 870e44f1d27e2b8fe6a70f66d056d4de83b6157f997ddb151c86e31afaf7dfea
+- claim_id: F8
+  source_verdict: FAILS
+  source_line: 152
+  claim_text: «Η αρχιτεκτονική προκύπτει από τον διάλογο· ο διάλογος είναι η μέθοδος.»
+  source_basis_or_failure: Ο διάλογος είναι **καταγραφή** διερεύνησης, όχι μέθοδος παραγωγής με ελέγξιμο αποτέλεσμα. Καμία ιδιότητα του προϊόντος
+    δεν εξασφαλίζεται από τη μορφή του διαλόγου.
+  preserved_residue_or_action: '**Επιβιώνει ως πηγή απαιτήσεων.** Ο διάλογος περιέχει τις πραγματικές ανάγκες του δημιουργού διατυπωμένες σε φυσική
+    γλώσσα — η πιο πολύτιμη πρώτη ύλη για το `Requirements`. Κρατείται ως **πηγή**, όχι ως **αυθεντία**: κάθε απαίτηση που εξάγεται από εκεί περνά
+    από την ίδια βάσανο.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 4a12557edc904fd381a52b57affe238a4a892b31adc7e46715f82e5f9ebddd39
+- claim_id: F9
+  source_verdict: FAILS
+  source_line: 153
+  claim_text: «Οι επτά στρώσεις (World OS → Meta) είναι η σωστή και πλήρης διαίρεση.»
+  source_basis_or_failure: Ούτε η ορθότητα ούτε η πληρότητα τεκμηριώνονται. Καμία εναλλακτική διαίρεση δεν εξετάστηκε, κανένα κριτήριο διαχωρισμού
+    δεν δόθηκε. Η κλειστότητα («επτά») είναι αναπόδεικτη.
+  preserved_residue_or_action: '**Η διαίρεση επιβιώνει ως εργαζόμενη δομή και είναι χρήσιμη** — δίνει διακριτές έδρες και επιτρέπει παράλληλη
+    εργασία. Αλλάζει το καθεστώς της: από «σωστή και πλήρης» σε **ανοιχτή απαρίθμηση με κριτήριο ένταξης**. Το κριτήριο πρέπει να γραφεί πριν
+    τη Φάση Β (§6).'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:7
+  - TECHNICAL-ARCHITECTURE.md:51
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 0baae20e29d698958232e32f2848bceef7fb390811a77e814de5bb0124a50ee8
+- claim_id: F10
+  source_verdict: FAILS
+  source_line: 154
+  claim_text: «Το σύστημα πρέπει να είναι αυτο-τροποποιήσιμο σε κάθε επίπεδο.»
+  source_basis_or_failure: 'Καθολικός ισχυρισμός που συγκρούεται με τον ίδιο τον σχεδιασμό: αν ο πυρήνας τροποποιεί το σύνταγμα, το σύνταγμα δεν
+    δεσμεύει. Το κείμενο δεν διακρίνει επίπεδα τροποποίησης.'
+  preserved_residue_or_action: '**Επιβιώνει η βαθμιδωτή μορφή, που είναι η σωστή:** αυτο-τροποποίηση επιτρέπεται σε κάθε επίπεδο **εκτός** από
+    το αμετάβλητο πυρήνα (constitution core), και μόνο με μονότονο περιορισμό εξουσίας (`authority_ceiling`, βλ. F24). Αυτή είναι η διάκριση που
+    κάνει το εγχείρημα δυνατό αντί για αντιφατικό.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: bfe5bc2ac537f53423911ed555eab83e60b920702654fb8f089a73743e1d53ca
+- claim_id: F11
+  source_verdict: FAILS
+  source_line: 155
+  claim_text: «Η συλλογική συνείδηση αναδύεται από τη σύζευξη πολλών AEO.»
+  source_basis_or_failure: «Ανάδυση» χωρίς ορισμό και χωρίς κριτήριο παρατήρησης. Δεν είναι ψευδές — είναι **μη διατυπώσιμο ως έλεγχος**. Και
+    ο όρος «συνείδηση» φέρνει βάρος που το κείμενο δεν πληρώνει.
+  preserved_residue_or_action: '**Επιβιώνει ο μηχανισμός χωρίς το όνομα:** πολλά AEO με κοινή μνήμη και πρωτόκολλο συμφωνίας παράγουν συμπεριφορές
+    που κανένα μόνο του δεν παράγει. Αυτό είναι μετρήσιμο (π.χ. εργασίες που λύνονται μόνο συλλογικά). Ο όρος «συνείδηση» αποσύρεται από το μοντέλο
+    υπέρ του `Collective` με ρητές, μετρήσιμες ιδιότητες.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 1170ab9fcc7c24b038c33de9b2c0511fb328741da3e6aca0b60ad3e88cd2312f
+- claim_id: F12
+  source_verdict: FAILS
+  source_line: 156
+  claim_text: «Η ταυτότητα του AEO διατηρείται σε πολλά σώματα.»
+  source_basis_or_failure: 'Το κείμενο δεν ορίζει **κριτήριο ταυτότητας**: τι ακριβώς πρέπει να διατηρηθεί για να πούμε ότι είναι το ίδιο AEO.
+    Χωρίς αυτό, ο ισχυρισμός δεν έχει συνθήκες αλήθειας.'
+  preserved_residue_or_action: '**Η απαίτηση είναι πραγματική και λύσιμη.** Το κριτήριο μπορεί να οριστεί λειτουργικά: συνέχεια μνήμης (append-only,
+    με απόδειξη), συνέχεια δεσμεύσεων (υποχρεώσεις που μεταφέρονται), συνέχεια κλειδιού (κρυπτογραφική ταυτότητα με ανάκληση). Γίνεται `REQ` με
+    τρία `verify`.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 79c816fc7fb6eb20756c84f4d177459f8df17e6cde7f09f404c4f400111ee459
+- claim_id: F13
+  source_verdict: FAILS
+  source_line: 157
+  claim_text: «Η μνήμη είναι το θεμέλιο της ταυτότητας, όχι η συμπεριφορά.»
+  source_basis_or_failure: Φιλοσοφική θέση παρουσιασμένη ως τεχνική προϋπόθεση. Δεν προκύπτει από τίποτα στο κείμενο και δεν είναι απαραίτητη
+    για τον σχεδιασμό.
+  preserved_residue_or_action: '**Επιβιώνει ως σχεδιαστική επιλογή με λόγο, όχι ως αλήθεια:** η μνήμη είναι **ελέγξιμη και αποδείξιμη**, η συμπεριφορά
+    δεν είναι. Άρα η ταυτότητα θεμελιώνεται στη μνήμη για λόγους επαληθευσιμότητας. Αυτή η αιτιολόγηση στέκει· η οντολογική δεν χρειάζεται.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 28113b54d127b620239da506f7b89a94d90948451f100c70be3539b6b59cc7bc
+- claim_id: F14
+  source_verdict: FAILS
+  source_line: 158
+  claim_text: «Ο διάλογος έδειξε ότι το εγχείρημα είναι εφικτό.»
+  source_basis_or_failure: Ένας διάλογος δεν δείχνει εφικτότητα. Καμία πρόταση δεν δοκιμάστηκε στο κείμενο.
+  preserved_residue_or_action: '**Επιβιώνει κάτι διαφορετικό αλλά αληθινό:** ο διάλογος έδειξε ότι το εγχείρημα είναι **διατυπώσιμο** — ότι υπάρχει
+    συνεπής περιγραφή του στόχου. Αυτό δεν είναι μικρό: πολλά εγχειρήματα αποτυγχάνουν στο ότι δεν μπορούν καν να διατυπωθούν χωρίς αντίφαση.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: e332d79e4c051823afb7289209ba7bb26ac72ce02d7d7db4862af9d972c788c5
+- claim_id: F15
+  source_verdict: FAILS
+  source_line: 159
+  claim_text: «Η γλώσσα-forge (compilers κατά παραγγελία) είναι κεντρικό συστατικό, όχι εργαλείο.»
+  source_basis_or_failure: 'Δεν τεκμηριώνεται γιατί η παραγωγή γλωσσών πρέπει να είναι πυρηνική αντί για περιφερειακή. Η επιχειρηματολογία είναι
+    κυκλική: επειδή το σύστημα φτιάχνει γλώσσες, η forge είναι κεντρική.'
+  preserved_residue_or_action: '**Επιβιώνει η αναγκαιότητα σε συγκεκριμένο σημείο:** το LAWMAX χρειάζεται DSL για κανόνες, και ένα σύστημα που
+    αλλάζει τους δικούς του κανόνες χρειάζεται τον compiler του ως **ελεγχόμενο** συστατικό, όχι ως εξωτερικό εργαλείο (αλλιώς η αλυσίδα εμπιστοσύνης
+    σπάει). Αυτό είναι επαρκής λόγος και αντικαθιστά τον ανύπαρκτο.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 3214ae78cf999aa2ac53a3929337ecfa8ea18e7d8098a8f83066bf1a1e7c09a7
+- claim_id: F16
+  source_verdict: FAILS
+  source_line: 160
+  claim_text: «Ο άνθρωπος παραμένει στον βρόχο σε κάθε κρίσιμη απόφαση.»
+  source_basis_or_failure: «Κρίσιμη» δεν ορίζεται. Χωρίς ορισμό, ο ισχυρισμός είτε είναι κενός είτε σημαίνει «σε κάθε απόφαση», που ακυρώνει το
+    σύστημα.
+  preserved_residue_or_action: '**Επιβιώνει ως η σημαντικότερη απαίτηση του έργου, με το κενό της ονομασμένο:** χρειάζεται **ρητός κατάλογος**
+    ενεργειών που απαιτούν ανθρώπινη έγκριση, παραγόμενος από κριτήριο (μη αναστρεψιμότητα, εξωτερική επίδραση, αλλαγή εξουσίας). Ο κατάλογος
+    γίνεται `Constitution` και το κριτήριο γίνεται `INV`.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:80
+  - ARCHITECTURE-ELEMENTS.yaml:123
+  - ARCHITECTURE-ELEMENTS.yaml:124
+  - TECHNICAL-ARCHITECTURE.md:581
+  - TECHNICAL-ARCHITECTURE.md:591
+  - diagrams/MFA-DIA-10.mmd:21
+  - diagrams/rendered/MFA-DIA-10.svg:1
+  - mechanisms/MFA-MECH-006.md:28
+  - patches/MFA-PATCH-0005-R.yaml:33
+  - patches/MFA-PATCH-0005.yaml:39
+  - patches/MFA-PATCH-0007-R.yaml:75
+  - patches/MFA-PATCH-0007.yaml:159
+  - patches/MFA-PATCH-0009-R.yaml:40
+  - patches/MFA-PATCH-0009.yaml:62
+  - patches/MFA-PATCH-0018-R.yaml:43
+  - patches/MFA-PATCH-0018.yaml:43
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 14a23c3c309358283abc5576fba5ce72b203eab9f4e49e51d299321365ab2e20
+- claim_id: F17
+  source_verdict: FAILS
+  source_line: 166
+  claim_text: «Το ULTIMA-LEX v4.1 είναι πλήρες νομικό σύστημα συλλογιστικής.»
+  source_basis_or_failure: Η «πληρότητα» δεν ορίζεται και δεν ελέγχεται. Το έγγραφο περιγράφει σχήμα, όχι εκτελέσιμο σύστημα με αποτελέσματα.
+  preserved_residue_or_action: '**Επιβιώνει ως η πληρέστερη διαθέσιμη προδιαγραφή** του νομικού στρώματος και ως τέτοια είναι η βάση του `LAWMAX`
+    πακέτου. Αλλάζει το καθεστώς: από «σύστημα» σε «προδιαγραφή προς υλοποίηση και επαλήθευση».'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: bf69ece6f4a53f1deeff17715d726fef74b83cb256c99b443df4e224b519b9c3
+- claim_id: F18
+  source_verdict: FAILS
+  source_line: 167
+  claim_text: «Η αναπαράσταση κανόνα καλύπτει κάθε μορφή νομικού κανόνα.»
+  source_basis_or_failure: 'Καθολικός ισχυρισμός, ένα αντιπαράδειγμα αρκεί: οι κανόνες με ανοιχτή στάθμιση αρχών (proportionality) δεν εκφράζονται
+    στο σχήμα που δίνεται.'
+  preserved_residue_or_action: '**Επιβιώνει η κάλυψη των κανόνων-τύπου-προϋπόθεση/συνέπεια, που είναι η πλειονότητα**, και η δομή είναι σωστή.
+    Το κενό ονομάζεται ρητά: η στάθμιση αρχών χρειάζεται δεύτερο μηχανισμό (Carneades proof standards, ASPIC+ preferences) — `GAP-LAW-09`.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:205
+  - ARCHITECTURE-ELEMENTS.yaml:373
+  - CROSS-DOMAIN-TRANSFERS.md:16
+  - CROSS-DOMAIN-TRANSFERS.md:22
+  - INVENTIONS.yaml:167
+  - TECHNICAL-ARCHITECTURE.md:1064
+  - mechanisms/MFA-MECH-016.md:12
+  - mechanisms/MFA-MECH-016.md:30
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 020c2387844bfa7cdb931ef3e0e4b19e39751ebbfffb8166bc583916c01c63b8
+- claim_id: F19
+  source_verdict: FAILS
+  source_line: 168
+  claim_text: «Η ιεραρχία πηγών δικαίου κωδικοποιείται πλήρως ως μερική διάταξη.»
+  source_basis_or_failure: 'Η ιεραρχία πηγών **δεν είναι** μερική διάταξη σε όλες τις περιπτώσεις: υπάρχουν κυκλικές σχέσεις (lex specialis έναντι
+    lex posterior) που παράγουν κύκλους, όχι διάταξη.'
+  preserved_residue_or_action: '**Επιβιώνει η μερική διάταξη ως πρώτη προσέγγιση και ως η σωστή δομή για το 90% των περιπτώσεων.** Οι κύκλοι γίνονται
+    ρητά `conflict` αντικείμενα που πάνε στον μηχανισμό επίλυσης, αντί να σπάνε τη δομή. Αυτή η διόρθωση **βελτιώνει** τον σχεδιασμό αντί να τον
+    καταστρέφει.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:202
+  - AI-CONTRIBUTION-LEDGER.md:205
+  - INVENTIONS.yaml:167
+  - mechanisms/MFA-MECH-016.md:20
+  - mechanisms/MFA-MECH-016.md:30
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: a0b3e0315f679a43e99f57ec9be6a59f91db73f8074b028bd73b56ea26773c62
+- claim_id: F20
+  source_verdict: FAILS
+  source_line: 169
+  claim_text: «Ο μηχανισμός defeasibility είναι μη μονότονος και αυτό επαρκεί για νομική συλλογιστική.»
+  source_basis_or_failure: 'Το «επαρκεί» δεν τεκμηριώνεται. Η μη μονοτονία είναι **αναγκαία**, όχι ικανή: χρειάζεται επιπλέον διαχείριση αποδεικτικού
+    βάρους και προτεραιοτήτων.'
+  preserved_residue_or_action: '**Επιβιώνει η αναγκαιότητα, με ώριμα εργαλεία σήμερα:** Defeasible Deontic Logic (υλοποίηση Governatori, ανοίχθηκε
+    το repo), Clingo/ASP για την υπολογιστική βάση. Υλοποιήσιμο σήμερα — πάει στο «υλοποιήσιμο» καλάθι.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:501
+  - TECHNICAL-ARCHITECTURE.md:1334
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 54b14211f01e6cc6bd32cb8e832a2b2dd9b94e7df564d5af00b689800195d437
+- claim_id: F21
+  source_verdict: FAILS
+  source_line: 170
+  claim_text: «Οι προτεραιότητες κανόνων είναι **διανυσματικές**.» *(μέρος διχασμένης, §1.3)*
+  source_basis_or_failure: Ο μηχανισμός δεν υπάρχει στο έγγραφο. Ο ισχυρισμός ονομάζει κάτι που δεν έχει οριστεί ούτε μία φορά.
+  preserved_residue_or_action: '**Επιβιώνει η μη μονοτονία (το μέρος που στέκει) και η πρόθεση:** οι προτεραιότητες όντως δεν πρέπει να είναι
+    βαθμωτές (πρβλ. H8). Το κενό είναι ο ορισμός — γίνεται ρητό παραδοτέο, όχι σιωπηλή παραδοχή.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:500
+  - ARCHITECTURE-ELEMENTS.yaml:501
+  - TECHNICAL-ARCHITECTURE.md:1324
+  - TECHNICAL-ARCHITECTURE.md:1334
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 938ade1a02f3b04836666b8204ae5b19ce74cd9de20935636f00ae87db1a08b0
+- claim_id: F22
+  source_verdict: FAILS
+  source_line: 171
+  claim_text: «Η ανίχνευση σύγκρουσης κανόνων είναι πλήρης και αυτόματη.»
+  source_basis_or_failure: Η πλήρης ανίχνευση συγκρούσεων σε μη μονότονο σύστημα με ανοιχτούς όρους δεν είναι αποφασίσιμη γενικά· το έγγραφο δεν
+    περιορίζει το πεδίο ώστε να γίνει.
+  preserved_residue_or_action: '**Επιβιώνει η αυτόματη ανίχνευση στο αποφασίσιμο τμήμα, που είναι μεγάλο και χρήσιμο**: για κανόνες με κλειστούς
+    όρους, το ASP δίνει πλήρη απαρίθμηση συγκρούσεων. Ο περιορισμός πεδίου γίνεται ρητός όρος, όχι κρυφή αποτυχία.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:501
+  - TECHNICAL-ARCHITECTURE.md:1334
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 8117eca51a9803e2a849097d587d5ad1f40a707f34fd8ffd1598a9255a9fd07d
+- claim_id: F23
+  source_verdict: FAILS
+  source_line: 172
+  claim_text: «Η αιτιολόγηση κάθε απόφασης παράγεται αυτόματα και είναι πλήρης.»
+  source_basis_or_failure: «Πλήρης αιτιολόγηση» δεν ορίζεται. Το ίχνος εκτέλεσης δεν είναι νομική αιτιολόγηση· η μετάφραση του ενός στο άλλο δεν
+    περιγράφεται.
+  preserved_residue_or_action: '**Επιβιώνει το ίχνος ως αναγκαία βάση και είναι πολύτιμο:** χωρίς μηχανικό ίχνος δεν υπάρχει καν πρώτη ύλη για
+    αιτιολόγηση. Η μετάφραση ίχνους → αιτιολόγηση γίνεται ονομασμένο συστατικό (`CMP-LAW-07`) με δικές του απαιτήσεις, αντί να θεωρείται δεδομένη.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:710
+  - TECHNICAL-ARCHITECTURE.md:1780
+  - TECHNICAL-ARCHITECTURE.md:1790
+  - alternatives/MFA-ALT-3.md:69
+  - patches/MFA-PATCH-0012-R.yaml:48
+  - patches/MFA-PATCH-0012.yaml:56
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 1b3584cf962b8e591c662acdb5337e071250bfe8fd7bf2dc4391bca0bb14e378
+- claim_id: F24
+  source_verdict: FAILS
+  source_line: 173
+  claim_text: «Το `authority_ceiling` εμποδίζει την κλιμάκωση εξουσίας.»
+  source_basis_or_failure: 'Μόνο του δεν εμποδίζει τίποτα: ένα ανώτατο όριο που το ίδιο το σύστημα μπορεί να ανυψώσει είναι διακοσμητικό. Το έγγραφο
+    δεν δηλώνει τον κανόνα μονοτονίας.'
+  preserved_residue_or_action: '**Επιβιώνει και γίνεται ισχυρό με μία πρόταση:** το `authority_ceiling` λειτουργεί **μόνο** με ρητό κανόνα μονοτονίας
+    — κάθε παραγόμενο περιβάλλον έχει όριο ≤ του γονέα, και καμία διαδρομή δεν το αυξάνει χωρίς ανθρώπινη έγκριση. Με αυτή την προσθήκη είναι
+    από τα ισχυρότερα εργαλεία του σχεδίου (`INV-S02`).'
+  legacy_explicit_trace_refs:
+  - INVARIANTS.yaml:73
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: d711b6db5ceb5bebebb8199d504769eb18477bd9f9d2a58e10884449550ead9c
+- claim_id: F25
+  source_verdict: FAILS
+  source_line: 174
+  claim_text: «Μηδέν LLM, μηδέν embeddings σε ολόκληρο το σύστημα.» *(μέρος διχασμένης, §1.3)*
+  source_basis_or_failure: Η γρ. 39 διατυπώνει απόλυτο περιορισμό για όλο το σύστημα, που δεν τεκμηριώνεται και συγκρούεται με άλλα μέρη του corpus.
+  preserved_residue_or_action: '**Επιβιώνει ακέραιο το τεκμηριωμένο μέρος:** η γρ. 1516 λέει «No NEURAL embeddings» για τον **νομικό πυρήνα**
+    και αυτό στέκει. Επίσης επαληθεύτηκε ότι το κείμενο δεν περιέχει καμία γεννήτρια τυχαίων — άρα το «NOT stochastic» είναι αληθές για το περιγραφόμενο.
+    Η σωστή διατύπωση: **ντετερμινιστικός νομικός πυρήνας, με στατιστικά συστατικά μόνο εκτός της αλυσίδας απόφασης.**'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 207ab7ab384c5f1d377f2f5c7996c878c6b47a375731e025c26c26ab77aa6847
+- claim_id: F26
+  source_verdict: FAILS
+  source_line: 175
+  claim_text: «Η ντετερμινιστικότητα εγγυάται την αναπαραγωγιμότητα της κρίσης.»
+  source_basis_or_failure: 'Δεν συνεπάγεται: η ντετερμινιστικότητα του αλγορίθμου δεν δίνει αναπαραγωγιμότητα αν η **είσοδος** (σώμα κανόνων,
+    εκδοχή δικαίου, χρόνος) δεν είναι καθηλωμένη. Το έγγραφο δεν καθηλώνει την είσοδο.'
+  preserved_residue_or_action: '**Επιβιώνει ως μισή λύση που αξίζει και συμπληρώνεται εύκολα:** ντετερμινιστικός αλγόριθμος **και** περιεχομενική
+    διευθυνσιοδότηση της εισόδου (content-addressed corpus snapshot) δίνουν πραγματική αναπαραγωγιμότητα. Το δεύτερο σκέλος είναι υλοποιήσιμο
+    σήμερα και γίνεται `INV`.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:185
+  - AI-CONTRIBUTION-LEDGER.md:193
+  - INVARIANTS.yaml:30
+  - INVARIANTS.yaml:114
+  - INVENTIONS.yaml:29
+  - INVENTIONS.yaml:158
+  - mechanisms/MFA-MECH-015.md:10
+  - mechanisms/MFA-MECH-015.md:30
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: e24b42fe1cd485d181452c181e646d4d23c2ee8c842f6b0f876b738bf309c68f
+- claim_id: F27
+  source_verdict: FAILS
+  source_line: 182
+  claim_text: «Ο evaluator v13-θ είναι διορθωμένος και έτοιμος.»
+  source_basis_or_failure: «Διορθωμένος» ως προς τι; Δεν υπάρχει κατάλογος των σφαλμάτων που διορθώθηκαν ούτε τεστ που να το δείχνει. Το επίθετο
+    στον τίτλο δεν είναι τεκμήριο.
+  preserved_residue_or_action: '**Επιβιώνει η μέθοδος αξιολόγησης που περιγράφεται**, και είναι η πιο λεπτομερής του corpus. Αλλάζει καθεστώς:
+    «προδιαγραφή αξιολογητή», με τα τεστ της ως παραδοτέο του πακέτου `Verification`.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 9f2b65f10ca780101698204ad37306f66f2597aa450ddb4564e4e6e63b62c6c1
+- claim_id: F28
+  source_verdict: FAILS
+  source_line: 183
+  claim_text: «Η κλίμακα επιπέδων είναι αντικειμενική και συγκρίσιμη μεταξύ συστημάτων.»
+  source_basis_or_failure: 'Οι κλίμακες του corpus είναι **ασύμμετρες**: το «Level 12» του OMEGA-EVAL, τα L1–L12 του CPEI και τα 15 επίπεδα του
+    CEILING-CROSSWALK είναι τρεις διαφορετικές κλίμακες με σύμπτωση ονομάτων. Σύγκριση αριθμών μεταξύ τους είναι ομωνυμία.'
+  preserved_residue_or_action: '**Επιβιώνει η ανάγκη για κλίμακα και επιβιώνουν οι τρεις κλίμακες χωριστά.** Η διόρθωση είναι ονοματολογική και
+    υποχρεωτική πριν τη Φάση Β: κάθε κλίμακα παίρνει δικό της namespace (`OMEGA-L*`, `CPEI-L*`, `XWALK-L*`) και ο τίτλος «Level 12» αποσύρεται
+    (ήδη αποφασισμένο, `MATERIAL-SYNTHESIS.md` γρ. 234).'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 0d73537a342e5cc640da25b68c55359f4ec073ed86d94539564116aff186da85
+- claim_id: F29
+  source_verdict: FAILS
+  source_line: 184
+  claim_text: «Η αξιολόγηση είναι ανεξάρτητη από τον αξιολογούμενο.»
+  source_basis_or_failure: Το έγγραφο περιγράφει τον evaluator μέσα στο ίδιο σύστημα που αξιολογεί, χωρίς μηχανισμό απομόνωσης. Η ανεξαρτησία
+    δηλώνεται, δεν κατασκευάζεται.
+  preserved_residue_or_action: '**Επιβιώνει ως απαίτηση με γνωστή λύση:** ο αξιολογητής πρέπει να τρέχει σε περιοχή που ο αξιολογούμενος δεν μπορεί
+    να γράψει, με δικό του `authority_ceiling` (F24) και δικό του αμετάβλητο μητρώο (F6). Αυτό είναι ακριβώς η αρχιτεκτονική του Epistemic Court
+    — και δικαιολογεί την ύπαρξή του ως χωριστό στρώμα.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:415
+  - TECHNICAL-ARCHITECTURE.md:1150
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 0632f468a66cb4d1017bda48cda8e169d1744fe2209a85e828c8d53c7909d0a7
+- claim_id: F30
+  source_verdict: FAILS
+  source_line: 185
+  claim_text: «Οι μετρικές του evaluator δεν είναι παίξιμες (non-gameable).»
+  source_basis_or_failure: Καμία μετρική δεν είναι μη παίξιμη έναντι βελτιστοποιητή που τη βλέπει (νόμος Goodhart ως εμπειρική παρατήρηση, όχι
+    θεώρημα — Δ-13). Το έγγραφο δεν δίνει μηχανισμό, μόνο δήλωση.
+  preserved_residue_or_action: '**Επιβιώνει ο σωστός αμυντικός σχεδιασμός που υπάρχει ήδη στο corpus:** μετρικές που **δεν εκτίθενται** στον βελτιστοποιητή
+    (H4 — οι συνθήκες νίκης δεν ανήκουν στον evaluator) και αξιολόγηση σε κρυφό, περιοδικά ανανεούμενο σύνολο. Δεν λύνει το πρόβλημα· το περιορίζει
+    μετρήσιμα.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:663
+  - TECHNICAL-ARCHITECTURE.md:1690
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 8c76e8ae2dce5404a10b9d54bad50421fcde461795469c76ba0a0931f646eef2
+- claim_id: F31
+  source_verdict: FAILS
+  source_line: 186
+  claim_text: «Η αξιολόγηση καλύπτει και ιδιότητες που δεν έχουν ακόμη οριστεί (ανοιχτό σύνολο).»
+  source_basis_or_failure: Ένα ανοιχτό σύνολο ιδιοτήτων δεν μπορεί να αξιολογηθεί από κλειστό σύνολο ελέγχων. Ο ισχυρισμός αναιρεί τον εαυτό του
+    όπως διατυπώνεται.
+  preserved_residue_or_action: '**Επιβιώνει ως σημείο επέκτασης, που είναι η σωστή θέση του:** `EXP-16` — ο evaluator δέχεται νέα κριτήρια χωρίς
+    αλλαγή πυρήνα, με ρητή διαδικασία εισαγωγής και ανθρώπινη έγκριση. Δηλωμένο κενό αντί για ψευδή κάλυψη.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 6c0301861d64895d0fb937c88878e4bd90915aef10ca2f9731f55fc877af681e
+- claim_id: F32
+  source_verdict: FAILS
+  source_line: 187
+  claim_text: «Οι τιμές αξιολόγησης προέρχονται από κλειστή απαρίθμηση έξι τιμών.»
+  source_basis_or_failure: Η κλειστότητα δεν τεκμηριώνεται και συγκρούεται με το F31. Έξι τιμές είναι επιλογή, όχι ανακάλυψη.
+  preserved_residue_or_action: '**Επιβιώνουν οι έξι τιμές ως αρχικό, δοκιμασμένο σύνολο** — έχουν περιεχόμενο και είναι χρήσιμες. Γίνονται **ανοιχτή**
+    απαρίθμηση με κανόνα προσθήκης. (Το ίδιο ισχύει για τις 6 κλάσεις ανακάλυψης, `MATERIAL-SYNTHESIS.md` γρ. 161.)'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:283
+  - TECHNICAL-ARCHITECTURE.md:876
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 97efed59361b8822c71dd7a74bee2e04922da7d20f752e173daf7a298127a986
+- claim_id: F33
+  source_verdict: FAILS
+  source_line: 188
+  claim_text: «Ο evaluator ανιχνεύει την αυτο-εξαπάτηση του συστήματος.»
+  source_basis_or_failure: Καμία διαδικασία δεν δίνεται. Η ανίχνευση αυτο-εξαπάτησης σε σύστημα που ελέγχει τις δικές του αναφορές είναι το ίδιο
+    πρόβλημα με το F29, χωρίς τη λύση του.
+  preserved_residue_or_action: '**Επιβιώνει ο σωστός τελεστής: η διασταύρωση.** Αυτο-εξαπάτηση ανιχνεύεται όχι από ενδοσκόπηση αλλά από **ασυμφωνία**
+    μεταξύ δηλωμένου και μετρημένου. Το ίδιο αυτό έγγραφο έδωσε το τεκμήριο: ο Α΄ ελεγκτής δήλωσε επτά φορές ότι δεν υπήρχε SBCL· η μέτρηση το
+    διέψευσε. Ο μηχανισμός δουλεύει — αρκεί να είναι εξωτερικός.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 3434523139b3dfceb3e607c18d00927026b60f3dc348b92774a3ffcfed76c8ac
+- claim_id: F34
+  source_verdict: FAILS
+  source_line: 189
+  claim_text: '«Η κλίμακα είναι μονοτονική: υψηλότερο επίπεδο σημαίνει αυστηρά ανώτερη ικανότητα.»'
+  source_basis_or_failure: Δεν τεκμηριώνεται. Τα επίπεδα του εγγράφου μετρούν διαφορετικές διαστάσεις, που δεν διατάσσονται ολικά.
+  preserved_residue_or_action: '**Επιβιώνει η μερική διάταξη, που είναι και τιμιότερη:** ορισμένα επίπεδα όντως προϋποθέτουν άλλα (σχέση `requires`),
+    και αυτό είναι χρήσιμο για σχεδιασμό σειράς υλοποίησης. Η ολική διάταξη αντικαθίσταται από γράφο εξαρτήσεων.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: c79bc9b97361094d6d127dfb38c820b43503f1f7342a86eba1e622d3dc25f12f
+- claim_id: F35
+  source_verdict: FAILS
+  source_line: 190
+  claim_text: «Η αξιολόγηση είναι φθηνή σε σχέση με το όφελος.»
+  source_basis_or_failure: Κανένα μέγεθος κόστους δεν δίνεται, ούτε τάξη μεγέθους. Ο ισχυρισμός δεν έχει περιεχόμενο.
+  preserved_residue_or_action: '**Επιβιώνει η ανησυχία, που είναι πραγματική και σωστά τοποθετημένη:** αν η αξιολόγηση κοστίζει όσο η εργασία,
+    το σύστημα δεν λειτουργεί. Γίνεται **απαίτηση με αριθμό**: το κόστος αξιολόγησης δεν υπερβαίνει καθορισμένο κλάσμα του κόστους εκτέλεσης,
+    μετρημένο, με `VT` που το ελέγχει.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:662
+  - ARCHITECTURE-ELEMENTS.yaml:663
+  - INVARIANTS.yaml:120
+  - TECHNICAL-ARCHITECTURE.md:1680
+  - TECHNICAL-ARCHITECTURE.md:1690
+  - alternatives/MFA-ALT-4.md:73
+  - patches/MFA-PATCH-0013-R.yaml:43
+  - patches/MFA-PATCH-0013-R.yaml:64
+  - patches/MFA-PATCH-0013.yaml:45
+  - patches/MFA-PATCH-0013.yaml:61
+  - patches/MFA-PATCH-0013.yaml:75
+  - patches/MFA-PATCH-0017-R.yaml:21
+  - patches/MFA-PATCH-0017.yaml:19
+  - patches/MFA-PATCH-0035-R.yaml:166
+  - patches/MFA-PATCH-0035.yaml:212
+  - patches/MFA-PATCH-0045-R.yaml:37
+  - patches/MFA-PATCH-0045.yaml:39
+  - patches/MFA-PATCH-0047-R.yaml:30
+  - patches/MFA-PATCH-0047.yaml:29
+  - patches/MFA-PATCH-0053-R.yaml:21
+  - patches/MFA-PATCH-0053.yaml:18
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 9f24284fe4f68ea4bfdb3a38a1168c2e9b0aff9767d1f0fdf61229fd51c8e8d5
+- claim_id: F36
+  source_verdict: FAILS
+  source_line: 196
+  claim_text: «Ο οδηγός υλοποίησης είναι αρχιτεκτονική.»
+  source_basis_or_failure: 'Δεν είναι: περιγράφει **μέθοδο** εργασίας (σειρά βημάτων, κριτήρια αποδοχής), όχι δομή συστήματος. Καμία διεπαφή,
+    κανένα συστατικό δεν προδιαγράφεται πλήρως.'
+  preserved_residue_or_action: '**Ως μέθοδος είναι πλήρης και αυτό είναι σημαντικό** (καταγράφηκε ήδη στο `MATERIAL-SYNTHESIS.md` γρ. 51). Κρατείται
+    ολόκληρος ως η διαδικασία εργασίας των δόσεων της Φάσης Β, όχι ως πηγή στοιχείων μοντέλου.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 1cab77a9c76b9c37c4be43c06cd7fb9afb4120120e5f41674be5b655c555fad5
+- claim_id: F37
+  source_verdict: FAILS
+  source_line: 197
+  claim_text: «Η υλοποίηση αναφοράς επαληθεύει τον σχεδιασμό.»
+  source_basis_or_failure: 'Η υλοποίηση αναφοράς (`omega-core-fixed/`) **δεν φορτώνει**: `(asdf:load-system :omega)` αποτυγχάνει με `DEFCONSTANT-UNEQL`
+    στο `core/meta-architecture.lisp:11`. Κώδικας που δεν φορτώνει δεν επαληθεύει τίποτα.'
+  preserved_residue_or_action: '**Επιβιώνει ως εκτελέσιμη προδιαγραφή προθέσεων:** δείχνει τι θέλησε ο σχεδιαστής σε επίπεδο δομής δεδομένων και
+    ονομάτων. Επιβιώνει επίσης **το ίδιο το σφάλμα ως μάθημα**: το `defconstant` με μη-`eql` τιμή είναι κλασική παγίδα της Common Lisp και μπαίνει
+    στον κατάλογο ελέγχων της Φάσης Β.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 21459032c98a7580c734f6a2060f55e4eb24de5cf4f20cc7ba5998e1dce9f96a
+- claim_id: F38
+  source_verdict: FAILS
+  source_line: 198
+  claim_text: «Τα βήματα του οδηγού είναι ανεξάρτητα και παραλληλοποιήσιμα.»
+  source_basis_or_failure: Το κείμενο δηλώνει ανεξαρτησία αλλά τα βήματα μοιράζονται καθολική κατάσταση (μητρώο, σύνταγμα). Καμία ανάλυση εξαρτήσεων
+    δεν δίνεται.
+  preserved_residue_or_action: '**Επιβιώνει η μερική παραλληλοποίηση, που είναι το ρεαλιστικό:** τα βήματα που παράγουν χωριστά πακέτα (`Telos`,
+    `Stakeholders`) είναι όντως ανεξάρτητα· αυτά που αγγίζουν το `Constitution` δεν είναι. Ο γράφος εξαρτήσεων γράφεται ρητά στο `DESIGN-START-PLAN.md`.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 8a5ec4721979f456cbf46bea241bd798c389a19da307c82d754d9b04e0a57e9d
+- claim_id: F39
+  source_verdict: FAILS
+  source_line: 199
+  claim_text: «Τα κριτήρια αποδοχής κάθε βήματος είναι αντικειμενικά.»
+  source_basis_or_failure: Πολλά κριτήρια είναι ποιοτικά («επαρκής κάλυψη», «σαφής διατύπωση») χωρίς μετρήσιμο κατώφλι.
+  preserved_residue_or_action: '**Επιβιώνει ότι τα κριτήρια υπάρχουν και είναι γραμμένα πριν από την εργασία** — αυτό είναι ήδη πολύ πάνω από
+    τη συνήθη πρακτική. Η αναβάθμιση είναι μηχανική: κάθε ποιοτικό κριτήριο αποκτά έναν μετρήσιμο δείκτη ή δηλώνεται ρητά ως ανθρώπινη κρίση με
+    ονομασμένο κριτή.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: bd4e4458888efe9af313bf2af0965fc14a852375ceff102e8d02f4875a575ae0
+- claim_id: F40
+  source_verdict: FAILS
+  source_line: 200
+  claim_text: «Η καθοδήγηση καλύπτει και την περίπτωση αποτυχίας.»
+  source_basis_or_failure: Το έγγραφο περιγράφει τι γίνεται όταν ένα βήμα πετύχει· η διαδρομή αποτυχίας (rollback, μερική αποτυχία, ασυνεπής ενδιάμεση
+    κατάσταση) δεν περιγράφεται.
+  preserved_residue_or_action: '**Επιβιώνει η αναγνώριση της ανάγκης, και το κενό είναι ονομασμένο και μικρό:** χρειάζεται μία ενότητα ανά βήμα
+    — «τι σημαίνει αποτυχία, τι αναιρείται, τι μένει». Υλοποιήσιμο σήμερα, χαμηλού κόστους, υψηλής αξίας.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: ae7f69836bad4c757e9da5aba46a760d014391ff8bd05c18b927c2ef05ca1d52
+- claim_id: F41
+  source_verdict: FAILS
+  source_line: 201
+  claim_text: «Ο έλεγχος συμβατότητας γίνεται αυτόματα σε κάθε αλλαγή.»
+  source_basis_or_failure: Κανένας μηχανισμός δεν περιγράφεται. Δεν υπάρχει ορισμός συμβατότητας για τα αντικείμενα του συστήματος.
+  preserved_residue_or_action: '**Επιβιώνει η απαίτηση με ώριμη λύση:** ορισμός συμβατότητας ανά διεπαφή (`ICD`), αυτόματος έλεγχος με schema
+    diff και contract tests. Συνδέεται άμεσα με το H5 (μη αναστρέψιμες διεπαφές) — μαζί κάνουν ένα λειτουργικό καθεστώς εκδόσεων.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 56abdd08d82f8094b80a3103d8be272092973cb327d2c0c2444696c411669a1e
+- claim_id: F42
+  source_verdict: FAILS
+  source_line: 202
+  claim_text: «Η τεκμηρίωση παράγεται από το μοντέλο και δεν αποκλίνει.»
+  source_basis_or_failure: Στο ίδιο το corpus η τεκμηρίωση **έχει ήδη αποκλίνει** από τον κώδικα (βλ. §3.10, OMEGA-DOCS). Ο ισχυρισμός διαψεύδεται
+    από τα ίδια τα αρχεία που τον συνοδεύουν.
+  preserved_residue_or_action: '**Επιβιώνει ως ο κύριος λόγος για τη Φάση Β όπως σχεδιάστηκε:** ζωντανό SysML v2 μοντέλο στο SysON με εξαγωγή
+    κειμένου στο `model/` σε κάθε ορόσημο. Η απόκλιση που μετρήθηκε εδώ είναι το ισχυρότερο επιχείρημα υπέρ αυτής της απόφασης.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 9908ba0a250a804887b43e39f65a5a5d5111ef91ca535b9d033596d85964693d
+- claim_id: F43
+  source_verdict: FAILS
+  source_line: 203
+  claim_text: «Οι τέσσερις βασικές συναρτήσεις του βρόχου ορίζονται στην υλοποίηση.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος.** Στο `reproducibility.lisp` καλούνται τέσσερις συναρτήσεις που δεν ορίζονται πουθενά: `parse-input`,
+    `generate-options`, `evaluate-option`, `select-best-option`.'
+  preserved_residue_or_action: '**Επιβιώνει η δομή του βρόχου, και είναι σωστή:** ανάλυση εισόδου → παραγωγή επιλογών → αποτίμηση → επιλογή. Αυτή
+    η τετράδα είναι καθαρή διαίρεση αρμοδιοτήτων και μπαίνει στο `Functions` ως τέσσερα `action`. Λείπει η υλοποίηση, όχι ο σχεδιασμός.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 714aea0e93bdf4f080c7ecbfd5861c3f943f78c4b10df179e3c018f2930c142a
+- claim_id: F44
+  source_verdict: FAILS
+  source_line: 204
+  claim_text: «Ο μετακυκλικός πύργος (reflective tower) είναι υλοποιημένος.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος.** Αναζήτηση για metacircular / reflective tower στο σώμα: **0 ευρήματα** (`MATERIAL-SYNTHESIS.md`
+    γρ. 75).'
+  preserved_residue_or_action: '**Επιβιώνει ως γνωστή, υπαρκτή τεχνική με αναφορά υλοποίησης:** ο reflective tower είναι πραγματικό αντικείμενο
+    (Brown/Blond· namin/lms-black, το README ανοίχθηκε). Δεν είναι φαντασία — είναι **σημείο επέκτασης που απαιτεί πείραμα**, όχι υλοποιημένο
+    συστατικό.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:289
+  - ARCHITECTURE-ELEMENTS.yaml:290
+  - CROSS-DOMAIN-TRANSFERS.md:28
+  - CROSS-DOMAIN-TRANSFERS.md:45
+  - TECHNICAL-ARCHITECTURE.md:880
+  - TECHNICAL-ARCHITECTURE.md:890
+  - UNKNOWNS.yaml:45
+  - patches/MFA-PATCH-0035-R.yaml:93
+  - patches/MFA-PATCH-0035.yaml:98
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: c46cc406e474174e4cba78096a1c0a07229a92d32cd0f7c93b685d375007a5d8
+- claim_id: F45
+  source_verdict: FAILS
+  source_line: 210
+  claim_text: «Η σύνθεση καλύπτει και τα 11 έγγραφα-πηγές χωρίς απώλεια.»
+  source_basis_or_failure: Η «χωρίς απώλεια» δεν ελέγχθηκε και δεν μπορεί να ελεγχθεί χωρίς αντιστοίχιση ανά ισχυρισμό — αντιστοίχιση που έλειπε
+    ακριβώς μέχρι το παρόν έγγραφο.
+  preserved_residue_or_action: '**Επιβιώνει η κάλυψη ως γεγονός και επιβεβαιώνεται εδώ:** και τα 11 έγγραφα έχουν τώρα ισχυρισμούς κριμένους (§1.1).
+    Η «απώλεια» παύει να είναι άγνωστη — μετράται: 97 ισχυρισμοί έπεσαν, με 97 υπολείμματα καταγεγραμμένα.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 61291196af900d2ee1e02fd2bffa17f7663816e19eea8e66d5822d5b3b89480b
+- claim_id: F46
+  source_verdict: FAILS
+  source_line: 211
+  claim_text: «Οι αντιφάσεις μεταξύ των πηγών επιλύθηκαν.»
+  source_basis_or_failure: 'Δεν επιλύθηκαν: η αντίφαση «22 έναντι 17 πεδίων» (F1) και η ασυμμετρία των κλιμάκων (F28) επιβίωσαν μέσα στη σύνθεση
+    και διαδόθηκαν σε εντολή σχεδιασμού.'
+  preserved_residue_or_action: '**Επιβιώνει ο εντοπισμός των αντιφάσεων** — η σύνθεση τις έφερε στην ίδια σελίδα, που είναι προϋπόθεση επίλυσης.
+    Η επίλυση γίνεται τώρα, ονομαστικά, στο §6.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:209
+  - INVENTIONS.yaml:176
+  - mechanisms/MFA-MECH-017.md:10
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 2dd0b5cf14cf0dc8f9ed293039720bfcfb8912534746a5267afe423c3fc07490
+- claim_id: F47
+  source_verdict: FAILS
+  source_line: 212
+  claim_text: «Η σύνθεση είναι έτοιμη να τροφοδοτήσει άμεσα τον σχεδιασμό.»
+  source_basis_or_failure: 'Δεν ήταν: περιείχε μετρημένα λάθη που θα είχαν περάσει στο μοντέλο (η γρ. 228 δίνει ρητή εντολή με λάθος αριθμό).'
+  preserved_residue_or_action: '**Επιβιώνει η ετοιμότητά της μετά τις διορθώσεις του §6** — και επιβιώνει η αρχή που την έσωσε: κανένα έγγραφο
+    δεν τροφοδοτεί τον σχεδιασμό πριν περάσει από βάσανο. Η εντολή της Φάσης Β («από το **εγκεκριμένο** αποτέλεσμα, όχι τυφλά από το πρόχειρο»)
+    επικυρώνεται εμπειρικά.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 4ed19150c2ad25d6f65fe87c66af27354e70c40ffa270691814d3733b991cce9
+- claim_id: F48
+  source_verdict: FAILS
+  source_line: 213
+  claim_text: «Τα ποσοστά βελτίωσης (17–33%) τεκμηριώνουν την ανωτερότητα.»
+  source_basis_or_failure: '**Απαγορευμένη προβολή** κατά `DECISIONS-FOR-CREATOR.md` γρ. 148: αριθμοί χωρίς μέτρηση. Καμία σύγκριση δεν έγινε.'
+  preserved_residue_or_action: '**Επιβιώνει η ποιοτική διαπίστωση χωρίς τους αριθμούς** (H6) και επιβιώνει ο κανόνας που τους έκοψε. Αν χρειαστεί
+    ποσοτικοποίηση, ορίζεται πείραμα — μέχρι τότε, σιωπή αντί για αριθμό.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: ac9e3ba56745f5cadacfc0e8f61f467f11c1b633b7531674cf0b4362901724e1
+- claim_id: F49
+  source_verdict: FAILS
+  source_line: 214
+  claim_text: «Η δομή σε 23 ενότητες αντικατοπτρίζει τη δομή του προβλήματος.»
+  source_basis_or_failure: Ο αριθμός είναι αποτέλεσμα σύνταξης, όχι ανάλυσης. Καμία αντιστοίχιση ενότητας ↔ υποπροβλήματος δεν δίνεται.
+  preserved_residue_or_action: '**Επιβιώνει το περιεχόμενο των ενοτήτων** — τρεις από αυτές (§16.3, §19.3, §23) έδωσαν το τεκμήριο για το H8.
+    Η δομή είναι ευρετήριο, όχι θεωρία, και ως ευρετήριο είναι χρήσιμη.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 78a6c1c9071d5589027c72c3c1f5e0d487a89987541cfb464decf2ee7b85302c
+- claim_id: F50
+  source_verdict: FAILS
+  source_line: 215
+  claim_text: «Οι προτεινόμενες αποφάσεις είναι έτοιμες προς έγκριση.»
+  source_basis_or_failure: 'Αρκετές διατυπώθηκαν χωρίς εναλλακτικές και χωρίς κόστος, άρα δεν είναι εγκρίσιμες: μια απόφαση χωρίς εναλλακτική
+    δεν είναι απόφαση.'
+  preserved_residue_or_action: '**Επιβιώνει ο κατάλογος των σημείων που χρειάζονται έγκριση** — αυτό είναι το πραγματικά δύσκολο μέρος και έγινε.
+    Η μορφή διορθώνεται στο `DECISIONS-FOR-CREATOR.md`: κάθε απόφαση με πρόταση, εναλλακτικές και κόστος, όπως ορίζει η εντολή της Φάσης Α.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 2d38ab7d9136bf1a463d444ef542a009679fb4a4e45b87fe5fb4ff879d315555
+- claim_id: F51
+  source_verdict: FAILS
+  source_line: 216
+  claim_text: «Η σύνθεση διατηρεί την τελεολογία του έργου αναλλοίωτη.»
+  source_basis_or_failure: '«Αναλλοίωτη» δεν ελέγχθηκε: ο τελικός σκοπός δεν είναι διατυπωμένος σε μορφή που να επιτρέπει σύγκριση πριν/μετά.'
+  preserved_residue_or_action: '**Επιβιώνει η διαπίστωση ότι το `Telos` λείπει ως ρητό αντικείμενο** — και αυτό είναι ακριβώς ο λόγος που η πρώτη
+    δόση της Φάσης Β είναι «Telos + απαιτήσεις». Ο ισχυρισμός έπεσε και ταυτόχρονα επικύρωσε το σχέδιο.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 39a5912668f56b772ce6d7164242994ec54f3d8b75d8955e8a40f6313eb20ac2
+- claim_id: F52
+  source_verdict: FAILS
+  source_line: 223
+  claim_text: «Τα όργανα (organs) είναι εναλλάξιμα χωρίς αλλαγή του πυρήνα.»
+  source_basis_or_failure: 'Η εναλλαξιμότητα προϋποθέτει σταθερό ABI· το ABI δεν είναι πλήρως προδιαγεγραμμένο (πρβλ. F1: 17 πεδία, 16 κενά).
+    Χωρίς κλειστή προδιαγραφή, η εναλλαγή δεν είναι ελέγξιμη.'
+  preserved_residue_or_action: '**Επιβιώνει ως ο κεντρικός στόχος του Organ ABI και είναι εφικτός:** με τα 17 πεδία καθηλωμένα και τα 16 κενά
+    με `fill_policy` (F2), η εναλλαξιμότητα γίνεται ελέγξιμη ιδιότητα με contract tests. Είναι το πρώτο `ICD` που πρέπει να γραφτεί.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:85
+  - TECHNICAL-ARCHITECTURE.md:532
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 7c6148db617e8d7f2c39139337089f277bac02c39799c79c34eca8a97a78aef9
+- claim_id: F53
+  source_verdict: FAILS
+  source_line: 224
+  claim_text: «Ο Legal Meta-Compiler **εγγυάται** μη-στατιστική διαδρομή για κάθε νομική κρίση.» *(μέρος διχασμένης, §1.3)*
+  source_basis_or_failure: Το ρήμα «εγγυάται» δεν τεκμηριώνεται. Ο Meta-Compiler καλύπτει το **offline ingestion**, όχι τη ζωντανή διαδρομή απόφασης.
+  preserved_residue_or_action: '**Επιβιώνει ένα γεγονός που ο Α΄ γύρος είχε αποκρύψει με επιλεκτική παράθεση: ο Legal Meta-Compiler ΥΠΑΡΧΕΙ στο
+    έγγραφο** και κάνει πραγματική δουλειά στο offline ingestion. Η σωστή διατύπωση: ντετερμινιστική μετατροπή πηγής δικαίου σε κανόνες, **εκτός**
+    της αλυσίδας απόφασης — που είναι ακριβώς η μορφή του F25 και ενισχύει τον σχεδιασμό.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 6bfbe6f3e27bc7a2231cb540723d7884c54fe83d10e58f2bbbbcc72326ba5a50
+- claim_id: F54
+  source_verdict: FAILS
+  source_line: 225
+  claim_text: «Η απομόνωση οργάνων είναι ισοδύναμη με απόδειξη μη-παρεμβολής.»
+  source_basis_or_failure: 'Δεν είναι: η απομόνωση με μηχανισμούς λειτουργικού συστήματος δίνει περιορισμό πρόσβασης, όχι απόδειξη noninterference.
+    Το έγγραφο δεν διακρίνει τα δύο.'
+  preserved_residue_or_action: '**Επιβιώνει το ανώτερο που υπάρχει σήμερα και ονομάζεται:** το seL4 έχει **μηχανικά ελεγμένη απόδειξη** noninterference.
+    Αυτό είναι το κριτήριο σύγκρισης· η υπάρχουσα απομόνωση κατατάσσεται ρητά ως ασθενέστερη και δηλώνεται ως τέτοια, όχι ως ισοδύναμη.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:135
+  - ARCHITECTURE-ELEMENTS.yaml:136
+  - TECHNICAL-ARCHITECTURE.md:607
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: d475551323f93062c177c8d82542bd76ae0ec7131097e5d98d2ad33214f34c77
+- claim_id: F55
+  source_verdict: FAILS
+  source_line: 226
+  claim_text: «Ο δίαυλος pulse είναι χαμηλής καθυστέρησης και ασφαλής ταυτόχρονα.»
+  source_basis_or_failure: Η ταυτόχρονη ιδιότητα δηλώνεται χωρίς μέτρηση και χωρίς μοντέλο απειλής. Ο έλεγχος ασφαλείας κοστίζει· το κόστος δεν
+    αποτιμάται.
+  preserved_residue_or_action: '**Επιβιώνει με ονομασμένο συμβιβασμό, που είναι πιο χρήσιμο από την υπόσχεση:** ο δίαυλος είναι γρήγορος **επειδή**
+    ο έλεγχος γίνεται στην παραχώρηση (grant) και όχι σε κάθε μήνυμα (H10, F7). Αυτό είναι λύση, αρκεί να γραφτεί ως λύση με τους όρους της.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: fb3a6ab1e8c173feab72bd444678f4ff6a3c26a7c6f1873c0861a70dbdbdeb5f
+- claim_id: F56
+  source_verdict: FAILS
+  source_line: 227
+  claim_text: «Τα όργανα δεν μπορούν να κλιμακώσουν τα δικαιώματά τους.»
+  source_basis_or_failure: Δηλώνεται χωρίς μηχανισμό επιβολής. Χωρίς κανόνα μονοτονίας (F24), η μη-κλιμάκωση είναι ευχή.
+  preserved_residue_or_action: '**Επιβιώνει ως απαίτηση με πλήρη λύση σήμερα:** capability-based authorization με μη-διευρύνσιμα tokens — Biscuit
+    (attenuation μόνο προς τα κάτω), SPIFFE για ταυτότητα φορτίου, Cedar για πολιτική. Και τα τρία υπάρχουν σε παραγωγή.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:114
+  - ARCHITECTURE-ELEMENTS.yaml:115
+  - INVARIANTS.yaml:73
+  - TECHNICAL-ARCHITECTURE.md:76
+  - TECHNICAL-ARCHITECTURE.md:567
+  - TECHNICAL-ARCHITECTURE.md:577
+  - patches/MFA-PATCH-0005-R.yaml:53
+  - patches/MFA-PATCH-0005.yaml:60
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: fdfe2089ec0b6f6953cd9d814ae6444fab77c637af93f925f5e0a8665edb5382
+- claim_id: F57
+  source_verdict: FAILS
+  source_line: 228
+  claim_text: «Η ανάκτηση από αποτυχία οργάνου είναι διαφανής στον καλούντα.»
+  source_basis_or_failure: Η διαφανής ανάκτηση απαιτεί ιδιότητες (idempotency, exactly-once) που δεν προδιαγράφονται. Με παρενέργειες, η διαφάνεια
+    είναι αδύνατη χωρίς πρωτόκολλο.
+  preserved_residue_or_action: '**Επιβιώνει η διάκριση που λύνει το πρόβλημα:** για **καθαρά** όργανα (χωρίς παρενέργεια) η επανεκτέλεση είναι
+    όντως διαφανής και υλοποιήσιμη σήμερα. Για τα υπόλοιπα, απαιτείται ρητό `idempotency_key` στο ABI. Αυτή η διχοτόμηση γίνεται πεδίο του συμβολαίου.'
+  legacy_explicit_trace_refs:
+  - CONTRACTS.yaml:35
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 529b77c07bc24ed4e3102f7d3eb9783186740e2be690aeea2d4086b59f4c1782
+- claim_id: F58
+  source_verdict: FAILS
+  source_line: 229
+  claim_text: «Η αρχιτεκτονική Mercury έχει δοκιμαστεί στην πράξη.»
+  source_basis_or_failure: Τα διαθέσιμα RELEASE_NOTES δεν τεκμηριώνουν τη δοκιμή των ιδιοτήτων που διεκδικούνται εδώ. Το «δοκιμασμένο» αφορά άλλο
+    πράγμα από το ισχυριζόμενο.
+  preserved_residue_or_action: '**Επιβιώνει ότι τα δομικά στοιχεία είναι δοκιμασμένα χωριστά και αυτό δεν είναι λίγο:** zero-copy rings (H10),
+    grammar-constrained decoding (H9), capability tokens (F56) τρέχουν σε παραγωγή. Η **σύνθεσή** τους είναι το αδοκίμαστο — και αυτό δηλώνεται
+    ως το πείραμα που χρωστάμε.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 4d7bd2d7e9794f3c78698246b6976811d971f391c96fa609e09e3590e3fc2791
+- claim_id: F59
+  source_verdict: FAILS
+  source_line: 235
+  claim_text: «Οι απαντήσεις καλύπτουν τα ανοιχτά ερωτήματα του corpus.»
+  source_basis_or_failure: Τα «ανοιχτά ερωτήματα» δεν είναι απαριθμημένα πουθενά, άρα η κάλυψη δεν ελέγχεται.
+  preserved_residue_or_action: '**Επιβιώνει το περιεχόμενο των απαντήσεων** — τρεις από αυτές πέρασαν τη βάσανο (H11, H12, H13), ποσοστό πολύ
+    πάνω από τον μέσο όρο του corpus. Η απαρίθμηση των ανοιχτών ερωτημάτων γίνεται τώρα, στο §7.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 9b24d95736db25ad5bf89340bb8b1dd1b1a7a56abb451fe56fb2d1a9623b7ade
+- claim_id: F60
+  source_verdict: FAILS
+  source_line: 236
+  claim_text: «Η παρασυνεπής λογική υλοποιείται χωρίς κόστος επίδοσης.»
+  source_basis_or_failure: Δεν τεκμηριώνεται· η αποτίμηση σε FDE/LP έχει διαφορετικό κόστος από την κλασική και το κείμενο δεν το μετρά.
+  preserved_residue_or_action: '**Επιβιώνει ότι το κόστος είναι φραγμένο και γνωστό:** η αποτίμηση σε πεπερασμένη πολύτιμη λογική παραμένει πολυωνυμική
+    για το αποφασίσιμο τμήμα. Δεν είναι «χωρίς κόστος»· είναι «με κόστος που μπορούμε να υπολογίσουμε πριν», που είναι ό,τι χρειάζεται ο σχεδιασμός.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 8cd2cc3ab64b9cae34a1a97f9158daf0d9134b3b3c7b2a86c2dba22ff8efb278
+- claim_id: F61
+  source_verdict: FAILS
+  source_line: 237
+  claim_text: «Η δομή MAPE-K επιλέχθηκε επειδή δεν υπάρχει ανώτερη.»
+  source_basis_or_failure: 'Η αιτιολόγηση είναι σφαλερή: το «ανώτερο» που προσκομίστηκε ως αντίπαλο **είναι το ίδιο MAPE-K** σε ιεραρχική μορφή.
+    *(Η ίδια η καταλληλότητα του MAPE-K μεταφέρθηκε στο UNPROVEN — §4.)*'
+  preserved_residue_or_action: '**Επιβιώνει η επιλογή, με άλλη αιτιολόγηση:** το MAPE-K επιλέγεται επειδή δίνει ονομασμένες έδρες (Monitor/Analyze/Plan/Execute
+    πάνω σε κοινή Knowledge) που αντιστοιχούν ένα προς ένα σε πακέτα του μοντέλου. Αυτή είναι αιτιολόγηση σχεδιασμού, όχι ισχυρισμός υπεροχής.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: a8fdf7d0cc765457d78acc64a6832627d1d662c7a6c041365fcb76136c17861d
+- claim_id: F62
+  source_verdict: FAILS
+  source_line: 238
+  claim_text: «Η αυτο-βελτίωση συγκλίνει.»
+  source_basis_or_failure: Καμία συνθήκη σύγκλισης δεν δίνεται. Χωρίς ορισμό του μετρικού χώρου και του τελεστή, η «σύγκλιση» δεν έχει νόημα.
+  preserved_residue_or_action: '**Επιβιώνει ένα υπαρκτό, μετρήσιμο ανάλογο:** το MCTS ως τελεστής βελτίωσης πολιτικής έχει αποδεδειγμένες ιδιότητες
+    βελτίωσης υπό συνθήκες. Ο δρόμος υπάρχει — αλλά είναι **πείραμα**, όχι υλοποιήσιμο σήμερα, και έτσι καταγράφεται.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 5bb3d1da150bda1927b2d94d35e02bdaa1e105c1a4390479927a58ede9277f7a
+- claim_id: F63
+  source_verdict: FAILS
+  source_line: 239
+  claim_text: «Το σύστημα διατηρεί πλαστικότητα επ' άπειρον.»
+  source_basis_or_failure: 'Ψευδές ως καθολικό: η απώλεια πλαστικότητας (loss of plasticity) είναι **μετρημένο** φαινόμενο σε συστήματα συνεχούς
+    μάθησης. Ο ισχυρισμός αγνοεί γνωστό εμπόδιο.'
+  preserved_residue_or_action: '**Επιβιώνει με τη γνωστή θεραπεία ονομασμένη:** continual backpropagation και συγγενείς τεχνικές επαναφοράς μονάδων
+    αντιμετωπίζουν ακριβώς αυτό. Ο ισχυρισμός γίνεται απαίτηση με μηχανισμό και με **μετρήσιμο δείκτη πλαστικότητας** που παρακολουθείται. Αυτό
+    είναι ανώτερο από την αρχική υπόσχεση.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:580
+  - CROSS-DOMAIN-TRANSFERS.md:24
+  - TECHNICAL-ARCHITECTURE.md:1494
+  - patches/MFA-PATCH-0010-R.yaml:53
+  - patches/MFA-PATCH-0010.yaml:176
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 116d9a3dd780fcfc4007da68816c889c170b41b705aaad021e7685f5611d1d15
+- claim_id: F64
+  source_verdict: FAILS
+  source_line: 240
+  claim_text: «Η μετα-μάθηση επιτρέπει προσαρμογή σε νέες περιοχές με ελάχιστα δείγματα.»
+  source_basis_or_failure: Το «ελάχιστα» δεν ποσοτικοποιείται και το πεδίο δεν οριοθετείται. Επιπλέον η ανάλυση ANIL δείχνει ότι μεγάλο μέρος
+    του οφέλους του MAML είναι επαναχρησιμοποίηση αναπαράστασης, όχι ταχεία προσαρμογή.
+  preserved_residue_or_action: '**Επιβιώνει το πραγματικό μέγεθος, που είναι χρήσιμο:** αν το όφελος είναι επαναχρησιμοποίηση αναπαράστασης, τότε
+    η επένδυση πρέπει να πάει στην **κοινή αναπαράσταση** (γνωσιακός πυρήνας) και όχι στον αλγόριθμο προσαρμογής. Αυτό είναι σχεδιαστική οδηγία
+    που προκύπτει από την απόρριψη.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: b2ac30bd91a30992773d966022fcd5a2824af8466953b54f6b356d95a4fab596
+- claim_id: F65
+  source_verdict: FAILS
+  source_line: 241
+  claim_text: «Η ισορροπία μεταξύ ανταγωνιστικών στόχων υπολογίζεται αποδοτικά.»
+  source_basis_or_failure: 'Γενικά όχι: η εύρεση ισορροπίας Nash είναι υπολογιστικά δύσκολη στη γενική περίπτωση. Το κείμενο δεν περιορίζει την
+    περίπτωση.'
+  preserved_residue_or_action: '**Επιβιώνει το τμήμα όπου ισχύει, και είναι ακριβώς το τμήμα που μας ενδιαφέρει:** για **παίγνια μηδενικού αθροίσματος**
+    η ισορροπία λύνεται με γραμμικό προγραμματισμό, σε πολυωνυμικό χρόνο. Ο αντιπαλικός θεσμός (Epistemic Court) μοντελοποιείται φυσικά ως μηδενικού
+    αθροίσματος. Ο περιορισμός γίνεται σχεδιαστική επιλογή.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:405
+  - ARCHITECTURE-ELEMENTS.yaml:415
+  - CROSS-DOMAIN-TRANSFERS.md:25
+  - TECHNICAL-ARCHITECTURE.md:1134
+  - TECHNICAL-ARCHITECTURE.md:1150
+  - alternatives/MFA-ALT-4.md:34
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 8e9e6f91461656b5e2cb5009b9dfc116ec5c8fae9513416859f9cd43d06fcd89
+- claim_id: F66
+  source_verdict: FAILS
+  source_line: 242
+  claim_text: «Η επιχειρηματολογία επιλύει κάθε σύγκρουση ισχυρισμών.»
+  source_basis_or_failure: Τα πλαίσια επιχειρηματολογίας (Dung, ASPIC+) παράγουν **επεκτάσεις**, που μπορεί να είναι πολλαπλές ή κενές. «Επιλύει
+    κάθε σύγκρουση» δεν είναι ιδιότητά τους.
+  preserved_residue_or_action: '**Επιβιώνει η πολλαπλότητα ως χαρακτηριστικό, όχι ως ελάττωμα:** πολλαπλές επεκτάσεις σημαίνουν «υπάρχουν δύο
+    υπερασπίσιμες θέσεις» — ακριβώς αυτό που πρέπει να αναφέρει ένα νομικό σύστημα αντί να κρύψει. Συνδέεται άμεσα με το `conflict_set` (§1.4)
+    και τα Carneades proof standards (F18).'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:373
+  - TECHNICAL-ARCHITECTURE.md:1064
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: e49db586d4b275d5dfb3b40deee030e8a3d77ba5029f6f7c834f339b1631a981
+- claim_id: F67
+  source_verdict: FAILS
+  source_line: 248
+  claim_text: «Το `conflict_set` με ονομασμένο άξονα και δύο πλευρές αποτυπώνει τις αντιφάσεις της νομολογίας.» ***(δεν δέχθηκε επίθεση — §1.4)***
+  source_basis_or_failure: 'Δύο πλευρές και ένας άξονας είναι πολύ φτωχή δομή: οι πραγματικές αντιφάσεις έχουν πολλούς άξονες και περισσότερες
+    από δύο θέσεις.'
+  preserved_residue_or_action: '**Επιβιώνει η αρχή «δεν τις απορρίπτουμε», που είναι σωστή και σπάνια:** οι αντιφατικές αποφάσεις κρατιούνται
+    ως αντικείμενα πρώτης τάξης. Ο `axis` γίνεται **διάσταση αξιών** — πολλοί άξονες, ο καθένας ο ίδιος αμφισβητήσιμος. Τα `resolution_criteria`
+    αναβαθμίζονται σε Carneades proof standards και ASPIC+ preferences. Οι δύο πλευρές επιβιώνουν ως **προβολή** για ανθρώπινη παρουσίαση, όχι
+    ως μορφή αποθήκευσης.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:198
+  - AI-CONTRIBUTION-LEDGER.md:205
+  - ARCHITECTURE-ELEMENTS.yaml:373
+  - ARCHITECTURE-ELEMENTS.yaml:557
+  - CROSS-DOMAIN-TRANSFERS.md:16
+  - INVENTIONS.yaml:167
+  - TECHNICAL-ARCHITECTURE.md:1064
+  - TECHNICAL-ARCHITECTURE.md:1450
+  - mechanisms/MFA-MECH-016.md:15
+  - mechanisms/MFA-MECH-016.md:30
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 52c94f156a5084c2944354d2471a9d81762bf0e0e59290dcb15a2950b6bc755b
+- claim_id: F68
+  source_verdict: FAILS
+  source_line: 249
+  claim_text: «Τα `abstraction_levels` δίνουν αντικειμενική κλίμακα αφαίρεσης.» *(ο Β΄ απέρριψε το σκεπτικό του Α΄ αλλά κράτησε το FAILS — §5)*
+  source_basis_or_failure: Η κλίμακα είναι επιλογή του συγγραφέα χωρίς κριτήριο ένταξης· δύο διαφορετικοί αναλυτές θα παρήγαγαν διαφορετικά επίπεδα
+    για το ίδιο αντικείμενο.
+  preserved_residue_or_action: '**Επιβιώνει η ανάγκη ρητής δήλωσης επιπέδου, η οποία λύνει πραγματικό πρόβλημα:** χωρίς αυτήν, ισχυρισμοί διαφορετικού
+    επιπέδου συγκρίνονται σαν να ήταν ομοειδείς (ακριβώς το σφάλμα του F28). Το επίπεδο γίνεται **δηλωμένο πεδίο με υπεύθυνο**, όχι μετρημένη
+    ιδιότητα.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 6e89146268cf2643380dc1bff6d3e2031dfe438fcf12d6fb58b80bf5a2a9120e
+- claim_id: F69
+  source_verdict: FAILS
+  source_line: 250
+  claim_text: «Η εξουσία μοντελοποιείται πλήρως ως σχέση μεταξύ φορέων.»
+  source_basis_or_failure: Η εξουσία στο κείμενο περιγράφεται ως δυαδική σχέση, ενώ οι πραγματικές δομές είναι τριαδικές (ποιος, έναντι ποιου,
+    **ως προς τι**) και χρονικές.
+  preserved_residue_or_action: '**Επιβιώνει η σχεσιακή σύλληψη, που είναι σωστή έναντι της ιδιοτικής:** η εξουσία δεν είναι ιδιότητα ενός φορέα
+    αλλά σχέση. Επεκτείνεται σε τριάδα με πεδίο ισχύος και χρονικό παράθυρο — δηλαδή ακριβώς στη μορφή ενός capability token (F56). Η σύνδεση
+    αυτή κάνει το μοντέλο υλοποιήσιμο.'
+  legacy_explicit_trace_refs:
+  - alternatives/MFA-ALT-4.md:40
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: ed6236997de9c6f2d447ce536c5c91e2f44ed3e21c2fe3e825b6e1043b4bc02f
+- claim_id: F70
+  source_verdict: FAILS
+  source_line: 251
+  claim_text: «Το ψυχολογικό προφίλ του φορέα προβλέπει τη συμπεριφορά του.» *(ο Β΄ απέρριψε το σκεπτικό αλλά κράτησε το FAILS — §5)*
+  source_basis_or_failure: 'Καμία βάση: ούτε ορισμός του προφίλ, ούτε μηχανισμός πρόβλεψης, ούτε επικύρωση. Είναι ισχυρισμός εμπειρικής ψυχολογίας
+    χωρίς εμπειρία.'
+  preserved_residue_or_action: '**Επιβιώνει ένα μικρό αλλά πραγματικό υπόλειμμα:** η **παρελθούσα συμπεριφορά ενός φορέα μέσα στο σύστημα** είναι
+    καταγεγραμμένη, μετρήσιμη και νομικά κρίσιμη (π.χ. επανάληψη παράβασης). Αυτό αντικαθιστά το «προφίλ» με ιστορικό — ελέγξιμο, με ρητή πολιτική
+    διατήρησης.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:198
+  - AI-CONTRIBUTION-LEDGER.md:205
+  - ARCHITECTURE-ELEMENTS.yaml:519
+  - ARCHITECTURE-ELEMENTS.yaml:520
+  - CROSS-DOMAIN-TRANSFERS.md:43
+  - INVENTIONS.yaml:167
+  - TECHNICAL-ARCHITECTURE.md:1366
+  - TECHNICAL-ARCHITECTURE.md:1376
+  - mechanisms/MFA-MECH-016.md:15
+  - mechanisms/MFA-MECH-016.md:30
+  - patches/MFA-PATCH-0011-R.yaml:55
+  - patches/MFA-PATCH-0011.yaml:105
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: cb573e9b3a070244660dc1339177856bedbafffeea522f377123774e125bda0e
+- claim_id: F71
+  source_verdict: FAILS
+  source_line: 252
+  claim_text: «Η ανάλυση εξουσίας εφαρμόζεται αμετάβλητη σε ανθρώπινους και τεχνητούς φορείς.»
+  source_basis_or_failure: Η συμμετρία δηλώνεται χωρίς εξέταση των διαφορών που έχουν νομική σημασία (ευθύνη, ικανότητα δικαίου, ανάκληση).
+  preserved_residue_or_action: '**Επιβιώνει η συμμετρία στο επίπεδο του μηχανισμού** — άδειες, όρια, ανάκληση λειτουργούν το ίδιο για κάθε φορέα,
+    και αυτό απλοποιεί τον σχεδιασμό δραστικά. Η ασυμμετρία μεταφέρεται εκεί που ανήκει: στην **απόδοση ευθύνης**, που είναι χωριστό αντικείμενο.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 8f851288d1e248be86ce0f27c47838cbf94aae357861defe2ade9a9472ef4673
+- claim_id: F72
+  source_verdict: FAILS
+  source_line: 253
+  claim_text: «Οι σχέσεις εξουσίας είναι μεταβατικές.»
+  source_basis_or_failure: 'Δεν είναι, και δεν πρέπει να είναι: η μεταβατικότητα της εξουσιοδότησης είναι ακριβώς ο μηχανισμός ανεξέλεγκτης κλιμάκωσης.'
+  preserved_residue_or_action: '**Επιβιώνει ως ρητή απαγόρευση, που είναι πολυτιμότερη από τον ισχυρισμό:** η εξουσιοδότηση είναι μεταβατική **μόνο**
+    με εξασθένηση (attenuation) και ρητό βάθος. Ήδη καταγεγραμμένο ως Α-6 (μεταβατικό κλείσιμο, έλεγχος με Alloy — `MATERIAL-SYNTHESIS.md` γρ.
+    317).'
+  legacy_explicit_trace_refs:
+  - INVARIANTS.yaml:73
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: bc3a45996797e152fe43b1f16a7d5bf558aef376e06c8e746a0ad5842b47b0ea
+- claim_id: F73
+  source_verdict: FAILS
+  source_line: 254
+  claim_text: «Ο έλεγχος εξουσίας γίνεται στατικά, πριν την εκτέλεση.»
+  source_basis_or_failure: Αδύνατο για εξουσίες που εξαρτώνται από κατάσταση χρόνου εκτέλεσης (ποιος κατέχει τι, ποια εντολή ισχύει σήμερα).
+  preserved_residue_or_action: '**Επιβιώνει η υβριδική μορφή που είναι η πρακτική λύση:** στατικός έλεγχος για τη **δομή** (ποιος μπορεί καταρχήν),
+    δυναμικός για την **κατάσταση** (ποιος μπορεί τώρα). Ακριβώς η διαίρεση Cedar (στατική ανάλυση πολιτικής) + runtime PDP. Υλοποιήσιμο σήμερα.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:115
+  - TECHNICAL-ARCHITECTURE.md:577
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: f15cb3c1038b54fafb7ae8277dc718eac23b58cd378041ea694cc659672801ef
+- claim_id: F74
+  source_verdict: FAILS
+  source_line: 255
+  claim_text: «Η ανάκληση εξουσίας είναι άμεση και καθολική.»
+  source_basis_or_failure: Η άμεση καθολική ανάκληση σε κατανεμημένο σύστημα προσκρούει σε θεμελιώδη όρια διάδοσης· το κείμενο δεν αναγνωρίζει
+    το πρόβλημα.
+  preserved_residue_or_action: '**Επιβιώνει με τον μηχανισμό που το κάνει εφικτό:** βραχύβια tokens με ανανέωση, συν κατάλογος ανάκλησης με αποδείξεις
+    — η ανάκληση γίνεται «φραγμένη στον χρόνο» αντί για «άμεση». Το φράγμα είναι ρυθμιζόμενη παράμετρος και δηλώνεται. Αυτό είναι το ανώτερο που
+    υπάρχει σήμερα.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:115
+  - TECHNICAL-ARCHITECTURE.md:577
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 6c84c17b485c700ecf31b3c9b57282de31178ecb8adb16affa4fd23318213eec
+- claim_id: F75
+  source_verdict: FAILS
+  source_line: 256
+  claim_text: «Η δομή εξουσίας του συστήματος αντικατοπτρίζει τη συνταγματική δομή.»
+  source_basis_or_failure: Ο αντικατοπτρισμός δηλώνεται χωρίς αντιστοίχιση. Καμία γραμμή συντάγματος δεν συνδέεται με κανένα στοιχείο της δομής.
+  preserved_residue_or_action: '**Επιβιώνει ως η σωστή απαίτηση ιχνηλασιμότητας:** κάθε δικαίωμα του συστήματος οφείλει να ανάγεται σε άρθρο του
+    συντάγματος — αυτό γίνεται σχέση `satisfy` στο SysML και ελέγχεται μηχανικά με `syson_query_requirements_trace`. Ο ισχυρισμός έπεσε ως περιγραφή
+    και επανέρχεται ως επαληθεύσιμη υποχρέωση.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: bbfac533ebd8e09a6f425e310b3e05067cbdafa5322921f9e410c5f081ae236c
+- claim_id: F76
+  source_verdict: FAILS
+  source_line: 265
+  claim_text: «Το σύστημα αριθμεί ~2.900 γραμμές Common Lisp.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος.** Πραγματική μέτρηση: **5.986** γραμμές `.lisp` συνολικά — **5.070** εκτός τεστ, **916** τεστ.
+    Απόκλιση πάνω από 2×.'
+  preserved_residue_or_action: '**Επιβιώνει ένα καλύτερο νούμερο και ένας δείκτης:** το σώμα είναι διπλάσιο από ό,τι νόμιζε η σύνθεση, με λόγο
+    τεστ/κώδικα **916/5.070 ≈ 18%**. Και τα δύο μπαίνουν διορθωμένα στο `MATERIAL-SYNTHESIS.md` (§6). Ο λόγος τεστ είναι χρήσιμος δείκτης ωριμότητας
+    που δεν είχε υπολογιστεί ποτέ.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: e27bdcb30b887c65406aec1d9d2afb882c20cb6ec6ab1e4a83b91faf1d75affa
+- claim_id: F77
+  source_verdict: FAILS
+  source_line: 266
+  claim_text: «Ο αγωγός F-11 έχει πλήρη περιγραφή όλων των σταδίων.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος.** Η περιγραφή ξεκινά στο «11.1 intake & conflicts»· **τα τρία πρώτα στάδια λείπουν εντελώς** από
+    το κείμενο.'
+  preserved_residue_or_action: '**Επιβιώνουν τα στάδια που περιγράφονται, και το κενό είναι ονομασμένο και φραγμένο:** τρία στάδια, στην αρχή
+    του αγωγού. Αυτό είναι ακριβώς το είδος κενού που το SysML κάνει ορατό με το που μοντελοποιηθεί ο αγωγός ως ακολουθία `action` — και είναι
+    ο λόγος που το F-11 μπαίνει νωρίς στη δόση 2.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:197
+  - AI-CONTRIBUTION-LEDGER.md:205
+  - INVENTIONS.yaml:167
+  - mechanisms/MFA-MECH-016.md:10
+  - mechanisms/MFA-MECH-016.md:30
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 52f791753e894ee7af63a83ca150db177b104bd7cf8757350e4e4ae382a479af
+- claim_id: F78
+  source_verdict: FAILS
+  source_line: 267
+  claim_text: «Υπάρχει αντιπαλική (adverse) διαδικασία ελέγχου.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος.** Αναζήτηση για `adverse` στο σώμα: **0 ευρήματα** (`MATERIAL-SYNTHESIS.md` γρ. 90). Η διαδικασία
+    δεν υπάρχει πουθενά.'
+  preserved_residue_or_action: '**Επιβιώνει η ανάγκη, τεκμηριωμένη από την ίδια αυτή εργασία:** ο δεύτερος, ανεξάρτητος ελεγκτής ανέτρεψε 14 από
+    113 ετυμηγορίες. Ο αντιπαλικός θεσμός δεν είναι θεωρητικό κόσμημα — **μετρήθηκε ότι παράγει**. Αυτό είναι το ισχυρότερο εμπειρικό επιχείρημα
+    του corpus υπέρ του Epistemic Court (`SOTA-ADV-16/17`, `DEC-ADV-02`).'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:415
+  - TECHNICAL-ARCHITECTURE.md:1150
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 315b3b74da666f15b271f4f27cca462567935dcdfd92d879ce5c13029364066c
+- claim_id: F79
+  source_verdict: FAILS
+  source_line: 268
+  claim_text: «Ο μετακυκλικός πύργος τεκμηριώνεται ως μέρος του σχεδιασμού.»
+  source_basis_or_failure: 0 ευρήματα, όπως και στο F44. Η τεκμηρίωση αναφέρεται σε συστατικό που δεν υπάρχει ούτε ως προδιαγραφή.
+  preserved_residue_or_action: '**Επιβιώνει ως ρητό σημείο επέκτασης με υπαρκτή αναφορά** (Brown/Blond, namin/lms-black). Μπαίνει στο `ExtensionPoints`
+    ως `EXP` με σημείωση «απαιτεί πείραμα», όχι στο `LogicalArchitecture`.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:289
+  - ARCHITECTURE-ELEMENTS.yaml:290
+  - CROSS-DOMAIN-TRANSFERS.md:45
+  - TECHNICAL-ARCHITECTURE.md:880
+  - TECHNICAL-ARCHITECTURE.md:890
+  - patches/MFA-PATCH-0035-R.yaml:93
+  - patches/MFA-PATCH-0035.yaml:98
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 90b752cdab9f3c4a46a91cdbf6dbebe1ab4804fec8d96c5a0ab03c3e35255ac6
+- claim_id: F80
+  source_verdict: FAILS
+  source_line: 269
+  claim_text: «Η τεκμηρίωση της ανίχνευσης συνείδησης περιγράφει μετρήσιμο φαινόμενο.»
+  source_basis_or_failure: 'Το περιγραφόμενο δεν είναι μετρήσιμο: η εκτέλεση έδειξε ότι ο μηχανισμός είναι γεννήτρια τυχαίων (F92). Η τεκμηρίωση
+    περιγράφει πρόθεση ως αποτέλεσμα.'
+  preserved_residue_or_action: '**Επιβιώνει η μετρήσιμη ερώτηση κάτω από τον όρο:** «ανιχνεύεται δομική αντιστοιχία μεταξύ δύο ροών;» είναι πραγματική,
+    απαντήσιμη ερώτηση με υπαρκτά εργαλεία (συσχέτιση, αμοιβαία πληροφορία, ομολογία). Ο όρος «συνείδηση» αποσύρεται (πρβλ. F11), η ερώτηση μένει.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: a7463ca898a701d17ff48205f4972290c491097dc60c51af3b3ff8c41d8eb287
+- claim_id: F81
+  source_verdict: FAILS
+  source_line: 270
+  claim_text: «Η περιγραφή της επίμονης ομολογίας (persistent homology) αντιστοιχεί σε υλοποιημένο υπολογισμό.»
+  source_basis_or_failure: Η τεκμηρίωση περιγράφει H₀/H₁/H₂ σε α-complex με ενσωμάτωση MDS· ο κώδικας δεν υλοποιεί τίποτα από αυτά.
+  preserved_residue_or_action: '**Επιβιώνει ως πλήρης και ορθή προδιαγραφή — σπάνιο εύρημα.** Η αλυσίδα MDS → α-complex → H₀/H₁/H₂ είναι σωστά
+    διατυπωμένη και υπάρχουν ώριμες βιβλιοθήκες. Είναι **υλοποιήσιμο σήμερα**, από τα λίγα σημεία του corpus που το είναι χωρίς έρευνα.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: f77952a1b7d729c84e165548dfcbb784a54aae8b02e34c2eb90e5e3c4686fc68
+- claim_id: F82
+  source_verdict: FAILS
+  source_line: 271
+  claim_text: «Η δομή 2-topos με τον νόμο εναλλαγής (interchange law) θεμελιώνει τη σύνθεση επιπέδων.»
+  source_basis_or_failure: Η τεκμηρίωση επικαλείται τη δομή χωρίς να ελέγχει ότι οι υποθέσεις της ισχύουν στο πλαίσιο GRAIL — ακριβώς η απαίτηση
+    του Δ-13.
+  preserved_residue_or_action: '**Επιβιώνει ως γνήσια υπόσχεση με ονομασμένη προϋπόθεση:** αν η σύνθεση επιπέδων ικανοποιεί τον νόμο εναλλαγής,
+    τότε η σειρά εφαρμογής ανεξάρτητων μετασχηματισμών δεν έχει σημασία — ισχυρή και **ελέγξιμη** ιδιότητα. Ο έλεγχος των υποθέσεων γίνεται πείραμα,
+    με σαφές κριτήριο επιτυχίας.'
+  legacy_explicit_trace_refs:
+  - CROSS-DOMAIN-TRANSFERS.md:17
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: a98de28850b6c8b1ec402f9dc30deb2863123607a72457dc88d9c5361b0daf24
+- claim_id: F83
+  source_verdict: FAILS
+  source_line: 272
+  claim_text: «Οι αποδείξεις σε Lean 4 επικυρώνουν τις κρίσιμες ιδιότητες.»
+  source_basis_or_failure: Η τεκμηρίωση αναφέρει αποδείξεις χωρίς έλεγχο των αξιωμάτων τους. Χρήση `native_decide` μεταφέρει την εμπιστοσύνη στον
+    μεταγλωττιστή, όχι στον πυρήνα του Lean.
+  preserved_residue_or_action: '**Επιβιώνει ο σωστός έλεγχος, που είναι μία γραμμή:** `#print axioms` σε κάθε θεώρημα αποκαλύπτει ακριβώς τι εμπιστευόμαστε.
+    Αυτό γίνεται **υποχρεωτικό βήμα** του `Verification` πακέτου για κάθε απόδειξη που θα παραχθεί. Η απόρριψη παρήγαγε διαδικασία.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:210
+  - ARCHITECTURE-ELEMENTS.yaml:755
+  - TECHNICAL-ARCHITECTURE.md:516
+  - TECHNICAL-ARCHITECTURE.md:736
+  - alternatives/MFA-ALT-1.md:49
+  - patches/MFA-PATCH-0016.yaml:64
+  - patches/MFA-PATCH-0016.yaml:171
+  - patches/MFA-PATCH-0023-R.yaml:65
+  - patches/MFA-PATCH-0023.yaml:591
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 865cf5f6bef18232681b03e26ea0d5fa7e02e1ec3667e5ea6648a75c4135ec03
+- claim_id: F84
+  source_verdict: FAILS
+  source_line: 273
+  claim_text: «Οι προδιαγραφές TLA+ αποδεικνύουν την ορθότητα του πρωτοκόλλου.»
+  source_basis_or_failure: Η τεκμηρίωση δεν αναφέρει ούτε σχέση εκλέπτυνσης (refinement) προς την υλοποίηση, ούτε machine closure, ούτε ορθότητα
+    επιπέδου (level-correctness). Χωρίς αυτά, το μοντέλο ελέγχεται αλλά δεν δεσμεύει το σύστημα.
+  preserved_residue_or_action: '**Επιβιώνει το TLA+ ως το σωστό εργαλείο και ο κατάλογος των τριών ελέγχων που το κάνουν να μετράει.** Refinement,
+    machine closure, level-correctness γίνονται ρητά κριτήρια αποδοχής κάθε προδιαγραφής. Αυτό είναι ανώτερο από τον αρχικό ισχυρισμό.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:21
+  - ARCHITECTURE-ELEMENTS.yaml:210
+  - ARCHITECTURE-ELEMENTS.yaml:755
+  - TECHNICAL-ARCHITECTURE.md:516
+  - TECHNICAL-ARCHITECTURE.md:736
+  - mechanisms/MFA-MECH-001.md:22
+  - patches/MFA-PATCH-0016.yaml:64
+  - patches/MFA-PATCH-0016.yaml:171
+  - patches/MFA-PATCH-0023-R.yaml:65
+  - patches/MFA-PATCH-0023.yaml:591
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 55c1b03673a664c9463a15fa96f653ef65759da3acdc5095882637390048a078
+- claim_id: F85
+  source_verdict: FAILS
+  source_line: 274
+  claim_text: «Η τεκμηρίωση της ασφάλειας νημάτων περιγράφει το υλοποιημένο μοντέλο.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος.** Η υλοποίηση χάνει από 37% έως 68% των εγγραφών υπό ταυτοχρονισμό (F89) — η τεκμηρίωση δεν το
+    αναφέρει.'
+  preserved_residue_or_action: '**Επιβιώνει η αναγνώριση ότι ο ταυτοχρονισμός είναι κρίσιμος**, και επιβιώνει η μέτρηση ως προδιαγραφή του τεστ
+    που θα τη φυλάει: 4 νήματα × 20.000 εγγραφές, αναμενόμενο 80.000, ανοχή 0. Το τεστ γράφεται πριν τον κώδικα.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:610
+  - TECHNICAL-ARCHITECTURE.md:1564
+  - TECHNICAL-ARCHITECTURE.md:1574
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 60f4e35057a29dc0f1854eda20d35ce02e2d766779b2e37ab7c530c682405f2f
+- claim_id: F86
+  source_verdict: FAILS
+  source_line: 275
+  claim_text: «Η τεκμηρίωση της αναπαραγωγιμότητας αντιστοιχεί στη συμπεριφορά.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος.** Το `(make-random-state 42)` σφάλλει με type error σε **κάθε** διαδρομή, και το ίδιο «UUID» `D091BB5C-9EF6-4AEE-9F79-352CF807B7DF`
+    παράγεται σε νέες, ανεξάρτητες διεργασίες.'
+  preserved_residue_or_action: '**Επιβιώνει η απαίτηση αναπαραγωγιμότητας ακέραιη, και ο σωστός τρόπος φάνηκε από την αποτυχία:** το σπόρος πρέπει
+    να είναι ρητό, καταγεγραμμένο αντικείμενο της κατάστασης, όχι παράμετρος κλήσης — και οι ταυτότητες πρέπει να παράγονται από πηγή με εγγύηση
+    μοναδικότητας. Συνδέεται με το F26.'
+  legacy_explicit_trace_refs:
+  - INVARIANTS.yaml:30
+  - INVARIANTS.yaml:114
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 812406c55dc22f515edf8bea215024b5d7e79ebb4ec758a596f4fb5e717c50cc
+- claim_id: F87
+  source_verdict: FAILS
+  source_line: 276
+  claim_text: «Η τεκμηρίωση καλύπτει το μοντέλο απειλής της κατάστασης.»
+  source_basis_or_failure: '**Μετρημένο ψεύδος και σοβαρό.** Αρχείο κατάστασης που περιέχει `#.(…)` **εκτελεί αυθαίρετο κώδικα κατά την ανάγνωση**,
+    επειδή το `*read-eval*` παραμένει ενεργό. Καμία αναφορά στην τεκμηρίωση.'
+  preserved_residue_or_action: '**Επιβιώνει ως ο πρώτος κανόνας ασφάλειας που μπαίνει στο `Constitution`:** καμία δεσεριοποίηση κατάστασης χωρίς
+    `*read-eval*` απενεργοποιημένο και χωρίς επικύρωση σχήματος. Το εύρημα είναι δώρο: μια συγκεκριμένη, αποδεδειγμένη ευπάθεια αξίζει περισσότερο
+    από δέκα γενικές αρχές.'
+  legacy_explicit_trace_refs:
+  - INVARIANTS.yaml:72
+  - INVENTIONS.yaml:29
+  - VERIFICATION-OBLIGATIONS.yaml:110
+  - mechanisms/MFA-MECH-001.md:21
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 1a446df250b8529a32863e4522bdd7ec6767e6e6fa3fbe41368287d3f73bf3ed
+- claim_id: F88
+  source_verdict: FAILS
+  source_line: 284
+  claim_text: «Το σύστημα φορτώνει και τρέχει.»
+  source_basis_or_failure: '`(asdf:load-system :omega)` → **`DEFCONSTANT-UNEQL`** στο `core/meta-architecture.lisp:11`. Το `defconstant` με μη-`eql`
+    τιμή επανορίζεται σε κάθε επαναφόρτωση.'
+  preserved_residue_or_action: '**Επιβιώνει ένας κανόνας γλώσσας που μπαίνει στον κατάλογο ελέγχων:** σύνθετες σταθερές δηλώνονται με `define-constant`
+    και ρητό `:test`. Ένα σφάλμα, μία γραμμή, πλήρως θεραπεύσιμο — ο υπόλοιπος κώδικας δεν ευθύνεται.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: fd8b41c24e2397fe665a649287c8b9bbca78fb71cee0d9af51a724cc6bd51512
+- claim_id: F89
+  source_verdict: FAILS
+  source_line: 285
+  claim_text: «Η μνήμη είναι ασφαλής υπό ταυτοχρονισμό.»
+  source_basis_or_failure: 4 νήματα × 20.000 κλήσεις `remember`, αναμενόμενο 80.000. Μετρήθηκαν **25.527 έως 50.394** — απώλεια **37%–68%**.
+  preserved_residue_or_action: '**Επιβιώνει η διεπαφή `remember`, που είναι σωστά σχεδιασμένη**, και επιβιώνει το μετρημένο τεστ ως μόνιμος φύλακας
+    (F85). Η θεραπεία είναι γνωστή και τοπική: ατομική ενημέρωση ή ουρά ενός γραφέα.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:610
+  - TECHNICAL-ARCHITECTURE.md:1564
+  - TECHNICAL-ARCHITECTURE.md:1574
+  - VERIFICATION-OBLIGATIONS.yaml:105
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 48708fd98f3750259525a3cb13fbe80f652f466539f3c9f7d5d19c1a12ea45c1
+- claim_id: F90
+  source_verdict: FAILS
+  source_line: 286
+  claim_text: «Η ακεραιότητα των αξιωμάτων επαληθεύεται.»
+  source_basis_or_failure: '`(setf (car +truth-axioms+) :evil)` και κατόπιν `verify-truth-integrity` → επιστρέφει **T**. Ο έλεγχος δεν βλέπει
+    την αλλοίωση.'
+  preserved_residue_or_action: '**Επιβιώνει η θέση του ελέγχου, που είναι σωστή** — η ακεραιότητα των αξιωμάτων *πρέπει* να επαληθεύεται. Και
+    επιβιώνει ο σωστός μηχανισμός, μετρημένα διαθέσιμος: κρυπτογραφικό hash πάνω σε **αμετάβλητη** δομή, όχι έλεγχος ταυτότητας δείκτη.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 9a5f0a5a510a5e0baa8aae493118a75ba01234dce8231e7b78576117ff689c39
+- claim_id: F91
+  source_verdict: FAILS
+  source_line: 287
+  claim_text: «Ο έλεγχος επιπέδου μετα-αρχιτεκτονικής λειτουργεί.»
+  source_basis_or_failure: '`meta-level-allowed-p` σφάλλει με `SIMPLE-TYPE-ERROR` σε **κάθε** κλήση — κακοσχηματισμένη plist στη δομή δεδομένων.
+    Δεν επέστρεψε ποτέ τιμή.'
+  preserved_residue_or_action: '**Επιβιώνει η έννοια του φραγμού μετα-επιπέδου, που είναι κεντρική για το F10** (αυτο-τροποποίηση με όριο). Η
+    υλοποίηση είναι κατεστραμμένη, η πρόθεση ορθή· γίνεται `INV` με τεστ που θα είχε πιάσει αυτό ακριβώς το σφάλμα στην πρώτη κλήση.'
+  legacy_explicit_trace_refs:
+  - ARCHITECTURE-ELEMENTS.yaml:290
+  - TECHNICAL-ARCHITECTURE.md:890
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 98efaa49406c0514f014a56e0ec4a5a86f666c5c6b91ac08ae4d0a2d73ee0058
+- claim_id: F92
+  source_verdict: FAILS
+  source_line: 288
+  claim_text: «Η ανίχνευση συντονισμού (resonance) εντοπίζει πραγματική αντιστοιχία.»
+  source_basis_or_failure: '`resonance-detected-p` είναι **Bernoulli(`*consciousness-noise*`)**. Σε 20.000 δοκιμές: **1.873** θετικά για πανομοιότυπες
+    ροές, **1.944** για εντελώς άσχετες. Η συνάρτηση αγνοεί την είσοδό της.'
+  preserved_residue_or_action: '**Επιβιώνει η ερώτηση χωρίς την ψευδή απάντηση** (πρβλ. F80): η δομική αντιστοιχία δύο ροών είναι μετρήσιμη με
+    υπαρκτά μέσα. Και επιβιώνει **το ίδιο το πείραμα ως πρότυπο ελέγχου**: κάθε ανιχνευτής οφείλει να δείχνει διαφορετική συμπεριφορά σε πανομοιότυπη
+    και σε άσχετη είσοδο, αλλιώς δεν ανιχνεύει.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:125
+  - INVARIANTS.yaml:104
+  - INVENTIONS.yaml:113
+  - RESEARCH-PROGRAMS.yaml:31
+  - TECHNICAL-ARCHITECTURE.md:409
+  - mechanisms/MFA-MECH-010.md:10
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 7c7b01c19a2fa11dbbedeaf97aaaed3a0e50829e67a1e26fb8ed344246a98ba9
+- claim_id: F93
+  source_verdict: FAILS
+  source_line: 289
+  claim_text: «Ο δείκτης συνοχής (coherence) διακρίνει καταστάσεις.»
+  source_basis_or_failure: Μετρήθηκε **1,0 σε 2.000 από 2.000** εκτελέσεις. Σταθερά που παριστάνει μέτρηση.
+  preserved_residue_or_action: '**Επιβιώνει ο κανόνας που παράγει η αποτυχία:** κάθε δείκτης πρέπει να συνοδεύεται από απόδειξη διακριτικής ικανότητας
+    — τουλάχιστον δύο είσοδοι με διαφορετική τιμή. Μπαίνει στο `Verification` ως γενικό κριτήριο αποδοχής κάθε μετρικής.'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:125
+  - AI-CONTRIBUTION-LEDGER.md:126
+  - ARCHITECTURE-ELEMENTS.yaml:610
+  - INVARIANTS.yaml:104
+  - INVENTIONS.yaml:113
+  - TECHNICAL-ARCHITECTURE.md:1564
+  - TECHNICAL-ARCHITECTURE.md:1574
+  - VERIFICATION-OBLIGATIONS.yaml:104
+  - mechanisms/MFA-MECH-010.md:10
+  - mechanisms/MFA-MECH-010.md:15
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: eca9e305e75dddfc15c18d81d91e57c127d21deaae4b1d93a126c8e9b04dc2d5
+- claim_id: F94
+  source_verdict: FAILS
+  source_line: 290
+  claim_text: «Η κατακερματισμένη ταυτότητα ίχνους είναι μοναδική.»
+  source_basis_or_failure: '`sxhash` πενταμελούς λίστας είναι **τυφλός στο 5ο στοιχείο** (περικοπή βάθους 4). Μετρήθηκε: δύο ίχνη που διαφέρουν
+    μόνο στο `output` δίνουν και τα δύο **`756160182569110514`**. Δύο διαφορετικές αποφάσεις, μία ταυτότητα.'
+  preserved_residue_or_action: '**Επιβιώνει η σωστή αρχή —ταυτότητα ίχνους από το περιεχόμενό του— και ονομάζεται ο σωστός μηχανισμός:** κρυπτογραφικός
+    κατακερματισμός πάνω σε κανονικοποιημένη σειριοποίηση. Το `sxhash` είναι για hash tables, όχι για ταυτότητα. Η διάκριση μπαίνει στον κατάλογο
+    ελέγχων.'
+  legacy_explicit_trace_refs:
+  - INVARIANTS.yaml:114
+  - INVENTIONS.yaml:29
+  - alternatives/MFA-ALT-1.md:29
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 1da0cfcf4add7022a50704dbb34e21185eaba3759ecfacede2d33e6c81723a1a
+- claim_id: F95
+  source_verdict: FAILS
+  source_line: 291
+  claim_text: «Η αναδρομή του βρόχου είναι επαρκής για το βάθος που απαιτείται.»
+  source_basis_or_failure: 'Αυστηρή αναδρομή: **63.180** πλαίσια πριν την εξάντληση στοίβας. Trampoline: **≥100.000.000** χωρίς αποτυχία — λόγος
+    **≥1.583×**.'
+  preserved_residue_or_action: '**Επιβιώνει μια μετρημένη σχεδιαστική απόφαση αντί για γνώμη:** ο βρόχος υλοποιείται με trampoline / ρητή στοίβα,
+    όχι με αυστηρή αναδρομή. Η διαφορά τριών τάξεων μεγέθους δεν είναι προτίμηση ύφους.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 32fd152867d9c3680e5b375a9c1347f5fb4a17fd2eb9f470e579dbc46801dfd6
+- claim_id: F96
+  source_verdict: FAILS
+  source_line: 292
+  claim_text: «Το Neural Luminescence διαδίδει διέγερση επιλεκτικά.»
+  source_basis_or_failure: 'Με **α = 0,45** και **λ_max = 8,238** προκύπτει **α·λ = 3,71 > 1**. Η διάδοση δεν συγκλίνει: **κάθε** σπίθα επιστρέφει
+    την ιδιοδιανυσματική κεντρικότητα του γράφου, ανεξάρτητα από την αφετηρία.'
+  preserved_residue_or_action: '**Επιβιώνει ο ακριβής όρος που το διορθώνει, και είναι θεώρημα:** η διάδοση ενεργοποίησης συγκλίνει σε κάτι εξαρτώμενο
+    από την αφετηρία **αν και μόνο αν α·λ_max < 1** (Perron–Frobenius). Δίνει άμεσα το φράγμα για το α. Αυτό είναι το ισχυρότερο τεχνικό υπόλειμμα
+    ολόκληρης της εργασίας: μια σπασμένη υλοποίηση παρήγαγε έναν ελέγξιμο νόμο για τον πυρήνα (`INV-C06`, πρβλ. H3).'
+  legacy_explicit_trace_refs:
+  - AI-CONTRIBUTION-LEDGER.md:137
+  - AI-CONTRIBUTION-LEDGER.md:145
+  - CROSS-DOMAIN-TRANSFERS.md:18
+  - INVARIANTS.yaml:26
+  - INVENTIONS.yaml:122
+  - alternatives/MFA-ALT-3.md:30
+  - mechanisms/MFA-MECH-011.md:10
+  - mechanisms/MFA-MECH-011.md:30
+  - patches/MFA-PATCH-0004-R.yaml:40
+  - patches/MFA-PATCH-0004.yaml:39
+  - patches/MFA-PATCH-0004.yaml:76
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: f2d0305af22178df421c4160d6e6ae125bdcd766bc00c7bd05a7c7e525a1f077
+- claim_id: F97
+  source_verdict: FAILS
+  source_line: 293
+  claim_text: «Ο κώδικας είναι μεταφέρσιμος μεταξύ υλοποιήσεων Common Lisp.»
+  source_basis_or_failure: 'Τρεις μετρημένες εξαρτήσεις από υλοποίηση: `slot-value` με λέξεις-κλειδιά, αριθμός ορισμάτων του `join-thread` στη
+    bordeaux-threads, και η μη κληρονόμηση δυναμικών δεσμεύσεων από νέα νήματα. Καμία δεν είναι φορητή.'
+  preserved_residue_or_action: '**Επιβιώνει ο κατάλογος των τριών ως έτοιμος οδηγός μεταφοράς** — η μεταφερσιμότητα δεν είναι χαμένη, είναι **αποτιμημένη**:
+    τρία ονομασμένα σημεία. Και επιβιώνει ο κανόνας: η δυναμική δέσμευση δεν περνά σε νήμα· ό,τι πρέπει να περάσει, περνά ρητά ως όρισμα.'
+  legacy_explicit_trace_refs: []
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: ABSENT
+  evidence_status: REFUTED
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: MISSING_EXPLICIT_LINK_REQUIRES_ADJUDICATION
+  source_text_sha256: 2f49a929067e4d22591e607716d6e3f95a4a913567cbe83240353c5bae13fe61
+- claim_id: U1
+  source_verdict: UNPROVEN
+  source_line: 307
+  claim_text: '**OMEGA-EVAL** — «Το σύστημα φτάνει Level 12+, επίπεδο μη διατυπώσιμο από τις υπάρχουσες κλίμακες.»'
+  source_basis_or_failure: 'Ο λόγος είναι **έλλειψη συνθηκών αλήθειας**. Το «μη διατυπώσιμος» δεν σημαίνει «ψευδής» — σημαίνει ότι ο ισχυρισμός
+    δεν λέει τι θα τον έκανε λάθος. Επιπλέον η σύγκριση «12 έναντι 5» είναι **ομωνυμία ασύμμετρων κλιμάκων** (F28): οι αριθμοί ανήκουν σε διαφορετικά
+    συστήματα μέτρησης. Ο Α΄ τον απέρριψε επειδή δεν βρήκε προηγούμενο — αυτό απαγορεύεται ρητά από το Δ-13.'
+  preserved_residue_or_action: 'Ορισμός του επιπέδου με **συμπεριφορικό** κριτήριο: μια εργασία που το σύστημα λύνει και τα συγκρινόμενα δεν λύνουν,
+    με προδιαγεγραμμένο πρωτόκολλο. Μέχρι τότε ο τίτλος αποσύρεται (`MATERIAL-SYNTHESIS.md` γρ. 234).'
+  legacy_explicit_trace_refs:
+  - UNKNOWNS.yaml:49
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: ACTIVE_UNKNOWN
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 09247a0851dc1b3fd0021f6019c3e6ca5df9abe58ab94a51d0ee8ed562ae0887
+- claim_id: U2
+  source_verdict: UNPROVEN
+  source_line: 308
+  claim_text: '**OMEGA-GUIDE** — «Τα CoR/MoR παρέχονται εξωτερικά μέσω hooks.»'
+  source_basis_or_failure: Ο λόγος είναι **απουσία ορισμού**. Τα CoR και MoR **δεν ορίζονται πουθενά** στα δύο σχετικά έγγραφα. Δεν μπορεί να
+    κριθεί αν παρέχονται εξωτερικά κάτι που δεν ξέρουμε τι είναι. Ο Α΄ τα έκρινε βάσει εικασίας για το τι σημαίνουν τα αρκτικόλεξα — εικασία αντί
+    για κρίση.
+  preserved_residue_or_action: '**Μία γραμμή από τον δημιουργό:** τι είναι CoR, τι είναι MoR. Αν οριστούν, ο ισχυρισμός γίνεται άμεσα κρίσιμος
+    — είναι απλή ερώτηση αρχιτεκτονικής (εσωτερικό ή σημείο επέκτασης).'
+  legacy_explicit_trace_refs:
+  - DECISION-LOG.md:25
+  - UNKNOWNS.yaml:48
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: ACTIVE_UNKNOWN
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: acb99a4bb0ef4088eef1b818e3431fd0396f4abf7667979daab026782b699a2b
+- claim_id: U3
+  source_verdict: UNPROVEN
+  source_line: 309
+  claim_text: '**ANSWERS** — «Το MAPE-K είναι η σωστή δομή για τον βρόχο αυτο-βελτίωσης.»'
+  source_basis_or_failure: 'Ο λόγος είναι **απουσία συγκριτικού επιχειρήματος από οποιαδήποτε πλευρά**. Και τα τρία επιχειρήματα που κατατέθηκαν
+    **υπέρ** το στηρίζουν, και το «ανώτερο» που προσκομίστηκε εναντίον του **είναι το ίδιο το MAPE-K** σε ιεραρχική μορφή (F61). Όμως —κατά Δ-13(στ)
+    αντίστροφο— η κατάρρευση του αντεπιχειρήματος **δεν αποδεικνύει** τον ισχυρισμό: «σωστή δομή» απαιτεί σύγκριση με εναλλακτικές που δεν έγινε.'
+  preserved_residue_or_action: Σύγκριση με τουλάχιστον δύο εναλλακτικές αρχιτεκτονικές βρόχου, με κοινό κριτήριο (π.χ. δυνατότητα ελέγχου κάθε
+    φάσης χωριστά, κόστος επαλήθευσης). Εφικτό ως εργασία σχεδιασμού, όχι ως πείραμα.
+  legacy_explicit_trace_refs:
+  - UNKNOWNS.yaml:50
+  semantic_destinations: []
+  corrective_patches: []
+  verification_obligations: []
+  target_status: PRESERVED_RESEARCH_TARGET
+  design_status: SKETCHED
+  evidence_status: ACTIVE_UNKNOWN
+  authority_status: DRAFT
+  operational_scope: NONE
+  reviewer: null
+  evidence_receipts: []
+  disposition_status: TRACE_FOUND_REQUIRES_SEMANTIC_ADJUDICATION
+  source_text_sha256: 6acd46e85dd68781ef93ebf2752085120f055db736a6be82607f80a15607f084
+closure_gate:
+  contract: MFA-CON-077
+  obligation: MFA-VO-091
+  current_result: NOT_ASSESSED
+  reason: 113 records exist, but semantic destinations, corrective patches and VOs still require claim-by-claim adjudication.

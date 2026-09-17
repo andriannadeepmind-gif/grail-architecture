@@ -16,6 +16,21 @@ schema_note: |
   και το τι την αλλάζει (affected_by). Υποψήφιο Telos (type: telos-candidate): σύνολο επιδιώξεων + κανόνας σύνθεσης.
   Το «status: PROPOSED» ισχύει παντού μέχρι Creator Approval.
 
+root_telos_separation:
+  status: PROPOSED
+  root_role: "Απαραβίαστες ιδιότητες πληροφοριακής ακεραιότητας, εξουσίας και amendment semantics· δεν είναι objective ή Telos candidate."
+  telos_role: "Versioned, signed επιλογή/διάταξη objectives· παραμένει PROPOSED μέχρι ρητή Creator ratification."
+  policy_role: "Μεταβαλλόμενα thresholds, budgets, autonomy envelopes, jurisdiction and deployment profiles under the active Telos version."
+  realization_role: "Replaceable mechanisms, models, checkers, corpora, runtimes and architectures, subject to refinement/replay/loss/fallback."
+  non_implications:
+    - "Η διατήρηση Root δεν παγώνει το ενεργό Telos για πάντα."
+    - "Η αλλαγή realization δεν επιτρέπεται να αλλάξει Telos σιωπηλά."
+    - "Η Creator ratification ενός Telos δεν αποδεικνύει την εμπειρική επιτευξιμότητά του."
+  schema_source: ARCHITECTURE-METAMODEL.yaml
+  contracts: [MFA-CON-073, MFA-CON-075]
+  invariants: [MFA-INV-116, MFA-INV-117, MFA-INV-119]
+  verification: [MFA-VO-088, MFA-VO-090]
+
 defaults: &defaults
   version: 1
   status: PROPOSED

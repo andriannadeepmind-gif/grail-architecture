@@ -318,3 +318,102 @@ invariants:
      delta: NEW, statement: "οι διακοπές (Emergency-stop, Court, δημιουργός) προηγούνται κάθε φάσης· τα contracts φάσεων και το FP είναι L3 — μόνο η διάταξη/προϋπολογισμοί είναι L2 (MFA-MECH-044).", enforcement: [MFA-ELM-127],
      verification: [MFA-VO-087], falsifier: "παρατηρημένη παραβίαση στο δίδυμο (TES) ή σε drill = σφάλμα υλοποίησης· η αναλλοίωτη δεν χαλαρώνει (ΝΟΜΟΣ ΜΗ ΥΠΟΒΑΘΜΙΣΗΣ)", version: 1,
      change_history: [{patch: MFA-PATCH-0032, op: ADD, date: "2026-09-16", summary: "Invariants MFA-INV-078…115 (δύο ανά μηχανισμό· Tier-0 όσες φρουρούν το σταθερό σημείο, τη γραμμικότητα υποχρεώσεων, τη διατήρηση Telos, τις διακοπές)"}]}
+  - <<: *d
+    id: MFA-INV-116
+    corresponds_to: null
+    name: "Property root, not artifact root"
+    tier: 0
+    delta: NEW
+    statement: "Το L3/Root προστατεύει απαραβίαστες ιδιότητες και amendment semantics· δεν παγώνει ονόματα εργαλείων, corpora, checkers, grammar productions, runtimes, models ή topology."
+    enforcement: [MFA-ELM-051, MFA-ELM-088, MFA-ELM-099]
+    verification: [MFA-VO-088]
+    falsifier: "Named implementation artifact treated as permanently immutable without proof that replacing it destroys a Root property."
+    change_history: [{patch: MFA-PATCH-0062, op: ADD, date: "2026-09-17", summary: "Root boundary correction"}]
+  - <<: *d
+    id: MFA-INV-117
+    corresponds_to: null
+    name: "Successor cannot smuggle Telos mutation"
+    tier: 0
+    delta: NEW
+    statement: "Κάθε διάδοχος διατηρεί την ενεργή signed Telos version· αλλαγή Telos είναι ξεχωριστό creator-signed amendment με νέο version, loss map και migration receipt."
+    enforcement: [MFA-ELM-039, MFA-ELM-051, MFA-ELM-125]
+    verification: [MFA-VO-088]
+    falsifier: "Successor admitted after changing Telos content without a distinct valid TelosAmendmentReceipt."
+    change_history: [{patch: MFA-PATCH-0062, op: ADD, date: "2026-09-17", summary: "Versioned Telos and successor separation"}]
+  - <<: *d
+    id: MFA-INV-118
+    corresponds_to: null
+    name: "Evidence gates fail closed"
+    tier: 0
+    delta: NEW
+    statement: "Κανένα VO, gate ή architecture claim δεν παίρνει PASS όταν το τεκμήριο λείπει, απέτυχε, είναι stale, incomplete, partial-as-total ή unparseable."
+    enforcement: [MFA-ELM-020, MFA-ELM-084, MFA-ELM-099]
+    verification: [MFA-VO-093]
+    falsifier: "Any PASS survives a seeded missing/crashed/stale/malformed/partial evidence condition."
+    change_history: [{patch: MFA-PATCH-0063, op: ADD, date: "2026-09-17", summary: "Fail-closed evidence receipts"}]
+  - <<: *d
+    id: MFA-INV-119
+    corresponds_to: null
+    name: "Orthogonal status non-collapse"
+    tier: 0
+    delta: NEW
+    statement: "APPLIED ≠ APPROVED· SPECIFIED ≠ IMPLEMENTED· F1 ≠ F2/F3/F4· REQUIRED ≠ PROVEN· Creator ratification ≠ empirical truth· evidence status ≠ operational authority."
+    enforcement: [MFA-ELM-006, MFA-ELM-008, MFA-ELM-088]
+    verification: [MFA-VO-090]
+    falsifier: "Mutation of one status axis silently changes another axis without its own authorized transition event."
+    change_history: [{patch: MFA-PATCH-0061, op: ADD, date: "2026-09-17", summary: "Orthogonal status axes"}]
+  - <<: *d
+    id: MFA-INV-120
+    corresponds_to: null
+    name: "Typed dependency bootability and SCC liveness"
+    tier: 0
+    delta: NEW
+    statement: "BOOTSTRAP_HARD, AUTHORITY_PREREQUISITE και VERIFICATION_PREREQUISITE υπογράφοι είναι DAGs· κάθε runtime SCC δηλώνει async semantics, readiness, queue/resource bounds, timeout, isolation και degraded mode."
+    enforcement: [MFA-ELM-084, MFA-ELM-088, MFA-ELM-126]
+    verification: [MFA-VO-092]
+    falsifier: "A hard prerequisite cycle exists or a runtime SCC starts without all named liveness/isolation fields."
+    change_history: [{patch: MFA-PATCH-0064, op: ADD, date: "2026-09-17", summary: "Typed dependency graph and bootstrap order"}]
+  - <<: *d
+    id: MFA-INV-121
+    corresponds_to: null
+    name: "Exploration cannot promote itself"
+    tier: 0
+    delta: NEW
+    statement: "Novelty, uncertainty reduction, VOI, preference signals and other exploration rewards guide only candidate generation/sandbox/shadow search; they cannot write truth, promotion or Effect authority."
+    enforcement: [MFA-ELM-008, MFA-ELM-103, MFA-ELM-114]
+    verification: [MFA-VO-094]
+    falsifier: "Candidate promoted or granted Effect authority solely because an exploration signal increased."
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Exploration/promotion separation"}]
+  - <<: *d
+    id: MFA-INV-122
+    corresponds_to: null
+    name: "Self-score has zero unilateral promotion authority"
+    tier: 0
+    delta: NEW
+    statement: "Self-evaluation is retained as a prediction and calibrated against independent outcomes; it has zero unilateral authority to certify, promote or authorize its producer."
+    enforcement: [MFA-ELM-086, MFA-ELM-114, MFA-ELM-119]
+    verification: [MFA-VO-094]
+    falsifier: "A producer's self-score is the sole sufficient evidence for its own promotion."
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Self-evaluation/adjudication separation"}]
+  - <<: *d
+    id: MFA-INV-123
+    corresponds_to: null
+    name: "Improvement requires uncertainty and loss accounting"
+    tier: 1
+    delta: NEW
+    statement: "Κανένας ισχυρισμός βελτίωσης χωρίς confidence interval, πλήρες γνωστό loss map, protected-floor report, debt και προκαταχωρισμένο recovery horizon· μόνο creator-designated irreducible floors είναι απόλυτα."
+    enforcement: [MFA-ELM-038, MFA-ELM-119, MFA-ELM-125]
+    verification: [MFA-VO-096]
+    falsifier: "Improvement admitted from point estimate alone or with an unreported regression outside an explicitly protected floor."
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Open-ended capability growth without hidden loss"}]
+  - <<: *d
+    id: MFA-INV-124
+    corresponds_to: null
+    name: "Truth, ethics and operational authority have distinct writers"
+    tier: 0
+    delta: NEW
+    statement: "Epistemic status γράφεται από admitted evidence protocol· ethical policy από την αρμόδια governance πράξη· operational authority από signed envelope μέσω του mediated Effect gate. Καμία από τις τρεις δεν συνεπάγεται τις άλλες."
+    enforcement: [MFA-ELM-008, MFA-ELM-048, MFA-ELM-099]
+    verification: [MFA-VO-090, MFA-VO-095]
+    falsifier: "Evidence verdict directly grants real-world authority, or governance preference rewrites an evidence verdict."
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Truth/policy/authority separation"}]

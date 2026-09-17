@@ -64,6 +64,13 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | MFA-PATCH-0058 | ANNOTATE | Ευρήματα της F1 εκτελέσιμης προδιαγραφής (tools/twin) στα δοσιέ MFA-MECH-039 (Act αυστηρότερο) και MFA-MECH-043 (κάλυψη αναλλοίωτων 35/115, SCC 89, UNMEASURED) — append-only | 3 | APPLIED (2026-09-16) | MFA-PATCH-0058-R |
 | MFA-PATCH-0059 | MODIFY | IMMEDIATE EPISTEMIC-LOCK CORRECTION (CHH): PhenomenalClaimRecord από NEVER_VERIFIED σε epistemic_status ACTIVE_UNKNOWN με FORBIDDEN αυτόματη συναγωγή/αυτο-πιστοποίηση και ENABLED συσσώρευση/αναθεώρηση μέσω admitted πρωτοκόλλου· τρία χωριστά επίπεδα (epistemic/ethical/authority)· συμμετρική ανά-πρόβλεψη αξιολόγηση θεωριών· αιτιακό πρωτόκολλο διαχωρισμού (χωρίς απαίτηση μηδενικής σύζευξης)· construct-valid ablations· πειράματα/κύκλο = resource policy· UNMEASURABLE ορθογώνιο· bitwise replay μόνο F1 — INV-075/103/113, VO-048/080/081, CFL-038, OBJ-052, ELM-121, CAP-086/102, CON-070, MECH-024/038/043, UNK-111, RSP-033, δοσιέ, DIA-23, DEC-018/022, TECH-ARCH, ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE, audit AA-032 | 25 | APPLIED (2026-09-16) | MFA-PATCH-0059-R |
 | MFA-PATCH-0060 | MODIFY | DIA-23 (Consciousness Hypothesis Host) ευθυγράμμιση με τη διόρθωση r1: UNMEASURABLE ορθογώνιο, k πειράματα = resource policy, συμμετρική ανά-πρόβλεψη έκβαση και THEORY_VARIANT/FAMILY διάκριση, construct-valid μοχλοί, αιτιακό πρωτόκολλο διαχωρισμού, απάντηση χωρίς αυτόματη συναγωγή | 1 | APPLIED (2026-09-16) | MFA-PATCH-0060-R |
+| MFA-PATCH-0061 | MODIFY | Κανονικό metamodel: authority/provenance και έξι ορθογώνιοι status axes· διαχωρισμός mechanical application από Creator ratification | 5 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0061-R |
+| MFA-PATCH-0062 | MODIFY | Minimal-property Root, versioned Telos και αντικαταστάσιμα realizations χωρίς tool lock-in | 8 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0062-R |
+| MFA-PATCH-0063 | MODIFY | Verification lifecycle και fail-closed EvidenceReceipt· PASS αδύνατο χωρίς έγκυρο scope/fidelity receipt | 5 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0063-R |
+| MFA-PATCH-0064 | MODIFY | 617/617 typed dependencies, prerequisites-first bootstrap witness και ρητά runtime SCC contracts | 7 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0064-R |
+| MFA-PATCH-0065 | MODIFY | Open-ended measurement/learning/risk, promotion separation και non-diminution του ASI target | 14 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0065-R |
+| MFA-PATCH-0066 | ADD | First-class ClaimDisposition seat για και τους 113 claims· κανένα FAILS/UNPROVEN residue δεν χάνεται | 3 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0066-R |
+| MFA-PATCH-0067 | MODIFY | Whole-system master map, calibrated ceiling language, canonical projections και 0.4.1 registry | 5 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0067-R |
 
 ## Εκδόσεις
 
@@ -72,4 +79,5 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | 0.1.0 | — | Pass A–F αρχικό πακέτο | committed f5baa98 |
 | 0.2.0 | MFA-PATCH-0001…0017 | Pass G/H: 17 επιθέσεις, 17 patches | committed |
 | 0.3.0 | MFA-PATCH-0018…0019 | Pass I σταθερό σημείο, ledgers, 17 διαγράμματα | committed 8176ddf (preservation snapshot) |
-| 0.4.0 (working tree) | MFA-PATCH-0020…0057 | Ω-ASI: 0020–0025 provisional (§13)· 0026 σήμανση· 0027–0034 έδρες· 0035–0042 ενσωμάτωση/epistemic status/γλώσσα/αποφάσεις· 0043–0054 επιθέσεις ATK-18…29 και σταθερό σημείο· 0055 audit· 0056 υπολείμματα· 0057 προβολές | PROPOSED / UNREVIEWED — no commit |
+| 0.4.0 | MFA-PATCH-0020…0060 | Ω-ASI: έδρες, μηχανισμοί, adversarial passes, F1 executable specification και epistemic-lock correction r1 | committed 6768c6c (preservation snapshot)· PROPOSED / UNREVIEWED |
+| 0.4.1 | MFA-PATCH-0061…0067 | Metamodel/Root/Telos/status/evidence correction· typed dependency graph· claim dispositions· whole-system master map | preservation snapshot· PROPOSED / UNREVIEWED / subject to correction |

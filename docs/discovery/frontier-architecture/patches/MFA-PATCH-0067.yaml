@@ -1,0 +1,22 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0067
+title: "Master map, ceiling-language correction and canonical projections"
+operation: MODIFY
+targets: [README.md, TECHNICAL-ARCHITECTURE.md, MFA-DIA-00, diagrams/rendered/INDEX.md, CHANGELOG.md]
+base: {package_version: 0.4.0, source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239}
+preconditions: ["MFA-PATCH-0061…0066 design semantics present", "No claim of architecture ceiling without theorem"]
+change:
+  add: ["whole-system macro map MFA-DIA-00", "Root/Telos/status/Civilization/trust/bootstrap projections", "source-only validation record and 0.4.1 change registry"]
+  replace_claim: "architecture ceiling → BEST_FOUND_IN_EXAMINED_SPACE_UNDER_DECLARED_AXES"
+rationale: "A single control-spine diagram was being mistaken for the whole model and the package overstated its epistemic status."
+evidence: ["TECHNICAL-ARCHITECTURE.md §0A", "diagrams/MFA-DIA-00.mmd", "diagrams/rendered/INDEX.md", "CHANGELOG.md"]
+affected_dependencies: [MFA-ELM-088, MFA-ELM-091]
+capability_impact: {gained: ["whole-model navigability"], at_risk: [], ledger_entry: "Projection only; no capability change"}
+migration: "Use DIA-00 for macro orientation and DIA-01…25 for detailed views."
+verification: "Mermaid validation plus projection-to-seat consistency review; generated DIA-00 binaries intentionally omitted"
+rollback: MFA-PATCH-0067-R
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED
+mechanical_state: PARTIALLY_APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

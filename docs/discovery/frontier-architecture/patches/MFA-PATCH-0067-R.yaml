@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0067-R
+reverses: MFA-PATCH-0067
+operation: MODIFY
+targets: [README.md, TECHNICAL-ARCHITECTURE.md, MFA-DIA-00, diagrams/rendered/INDEX.md, CHANGELOG.md]
+change: {restore: "0.4.0 projections and terminology", archive: diagrams/MFA-DIA-00.mmd}
+capability_impact: {gained: [], at_risk: ["whole-system navigation and calibrated ceiling claims"], ledger_entry: "Projection rollback only"}
+verification: "Exact diff against source commit 6768c6c"
+rollback: MFA-PATCH-0067
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED

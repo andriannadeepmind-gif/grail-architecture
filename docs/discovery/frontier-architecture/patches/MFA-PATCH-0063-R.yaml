@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0063-R
+reverses: MFA-PATCH-0063
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, MFA-CON-074, MFA-INV-118, MFA-VO-089, MFA-VO-093]
+change: {restore: "0.4.0 undifferentiated verification status", retire_added_records: [MFA-CON-074, MFA-INV-118, MFA-VO-089, MFA-VO-093]}
+capability_impact: {gained: [], at_risk: ["fail-closed evidence"], ledger_entry: "Rollback restores false-PASS exposure"}
+verification: "Exact diff against source commit 6768c6c"
+rollback: MFA-PATCH-0063
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED

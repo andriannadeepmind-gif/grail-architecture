@@ -1,0 +1,30 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0064
+title: "Typed dependency graph, proved bootstrap and trust-topology correction"
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, TECHNICAL-ARCHITECTURE.md, MFA-ELM-056, MFA-CON-076, MFA-INV-120, MFA-VO-092]
+base: {package_version: 0.4.0, source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239}
+preconditions: ["617 legacy dependencies are preserved", "No cycle is called runtime before edge typing"]
+change:
+  edge_types: [BOOTSTRAP_HARD, SCHEMA_IMPORT, AUTHORITY_PREREQUISITE, VERIFICATION_PREREQUISITE, RUNTIME_CALL, DATA_SUBSCRIPTION, OBSERVABILITY, OPTIONAL_AUGMENTATION, EVOLUTION_FEEDBACK, RESOURCE_PROVIDER, HUMAN_DECISION, PROJECTION_ONLY, COMPOSITION_MEMBER, UNCLASSIFIED_BLOCKING]
+  add: [MFA-CON-076, MFA-INV-120, MFA-VO-092]
+  modify: "MFA-ELM-056 Civilization Quorum → Trust-Domain Quorum; functional Civilizations remain orthogonal roles"
+rationale: "An untyped SCC does not prove bootability, liveness or evaluator independence."
+evidence: ["ARCHITECTURE-METAMODEL.yaml#dependency_edge_schema", "ARCHITECTURE-ELEMENTS.yaml#dependency_migration", "TECHNICAL-ARCHITECTURE.md §16-bis", "source graph: 127 nodes / 617 edges / 38 coarse SCCs / largest coarse SCC 89"]
+progress:
+  typed_edges: 617
+  unclassified_blocking: 0
+  hard_authority_verification_cycle_check: "PASS — 136 prerequisite edges, 89 nodes, 7 prerequisites-first layers, 0 coarse/facet cycles"
+  runtime_scc_admission: "DESIGN CONTRACTS COMPLETE — RTSCC-01 and RTSCC-02 provisionally admissible; F1 ConfigurationLivenessReceipts still required"
+  typed_runtime_graph: "2 required SCCs: 32 nodes/95 internal edges and 2 nodes/2 internal edges; all-optionals configuration yields 58 nodes and is disabled until re-analysis"
+  legacy_checker_note: "R8a still reports 215 raw simple cycles because tools/check-package.py reads untyped element.dependencies; it is a coarse legacy warning, not the typed SCC verdict."
+affected_dependencies: [MFA-ELM-056, MFA-ELM-057, MFA-ELM-084, MFA-ELM-088, MFA-ELM-126]
+capability_impact: {gained: ["typed bootstrap proof obligation"], at_risk: [], ledger_entry: "No edge or capability deleted"}
+migration: "All 617 legacy edges remain present and are semantically typed; runtime SCC admission remains a separate unfinished gate."
+verification: MFA-VO-092
+rollback: MFA-PATCH-0064-R
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED
+mechanical_state: PARTIALLY_APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

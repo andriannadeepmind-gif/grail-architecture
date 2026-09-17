@@ -1,0 +1,217 @@
+# ARCHITECTURE-METAMODEL — η κανονική γραμματική διακυβέρνησης του σχεδίου.
+# Ενοποιεί τις διορθώσεις MFA-PATCH-0061…0065 ώστε να μην δημιουργηθούν πέντε παράλληλα schema files.
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+
+document:
+  schema_id: GRAIL-ARCHITECTURE-METAMODEL-v1
+  package_source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239
+  design_revision: 0.4.1
+  status: PROPOSED
+  authority_status: DRAFT
+  scope: DESIGN_ONLY
+  non_implications:
+    - "Η παρουσία στο schema δεν σημαίνει Creator ratification."
+    - "Η σχεδιαστική πληρότητα δεν σημαίνει implementation ή empirical success."
+    - "Κανένα πεδίο αυτού του αρχείου δεν δίνει μόνο του Effect authority."
+
+root_boundary:
+  definition: "Ο Root είναι το ελάχιστο σύνολο ιδιοτήτων που αποτρέπει απώλεια πληροφορίας, πλαστογράφηση εξουσίας και σιωπηλή μείωση του στόχου. Δεν είναι κατάλογος συγκεκριμένων εργαλείων."
+  immutable_properties:
+    - provenance_and_lineage
+    - append_only_event_order_and_replay_semantics
+    - identity_and_key_lineage
+    - mandatory_authority_mediation
+    - admission_and_amendment_semantics
+    - unknown_conflict_and_residue_non_erasure
+    - creator_root_authority_with_explicit_delegation
+    - maximum_frontier_non_diminution
+  versioned_realizations:
+    - active_telos_version
+    - policy_and_thresholds
+    - harnesses_and_held_out_corpora
+    - checkers_and_verifier_implementations
+    - obligation_calculus_implementation
+    - grammar_productions
+    - metrics_and_risk_calibration
+    - deployment_and_trust_topology
+    - models_runtimes_and_architectures
+  amendment_rule:
+    root_property_change: "REJECT unless a separate creator-signed constitutional amendment names the property, proof obligation, migration, rollback and loss map."
+    realization_change: "Admissible only with refinement evidence, replay/conformance, explicit loss map and fallback."
+    telos_change: "Separate signed TelosAmendmentReceipt; never smuggled through successor construction or implementation replacement."
+
+status_axes:
+  target_status: [REQUIRED, OPTIONAL_PROFILE, PRESERVED_RESEARCH_TARGET, SUPERSEDED_TARGET]
+  design_status: [ABSENT, SKETCHED, SPECIFIED, SEMANTICALLY_CLOSED, CONFLICTED]
+  realization_fidelity: [F0_TEXT, F1_EXECUTABLE_SPEC, F2_SIMULATION, F3_SHADOW, F4_REAL]
+  evidence_status: [UNTESTED, PARTIAL, REPLICATED, REFUTED, ACTIVE_UNKNOWN, CONFLICT]
+  authority_status: [DRAFT, PROPOSED, CREATOR_RATIFIED, DELEGATED, REJECTED, SUPERSEDED]
+  operational_scope: [NONE, SANDBOX, SHADOW, CANARY, BOUNDED_REAL, FULL_REAL]
+  forbidden_inferences:
+    - APPLIED_implies_APPROVED
+    - SPECIFIED_implies_IMPLEMENTED
+    - F1_implies_F2_F3_or_F4
+    - REQUIRED_implies_PROVEN
+    - CREATOR_RATIFIED_implies_EMPIRICALLY_TRUE
+    - EVIDENCE_STATUS_implies_EFFECT_AUTHORITY
+
+patch_status_axes:
+  mechanical_state: [NOT_APPLIED, PARTIALLY_APPLIED, APPLIED, ROLLED_BACK]
+  authority_state: [UNAUTHORIZED, PROVISIONAL, CREATOR_RATIFIED, DELEGATED, REJECTED]
+  review_state: [UNREVIEWED, IN_REVIEW, ADJUDICATED]
+  evidence_state: [UNTESTED, CHECKED, PARTIAL, REFUTED, INDETERMINATE]
+  replay_state: [REPLAYABLE, NON_REPLAYABLE_HISTORICAL, SUPERSEDED]
+  historical_disposition:
+    range: MFA-PATCH-0020…0025
+    mechanical_state: APPLIED
+    authority_state: PROVISIONAL
+    review_state: IN_REVIEW
+    evidence_state: PARTIAL
+    replay_state: NON_REPLAYABLE_HISTORICAL
+
+verification_obligation_lifecycle:
+  declaration_state: [DECLARED, SUPERSEDED]
+  first_eligible_fidelity: [F0, F1, F2, F3, F4, F5]
+  execution_state: [NEVER_RUN, RUNNING, COMPLETED, ERROR]
+  verdict: [NOT_ASSESSED, PASS, FAIL, INDETERMINATE]
+  evidence_fidelity: [NONE, F0, F1, F2, F3, F4, F5]
+  required_fields: [scope, limitations, receipt_ids]
+  fail_closed_rule: "PASS is invalid unless execution_state=COMPLETED and every required receipt validates at or above first_eligible_fidelity."
+
+evidence_receipt_schema:
+  required_fields:
+    - receipt_id
+    - subject_claim_or_obligation
+    - source_and_method
+    - input_cut_and_digest
+    - tool_identity_and_version
+    - command_or_protocol_digest
+    - exit_status
+    - stdout_digest
+    - stderr_digest
+    - evaluated_predicate
+    - covered_scope
+    - evidence_fidelity
+    - timestamp
+    - issuer_or_signer
+  invalid_if:
+    - missing_required_field
+    - nonzero_or_missing_exit_status_without_explicit_indeterminate_verdict
+    - stale_input_cut
+    - malformed_or_unparseable_output
+    - partial_scope_presented_as_total
+    - unverifiable_tool_identity
+  failure_result: "INDETERMINATE or FAIL; never PASS."
+
+dependency_edge_schema:
+  edge_types:
+    - BOOTSTRAP_HARD
+    - SCHEMA_IMPORT
+    - AUTHORITY_PREREQUISITE
+    - VERIFICATION_PREREQUISITE
+    - RUNTIME_CALL
+    - DATA_SUBSCRIPTION
+    - OBSERVABILITY
+    - OPTIONAL_AUGMENTATION
+    - EVOLUTION_FEEDBACK
+    - RESOURCE_PROVIDER
+    - HUMAN_DECISION
+    - PROJECTION_ONLY
+    - COMPOSITION_MEMBER
+    - UNCLASSIFIED_BLOCKING
+  required_fields: [from, to, edge_type]
+  semantic_forms:
+    inline:
+      required: [readiness_condition, failure_mode, degraded_mode]
+    profiled:
+      required: [context]
+      profile_default: "edge_type"
+      optional_overrides: [readiness_condition, failure_mode, degraded_mode]
+  optional_fields: [from_facet, to_facet, activation_phase, evidence_receipt, context, semantics_profile]
+  semantic_resolution: "For a profiled edge, resolve readiness/failure/degraded from semantics_profile (default = edge_type), bind the edge context, then apply any explicit override. The resolved record must contain the same semantic triple as an inline edge; profiles compress repetition but do not weaken the contract."
+  semantic_profiles:
+    BOOTSTRAP_HARD: {readiness_condition: "the named bootstrap artifact is present and validated", failure_mode: "bootstrap cannot establish the dependent facet", degraded_mode: "none; dependent facet remains stopped"}
+    SCHEMA_IMPORT: {readiness_condition: "the named versioned schema/type contract is compatible and loaded", failure_mode: "the dependent cannot interpret the referenced object", degraded_mode: "reject the affected object or keep the dependent facet inactive"}
+    AUTHORITY_PREREQUISITE: {readiness_condition: "a valid signed authority decision exists for the named context", failure_mode: "authority is absent, expired, revoked or out of scope", degraded_mode: "proposal/sandbox/read-only only; no promotion or Effect action"}
+    VERIFICATION_PREREQUISITE: {readiness_condition: "the required independent verifier grade and receipt exist for the named context", failure_mode: "evidence is absent, failed, contested or non-independent", degraded_mode: "retain as hypothesis/canary; never promote or certify"}
+    RUNTIME_CALL: {readiness_condition: "the named endpoint has a bounded queue, quota, timeout and failure-isolation boundary", failure_mode: "call is unavailable, times out, saturates or returns an invalid receipt", degraded_mode: "disable the named path, preserve state/evidence and use the declared lower-fidelity path"}
+    DATA_SUBSCRIPTION: {readiness_condition: "the named versioned cut/stream is readable with provenance and freshness", failure_mode: "data is missing, stale, contested or cannot be correlated", degraded_mode: "use an explicitly frozen cut or UNKNOWN; never silently impute current truth"}
+    OBSERVABILITY: {readiness_condition: "event-correlated telemetry for the named context is available with declared sampling", failure_mode: "observation is missing, sampled away or loses correlation", degraded_mode: "record an observability gap and rely on the authoritative ledger only"}
+    OPTIONAL_AUGMENTATION: {readiness_condition: "the named augmentation is admitted and compatible", failure_mode: "augmentation is unavailable, unverified or out of budget", degraded_mode: "retain the base capability and make the missing augmentation explicit"}
+    EVOLUTION_FEEDBACK: {readiness_condition: "versioned feedback and its independent evidence are available for the named evolutionary context", failure_mode: "feedback is missing, circular, contaminated or stale", degraded_mode: "freeze the affected evolution step and retain the last admitted version"}
+    RESOURCE_PROVIDER: {readiness_condition: "a bounded resource/artifact lease exists for the named context", failure_mode: "resource is unavailable, exhausted or violates the envelope", degraded_mode: "defer, reduce fidelity/concurrency or keep the dependent facet inactive"}
+    HUMAN_DECISION: {readiness_condition: "the named authorized human/Court decision is signed and in force", failure_mode: "decision is missing, ambiguous, expired or appealed", degraded_mode: "freeze the affected irreversible transition and preserve alternatives"}
+    PROJECTION_ONLY: {readiness_condition: "the canonical source cut is readable by the named projection", failure_mode: "projection is unavailable, stale or misleading", degraded_mode: "use canonical text/YAML/receipts; projection never changes authority or truth"}
+    COMPOSITION_MEMBER: {readiness_condition: "the named member exists at the same admitted architecture cut", failure_mode: "the composite references a missing or incompatible member", degraded_mode: "mark the composite incomplete; member operation and authority remain unchanged"}
+    UNCLASSIFIED_BLOCKING: {readiness_condition: "not established", failure_mode: "dependency semantics are unknown", degraded_mode: "BLOCKED until classified; no bootability or liveness inference"}
+  facet_rule: "Όταν δύο coarse elements φαίνονται κυκλικά αλλά διαφορετικά bootstrap/runtime facets δεν είναι, τα facets ονομάζονται ρητά· η διάσπαση δεν επιτρέπεται να κρύψει πραγματικό κύκλο."
+  graph_rules:
+    hard_authority_verification_subgraphs: "Must be acyclic and have a witnessed topological order."
+    runtime_scc: "Allowed only with asynchronous semantics, readiness predicates, queue/resource bounds, timeout, failure isolation and a named degraded mode."
+    migration: "Every one of the 617 legacy edges is typed or deterministically belongs to legacy_edges minus typed_edges = UNCLASSIFIED_BLOCKING; no silent deletion."
+  bootstrap_layers:
+    B0: "EvidenceReceipt semantics and declared BootstrapRoot."
+    B1: "Independent Identity and Time roots; then cross-attestation."
+    B2: "Ledger, read-only canonical substrate and authority mediation."
+    B3: "VFC-bootstrap and minimal obligation semantics."
+    B4: "Gate, effect mediation and patch admission."
+    B5: "Organs start in named degraded modes."
+    B6: "Twin, evaluators, cockpit and evolution feedback after readiness."
+
+functional_civilizations:
+  ontology_rule: "A functional Civilization is an architectural responsibility, not a voting replica or a fault domain."
+  roles:
+    Formal: "Proof, logic, contracts, type systems, model checking and theorem-bearing artifacts."
+    Cognitive: "Perception, memory, world/self models, reasoning, attention, learning and generation."
+    Evolutionary: "Variation, architecture search, capability growth, replacement, migration and successor proposals."
+    Adversarial: "Attack generation, red teaming, counterexample search, threat simulation and falsification pressure."
+    Institutional: "Proceedings, burdens of proof, admissibility, governance, jurisdiction and authorization records."
+  separation_rule: "No Civilization may self-certify a claim or action for which it is the sole producer."
+
+trust_topology:
+  ontology_rule: "Trust domains are independent execution/evaluation domains and are orthogonal to functional Civilizations."
+  voting: "N >= 3f + 1 only where Byzantine verdict consensus is actually required."
+  held_out: "h >= 1 independent domain with sealed evidence; it must not share the evaluated system's disqualifying lineage."
+  deployment_profiles: "A laptop profile may reduce concurrency or scope, never pretend that co-located replicas are independent."
+
+claim_disposition_schema:
+  required_fields:
+    - claim_id
+    - source_verdict
+    - claim_text
+    - preserved_residue_or_action
+    - semantic_destinations
+    - corrective_patches
+    - verification_obligations
+    - design_status
+    - evidence_status
+    - authority_status
+    - reviewer
+    - evidence_receipts
+  rules:
+    - "Every one of the 113 claims has exactly one disposition record."
+    - "A FAIL residue is never erased or converted to closure without evidence."
+    - "UNPROVEN remains first-class and is never rewritten as false."
+    - "Text proximity or mechanical candidate IDs are not semantic destinations."
+
+risk_model:
+  representation: "Typed risk vector and partial order; never one scalar pretending to carry every dimension."
+  minimum_dimensions: [epistemic, safety, legal, privacy, authority, reversibility, capability_loss, resource, time]
+  composition_operators: [ANY, ALL, K_OF_N, SEQUENTIAL]
+  common_cause_groups: required
+  projection_rule: "A scalar projection is a versioned policy view with sensitivity analysis; it cannot alone authorize promotion or Effect action."
+  reversibility_rule: "Unknown reversibility is classified as irreversible until evidence proves otherwise."
+
+learning_and_promotion:
+  truth_writer: "Admitted evidence protocol."
+  protocol_admission_writer: "Creator or explicitly delegated authority."
+  effect_authority_writer: "Signed policy/envelope through the mediated Effect gate."
+  exploration_signals: [uncertainty_reduction, novelty, information_value, preference_signal, self_score]
+  exploration_scope: [SANDBOX, SHADOW]
+  forbidden: "Exploration signal or self-score cannot unilaterally write truth, promotion or Effect authority."
+  improvement_claim: "Requires confidence interval, loss map, protected-floor report, debt and recovery horizon."
+
+architecture_claim_rule:
+  forbidden_without_theorem: [architecture_ceiling, guaranteed_unbeaten, maximum_possible_in_all_worlds]
+  permitted: "BEST_FOUND_IN_EXAMINED_SPACE_UNDER_DECLARED_AXES at a named cut, with search space, axes, baselines, assumptions and surviving attacks recorded."
+  upgrade_condition: "An explicit bound or impossibility theorem under declared assumptions, independently verified."

@@ -236,3 +236,102 @@ obligations:
      measures: "10/10 κύκλοι με πλήρη CycleRecord· 0 σιωπηλές παραλείψεις· διακοπές προηγούνται 100 % ‖ κάθε ablation αποτυγχάνει το δικό της KT και μόνο (ablation_kt ανά φάση)", rejects: "μηχανισμός FALSIFIED ⇒ νέος μηχανισμός για την ίδια ικανότητα· ικανότητα PRESERVED στον στόχο (§5): Ω-E2: φάση της οποίας η ablation δεν αλλάζει κανένα KT (η φάση είναι διακοσμητική — συγχωνεύεται η ΔΙΑΤΑΞΗ, όχι η ικανότητα)", allows_next: "Δόση 0.5: Ω-E1 σε tools/twin με mocks· Δόση 1: κύκλος ημέρας με lite μηχανισμούς (PERCEIVE/VERIFY/LEARN-lite/MEASURE)· Δόση 2–4: φάσεις γεμίζουν καθώς οι μηχανισμοί φτάνουν τις δόσεις τους.",
      first_level: F1, verifies: [MFA-INV-114, MFA-INV-115], version: 1,
      change_history: [{patch: MFA-PATCH-0033, op: ADD, date: "2026-09-16", summary: "Verification Obligations MFA-VO-068…087 (τα προκαταχωρισμένα πειράματα κάθε μηχανισμού + property tests στο tools/twin)"}]}
+  - <<: *d
+    id: MFA-VO-088
+    corresponds_to: null
+    name: "Root Boundary, Amendment and Realization Replacement"
+    methods: ["property-minimality review", "mutation tests against each Root property", "refinement and replay drill", "successor/Telos smuggling test"]
+    measures: "0 admitted Root-property mutations without constitutional amendment· realization replacement preserves every protected property and can fall back· Telos change always has a distinct signed receipt"
+    rejects: "Named artifact frozen without necessity, Root weakened by replacement, or Telos changed through succession/reimplementation"
+    allows_next: "Root boundary may become CREATOR_RATIFIED; realization replacement may enter shadow"
+    first_level: F1
+    verifies: [MFA-INV-116, MFA-INV-117]
+    change_history: [{patch: MFA-PATCH-0062, op: ADD, date: "2026-09-17", summary: "Root boundary verification"}]
+  - <<: *d
+    id: MFA-VO-089
+    corresponds_to: null
+    name: "Mandate and Decision Provenance"
+    methods: ["exact source receipt", "digest comparison", "authority-chain verification", "dependent-claim traversal"]
+    measures: "Every claim of creator authorization resolves to exact canonical text, digest, signer and scope"
+    rejects: "Reconstructed, paraphrased or absent mandate presented as creator-authorized"
+    allows_next: "Only claims inside the receipt scope may move beyond PROVISIONAL"
+    first_level: F0
+    verifies: [MFA-INV-005, MFA-INV-118]
+    change_history: [{patch: MFA-PATCH-0063, op: ADD, date: "2026-09-17", summary: "Authority provenance must resolve"}]
+  - <<: *d
+    id: MFA-VO-090
+    corresponds_to: null
+    name: "Orthogonal Status Mutation Suite"
+    methods: ["one-axis-at-a-time mutation", "cross-axis non-interference matrix", "projection round trip", "unauthorized-writer injection"]
+    measures: "For every legal value transition, exactly one source axis changes; every forbidden implication produces ERR_INVALID"
+    rejects: "Any silent propagation among target, design, fidelity, evidence, authority or operational scope"
+    allows_next: "Status projections may drive the Cockpit without becoming authorities"
+    first_level: F1
+    verifies: [MFA-INV-119, MFA-INV-124]
+    change_history: [{patch: MFA-PATCH-0061, op: ADD, date: "2026-09-17", summary: "Status-axis independence"}]
+  - <<: *d
+    id: MFA-VO-091
+    corresponds_to: null
+    name: "113 ClaimDisposition Completeness and Semantic Traceability"
+    methods: ["count and uniqueness", "source-text digest", "FAIL-residue preservation", "UNPROVEN preservation", "semantic destination review", "ID resolution"]
+    measures: "113/113 unique dispositions· 97/97 FAIL residues preserved· 3/3 UNPROVEN remain non-false· every accepted destination semantically reviewed and resolvable"
+    rejects: "Missing/duplicate claim, erased residue, mechanical candidate promoted to semantic link, dangling destination or closure without evidence receipt"
+    allows_next: "Claims layer becomes SEMANTICALLY_CLOSED at the reviewed cut"
+    first_level: F0
+    verifies: [MFA-INV-004, MFA-INV-118]
+    change_history: [{patch: MFA-PATCH-0066, op: ADD, date: "2026-09-17", summary: "ClaimDisposition closure gate"}]
+  - <<: *d
+    id: MFA-VO-092
+    corresponds_to: null
+    name: "Typed Dependency, Bootstrap and Runtime-Liveness Proof"
+    methods: ["617-edge classification", "topological sort of hard/authority/verification subgraphs", "SCC decomposition", "bounded-queue and timeout model checking", "degraded-mode drills"]
+    measures: "617/617 edges typed or UNCLASSIFIED_BLOCKING· acyclic prerequisite witness exists· every admitted runtime SCC passes readiness, boundedness, timeout and isolation checks"
+    rejects: "Untyped edge presented as ready, hard prerequisite cycle, or SCC without an explicit liveness/isolation contract"
+    allows_next: "B0…B6 bootstrap order becomes admissible for F2 simulation"
+    first_level: F1
+    verifies: [MFA-INV-120]
+    change_history: [{patch: MFA-PATCH-0064, op: ADD, date: "2026-09-17", summary: "Dependency and bootstrap verification"}]
+  - <<: *d
+    id: MFA-VO-093
+    corresponds_to: null
+    name: "Fail-Closed Evidence Fault Injection"
+    methods: ["remove git/source evidence", "crash tool", "malform output", "stale input cut", "truncate scope", "corrupt signer and digest"]
+    measures: "0 PASS across every seeded evidence failure; each case yields FAIL or INDETERMINATE with the correct reason"
+    rejects: "Any seeded evidence failure is reported as PASS or silently ignored"
+    allows_next: "Acceptance-gate output may be used as evidence at its recorded fidelity and scope"
+    first_level: F1
+    verifies: [MFA-INV-118]
+    change_history: [{patch: MFA-PATCH-0063, op: ADD, date: "2026-09-17", summary: "Fail-closed evidence validation"}]
+  - <<: *d
+    id: MFA-VO-094
+    corresponds_to: null
+    name: "Evaluator Independence, Rotation and Goodhart Resistance"
+    methods: ["lineage/overlap matrix", "held-out rotation", "collusion seeds", "reward-hacking candidates", "self-score calibration against independent outcomes"]
+    measures: "Seeded Goodhart/collusion exploits detected above preregistered rate· disqualified evaluator votes have zero promotion weight· self-score calibration error reported"
+    rejects: "Producer or overlapping evaluator unilaterally promotes itself, or a seeded exploit survives all independent views"
+    allows_next: "Candidate may enter a promotion proceeding, never automatic promotion"
+    first_level: F2
+    verifies: [MFA-INV-121, MFA-INV-122]
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Evaluator/promotion separation"}]
+  - <<: *d
+    id: MFA-VO-095
+    corresponds_to: null
+    name: "Risk Vector Composition and Projection Sensitivity"
+    methods: ["operator truth tables", "common-cause injection", "partial-order tests", "weight/threshold sensitivity sweep", "unknown-reversibility drill"]
+    measures: "ANY/ALL/K_OF_N/SEQUENTIAL semantics match declarations· common causes are not double-counted· decision instability across plausible projections is exposed· unknown reversibility maps to irreversible"
+    rejects: "Scalar-only risk hides a dominated dimension, composition semantics disagree with the contract, or projection alone authorizes Effect"
+    allows_next: "Versioned risk projections may advise policy and Cockpit views"
+    first_level: F1
+    verifies: [MFA-INV-124]
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Vector risk and authority separation"}]
+  - <<: *d
+    id: MFA-VO-096
+    corresponds_to: null
+    name: "Bounded Regression, Debt and Recovery Horizon"
+    methods: ["confidence intervals", "loss-map review", "protected-floor check", "temporary regression injection", "recovery-horizon survival analysis"]
+    measures: "Every improvement claim reports uncertainty and all known losses· protected floors never regress· admitted temporary regression recovers within the preregistered horizon or triggers rollback"
+    rejects: "Point-estimate dominance, hidden loss, unbounded debt, protected-floor regression or missed recovery horizon"
+    allows_next: "Improvement claim may be admitted for the named scope and horizon"
+    first_level: F2
+    verifies: [MFA-INV-123]
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Capability-growth claims with loss and recovery accounting"}]

@@ -1,0 +1,22 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0066
+title: "First-class ClaimDisposition seat for all 113 verdict claims"
+operation: ADD
+targets: [CLAIM-DISPOSITIONS.yaml, MFA-CON-077, MFA-VO-091]
+base: {package_version: 0.4.0, source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239}
+preconditions: ["CLAIMS-VERDICT source remains unchanged", "Mechanical candidate IDs are not accepted as semantic destinations"]
+change:
+  add: ["113 immutable source claim/residue records", MFA-CON-077, MFA-VO-091]
+  counts: {total: 113, HOLDS: 13, FAILS: 97, UNPROVEN: 3, legacy_explicit_trace: 60, missing_trace: 53, semantically_adjudicated: 0}
+rationale: "A verdict in prose is not a traceable design obligation until its residue, destination, evidence and authority are first-class."
+evidence: ["CLAIMS-VERDICT.md", "CLAIM-RECONCILIATION-MATRIX.yaml"]
+affected_dependencies: [MFA-ELM-088]
+capability_impact: {gained: ["claim-to-architecture traceability"], at_risk: [], ledger_entry: "No target removed"}
+migration: "Adjudicate each record without changing source text or residue digest."
+verification: MFA-VO-091
+rollback: MFA-PATCH-0066-R
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED
+mechanical_state: PARTIALLY_APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

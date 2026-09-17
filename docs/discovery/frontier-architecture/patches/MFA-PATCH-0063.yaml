@@ -1,0 +1,22 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0063
+title: "Verification lifecycle and fail-closed EvidenceReceipt"
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, MFA-CON-074, MFA-INV-118, MFA-VO-089, MFA-VO-093]
+base: {package_version: 0.4.0, source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239}
+preconditions: ["Design-only: no checker implementation change", "Present gate results remain non-authoritative until MFA-VO-093"]
+change:
+  add: ["VO declaration/execution/verdict/evidence lifecycle", "EvidenceReceipt schema", MFA-CON-074, MFA-INV-118, MFA-VO-089, MFA-VO-093]
+  current_evidence: {executable_invariants: 35, unmeasured_invariants: 80, end_to_end_capabilities_F2_plus: 0}
+rationale: "A checker that treats missing/crashed/unparseable evidence as success is not evidence."
+evidence: ["ANTI-LOCK-AUDIT AL-011, AL-012, AL-019, AL-020"]
+affected_dependencies: [MFA-ELM-020, MFA-ELM-084, MFA-ELM-099]
+capability_impact: {gained: ["fail-closed evidence semantics"], at_risk: [], ledger_entry: "No target removed"}
+migration: "Existing PASS reports are relabeled NOT_ASSESSED or PARTIAL until valid receipts exist."
+verification: MFA-VO-093
+rollback: MFA-PATCH-0063-R
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED
+mechanical_state: APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

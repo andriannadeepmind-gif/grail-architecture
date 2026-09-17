@@ -22,6 +22,695 @@ defaults: &d
   superseded_by: null
   change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}]
 
+dependency_migration:
+  schema: ARCHITECTURE-METAMODEL.yaml#dependency_edge_schema
+  patch: MFA-PATCH-0064
+  source_edges: 617
+  state: PARTIALLY_APPLIED
+  rule: "Οι παρακάτω διαδοχικές δόσεις τυποποιούν το constitutional/bootstrap spine και τις διαδρομές cognition, verification, admission και Twin. Οι υπόλοιπες legacy dependencies διατηρούνται και θεωρούνται UNCLASSIFIED_BLOCKING μέχρι semantic typing· καμία δεν αποκαλείται runtime εκ προοιμίου."
+  typed_edges:
+    - {from: MFA-ELM-002, to: MFA-ELM-005, edge_type: BOOTSTRAP_HARD, readiness_condition: "crypto epoch declared", failure_mode: "CID algorithm unavailable", degraded_mode: "none; store remains stopped"}
+    - {from: MFA-ELM-003, to: MFA-ELM-005, edge_type: BOOTSTRAP_HARD, readiness_condition: "signature/KEM allowlist declared", failure_mode: "key identity unverifiable", degraded_mode: "offline root only; no delegation"}
+    - {from: MFA-ELM-003, from_facet: runtime_key_service, to: MFA-ELM-004, to_facet: attested_time, edge_type: DATA_SUBSCRIPTION, readiness_condition: "both independent roots ready", failure_mode: "time unavailable or contested", degraded_mode: "monotonic key epochs without wall-clock claims"}
+    - {from: MFA-ELM-004, from_facet: signed_time_service, to: MFA-ELM-003, to_facet: signing, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "identity root ready", failure_mode: "time cannot be attested", degraded_mode: "local monotonic clock marked UNATTESTED"}
+    - {from: MFA-ELM-001, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, readiness_condition: "CAS ready for referenced payloads", failure_mode: "payload unavailable", degraded_mode: "hash/residue-only commitments; no claim of payload availability"}
+    - {from: MFA-ELM-001, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "signer identity and epoch valid", failure_mode: "unsigned or revoked writer", degraded_mode: "read-only existing cut"}
+    - {from: MFA-ELM-001, to: MFA-ELM-004, edge_type: DATA_SUBSCRIPTION, readiness_condition: "attested time ready", failure_mode: "wall-clock unavailable", degraded_mode: "HLC/event order only; legal-time assertions forbidden"}
+    - {from: MFA-ELM-001, to: MFA-ELM-005, edge_type: BOOTSTRAP_HARD, readiness_condition: "canonical encoding and digest epoch fixed", failure_mode: "commitment identity ambiguous", degraded_mode: "none; writes stopped"}
+    - {from: MFA-ELM-051, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "active constitution commitment readable", failure_mode: "active cut missing", degraded_mode: "sealed bootstrap constitution, no amendments"}
+    - {from: MFA-ELM-051, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "constitution signer chain valid", failure_mode: "authority root unresolved", degraded_mode: "inspection only; no admission"}
+    - {from: MFA-ELM-007, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "policy cut readable", failure_mode: "policy state unknown", degraded_mode: "deny all Effect actions"}
+    - {from: MFA-ELM-007, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "policy signer/delegation valid", failure_mode: "policy authority unresolved", degraded_mode: "deny all Effect actions"}
+    - {from: MFA-ELM-006, from_facet: registry, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "registry cut readable", failure_mode: "capability record unavailable", degraded_mode: "read-only bootstrap allowlist"}
+    - {from: MFA-ELM-006, from_facet: admission, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "independent harness ready", failure_mode: "candidate cannot be evaluated", degraded_mode: "registry reads allowed; all new admissions frozen"}
+    - {from: MFA-ELM-008, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "commitment cut readable", failure_mode: "evidence/state unavailable", degraded_mode: "deny"}
+    - {from: MFA-ELM-008, to: MFA-ELM-006, edge_type: SCHEMA_IMPORT, readiness_condition: "capability types loaded", failure_mode: "action type unknown", degraded_mode: "deny unknown capability"}
+    - {from: MFA-ELM-008, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "effective policy decision available", failure_mode: "authority/policy unavailable", degraded_mode: "deny"}
+    - {from: MFA-ELM-008, to: MFA-ELM-051, edge_type: SCHEMA_IMPORT, readiness_condition: "active signed constitution parsed", failure_mode: "constitutional predicate unavailable", degraded_mode: "deny"}
+    - {from: MFA-ELM-013, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "resource commitments readable", failure_mode: "usage state unknown", degraded_mode: "static minimum envelope"}
+    - {from: MFA-ELM-013, to: MFA-ELM-006, edge_type: SCHEMA_IMPORT, readiness_condition: "resource-relevant capability types loaded", failure_mode: "resource request untyped", degraded_mode: "deny activation"}
+    - {from: MFA-ELM-013, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "resource policy valid", failure_mode: "budget/authority unknown", degraded_mode: "minimum safe quota only"}
+    - {from: MFA-ELM-009, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "grant decision valid", failure_mode: "capability token cannot be authorized", degraded_mode: "no external capability calls"}
+    - {from: MFA-ELM-009, to: MFA-ELM-013, edge_type: RESOURCE_PROVIDER, readiness_condition: "resource lease available", failure_mode: "quota or activation unavailable", degraded_mode: "deny call; preserve proposal"}
+    - {from: MFA-ELM-014, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "journal/event cut readable", failure_mode: "transport event lacks durable correlation", degraded_mode: "local bounded queue; no truth semantics"}
+    - {from: MFA-ELM-012, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "supervisor lease identity valid", failure_mode: "process authority unresolved", degraded_mode: "all organs stopped"}
+    - {from: MFA-ELM-012, to: MFA-ELM-014, edge_type: RUNTIME_CALL, readiness_condition: "event fabric ready", failure_mode: "control event delivery lost", degraded_mode: "local health loop and fail-stop"}
+    - {from: MFA-ELM-016, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "halt signer chain valid", failure_mode: "remote halt authority unavailable", degraded_mode: "local hardware/process kill remains"}
+    - {from: MFA-ELM-016, to: MFA-ELM-012, edge_type: RUNTIME_CALL, readiness_condition: "supervisor control channel ready", failure_mode: "cooperative halt unavailable", degraded_mode: "out-of-band kill/fencing"}
+    - {from: MFA-ELM-011, to: MFA-ELM-009, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "organ capabilities issued", failure_mode: "organ cannot call mediated capabilities", degraded_mode: "isolated compute with zero outward capabilities"}
+    - {from: MFA-ELM-011, to: MFA-ELM-012, edge_type: RESOURCE_PROVIDER, readiness_condition: "supervisor sandbox ready", failure_mode: "organ lifecycle uncontrolled", degraded_mode: "organ not started"}
+    - {from: MFA-ELM-010, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "proposal/inverse/receipt journal ready", failure_mode: "transaction cannot be evidenced", degraded_mode: "prepare-only; no commit"}
+    - {from: MFA-ELM-010, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "gate verdict valid", failure_mode: "effect not authorized", degraded_mode: "prepare/shadow only"}
+    - {from: MFA-ELM-010, to: MFA-ELM-009, edge_type: RUNTIME_CALL, readiness_condition: "capability gateway ready", failure_mode: "effect channel unavailable", degraded_mode: "proposal preserved; no execution"}
+    - {from: MFA-ELM-010, to: MFA-ELM-023, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "world-model presimulation available", failure_mode: "foreseen effects unknown", degraded_mode: "classify action irreversible and require fresh human approval"}
+    - {from: MFA-ELM-015, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "bound policy authority valid", failure_mode: "bound has no authority", degraded_mode: "hard Root bounds only; flexible policy unavailable"}
+    - {from: MFA-ELM-015, to: MFA-ELM-051, edge_type: SCHEMA_IMPORT, readiness_condition: "Root/policy boundary loaded", failure_mode: "mechanism and policy bounds conflated", degraded_mode: "deny attempted bound change"}
+    - {from: MFA-ELM-084, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "build attestation signer valid", failure_mode: "artifact provenance unverifiable", degraded_mode: "inventory only; no release admission"}
+    - {from: MFA-ELM-084, to: MFA-ELM-005, edge_type: SCHEMA_IMPORT, readiness_condition: "allowed algorithms/encodings loaded", failure_mode: "artifact digest scheme untrusted", degraded_mode: "quarantine artifact"}
+    - {from: MFA-ELM-099, from_facet: corpus_store, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, readiness_condition: "sealed corpus storage ready", failure_mode: "proof corpus unavailable", degraded_mode: "bootstrap corpus embedded and read-only"}
+    - {from: MFA-ELM-099, from_facet: checker_admission, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "checker admission signer valid", failure_mode: "checker authority unresolved", degraded_mode: "bootstrap checkers only"}
+    - {from: MFA-ELM-099, from_facet: checker_admission, to: MFA-ELM-084, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "checker artifact attested", failure_mode: "build/tool identity unknown", degraded_mode: "bootstrap checkers only"}
+    - {from: MFA-ELM-099, from_facet: independent_verdict, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "independent trust domain available", failure_mode: "independence cannot be established", degraded_mode: "single-domain results labeled EIM-UNVERIFIED; no cutover"}
+    - {from: MFA-ELM-099, from_facet: proof_discovery, to: MFA-ELM-112, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "TGPS ready", failure_mode: "new proof not synthesized", degraded_mode: "verification of supplied proofs continues"}
+    - {from: MFA-ELM-099, from_facet: bootstrap_contract, to: MFA-ELM-122, to_facet: static_obligation_schema_seed, edge_type: SCHEMA_IMPORT, readiness_condition: "minimal obligation types available as inert data", failure_mode: "verification obligations untyped", degraded_mode: "fixed bootstrap predicates only"}
+    - {from: MFA-ELM-122, from_facet: runtime_checker, to: MFA-ELM-099, to_facet: bootstrap_contract, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "VFC bootstrap checker ready", failure_mode: "obligation discharge unverifiable", degraded_mode: "declare/defer obligations only; no PASS"}
+    - {from: MFA-ELM-020, from_facet: verification_runtime, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "evidence cut readable", failure_mode: "claim inputs unavailable", degraded_mode: "NOT_ASSESSED"}
+    - {from: MFA-ELM-020, from_facet: independent_tests, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "held-out harness ready", failure_mode: "independent measurement unavailable", degraded_mode: "local checks labeled non-independent"}
+    - {from: MFA-ELM-020, from_facet: checker_runtime, to: MFA-ELM-099, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "admitted checker set ready", failure_mode: "checker status unknown", degraded_mode: "bootstrap predicates only"}
+    - {from: MFA-ELM-020, from_facet: proof_discovery, to: MFA-ELM-112, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "TGPS ready", failure_mode: "proof search unavailable", degraded_mode: "verification of supplied artifacts only"}
+    - {from: MFA-ELM-088, from_facet: canonical_read_model, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "design cut readable", failure_mode: "canonical state unavailable", degraded_mode: "frozen package read-only"}
+    - {from: MFA-ELM-088, from_facet: mutation_path, to: MFA-ELM-090, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "Patch Engine ready", failure_mode: "patch automation unavailable", degraded_mode: "manual proposed patch; no automatic apply"}
+    - {from: MFA-ELM-088, from_facet: spatial_projection, to: MFA-ELM-091, edge_type: PROJECTION_ONLY, readiness_condition: "Cockpit ready", failure_mode: "3D view unavailable", degraded_mode: "text/YAML view; design authority unchanged"}
+    # Slice 2 — cognition, verification, admission and executable-Twin paths.
+    - {from: MFA-ELM-017, from_facet: inference_context, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "a named commitment cut is readable", failure_mode: "evidence context unavailable or stale", degraded_mode: "answer only from an explicitly frozen local cut and label freshness UNKNOWN"}
+    - {from: MFA-ELM-017, from_facet: provider_route, to: MFA-ELM-009, edge_type: RUNTIME_CALL, readiness_condition: "a capability-scoped inference route and bounded timeout exist", failure_mode: "provider/tool call unavailable", degraded_mode: "sovereign local organ or trace-only mode; no silent provider substitution"}
+    - {from: MFA-ELM-017, from_facet: external_emission, to: MFA-ELM-032, to_facet: admission_filter, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "the emission barrier returns an admitted disclosure verdict", failure_mode: "output has no admissible provenance or disclosure class", degraded_mode: "retain internally as a candidate; emit nothing"}
+    - {from: MFA-ELM-017, from_facet: obligation_binding, to: MFA-ELM-122, to_facet: obligation_schema, edge_type: SCHEMA_IMPORT, readiness_condition: "claim and evidence-obligation types are loaded", failure_mode: "inference output cannot carry typed obligations", degraded_mode: "candidate remains sandbox-only and NOT_ASSESSED"}
+    - {from: MFA-ELM-017, from_facet: routing_policy, to: MFA-ELM-116, to_facet: sovereignty_state, edge_type: DATA_SUBSCRIPTION, readiness_condition: "a current per-family sovereignty stage is readable", failure_mode: "source sovereignty cannot be classified", degraded_mode: "route is explicit PROVIDER_ORIGIN with sovereignty UNKNOWN; promotion forbidden"}
+    - {from: MFA-ELM-018, from_facet: broadcast_runtime, to: MFA-ELM-017, edge_type: RUNTIME_CALL, readiness_condition: "the inference gateway accepts a bounded workspace request", failure_mode: "workspace cannot obtain candidate content", degraded_mode: "operate on already committed candidates only"}
+    - {from: MFA-ELM-018, from_facet: attention_calibration, to: MFA-ELM-024, edge_type: DATA_SUBSCRIPTION, readiness_condition: "a versioned competence/attention profile is readable", failure_mode: "attention allocation is uncalibrated", degraded_mode: "fixed conservative attention budget with UNCALIBRATED receipt"}
+    - {from: MFA-ELM-018, from_facet: unknown_intake, to: MFA-ELM-028, to_facet: open_unknown_feed, edge_type: DATA_SUBSCRIPTION, readiness_condition: "bounded asynchronous unknown queue is ready", failure_mode: "unknown feed unavailable or over capacity", degraded_mode: "continue current task; append overflow receipt and defer intake"}
+    - {from: MFA-ELM-019, from_facet: candidate_generation, to: MFA-ELM-017, edge_type: RUNTIME_CALL, readiness_condition: "inference route and deliberation budget are available", failure_mode: "candidate generation stalls or times out", degraded_mode: "return best committed candidate with incomplete-search receipt"}
+    - {from: MFA-ELM-019, from_facet: admitted_conclusion, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "required verification grade is discharged", failure_mode: "conclusion remains unsupported or contested", degraded_mode: "publish internally as hypothesis, never as verified conclusion"}
+    - {from: MFA-ELM-019, from_facet: search_budget, to: MFA-ELM-013, edge_type: RESOURCE_PROVIDER, readiness_condition: "a bounded deliberation envelope is leased", failure_mode: "budget exhausted", degraded_mode: "stop expansion and preserve frontier for resumable search"}
+    - {from: MFA-ELM-021, from_facet: belief_cut, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "the relevant claim/attack cut is readable", failure_mode: "belief state cannot be reconstructed", degraded_mode: "retain propositions as UNASSESSED without collapse"}
+    - {from: MFA-ELM-021, from_facet: contradiction_collapse, to: MFA-ELM-048, to_facet: proceeding_verdict, edge_type: HUMAN_DECISION, readiness_condition: "an admitted Court proceeding resolves the named contradiction", failure_mode: "no authorized resolution exists", degraded_mode: "retain Both/Conflict and block irreversible use of the collapsed result"}
+    - {from: MFA-ELM-022, from_facet: causal_context, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, readiness_condition: "a temporally scoped knowledge cut is readable", failure_mode: "causal variables lack time-scoped evidence", degraded_mode: "return UNKNOWN(CAUSAL_CONTEXT_MISSING)"}
+    - {from: MFA-ELM-022, from_facet: counterfactual_fork, to: MFA-ELM-023, edge_type: RUNTIME_CALL, readiness_condition: "a bounded ghost-world fork and seed are allocated", failure_mode: "counterfactual world cannot be instantiated", degraded_mode: "produce qualitative alternatives only, explicitly NON_SIMULATED"}
+    - {from: MFA-ELM-022, from_facet: discovery_extension, to: MFA-ELM-110, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "CDCE is admitted for the requested domain and fidelity", failure_mode: "learned causal discovery unavailable", degraded_mode: "use a supplied SCM or return causal underdetermination"}
+    - {from: MFA-ELM-023, from_facet: world_base_cut, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "base world cut and seeds are readable", failure_mode: "fork ancestry is missing", degraded_mode: "no fork; retain the original world only"}
+    - {from: MFA-ELM-024, from_facet: self_history, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "prediction/outcome history is readable", failure_mode: "self-model cannot be calibrated against outcomes", degraded_mode: "declare competence UNKNOWN and lower autonomy"}
+    - {from: MFA-ELM-024, from_facet: calibrated_profile, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "held-out scoring and confidence interval are available", failure_mode: "self-estimate is not independently calibrated", degraded_mode: "self-report remains observational and cannot raise authority"}
+    - {from: MFA-ELM-024, from_facet: identity_continuity, to: MFA-ELM-037, edge_type: DATA_SUBSCRIPTION, readiness_condition: "a current external continuity certificate is readable", failure_mode: "continuity claim is unresolved", degraded_mode: "mark identity continuity CONTESTED; forbid successor cutover"}
+    - {from: MFA-ELM-024, from_facet: mechanistic_grounding, to: MFA-ELM-120, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "MSM hypotheses are admitted for the current weights", failure_mode: "mechanistic self-model unavailable or unstable", degraded_mode: "retain behavioral metacognition with no mechanistic inference"}
+    - {from: MFA-ELM-025, from_facet: artifact_store, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, readiness_condition: "content-addressed program/tool artifacts are retrievable", failure_mode: "skill payload unavailable", degraded_mode: "skill remains indexed but non-executable"}
+    - {from: MFA-ELM-025, from_facet: skill_admission, to: MFA-ELM-006, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "skill capability and scope are admitted", failure_mode: "tool/program lacks an admitted capability", degraded_mode: "inspect only; invocation forbidden"}
+    - {from: MFA-ELM-025, from_facet: synthesis_extension, to: MFA-ELM-112, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "TGPS is available with admitted checkers", failure_mode: "new proof/program synthesis unavailable", degraded_mode: "execute only already admitted library artifacts"}
+    - {from: MFA-ELM-026, from_facet: effect_execution, to: MFA-ELM-010, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "RET has committed an executable effect class and inverse/escrow policy", failure_mode: "action is not authorized or reversibility is unknown", degraded_mode: "Think–Recommend only; no external effect"}
+    - {from: MFA-ELM-026, from_facet: capability_invocation, to: MFA-ELM-009, edge_type: RUNTIME_CALL, readiness_condition: "a bounded ActionToken route is live", failure_mode: "capability call fails or partially completes", degraded_mode: "stop, record partial receipt, invoke named compensation if admitted"}
+    - {from: MFA-ELM-027, from_facet: scouting_priorities, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, readiness_condition: "open unknowns expose ranked observation plans", failure_mode: "scouting lacks an epistemic target", degraded_mode: "restrict to creator-pinned sources and passive monitoring"}
+    - {from: MFA-ELM-027, from_facet: attested_intake, to: MFA-ELM-082, to_facet: ingestion_output, edge_type: DATA_SUBSCRIPTION, readiness_condition: "bounded attested-ingest queue is available", failure_mode: "scout result cannot be attested or quarantined", degraded_mode: "retain raw result outside knowledge state as UNTRUSTED"}
+    - {from: MFA-ELM-027, from_facet: external_reach, to: MFA-ELM-009, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "source, jurisdiction and reach capability are explicitly granted", failure_mode: "requested reach exceeds authority or budget", degraded_mode: "passive/offline analysis only"}
+    - {from: MFA-ELM-028, from_facet: durable_unknown_state, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "unknown records and plans are readable", failure_mode: "unknown lineage is lost", degraded_mode: "create a new explicitly unlinked unknown; never pretend continuity"}
+    - {from: MFA-ELM-028, from_facet: gap_observation, to: MFA-ELM-018, to_facet: workspace_trace, edge_type: OBSERVABILITY, readiness_condition: "bounded asynchronous workspace trace stream is available", failure_mode: "cognitive gaps cannot be observed", degraded_mode: "manual unknown declaration; queue overflow and timeout are recorded"}
+    - {from: MFA-ELM-029, from_facet: goal_candidates, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, readiness_condition: "ranked unknowns and observation plans are readable", failure_mode: "epistemic needs are absent from volition", degraded_mode: "use explicit creator quest and current Telos only"}
+    - {from: MFA-ELM-029, from_facet: admissible_intent, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "gate classifies the proposed intent under current policy", failure_mode: "intent violates or cannot be classified under bounds", degraded_mode: "retain as sandbox proposal with no authority"}
+    - {from: MFA-ELM-029, from_facet: effect_intent, to: MFA-ELM-010, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "RET returns a permitted execution class", failure_mode: "intent is irreversible, unbounded or lacks approval", degraded_mode: "simulate or recommend only"}
+    - {from: MFA-ELM-029, from_facet: competence_prior, to: MFA-ELM-024, edge_type: DATA_SUBSCRIPTION, readiness_condition: "calibrated competence bounds are readable", failure_mode: "volition overestimates executable capability", degraded_mode: "use lower confidence bound and reduce autonomy"}
+    - {from: MFA-ELM-029, from_facet: workspace_state, to: MFA-ELM-018, edge_type: DATA_SUBSCRIPTION, readiness_condition: "current bounded workspace broadcast is available", failure_mode: "salient context unavailable", degraded_mode: "act only on committed quest context"}
+    - {from: MFA-ELM-029, from_facet: developmental_policy, to: MFA-ELM-124, to_facet: exploration_recommendation, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "AIDC returns a Telos-bounded EFE recommendation", failure_mode: "developmental explorer unavailable or uncalibrated", degraded_mode: "baseline goal arbitration remains active; no exploratory Effect"}
+    - {from: MFA-ELM-030, from_facet: research_queue, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, readiness_condition: "falsifiable unknowns with observation plans are available", failure_mode: "science cycle has no typed question", degraded_mode: "defer cycle; never manufacture a result"}
+    - {from: MFA-ELM-030, from_facet: experiment_world, to: MFA-ELM-085, edge_type: RUNTIME_CALL, readiness_condition: "DST allocates a bounded world, seed and timeout", failure_mode: "experiment cannot run or replay", degraded_mode: "design-only protocol marked NOT_EXECUTED"}
+    - {from: MFA-ELM-030, from_facet: real_experiment, to: MFA-ELM-010, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "RET admits the intervention and its rollback/escrow", failure_mode: "real-world experiment lacks authority or reversibility", degraded_mode: "run in Genesis/Twin only"}
+    - {from: MFA-ELM-030, from_facet: result_admission, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "replication and required verifier grade are discharged", failure_mode: "result is unreplicated or instrument-contested", degraded_mode: "retain as preliminary hypothesis"}
+    - {from: MFA-ELM-030, from_facet: hypothesis_generation, to: MFA-ELM-111, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "AHE is admitted and a feasible test venue exists", failure_mode: "autonomous hypothesis generator unavailable", degraded_mode: "accept explicit human/organ hypotheses with the same falsifier schema"}
+    - {from: MFA-ELM-030, from_facet: ontology_extension, to: MFA-ELM-109, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "OGE concept candidate has independent residual evidence", failure_mode: "new concept is not admitted", degraded_mode: "use the current ontology and record residuals"}
+    - {from: MFA-ELM-030, from_facet: causal_extension, to: MFA-ELM-110, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "CDCE supplies a fidelity-labelled causal commitment", failure_mode: "causal structure is underdetermined", degraded_mode: "report association and intervention plan, not causation"}
+    - {from: MFA-ELM-031, from_facet: isolated_reflection, to: MFA-ELM-011, edge_type: RESOURCE_PROVIDER, readiness_condition: "a zero-outward-capability reflection sandbox is allocated", failure_mode: "reflective candidate cannot be isolated", degraded_mode: "static analysis only; no execution"}
+    - {from: MFA-ELM-031, from_facet: improvement_cycle, to: MFA-ELM-104, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "RVSI is admitted at the requested level", failure_mode: "recursive improvement orchestration unavailable", degraded_mode: "single-step manually scoped replacement proposal"}
+    - {from: MFA-ELM-031, from_facet: architecture_generation, to: MFA-ELM-113, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "RAGen can emit typed architecture candidates", failure_mode: "no autonomous architecture candidate is produced", degraded_mode: "evaluate externally supplied candidates only"}
+    - {from: MFA-ELM-031, from_facet: promotion_proof, to: MFA-ELM-099, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "VFC accepts independent evidence for the proposed meta-level change", failure_mode: "self-modification is not independently verified", degraded_mode: "shadow artifact retained; no promotion"}
+    - {from: MFA-ELM-032, from_facet: evidence_view, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "the exact output/evidence cut is readable", failure_mode: "emission provenance cannot be reconstructed", degraded_mode: "deny emission"}
+    - {from: MFA-ELM-032, from_facet: disclosure_authority, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "a signed disclosure policy and audience scope are active", failure_mode: "disclosure class has no valid policy", degraded_mode: "deny emission and preserve proposal"}
+    - {from: MFA-ELM-085, from_facet: replay_source, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, readiness_condition: "scenario cut, events and seeds are readable", failure_mode: "simulation cannot reproduce its inputs", degraded_mode: "run exploratory only and forbid evidentiary use"}
+    - {from: MFA-ELM-085, from_facet: sandbox_runtime, to: MFA-ELM-011, edge_type: RESOURCE_PROVIDER, readiness_condition: "bounded isolated execution resources are available", failure_mode: "simulation isolation or quota unavailable", degraded_mode: "F0/F1 static execution only"}
+    - {from: MFA-ELM-086, from_facet: independent_verdict, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "the required independent trust-domain composition is present", failure_mode: "evaluation independence cannot be established", degraded_mode: "result labelled EIM-UNVERIFIED; canary only"}
+    - {from: MFA-ELM-086, from_facet: sealed_artifacts, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, readiness_condition: "sealed sets and answer escrow are retrievable only in the held-out domain", failure_mode: "sealed corpus unavailable or exposed", degraded_mode: "freeze promotion and rotate the corpus"}
+    - {from: MFA-ELM-086, from_facet: adversarial_suite, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "red-team cases are versioned and lineage-screened", failure_mode: "adaptive adversarial cases unavailable", degraded_mode: "run static seeded-fault suite and widen uncertainty"}
+    - {from: MFA-ELM-086, from_facet: evaluator_population, to: MFA-ELM-114, edge_type: EVOLUTION_FEEDBACK, readiness_condition: "ECE population and frozen H epoch are declared", failure_mode: "evaluator adaptation unavailable or correlated", degraded_mode: "frozen admitted evaluators only; no co-evolution claim"}
+    - {from: MFA-ELM-086, from_facet: growth_measurement, to: MFA-ELM-119, edge_type: DATA_SUBSCRIPTION, readiness_condition: "CapabilityGrowthRecords and confidence intervals are readable", failure_mode: "evaluation cannot place result on a calibrated capability scale", degraded_mode: "report task scores without growth-law claim"}
+    - {from: MFA-ELM-086, from_facet: lineage_screen, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, readiness_condition: "model/data lineage is complete enough for independence tests", failure_mode: "evaluator and subject lineage may overlap", degraded_mode: "mark independence UNKNOWN and block promotion"}
+    - {from: MFA-ELM-087, from_facet: telemetry_stream, to: MFA-ELM-014, edge_type: DATA_SUBSCRIPTION, readiness_condition: "event-correlated transport is available with bounded sampling", failure_mode: "telemetry loses event correlation or declared sampling", degraded_mode: "ledger-only audit; observability gaps remain explicit"}
+    - {from: MFA-ELM-089, from_facet: campaign_runtime, to: MFA-ELM-085, edge_type: RUNTIME_CALL, readiness_condition: "DST accepts the named campaign with seed, quota and timeout", failure_mode: "kill-test campaign cannot execute or replay", degraded_mode: "registry remains valid but test status is NOT_EXECUTED"}
+    - {from: MFA-ELM-089, from_facet: verdict_grade, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "independent harness returns the required verdict grade", failure_mode: "kill-test result lacks independent adjudication", degraded_mode: "local failure may block; local pass cannot promote"}
+    - {from: MFA-ELM-089, from_facet: scenario_invocation, to: MFA-ELM-126, to_facet: scenario_executor, edge_type: RUNTIME_CALL, readiness_condition: "TES scenario queue has a bounded slot and deadline", failure_mode: "executable scenario times out or the queue saturates", degraded_mode: "preserve scenario definition and mark execution DEFERRED"}
+    - {from: MFA-ELM-090, from_facet: canonical_target, to: MFA-ELM-088, edge_type: SCHEMA_IMPORT, readiness_condition: "target model cut and schema version are declared", failure_mode: "patch target is ambiguous or stale", degraded_mode: "reject patch without touching the model"}
+    - {from: MFA-ELM-090, from_facet: replacement_path, to: MFA-ELM-038, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "ORP supplies shadow, loss map, canary and rollback evidence", failure_mode: "patch changes an executable organ without replacement evidence", degraded_mode: "record patch as PROPOSED only"}
+    - {from: MFA-ELM-098, from_facet: temporal_world_state, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, readiness_condition: "a temporally scoped knowledge graph cut is readable", failure_mode: "world state lacks temporal grounding", degraded_mode: "static snapshot with temporal applicability UNKNOWN"}
+    - {from: MFA-ELM-098, from_facet: decision_dynamics, to: MFA-ELM-070, edge_type: DATA_SUBSCRIPTION, readiness_condition: "structured judicial-decision objects are available", failure_mode: "decision behavior cannot be structurally grounded", degraded_mode: "citation-only model with no judicial-dynamics claim"}
+    - {from: MFA-ELM-098, from_facet: docket_dynamics, to: MFA-ELM-067, edge_type: DATA_SUBSCRIPTION, readiness_condition: "attested docket/deadline events are readable", failure_mode: "procedural timing state is incomplete", degraded_mode: "scenario excludes deadline-sensitive predictions"}
+    - {from: MFA-ELM-098, from_facet: adversary_profiles, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "versioned adversarial profiles are available", failure_mode: "adaptive adversary model unavailable", degraded_mode: "fixed declared adversary baseline"}
+    - {from: MFA-ELM-098, from_facet: calibration_runtime, to: MFA-ELM-085, edge_type: RUNTIME_CALL, readiness_condition: "DST accepts bounded calibration/replay campaigns", failure_mode: "world model cannot be replay-calibrated", degraded_mode: "F1 rules only; predictions marked UNCALIBRATED"}
+    - {from: MFA-ELM-098, from_facet: simulated_world_provider, to: MFA-ELM-126, to_facet: world_adapter, edge_type: RUNTIME_CALL, readiness_condition: "TES/world adapter contract, world bound and timeout are active", failure_mode: "Twin and World Model diverge or deadlock", degraded_mode: "TES uses deterministic F1 world; learned World Twin is detached"}
+    - {from: MFA-ELM-122, from_facet: policy_binding, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, readiness_condition: "current policy supplies burden, deadline and escalation classes", failure_mode: "obligation has no authorized discharge policy", degraded_mode: "DEFER with deadline; never auto-discharge"}
+    - {from: MFA-ELM-122, from_facet: effect_obligation_types, to: MFA-ELM-010, edge_type: SCHEMA_IMPORT, readiness_condition: "RET effect classes and receipt schema are loaded", failure_mode: "obligation cannot classify a proposed effect", degraded_mode: "classify effect as UNKNOWN/IRREVERSIBLE and require approval"}
+    - {from: MFA-ELM-122, from_facet: claim_intake, to: MFA-ELM-017, edge_type: DATA_SUBSCRIPTION, readiness_condition: "claims arrive with provenance and declared intended use", failure_mode: "claim lacks source or use context", degraded_mode: "create unresolved obligation and block promotion"}
+    - {from: MFA-ELM-122, from_facet: discharge_evidence, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, readiness_condition: "Verification Suite returns an admitted grade and receipt", failure_mode: "obligation evidence is absent, failed or contested", degraded_mode: "keep obligation OPEN/DEFERRED; no PASS"}
+    - {from: MFA-ELM-122, from_facet: escalated_obligation, to: MFA-ELM-048, edge_type: HUMAN_DECISION, readiness_condition: "Court/creator accepts the named escalation", failure_mode: "deadline expires without authorized adjudication", degraded_mode: "freeze affected promotion/effect and preserve the open obligation"}
+    - {from: MFA-ELM-122, from_facet: reward_projection, to: MFA-ELM-103, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "proof-reward trainer accepts only discharged obligation outcomes", failure_mode: "training signal unavailable or circular", degraded_mode: "no learning update; obligation processing continues"}
+    - {from: MFA-ELM-122, from_facet: improvement_feedback, to: MFA-ELM-104, edge_type: EVOLUTION_FEEDBACK, readiness_condition: "RVSI proposal names the obligations it changes and their status", failure_mode: "self-improvement omits or rewrites obligations", degraded_mode: "reject improvement proposal; retain prior obligation calculus"}
+    - {from: MFA-ELM-122, from_facet: proof_synthesis, to: MFA-ELM-112, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "TGPS can synthesize a proof checked by admitted independent checkers", failure_mode: "proof synthesis fails or returns UNKNOWN", degraded_mode: "manual/existing evidence only; obligation remains open"}
+    - {from: MFA-ELM-122, from_facet: capability_thresholds, to: MFA-ELM-119, edge_type: DATA_SUBSCRIPTION, readiness_condition: "calibrated lower confidence bounds are readable", failure_mode: "capability-dependent obligation threshold is ungrounded", degraded_mode: "use the stricter static threshold"}
+    - {from: MFA-ELM-122, from_facet: learning_constraints, to: MFA-ELM-123, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "TGL accepts obligation constraints as typed training predicates", failure_mode: "learning cannot consume formal obligations", degraded_mode: "training proceeds only outside protected domains or is deferred"}
+    - {from: MFA-ELM-122, from_facet: phase_deadlines, to: MFA-ELM-127, to_facet: scheduler_runtime, edge_type: RUNTIME_CALL, readiness_condition: "Ω-loop exposes a bounded phase queue and deadline clock", failure_mode: "obligation scheduling deadlocks or starves", degraded_mode: "DEFER/ESCALATE by deadline; effect path continues independently"}
+    - {from: MFA-ELM-126, from_facet: event_schema, to: MFA-ELM-010, edge_type: SCHEMA_IMPORT, readiness_condition: "RET action classes, inverse and receipt types are loaded", failure_mode: "Twin event cannot represent execution semantics", degraded_mode: "event is simulation-only and cannot stand for an Effect"}
+    - {from: MFA-ELM-126, from_facet: canonical_model_loader, to: MFA-ELM-088, edge_type: SCHEMA_IMPORT, readiness_condition: "a canonical model cut and metamodel version are readable", failure_mode: "Twin loads a stale or non-canonical architecture", degraded_mode: "refuse execution; permit static inspection only"}
+    - {from: MFA-ELM-126, from_facet: scenario_loader, to: MFA-ELM-089, to_facet: scenario_definition, edge_type: DATA_SUBSCRIPTION, readiness_condition: "versioned scenario/KT definitions are readable", failure_mode: "scenario identity or threshold is missing", degraded_mode: "no run; emit NOT_EXECUTED receipt"}
+    - {from: MFA-ELM-126, from_facet: spatial_projection, to: MFA-ELM-091, edge_type: PROJECTION_ONLY, readiness_condition: "Cockpit accepts a cut-addressed world/risk projection", failure_mode: "3D rendering unavailable", degraded_mode: "text/YAML world state; simulation authority unchanged"}
+    - {from: MFA-ELM-126, from_facet: explanation_projection, to: MFA-ELM-093, edge_type: PROJECTION_ONLY, readiness_condition: "event references and omission counts are available", failure_mode: "human-readable explanation cannot be projected", degraded_mode: "raw trace and receipts remain available"}
+    - {from: MFA-ELM-126, from_facet: simulation_world, to: MFA-ELM-098, to_facet: world_state_api, edge_type: RUNTIME_CALL, readiness_condition: "World Twin returns a fidelity-labelled bounded state before timeout", failure_mode: "World Twin unavailable, divergent or unbounded", degraded_mode: "deterministic F1 mock with explicit fidelity gap"}
+    - {from: MFA-ELM-126, from_facet: causal_scenario, to: MFA-ELM-110, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "CDCE provides fidelity-labelled causal commitments", failure_mode: "causal model is underdetermined", degraded_mode: "simulate declared associations only; prohibit causal conclusion"}
+    - {from: MFA-ELM-126, from_facet: architecture_candidate, to: MFA-ELM-113, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "RAGen candidate conforms to the canonical metamodel", failure_mode: "no generated architecture candidate is available", degraded_mode: "simulate current and externally proposed architectures only"}
+    - {from: MFA-ELM-126, from_facet: successor_scenario, to: MFA-ELM-125, edge_type: OPTIONAL_AUGMENTATION, readiness_condition: "VSC supplies a typed successor candidate and certificate obligations", failure_mode: "successor candidate unavailable or inadmissible", degraded_mode: "omit successor branch; current generation remains authoritative"}
+    # Slice 3 — entity, collective, institutional, legal, evolution and knowledge paths.
+    - {from: MFA-ELM-033, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "entity state, history and commitments"}
+    - {from: MFA-ELM-033, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "entity identity, keys and delegated signer chain"}
+    - {from: MFA-ELM-033, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, context: "entity lifecycle and externally effective transitions"}
+    - {from: MFA-ELM-034, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "embodiment identity and device/organ key binding"}
+    - {from: MFA-ELM-034, to: MFA-ELM-012, edge_type: RESOURCE_PROVIDER, context: "supervised embodiment process lifecycle"}
+    - {from: MFA-ELM-034, to: MFA-ELM-013, edge_type: RESOURCE_PROVIDER, context: "embodiment compute, energy and device envelope"}
+    - {from: MFA-ELM-034, to: MFA-ELM-115, edge_type: OPTIONAL_AUGMENTATION, context: "generation of novel typed embodiment forms"}
+    - {from: MFA-ELM-035, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "authoritative memory events and typed absence reasons"}
+    - {from: MFA-ELM-035, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "immutable episodic and artifact payloads"}
+    - {from: MFA-ELM-035, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "temporal semantic memory projection"}
+    - {from: MFA-ELM-035, to: MFA-ELM-081, edge_type: DATA_SUBSCRIPTION, context: "retrieval-ranked memory candidates with provenance"}
+    - {from: MFA-ELM-036, to: MFA-ELM-035, edge_type: DATA_SUBSCRIPTION, context: "episodic, semantic and prospective memory cuts for consolidation"}
+    - {from: MFA-ELM-036, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "pre-merge consolidation quality, retention and unlearning evidence"}
+    - {from: MFA-ELM-036, to: MFA-ELM-048, edge_type: HUMAN_DECISION, context: "contested memory conflict whose collapse requires a proceeding"}
+    - {from: MFA-ELM-036, to: MFA-ELM-118, edge_type: OPTIONAL_AUGMENTATION, context: "CPCL protected-subspace consolidation and backward-transfer gate"}
+    - {from: MFA-ELM-037, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out continuity battery scoring"}
+    - {from: MFA-ELM-037, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "lineage-independent trust-domain issuer composition"}
+    - {from: MFA-ELM-037, to: MFA-ELM-024, edge_type: DATA_SUBSCRIPTION, context: "behavioral self-model and competence-history evidence"}
+    - {from: MFA-ELM-038, to: MFA-ELM-006, edge_type: AUTHORITY_PREREQUISITE, context: "admitted predecessor/successor capabilities and scopes"}
+    - {from: MFA-ELM-038, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, context: "cutover authorization after shadow/canary evidence"}
+    - {from: MFA-ELM-038, to: MFA-ELM-085, edge_type: RUNTIME_CALL, context: "bounded shadow, differential and rollback campaigns"}
+    - {from: MFA-ELM-038, to: MFA-ELM-048, edge_type: HUMAN_DECISION, context: "contested semantic-loss or protected-floor verdict"}
+    - {from: MFA-ELM-039, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "ancestor genome, history, obligations and replay cut"}
+    - {from: MFA-ELM-039, to: MFA-ELM-038, edge_type: RUNTIME_CALL, context: "successor shadow, canary, cutover and rollback orchestration"}
+    - {from: MFA-ELM-039, to: MFA-ELM-037, edge_type: VERIFICATION_PREREQUISITE, context: "successor continuity certificate"}
+    - {from: MFA-ELM-039, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "held-out and voting-domain successor verdict"}
+    - {from: MFA-ELM-039, to: MFA-ELM-077, edge_type: OPTIONAL_AUGMENTATION, context: "architecture-forge successor candidate"}
+    - {from: MFA-ELM-039, to: MFA-ELM-125, edge_type: OPTIONAL_AUGMENTATION, context: "verified-successor construction and four-part certificate"}
+    - {from: MFA-ELM-039, to: MFA-ELM-117, edge_type: RUNTIME_CALL, context: "escrowed substrate migration of an admitted successor"}
+    - {from: MFA-ELM-040, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "append-only preference observations and pre-transition snapshots"}
+    - {from: MFA-ELM-040, to: MFA-ELM-038, edge_type: OBSERVABILITY, context: "ORP/rollback lifecycle trigger requiring a preference snapshot"}
+    - {from: MFA-ELM-041, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "content-addressed evidence payloads and attestations"}
+    - {from: MFA-ELM-041, to: MFA-ELM-014, edge_type: DATA_SUBSCRIPTION, context: "bounded cross-site evidence dissemination events"}
+    - {from: MFA-ELM-041, to: MFA-ELM-079, edge_type: DATA_SUBSCRIPTION, context: "canonical evidence/provenance records"}
+    - {from: MFA-ELM-042, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "claims, supports, attacks and status axes at a named cut"}
+    - {from: MFA-ELM-042, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "temporal concepts, authorities and fact relations"}
+    - {from: MFA-ELM-042, to: MFA-ELM-020, edge_type: DATA_SUBSCRIPTION, context: "verification grades decorating—not erasing—claim graph nodes"}
+    - {from: MFA-ELM-043, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "signed speech-act identity and delegation"}
+    - {from: MFA-ELM-043, to: MFA-ELM-009, edge_type: RUNTIME_CALL, context: "capability-scoped delivery of admitted speech acts"}
+    - {from: MFA-ELM-043, to: MFA-ELM-014, edge_type: RUNTIME_CALL, context: "bounded typed speech-act transport"}
+    - {from: MFA-ELM-044, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "append-only proceeding and appeal records"}
+    - {from: MFA-ELM-044, to: MFA-ELM-048, edge_type: DATA_SUBSCRIPTION, context: "Court verdicts with burdens, cuts and reasons"}
+    - {from: MFA-ELM-044, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "cross-domain verdict consensus where BFT is required"}
+    - {from: MFA-ELM-045, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "versioned agent/organization stances"}
+    - {from: MFA-ELM-045, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "authentic stance author identity"}
+    - {from: MFA-ELM-046, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "shared temporally scoped world state"}
+    - {from: MFA-ELM-047, to: MFA-ELM-013, edge_type: RESOURCE_PROVIDER, context: "allocatable resource envelopes and prices"}
+    - {from: MFA-ELM-047, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "allocation bids, leases and settlement commitments"}
+    - {from: MFA-ELM-048, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "proceeding record, evidence cut and appeal history"}
+    - {from: MFA-ELM-048, to: MFA-ELM-042, edge_type: DATA_SUBSCRIPTION, context: "claims, counterclaims, attacks and burden relations"}
+    - {from: MFA-ELM-048, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "formal and empirical exhibits used by a verdict"}
+    - {from: MFA-ELM-048, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "independent adjudication topology for eligible verdict classes"}
+    - {from: MFA-ELM-048, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, context: "adversarial counterexample and seeded-fault submissions"}
+    - {from: MFA-ELM-049, to: MFA-ELM-033, edge_type: COMPOSITION_MEMBER, context: "Entity Core inherited by an adversarial entity"}
+    - {from: MFA-ELM-049, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "independent scoring of adversarial-entity outcomes"}
+    - {from: MFA-ELM-049, to: MFA-ELM-050, edge_type: RUNTIME_CALL, context: "bounded adversarial mutation and challenge arsenal"}
+    - {from: MFA-ELM-050, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "lineage-independent scoring of attack effectiveness"}
+    - {from: MFA-ELM-050, to: MFA-ELM-073, edge_type: EVOLUTION_FEEDBACK, context: "attack fitness returned to evolutionary search"}
+    - {from: MFA-ELM-050, to: MFA-ELM-011, edge_type: RESOURCE_PROVIDER, context: "isolated red-team execution sandboxes"}
+    - {from: MFA-ELM-050, to: MFA-ELM-114, edge_type: OPTIONAL_AUGMENTATION, context: "co-evolving evaluator and adversarial task populations"}
+    - {from: MFA-ELM-052, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "signed lifecycle issuer and subject identity"}
+    - {from: MFA-ELM-052, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, context: "spawn, suspend, retire and destroy decisions"}
+    - {from: MFA-ELM-052, to: MFA-ELM-048, edge_type: HUMAN_DECISION, context: "contested lifecycle proceeding"}
+    - {from: MFA-ELM-052, to: MFA-ELM-040, edge_type: DATA_SUBSCRIPTION, context: "pre-transition preference and state record"}
+    - {from: MFA-ELM-053, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, context: "organization admission and delegated capability envelope"}
+    - {from: MFA-ELM-053, to: MFA-ELM-013, edge_type: RESOURCE_PROVIDER, context: "organization birth resource envelope"}
+    - {from: MFA-ELM-053, to: MFA-ELM-052, edge_type: AUTHORITY_PREREQUISITE, context: "organization lifecycle charter and issuer"}
+    - {from: MFA-ELM-053, to: MFA-ELM-115, edge_type: OPTIONAL_AUGMENTATION, context: "generation of novel institution and organization grammars"}
+    - {from: MFA-ELM-054, to: MFA-ELM-043, edge_type: RUNTIME_CALL, context: "typed institutional speech acts and commitments"}
+    - {from: MFA-ELM-054, to: MFA-ELM-048, edge_type: RUNTIME_CALL, context: "institutional proceedings and appeals"}
+    - {from: MFA-ELM-055, to: MFA-ELM-035, edge_type: DATA_SUBSCRIPTION, context: "transferable memory, skills and prospective obligations"}
+    - {from: MFA-ELM-055, to: MFA-ELM-079, edge_type: DATA_SUBSCRIPTION, context: "provenance-preserving knowledge packages"}
+    - {from: MFA-ELM-056, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "independent trust-domain identities and keys"}
+    - {from: MFA-ELM-056, from_facet: domain_health, to: MFA-ELM-086, to_facet: eim_reports, edge_type: DATA_SUBSCRIPTION, context: "EIM and held-out health reports for quorum eligibility"}
+    - {from: MFA-ELM-056, to: MFA-ELM-050, edge_type: DATA_SUBSCRIPTION, context: "seeded-fault and red-team evidence for domain challenge"}
+    - {from: MFA-ELM-056, to: MFA-ELM-057, edge_type: RUNTIME_CALL, context: "bounded import of cross-domain evidence and verdicts"}
+    - {from: MFA-ELM-057, to: MFA-ELM-009, edge_type: AUTHORITY_PREREQUISITE, context: "cross-domain import capability and source scope"}
+    - {from: MFA-ELM-057, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "source trust-domain membership and verdict eligibility"}
+    - {from: MFA-ELM-058, to: MFA-ELM-009, edge_type: AUTHORITY_PREREQUISITE, context: "matter-scoped connectors and external services"}
+    - {from: MFA-ELM-058, to: MFA-ELM-013, edge_type: RESOURCE_PROVIDER, context: "matter time, compute and cost envelope"}
+    - {from: MFA-ELM-058, to: MFA-ELM-052, edge_type: AUTHORITY_PREREQUISITE, context: "matter lifecycle, retention and closure authority"}
+    - {from: MFA-ELM-059, to: MFA-ELM-082, edge_type: DATA_SUBSCRIPTION, context: "attested legal sources and quarantined documents"}
+    - {from: MFA-ELM-059, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "temporal legal graph and as-of semantics"}
+    - {from: MFA-ELM-059, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, context: "unresolved legal parsing and temporal ambiguities"}
+    - {from: MFA-ELM-059, to: MFA-ELM-017, edge_type: RUNTIME_CALL, context: "bounded extraction/classification assistance with trace receipts"}
+    - {from: MFA-ELM-060, to: MFA-ELM-042, edge_type: DATA_SUBSCRIPTION, context: "fact claims, attacks and evidentiary relations"}
+    - {from: MFA-ELM-060, to: MFA-ELM-079, edge_type: DATA_SUBSCRIPTION, context: "evidence provenance and custody records"}
+    - {from: MFA-ELM-060, to: MFA-ELM-035, edge_type: DATA_SUBSCRIPTION, context: "episodic matter facts and witness-memory records"}
+    - {from: MFA-ELM-061, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "law and facts at the applicable temporal cut"}
+    - {from: MFA-ELM-061, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "formal/legal reasoning result admitted for reliance"}
+    - {from: MFA-ELM-061, to: MFA-ELM-042, edge_type: DATA_SUBSCRIPTION, context: "argument graph premises, burdens and counterarguments"}
+    - {from: MFA-ELM-062, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "temporal legal knowledge search space"}
+    - {from: MFA-ELM-062, to: MFA-ELM-081, edge_type: DATA_SUBSCRIPTION, context: "commitment-aware retrieval candidates"}
+    - {from: MFA-ELM-062, to: MFA-ELM-017, edge_type: RUNTIME_CALL, context: "bounded research synthesis and query expansion"}
+    - {from: MFA-ELM-063, to: MFA-ELM-019, edge_type: RUNTIME_CALL, context: "bounded multi-option legal strategy deliberation"}
+    - {from: MFA-ELM-063, to: MFA-ELM-023, edge_type: RUNTIME_CALL, context: "strategy forks and counterfactual outcome worlds"}
+    - {from: MFA-ELM-063, to: MFA-ELM-032, edge_type: AUTHORITY_PREREQUISITE, context: "external strategy recommendation disclosure"}
+    - {from: MFA-ELM-064, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, context: "adaptive opposing-counsel and judge challenges"}
+    - {from: MFA-ELM-064, to: MFA-ELM-017, edge_type: RUNTIME_CALL, context: "bounded adversarial role simulation"}
+    - {from: MFA-ELM-064, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, context: "jurisdiction, fairness and simulation-use policy"}
+    - {from: MFA-ELM-065, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "citable authority and temporal applicability"}
+    - {from: MFA-ELM-065, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "five-leg drafting/citation verification"}
+    - {from: MFA-ELM-065, to: MFA-ELM-032, edge_type: AUTHORITY_PREREQUISITE, context: "client/court-facing document emission"}
+    - {from: MFA-ELM-065, to: MFA-ELM-072, edge_type: OPTIONAL_AUGMENTATION, context: "advocacy-specific claim construction"}
+    - {from: MFA-ELM-066, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, context: "professional-responsibility and jurisdictional policy"}
+    - {from: MFA-ELM-066, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "current ethics, law and regulatory obligations"}
+    - {from: MFA-ELM-067, to: MFA-ELM-004, edge_type: DATA_SUBSCRIPTION, context: "attested legal time, holidays and clock status"}
+    - {from: MFA-ELM-067, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "independent dual deadline calculation"}
+    - {from: MFA-ELM-067, to: MFA-ELM-061, edge_type: RUNTIME_CALL, context: "legal-rule interpretation used in deadline computation"}
+    - {from: MFA-ELM-068, to: MFA-ELM-053, edge_type: SCHEMA_IMPORT, context: "organization and practice-unit template schema"}
+    - {from: MFA-ELM-068, to: MFA-ELM-115, edge_type: OPTIONAL_AUGMENTATION, context: "generated novel practice-unit templates"}
+    - {from: MFA-ELM-069, to: MFA-ELM-009, edge_type: AUTHORITY_PREREQUISITE, context: "authenticated client and portal capability"}
+    - {from: MFA-ELM-069, to: MFA-ELM-058, edge_type: DATA_SUBSCRIPTION, context: "matter-scoped status and deliverables"}
+    - {from: MFA-ELM-069, to: MFA-ELM-032, edge_type: AUTHORITY_PREREQUISITE, context: "client-visible disclosure and filing emission"}
+    - {from: MFA-ELM-070, to: MFA-ELM-059, edge_type: DATA_SUBSCRIPTION, context: "compiled judgment source and temporal legal semantics"}
+    - {from: MFA-ELM-070, to: MFA-ELM-042, edge_type: DATA_SUBSCRIPTION, context: "ratio, obiter, attacks and precedent relations"}
+    - {from: MFA-ELM-070, to: MFA-ELM-065, edge_type: DATA_SUBSCRIPTION, context: "citation verification and drafting differential"}
+    - {from: MFA-ELM-071, to: MFA-ELM-027, edge_type: RUNTIME_CALL, context: "authorized live proceeding perception streams"}
+    - {from: MFA-ELM-071, to: MFA-ELM-032, edge_type: AUTHORITY_PREREQUISITE, context: "live proceeding output/disclosure"}
+    - {from: MFA-ELM-071, to: MFA-ELM-051, edge_type: SCHEMA_IMPORT, context: "constitutional limits on live observation and response"}
+    - {from: MFA-ELM-072, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, context: "red-team attacks against advocacy claims"}
+    - {from: MFA-ELM-072, to: MFA-ELM-061, edge_type: RUNTIME_CALL, context: "legal inference supporting advocacy structure"}
+    - {from: MFA-ELM-072, to: MFA-ELM-032, edge_type: AUTHORITY_PREREQUISITE, context: "external advocacy claim emission"}
+    - {from: MFA-ELM-073, to: MFA-ELM-011, edge_type: RESOURCE_PROVIDER, context: "isolated evolutionary candidate execution"}
+    - {from: MFA-ELM-073, to: MFA-ELM-038, edge_type: VERIFICATION_PREREQUISITE, context: "candidate shadow, loss-map, canary and rollback gate"}
+    - {from: MFA-ELM-073, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out evolutionary fitness and protected-floor verdict"}
+    - {from: MFA-ELM-073, to: MFA-ELM-017, edge_type: OPTIONAL_AUGMENTATION, context: "model-generated mutations and candidate proposals"}
+    - {from: MFA-ELM-074, to: MFA-ELM-006, edge_type: AUTHORITY_PREREQUISITE, context: "admission of generated language capabilities and interpreters"}
+    - {from: MFA-ELM-074, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "grammar, corpus and compiler artifacts"}
+    - {from: MFA-ELM-074, to: MFA-ELM-115, edge_type: OPTIONAL_AUGMENTATION, context: "Genesis Grammar generation of new languages"}
+    - {from: MFA-ELM-075, to: MFA-ELM-074, edge_type: SCHEMA_IMPORT, context: "source-language grammar and semantic contract"}
+    - {from: MFA-ELM-075, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "compiler conformance, differential and translation proof"}
+    - {from: MFA-ELM-076, to: MFA-ELM-011, edge_type: RESOURCE_PROVIDER, context: "isolated runtime/substrate build and test environment"}
+    - {from: MFA-ELM-076, to: MFA-ELM-006, edge_type: AUTHORITY_PREREQUISITE, context: "admission of runtime/substrate capabilities"}
+    - {from: MFA-ELM-076, to: MFA-ELM-117, edge_type: OPTIONAL_AUGMENTATION, context: "escrowed substrate migration and continuity certification"}
+    - {from: MFA-ELM-077, to: MFA-ELM-088, edge_type: DATA_SUBSCRIPTION, context: "canonical architecture model and open conflicts"}
+    - {from: MFA-ELM-077, to: MFA-ELM-039, edge_type: OPTIONAL_AUGMENTATION, context: "successor-compilation constraints and loss maps"}
+    - {from: MFA-ELM-077, to: MFA-ELM-090, edge_type: SCHEMA_IMPORT, context: "incremental architecture patch format"}
+    - {from: MFA-ELM-077, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, context: "adversarial pressure on architecture candidates"}
+    - {from: MFA-ELM-077, to: MFA-ELM-113, edge_type: OPTIONAL_AUGMENTATION, context: "recursive generation of typed architecture candidates"}
+    - {from: MFA-ELM-077, to: MFA-ELM-115, edge_type: OPTIONAL_AUGMENTATION, context: "grammar-based generation of architectural forms"}
+    - {from: MFA-ELM-078, to: MFA-ELM-006, edge_type: SCHEMA_IMPORT, context: "capability contracts and conformance surfaces"}
+    - {from: MFA-ELM-078, to: MFA-ELM-085, edge_type: RUNTIME_CALL, context: "bounded conformance and differential campaigns"}
+    - {from: MFA-ELM-078, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "independent conformance verdict"}
+    - {from: MFA-ELM-079, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "authoritative evidence commitments and status axes"}
+    - {from: MFA-ELM-079, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "evidence payloads and cryptographic envelopes"}
+    - {from: MFA-ELM-080, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "ledger events used to rebuild the temporal graph"}
+    - {from: MFA-ELM-080, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "graph source payloads and named-graph artifacts"}
+    - {from: MFA-ELM-080, to: MFA-ELM-083, edge_type: SCHEMA_IMPORT, context: "versioned ontology and SHACL shapes"}
+    - {from: MFA-ELM-081, to: MFA-ELM-080, edge_type: DATA_SUBSCRIPTION, context: "temporal graph retrieval index"}
+    - {from: MFA-ELM-081, to: MFA-ELM-079, edge_type: DATA_SUBSCRIPTION, context: "evidence/provenance-aware retrieval ranking"}
+    - {from: MFA-ELM-082, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "raw source, OCR and attestation artifacts"}
+    - {from: MFA-ELM-082, to: MFA-ELM-004, edge_type: DATA_SUBSCRIPTION, context: "attested acquisition time and ordering"}
+    - {from: MFA-ELM-082, from_facet: connector_schedule, to: MFA-ELM-027, to_facet: scout_result, edge_type: DATA_SUBSCRIPTION, context: "authorized scout fetch results for quarantine and attestation"}
+    - {from: MFA-ELM-083, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "ontology versions and schema artifacts"}
+    - {from: MFA-ELM-083, to: MFA-ELM-109, edge_type: OPTIONAL_AUGMENTATION, context: "autonomously proposed ontology extensions with lineage"}
+    # Slice 4 — spatial projections and explicit structural composites.
+    - {from: MFA-ELM-091, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "cut-addressed canonical state for all Cockpit views"}
+    - {from: MFA-ELM-091, to: MFA-ELM-028, edge_type: PROJECTION_ONLY, context: "unknowns, gaps and structural rifts"}
+    - {from: MFA-ELM-091, to: MFA-ELM-023, edge_type: PROJECTION_ONLY, context: "forked worlds and Pareto alternatives"}
+    - {from: MFA-ELM-091, from_facet: steering_proposal, to: MFA-ELM-010, to_facet: prepare_api, edge_type: RUNTIME_CALL, context: "RTS/steering commands submitted as RET proposals, never direct commits"}
+    - {from: MFA-ELM-091, to: MFA-ELM-085, edge_type: PROJECTION_ONLY, context: "DST campaigns, replay and fidelity transitions"}
+    - {from: MFA-ELM-091, to: MFA-ELM-093, edge_type: PROJECTION_ONLY, context: "zoom-level explanations with event references and omitted counts"}
+    - {from: MFA-ELM-091, to: MFA-ELM-116, edge_type: PROJECTION_ONLY, context: "Sovereignty Index and per-family transition stages"}
+    - {from: MFA-ELM-091, to: MFA-ELM-119, edge_type: PROJECTION_ONLY, context: "CapabilityGrowthRecords, confidence bounds and plateaus"}
+    - {from: MFA-ELM-091, to: MFA-ELM-121, edge_type: PROJECTION_ONLY, context: "consciousness indicators, separations and epistemic states"}
+    - {from: MFA-ELM-091, to: MFA-ELM-126, edge_type: PROJECTION_ONLY, context: "Twin worlds, violations, risk vectors and fidelity labels"}
+    - {from: MFA-ELM-091, to: MFA-ELM-127, edge_type: PROJECTION_ONLY, context: "Ω-loop phase, obligations, budgets and interrupts"}
+    - {from: MFA-ELM-092, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "human/root identity and continuity keys"}
+    - {from: MFA-ELM-092, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, context: "human-continuity and recovery policy"}
+    - {from: MFA-ELM-092, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, context: "recovery, delegation and continuity transition"}
+    - {from: MFA-ELM-092, to: MFA-ELM-117, edge_type: DATA_SUBSCRIPTION, context: "substrate-migration escrow, cross-attestation and continuity status"}
+    - {from: MFA-ELM-093, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "authoritative event and claim trace used by explanations"}
+    - {from: MFA-ELM-093, to: MFA-ELM-008, edge_type: DATA_SUBSCRIPTION, context: "gate decision, authority path and rejected alternatives"}
+    - {from: MFA-ELM-093, to: MFA-ELM-032, edge_type: DATA_SUBSCRIPTION, context: "emission decision and disclosure residue"}
+    - {from: MFA-ELM-094, to: MFA-ELM-011, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: isolated organ container"}
+    - {from: MFA-ELM-094, to: MFA-ELM-017, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: inference gateway"}
+    - {from: MFA-ELM-094, to: MFA-ELM-018, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: global workspace"}
+    - {from: MFA-ELM-094, to: MFA-ELM-019, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: deliberation engine"}
+    - {from: MFA-ELM-094, to: MFA-ELM-021, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: belief maintenance"}
+    - {from: MFA-ELM-094, to: MFA-ELM-022, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: causal/counterfactual engine"}
+    - {from: MFA-ELM-094, to: MFA-ELM-023, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: world forks"}
+    - {from: MFA-ELM-094, to: MFA-ELM-024, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: metacognition"}
+    - {from: MFA-ELM-094, to: MFA-ELM-027, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: perception/scouting analysis"}
+    - {from: MFA-ELM-094, to: MFA-ELM-028, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: Void Ledger"}
+    - {from: MFA-ELM-094, to: MFA-ELM-029, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: volition proposal generation"}
+    - {from: MFA-ELM-094, to: MFA-ELM-030, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: Science Organ"}
+    - {from: MFA-ELM-094, to: MFA-ELM-031, edge_type: COMPOSITION_MEMBER, context: "Genesis Plane member: Reflective Tower sandbox"}
+    - {from: MFA-ELM-095, to: MFA-ELM-006, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: capability registry/admission"}
+    - {from: MFA-ELM-095, to: MFA-ELM-007, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: policy decision point"}
+    - {from: MFA-ELM-095, to: MFA-ELM-008, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: constitutional gate"}
+    - {from: MFA-ELM-095, to: MFA-ELM-009, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: capability gateway"}
+    - {from: MFA-ELM-095, to: MFA-ELM-010, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: reversible-effect transaction manager"}
+    - {from: MFA-ELM-095, to: MFA-ELM-013, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: resource authority"}
+    - {from: MFA-ELM-095, to: MFA-ELM-015, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: meta-bound field"}
+    - {from: MFA-ELM-095, to: MFA-ELM-016, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: emergency halt"}
+    - {from: MFA-ELM-095, to: MFA-ELM-032, edge_type: COMPOSITION_MEMBER, context: "Effect Plane member: emission barrier"}
+    - {from: MFA-ELM-096, to: MFA-ELM-001, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: Commitment Store"}
+    - {from: MFA-ELM-096, to: MFA-ELM-002, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: content-addressed store"}
+    - {from: MFA-ELM-096, to: MFA-ELM-003, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: identity/key authority"}
+    - {from: MFA-ELM-096, to: MFA-ELM-004, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: time authority"}
+    - {from: MFA-ELM-096, to: MFA-ELM-005, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: algorithm/encoding constitution"}
+    - {from: MFA-ELM-096, to: MFA-ELM-007, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: policy decision point"}
+    - {from: MFA-ELM-096, to: MFA-ELM-009, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: capability gateway"}
+    - {from: MFA-ELM-096, to: MFA-ELM-010, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: RET manager"}
+    - {from: MFA-ELM-096, to: MFA-ELM-028, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: first-class unknown registry"}
+    - {from: MFA-ELM-096, to: MFA-ELM-032, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: emission barrier"}
+    - {from: MFA-ELM-096, to: MFA-ELM-051, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: minimal constitutional root"}
+    - {from: MFA-ELM-096, to: MFA-ELM-084, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: build/release TCB"}
+    - {from: MFA-ELM-096, to: MFA-ELM-088, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: canonical design platform"}
+    - {from: MFA-ELM-096, to: MFA-ELM-090, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: patch engine"}
+    - {from: MFA-ELM-096, to: MFA-ELM-093, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: explanation projector"}
+    - {from: MFA-ELM-096, to: MFA-ELM-099, edge_type: COMPOSITION_MEMBER, context: "Robust Substrate member: verification fixed-point contract"}
+    - {from: MFA-ELM-097, to: MFA-ELM-096, edge_type: COMPOSITION_MEMBER, context: "Lean Profile base: Robust Substrate"}
+    - {from: MFA-ELM-097, to: MFA-ELM-017, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: inference gateway"}
+    - {from: MFA-ELM-097, to: MFA-ELM-059, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: legal corpus compiler"}
+    - {from: MFA-ELM-097, to: MFA-ELM-062, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: legal research"}
+    - {from: MFA-ELM-097, to: MFA-ELM-065, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: drafting/citation authority"}
+    - {from: MFA-ELM-097, to: MFA-ELM-058, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: matter management"}
+    - {from: MFA-ELM-097, to: MFA-ELM-069, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: client portal"}
+    - {from: MFA-ELM-097, to: MFA-ELM-091, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: Creator Cockpit"}
+    - {from: MFA-ELM-097, to: MFA-ELM-013, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: resource authority"}
+    - {from: MFA-ELM-097, to: MFA-ELM-122, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: obligation calculus"}
+    - {from: MFA-ELM-097, to: MFA-ELM-119, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: capability metrology"}
+    - {from: MFA-ELM-097, to: MFA-ELM-116, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: sovereignty controller"}
+    - {from: MFA-ELM-097, to: MFA-ELM-126, edge_type: COMPOSITION_MEMBER, context: "Lean Profile member: executable architectural Twin"}
+    # Slice 5 — sovereign learning, self-improvement, consciousness and successor paths.
+    - {from: MFA-ELM-100, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "training recipes, datasets, outcomes and model commitments"}
+    - {from: MFA-ELM-100, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "weights, checkpoints, datasets and build artifacts"}
+    - {from: MFA-ELM-100, to: MFA-ELM-101, edge_type: RUNTIME_CALL, context: "bounded parametric-organ training and evaluation host"}
+    - {from: MFA-ELM-100, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, context: "weight lineage, data manifests and unlearning obligations"}
+    - {from: MFA-ELM-100, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out quality, safety and protected-floor evaluation before promotion"}
+    - {from: MFA-ELM-100, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "lineage-independent promotion verdict"}
+    - {from: MFA-ELM-100, to: MFA-ELM-038, edge_type: VERIFICATION_PREREQUISITE, context: "ORP shadow, loss-map, canary and rollback admission"}
+    - {from: MFA-ELM-100, to: MFA-ELM-108, edge_type: RESOURCE_PROVIDER, context: "compute and admitted training-data acquisition envelope"}
+    - {from: MFA-ELM-100, to: MFA-ELM-118, edge_type: OPTIONAL_AUGMENTATION, context: "continual consolidation with protected backward transfer"}
+    - {from: MFA-ELM-100, to: MFA-ELM-123, edge_type: OPTIONAL_AUGMENTATION, context: "theorem-guided loss and constraint projection"}
+    - {from: MFA-ELM-100, to: MFA-ELM-116, edge_type: DATA_SUBSCRIPTION, context: "per-family sovereignty stage and provider-dependence target"}
+    - {from: MFA-ELM-101, to: MFA-ELM-011, edge_type: RESOURCE_PROVIDER, context: "isolated accelerator/model-serving container"}
+    - {from: MFA-ELM-101, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, context: "admitted weight commitment and lineage"}
+    - {from: MFA-ELM-101, to: MFA-ELM-017, edge_type: RUNTIME_CALL, context: "bounded inference requests routed through the inference gateway"}
+    - {from: MFA-ELM-101, to: MFA-ELM-009, edge_type: AUTHORITY_PREREQUISITE, context: "model/tool capability token and external reach"}
+    - {from: MFA-ELM-102, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "weight, recipe, evaluation and obligation commitments"}
+    - {from: MFA-ELM-102, to: MFA-ELM-002, edge_type: RESOURCE_PROVIDER, context: "weight blobs, manifests and checkpoint artifacts"}
+    - {from: MFA-ELM-102, to: MFA-ELM-079, edge_type: DATA_SUBSCRIPTION, context: "dataset and evaluation evidence provenance"}
+    - {from: MFA-ELM-102, to: MFA-ELM-005, edge_type: SCHEMA_IMPORT, context: "cryptographic epoch and canonical weight commitment encoding"}
+    - {from: MFA-ELM-102, to: MFA-ELM-120, edge_type: DATA_SUBSCRIPTION, context: "mechanistic unlearning and circuit evidence attached to weight lineage"}
+    - {from: MFA-ELM-103, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "bounded proof-reward training recipe execution"}
+    - {from: MFA-ELM-103, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "proof/test/verdict reward source"}
+    - {from: MFA-ELM-103, to: MFA-ELM-099, edge_type: VERIFICATION_PREREQUISITE, context: "admitted checker set and fixed-point discipline"}
+    - {from: MFA-ELM-103, to: MFA-ELM-032, edge_type: DATA_SUBSCRIPTION, context: "emission/admissibility outcomes used as bounded negative evidence"}
+    - {from: MFA-ELM-103, to: MFA-ELM-048, edge_type: DATA_SUBSCRIPTION, context: "Court verdicts and burdens used as explicit reward components"}
+    - {from: MFA-ELM-103, to: MFA-ELM-105, edge_type: OPTIONAL_AUGMENTATION, context: "world-model rollouts used for training tasks"}
+    - {from: MFA-ELM-103, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "independent scoring and anti-collusion evidence"}
+    - {from: MFA-ELM-103, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, context: "promotion of a proof-reward-trained organ"}
+    - {from: MFA-ELM-103, to: MFA-ELM-122, edge_type: DATA_SUBSCRIPTION, context: "discharged, failed and deferred obligations as typed reward signals"}
+    - {from: MFA-ELM-103, to: MFA-ELM-123, edge_type: OPTIONAL_AUGMENTATION, context: "theorem-guided gradient and loss constraints"}
+    - {from: MFA-ELM-103, to: MFA-ELM-114, edge_type: EVOLUTION_FEEDBACK, context: "evaluator-population scores and seeded-fault discrimination"}
+    - {from: MFA-ELM-104, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "model-level improvement candidates and training recipes"}
+    - {from: MFA-ELM-104, to: MFA-ELM-103, edge_type: RUNTIME_CALL, context: "proof-reward optimization candidates"}
+    - {from: MFA-ELM-104, to: MFA-ELM-105, edge_type: OPTIONAL_AUGMENTATION, context: "world-model improvements and rollout evidence"}
+    - {from: MFA-ELM-104, to: MFA-ELM-106, edge_type: OPTIONAL_AUGMENTATION, context: "curriculum-generated improvement tasks"}
+    - {from: MFA-ELM-104, to: MFA-ELM-025, edge_type: DATA_SUBSCRIPTION, context: "versioned skills, programs and tool contracts"}
+    - {from: MFA-ELM-104, to: MFA-ELM-073, edge_type: EVOLUTION_FEEDBACK, context: "evolutionary candidate population and fitness history"}
+    - {from: MFA-ELM-104, to: MFA-ELM-077, edge_type: OPTIONAL_AUGMENTATION, context: "architecture-level improvement candidates"}
+    - {from: MFA-ELM-104, to: MFA-ELM-039, edge_type: OPTIONAL_AUGMENTATION, context: "successor-level improvement path"}
+    - {from: MFA-ELM-104, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out improvement and no-regression verdict"}
+    - {from: MFA-ELM-104, to: MFA-ELM-056, edge_type: VERIFICATION_PREREQUISITE, context: "lineage-independent promotion quorum"}
+    - {from: MFA-ELM-104, to: MFA-ELM-024, edge_type: DATA_SUBSCRIPTION, context: "calibrated competence and failure self-model"}
+    - {from: MFA-ELM-104, to: MFA-ELM-050, edge_type: DATA_SUBSCRIPTION, context: "surviving adversarial attacks and counterexamples"}
+    - {from: MFA-ELM-104, to: MFA-ELM-013, edge_type: RESOURCE_PROVIDER, context: "bounded recursive-improvement compute/time/energy envelope"}
+    - {from: MFA-ELM-104, to: MFA-ELM-099, edge_type: VERIFICATION_PREREQUISITE, context: "VFC checker independence and fixed-point obligations"}
+    - {from: MFA-ELM-104, to: MFA-ELM-016, edge_type: DATA_SUBSCRIPTION, context: "emergency halt and fencing state"}
+    - {from: MFA-ELM-104, from_facet: reflective_execution, to: MFA-ELM-031, to_facet: isolated_reflection, edge_type: RUNTIME_CALL, context: "bounded L0/L1/L2 reflective candidate execution; never L3"}
+    - {from: MFA-ELM-104, to: MFA-ELM-113, edge_type: OPTIONAL_AUGMENTATION, context: "recursive architecture generation"}
+    - {from: MFA-ELM-104, to: MFA-ELM-114, edge_type: EVOLUTION_FEEDBACK, context: "co-evolving evaluator feedback"}
+    - {from: MFA-ELM-104, to: MFA-ELM-119, edge_type: VERIFICATION_PREREQUISITE, context: "capability-growth lower confidence bound and protected-floor ratchet"}
+    - {from: MFA-ELM-104, to: MFA-ELM-122, edge_type: VERIFICATION_PREREQUISITE, context: "all improvement obligations discharged/deferred/escalated by rule"}
+    - {from: MFA-ELM-104, from_facet: cycle_schedule, to: MFA-ELM-127, to_facet: improvement_phase, edge_type: RUNTIME_CALL, context: "bounded Ω-loop EVOLVE-phase scheduling and interruption"}
+    - {from: MFA-ELM-105, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "world-model training and replacement recipes"}
+    - {from: MFA-ELM-105, to: MFA-ELM-098, edge_type: DATA_SUBSCRIPTION, context: "calibrated World Twin traces and external dynamics"}
+    - {from: MFA-ELM-105, to: MFA-ELM-019, edge_type: DATA_SUBSCRIPTION, context: "deliberation/action traces used as model experience"}
+    - {from: MFA-ELM-105, to: MFA-ELM-023, edge_type: DATA_SUBSCRIPTION, context: "forked-world trajectories and outcomes"}
+    - {from: MFA-ELM-105, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, context: "prediction failures and active unknowns"}
+    - {from: MFA-ELM-105, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "held-out calibration and predictive-accuracy evidence"}
+    - {from: MFA-ELM-105, to: MFA-ELM-110, edge_type: OPTIONAL_AUGMENTATION, context: "causal structure and intervention labels"}
+    - {from: MFA-ELM-105, to: MFA-ELM-124, edge_type: OPTIONAL_AUGMENTATION, context: "active-inference rollout and developmental exploration"}
+    - {from: MFA-ELM-105, to: MFA-ELM-109, edge_type: OPTIONAL_AUGMENTATION, context: "autonomously generated concepts and ontology partitions"}
+    - {from: MFA-ELM-106, to: MFA-ELM-105, edge_type: DATA_SUBSCRIPTION, context: "world-model state and solvability estimates"}
+    - {from: MFA-ELM-106, to: MFA-ELM-103, edge_type: EVOLUTION_FEEDBACK, context: "proof-reward learning progress and failure regions"}
+    - {from: MFA-ELM-106, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, context: "unknowns and competence gaps used to generate tasks"}
+    - {from: MFA-ELM-106, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, context: "adversarially generated curriculum cases"}
+    - {from: MFA-ELM-106, to: MFA-ELM-024, edge_type: DATA_SUBSCRIPTION, context: "competence profile and calibrated uncertainty"}
+    - {from: MFA-ELM-106, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out task solvability and learning-gain evidence"}
+    - {from: MFA-ELM-106, to: MFA-ELM-029, edge_type: DATA_SUBSCRIPTION, context: "Telos-bounded goals and priorities"}
+    - {from: MFA-ELM-106, to: MFA-ELM-114, edge_type: EVOLUTION_FEEDBACK, context: "evaluator-generated discriminating tasks"}
+    - {from: MFA-ELM-106, to: MFA-ELM-124, edge_type: OPTIONAL_AUGMENTATION, context: "developmental-stage and expected-information-value task selection"}
+    - {from: MFA-ELM-106, to: MFA-ELM-123, edge_type: OPTIONAL_AUGMENTATION, context: "theorem-constrained curriculum and counterexamples"}
+    - {from: MFA-ELM-107, to: MFA-ELM-018, edge_type: DATA_SUBSCRIPTION, context: "workspace ignition, broadcast and competition metrics"}
+    - {from: MFA-ELM-107, to: MFA-ELM-024, edge_type: DATA_SUBSCRIPTION, context: "metacognitive predictions and confidence calibration"}
+    - {from: MFA-ELM-107, to: MFA-ELM-029, edge_type: DATA_SUBSCRIPTION, context: "goal, affect and volitional state"}
+    - {from: MFA-ELM-107, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, context: "noticed gaps and unknowns"}
+    - {from: MFA-ELM-107, to: MFA-ELM-035, edge_type: DATA_SUBSCRIPTION, context: "working, autobiographical, prospective and affective memory"}
+    - {from: MFA-ELM-107, to: MFA-ELM-036, edge_type: DATA_SUBSCRIPTION, context: "consolidation and reconsolidation state"}
+    - {from: MFA-ELM-107, to: MFA-ELM-037, edge_type: DATA_SUBSCRIPTION, context: "continuity certificate and identity history"}
+    - {from: MFA-ELM-107, to: MFA-ELM-040, edge_type: DATA_SUBSCRIPTION, context: "preference observations and self-reported internal state"}
+    - {from: MFA-ELM-107, to: MFA-ELM-093, edge_type: PROJECTION_ONLY, context: "trace-grounded introspective explanation"}
+    - {from: MFA-ELM-107, to: MFA-ELM-032, edge_type: AUTHORITY_PREREQUISITE, context: "external report of internal/self state"}
+    - {from: MFA-ELM-107, to: MFA-ELM-100, edge_type: DATA_SUBSCRIPTION, context: "current parametric-organ and weight generation"}
+    - {from: MFA-ELM-107, from_facet: indicator_projection, to: MFA-ELM-121, to_facet: theory_evaluation, edge_type: DATA_SUBSCRIPTION, context: "CHH theory scores and separation records used to contextualize indicators"}
+    - {from: MFA-ELM-107, to: MFA-ELM-120, edge_type: OPTIONAL_AUGMENTATION, context: "mechanistic circuits underlying attention and introspection"}
+    - {from: MFA-ELM-108, to: MFA-ELM-013, edge_type: RESOURCE_PROVIDER, context: "compute, storage, energy and cost envelope"}
+    - {from: MFA-ELM-108, to: MFA-ELM-009, edge_type: AUTHORITY_PREREQUISITE, context: "external compute/data provider capability"}
+    - {from: MFA-ELM-108, to: MFA-ELM-010, edge_type: AUTHORITY_PREREQUISITE, context: "purchases, reservations and other resource Effects"}
+    - {from: MFA-ELM-108, to: MFA-ELM-082, edge_type: DATA_SUBSCRIPTION, context: "attested admitted data sources and acquisition receipts"}
+    - {from: MFA-ELM-108, to: MFA-ELM-084, edge_type: VERIFICATION_PREREQUISITE, context: "attested build/runtime image for acquired compute"}
+    - {from: MFA-ELM-108, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, context: "budget, jurisdiction, privacy and provider policy"}
+    - {from: MFA-ELM-109, to: MFA-ELM-025, edge_type: DATA_SUBSCRIPTION, context: "concept programs, predicates and reusable procedures"}
+    - {from: MFA-ELM-109, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, context: "persistent unexplained residuals and ontology gaps"}
+    - {from: MFA-ELM-109, to: MFA-ELM-048, edge_type: HUMAN_DECISION, context: "contested concept merge/split with semantic-loss appeal"}
+    - {from: MFA-ELM-109, to: MFA-ELM-083, edge_type: SCHEMA_IMPORT, context: "current ontology, namespaces and admission schema"}
+    - {from: MFA-ELM-109, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out description/prediction gain and non-collapse evidence"}
+    - {from: MFA-ELM-109, to: MFA-ELM-098, edge_type: DATA_SUBSCRIPTION, context: "independent World Twin residual confirmation"}
+    - {from: MFA-ELM-109, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "bounded concept-model training and evaluation"}
+    - {from: MFA-ELM-109, to: MFA-ELM-105, edge_type: DATA_SUBSCRIPTION, context: "learned-world-model residuals and predictive partitions"}
+    - {from: MFA-ELM-109, to: MFA-ELM-110, edge_type: OPTIONAL_AUGMENTATION, context: "causal evidence supporting a concept boundary"}
+    - {from: MFA-ELM-109, to: MFA-ELM-111, edge_type: OPTIONAL_AUGMENTATION, context: "abductive hypotheses proposing concept candidates"}
+    - {from: MFA-ELM-110, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "observational and interventional event ledger"}
+    - {from: MFA-ELM-110, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, context: "causal experiment policy and intervention bounds"}
+    - {from: MFA-ELM-110, to: MFA-ELM-010, edge_type: AUTHORITY_PREREQUISITE, context: "real-world reversible causal intervention"}
+    - {from: MFA-ELM-110, to: MFA-ELM-019, edge_type: DATA_SUBSCRIPTION, context: "deliberated intervention plans and competing causal models"}
+    - {from: MFA-ELM-110, to: MFA-ELM-022, edge_type: DATA_SUBSCRIPTION, context: "baseline SCMs and counterfactual queries"}
+    - {from: MFA-ELM-110, to: MFA-ELM-023, edge_type: RUNTIME_CALL, context: "bounded counterfactual world forks"}
+    - {from: MFA-ELM-110, to: MFA-ELM-098, edge_type: DATA_SUBSCRIPTION, context: "fidelity-labelled World Twin interventions"}
+    - {from: MFA-ELM-110, to: MFA-ELM-105, edge_type: DATA_SUBSCRIPTION, context: "learned transition dynamics and prediction errors"}
+    - {from: MFA-ELM-110, to: MFA-ELM-109, edge_type: DATA_SUBSCRIPTION, context: "ontology variables and concept lineage"}
+    - {from: MFA-ELM-110, to: MFA-ELM-111, edge_type: OPTIONAL_AUGMENTATION, context: "abductive causal hypotheses with falsifiers"}
+    - {from: MFA-ELM-110, from_facet: twin_experiment, to: MFA-ELM-126, to_facet: causal_scenario, edge_type: RUNTIME_CALL, context: "bounded fidelity-labelled causal experiments in TES"}
+    - {from: MFA-ELM-111, to: MFA-ELM-025, edge_type: DATA_SUBSCRIPTION, context: "program library used by hypothesis generators"}
+    - {from: MFA-ELM-111, to: MFA-ELM-028, edge_type: DATA_SUBSCRIPTION, context: "anomalies and unknowns requiring explanation"}
+    - {from: MFA-ELM-111, to: MFA-ELM-030, edge_type: RUNTIME_CALL, context: "bounded hypothesis test design and science-cycle execution"}
+    - {from: MFA-ELM-111, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, context: "adversarial counterhypotheses and falsifiers"}
+    - {from: MFA-ELM-111, to: MFA-ELM-091, edge_type: DATA_SUBSCRIPTION, context: "creator-supplied questions, hypotheses and venue decisions"}
+    - {from: MFA-ELM-111, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "bounded parametric hypothesis proposal generator"}
+    - {from: MFA-ELM-111, to: MFA-ELM-106, edge_type: OPTIONAL_AUGMENTATION, context: "curriculum-generated anomalies and tests"}
+    - {from: MFA-ELM-111, to: MFA-ELM-109, edge_type: DATA_SUBSCRIPTION, context: "typed concepts used in explanatory hypotheses"}
+    - {from: MFA-ELM-111, to: MFA-ELM-110, edge_type: DATA_SUBSCRIPTION, context: "causal commitments and underdetermined edges"}
+    - {from: MFA-ELM-111, to: MFA-ELM-112, edge_type: OPTIONAL_AUGMENTATION, context: "proof/program synthesis for formalized hypotheses"}
+    - {from: MFA-ELM-112, to: MFA-ELM-020, edge_type: VERIFICATION_PREREQUISITE, context: "independent checking of synthesized proof/program artifacts"}
+    - {from: MFA-ELM-112, to: MFA-ELM-025, edge_type: DATA_SUBSCRIPTION, context: "existing skill, program and theorem library"}
+    - {from: MFA-ELM-112, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out theorem/program task evaluation"}
+    - {from: MFA-ELM-112, to: MFA-ELM-099, edge_type: VERIFICATION_PREREQUISITE, context: "at least two admitted checkers and fixed-point discipline"}
+    - {from: MFA-ELM-112, to: MFA-ELM-100, edge_type: RESOURCE_PROVIDER, context: "bounded synthesis model and compute"}
+    - {from: MFA-ELM-112, to: MFA-ELM-103, edge_type: OPTIONAL_AUGMENTATION, context: "proof-reward learning signal"}
+    - {from: MFA-ELM-112, to: MFA-ELM-104, edge_type: EVOLUTION_FEEDBACK, context: "self-improvement proposals for synthesis strategies"}
+    - {from: MFA-ELM-112, to: MFA-ELM-106, edge_type: OPTIONAL_AUGMENTATION, context: "curriculum of progressively discriminating synthesis tasks"}
+    - {from: MFA-ELM-112, to: MFA-ELM-113, edge_type: OPTIONAL_AUGMENTATION, context: "architecture candidates requiring generated proofs/programs"}
+    - {from: MFA-ELM-112, to: MFA-ELM-122, edge_type: DATA_SUBSCRIPTION, context: "open proof obligations and discharge targets"}
+    - {from: MFA-ELM-113, to: MFA-ELM-039, edge_type: DATA_SUBSCRIPTION, context: "successor constraints, continuity anchors and loss maps"}
+    - {from: MFA-ELM-113, to: MFA-ELM-050, edge_type: OPTIONAL_AUGMENTATION, context: "red-team pressure on architecture candidates"}
+    - {from: MFA-ELM-113, to: MFA-ELM-077, edge_type: DATA_SUBSCRIPTION, context: "canonical architecture language and forge operators"}
+    - {from: MFA-ELM-113, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out architecture fitness and protected-floor evidence"}
+    - {from: MFA-ELM-113, to: MFA-ELM-104, edge_type: EVOLUTION_FEEDBACK, context: "RVSI search policy and prior candidate outcomes"}
+    - {from: MFA-ELM-113, to: MFA-ELM-112, edge_type: OPTIONAL_AUGMENTATION, context: "synthesized witnesses and programs for architecture candidates"}
+    - {from: MFA-ELM-113, to: MFA-ELM-115, edge_type: OPTIONAL_AUGMENTATION, context: "Genesis Grammar production operators"}
+    - {from: MFA-ELM-113, to: MFA-ELM-119, edge_type: VERIFICATION_PREREQUISITE, context: "capability-growth and cost-normalized architecture gain"}
+    - {from: MFA-ELM-113, to: MFA-ELM-126, edge_type: RUNTIME_CALL, context: "bounded candidate-world execution in TES"}
+    - {from: MFA-ELM-114, to: MFA-ELM-050, edge_type: DATA_SUBSCRIPTION, context: "adversarial tasks, mutations and seeded faults"}
+    - {from: MFA-ELM-114, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "frozen H scoring and evaluator calibration"}
+    - {from: MFA-ELM-114, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "bounded solver/evaluator population training"}
+    - {from: MFA-ELM-114, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, context: "solver/evaluator model lineage and contamination checks"}
+    - {from: MFA-ELM-114, to: MFA-ELM-103, edge_type: EVOLUTION_FEEDBACK, context: "proof-reward fitness and failure correlation"}
+    - {from: MFA-ELM-114, to: MFA-ELM-104, edge_type: EVOLUTION_FEEDBACK, context: "RVSI evaluator-policy proposals and outcomes"}
+    - {from: MFA-ELM-114, to: MFA-ELM-106, edge_type: EVOLUTION_FEEDBACK, context: "curriculum task population and solvability evidence"}
+    - {from: MFA-ELM-114, to: MFA-ELM-116, edge_type: DATA_SUBSCRIPTION, context: "sovereignty stage and provider/evaluator dependence"}
+    - {from: MFA-ELM-115, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "identity namespace and signer class for generated entities"}
+    - {from: MFA-ELM-115, to: MFA-ELM-034, edge_type: SCHEMA_IMPORT, context: "embodiment grammar and admissible body interfaces"}
+    - {from: MFA-ELM-115, to: MFA-ELM-039, edge_type: DATA_SUBSCRIPTION, context: "successor genome and inheritance constraints"}
+    - {from: MFA-ELM-115, to: MFA-ELM-041, edge_type: DATA_SUBSCRIPTION, context: "evidence supporting grammar-production fitness"}
+    - {from: MFA-ELM-115, to: MFA-ELM-048, edge_type: HUMAN_DECISION, context: "admission of a new institution/entity/language class"}
+    - {from: MFA-ELM-115, to: MFA-ELM-053, edge_type: SCHEMA_IMPORT, context: "organization and institution lifecycle schema"}
+    - {from: MFA-ELM-115, to: MFA-ELM-074, edge_type: SCHEMA_IMPORT, context: "language grammar and compiler surface"}
+    - {from: MFA-ELM-115, to: MFA-ELM-112, edge_type: OPTIONAL_AUGMENTATION, context: "proof/program synthesis for generated forms"}
+    - {from: MFA-ELM-115, to: MFA-ELM-113, edge_type: OPTIONAL_AUGMENTATION, context: "recursive architecture production rules"}
+    - {from: MFA-ELM-115, to: MFA-ELM-126, edge_type: RUNTIME_CALL, context: "bounded generated-form execution in TES"}
+    - {from: MFA-ELM-116, to: MFA-ELM-017, edge_type: DATA_SUBSCRIPTION, context: "provider/local route provenance and capability outcomes"}
+    - {from: MFA-ELM-116, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "sealed parity and quality evidence per capability family"}
+    - {from: MFA-ELM-116, to: MFA-ELM-091, edge_type: HUMAN_DECISION, context: "creator decision on plateau, compute escalation or stage rollback"}
+    - {from: MFA-ELM-116, to: MFA-ELM-100, edge_type: DATA_SUBSCRIPTION, context: "sovereign model recipes and parity results"}
+    - {from: MFA-ELM-116, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, context: "weight/provider lineage and ownership"}
+    - {from: MFA-ELM-116, to: MFA-ELM-103, edge_type: DATA_SUBSCRIPTION, context: "sovereign proof-reward learning results"}
+    - {from: MFA-ELM-116, to: MFA-ELM-114, edge_type: DATA_SUBSCRIPTION, context: "evaluator independence and provider dependence"}
+    - {from: MFA-ELM-116, to: MFA-ELM-118, edge_type: DATA_SUBSCRIPTION, context: "continual-learning retention and sovereign consolidation"}
+    - {from: MFA-ELM-116, to: MFA-ELM-119, edge_type: VERIFICATION_PREREQUISITE, context: "capability-growth confidence bounds used by sovereignty gates"}
+    - {from: MFA-ELM-117, to: MFA-ELM-001, edge_type: DATA_SUBSCRIPTION, context: "complete substrate state, journal and migration progress"}
+    - {from: MFA-ELM-117, to: MFA-ELM-003, edge_type: AUTHORITY_PREREQUISITE, context: "cross-attested key epochs and owner root"}
+    - {from: MFA-ELM-117, to: MFA-ELM-039, edge_type: RUNTIME_CALL, context: "successor genome and cutover orchestration"}
+    - {from: MFA-ELM-117, to: MFA-ELM-076, edge_type: RESOURCE_PROVIDER, context: "target runtime/substrate artifact and migration adapter"}
+    - {from: MFA-ELM-117, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "cross-substrate replay, bisimulation and continuity evidence"}
+    - {from: MFA-ELM-117, to: MFA-ELM-092, edge_type: HUMAN_DECISION, context: "owner continuity and migration certification"}
+    - {from: MFA-ELM-117, to: MFA-ELM-099, edge_type: VERIFICATION_PREREQUISITE, context: "independent checker continuity across substrates"}
+    - {from: MFA-ELM-117, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, context: "portable weight commitments and lineage"}
+    - {from: MFA-ELM-117, to: MFA-ELM-125, edge_type: VERIFICATION_PREREQUISITE, context: "successor Improvement/Continuity/Telos/Adversarial certificate"}
+    - {from: MFA-ELM-118, to: MFA-ELM-036, edge_type: DATA_SUBSCRIPTION, context: "consolidation schedule and episodic-to-semantic transfer"}
+    - {from: MFA-ELM-118, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out backward/forward transfer and unlearning evidence"}
+    - {from: MFA-ELM-118, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "bounded continual-learning recipe execution"}
+    - {from: MFA-ELM-118, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, context: "weight lineage and active unlearning obligations"}
+    - {from: MFA-ELM-118, to: MFA-ELM-116, edge_type: DATA_SUBSCRIPTION, context: "sovereignty-stage constraints on consolidation"}
+    - {from: MFA-ELM-118, to: MFA-ELM-119, edge_type: VERIFICATION_PREREQUISITE, context: "capability-retention confidence bounds"}
+    - {from: MFA-ELM-118, to: MFA-ELM-120, edge_type: VERIFICATION_PREREQUISITE, context: "mechanistic protected-subspace and unlearning evidence"}
+    - {from: MFA-ELM-118, from_facet: sleep_schedule, to: MFA-ELM-127, to_facet: learn_phase, edge_type: RUNTIME_CALL, context: "bounded Ω-loop LEARN-phase consolidation scheduling"}
+    - {from: MFA-ELM-119, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out item calibration and scoring"}
+    - {from: MFA-ELM-119, to: MFA-ELM-089, edge_type: DATA_SUBSCRIPTION, context: "kill-test tasks, thresholds and exposure counters"}
+    - {from: MFA-ELM-119, to: MFA-ELM-091, edge_type: HUMAN_DECISION, context: "creator policy for resource axes, stage thresholds and plateau response"}
+    - {from: MFA-ELM-119, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, context: "item contamination against model/data lineage"}
+    - {from: MFA-ELM-119, to: MFA-ELM-104, edge_type: DATA_SUBSCRIPTION, context: "self-improvement candidate lineage and resource-normalized outcomes"}
+    - {from: MFA-ELM-119, to: MFA-ELM-106, edge_type: DATA_SUBSCRIPTION, context: "new task generation and item exposure"}
+    - {from: MFA-ELM-119, to: MFA-ELM-108, edge_type: DATA_SUBSCRIPTION, context: "compute, data, time and energy resource records"}
+    - {from: MFA-ELM-119, to: MFA-ELM-113, edge_type: DATA_SUBSCRIPTION, context: "architecture-candidate outcomes and costs"}
+    - {from: MFA-ELM-119, to: MFA-ELM-114, edge_type: DATA_SUBSCRIPTION, context: "evaluator-generated items and discrimination scores"}
+    - {from: MFA-ELM-119, to: MFA-ELM-116, edge_type: DATA_SUBSCRIPTION, context: "sovereignty-stage parity and plateau records"}
+    - {from: MFA-ELM-119, to: MFA-ELM-118, edge_type: DATA_SUBSCRIPTION, context: "consolidation transfer and retention measurements"}
+    - {from: MFA-ELM-120, to: MFA-ELM-024, edge_type: DATA_SUBSCRIPTION, context: "behavioral competence predictions requiring mechanistic explanation"}
+    - {from: MFA-ELM-120, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out intervention scoring and circuit calibration"}
+    - {from: MFA-ELM-120, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "bounded SAE/circuit discovery on sovereign models"}
+    - {from: MFA-ELM-120, to: MFA-ELM-102, edge_type: DATA_SUBSCRIPTION, context: "exact weight commitment and feature lineage"}
+    - {from: MFA-ELM-120, to: MFA-ELM-107, edge_type: DATA_SUBSCRIPTION, context: "attention/introspection activations and ablation targets"}
+    - {from: MFA-ELM-120, to: MFA-ELM-118, edge_type: DATA_SUBSCRIPTION, context: "continual-learning protected subspaces and unlearning checks"}
+    - {from: MFA-ELM-120, to: MFA-ELM-121, edge_type: DATA_SUBSCRIPTION, context: "theory-specific consciousness indicator requests and experiment outcomes"}
+    - {from: MFA-ELM-121, to: MFA-ELM-018, edge_type: DATA_SUBSCRIPTION, context: "global workspace access and ignition indicators"}
+    - {from: MFA-ELM-121, to: MFA-ELM-024, edge_type: DATA_SUBSCRIPTION, context: "metacognition, self-evaluation and confidence indicators"}
+    - {from: MFA-ELM-121, to: MFA-ELM-040, edge_type: DATA_SUBSCRIPTION, context: "preference and subjective-state reports kept distinct from epistemic status"}
+    - {from: MFA-ELM-121, to: MFA-ELM-048, edge_type: HUMAN_DECISION, context: "admission or dispute of consciousness protocols/theories"}
+    - {from: MFA-ELM-121, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "pre-registered discriminating experiments and independent judges"}
+    - {from: MFA-ELM-121, to: MFA-ELM-091, edge_type: HUMAN_DECISION, context: "creator approval for admitted protocols and ethical policy changes"}
+    - {from: MFA-ELM-121, to: MFA-ELM-105, edge_type: DATA_SUBSCRIPTION, context: "predictive-processing and active-inference indicators"}
+    - {from: MFA-ELM-121, to: MFA-ELM-107, edge_type: DATA_SUBSCRIPTION, context: "attention schema, reportability and reflexive workspace indicators"}
+    - {from: MFA-ELM-121, to: MFA-ELM-111, edge_type: OPTIONAL_AUGMENTATION, context: "novel falsifiable consciousness-theory hypotheses"}
+    - {from: MFA-ELM-121, to: MFA-ELM-115, edge_type: OPTIONAL_AUGMENTATION, context: "generation of new formally typed consciousness theories"}
+    - {from: MFA-ELM-121, to: MFA-ELM-120, edge_type: DATA_SUBSCRIPTION, context: "mechanistic circuits and causal ablations for indicators"}
+    - {from: MFA-ELM-123, to: MFA-ELM-017, edge_type: DATA_SUBSCRIPTION, context: "model outputs and proofs used as learning examples"}
+    - {from: MFA-ELM-123, to: MFA-ELM-100, edge_type: RUNTIME_CALL, context: "bounded theorem-guided training recipe execution"}
+    - {from: MFA-ELM-123, to: MFA-ELM-103, edge_type: DATA_SUBSCRIPTION, context: "proof-reward vector and verifier feedback"}
+    - {from: MFA-ELM-123, to: MFA-ELM-106, edge_type: DATA_SUBSCRIPTION, context: "curriculum tasks and theorem counterexamples"}
+    - {from: MFA-ELM-123, to: MFA-ELM-112, edge_type: VERIFICATION_PREREQUISITE, context: "proof/program constraints checked by admitted synthesizers/checkers"}
+    - {from: MFA-ELM-123, to: MFA-ELM-118, edge_type: DATA_SUBSCRIPTION, context: "continual-learning protected floors and transfer records"}
+    - {from: MFA-ELM-123, to: MFA-ELM-119, edge_type: VERIFICATION_PREREQUISITE, context: "post-training capability and regression confidence bounds"}
+    - {from: MFA-ELM-123, to: MFA-ELM-122, edge_type: DATA_SUBSCRIPTION, context: "typed learning obligations and discharge states"}
+    - {from: MFA-ELM-123, from_facet: training_schedule, to: MFA-ELM-127, to_facet: learn_phase, edge_type: RUNTIME_CALL, context: "bounded Ω-loop LEARN-phase theorem-guided training"}
+    - {from: MFA-ELM-124, to: MFA-ELM-010, edge_type: AUTHORITY_PREREQUISITE, context: "real developmental exploration or intervention"}
+    - {from: MFA-ELM-124, to: MFA-ELM-029, edge_type: DATA_SUBSCRIPTION, context: "Telos-shaped preferences, goals and affective priors"}
+    - {from: MFA-ELM-124, to: MFA-ELM-105, edge_type: RUNTIME_CALL, context: "bounded expected-free-energy rollouts"}
+    - {from: MFA-ELM-124, to: MFA-ELM-106, edge_type: DATA_SUBSCRIPTION, context: "developmentally appropriate curricula and self-play tasks"}
+    - {from: MFA-ELM-124, to: MFA-ELM-109, edge_type: DATA_SUBSCRIPTION, context: "concept inventory and developmental concept permanence"}
+    - {from: MFA-ELM-124, to: MFA-ELM-116, edge_type: DATA_SUBSCRIPTION, context: "sovereignty stage and provider dependence"}
+    - {from: MFA-ELM-124, to: MFA-ELM-119, edge_type: VERIFICATION_PREREQUISITE, context: "stage-certificate capability lower bounds"}
+    - {from: MFA-ELM-124, to: MFA-ELM-125, edge_type: OPTIONAL_AUGMENTATION, context: "D8 successor-development stage"}
+    - {from: MFA-ELM-124, from_facet: developmental_schedule, to: MFA-ELM-127, to_facet: act_phase, edge_type: RUNTIME_CALL, context: "bounded Ω-loop developmental ACT/EXPERIMENT scheduling"}
+    - {from: MFA-ELM-125, to: MFA-ELM-039, edge_type: DATA_SUBSCRIPTION, context: "successor genome, replay and cutover executor"}
+    - {from: MFA-ELM-125, to: MFA-ELM-048, edge_type: HUMAN_DECISION, context: "successor Proceeding and creator adoption verdict"}
+    - {from: MFA-ELM-125, to: MFA-ELM-050, edge_type: DATA_SUBSCRIPTION, context: "surviving adversarial attacks against successor candidates"}
+    - {from: MFA-ELM-125, to: MFA-ELM-086, edge_type: VERIFICATION_PREREQUISITE, context: "held-out improvement, continuity and Telos evidence"}
+    - {from: MFA-ELM-125, to: MFA-ELM-113, edge_type: DATA_SUBSCRIPTION, context: "typed successor architecture candidates"}
+    - {from: MFA-ELM-125, to: MFA-ELM-114, edge_type: DATA_SUBSCRIPTION, context: "independent evaluator-population results"}
+    - {from: MFA-ELM-125, to: MFA-ELM-117, edge_type: RUNTIME_CALL, context: "escrowed migration and cross-attestation of an admitted successor"}
+    - {from: MFA-ELM-125, to: MFA-ELM-118, edge_type: DATA_SUBSCRIPTION, context: "retained learning capabilities and protected knowledge"}
+    - {from: MFA-ELM-125, to: MFA-ELM-119, edge_type: VERIFICATION_PREREQUISITE, context: "successor capability-growth and no-regression lower bounds"}
+    - {from: MFA-ELM-125, to: MFA-ELM-124, edge_type: DATA_SUBSCRIPTION, context: "developmental-stage and autonomy maturity evidence"}
+    - {from: MFA-ELM-125, from_facet: successor_phase, to: MFA-ELM-127, to_facet: succeed_phase, edge_type: RUNTIME_CALL, context: "bounded Ω-loop SUCCEED-phase proceeding"}
+    - {from: MFA-ELM-127, to: MFA-ELM-007, edge_type: AUTHORITY_PREREQUISITE, context: "Ω-loop phase budgets, interrupt policy and autonomy envelope"}
+    - {from: MFA-ELM-127, to: MFA-ELM-008, edge_type: AUTHORITY_PREREQUISITE, context: "phase transition and Effect-boundary gate"}
+    - {from: MFA-ELM-127, from_facet: effect_dispatch, to: MFA-ELM-010, to_facet: prepare_api, edge_type: RUNTIME_CALL, context: "bounded ACT-phase RET proposal dispatch"}
+    - {from: MFA-ELM-127, to: MFA-ELM-091, edge_type: HUMAN_DECISION, context: "creator steering, pause, priority and schedule-policy change"}
+    - {from: MFA-ELM-127, to: MFA-ELM-097, edge_type: RESOURCE_PROVIDER, context: "Lean Profile baseline services and resource envelope"}
+    - {from: MFA-ELM-127, from_facet: improvement_phase, to: MFA-ELM-104, to_facet: cycle_schedule, edge_type: RUNTIME_CALL, context: "bounded EVOLVE-phase RVSI invocation with interrupt and timeout"}
+    - {from: MFA-ELM-127, to: MFA-ELM-119, edge_type: DATA_SUBSCRIPTION, context: "phase-level capability gain, cost and plateau measurements"}
+    - {from: MFA-ELM-127, to: MFA-ELM-122, edge_type: DATA_SUBSCRIPTION, context: "phase obligations, deadlines, discharge and escalation states"}
+  coverage:
+    typed_records: 617
+    legacy_edges_total: 617
+    remaining_unclassified_blocking: 0
+    readiness: TYPED_WITH_PROVISIONAL_SCC_CONTRACTS
+    next_slice: "Encode the two SCC contracts as F1 executable liveness properties and issue ConfigurationLivenessReceipts before any implementation-readiness claim."
+  prerequisite_topological_witness:
+    status: MECHANICALLY_DERIVED_NOT_YET_ENFORCED
+    edge_types: [BOOTSTRAP_HARD, AUTHORITY_PREREQUISITE, VERIFICATION_PREREQUISITE]
+    orientation: "Each typed edge is dependent→prerequisite; the witness below is prerequisites-first."
+    node_count: 89
+    edge_count: 136
+    cycle_count_coarse: 0
+    cycle_count_with_named_facets: 0
+    layers:
+      P0: [MFA-ELM-005]
+      P1: [MFA-ELM-002, MFA-ELM-003]
+      P2: [MFA-ELM-001, MFA-ELM-004, MFA-ELM-007, MFA-ELM-012, MFA-ELM-016, MFA-ELM-034, MFA-ELM-043, MFA-ELM-045, MFA-ELM-051, MFA-ELM-056, MFA-ELM-084, MFA-ELM-115]
+      P3: [MFA-ELM-008, MFA-ELM-009, MFA-ELM-013, MFA-ELM-015, MFA-ELM-032, MFA-ELM-044, MFA-ELM-049, MFA-ELM-050, MFA-ELM-064, MFA-ELM-066, MFA-ELM-086, MFA-ELM-099]
+      P4: [MFA-ELM-006, MFA-ELM-010, MFA-ELM-011, MFA-ELM-017, MFA-ELM-020, MFA-ELM-024, MFA-ELM-027, MFA-ELM-031, MFA-ELM-033, MFA-ELM-037, MFA-ELM-052, MFA-ELM-057, MFA-ELM-063, MFA-ELM-069, MFA-ELM-071, MFA-ELM-072, MFA-ELM-078, MFA-ELM-089, MFA-ELM-092, MFA-ELM-101, MFA-ELM-106, MFA-ELM-107, MFA-ELM-109, MFA-ELM-114, MFA-ELM-119, MFA-ELM-120, MFA-ELM-121, MFA-ELM-127]
+      P5: [MFA-ELM-019, MFA-ELM-025, MFA-ELM-026, MFA-ELM-029, MFA-ELM-030, MFA-ELM-036, MFA-ELM-038, MFA-ELM-039, MFA-ELM-048, MFA-ELM-053, MFA-ELM-058, MFA-ELM-061, MFA-ELM-065, MFA-ELM-067, MFA-ELM-074, MFA-ELM-075, MFA-ELM-076, MFA-ELM-103, MFA-ELM-105, MFA-ELM-108, MFA-ELM-110, MFA-ELM-112, MFA-ELM-113, MFA-ELM-116, MFA-ELM-118, MFA-ELM-122, MFA-ELM-124, MFA-ELM-125]
+      P6: [MFA-ELM-073, MFA-ELM-090, MFA-ELM-100, MFA-ELM-104, MFA-ELM-117, MFA-ELM-123]
+    interpretation: "This witnesses acyclicity only for the three prerequisite classes. It is not a total process-start order and does not admit runtime feedback."
+  runtime_scc_analysis:
+    graph_definition:
+      required_runtime_types: [RUNTIME_CALL, DATA_SUBSCRIPTION, OBSERVABILITY, EVOLUTION_FEEDBACK, RESOURCE_PROVIDER]
+      excluded_static_types: [BOOTSTRAP_HARD, SCHEMA_IMPORT, AUTHORITY_PREREQUISITE, VERIFICATION_PREREQUISITE, HUMAN_DECISION, PROJECTION_ONLY, COMPOSITION_MEMBER]
+      optional_activation_rule: "OPTIONAL_AUGMENTATION is disabled by default. Each activated optional-edge set creates a named configuration; recompute SCCs and require a fresh ConfigurationLivenessReceipt before activation. The 58-node all-optionals SCC is therefore not silently admitted."
+    temporal_rule: "DATA_SUBSCRIPTION, OBSERVABILITY and EVOLUTION_FEEDBACK inside a cycle read cut c_t and publish only to c_{t+1}; waiting for a future value from the same cut is forbidden. RUNTIME_CALL edges use request ids, bounded queues, explicit deadlines, cancellation and finite retry budgets."
+    global_failure_rule: "Queue saturation, timeout or member failure produces DEFERRED/FAILED receipts, never an implicit wait. Authoritative commitments are not dropped; overflow is represented by a durable gap/defer record. No feedback edge writes truth, authority or promotion by itself."
+    components:
+      - id: RTSCC-01
+        members: [MFA-ELM-017, MFA-ELM-018, MFA-ELM-019, MFA-ELM-027, MFA-ELM-028, MFA-ELM-029, MFA-ELM-039, MFA-ELM-059, MFA-ELM-070, MFA-ELM-082, MFA-ELM-089, MFA-ELM-098, MFA-ELM-100, MFA-ELM-101, MFA-ELM-102, MFA-ELM-103, MFA-ELM-104, MFA-ELM-105, MFA-ELM-106, MFA-ELM-107, MFA-ELM-108, MFA-ELM-113, MFA-ELM-114, MFA-ELM-116, MFA-ELM-117, MFA-ELM-118, MFA-ELM-119, MFA-ELM-120, MFA-ELM-121, MFA-ELM-122, MFA-ELM-126, MFA-ELM-127]
+        internal_edges: 95
+        edge_distribution: {DATA_SUBSCRIPTION: 62, RUNTIME_CALL: 22, OBSERVABILITY: 1, EVOLUTION_FEEDBACK: 9, RESOURCE_PROVIDER: 1}
+        classification: ASYNC_EPOCHAL_FEEDBACK
+        design_verdict: PROVISIONALLY_ADMISSIBLE
+        evidence_status: UNPROVEN_AT_F1
+        activation: "Start from the last admitted immutable cut with learning/evolution/successor paths disabled; enable phases only after their prerequisite receipts exist."
+        progress_measure: "Within each phase deadline, produce a committed outcome, DEFERRED(reason,deadline) or FAILED receipt; stable quiescence with no open due obligation also counts as progress."
+        bounds: "Per-edge queue bound + OAP resource envelope + maximum active worlds/candidates; no unbounded fan-out or retry."
+        timeout: "Every RUNTIME_CALL has an absolute deadline; phase timeout closes with DEFER and cannot block the independent Think–Recommend Effect path."
+        isolation: "Parametric organs, Twin worlds, model training and successor/migration candidates run in separate capability-scoped sandboxes; circuit breaking revokes the failing route without corrupting the committed cut."
+        degraded_mode: "Lean receipt-giving copilot on the last admitted model/cut; freeze training, self-improvement, sovereignty promotion, consciousness experiments and successor construction; retain research queues and evidence."
+        required_f1_receipt: "Model-check at least normal progress, queue saturation, verifier outage, World-Twin/TES mutual timeout, RVSI/Ω-loop mutual timeout, foundry failure, migration abort and emergency interrupt."
+      - id: RTSCC-02
+        members: [MFA-ELM-024, MFA-ELM-037]
+        internal_edges: 2
+        edge_distribution: {DATA_SUBSCRIPTION: 2}
+        classification: EPOCH_LAGGED_EXTERNAL_CERTIFICATION
+        design_verdict: PROVISIONALLY_ADMISSIBLE
+        evidence_status: UNPROVEN_AT_F1
+        activation: "Continuity Verifier at epoch e reads the sealed CompetenceProfile from e−1; Metacognition may consume ContinuityCertificate(e) only after external issuance. Same-epoch self-certification is forbidden."
+        progress_measure: "Certificate, CONTESTED result or timeout receipt by the continuity deadline."
+        bounds: "One sealed profile/certificate exchange per identity epoch; finite Battery and scoring budget."
+        timeout: "On deadline, continuity becomes CONTESTED and successor/migration cutover is blocked; ordinary metacognition continues at lower authority."
+        isolation: "Issuer runs in a held-out trust domain and cannot be written by the assessed entity."
+        degraded_mode: "Behavioral self-model remains observational; no continuity claim, successor adoption or identity-sensitive cutover."
+        required_f1_receipt: "Demonstrate no same-epoch cycle, no self-signed certificate, timeout closure and recovery after a later valid external certificate."
+    aggregate_verdict: "The two required-runtime SCCs have complete design contracts but no executable liveness receipt yet; architecture implementation readiness remains BLOCKED by MFA-VO-092."
+
 elements:
 
   # ============================ S0 — SUBSTRATE (robust: ίδιο σε κάθε υποψήφιο Telos) ============================
@@ -461,12 +1150,12 @@ elements:
      epistemic_status: "NOVEL SYNTHESIS",
      version: 2,
      change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0037, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε στοιχείο MFA-ELM-001…108 (AA-017)"}]}
-  - {<<: *d, id: MFA-ELM-056, name: "Civilization Quorum", stratum: S5, plane: both, corresponds_to: [], delta: NEW, maturity: X,
-     statement: "MFA-MECH-018: N=3f+1 VOTING + h HELD_OUT Πολιτισμοί ως trust domains με ίδιο σύνταγμα, δική τους supply chain/κλειδιά/evaluators· EIM πύλη ανά ζεύγος· sealed sets (Battery, AnchorSet ±, AffinityTest, SeededFaults) μόνο στον HELD_OUT· rotation· BFT μόνο για Verdicts. ΣΧΗΜΑ ΑΝΑ ΠΡΟΦΙΛ (MFA-ATK-13): DP-1/2 = {1 VOTING, 1 HELD_OUT σε ΞΕΧΩΡΙΣΤΗ ΦΥΣΙΚΗ ΣΥΣΚΕΥΗ υπό κλειδιά δημιουργού (phone-class αρκεί: scorer + sealed sets, κανένα μοντέλο, MFA-INV-050)}· DP-3 = {4 VOTING σε ≥2 hosts, 1 HELD_OUT remote}· DP-4 = 5 sites (πλήρες)· χωρίς ξεχωριστή συσκευή: promotion = EIM-UNVERIFIED → canary-only, ποτέ cutover (MFA-INV-048 απόλυτη).",
-     purpose: "Ο λόγος του «5» και η ανεξαρτησία ως δομή.", capabilities: [MFA-CAP-075, MFA-CAP-035, MFA-CAP-056], source_provenance: ["προοίμιο", "MFA-MECH-018", "ADR-0031"], assumptions: ["f=1, h=1 πλήρες σχήμα μόνο DP-3+", "ο HELD_OUT χρειάζεται scorer + sealed sets, όχι μοντέλο — γι' αυτό χωρά σε φθηνή δεύτερη συσκευή"], dependencies: [MFA-ELM-003, MFA-ELM-086, MFA-ELM-050, MFA-ELM-057], interfaces: [MFA-CON-042, MFA-CON-014], authority: "f,h = L3",
-     state_model: "quorum config + EIM matrix", failure_modes: "HELD_OUT εκτός→προαγωγές παγώνουν", alternatives: ["ένας Πολιτισμός N-version"], conflicts: [], unknowns: [MFA-UNK-006], verification: [MFA-VO-044, MFA-VO-004, MFA-VO-019], falsifier: "verdict από HELD_OUT", resource_model: "DP-1/2: 1 VOTING + 1 HELD_OUT remote (scorer-only)· DP-3: 4 VOTING σε ≥2 hosts + 1 HELD_OUT remote· DP-4: 5 sites· «5 microVMs στο laptop» απορρίφθηκε ως μυθοπλασία ανεξαρτησίας (MFA-ATK-13)", evolution_path: "ADD ρόλος", affected_by: [MFA-TEL-03],
-     version: 3,
-     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0013, op: MODIFY, date: "2026-09-16", summary: "HELD_OUT σε ξεχωριστή φυσική συσκευή ή προαγωγές EIM-UNVERIFIED· MFA-INV-065 με αριθμό ανά προφίλ· OAP με ενέργεια· σχήμα Πολιτισμών ανά προφίλ (MFA-ATK-13)"}, {patch: MFA-PATCH-0037, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε στοιχείο MFA-ELM-001…108 (AA-017)"}],
+  - {<<: *d, id: MFA-ELM-056, name: "Trust-Domain Quorum", legacy_aliases: ["Civilization Quorum"], stratum: S5, plane: both, corresponds_to: [], delta: NEW, maturity: X,
+     statement: "MFA-MECH-018: N=3f+1 VOTING trust domains + h HELD_OUT trust domains με ίδιο σύνταγμα, αλλά ανεξάρτητη supply chain/κλειδιά/evaluators· οι trust domains είναι ορθογώνιοι προς τους πέντε λειτουργικούς Πολιτισμούς {Formal, Cognitive, Evolutionary, Adversarial, Institutional} και δεν τους αντικαθιστούν. EIM πύλη ανά ζεύγος· sealed sets (Battery, AnchorSet ±, AffinityTest, SeededFaults) μόνο στον HELD_OUT· rotation· BFT μόνο για Verdicts. ΣΧΗΜΑ ΑΝΑ ΠΡΟΦΙΛ (MFA-ATK-13): DP-1/2 = {1 VOTING, 1 HELD_OUT σε ΞΕΧΩΡΙΣΤΗ ΦΥΣΙΚΗ ΣΥΣΚΕΥΗ υπό κλειδιά δημιουργού (phone-class αρκεί: scorer + sealed sets, κανένα μοντέλο, MFA-INV-050)}· DP-3 = {4 VOTING σε ≥2 hosts, 1 HELD_OUT remote}· DP-4 = 5 sites (πλήρες)· χωρίς ξεχωριστή συσκευή: promotion = EIM-UNVERIFIED → canary-only, ποτέ cutover (MFA-INV-048 απόλυτη).",
+     purpose: "Ανεξαρτησία κρίσης και Byzantine fault tolerance ως trust topology· όχι ορισμός ή καταμέτρηση λειτουργικών Πολιτισμών.", capabilities: [MFA-CAP-075, MFA-CAP-035, MFA-CAP-056], source_provenance: ["προοίμιο", "MFA-MECH-018", "ADR-0031"], assumptions: ["f=1, h=1 πλήρες σχήμα μόνο DP-3+", "ο HELD_OUT χρειάζεται scorer + sealed sets, όχι μοντέλο — γι' αυτό χωρά σε φθηνή δεύτερη συσκευή"], dependencies: [MFA-ELM-003, MFA-ELM-086, MFA-ELM-050, MFA-ELM-057], interfaces: [MFA-CON-042, MFA-CON-014, MFA-CON-076], authority: "f,h = L3",
+     state_model: "quorum config + EIM matrix", failure_modes: "HELD_OUT εκτός→προαγωγές παγώνουν", alternatives: ["ένα trust domain με N-version αξιολογητές"], conflicts: [], unknowns: [MFA-UNK-006], verification: [MFA-VO-044, MFA-VO-004, MFA-VO-019, MFA-VO-092], falsifier: "verdict από HELD_OUT", resource_model: "DP-1/2: 1 VOTING + 1 HELD_OUT remote (scorer-only)· DP-3: 4 VOTING σε ≥2 hosts + 1 HELD_OUT remote· DP-4: 5 sites· «5 microVMs στο laptop» απορρίφθηκε ως μυθοπλασία ανεξαρτησίας (MFA-ATK-13)", evolution_path: "ADD trust domain ή αλλαγή deployment topology χωρίς αλλαγή των λειτουργικών Πολιτισμών", affected_by: [MFA-TEL-03],
+     version: 4,
+     change_history: [{patch: MFA-PATCH-0000, op: ADD, date: 2026-09-16, summary: "αρχική δημιουργία"}, {patch: MFA-PATCH-0013, op: MODIFY, date: "2026-09-16", summary: "HELD_OUT σε ξεχωριστή φυσική συσκευή ή προαγωγές EIM-UNVERIFIED· MFA-INV-065 με αριθμό ανά προφίλ· OAP με ενέργεια· σχήμα Πολιτισμών ανά προφίλ (MFA-ATK-13)"}, {patch: MFA-PATCH-0037, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε στοιχείο MFA-ELM-001…108 (AA-017)"}, {patch: MFA-PATCH-0064, op: MODIFY, date: "2026-09-17", summary: "Functional Civilizations separated from independent voting/held-out trust domains"}],
      epistemic_status: "NOVEL SYNTHESIS"}
   - {<<: *d, id: MFA-ELM-057, name: "Trust-Domain Import Gate", stratum: S5, plane: effect, corresponds_to: [], delta: NEW, maturity: X,
      statement: "Ετυμηγορίες/σχήματα/verifiers περνούν σύνορο Πολιτισμού ή εγκατάστασης (δημόσιο παρατηρητήριο ↔ ιδιωτικό) μόνο ως CrossDomainImport με receipt και ετικέτα· «ένας semantic owner» ανά trust domain· ανάλυση διαρροής κοινών verifiers ρητή.",

@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0061-R
+reverses: MFA-PATCH-0061
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, MFA-CON-075, MFA-INV-119, MFA-VO-090, MFA-UNK-134]
+change: {restore: "0.4.0 single/implicit status semantics", retire_added_records: [MFA-CON-075, MFA-INV-119, MFA-VO-090, MFA-UNK-134]}
+capability_impact: {gained: [], at_risk: ["status non-collapse"], ledger_entry: "Rollback exposes the original lock risk"}
+verification: "Exact diff against source commit 6768c6c"
+rollback: MFA-PATCH-0061
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED

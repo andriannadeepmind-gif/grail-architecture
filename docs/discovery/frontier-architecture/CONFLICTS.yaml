@@ -97,3 +97,43 @@ conflicts:
      side_b: "AUT-00 NoActWithoutAnswer· ελεγχόμενη ασύγχρονη αυτονομία", resolution_shape: "διακοπές (Emergency-stop, Court, δημιουργός) προηγούνται κάθε φάσης· ACT μόνο μέσω RET· contracts φάσεων L3, μόνο διάταξη/προϋπολογισμοί L2 (MFA-INV-114/115)", resolution_condition: "MFA-VO-087 (Ω-E1 διακοπές 100 %)",
      elements: [MFA-ELM-127, MFA-ELM-008], status: OPEN, version: 1,
      change_history: [{patch: MFA-PATCH-0034, op: ADD, date: "2026-09-16", summary: "Unknowns MFA-UNK-115…133 (EPISTEMIC/EXTERNAL_FACT, χωριστά από τον στόχο), Conflicts MFA-CFL-039…046 (με resolution condition), Research Programs MFA-RSP-021…040 (ένα ανά μηχανισμό + LWM-OEC για ELM-105/106, AA-020)"}]}
+  - <<: *d
+    id: MFA-CFL-047
+    source: MFA-PATCH-0062
+    between: [MFA-OBJ-016, MFA-OBJ-055]
+    side_a: "Root integrity and non-erasure"
+    side_b: "Open-ended evolution, replacement and successor construction"
+    resolution_shape: "Immutable information/authority properties with versioned, replaceable realizations; Telos amendment is separate from succession."
+    resolution_condition: "MFA-VO-088 demonstrates mutation rejection plus strict-superior realization replacement with replay and fallback."
+    elements: [MFA-ELM-038, MFA-ELM-039, MFA-ELM-051, MFA-ELM-125]
+    change_history: [{patch: MFA-PATCH-0062, op: ADD, date: "2026-09-17", summary: "Root integrity versus open-ended evolution"}]
+  - <<: *d
+    id: MFA-CFL-048
+    source: MFA-PATCH-0065
+    between: [MFA-OBJ-007, MFA-OBJ-010]
+    side_a: "Evidence determines epistemic status"
+    side_b: "Creator or delegate determines operational authorization"
+    resolution_shape: "Different writers and records: admitted evidence protocol for truth; signed governance/envelope for action."
+    resolution_condition: "MFA-VO-090 and MFA-VO-095 show zero silent cross-write in both directions."
+    elements: [MFA-ELM-008, MFA-ELM-048, MFA-ELM-099]
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Truth evaluation versus operational authority"}]
+  - <<: *d
+    id: MFA-CFL-049
+    source: MFA-PATCH-0065
+    between: [MFA-OBJ-025, MFA-OBJ-016]
+    side_a: "Open exploration needs novelty, uncertainty and high-variance search"
+    side_b: "Promotion and Effect require independently verified evidence"
+    resolution_shape: "Exploration signals operate freely in sandbox/shadow; independent evidence and authority gates control promotion/effects."
+    resolution_condition: "MFA-VO-094 catches seeded self-promotion/Goodhart exploits without suppressing candidate generation."
+    elements: [MFA-ELM-103, MFA-ELM-106, MFA-ELM-114]
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Open exploration versus verified promotion"}]
+  - <<: *d
+    id: MFA-CFL-050
+    source: MFA-PATCH-0065
+    between: [MFA-OBJ-050, MFA-OBJ-007]
+    side_a: "A self-improving system needs fast internal self-evaluation"
+    side_b: "An evaluator cannot be the sole judge of its own producer"
+    resolution_shape: "Self-score remains a calibrated predictor; independent held-out adjudication alone can support promotion."
+    resolution_condition: "MFA-VO-094 reports calibration and rejects unilateral self-promotion across evaluator rotations."
+    elements: [MFA-ELM-086, MFA-ELM-104, MFA-ELM-114, MFA-ELM-119]
+    change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Self-score versus independent adjudication"}]

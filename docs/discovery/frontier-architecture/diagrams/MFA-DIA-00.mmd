@@ -1,0 +1,59 @@
+%% id: MFA-DIA-00 · Whole-system master map · question: πώς συνδέονται Root, Telos, Πολιτισμοί, strata, planes, twin, trust domains, cockpit και πραγματικός κόσμος;
+%% scope: πλήρης μακροσκοπική όψη· τα MFA-DIA-01…25 είναι οι αναλυτικές προβολές
+flowchart TB
+  CREATOR["Creator and scoped delegates"] --> ROOT["Minimal Root properties"]
+  ROOT --> TELOS["Signed Telos version and flexible policy"]
+  TELOS --> MODEL["Canonical model: 127 ELM, 78 CON, 124 INV, 108 CAP"]
+
+  subgraph CIV["Five functional civilizations — roles, not replicas"]
+    direction LR
+    FORMAL["Formal"]
+    COG["Cognitive"]
+    EVO["Evolutionary"]
+    ADV["Adversarial"]
+    INST["Institutional"]
+  end
+  MODEL --> CIV
+
+  subgraph STRATA["Canonical architecture strata"]
+    direction TB
+    S01["S0–S1: substrate and authority"]
+    S23["S2–S3: cognition and entity"]
+    S45["S4–S5: commons and institutions"]
+    S6["S6: LAWMAX legal civilization"]
+    S78["S7–S8: evolution and knowledge"]
+    S910["S9–S10: verification and cockpit"]
+    S01 --> S23 --> S45 --> S6 --> S78 --> S910
+  end
+  CIV --> STRATA
+
+  subgraph PLANES["Two execution planes"]
+    direction LR
+    GEN["Genesis: think, simulate, invent"]
+    GATE["Gateway, RET and gates"]
+    EFFECT["Effect: bounded real action"]
+    GEN --> GATE --> EFFECT
+  end
+  STRATA --> GEN
+
+  subgraph FIDELITY["Executable Twin fidelity"]
+    direction LR
+    F01["F0–F1: model and executable spec"]
+    F2["F2: simulation"]
+    F3["F3: shadow"]
+    F4["F4: bounded real"]
+    F01 --> F2 --> F3 --> F4
+  end
+  STRATA --> F01
+  F2 --> GATE
+  F3 --> GATE
+
+  TRUST["Independent trust topology: voting N=3f+1, held-out h≥1"] --> FIDELITY
+  TRUST --> GATE
+  EFFECT --> WORLD["Legal and external world"]
+  WORLD --> OBS["Attested outcomes and counterevidence"]
+  OBS --> STRATA
+
+  COCKPIT["3D Cognitive Twin Cockpit"] <--> MODEL
+  STATUS["Six orthogonal status axes"] -.-> MODEL
+  ROOT --> GATE

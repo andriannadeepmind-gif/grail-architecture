@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0064-R
+reverses: MFA-PATCH-0064
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, TECHNICAL-ARCHITECTURE.md, MFA-ELM-056, MFA-CON-076, MFA-INV-120, MFA-VO-092]
+change: {restore: "0.4.0 untyped dependencies and legacy Civilization Quorum wording", retire_added_records: [MFA-CON-076, MFA-INV-120, MFA-VO-092]}
+capability_impact: {gained: [], at_risk: ["proved bootstrap and ontology separation"], ledger_entry: "Rollback restores untyped-cycle risk"}
+verification: "Exact diff against source commit 6768c6c"
+rollback: MFA-PATCH-0064
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED

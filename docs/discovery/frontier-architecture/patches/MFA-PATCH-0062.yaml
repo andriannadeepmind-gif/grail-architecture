@@ -1,0 +1,24 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0062
+title: "Minimal property Root, versioned Telos and replaceable realizations"
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, OBJECTIVE-SPACE.yaml, MFA-CON-073, MFA-INV-116, MFA-INV-117, MFA-VO-088, MFA-UNK-135, MFA-CFL-047]
+base: {package_version: 0.4.0, source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239}
+preconditions: ["MFA-PATCH-0061 semantics available", "No objective or capability is deleted"]
+change:
+  root: "Eight information/authority properties plus amendment semantics"
+  telos: "Signed, versioned and separately amendable"
+  realizations: "Replaceable under refinement, replay, loss map and fallback"
+  add: [MFA-CON-073, MFA-INV-116, MFA-INV-117, MFA-VO-088, MFA-UNK-135, MFA-CFL-047]
+rationale: "Open-ended improvement is impossible if current tools/corpora/productions are mistaken for immutable Root."
+evidence: ["ANTI-LOCK-AUDIT AL-001…004", "ARCHITECTURE-METAMODEL.yaml#root_boundary"]
+affected_dependencies: [MFA-ELM-038, MFA-ELM-039, MFA-ELM-051, MFA-ELM-099, MFA-ELM-125]
+capability_impact: {gained: ["replaceable verification and successor realizations"], at_risk: [], ledger_entry: "Target preserved; lock-in removed"}
+migration: "Classify every frozen item as property, active Telos content or replaceable realization."
+verification: MFA-VO-088
+rollback: MFA-PATCH-0062-R
+author: Stavropoulos Law® — design correction draft
+status: PROPOSED
+mechanical_state: APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW
