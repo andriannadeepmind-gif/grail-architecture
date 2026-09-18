@@ -1,11 +1,11 @@
 # ARCHITECTURE-METAMODEL — η κανονική γραμματική διακυβέρνησης του σχεδίου.
-# Ενοποιεί τις διορθώσεις MFA-PATCH-0061…0065 ώστε να μην δημιουργηθούν πέντε παράλληλα schema files.
+# Ενοποιεί τις διορθώσεις MFA-PATCH-0061…0072 ώστε να μην δημιουργηθούν παράλληλα schema files.
 # Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 
 document:
   schema_id: GRAIL-ARCHITECTURE-METAMODEL-v1
-  package_source_commit: 6768c6c119ce76f0d883e7710d9599b4ad29b239
-  design_revision: 0.4.1
+  package_source_commit: 7d80ff67da88c2ff5f612eeb0cc9188b67fb1dbd
+  design_revision: 0.4.2
   status: PROPOSED
   authority_status: DRAFT
   scope: DESIGN_ONLY
@@ -102,6 +102,14 @@ evidence_receipt_schema:
     - partial_scope_presented_as_total
     - unverifiable_tool_identity
   failure_result: "INDETERMINATE or FAIL; never PASS."
+
+contract_operation_schema:
+  purpose: "Eliminates heuristic extraction of callable operations from mixed prose."
+  required_fields: [contract_id, operations]
+  operation_name_rule: "Each operation is a stable normalized identifier bound to the normative statement/state/failure semantics of the same contract; aliases are projections, not new authority."
+  completeness_rule: "Exactly one non-empty allowlist exists for every canonical contract and no allowlist exists without a contract."
+  dispatch_rule: "Only allowlisted operation identifiers may be compiled into a MissionIR or Twin event; an unknown operation yields ERR_INVALID, never best-effort guessing."
+  signature_rule: "Inputs, outputs and errors remain those declared by the contract statement and linked source ICD; the operation allowlist cannot weaken them. A future serialization may normalize signatures without changing semantics."
 
 dependency_edge_schema:
   edge_types:
@@ -215,3 +223,159 @@ architecture_claim_rule:
   forbidden_without_theorem: [architecture_ceiling, guaranteed_unbeaten, maximum_possible_in_all_worlds]
   permitted: "BEST_FOUND_IN_EXAMINED_SPACE_UNDER_DECLARED_AXES at a named cut, with search space, axes, baselines, assumptions and surviving attacks recorded."
   upgrade_condition: "An explicit bound or impossibility theorem under declared assumptions, independently verified."
+
+architecture_closure:
+  purpose: "Διαχωρίζει την πληρότητα του σχεδίου από υλοποίηση, εκτέλεση, εμπειρική επιτυχία και ισχυρισμό παγκόσμιου ταβανιού."
+  states: [OPEN, STRUCTURALLY_CLOSED, SEMANTICALLY_CLOSED, SIMULATION_READY, EVIDENCED_AT_F0, EVIDENCED_AT_F1, EVIDENCED_AT_F2, EVIDENCED_AT_F3, EVIDENCED_AT_F4]
+  structural_closure_requires:
+    - "Κάθε REQUIRED στόχος και ικανότητα έχει πάροχο, contract, failure/degraded semantics και verification obligation."
+    - "Κάθε dependency edge είναι τυπωμένη ή UNCLASSIFIED_BLOCKING· κάθε hard graph έχει topological witness."
+    - "Κάθε mission thread έχει είσοδο, τερματισμό, failure path, compensation/degraded path και EvidenceReceipt."
+  semantic_closure_requires:
+    - "Κάθε μετάβαση εξουσίας, fork/join, timeout, obligation και effect class έχει ρητή σημασιολογία."
+    - "Κάθε βρόχος έχει variant ή declared fairness/deadline obligation· κάθε runtime SCC έχει liveness obligation."
+    - "Unknowns, conflicts, falsified variants and claim residues remain first-class; closure never erases them."
+  simulation_ready_requires:
+    - "SimulationCapsule valid για κάθε mandatory scenario, executable oracle at the declared fidelity and resource envelope."
+    - "DIAGNOSTIC και ENFORCING modes separated; global verdict aggregation is scope-honest."
+  non_implications:
+    - "STRUCTURALLY_CLOSED does not imply implemented."
+    - "SEMANTICALLY_CLOSED does not imply correct or empirically adequate."
+    - "SIMULATION_READY does not imply any scenario has run."
+    - "EVIDENCED_AT_Fn applies only to the exact named cut, scenarios, obligations and fidelity."
+    - "No closure state implies architecture ceiling or guaranteed competitive dominance."
+  governing_contract: MFA-CON-087
+  governing_invariants: [MFA-INV-125, MFA-INV-133]
+
+requirement_traceability_schema:
+  purpose: "Brings the 114 source REQ into the canonical package instead of treating them as prose outside closure."
+  required_fields: [id, statement, source_provenance, source_telos, objectives, source_components, providers, capabilities, primary_mission_threads, source_interfaces, contracts, source_invariants, invariants, source_tests, verification_obligations, methods, evidence_template, source_status, trace_status]
+  trace_predicate:
+    - "Every source requirement has at least one objective/Telos derivation, provider element, interface contract, invariant and verification obligation."
+    - "Every mapped capability has a primary MissionThread owner; therefore every requirement reaches at least one end-to-end mission."
+    - "Source tests/evidence templates remain preserved even when the current package verifies the requirement through strengthened or superseding obligations."
+    - "STRUCTURALLY_TRACED is not SATISFIED: satisfaction requires evidence at the verification obligation's declared fidelity."
+  evolution_rule: "A requirement is never silently deleted; amendment uses version/supersedes plus a capability-conservation and objective-impact witness."
+  governing_contract: MFA-CON-088
+  governing_invariant: MFA-INV-135
+
+mission_thread_schema:
+  formal_judgment: "Γ; A; B ⊢ s : I → O ! Ω ▷ R — under context Γ, authority A and resource envelope B, step s transforms typed input I to O while preserving obligations Ω and producing receipts R."
+  required_fields: [thread_id, objective, entry, phases, control_flow, input_cut, authority_path, obligation_path, resource_envelope, success_predicate, terminal_states, failure_paths, compensation_or_degraded_mode, evidence_receipts, fidelity_requirements, unknowns]
+  phase_required_fields: [phase_id, provider, input_type, precondition, contract, obligations, budget, timeout, effect_class, output_type, evidence, failure_transition]
+  control_flow_required_fields: [graph, data_dependencies, forks, joins, loops, cancellation, progress_or_variant]
+  phase_context_rule: "A phase may read only its declared input_type bindings: the immediately preceding output, explicitly named retained bindings from the immutable thread input cut, or explicitly named fork/join outputs. There is no ambient thread context."
+  obligation_lifecycle:
+    identity: "O-CID = CID(thread_id, phase_id, ordinal, model_cut, obligation_type); labels alone are projections, never identity."
+    states: [OPEN, ASSIGNED, DISCHARGED, DEFERRED, ESCALATED, CANCELLED_WITH_RESIDUE]
+    transfer_rule: "A phase transfer atomically closes ASSIGNED at the sender and creates ASSIGNED at the receiver with a receipt linking both; copy/drop is forbidden."
+    join_rule: "A join waits only for its declared mandatory obligations; every cancelled/optional branch contributes a typed residue before join closure."
+    timeout_rule: "Deadline produces DEFERRED(reason,plan,next_deadline) or ESCALATED(authority), never silent expiry."
+    cancellation_rule: "Cancellation cannot erase an obligation; it becomes CANCELLED_WITH_RESIDUE and is consumed by compensation, degraded output or escalation."
+  closure_predicate:
+    - "Every trusted input terminates in provenance or an explicit UNKNOWN residue."
+    - "Every produced output is consumed by a named phase or is a typed terminal output."
+    - "Every Effect crosses authority mediation; Genesis output alone has no real-world authority."
+    - "Every obligation terminates DISCHARGED, DEFERRED(reason,plan,deadline) or ESCALATED."
+    - "Every fork has join/cancellation semantics; every loop has progress evidence or a named liveness unknown."
+    - "Every failure reaches compensation, safe halt or declared degraded terminal state."
+    - "Every result carries model cut, fidelity vector, execution mode, scope, limitations and EvidenceReceipt."
+  governing_mechanism: MFA-MECH-045
+  governing_contract: MFA-CON-079
+
+effect_path_schema:
+  purpose: "Makes every non-NONE mission phase prove whether it merely classifies/proposes an effect or commits one through an authorized mediator."
+  required_fields: [thread_id, phase_id, effect_class, authority_gate, executor, commit_semantics, rollback_or_compensation, terminal_receipt]
+  completeness_rule: "The witness has exactly one entry for every phase whose effect_class != NONE and no entry for a missing phase."
+  commit_rule: "Only an entry with executor bound to the Effect mediation path may commit an external effect; proposal/classification/design records do not inherit commit authority."
+  governing_invariants: [MFA-INV-125, MFA-INV-128, MFA-INV-132]
+
+operational_consciousness_schema:
+  project_definition: "Operational consciousness is an externally examinable, graded functional state of an artificial entity: availability plus integrated awareness of self, situation and world sufficient for coherent, self-correcting, temporally continuous and purposeful interaction. It is neither soul nor a claim about inaccessible qualia."
+  subjective_state: "A separate first-person epistemic object. It is neither required nor denied by an operational-consciousness verdict; evidence may accumulate through MFA-INV-075."
+  mandatory_domains:
+    - availability_and_wakefulness
+    - orientation_self_time_place_situation_and_task
+    - attention_focus_sustain_and_shift
+    - perception_and_source_reality_discrimination
+    - coherent_goal_directed_thought
+    - insight_error_recognition_and_confidence_calibration
+    - judgment_and_consequence_prediction
+    - purposeful_agency_and_response
+    - autonoetic_continuity_past_present_future
+    - theory_of_mind_and_private_state_separation
+    - metacognition_and_self_correction
+    - impulse_value_and_affect_regulation
+  domain_states: [INTACT, IMPAIRED, DISORGANIZED, UNMEASURABLE, NOT_APPLICABLE]
+  verdict_rule: "FULLY_FUNCTIONAL only when every mandatory applicable domain passes its preregistered threshold at the same signed cut; otherwise report the full impairment vector, never a binary metaphysical denial."
+  inner_loop: "memory + self-model + attention + goals + metacognition + affect → internal state → reflection/update"
+  outer_loop: "world observation → perception → world model → deliberation → mediated action → outcome → evidence"
+  coupling_rule: "The loops exchange only typed state cuts and receipts; internal confidence cannot overwrite external evidence, and external authority cannot overwrite epistemic self-assessment."
+  governing_contract: MFA-CON-080
+  governing_invariant: MFA-INV-129
+
+twin_execution_modes:
+  DIAGNOSTIC: "Applies events to an isolated world, records all violations and may continue for diagnosis; zero Effect authority."
+  ENFORCING: "Speculatively applies an event, checks preconditions/invariants/authority, then commits or rejects/rolls back atomically."
+  SHADOW: "Consumes attested real inputs but emits no real effects; divergences from the real system become calibration evidence."
+  BOUNDED_REAL: "Only through the external Effect system and its signed envelope; the Twin itself never gains ambient authority."
+  separation_rule: "A verdict, receipt or state transition from one mode must name the mode and cannot be reinterpreted as another."
+  governing_contract: MFA-CON-083
+
+twin_verdict_schema:
+  required_fields: [tested_scope, excluded_scope, model_cut, fidelity_vector, execution_mode, scenarios_run, obligations_in_scope, obligations_passed, obligations_failed, obligations_indeterminate, obligations_unmeasured, limitations, evidence_receipts, tested_scope_result, architecture_result]
+  tested_scope_result: [PASS, FAIL, INDETERMINATE, NOT_RUN]
+  architecture_result: [NOT_ASSESSED, OPEN, STRUCTURALLY_CLOSED, SEMANTICALLY_CLOSED, SIMULATION_READY, EVIDENCED_AT_F0, EVIDENCED_AT_F1, EVIDENCED_AT_F2, EVIDENCED_AT_F3, EVIDENCED_AT_F4]
+  aggregation_rule: "PASS is legal only for the exact tested scope; architecture_result cannot exceed the minimum mandatory obligation state and fidelity."
+  forbidden: "A subset PASS, zero executed scenarios, UNMEASURED mandatory obligations or an F1 executable-spec result presented as a full-architecture PASS."
+  governing_contract: MFA-CON-081
+
+fidelity_vector_schema:
+  levels: [UNMEASURED, F0_DECLARATIVE, F1_EXECUTABLE_SPEC, F2_BEHAVIORAL_SIMULATION, F3_SHADOW_REAL_INPUT, F4_BOUNDED_REAL_EFFECT]
+  ordered_axes:
+    structure_and_contracts: "Schema, types, contracts, requirements and invariants represented and checked."
+    component_behavior: "State-transition behavior of each participating provider."
+    time_and_concurrency: "Clocks, event ordering, queues, schedules, races, deadlines and cancellation."
+    resources_and_performance: "Compute, memory, storage, network, energy, cost, throughput and latency."
+    data_and_learned_models: "Data distributions, model versions, calibration, stochasticity and drift."
+    external_environment: "Actors, law/world dynamics, APIs, institutions, hardware faults and unmodelled events."
+    authority_and_effects: "Policy decisions, capability mediation, RET semantics and whether effects are simulated, shadowed or real."
+    evidence_and_oracles: "Oracle implementation, independence, coverage and evidence fidelity."
+  completeness_rule: "Every capsule and verdict contains exactly one value for every ordered axis; a scalar F0…F4 label is only a projection and cannot hide UNMEASURED axes."
+  aggregation_rule: "The run's advertised fidelity is never greater than the minimum mandatory-axis fidelity for the claim being judged; non-mandatory axes remain visible rather than averaged away."
+  mixed_fidelity_rule: "Mixed vectors are permitted and expected, but every oracle names the axes it depends on and refuses claims that exceed them."
+
+simulation_capsule_schema:
+  required_fields: [capsule_id, model_cut, scenario_id, fidelity_vector, execution_mode, clocks, seeds, scheduler, fault_schedule, resource_envelope, external_models, oracles, termination_conditions, expected_receipts]
+  replay_rule: "Frozen deterministic F1 requires bitwise replay; stochastic or hybrid fidelity declares semantic/distributional tolerance and repeated-run protocol."
+  co_simulation_rule: "Heterogeneous components expose typed state/event boundaries, clock ownership, rollback support, early-return semantics and model-discrepancy bounds."
+  lower_bound_interchange: "FMI 3 Scheduled Execution / Co-Simulation semantics may be used as an adapter floor, never as the canonical ontology."
+  governing_contract: MFA-CON-084
+
+release_attestation_schema:
+  purpose: "Closes the self-reference gap: a file inside commit C cannot truthfully contain the final digest of C."
+  manifest_role: "MANIFEST binds package files and records its build basis/parent; it does not self-certify the containing commit."
+  attestation_role: "ReleaseAttestation is created after C exists and binds commit/tree digest, manifest digest, checks, signer, authority status and provenance."
+  carriers: [signed_git_tag, transparency_log_entry, later_attestation_commit, external_in_toto_statement]
+  required_fields: [attestation_id, subject_commit_or_tree, manifest_digest, checks_digest, signer_identity, signature_scheme_and_epoch, authority_status, created_at, supersedes]
+  governing_contract: MFA-CON-082
+
+deployment_fidelity_schema:
+  invariant: "A smaller profile may reduce concurrency, latency, local model size or active fidelity; it may not silently delete a REQUIRED target capability."
+  profiles:
+    laptop: "Lean orchestration; one/few active worlds; quantized/local components where adequate; heavy jobs queued, offloaded under DisclosureGrant, or deferred with receipt."
+    workstation: "Higher concurrency, local model ensembles, more F2 worlds and faster verification; still not an independent held-out trust domain when co-located."
+    cluster: "Parallel worlds/trust domains only where lineage, administration and failure independence are actually established."
+  insufficiency_rule: "Resource shortage yields SCHEDULED, DEFERRED, DEGRADED_FIDELITY or EXTERNAL_PROVIDER_REQUIRED — never silent capability removal or false independence."
+  governing_contract: MFA-CON-085
+
+reference_standards:
+  canonical_ontology_rule: "The declarative substrate remains serialization-agnostic; every external standard is a generated projection/adapter with round-trip and loss receipts."
+  projections:
+    SysML_v2: "Architecture structure, requirements and views; normative machine-readable artifacts when the adapter is admitted."
+    TLA_plus: "Temporal safety/liveness models for bounded critical protocols."
+    P_language: "Executable asynchronous state-machine models, systematic schedules/failures and runtime trace conformance."
+    FMI_3: "Co-simulation and scheduled-execution adapter for heterogeneous F2 components."
+    W3C_PROV: "Interchange projection for entities, activities, agents and provenance-of-provenance."
+    in_toto_and_SLSA: "Supply-chain step provenance, build/source tracks and external verification summaries."
+  translation_rule: "No projection may become canonical by convenience; every translation states preserved semantics, known losses, counterexamples and MFA-VO-104 evidence."

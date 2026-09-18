@@ -1,0 +1,22 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0068
+title: "Evidence-Carrying Mission Weave and architecture closure"
+operation: ADD_AND_MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, CAPABILITY-LATTICE.yaml, CONTRACTS.yaml, INVARIANTS.yaml, VERIFICATION-OBLIGATIONS.yaml, INVENTIONS.yaml, RESEARCH-PROGRAMS.yaml, mechanisms/MFA-MECH-045.md, inventions/MFA-MECH-045.yaml, TECHNICAL-ARCHITECTURE.md, IMPLEMENTATION-ROADMAP.md, diagrams/MFA-DIA-00.mmd, diagrams/MFA-DIA-26.mmd, README.md, CHANGELOG.md]
+base: {package_version: 0.4.1, source_commit: 7d80ff67da88c2ff5f612eeb0cc9188b67fb1dbd}
+preconditions: ["0.4.1 canonical seats parse", "No capability removed", "Unknowns/conflicts remain first-class"]
+change:
+  add: ["MFA-MECH-045", "MFA-CAP-109", "MFA-CON-079", "MFA-CON-086", "MFA-CON-087", "MFA-INV-125", "MFA-INV-132", "MFA-INV-133", "MFA-VO-097", "MFA-VO-105", "MFA-RSP-041", "12 canonical mission threads", "12 explicit control-flow records", "109/109 capability primary-owner witness", "58/58 objective union witness", "15/15 non-NONE effect-path witnesses"]
+  modify: ["MFA-ELM-126", "MFA-ELM-127", "architecture closure metamodel", "obligation lifecycle", "effect authority separation", "master map"]
+rationale: "The subsystem inventory was broad but lacked a binding end-to-end witness proving that components compose into complete missions."
+evidence: ["inventions/MFA-MECH-045.yaml", "ARCHITECTURE-ELEMENTS.yaml#mission_threads", "ARCHITECTURE-ELEMENTS.yaml#architecture_closure_coverage", "ARCHITECTURE-ELEMENTS.yaml#effect_path_witness", "MFA-VO-097", "MFA-VO-105"]
+affected_dependencies: [MFA-ELM-088, MFA-ELM-122, MFA-ELM-126, MFA-ELM-127]
+capability_impact: {gained: [MFA-CAP-109], at_risk: [], ledger_entry: "No removal; existing capabilities gain end-to-end composition witnesses"}
+migration: "Treat existing components as providers in the 12 threads; later implement the read-only F1 compiler and F2 capsules."
+verification: "YAML/referential/check-package now; MFA-VO-097/105 after implementation authorization"
+rollback: MFA-PATCH-0068-R
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED
+mechanical_state: PARTIALLY_APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

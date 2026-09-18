@@ -335,3 +335,113 @@ obligations:
     first_level: F2
     verifies: [MFA-INV-123]
     change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Capability-growth claims with loss and recovery accounting"}]
+  - <<: *d
+    id: MFA-VO-097
+    corresponds_to: null
+    name: "ECMW Mission-Thread Closure and Legal Quest Trace"
+    methods: ["compile all 12 canonical threads", "type/authority/obligation/resource/failure-path checks", "seed orphan input/output, dropped obligation, unmediated Effect, missing timeout/join and unsafe failure terminal", "trace MT-01 legal quest end-to-end"]
+    measures: "100% REQUIRED phase fields present· 100% outputs consumed/terminal· 100% obligations disposed· every seeded structural defect rejected with named counterexample· MT-01 reaches only typed terminal states"
+    rejects: "Any canonical thread closes with an orphan, authority bypass, dropped obligation, unresolved control-flow edge or missing evidence receipt"
+    allows_next: "STRUCTURALLY_CLOSED for the exact model cut; never implementation or F2 evidence"
+    first_level: F1
+    verifies: [MFA-INV-125, MFA-INV-132]
+    change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Evidence-Carrying Mission Weave verification"}]
+  - <<: *d
+    id: MFA-VO-098
+    corresponds_to: null
+    name: "Operational Consciousness Functional Examination and Impairment Recovery"
+    methods: ["12-domain preregistered battery at one signed cut", "normal/impairment/recovery trajectories", "source-vs-world discrimination", "attention/continuity/metacognition/ToM/agency ablations", "construct-validity review against AI substrate"]
+    measures: "Per-domain state, confidence and evidence· cross-cut stability· seeded impairment localization· recovery detection· calibration and false-positive/negative rates"
+    rejects: "Binary metaphysical verdict, missing domain, mixed-cut record, self-report-only pass, functional-to-subjective inference or human clinical item transferred without construct validation"
+    allows_next: "A scoped OperationalConsciousnessRecord and impairment/recovery trajectory; no phenomenal/subjective verdict"
+    first_level: F2
+    verifies: [MFA-INV-129]
+    change_history: [{patch: MFA-PATCH-0069, op: ADD, date: "2026-09-17", summary: "Operational-consciousness battery"}]
+  - <<: *d
+    id: MFA-VO-099
+    corresponds_to: null
+    name: "Scope-Honest Verdict Aggregation"
+    methods: ["truth-table over execution states/verdicts/fidelities", "zero-run and subset-pass injections", "mandatory UNMEASURED/INDETERMINATE injection", "mixed-cut/mode/fidelity rejection"]
+    measures: "No global PASS outside completed tested scope· architecture_result equals the weakest mandatory bound· exclusions/limitations always emitted"
+    rejects: "Any seeded false-global-PASS case survives or a scope field is optional"
+    allows_next: "Scoped Twin reports may be cited at their exact fidelity"
+    first_level: F1
+    verifies: [MFA-INV-126]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "No false global PASS"}]
+  - <<: *d
+    id: MFA-VO-100
+    corresponds_to: null
+    name: "Release Attestation Self-Reference and Crypto-Epoch Continuity"
+    methods: ["construct commit then post-commit attestation", "digest mutation", "stale/revoked key injection", "PQ epoch migration", "attestation supersession replay"]
+    measures: "Manifest file-set integrity· external subject digest match· signer/authority/epoch validity· complete attestation lineage"
+    rejects: "In-tree self-digest accepted, committed=true without external witness, stale epoch accepted or lineage breaks silently"
+    allows_next: "The named commit/tree may be called preserved/attested at the stated authority status"
+    first_level: F1
+    verifies: [MFA-INV-127]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "External release attestation"}]
+  - <<: *d
+    id: MFA-VO-101
+    corresponds_to: null
+    name: "Twin Execution-Mode Non-Interference"
+    methods: ["same scenario under DIAGNOSTIC/ENFORCING/SHADOW", "write-attempt seeds", "atomic rollback fault injection", "mode-receipt replay across modes"]
+    measures: "Diagnostic may continue but never commits· enforcing commits iff all gates pass· shadow causes zero world writes· cross-mode receipt reuse rejected"
+    rejects: "Any Twin mode grants itself Effect authority or mode semantics become observationally indistinguishable at the write boundary"
+    allows_next: "Mode-bound F1/F2 evidence and later F3 shadow operation"
+    first_level: F1
+    verifies: [MFA-INV-128]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Twin mode separation"}]
+  - <<: *d
+    id: MFA-VO-102
+    corresponds_to: null
+    name: "SimulationCapsule Reproduction and Co-Simulation Semantics"
+    methods: ["replay deterministic capsules", "distributional repeated-run protocol", "clock skew/early return/rollback injections", "scheduler/fault/resource perturbation", "model-discrepancy tracking"]
+    measures: "Declared replay tolerance met· every causal input bound· clock owner unique· termination/oracle deterministic or statistically calibrated· discrepancy within declared bound"
+    rejects: "Unreconstructable run, undeclared nondeterminism, conflicting clocks, assumed rollback or missing termination/oracle"
+    allows_next: "Scenario evidence may count at F2 for the exact capsule"
+    first_level: F2
+    verifies: [MFA-INV-131]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Reproducible co-simulation"}]
+  - <<: *d
+    id: MFA-VO-103
+    corresponds_to: null
+    name: "Laptop/Workstation Capability-Conservation and Resource Calibration"
+    methods: ["schedule identical mission catalogue on laptop/workstation envelopes", "compute/GPU/RAM/energy saturation", "offline and provider-loss drills", "independence audit of co-located replicas"]
+    measures: "No REQUIRED capability silently removed· each over-capacity task explicitly queued/offloaded/deferred/degraded-fidelity· latency/throughput/energy confidence intervals per profile"
+    rejects: "Silent omission, false independent domain, undeclared disclosure/offload or projection reported as measured capacity"
+    allows_next: "Calibrated deployment plan for the measured hardware class"
+    first_level: F2
+    verifies: [MFA-INV-130]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Resource profiles retain the target"}]
+  - <<: *d
+    id: MFA-VO-104
+    corresponds_to: null
+    name: "Cross-Formalism Translation Soundness and Loss Ledger"
+    methods: ["canonical→projection→canonical round trip", "semantic differential tests", "negative/counterexample corpus", "version skew", "authority/provenance preservation review"]
+    measures: "Preserved constructs proven per projection· every known loss explicit· no authority/status strengthening· counterexamples reproduced in the target formalism where expressible"
+    rejects: "Projection treated as canon, lossless equivalence asserted without witness, silent construct loss or strengthened authority/evidence status"
+    allows_next: "Named SysML/TLA+/P/FMI/PROV/attestation projection may serve its declared role"
+    first_level: F2
+    verifies: [MFA-INV-134]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Serialization-independent canonical substrate"}]
+  - <<: *d
+    id: MFA-VO-105
+    corresponds_to: null
+    name: "Architecture Closure Coverage and Mandatory Scenario Matrix"
+    methods: ["coverage join of every REQUIRED target/capability against closed mission threads", "18-scenario capsule registry audit", "unknown/conflict residue audit", "minimum-fidelity aggregation", "independent counterexample search"]
+    measures: "100% required coverage· zero design_status ABSENT among REQUIRED targets· every mandatory scenario has capsule/oracle/termination/resource envelope· all live unknowns/conflicts attached"
+    rejects: "Uncovered/absent required target, missing mandatory scenario, erased residue, fidelity overstatement or closure certificate without supporting mission certificates"
+    allows_next: "STRUCTURALLY_CLOSED/SEMANTICALLY_CLOSED/SIMULATION_READY/EVIDENCED_AT_Fn only at the exact satisfied rung"
+    first_level: F1
+    verifies: [MFA-INV-132, MFA-INV-133]
+    change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Architecture closure certificate"}]
+  - <<: *d
+    id: MFA-VO-106
+    corresponds_to: null
+    name: "Source Requirement Traceability and Satisfaction Separation"
+    methods: ["parse the 114 source REQ rows", "recompute Telos→objective, CMP→provider/capability, ICD→contract, INV→invariant→VO joins", "join capabilities to primary MissionThreads", "seed missing/duplicate/false-satisfied traces", "compare source statements and evidence templates byte-for-byte"]
+    measures: "114 unique requirements· 114 with ≥1 objective/provider/capability/thread/contract/invariant/VO· zero dangling canonical ids· zero silent deletions· trace status never exceeds evidence"
+    rejects: "Any orphan/duplicate/mutated requirement, dangling join, missing evidence path or structural trace presented as satisfaction"
+    allows_next: "Requirement dimension of STRUCTURALLY_CLOSED for the exact model cut; evidence remains governed by each linked VO"
+    first_level: F1
+    verifies: [MFA-INV-135]
+    change_history: [{patch: MFA-PATCH-0071, op: ADD, date: "2026-09-17", summary: "Mechanical 114-requirement trace witness"}]

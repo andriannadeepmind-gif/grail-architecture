@@ -26,20 +26,20 @@ f  = W.fork(r, seed=7)                         # branch with a fresh rng
 W.replay(w, r.log, r.seeds).state_hash() == r.state_hash()   # deterministic replay (D1)
 W.substitute(r, "MFA-ELM-001", "F1")           # fidelity transition under the contract's conformance suite
 risk.propagate(M)                              # epistemic risk per element / capability
-INV.coverage_summary(M)                        # "35 executable / 115 total (80 UNMEASURED, declared)"
+INV.coverage_summary(M)                        # "35 executable / 135 total (100 UNMEASURED, declared)"
 ```
 
 ## Modules
 
 | module | dossier field | content |
 |---|---|---|
-| `model.py` | TES `LOAD` | seats → dicts by id; dependency graph; contract→provider; capability→providers; contract op vocabulary parsed from `statement`; `check_references()` (R1); Telos / Constitution hashes |
+| `model.py` | TES `LOAD` | seats → dicts by id; dependency graph; contract→provider; capability→providers; frozen F1 op vocabulary parsed from `statement`; `check_references()` (R1); Telos / Constitution hashes. Η 0.4.2 design έδρα έχει πλέον 88/88 explicit allowlists, αλλά αυτός ο παλαιός F1 loader δεν τις καταναλώνει ακόμη. |
 | `world.py` | TES `APPLY / FORK / REPLAY / SUBSTITUTE` | `World`, `Event`, `Violation`, `ViolationRecord`, `Fidelity`, fidelity impl registry, precondition registry, escrow helpers |
 | `invariants.py` | TES `ExecutableInvariant` | `PREDICATES` registry (35 executable, the rest `UNMEASURED`), the derived-facts index, policy constants |
 | `risk.py` | TES `PROPAGATE` | base risk per `epistemic_status`, Tarjan SCC condensation, max-path with decay 0.9, min over providers |
 | `oc.py` | OC-TypeCheck, DischargeScheduler | AST (Lit, Var, Gen, Discharge, Defer, Escalate, Seq, Act), linear obligations, stub VFC (2 independent checkers), stub RET, OC-E1 flow set |
 | `omega.py` | Ω-Cycle | ten mock phases, priority interrupt queue, per-phase budgets, `CycleRecord` with DONE/DEFERRED/SKIPPED/HALTED receipts, explicit carry of deferred obligations, optional emission of typed events into a World |
-| `scenarios.py` | TES `INJECT` | `seeded_violations` (60 seeds, each exactly one violation), `valid_events`, `random_events` |
+| `scenarios.py` | TES `INJECT` | `seeded_violations` (64 seeds, each exactly one violation), `valid_events`, `random_events` |
 | `tests/` | MFA-VO-086 / 082 / 087 | plain `unittest` |
 
 ## TES_Apply in one paragraph
@@ -72,21 +72,20 @@ unchanged; a passing transition is itself a typed event (`MFA-CON-072 substitute
 
 ## What is measured, what is UNMEASURED
 
-`invariants.coverage(model)`: **35 executable / 115 total; 80 declared `UNMEASURED('no executable predicate yet')`**
-(this number is the measurement of MFA-UNK-132 at F1: 30.4 %). Executable: MFA-INV-001, 072, 075, 077, 078, 080,
+`invariants.coverage(model)`: **35 executable / 135 total; 100 declared `UNMEASURED('no executable predicate yet')`**
+(this number is the measurement of MFA-UNK-132 at the current F1 cut: 25.93 %). Executable: MFA-INV-001, 072, 075, 077, 078, 080,
 081, 084, 086–099 (except 100–101), 102–106, 108–115. Each predicate's docstring names the contract, the operation
 and the argument keys it reads — this is the F1 event vocabulary, shared with `scenarios.py`.
 
 Declared limits (honest ignorance, not silent PASS):
 
-* The 80 UNMEASURED invariants need instruments the F1 twin does not have (real ledgers, Merkle proofs, TSA, Lean,
+* The 100 UNMEASURED invariants need instruments the F1 twin does not have (real ledgers, Merkle proofs, TSA, Lean,
   benchmarks); they are counted at every event (`world.unmeasured_events`) and listed in `world.unmeasured`.
 * MFA-INV-113 is split: the conformance-test half is a predicate; the replay-determinism half is a property of the
   interpreter verified by TES-E2, not decidable from a single event.
 * Two predicates can answer `UNKNOWN`: MFA-INV-078 when a merged concept's birth is not in the log, MFA-INV-089 when a
   lineage was never registered, MFA-INV-093 when no quality is reported.
-* Operation vocabularies are parsed from the prose `statement` of each contract (heuristic; a few prose tokens such
-  as `CIDv1`, `tokens`, `FALSE` are accepted as operations). An explicit `operations` field per contract is the F2 fix.
+* Ο frozen F1 loader εξακολουθεί να εξάγει operation vocabularies από prose `statement` (heuristic). Η 0.4.2 canonical design έδρα `CONTRACTS.yaml#contract_operation_catalog` περιέχει πλέον 88/88 μη κενές allowlists και 439 operations. Μέχρι ο loader να τις καταναλώσει και να περάσει CE-09, το υπάρχον F1 PASS δεν αποδεικνύει τον νέο κανόνα.
 * Policy constants are explicit in `invariants.py`: FP set, Tier-0 productions, VSC certificates, N = 3 consecutive
   cuts (MFA-INV-092/108), risk table and decay 0.9 in `risk.py`, tier→evidence class in `oc.py`.
 * Risk finding: the working-tree dependency graph contains one strongly connected component of 89 elements (the
@@ -97,11 +96,11 @@ Declared limits (honest ignorance, not silent PASS):
 
 | test | experiment | pre-registered criterion | VO |
 |---|---|---|---|
-| `tests/test_tes.py::TestTESE1` | TES-E1 | 60 seeded violations (3 signature, 4 precondition, 3 RET escrow, 50 invariant seeds covering all 35 executable invariants) detected with the correct id, exactly one each; 0 false positives on 100 valid events | MFA-VO-086 |
+| `tests/test_tes.py::TestTESE1` | TES-E1 | 64 seeded violations (3 signature, 4 precondition, 3 RET escrow, 54 invariant seeds covering all 35 executable invariants) detected with the correct id, exactly one each; 0 false positives on 100 valid events | MFA-VO-086 |
 | `tests/test_tes.py::TestTESE2` | TES-E2 | 1000 random events, fork into 10 worlds, replay hash equality 10/10; substitution F0→F1 PASS (conformant) / FAIL (non-conformant, unregistered) | MFA-VO-086 |
 | `tests/test_oc.py::TestOCE1` | OC-E1 | 25 correct Think–Recommend flows accepted, 25 flawed rejected with the right reason (DROPPED_OBLIGATIONS, INSUFFICIENT_EVIDENCE, UNVERIFIED_EFFECT, NO_SUCH_OBLIGATION, INVALID_DEFER), 0 false positives/negatives | MFA-VO-082 |
 | `tests/test_omega.py::TestOmegaE1` | Ω-E1 | 10 cycles with mocks and seeded interrupts: 10 complete CycleRecords, 0 silent skips, interrupts handled before their phase 100 %, priority order, 0 twin violations on the emitted MFA-CON-068 events | MFA-VO-087 |
-| `tests/test_risk.py` | TES_Propagate | risk map for 127 elements and 108/108 capabilities; monotone over dependencies; one risk per SCC | MFA-VO-086 (risk map produced) |
+| `tests/test_risk.py` | TES_Propagate | risk map for 127 elements and 109/109 capabilities; monotone over dependencies; one risk per SCC | MFA-VO-086 (risk map produced) |
 | `tests/test_model.py` | LOAD | seats loaded, 0 dangling references, registry covers every invariant | R1 |
 
 ## Event vocabulary (excerpt)

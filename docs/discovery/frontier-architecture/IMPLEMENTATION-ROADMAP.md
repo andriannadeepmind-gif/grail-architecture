@@ -72,3 +72,17 @@ RSP-015: νευρομορφικά/φωτονικά ως χρησμωδικά ό�
 | 3 | MFA-ELM-104 Self-Improvement Orchestrator · MFA-ELM-125 Verified Successor Constructor · MFA-ELM-031 Reflective Tower [EP] |
 
 **Lean profile 0.4.0 (MFA-ELM-097, Δόση 0.5):** OC-lite (122), CGM-lite (119), STP measurement (116), TES F1 (126), SMF adapters σε σκιά (100) — ATK-27 / MFA-PATCH-0052. Η Δόση 0 εκτιμάται από 8 σε ~10 εβδομάδες.
+
+## Πριν από οποιαδήποτε υλοποίηση — Architecture Closure Adjudication 0.4.2
+
+Η 0.4.2 παραμένει design-only και `OPEN` μέχρι να ολοκληρωθεί η παρακάτω σειρά:
+
+1. **Coverage witness — DESIGN COMPLETE:** 109/109 CAP έχουν ακριβώς έναν primary MT-01…12 owner και 58/58 OBJ παράγονται ως union των owners· secondary relations παραμένουν.
+2. **Source-requirement witness — DESIGN COMPLETE:** 114/114 REQ διατηρούν αυτούσιο statement/provenance και ενώνονται με objective/provider/capability/thread/contract/invariant/VO στο `REQUIREMENT-TRACEABILITY.yaml`.
+3. **Mission-schema audit — DESIGN COMPLETE:** 12 threads, 53 phases, όλα τα υποχρεωτικά phase fields και 12/12 δηλωμένα control-flow records (fork/join/loop/cancellation/progress). Κάθε obligation έχει content-derived identity και lifecycle χωρίς silent drop, ενώ 15/15 non-`NONE` phases έχουν explicit authority gate, executor, commit semantics, rollback/compensation και terminal receipt. Η εκτελέσιμη αρνητική επαλήθευση δεν έχει ακόμη τρέξει.
+4. **Scenario completeness — DESIGN COMPLETE:** SCN-01…18 + defaults/profiles/field bindings υλοποιούν σχεδιαστικά τα 14 υποχρεωτικά SimulationCapsule fields· όλα παραμένουν `DESIGN_ONLY_NOT_RUN`.
+5. **Adversarial closure specification — DESIGN COMPLETE:** το MFA-ATK-30 προεγγράφει CE-01…10 για requirement orphaning, ambient input, dropped obligation, authority bypass, partial capsule, scope escalation, resource capability deletion, epistemic erasure, operation guessing και scalar-fidelity collapse, με typed expected verdict και falsifier. Δεν έχουν ακόμη εκτελεστεί.
+6. **Independent adjudication — NEXT:** μόνο εφόσον τα MFA-VO-097/105/106 και οι συναφείς MFA-VO-099/102 ικανοποιηθούν από ανεξάρτητο F1 checker στο ακριβές cut, το μοντέλο μπορεί να γίνει `STRUCTURALLY_CLOSED`. `SEMANTICALLY_CLOSED` και `SIMULATION_READY` απαιτούν χωριστές επόμενες ετυμηγορίες.
+7. **Creator gate:** μετά την παρουσίαση του evidence pack, ο δημιουργός αποφασίζει αν αρχίζει η F1 implementation του ECMW/trace compiler. Κανένας παραγωγικός κώδικας δεν προηγείται.
+
+Μετά την έγκριση, το πρώτο implementation delta δεν αλλάζει τον στόχο: read-only F1 compiler για MFA-CON-079/087, negative fixtures και scope-honest report. Τα 18 F2 scenarios παραμένουν επόμενη δόση, όχι mock-pass.

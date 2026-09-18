@@ -190,3 +190,63 @@ unknowns:
     blocks: [MFA-ELM-038, MFA-ELM-119, MFA-ELM-125]
     reason_class: EPISTEMIC
     change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Growth floors and recovery bounds remain open"}]
+  - <<: *d
+    id: MFA-UNK-138
+    source: MFA-PATCH-0069
+    name: "Construct validity of an AI operational-consciousness examination"
+    reason: "Human neurological/psychiatric constructs are useful functional analogies but embodiment, clocks, memory, interfaces and failure modes differ; direct item transfer can measure the test harness rather than the target construct."
+    judgment: "The 12-domain ontology is specified; thresholds, tasks, invariance across substrates and diagnostic accuracy remain empirical."
+    plan: "Preregister construct maps and negative controls; run impairment/recovery ablations at F2; compare independent batteries and external behaviour traces under MFA-VO-098."
+    cost: "F2 experiment programme plus interdisciplinary review"
+    voi: HIGH
+    blocks: [MFA-ELM-107, MFA-ELM-120, MFA-ELM-121]
+    reason_class: EPISTEMIC
+    change_history: [{patch: MFA-PATCH-0069, op: ADD, date: "2026-09-17", summary: "Operational consciousness is testable but calibration remains open"}]
+  - <<: *d
+    id: MFA-UNK-139
+    source: MFA-PATCH-0070
+    name: "F2 co-simulation model-discrepancy bounds"
+    reason: "A contract-conformant component may still diverge dynamically from hardware, networks, models or institutions; universal discrepancy bounds do not follow from interface conformance."
+    judgment: "Every component/boundary needs a local discrepancy model and calibration receipt; global simulation certainty is unavailable without them."
+    plan: "Shadow trace collection, differential replay and per-boundary error envelopes under MFA-VO-102."
+    cost: "F2/F3 traces and repeated calibration"
+    voi: HIGH
+    blocks: [MFA-ELM-126]
+    reason_class: EPISTEMIC
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Honest simulation model error"}]
+  - <<: *d
+    id: MFA-UNK-140
+    source: MFA-PATCH-0070
+    name: "Empirical resource envelopes for the €2k laptop and €10k workstation classes"
+    reason: "Hardware price is not a stable technical specification; model sizes, quantization, workload mix, energy limits and provider availability determine actual latency/throughput."
+    judgment: "Both profiles preserve the target architecture; only active fidelity/concurrency/latency/offload schedule differs. Numeric capacity remains a projection until benchmarked on named hardware."
+    plan: "Freeze two hardware bills of materials, execute the mission/scenario catalogue, publish confidence intervals and saturation curves under MFA-VO-103."
+    cost: "Two machines plus F2 benchmark campaign"
+    voi: HIGH
+    blocks: [MFA-ELM-097, MFA-ELM-108, MFA-ELM-126, MFA-ELM-127]
+    reason_class: EXTERNAL_FACT
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Resource claims require measured profiles"}]
+  - <<: *d
+    id: MFA-UNK-141
+    source: MFA-PATCH-0070
+    name: "Semantic translation soundness across canonical substrate, SysML, TLA+, P and FMI"
+    reason: "The formalisms have different expressiveness and execution semantics; complete bidirectional equivalence is generally unavailable."
+    judgment: "Each adapter can preserve a declared fragment with a loss ledger; no tool/formalism becomes the canonical truth."
+    plan: "Define fragments, translation witnesses and differential counterexamples; discharge MFA-VO-104 per adapter/version."
+    cost: "Formalization and tool-adapter work per projection"
+    voi: HIGH
+    blocks: [MFA-ELM-088, MFA-ELM-099, MFA-ELM-126]
+    reason_class: EPISTEMIC
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Cross-formalism equivalence is explicit research"}]
+  - <<: *d
+    id: MFA-UNK-142
+    source: MFA-PATCH-0070
+    name: "Release-attestation trust continuity across post-quantum epochs"
+    reason: "A later cryptographic break can invalidate historical verification unless epoch transitions have independent anchors and migration evidence."
+    judgment: "The external-attestation structure closes self-reference now; long-horizon trust requires multi-epoch cross-attestation and independent archival witnesses."
+    plan: "Run signature-break/migration drills, cross-sign old/new roots and preserve raw evidence for re-attestation under MFA-VO-100."
+    cost: "Periodic cryptographic migration drill"
+    voi: HIGH
+    blocks: [MFA-ELM-003, MFA-ELM-005, MFA-ELM-088]
+    reason_class: EPISTEMIC
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Attestation continuity remains an explicit unknown"}]

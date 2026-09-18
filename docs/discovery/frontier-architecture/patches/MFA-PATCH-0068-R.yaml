@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0068-R
+reverses: MFA-PATCH-0068
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, CAPABILITY-LATTICE.yaml, CONTRACTS.yaml, INVARIANTS.yaml, VERIFICATION-OBLIGATIONS.yaml, INVENTIONS.yaml, RESEARCH-PROGRAMS.yaml, TECHNICAL-ARCHITECTURE.md, IMPLEMENTATION-ROADMAP.md, diagrams/MFA-DIA-00.mmd, README.md, CHANGELOG.md]
+change: {restore: "0.4.1 canonical architecture while preserving 0.4.2 files as superseded evidence", archive: [mechanisms/MFA-MECH-045.md, inventions/MFA-MECH-045.yaml, diagrams/MFA-DIA-26.mmd]}
+capability_impact: {gained: [], at_risk: [MFA-CAP-109], ledger_entry: "Rollback removes closure formalism from active design but preserves all prior capabilities and the proposal record"}
+verification: "Exact semantic diff against frozen source commit 7d80ff67"
+rollback: MFA-PATCH-0068
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED

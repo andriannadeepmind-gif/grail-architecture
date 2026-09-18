@@ -1,0 +1,110 @@
+# INVENTION DOSSIER MFA-MECH-045 — Evidence-Carrying Mission Weave (ECMW)
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+# status: PROPOSED / UNREVIEWED — design only; no implementation claim.
+invention_id: MFA-MECH-045
+name: "Evidence-Carrying Mission Weave (ECMW) — τυπική σύνθεση αποστολής, closure και scope-honest verdict"
+required_capability:
+  caps: [MFA-CAP-109]
+  text: "Κάθε REQUIRED ικανότητα συμμετέχει σε τουλάχιστον ένα κλειστό end-to-end mission thread και κάθε verdict περιορίζεται στο scope/fidelity που πράγματι εκτελέστηκε."
+why_known_methods_are_insufficient: "Workflow engines δίνουν δρομολόγηση χωρίς ενιαία σημασιολογία epistemic status, authority, reversibility και evidence fidelity· proof/effect systems συνήθως δεν περιλαμβάνουν real-world receipts, resource envelopes, failure compensation και simulation modes· το 0.4.1 είχε τα όργανα και contracts αλλά όχι binding end-to-end witness που να αποδεικνύει τη συνεργασία τους."
+preserved_objective: "MFA-TEL-08 · MFA-OBJ-050…058 · MFA-INV-001 · καμία αφαίρεση ικανότητας"
+new_principle: "Αποστολή = evidence-carrying temporal graph. Κάθε κόμβος είναι τυπωμένη μεταβολή με authority/resource/effect/obligation annotations· η σύνθεση παράγει MissionClosureCertificate μόνο αν δεν υπάρχει ορφανή είσοδος/έξοδος, unmediated Effect, dropped obligation, άτερμος failure path ή μη δηλωμένο scope/fidelity."
+formal_objects:
+  - "MissionThread M = ⟨id, objective, cut, phases, edges, authority_path, resource_envelope, terminal_states⟩"
+  - "Phase p = ⟨provider, I, O, pre, contract, A, B, Ω, timeout, effect_class, evidence, fail⟩"
+  - "Judgment Γ; A; B ⊢ p : I → O ! Ω ▷ R"
+  - "MissionClosureCertificate = ⟨thread, cut, structural_witness, semantic_witness, scope, fidelity, receipts⟩"
+  - "ArchitectureClosureCertificate = coverage(required targets/capabilities, closed threads) + unresolved unknown/conflict ledger"
+state_variables:
+  - mission_graph
+  - current_cut
+  - phase_states
+  - open_obligations
+  - authority_ledger
+  - resource_ledger
+  - evidence_receipts
+  - closure_state
+transition_rules:
+  - "COMPOSE: output type, cut and classification of p must satisfy the input contract of every successor."
+  - "ADVANCE: precondition true and required authority/resource lease present; otherwise BLOCKED or DEFERRED with receipt."
+  - "EFFECT: any effect_class other than NONE must cross the declared mediated gate and yield an EffectReceipt."
+  - "FAIL: phase failure follows exactly one declared compensation/degraded/halt transition; no implicit fall-through."
+  - "CLOSE_THREAD: all terminal, obligation, liveness, evidence and scope predicates hold; otherwise OPEN with counterexample."
+  - "CLOSE_ARCHITECTURE: every REQUIRED target/capability covered by a closed thread and no REQUIRED target is design_status ABSENT."
+algorithms:
+  - name: "Compile-and-close mission thread"
+    complexity: "O(|P| + |E| + |Ω|) for structural closure; semantic/liveness obligations depend on their named verifier"
+    pseudocode: |
+      procedure CLOSE_THREAD(M, model_cut, fidelity, mode):
+        assert digest(M.cut) = digest(model_cut)
+        errors ← []
+        for p in M.phases:
+          errors += typecheck(p.input, predecessors(p).outputs)
+          errors += check_contract(p.pre, p.contract, p.output)
+          errors += check_authority(p.authority, p.effect_class)
+          errors += check_budget_timeout(p.resource, p.timeout)
+          errors += require_failure_transition(p)
+          errors += require_evidence_schema(p.evidence, fidelity, mode)
+        errors += check_fork_join_cancel(M.edges)
+        errors += check_obligation_linearity(M.open_obligations)
+        errors += check_loop_progress_or_liveness_obligation(M)
+        errors += check_all_outputs_consumed_or_terminal(M)
+        if errors ≠ ∅:
+          return OPEN(counterexamples=errors, receipt=scope_receipt(M, fidelity, mode))
+        return MissionClosureCertificate(M.id, model_cut, fidelity, mode, witnesses(), receipts())
+
+      procedure CLOSE_ARCHITECTURE(model, threads):
+        required ← required_targets(model) ∪ required_capabilities(model)
+        certs ← { CLOSE_THREAD(t, model.cut, t.fidelity, DESIGN_ONLY) | t ∈ threads }
+        uncovered ← required - union(c.coverage for c in certs if c.valid)
+        absent ← {x ∈ required | design_status(x) = ABSENT}
+        if uncovered ∪ absent ≠ ∅: return OPEN(uncovered, absent)
+        return SEMANTICALLY_CLOSED(certs, unresolved_unknowns(model), conflicts(model))
+interfaces:
+  - "compile(thread, model_cut) → MissionIR | CounterexampleSet"
+  - "close_thread(thread, capsule) → MissionClosureCertificate | OPEN"
+  - "close_architecture(model_cut, threads) → ArchitectureClosureCertificate | OPEN"
+  - "aggregate(receipts, declared_scope) → ScopedVerdict"
+contracts: [MFA-CON-079, MFA-CON-081, MFA-CON-087]
+invariants: [MFA-INV-125, MFA-INV-126, MFA-INV-132, MFA-INV-133]
+authority_model: "ECMW compiles and evaluates only in Genesis. It cannot grant authority. Each phase carries an authority requirement that must be satisfied by the existing mediated authority chain; Creator-only transitions remain Creator-only."
+learning_model: "Mission ordering and resource allocations may be proposed by MFA-MECH-044/RVSI at L2, but phase contracts, authority classes and closure semantics change only through admitted architecture patches. Traces may improve estimates, never rewrite evidence."
+failure_modes:
+  - {mode: "false closure from missing phase", response: "coverage counterexample; thread remains OPEN"}
+  - {mode: "liveness hidden inside runtime SCC", response: "mandatory liveness VO and bounded scenario; no closure at F2 until discharged"}
+  - {mode: "receipt laundering across scope/fidelity", response: "digest mismatch or scope mismatch makes aggregation INDETERMINATE"}
+  - {mode: "resource exhaustion", response: "DEFER/DEGRADED_FIDELITY/OFFLOAD with explicit receipt; capability retained"}
+  - {mode: "failure branch has no safe terminal", response: "compile-time counterexample; architecture OPEN"}
+containment: "Design-time compilation, Twin isolation, no ambient authority, mediated effects, typed failure terminals, immutable receipts."
+reversibility_class: "REVERSIBLE design formalism; real actions inherit their own RET classification and are never reclassified by ECMW."
+resource_complexity: "Structural analysis linear in graph size; bounded model checking may be exponential in state variables; F2 simulation cost is capsule-specific and always declared."
+scaling_law: "Partition by mission thread and cut; compositional assume-guarantee witnesses reduce global state explosion. No unbounded scalability claim until MFA-VO-105."
+verification_strategy:
+  - "schema/referential check of every canonical thread"
+  - "negative fixtures: orphan output, dropped obligation, unmediated effect, missing timeout, false global PASS"
+  - "F2 execution of all mandatory scenario capsules"
+  - "coverage proof over every REQUIRED target/capability"
+experiments:
+  - "ECMW-E1: compile 12 canonical mission threads; inject one defect class at a time; every defect yields the named counterexample."
+  - "ECMW-E2: run 18 mandatory scenario capsules at F2; no global PASS unless every mandatory obligation is measured and completed."
+  - "ECMW-E3: compare monolithic state exploration with compositional witnesses on identical scenarios; report cost and missed counterexamples."
+falsifiers:
+  - "A REQUIRED capability has no closed thread but ArchitectureClosureCertificate is issued."
+  - "A phase creates a real effect without a mediated authority receipt and the thread closes."
+  - "An unmeasured/indeterminate mandatory obligation is aggregated into PASS."
+  - "A seeded failure reaches neither compensation, degraded terminal nor halt and is not reported."
+known_dependencies: [MFA-MECH-001, MFA-MECH-015, MFA-MECH-025, MFA-MECH-039, MFA-MECH-043, MFA-MECH-044, MFA-ELM-122, MFA-ELM-126, MFA-ELM-127]
+unknown_dependencies: [MFA-UNK-139, MFA-UNK-141]
+integration_points: [MFA-ELM-088, MFA-ELM-091, MFA-ELM-122, MFA-ELM-126, MFA-ELM-127]
+migration_path: "0.4.2 defines canonical threads/scenarios and closure semantics without changing production code; Dose 0.5 compiles them at F1; Dose 1–2 substitutes F2 components while preserving contracts."
+implementation_sequence:
+  - "Admit metamodel and canonical thread records."
+  - "Build read-only compiler and negative fixtures at F1."
+  - "Bind each thread to SimulationCapsules and F2 oracles."
+  - "Require ArchitectureClosureCertificate for later implementation promotion."
+epistemic_status:
+  overall: "NEW FORMALISM"
+  per_claim:
+    - {claim: "typed workflow/effect/obligation composition can expose structural omissions", status: "IMPLEMENTABLE FROM KNOWN COMPONENTS"}
+    - {claim: "the combined ECMW judgment is sufficient for GRAIL semantic closure", status: "NEW FORMALISM"}
+    - {claim: "compositional witnesses control full F2 state explosion without missed failures", status: "RESEARCH HYPOTHESIS"}

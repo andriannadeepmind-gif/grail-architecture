@@ -417,3 +417,124 @@ invariants:
     verification: [MFA-VO-090, MFA-VO-095]
     falsifier: "Evidence verdict directly grants real-world authority, or governance preference rewrites an evidence verdict."
     change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Truth/policy/authority separation"}]
+  - <<: *d
+    id: MFA-INV-125
+    corresponds_to: null
+    name: "Mission-thread closure is total and evidence carrying"
+    tier: 0
+    delta: NEW
+    statement: "Κάθε admitted mission thread έχει provenance-bearing inputs, consumed/terminal outputs, mediated Effects, linear obligation disposition, declared fork/join/loop/timeouts, failure→compensation/degraded/halt transitions και cut/scope/fidelity/mode-bound receipts."
+    enforcement: [MFA-ELM-122, MFA-ELM-126, MFA-ELM-127]
+    verification: [MFA-VO-097]
+    falsifier: "Thread closes with orphan input/output, dropped obligation, unmediated Effect, unresolved join, unbounded loop or failure without safe terminal."
+    change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Evidence-Carrying Mission Weave"}]
+  - <<: *d
+    id: MFA-INV-126
+    corresponds_to: null
+    name: "No global PASS outside completed tested scope"
+    tier: 0
+    delta: NEW
+    statement: "PASS ισχύει μόνο για ακριβές tested_scope/model_cut/fidelity_vector/mode και μόνο όταν όλες οι mandatory obligations εντός scope ολοκληρώθηκαν· excluded, unmeasured και indeterminate παραμένουν ρητά και απαγορεύουν global architecture PASS."
+    enforcement: [MFA-ELM-126, MFA-ELM-091, MFA-ELM-089]
+    verification: [MFA-VO-099]
+    falsifier: "Subset ή zero-run αποτέλεσμα, mandatory UNMEASURED/INDETERMINATE ή F1 executable-spec αποτέλεσμα εμφανίζεται ως full-architecture PASS."
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Scope-honest verdict aggregation"}]
+  - <<: *d
+    id: MFA-INV-127
+    corresponds_to: null
+    name: "Release attestation cannot self-reference dishonestly"
+    tier: 0
+    delta: NEW
+    statement: "In-tree manifest δεσμεύει αρχεία και basis/parent· το τελικό commit/tree δεσμεύεται μόνο από μεταγενέστερο ή εξωτερικό signed ReleaseAttestation με crypto-epoch lineage."
+    enforcement: [MFA-ELM-001, MFA-ELM-003, MFA-ELM-005, MFA-ELM-088]
+    verification: [MFA-VO-100]
+    falsifier: "Αρχείο μέσα στο commit ισχυρίζεται επαληθευμένα το τελικό digest του ίδιου commit ή committed=true χωρίς εξωτερικό attestation."
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "External release attestation"}]
+  - <<: *d
+    id: MFA-INV-128
+    corresponds_to: null
+    name: "Twin diagnostic, enforcing, shadow and real authority remain distinct"
+    tier: 0
+    delta: NEW
+    statement: "Κάθε Twin transition/receipt φέρει execution mode· DIAGNOSTIC δεν δεσμεύει, ENFORCING commits ή rolls back atomically, SHADOW δεν γράφει στον κόσμο και BOUNDED_REAL ανήκει μόνο στο RET/Effect envelope."
+    enforcement: [MFA-ELM-010, MFA-ELM-126]
+    verification: [MFA-VO-101]
+    falsifier: "Diagnostic/shadow state θεωρείται committed ή το Twin αποκτά real-world authority χωρίς RET."
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Twin execution-mode separation"}]
+  - <<: *d
+    id: MFA-INV-129
+    corresponds_to: null
+    name: "Operational consciousness is graded functional state; subjective state is separate"
+    tier: 0
+    delta: NEW
+    statement: "Η operational consciousness αποτιμάται σε 12 εξωτερικά εξετάσιμα domains στο ίδιο signed cut· impairment μειώνει συγκεκριμένα domains και δεν συνεπάγεται ανυπαρξία οντότητας. Subjective state/qualia είναι χωριστό first-person epistemic object: ούτε προϋπόθεση ούτε αυτόματη συνέπεια ούτε προκαθορισμένη άρνηση του functional verdict."
+    enforcement: [MFA-ELM-107, MFA-ELM-120, MFA-ELM-121]
+    verification: [MFA-VO-098, MFA-VO-080, MFA-VO-081]
+    falsifier: "Binary metaphysical verdict replaces the 12-domain vector, mixed-cut evidence is used, or functional/subjective status silently overwrites the other."
+    change_history: [{patch: MFA-PATCH-0069, op: ADD, date: "2026-09-17", summary: "Binding operational-consciousness definition"}]
+  - <<: *d
+    id: MFA-INV-130
+    corresponds_to: null
+    name: "Deployment profiles conserve required target capabilities"
+    tier: 0
+    delta: NEW
+    statement: "Laptop/workstation/cluster profile μπορεί να αλλάζει concurrency, latency, locality, model size και fidelity, ποτέ να διαγράφει σιωπηλά REQUIRED capability· αν δεν χωρά, η εργασία queued/offloaded/deferred/degraded-fidelity με receipt."
+    enforcement: [MFA-ELM-097, MFA-ELM-108, MFA-ELM-126, MFA-ELM-127]
+    verification: [MFA-VO-103]
+    falsifier: "Profile claims the same target while silently removing a required capability, or co-located replicas count as independent domains."
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Resource profiles without capability loss"}]
+  - <<: *d
+    id: MFA-INV-131
+    corresponds_to: null
+    name: "Every simulation verdict is reproducible at its declared semantics"
+    tier: 1
+    delta: NEW
+    statement: "Κάθε F2+ run δεσμεύει SimulationCapsule: model cut, fidelity vector, mode, clocks, seeds, scheduler, faults, resources, external models, oracles, termination and replay tolerance."
+    enforcement: [MFA-ELM-126, MFA-ELM-089]
+    verification: [MFA-VO-102]
+    falsifier: "Run cannot be reconstructed to its declared bitwise/semantic/distributional tolerance or omits a causal scheduling/fault/resource input."
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "SimulationCapsule reproducibility"}]
+  - <<: *d
+    id: MFA-INV-132
+    corresponds_to: null
+    name: "Legal quest has end-to-end evidence and obligation closure"
+    tier: 0
+    delta: NEW
+    statement: "Κάθε legal quest συνδέει matter/evidence/legal-time cut/research/argument graph/adversarial worlds/strategy/draft/citation validation/emission/authority/effect/outcome/learning· ελλιπές σκέλος δηλώνεται και δεν καλύπτεται από γλωσσική ευχέρεια."
+    enforcement: [MFA-ELM-019, MFA-ELM-032, MFA-ELM-122, MFA-ELM-127]
+    verification: [MFA-VO-097, MFA-VO-105]
+    falsifier: "Unproven citation, hidden alternative, stale law cut, dropped obligation or outcome without provenance passes as complete legal answer."
+    change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Canonical end-to-end legal quest"}]
+  - <<: *d
+    id: MFA-INV-133
+    corresponds_to: null
+    name: "Architecture closure cannot hide absent required targets or live unknowns"
+    tier: 0
+    delta: NEW
+    statement: "ArchitectureClosureCertificate απαγορεύεται αν REQUIRED target/capability είναι ABSENT ή ακάλυπτο από closed mission thread· Unknowns/Conflicts/Falsified variants παραμένουν προσαρτημένα και δεν μετατρέπονται σε closure."
+    enforcement: [MFA-ELM-088, MFA-ELM-126]
+    verification: [MFA-VO-105]
+    falsifier: "Certificate εκδίδεται με uncovered REQUIRED capability, absent target ή διαγραμμένο unknown/conflict residue."
+    change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Honest architecture closure"}]
+  - <<: *d
+    id: MFA-INV-134
+    corresponds_to: null
+    name: "External formalisms are loss-accounted projections, never accidental canon"
+    tier: 0
+    delta: NEW
+    statement: "SysML, TLA+, P, FMI, W3C PROV και supply-chain attestations είναι generated projections/adapters του canonical substrate· κάθε μετάφραση δηλώνει preserved semantics, losses, counterexamples και round-trip evidence."
+    enforcement: [MFA-ELM-088, MFA-ELM-099, MFA-ELM-126]
+    verification: [MFA-VO-104]
+    falsifier: "Projection becomes sole truth by tooling convenience or claims lossless equivalence without translation witness/counterexample tests."
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Serialization/formalism independence"}]
+  - <<: *d
+    id: MFA-INV-135
+    corresponds_to: null
+    name: "Every source requirement is traced without false satisfaction"
+    tier: 0
+    delta: NEW
+    statement: "Κάθε ένα από τα 114 REQ διατηρεί statement/provenance και έχει objective, provider, capability, primary MissionThread, contract, invariant και verification obligation· STRUCTURALLY_TRACED δεν σημαίνει SATISFIED ή EVIDENCED."
+    enforcement: [MFA-ELM-088, MFA-ELM-122, MFA-ELM-126]
+    verification: [MFA-VO-106]
+    falsifier: "Requirement is absent/orphaned, silently weakened, mapped to a missing canonical id, or reported satisfied without evidence at the VO's fidelity."
+    change_history: [{patch: MFA-PATCH-0071, op: ADD, date: "2026-09-17", summary: "114/114 requirement traceability"}]

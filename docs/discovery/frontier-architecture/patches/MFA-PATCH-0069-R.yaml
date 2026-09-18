@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0069-R
+reverses: MFA-PATCH-0069
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, CAPABILITY-LATTICE.yaml, CONTRACTS.yaml, INVARIANTS.yaml, VERIFICATION-OBLIGATIONS.yaml, UNKNOWNS.yaml, RESEARCH-PROGRAMS.yaml, ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md, TECHNICAL-ARCHITECTURE.md, diagrams/MFA-DIA-26.mmd, CHANGELOG.md]
+change: {restore: "0.4.1 functional-consciousness wording", preserve: "MFA-PATCH-0059 ACTIVE_UNKNOWN and open revision path"}
+capability_impact: {gained: [], at_risk: ["graded 12-domain operational examination"], ledger_entry: "Rollback never reinstates the epistemic lock or removes the consciousness target"}
+verification: "Exact semantic diff against frozen source commit 7d80ff67"
+rollback: MFA-PATCH-0069
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED

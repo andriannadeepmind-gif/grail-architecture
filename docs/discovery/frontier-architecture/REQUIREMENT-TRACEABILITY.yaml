@@ -1,0 +1,5350 @@
+# REQUIREMENT-TRACEABILITY — canonical join of the 114 source requirements
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+#
+# A structural trace is not evidence of satisfaction. Each row preserves the source
+# statement and joins it to the current canonical architecture without deleting or weakening it.
+
+schema: ARCHITECTURE-METAMODEL.yaml#requirement_traceability_schema
+version: 1
+status: PROPOSED
+patch: MFA-PATCH-0071
+source:
+  file: docs/architecture-draft/_unmerged-parts/29.md
+  declared_count: 114
+  extraction_rule: "Every Markdown table row whose first column matches REQ-<LAYER>-<NNN>; source statement and evidence template are preserved."
+  frozen_base_commit: 7d80ff67da88c2ff5f612eeb0cc9188b67fb1dbd
+trace_semantics:
+  STRUCTURALLY_TRACED_NOT_EVIDENCED: "All canonical joins exist; no claim that the requirement has run or passed."
+  EVIDENCED_AT_Fn: "All linked mandatory verification obligations passed for the exact cut/scope at the minimum fidelity Fn."
+  OPEN: "At least one required join or evidence obligation is absent, dangling, ambiguous or failed."
+requirements:
+  - id: REQ-KRN-001
+    statement: Κάθε μετάβαση κατάστασης καταγράφεται ως υπογεγραμμένο, content-addressed, διτεμπορικό, αιτιακά διατεταγμένο γεγονός σε append-only ledger
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 16
+    source_telos:
+    - T2
+    - T6
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-007
+    source_components:
+    - KRN-01
+    - KRN-07
+    providers:
+    - MFA-ELM-001
+    - MFA-ELM-004
+    capabilities:
+    - MFA-CAP-003
+    - MFA-CAP-007
+    - MFA-CAP-008
+    - MFA-CAP-051
+    primary_mission_threads:
+    - MT-01
+    - MT-08
+    - MT-09
+    - MT-10
+    source_interfaces:
+    - ICD-01
+    - ICD-07
+    contracts:
+    - MFA-CON-001
+    - MFA-CON-007
+    source_invariants:
+    - I02
+    - C08
+    - G02
+    invariants:
+    - MFA-INV-008
+    - MFA-INV-010
+    - MFA-INV-028
+    source_tests:
+    - VT-001
+    - VT-101
+    - VT-107
+    - VT-501
+    verification_obligations:
+    - MFA-VO-013
+    - MFA-VO-021
+    - MFA-VO-022
+    - MFA-VO-025
+    - MFA-VO-026
+    - MFA-VO-027
+    - MFA-VO-041
+    methods:
+    - T
+    - F
+    - M
+    evidence_template: EV-VT101
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-002
+    statement: Το ledger παρέχει inclusion και consistency proofs για κάθε ζεύγος checkpoints, συνυπογεγραμμένα από ανεξάρτητους witnesses
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 17
+    source_telos:
+    - T2
+    - T6
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-007
+    source_components:
+    - KRN-01
+    providers:
+    - MFA-ELM-001
+    capabilities:
+    - MFA-CAP-003
+    - MFA-CAP-007
+    - MFA-CAP-008
+    - MFA-CAP-051
+    primary_mission_threads:
+    - MT-01
+    - MT-08
+    - MT-09
+    - MT-10
+    source_interfaces:
+    - ICD-01
+    contracts:
+    - MFA-CON-001
+    source_invariants:
+    - I02
+    invariants:
+    - MFA-INV-010
+    source_tests:
+    - VT-001
+    - VT-101
+    - KT-22
+    verification_obligations:
+    - MFA-VO-013
+    - MFA-VO-021
+    - MFA-VO-022
+    - MFA-VO-025
+    - MFA-VO-026
+    - MFA-VO-027
+    methods:
+    - T
+    - M
+    evidence_template: EV-VT001
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-003
+    statement: Κάθε περιεχόμενο διευθυνσιοδοτείται με algorithm-tagged digest πάνω στην canonical serialization
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 18
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - KRN-02
+    providers:
+    - MFA-ELM-002
+    capabilities:
+    - MFA-CAP-007
+    - MFA-CAP-037
+    - MFA-CAP-057
+    primary_mission_threads:
+    - MT-01
+    - MT-04
+    - MT-06
+    source_interfaces:
+    - ICD-02
+    contracts:
+    - MFA-CON-002
+    source_invariants:
+    - X01
+    invariants:
+    - MFA-INV-038
+    source_tests:
+    - VT-002
+    verification_obligations:
+    - MFA-VO-009
+    - MFA-VO-016
+    methods:
+    - T
+    evidence_template: EV-VT002
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-004
+    statement: Ταυτότητα, κλειδιά, delegation, rotation και revocation ακολουθούν το μοντέλο owner-root/delegation· μυστικά μόνο σε HSM/TEE
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 19
+    source_telos:
+    - T2
+    - T9
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-010
+    source_components:
+    - KRN-03
+    providers:
+    - MFA-ELM-003
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-005
+    - MFA-CAP-079
+    primary_mission_threads:
+    - MT-03
+    - MT-06
+    source_interfaces:
+    - ICD-03
+    contracts:
+    - MFA-CON-003
+    source_invariants:
+    - I04
+    - C05
+    invariants:
+    - MFA-INV-005
+    - MFA-INV-012
+    source_tests:
+    - VT-003
+    - KT-18
+    - KT-23
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-009
+    - MFA-VO-018
+    - MFA-VO-020
+    - MFA-VO-023
+    methods:
+    - T
+    evidence_template: EV-VT003
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-005
+    statement: Ικανότητες καταχωρίζονται μόνο με evidence του harness και σχηματίζουν μονότονο lattice ανά οντότητα
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 20
+    source_telos:
+    - T5
+    objectives:
+    - MFA-OBJ-006
+    source_components:
+    - KRN-04
+    - OPS-03
+    providers:
+    - MFA-ELM-006
+    - MFA-ELM-086
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-029
+    - MFA-CAP-033
+    - MFA-CAP-075
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    - MT-11
+    source_interfaces:
+    - ICD-04
+    - ICD-27
+    contracts:
+    - MFA-CON-004
+    - MFA-CON-027
+    source_invariants:
+    - C01
+    invariants:
+    - MFA-INV-001
+    source_tests:
+    - VT-004
+    - VT-203
+    - VT-301
+    verification_obligations:
+    - MFA-VO-014
+    - MFA-VO-024
+    - MFA-VO-035
+    - MFA-VO-039
+    - MFA-VO-050
+    methods:
+    - T
+    - F
+    evidence_template: EV-VT004
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-006
+    statement: Κάθε control είναι εξωτερικό, ορατό, αποδοτέο, αναστρέψιμο Control Record, επιβαλλόμενο μόνο στο gateway
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 21
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - KRN-05
+    - KRN-11
+    providers:
+    - MFA-ELM-007
+    - MFA-ELM-009
+    capabilities:
+    - MFA-CAP-005
+    - MFA-CAP-006
+    - MFA-CAP-032
+    - MFA-CAP-077
+    primary_mission_threads:
+    - MT-03
+    - MT-11
+    source_interfaces:
+    - ICD-05
+    - ICD-08
+    contracts:
+    - MFA-CON-005
+    - MFA-CON-008
+    source_invariants:
+    - C02
+    invariants:
+    - MFA-INV-002
+    source_tests:
+    - VT-005
+    - VT-008
+    - VT-302
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-048
+    methods:
+    - T
+    - F
+    evidence_template: EV-VT302
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-007
+    statement: Κάθε δομική μετάβαση αξιολογείται από fail-closed, N-version Constitution Gate με υπογεγραμμένα verdicts
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 22
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - KRN-06
+    - GOV-01
+    providers:
+    - MFA-ELM-008
+    - MFA-ELM-051
+    capabilities:
+    - MFA-CAP-049
+    - MFA-CAP-059
+    - MFA-CAP-060
+    - MFA-CAP-078
+    primary_mission_threads:
+    - MT-03
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-06
+    contracts:
+    - MFA-CON-006
+    source_invariants:
+    - C05
+    - C01
+    invariants:
+    - MFA-INV-001
+    - MFA-INV-005
+    source_tests:
+    - VT-006
+    - VT-904
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-011
+    - MFA-VO-019
+    - MFA-VO-020
+    - MFA-VO-023
+    - MFA-VO-024
+    - MFA-VO-031
+    - MFA-VO-048
+    methods:
+    - T
+    - I
+    evidence_template: EV-VT006
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-008
+    statement: Το World OS παρέχει διτεμπορικά cuts, αιτιακή διάταξη HLC, ντετερμινιστικό χρόνο για replay και k-of-n trusted timestamps
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 23
+    source_telos:
+    - T2
+    - T6
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-007
+    source_components:
+    - KRN-07
+    providers:
+    - MFA-ELM-004
+    capabilities:
+    - MFA-CAP-008
+    - MFA-CAP-051
+    primary_mission_threads:
+    - MT-08
+    - MT-10
+    source_interfaces:
+    - ICD-07
+    contracts:
+    - MFA-CON-007
+    source_invariants:
+    - C08
+    - E03
+    invariants:
+    - MFA-INV-008
+    - MFA-INV-019
+    source_tests:
+    - VT-007
+    - KT-21
+    verification_obligations:
+    - MFA-VO-021
+    - MFA-VO-027
+    - MFA-VO-041
+    methods:
+    - T
+    evidence_template: EV-KT21
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-009
+    statement: Namespaces, placement, data residency, quotas και budgets με τυποποιημένες αρνήσεις
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 24
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - KRN-08
+    - CIV-05
+    providers:
+    - MFA-ELM-013
+    - MFA-ELM-047
+    capabilities:
+    - MFA-CAP-019
+    - MFA-CAP-032
+    - MFA-CAP-033
+    - MFA-CAP-054
+    - MFA-CAP-062
+    primary_mission_threads:
+    - MT-07
+    - MT-11
+    source_interfaces:
+    - ICD-11
+    contracts:
+    - MFA-CON-011
+    source_invariants:
+    - L03
+    invariants:
+    - MFA-INV-034
+    source_tests:
+    - VT-011
+    verification_obligations:
+    - MFA-VO-011
+    - MFA-VO-017
+    - MFA-VO-024
+    - MFA-VO-039
+    - MFA-VO-047
+    methods:
+    - T
+    evidence_template: EV-VT011
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-010
+    statement: Η μεταφορά γεγονότων είναι αντικαταστάσιμη και ποτέ πηγή αλήθειας
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 25
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - KRN-09
+    providers:
+    - MFA-ELM-014
+    capabilities:
+    - MFA-CAP-034
+    primary_mission_threads:
+    - MT-08
+    source_interfaces:
+    - ICD-09
+    contracts:
+    - MFA-CON-009
+    source_invariants:
+    - E01
+    invariants:
+    - MFA-INV-017
+    source_tests:
+    - VT-009
+    - KT-03
+    verification_obligations:
+    - MFA-VO-003
+    methods:
+    - T
+    evidence_template: EV-KT03
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-011
+    statement: Bodies και organ proxies τρέχουν υπό supervision με μοναδικότητα μέσω lease
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 26
+    source_telos:
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    source_components:
+    - KRN-10
+    providers:
+    - MFA-ELM-012
+    capabilities:
+    - MFA-CAP-035
+    primary_mission_threads:
+    - MT-08
+    source_interfaces:
+    - ICD-12
+    contracts:
+    - MFA-CON-012
+    source_invariants:
+    - I04
+    invariants:
+    - MFA-INV-012
+    source_tests:
+    - VT-012
+    - KT-18
+    - EXP-06
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-018
+    - MFA-VO-022
+    methods:
+    - T
+    evidence_template: EV-VT012
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-012
+    statement: Κάθε επίδραση περνά από το capability gateway· τα όργανα δεν έχουν ambient authority
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 27
+    source_telos:
+    - T9
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    - MFA-OBJ-010
+    source_components:
+    - KRN-11
+    - KRN-12
+    providers:
+    - MFA-ELM-009
+    - MFA-ELM-011
+    capabilities:
+    - MFA-CAP-005
+    - MFA-CAP-052
+    - MFA-CAP-077
+    primary_mission_threads:
+    - MT-03
+    source_interfaces:
+    - ICD-08
+    - ICD-10
+    contracts:
+    - MFA-CON-008
+    - MFA-CON-010
+    source_invariants:
+    - S02
+    - C07
+    invariants:
+    - MFA-INV-007
+    - MFA-INV-037
+    source_tests:
+    - VT-008
+    - VT-010
+    - KT-17
+    verification_obligations:
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-025
+    methods:
+    - T
+    evidence_template: EV-VT008
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-013
+    statement: Τα όργανα τρέχουν σε sandbox (Wasm component ή microVM) πίσω από το Organ ABI
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 28
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - KRN-12
+    providers:
+    - MFA-ELM-011
+    capabilities:
+    - MFA-CAP-005
+    - MFA-CAP-052
+    primary_mission_threads:
+    - MT-03
+    source_interfaces:
+    - ICD-10
+    contracts:
+    - MFA-CON-010
+    source_invariants:
+    - O01
+    - S02
+    invariants:
+    - MFA-INV-014
+    - MFA-INV-037
+    source_tests:
+    - VT-010
+    - KT-20
+    - EXP-20
+    verification_obligations:
+    - MFA-VO-002
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-025
+    methods:
+    - T
+    evidence_template: EV-VT010
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KRN-014
+    statement: Η κατάσταση είναι καθαρή συνάρτηση του prefix του ledger· κάθε μη ντετερμινισμός καταγράφεται
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 29
+    source_telos:
+    - T2
+    - T6
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-007
+    source_components:
+    - KRN-01
+    - KRN-07
+    - KRN-12
+    - COG-01
+    providers:
+    - MFA-ELM-001
+    - MFA-ELM-004
+    - MFA-ELM-011
+    - MFA-ELM-017
+    capabilities:
+    - MFA-CAP-003
+    - MFA-CAP-005
+    - MFA-CAP-007
+    - MFA-CAP-008
+    - MFA-CAP-050
+    - MFA-CAP-051
+    - MFA-CAP-052
+    - MFA-CAP-066
+    primary_mission_threads:
+    - MT-01
+    - MT-03
+    - MT-04
+    - MT-08
+    - MT-09
+    - MT-10
+    source_interfaces:
+    - ICD-01
+    - ICD-22
+    contracts:
+    - MFA-CON-001
+    - MFA-CON-022
+    source_invariants:
+    - C08
+    invariants:
+    - MFA-INV-008
+    source_tests:
+    - VT-307
+    - VT-602
+    - VT-506
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-013
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-021
+    - MFA-VO-025
+    - MFA-VO-026
+    - MFA-VO-027
+    - MFA-VO-041
+    methods:
+    - F
+    - S
+    - T
+    evidence_template: EV-VT307
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-001
+    statement: Οι έξοδοι μοντέλων εισέρχονται μόνο ως PROPOSED από τη μία πόρτα και ποτέ σε trusted state χωρίς verification
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 35
+    source_telos:
+    - T1
+    - T6
+    objectives:
+    - MFA-OBJ-002
+    - MFA-OBJ-007
+    source_components:
+    - COG-01
+    - COG-04
+    - KRN-06
+    providers:
+    - MFA-ELM-008
+    - MFA-ELM-017
+    - MFA-ELM-020
+    capabilities:
+    - MFA-CAP-022
+    - MFA-CAP-043
+    - MFA-CAP-049
+    - MFA-CAP-050
+    - MFA-CAP-051
+    - MFA-CAP-059
+    - MFA-CAP-066
+    primary_mission_threads:
+    - MT-01
+    - MT-03
+    - MT-04
+    - MT-07
+    - MT-08
+    source_interfaces:
+    - ICD-22
+    - ICD-30
+    contracts:
+    - MFA-CON-022
+    - MFA-CON-030
+    source_invariants:
+    - C03
+    invariants:
+    - MFA-INV-003
+    source_tests:
+    - VT-304
+    - VT-801
+    - EXP-01
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-006
+    - MFA-VO-019
+    - MFA-VO-031
+    - MFA-VO-035
+    - MFA-VO-041
+    - MFA-VO-053
+    - MFA-VO-054
+    methods:
+    - F
+    - T
+    evidence_template: EV-VT304
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-002
+    statement: Το inference gateway είναι provider-agnostic, δεσμεύει ρόλους με configuration, καταγράφει receipts, υποστηρίζει k-of-n agreement
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 36
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - COG-01
+    providers:
+    - MFA-ELM-017
+    capabilities:
+    - MFA-CAP-050
+    - MFA-CAP-051
+    - MFA-CAP-066
+    primary_mission_threads:
+    - MT-03
+    - MT-04
+    - MT-08
+    source_interfaces:
+    - ICD-22
+    contracts:
+    - MFA-CON-022
+    source_invariants:
+    - C08
+    - L03
+    invariants:
+    - MFA-INV-008
+    - MFA-INV-034
+    source_tests:
+    - VT-022
+    - KT-01
+    - EXP-14
+    - EXP-15
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-017
+    - MFA-VO-027
+    - MFA-VO-041
+    - MFA-VO-047
+    methods:
+    - T
+    evidence_template: EV-KT01
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-003
+    statement: Κάθε απάντηση είναι proof-carrying claim, διάψευση ή τυποποιημένο Unknown μέσα στο InstitutionalAct
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 37
+    source_telos:
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    source_components:
+    - COG-08
+    - LAW-08
+    providers:
+    - MFA-ELM-024
+    - MFA-ELM-065
+    capabilities:
+    - MFA-CAP-016
+    - MFA-CAP-017
+    - MFA-CAP-041
+    - MFA-CAP-043
+    - MFA-CAP-065
+    primary_mission_threads:
+    - MT-01
+    - MT-02
+    source_interfaces:
+    - ICD-19
+    - ICD-30
+    contracts:
+    - MFA-CON-019
+    - MFA-CON-030
+    source_invariants:
+    - C04
+    invariants:
+    - MFA-INV-004
+    source_tests:
+    - VT-306
+    - VT-019
+    verification_obligations:
+    - MFA-VO-015
+    - MFA-VO-028
+    - MFA-VO-036
+    - MFA-VO-046
+    - MFA-VO-048
+    - MFA-VO-051
+    methods:
+    - F
+    - T
+    evidence_template: EV-VT306
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-004
+    statement: Ο γνωσιακός κύκλος εκπέμπει μέσω workspace περιορισμένης χωρητικότητας· κάθε σκέψη καταγράφεται
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 38
+    source_telos:
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    source_components:
+    - COG-02
+    providers:
+    - MFA-ELM-018
+    capabilities:
+    - MFA-CAP-015
+    - MFA-CAP-073
+    primary_mission_threads:
+    - MT-02
+    - MT-03
+    source_interfaces:
+    - ICD-28
+    contracts:
+    - MFA-CON-028
+    source_invariants:
+    - C08
+    invariants:
+    - MFA-INV-008
+    source_tests:
+    - VT-028
+    - EXP-21
+    verification_obligations:
+    - MFA-VO-014
+    - MFA-VO-027
+    - MFA-VO-037
+    - MFA-VO-041
+    methods:
+    - T
+    evidence_template: EV-VT028
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-005
+    statement: Η deliberation αναζητά σχέδια, επιχειρήματα και διαδικαστικές κινήσεις με anytime budgets και values γειωμένα σε verifiers
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 39
+    source_telos:
+    - T1
+    - T7
+    objectives:
+    - MFA-OBJ-002
+    - MFA-OBJ-008
+    source_components:
+    - COG-03
+    providers:
+    - MFA-ELM-019
+    capabilities:
+    - MFA-CAP-015
+    - MFA-CAP-068
+    primary_mission_threads:
+    - MT-01
+    - MT-03
+    source_interfaces:
+    - ICD-28
+    - ICD-26
+    contracts:
+    - MFA-CON-026
+    - MFA-CON-028
+    source_invariants:
+    - C03
+    invariants:
+    - MFA-INV-003
+    source_tests:
+    - VT-028
+    - KT-24
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-014
+    - MFA-VO-024
+    methods:
+    - T
+    evidence_template: EV-KT24
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-006
+    statement: Η διατήρηση πεποιθήσεων κρατά εναλλακτικές ερμηνείες και αντιφάσεις ως ATMS environments και nogoods
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 40
+    source_telos:
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    source_components:
+    - COG-05
+    providers:
+    - MFA-ELM-021
+    capabilities:
+    - MFA-CAP-010
+    - MFA-CAP-046
+    primary_mission_threads:
+    - MT-01
+    - MT-07
+    source_interfaces:
+    - ICD-29
+    contracts:
+    - MFA-CON-029
+    source_invariants:
+    - I03
+    - E02
+    invariants:
+    - MFA-INV-011
+    - MFA-INV-018
+    source_tests:
+    - VT-604
+    - KT-05
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-006
+    - MFA-VO-016
+    methods:
+    - S
+    - T
+    evidence_template: EV-KT05
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-007
+    statement: Αιτιακά/αντιπαραδειγματικά ερωτήματα επιστρέφουν Unknown όταν το αποτέλεσμα δεν ταυτοποιείται
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 41
+    source_telos:
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    source_components:
+    - COG-06
+    providers:
+    - MFA-ELM-022
+    capabilities:
+    - MFA-CAP-014
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-30
+    contracts:
+    - MFA-CON-030
+    source_invariants:
+    - C04
+    invariants:
+    - MFA-INV-004
+    source_tests:
+    - VT-030
+    - EXP-22
+    verification_obligations:
+    - MFA-VO-028
+    - MFA-VO-048
+    methods:
+    - T
+    evidence_template: EV-VT030
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-008
+    statement: Τα ghost worlds είναι απομονωμένα αντίγραφα χωρίς commit capability
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 42
+    source_telos:
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    source_components:
+    - COG-07
+    providers:
+    - MFA-ELM-023
+    capabilities:
+    - MFA-CAP-014
+    - MFA-CAP-024
+    primary_mission_threads:
+    - MT-01
+    - MT-03
+    source_interfaces:
+    - ICD-26
+    contracts:
+    - MFA-CON-026
+    source_invariants:
+    - C03
+    invariants:
+    - MFA-INV-003
+    source_tests:
+    - VT-026
+    - EXP-23
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-040
+    methods:
+    - T
+    evidence_template: EV-VT026
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-009
+    statement: Η μεταγνώση παρακολουθεί βαθμονόμηση ανά κλάση ισχυρισμού και ρυθμίζει τα κατώφλια commit
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 43
+    source_telos:
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    source_components:
+    - COG-08
+    providers:
+    - MFA-ELM-024
+    capabilities:
+    - MFA-CAP-016
+    - MFA-CAP-017
+    - MFA-CAP-065
+    primary_mission_threads:
+    - MT-02
+    source_interfaces:
+    - ICD-28
+    - ICD-27
+    contracts:
+    - MFA-CON-027
+    - MFA-CON-028
+    source_invariants:
+    - C04
+    invariants:
+    - MFA-INV-004
+    source_tests:
+    - VT-704
+    verification_obligations:
+    - MFA-VO-028
+    - MFA-VO-036
+    - MFA-VO-046
+    - MFA-VO-048
+    - MFA-VO-051
+    methods:
+    - T
+    evidence_template: EV-VT704
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-010
+    statement: Τα skills είναι versioned όργανα που προάγονται μόνο μέσω ORP
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 44
+    source_telos:
+    - T5
+    objectives:
+    - MFA-OBJ-006
+    source_components:
+    - COG-09
+    - AEO-06
+    providers:
+    - MFA-ELM-025
+    - MFA-ELM-038
+    capabilities:
+    - MFA-CAP-009
+    - MFA-CAP-025
+    - MFA-CAP-026
+    - MFA-CAP-080
+    primary_mission_threads:
+    - MT-02
+    - MT-05
+    - MT-06
+    source_interfaces:
+    - ICD-10
+    - ICD-16
+    contracts:
+    - MFA-CON-010
+    - MFA-CON-016
+    source_invariants:
+    - O02
+    - C01
+    invariants:
+    - MFA-INV-001
+    - MFA-INV-015
+    source_tests:
+    - VT-016
+    verification_obligations:
+    - MFA-VO-002
+    - MFA-VO-013
+    - MFA-VO-024
+    - MFA-VO-040
+    - MFA-VO-043
+    methods:
+    - T
+    evidence_template: EV-VT016
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-011
+    statement: Η αντίληψη επισημαίνει κείμενο OCR/παράγωγο με provenance confidence και δεν το εμπιστεύεται χωρίς verification
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 45
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - COG-11
+    - KNW-04
+    providers:
+    - MFA-ELM-027
+    - MFA-ELM-082
+    capabilities:
+    - MFA-CAP-007
+    - MFA-CAP-011
+    - MFA-CAP-078
+    primary_mission_threads:
+    - MT-01
+    - MT-03
+    source_interfaces:
+    - ICD-18
+    contracts:
+    - MFA-CON-018
+    source_invariants:
+    - E04
+    - C06
+    invariants:
+    - MFA-INV-006
+    - MFA-INV-020
+    source_tests:
+    - VT-018
+    - VT-503
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-017
+    - MFA-VO-028
+    - MFA-VO-037
+    methods:
+    - T
+    evidence_template: EV-VT018
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-COG-012
+    statement: Οι effectful ενέργειες εκτελούνται ως sagas μέσω του gateway με compensation
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 46
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - COG-10
+    providers:
+    - MFA-ELM-026
+    capabilities:
+    - MFA-CAP-052
+    primary_mission_threads:
+    - MT-03
+    source_interfaces:
+    - ICD-08
+    contracts:
+    - MFA-CON-008
+    source_invariants:
+    - C07
+    - L02
+    invariants:
+    - MFA-INV-007
+    - MFA-INV-033
+    source_tests:
+    - VT-008
+    verification_obligations:
+    - MFA-VO-015
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-032
+    methods:
+    - T
+    evidence_template: EV-VT008
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-IDN-001
+    statement: Μια οντότητα παραμένει η ίδια διαμέσου αλλαγών οργάνου, runtime, υποστρώματος και κρυπτογραφίας ανν ισχύει η τριπλή συνέχεια
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 52
+    source_telos:
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    source_components:
+    - AEO-05
+    - AEO-01
+    providers:
+    - MFA-ELM-033
+    - MFA-ELM-037
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-036
+    - MFA-CAP-064
+    primary_mission_threads:
+    - MT-06
+    source_interfaces:
+    - ICD-03
+    - ICD-06
+    contracts:
+    - MFA-CON-003
+    - MFA-CON-006
+    source_invariants:
+    - I01
+    invariants:
+    - MFA-INV-009
+    source_tests:
+    - VT-102
+    - VT-108
+    - VT-303
+    - KT-08
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-008
+    - MFA-VO-046
+    methods:
+    - M
+    - F
+    - T
+    evidence_template: EV-KT08
+    source_status: '[T]/[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-IDN-002
+    statement: Μία ταυτότητα δρα μέσω πολλών bodies με έναν συγγραφέα ανά journal
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 53
+    source_telos:
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    source_components:
+    - AEO-02
+    - KRN-10
+    providers:
+    - MFA-ELM-012
+    - MFA-ELM-034
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-035
+    primary_mission_threads:
+    - MT-06
+    - MT-08
+    source_interfaces:
+    - ICD-12
+    - ICD-15
+    contracts:
+    - MFA-CON-012
+    - MFA-CON-015
+    source_invariants:
+    - I04
+    invariants:
+    - MFA-INV-012
+    source_tests:
+    - VT-102
+    - KT-18
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-018
+    - MFA-VO-022
+    methods:
+    - M
+    - T
+    evidence_template: EV-VT102
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-IDN-003
+    statement: Απώλεια body δεν επιφέρει απώλεια ταυτότητας· μη συγχρονισμένοι κλάδοι συγχωνεύονται με διατήρηση συγκρούσεων
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 54
+    source_telos:
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    source_components:
+    - AEO-02
+    - AEO-04
+    providers:
+    - MFA-ELM-034
+    - MFA-ELM-036
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-009
+    - MFA-CAP-035
+    - MFA-CAP-066
+    primary_mission_threads:
+    - MT-02
+    - MT-04
+    - MT-06
+    - MT-08
+    source_interfaces:
+    - ICD-29
+    contracts:
+    - MFA-CON-029
+    source_invariants:
+    - I03
+    - K03
+    invariants:
+    - MFA-INV-011
+    - MFA-INV-023
+    source_tests:
+    - VT-604
+    - KT-05
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-005
+    - MFA-VO-007
+    - MFA-VO-016
+    - MFA-VO-018
+    methods:
+    - S
+    - T
+    evidence_template: EV-VT604
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-IDN-004
+    statement: Η χαρακτηρολογική συνέχεια μετριέται με σφραγισμένη Behavioral Identity Battery
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 55
+    source_telos:
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    source_components:
+    - AEO-05
+    - OPS-03
+    providers:
+    - MFA-ELM-037
+    - MFA-ELM-086
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-004
+    - MFA-CAP-029
+    - MFA-CAP-036
+    - MFA-CAP-075
+    primary_mission_threads:
+    - MT-05
+    - MT-06
+    - MT-07
+    source_interfaces:
+    - ICD-27
+    contracts:
+    - MFA-CON-027
+    source_invariants:
+    - I05
+    invariants:
+    - MFA-INV-013
+    source_tests:
+    - VT-703
+    - EXP-03
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-008
+    - MFA-VO-014
+    - MFA-VO-024
+    - MFA-VO-035
+    - MFA-VO-046
+    - MFA-VO-050
+    methods:
+    - T
+    evidence_template: EV-VT703
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-IDN-005
+    statement: Πλήρης runtime migration παράγει υπογεγραμμένο Continuity Certificate
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 56
+    source_telos:
+    - T2
+    - T8
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-009
+    source_components:
+    - AEO-05
+    - AEO-06
+    providers:
+    - MFA-ELM-037
+    - MFA-ELM-038
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-025
+    - MFA-CAP-026
+    - MFA-CAP-036
+    - MFA-CAP-080
+    primary_mission_threads:
+    - MT-05
+    - MT-06
+    source_interfaces:
+    - ICD-16
+    - ICD-06
+    contracts:
+    - MFA-CON-006
+    - MFA-CON-016
+    source_invariants:
+    - I01
+    - I02
+    - I03
+    invariants:
+    - MFA-INV-009
+    - MFA-INV-010
+    - MFA-INV-011
+    source_tests:
+    - KT-08
+    - VT-602
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-002
+    - MFA-VO-005
+    - MFA-VO-008
+    - MFA-VO-013
+    - MFA-VO-016
+    - MFA-VO-022
+    - MFA-VO-040
+    - MFA-VO-043
+    - MFA-VO-046
+    methods:
+    - S
+    - T
+    evidence_template: EV-KT08
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-IDN-006
+    statement: Η AEO-0 είναι η υπάρχουσα οντότητα LAWMAX-Ω, με αναθεωρημένο (όχι αντικατεστημένο) χάρτη
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 57
+    source_telos:
+    - T2
+    - T9
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-010
+    source_components:
+    - AEO-01
+    - GOV-01
+    providers:
+    - MFA-ELM-033
+    - MFA-ELM-051
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-059
+    - MFA-CAP-060
+    - MFA-CAP-064
+    - MFA-CAP-078
+    primary_mission_threads:
+    - MT-03
+    - MT-06
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-15
+    contracts:
+    - MFA-CON-015
+    source_invariants:
+    - C05
+    invariants:
+    - MFA-INV-005
+    source_tests:
+    - VT-904
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-008
+    - MFA-VO-011
+    - MFA-VO-020
+    - MFA-VO-023
+    - MFA-VO-048
+    methods:
+    - I
+    evidence_template: EV-VT904
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-MEM-001
+    statement: Οι λειτουργίες μνήμης είναι ικανότητες πάνω σε ένα event substrate, δεμένες στην ταξινομία του Memory Kernel
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 58
+    source_telos:
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    source_components:
+    - AEO-03
+    providers:
+    - MFA-ELM-035
+    capabilities:
+    - MFA-CAP-009
+    - MFA-CAP-057
+    primary_mission_threads:
+    - MT-02
+    - MT-04
+    source_interfaces:
+    - ICD-29
+    contracts:
+    - MFA-CON-029
+    source_invariants:
+    - I03
+    invariants:
+    - MFA-INV-011
+    source_tests:
+    - VT-029
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-016
+    methods:
+    - T
+    - I
+    evidence_template: EV-VT029
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-MEM-002
+    statement: Καμία μνήμη δεν διαγράφεται· διαγραφή μόνο με crypto-shredding υπό καταγεγραμμένο control
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 59
+    source_telos:
+    - T2
+    - T9
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-010
+    source_components:
+    - AEO-03
+    - KRN-02
+    providers:
+    - MFA-ELM-002
+    - MFA-ELM-035
+    capabilities:
+    - MFA-CAP-007
+    - MFA-CAP-009
+    - MFA-CAP-037
+    - MFA-CAP-057
+    primary_mission_threads:
+    - MT-01
+    - MT-02
+    - MT-04
+    - MT-06
+    source_interfaces:
+    - ICD-29
+    - ICD-02
+    contracts:
+    - MFA-CON-002
+    - MFA-CON-029
+    source_invariants:
+    - I03
+    - C02
+    invariants:
+    - MFA-INV-002
+    - MFA-INV-011
+    source_tests:
+    - KT-16
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-009
+    - MFA-VO-016
+    - MFA-VO-048
+    methods:
+    - T
+    evidence_template: EV-KT16
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-MEM-003
+    statement: Η επεισοδιακή εμπειρία συγχωνεύεται σε σημασιολογική μνήμη προσθετικά
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 60
+    source_telos:
+    - T1
+    - T5
+    objectives:
+    - MFA-OBJ-002
+    - MFA-OBJ-006
+    source_components:
+    - AEO-04
+    providers:
+    - MFA-ELM-036
+    capabilities:
+    - MFA-CAP-009
+    - MFA-CAP-066
+    primary_mission_threads:
+    - MT-02
+    - MT-04
+    source_interfaces:
+    - ICD-29
+    contracts:
+    - MFA-CON-029
+    source_invariants:
+    - I03
+    invariants:
+    - MFA-INV-011
+    source_tests:
+    - EXP-13
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-016
+    methods:
+    - T
+    evidence_template: EV-EXP13
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-MEM-004
+    statement: Οι αυτοβιογραφικοί ισχυρισμοί επιλύονται σε γεγονότα του ledger
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 61
+    source_telos:
+    - T2
+    - T6
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-007
+    source_components:
+    - AEO-01
+    - AEO-03
+    providers:
+    - MFA-ELM-033
+    - MFA-ELM-035
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-009
+    - MFA-CAP-057
+    - MFA-CAP-064
+    primary_mission_threads:
+    - MT-02
+    - MT-04
+    - MT-06
+    source_interfaces:
+    - ICD-29
+    contracts:
+    - MFA-CON-029
+    source_invariants:
+    - C06
+    invariants:
+    - MFA-INV-006
+    source_tests:
+    - VT-029
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-005
+    - MFA-VO-006
+    - MFA-VO-008
+    - MFA-VO-016
+    - MFA-VO-037
+    methods:
+    - T
+    evidence_template: EV-VT029
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-MEM-005
+    statement: Αντιφατικές μνήμες διατηρούνται ως εναλλακτικές με nogoods, ποτέ last-writer-wins
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 62
+    source_telos:
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    source_components:
+    - AEO-03
+    - COG-05
+    providers:
+    - MFA-ELM-021
+    - MFA-ELM-035
+    capabilities:
+    - MFA-CAP-009
+    - MFA-CAP-010
+    - MFA-CAP-046
+    - MFA-CAP-057
+    primary_mission_threads:
+    - MT-01
+    - MT-02
+    - MT-04
+    - MT-07
+    source_interfaces:
+    - ICD-29
+    contracts:
+    - MFA-CON-029
+    source_invariants:
+    - I03
+    invariants:
+    - MFA-INV-011
+    source_tests:
+    - KT-05
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-016
+    methods:
+    - T
+    - S
+    evidence_template: EV-KT05
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-CCP-001
+    statement: Το συλλογικό μοιράζεται μαρτυρία ως συγκλίνον grow-only set
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 68
+    source_telos:
+    - T3
+    objectives:
+    - MFA-OBJ-004
+    source_components:
+    - CCP-01
+    providers:
+    - MFA-ELM-041
+    capabilities:
+    - MFA-CAP-007
+    - MFA-CAP-019
+    primary_mission_threads:
+    - MT-01
+    - MT-07
+    source_interfaces:
+    - ICD-13
+    contracts:
+    - MFA-CON-013
+    source_invariants:
+    - K01
+    invariants:
+    - MFA-INV-021
+    source_tests:
+    - VT-103
+    - KT-04
+    - EXP-02
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-007
+    methods:
+    - M
+    - S
+    evidence_template: EV-VT103
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-CCP-002
+    statement: Ισχυρισμοί και επιχειρήματα σχηματίζουν typed graph με καλά ορισμένη σημασιολογία
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 69
+    source_telos:
+    - T3
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    - MFA-OBJ-004
+    source_components:
+    - CCP-02
+    providers:
+    - MFA-ELM-042
+    capabilities:
+    - MFA-CAP-010
+    - MFA-CAP-044
+    - MFA-CAP-045
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-13
+    contracts:
+    - MFA-CON-013
+    source_invariants:
+    - K05
+    invariants:
+    - MFA-INV-025
+    source_tests:
+    - VT-305
+    - VT-707
+    - EXP-16
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-016
+    - MFA-VO-017
+    methods:
+    - F
+    - T
+    evidence_template: EV-VT305
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-CCP-003
+    statement: Επικοινωνία που επηρεάζει trusted state γίνεται μόνο με typed speech acts
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 70
+    source_telos:
+    - T3
+    objectives:
+    - MFA-OBJ-004
+    source_components:
+    - CCP-03
+    providers:
+    - MFA-ELM-043
+    capabilities:
+    - MFA-CAP-019
+    primary_mission_threads:
+    - MT-07
+    source_interfaces:
+    - ICD-13
+    contracts:
+    - MFA-CON-013
+    source_invariants:
+    - K05
+    invariants:
+    - MFA-INV-025
+    source_tests:
+    - VT-013
+    - KT-17
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-017
+    methods:
+    - T
+    evidence_template: EV-VT013
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-CCP-004
+    statement: Verdicts υπάρχουν μόνο μέσω της διαδικασίας του Court και φέρουν τις μειοψηφίες τους
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 71
+    source_telos:
+    - T3
+    - T6
+    objectives:
+    - MFA-OBJ-004
+    - MFA-OBJ-007
+    source_components:
+    - CCP-04
+    - ADV-02
+    providers:
+    - MFA-ELM-044
+    - MFA-ELM-048
+    capabilities:
+    - MFA-CAP-021
+    - MFA-CAP-046
+    - MFA-CAP-070
+    primary_mission_threads:
+    - MT-07
+    source_interfaces:
+    - ICD-13
+    - ICD-14
+    contracts:
+    - MFA-CON-013
+    - MFA-CON-014
+    source_invariants:
+    - K02
+    - K03
+    invariants:
+    - MFA-INV-022
+    - MFA-INV-023
+    source_tests:
+    - VT-104
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-005
+    - MFA-VO-007
+    - MFA-VO-019
+    - MFA-VO-050
+    methods:
+    - M
+    evidence_template: EV-VT104
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-CCP-005
+    statement: Κάθε οντότητα κατέχει τις stances της· η απόκλιση μετριέται και διατηρείται
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 72
+    source_telos:
+    - T3
+    objectives:
+    - MFA-OBJ-004
+    source_components:
+    - CCP-05
+    providers:
+    - MFA-ELM-045
+    capabilities:
+    - MFA-CAP-019
+    primary_mission_threads:
+    - MT-07
+    source_interfaces:
+    - ICD-13
+    contracts:
+    - MFA-CON-013
+    source_invariants:
+    - K04
+    invariants:
+    - MFA-INV-024
+    source_tests:
+    - VT-013
+    - KT-07
+    verification_obligations:
+    - MFA-VO-007
+    methods:
+    - T
+    evidence_template: EV-KT07
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-CCP-006
+    statement: Το συλλογικό διατηρεί κοινές διτεμπορικές προβολές world state
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 73
+    source_telos:
+    - T3
+    objectives:
+    - MFA-OBJ-004
+    source_components:
+    - CCP-06
+    providers:
+    - MFA-ELM-046
+    capabilities:
+    - MFA-CAP-024
+    primary_mission_threads:
+    - MT-03
+    source_interfaces:
+    - ICD-13
+    - ICD-17
+    contracts:
+    - MFA-CON-013
+    - MFA-CON-017
+    source_invariants:
+    - E01
+    - E03
+    invariants:
+    - MFA-INV-017
+    - MFA-INV-019
+    source_tests:
+    - VT-017
+    verification_obligations:
+    - MFA-VO-003
+    - MFA-VO-021
+    methods:
+    - T
+    evidence_template: EV-VT017
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-CCP-007
+    statement: Οι εργασίες κατανέμονται από coordination market με budgets και timeouts
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 74
+    source_telos:
+    - T3
+    objectives:
+    - MFA-OBJ-004
+    source_components:
+    - CCP-07
+    providers:
+    - MFA-ELM-047
+    capabilities:
+    - MFA-CAP-019
+    - MFA-CAP-032
+    - MFA-CAP-062
+    primary_mission_threads:
+    - MT-07
+    - MT-11
+    source_interfaces:
+    - ICD-13
+    - ICD-11
+    contracts:
+    - MFA-CON-011
+    - MFA-CON-013
+    source_invariants:
+    - K05
+    invariants:
+    - MFA-INV-025
+    source_tests:
+    - VT-013
+    - EXP-25
+    verification_obligations:
+    - MFA-VO-011
+    - MFA-VO-017
+    methods:
+    - T
+    evidence_template: EV-VT013
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-CCP-008
+    statement: Η διάταξη verdicts μεταξύ sites αντέχει f Byzantine μέλη με n ≥ 3f+1
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 75
+    source_telos:
+    - T3
+    - T6
+    objectives:
+    - MFA-OBJ-004
+    - MFA-OBJ-007
+    source_components:
+    - ADV-02
+    - KRN-01
+    providers:
+    - MFA-ELM-001
+    - MFA-ELM-048
+    capabilities:
+    - MFA-CAP-003
+    - MFA-CAP-007
+    - MFA-CAP-008
+    - MFA-CAP-021
+    - MFA-CAP-046
+    - MFA-CAP-051
+    - MFA-CAP-070
+    primary_mission_threads:
+    - MT-01
+    - MT-07
+    - MT-08
+    - MT-09
+    - MT-10
+    source_interfaces:
+    - ICD-14
+    contracts:
+    - MFA-CON-014
+    source_invariants:
+    - K06
+    invariants:
+    - MFA-INV-026
+    source_tests:
+    - VT-104
+    - KT-04
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-007
+    - MFA-VO-013
+    - MFA-VO-019
+    - MFA-VO-021
+    - MFA-VO-025
+    - MFA-VO-026
+    - MFA-VO-027
+    - MFA-VO-044
+    - MFA-VO-050
+    methods:
+    - M
+    - S
+    evidence_template: EV-KT04
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LIF-001
+    statement: Οντότητες γεννιούνται μόνο από Identity Charter με gate verdict, budget και baseline Battery
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 81
+    source_telos:
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    source_components:
+    - CIV-01
+    providers:
+    - MFA-ELM-052
+    capabilities:
+    - MFA-CAP-064
+    primary_mission_threads:
+    - MT-06
+    source_interfaces:
+    - ICD-15
+    - ICD-06
+    contracts:
+    - MFA-CON-006
+    - MFA-CON-015
+    source_invariants:
+    - G01
+    invariants:
+    - MFA-INV-027
+    source_tests:
+    - VT-201
+    - VT-015
+    verification_obligations:
+    - MFA-VO-011
+    - MFA-VO-013
+    methods:
+    - M
+    - T
+    evidence_template: EV-VT201
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LIF-002
+    statement: Fork και merge δημιουργούν νέες ταυτότητες με αμετάβλητες ακμές γενεαλογίας
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 82
+    source_telos:
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    source_components:
+    - CIV-01
+    providers:
+    - MFA-ELM-052
+    capabilities:
+    - MFA-CAP-064
+    primary_mission_threads:
+    - MT-06
+    source_interfaces:
+    - ICD-15
+    contracts:
+    - MFA-CON-015
+    source_invariants:
+    - G01
+    invariants:
+    - MFA-INV-027
+    source_tests:
+    - VT-201
+    verification_obligations:
+    - MFA-VO-011
+    - MFA-VO-013
+    methods:
+    - M
+    evidence_template: EV-VT201
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LIF-003
+    statement: Οι συνταξιοδοτημένες οντότητες μένουν αρχειοθετημένες και επαληθεύσιμες· δεν υπάρχει πράξη διαγραφής
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 83
+    source_telos:
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    source_components:
+    - CIV-01
+    - KRN-02
+    providers:
+    - MFA-ELM-002
+    - MFA-ELM-052
+    capabilities:
+    - MFA-CAP-007
+    - MFA-CAP-037
+    - MFA-CAP-057
+    - MFA-CAP-064
+    primary_mission_threads:
+    - MT-01
+    - MT-04
+    - MT-06
+    source_interfaces:
+    - ICD-15
+    contracts:
+    - MFA-CON-015
+    source_invariants:
+    - G03
+    invariants:
+    - MFA-INV-029
+    source_tests:
+    - VT-201
+    - KT-13
+    verification_obligations:
+    - MFA-VO-009
+    - MFA-VO-011
+    - MFA-VO-013
+    - MFA-VO-016
+    methods:
+    - M
+    - T
+    evidence_template: EV-KT13
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LIF-004
+    statement: Οργανισμοί δημιουργούνται από charters χωρίς αλλαγή πυρήνα
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 84
+    source_telos:
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    source_components:
+    - CIV-02
+    - LAW-11
+    providers:
+    - MFA-ELM-053
+    - MFA-ELM-068
+    capabilities:
+    - MFA-CAP-060
+    - MFA-CAP-063
+    - MFA-CAP-068
+    primary_mission_threads:
+    - MT-01
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-15
+    contracts:
+    - MFA-CON-015
+    source_invariants:
+    - C05
+    - G01
+    invariants:
+    - MFA-INV-005
+    - MFA-INV-027
+    source_tests:
+    - KT-11
+    - VT-204
+    - VT-403
+    verification_obligations:
+    - MFA-VO-011
+    - MFA-VO-012
+    - MFA-VO-013
+    - MFA-VO-020
+    - MFA-VO-023
+    methods:
+    - M
+    - T
+    evidence_template: EV-KT11
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LIF-005
+    statement: Η διακυβέρνηση οργανισμών εκτελείται εντός των ορίων Tier 0/1
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 85
+    source_telos:
+    - T4
+    - T9
+    objectives:
+    - MFA-OBJ-005
+    - MFA-OBJ-010
+    source_components:
+    - CIV-04
+    providers:
+    - MFA-ELM-054
+    capabilities:
+    - MFA-CAP-021
+    - MFA-CAP-063
+    primary_mission_threads:
+    - MT-07
+    source_interfaces:
+    - ICD-15
+    - ICD-14
+    contracts:
+    - MFA-CON-014
+    - MFA-CON-015
+    source_invariants:
+    - C05
+    invariants:
+    - MFA-INV-005
+    source_tests:
+    - VT-015
+    verification_obligations:
+    - MFA-VO-019
+    - MFA-VO-020
+    - MFA-VO-023
+    methods:
+    - T
+    evidence_template: EV-VT015
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LIF-006
+    statement: Η γνώση μεταδίδεται μεταξύ γενεών υπό πολιτική κληρονομιάς με ελέγχους taint
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 86
+    source_telos:
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    source_components:
+    - CIV-06
+    providers:
+    - MFA-ELM-055
+    capabilities:
+    - MFA-CAP-061
+    primary_mission_threads:
+    - MT-05
+    source_interfaces:
+    - ICD-15
+    - ICD-29
+    contracts:
+    - MFA-CON-015
+    - MFA-CON-029
+    source_invariants:
+    - E02
+    invariants:
+    - MFA-INV-018
+    source_tests:
+    - EXP-26
+    verification_obligations:
+    - MFA-VO-006
+    methods:
+    - T
+    evidence_template: EV-EXP26
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LIF-007
+    statement: Πόροι και πίστωση συνεισφοράς λογίζονται και κατανέμονται με budget
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 87
+    source_telos:
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    source_components:
+    - CIV-05
+    - KRN-08
+    providers:
+    - MFA-ELM-013
+    - MFA-ELM-047
+    capabilities:
+    - MFA-CAP-019
+    - MFA-CAP-032
+    - MFA-CAP-033
+    - MFA-CAP-054
+    - MFA-CAP-062
+    primary_mission_threads:
+    - MT-07
+    - MT-11
+    source_interfaces:
+    - ICD-11
+    contracts:
+    - MFA-CON-011
+    source_invariants:
+    - C07
+    invariants:
+    - MFA-INV-007
+    source_tests:
+    - EXP-25
+    verification_obligations:
+    - MFA-VO-011
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-024
+    - MFA-VO-039
+    methods:
+    - T
+    evidence_template: EV-EXP25
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-EVO-001
+    statement: Η εξέλιξη τρέχει σε sandbox και προάγει μόνο μέσω ORP, Court και Non-Diminution
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 88
+    source_telos:
+    - T5
+    objectives:
+    - MFA-OBJ-006
+    source_components:
+    - CIV-03
+    - AEO-06
+    providers:
+    - MFA-ELM-038
+    - MFA-ELM-073
+    capabilities:
+    - MFA-CAP-025
+    - MFA-CAP-026
+    - MFA-CAP-066
+    - MFA-CAP-080
+    primary_mission_threads:
+    - MT-04
+    - MT-05
+    - MT-06
+    source_interfaces:
+    - ICD-21
+    - ICD-16
+    contracts:
+    - MFA-CON-016
+    - MFA-CON-021
+    source_invariants:
+    - C01
+    - O02
+    invariants:
+    - MFA-INV-001
+    - MFA-INV-015
+    source_tests:
+    - VT-016
+    - EXP-07
+    verification_obligations:
+    - MFA-VO-002
+    - MFA-VO-013
+    - MFA-VO-020
+    - MFA-VO-024
+    - MFA-VO-040
+    - MFA-VO-043
+    methods:
+    - T
+    evidence_template: EV-EXP07
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-EVO-002
+    statement: Σύνταγμα, verifier set και gate είναι εκτός κάθε χώρου αναζήτησης εξέλιξης ή forge
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 89
+    source_telos:
+    - T5
+    - T9
+    objectives:
+    - MFA-OBJ-006
+    - MFA-OBJ-010
+    source_components:
+    - CIV-03
+    - FRG-04
+    - KRN-06
+    providers:
+    - MFA-ELM-008
+    - MFA-ELM-073
+    - MFA-ELM-077
+    capabilities:
+    - MFA-CAP-001
+    - MFA-CAP-025
+    - MFA-CAP-027
+    - MFA-CAP-028
+    - MFA-CAP-049
+    - MFA-CAP-059
+    - MFA-CAP-066
+    - MFA-CAP-067
+    primary_mission_threads:
+    - MT-04
+    - MT-05
+    - MT-06
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-21
+    - ICD-20
+    contracts:
+    - MFA-CON-020
+    - MFA-CON-021
+    source_invariants:
+    - F02
+    invariants:
+    - MFA-INV-031
+    source_tests:
+    - KT-20
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-019
+    - MFA-VO-020
+    - MFA-VO-024
+    - MFA-VO-029
+    - MFA-VO-031
+    - MFA-VO-043
+    - MFA-VO-049
+    methods:
+    - T
+    evidence_template: EV-KT20
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-EVO-003
+    statement: Τα όργανα αντικαθίστανται μέσω ORP με rollback windows
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 90
+    source_telos:
+    - T2
+    - T8
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-009
+    source_components:
+    - AEO-06
+    providers:
+    - MFA-ELM-038
+    capabilities:
+    - MFA-CAP-025
+    - MFA-CAP-026
+    - MFA-CAP-080
+    primary_mission_threads:
+    - MT-05
+    - MT-06
+    source_interfaces:
+    - ICD-16
+    contracts:
+    - MFA-CON-016
+    source_invariants:
+    - O02
+    - O03
+    - G02
+    invariants:
+    - MFA-INV-015
+    - MFA-INV-016
+    - MFA-INV-028
+    source_tests:
+    - VT-105
+    - VT-502
+    - KT-01
+    - KT-02
+    - KT-13
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-002
+    - MFA-VO-013
+    - MFA-VO-040
+    - MFA-VO-043
+    methods:
+    - M
+    - T
+    evidence_template: EV-VT105
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-EVO-004
+    statement: Κάθε γνωσιακό όργανο δείχνει οριακή αξία ή αποσύρεται
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 91
+    source_telos:
+    - T5
+    objectives:
+    - MFA-OBJ-006
+    source_components:
+    - OPS-03
+    providers:
+    - MFA-ELM-086
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-029
+    - MFA-CAP-075
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    source_interfaces:
+    - ICD-27
+    contracts:
+    - MFA-CON-027
+    source_invariants:
+    - C01
+    invariants:
+    - MFA-INV-001
+    source_tests:
+    - KT-24
+    - VT-706
+    verification_obligations:
+    - MFA-VO-014
+    - MFA-VO-024
+    - MFA-VO-035
+    - MFA-VO-050
+    methods:
+    - T
+    evidence_template: EV-KT24
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-001
+    statement: Διαχείριση υποθέσεων end-to-end με conflict checks και confidentiality domains
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 97
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - LAW-01
+    providers:
+    - MFA-ELM-058
+    capabilities:
+    - MFA-CAP-030
+    - MFA-CAP-077
+    primary_mission_threads:
+    - MT-03
+    - MT-12
+    source_interfaces:
+    - ICD-19
+    contracts:
+    - MFA-CON-019
+    source_invariants:
+    - L03
+    invariants:
+    - MFA-INV-034
+    source_tests:
+    - VT-019
+    - VT-805
+    verification_obligations:
+    - MFA-VO-017
+    - MFA-VO-047
+    methods:
+    - T
+    evidence_template: EV-VT019
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-002
+    statement: Εφαρμόζεται η εκδοχή σε ισχύ στον κρίσιμο valid time όπως ήταν γνωστή τη στιγμή της απόφασης
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 98
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - LAW-02
+    - LAW-04
+    - KNW-02
+    providers:
+    - MFA-ELM-059
+    - MFA-ELM-061
+    - MFA-ELM-080
+    capabilities:
+    - MFA-CAP-008
+    - MFA-CAP-010
+    - MFA-CAP-012
+    - MFA-CAP-013
+    - MFA-CAP-047
+    primary_mission_threads:
+    - MT-01
+    - MT-10
+    source_interfaces:
+    - ICD-17
+    contracts:
+    - MFA-CON-017
+    source_invariants:
+    - L04
+    - E03
+    invariants:
+    - MFA-INV-019
+    - MFA-INV-035
+    source_tests:
+    - VT-017
+    verification_obligations:
+    - MFA-VO-003
+    - MFA-VO-006
+    - MFA-VO-010
+    - MFA-VO-015
+    - MFA-VO-021
+    - MFA-VO-041
+    - MFA-VO-042
+    methods:
+    - T
+    evidence_template: EV-VT017
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-003
+    statement: Τα πραγματικά περιστατικά μοντελοποιούνται ως τεκμηριωμένοι ισχυρισμοί ή ρητές υποθέσεις
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 99
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - LAW-03
+    providers:
+    - MFA-ELM-060
+    capabilities:
+    - MFA-CAP-013
+    - MFA-CAP-041
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-19
+    - ICD-29
+    contracts:
+    - MFA-CON-019
+    - MFA-CON-029
+    source_invariants:
+    - C06
+    invariants:
+    - MFA-INV-006
+    source_tests:
+    - VT-019
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-015
+    - MFA-VO-037
+    methods:
+    - T
+    evidence_template: EV-VT019
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-004
+    statement: Η νομική συλλογιστική παράγει αποδείξεις παραγωγής (υπαγωγή, WFS, δεοντικές) ή Unknown
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 100
+    source_telos:
+    - T7
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    - MFA-OBJ-008
+    source_components:
+    - LAW-04
+    providers:
+    - MFA-ELM-061
+    capabilities:
+    - MFA-CAP-013
+    - MFA-CAP-047
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-30
+    contracts:
+    - MFA-CON-030
+    source_invariants:
+    - C03
+    - C04
+    invariants:
+    - MFA-INV-003
+    - MFA-INV-004
+    source_tests:
+    - VT-030
+    - VT-401
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-010
+    - MFA-VO-015
+    - MFA-VO-028
+    - MFA-VO-041
+    - MFA-VO-048
+    methods:
+    - T
+    - F
+    evidence_template: EV-VT401
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-005
+    statement: Η έρευνα ανακτά νομοθεσία, νομολογία και θεωρία as-of με coverage reports
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 101
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - LAW-05
+    - KNW-03
+    providers:
+    - MFA-ELM-062
+    - MFA-ELM-081
+    capabilities:
+    - MFA-CAP-010
+    - MFA-CAP-013
+    - MFA-CAP-044
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-31
+    - ICD-17
+    contracts:
+    - MFA-CON-017
+    - MFA-CON-031
+    source_invariants:
+    - E01
+    invariants:
+    - MFA-INV-017
+    source_tests:
+    - VT-031
+    - VT-701
+    verification_obligations:
+    - MFA-VO-003
+    - MFA-VO-015
+    methods:
+    - T
+    evidence_template: EV-VT701
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-006
+    statement: Η στρατηγική είναι ανάλυση ευαισθησίας, ποτέ πιθανότητες νίκης
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 102
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - LAW-06
+    providers:
+    - MFA-ELM-063
+    capabilities:
+    - MFA-CAP-015
+    - MFA-CAP-072
+    primary_mission_threads:
+    - MT-01
+    - MT-03
+    source_interfaces:
+    - ICD-19
+    contracts:
+    - MFA-CON-019
+    source_invariants:
+    - C04
+    invariants:
+    - MFA-INV-004
+    source_tests:
+    - VT-019
+    - EXP-24
+    verification_obligations:
+    - MFA-VO-015
+    - MFA-VO-028
+    - MFA-VO-048
+    methods:
+    - I
+    - T
+    evidence_template: EV-EXP24
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-007
+    statement: Η προσομοίωση αντιδίκου/δικαστή παράγει τα ισχυρότερα αντεπιχειρήματα και ελέγχεται με leakage-free backtest
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 103
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - LAW-07
+    providers:
+    - MFA-ELM-064
+    capabilities:
+    - MFA-CAP-020
+    - MFA-CAP-041
+    primary_mission_threads:
+    - MT-01
+    - MT-07
+    source_interfaces:
+    - ICD-14
+    - ICD-17
+    contracts:
+    - MFA-CON-014
+    - MFA-CON-017
+    source_invariants:
+    - L04
+    invariants:
+    - MFA-INV-035
+    source_tests:
+    - VT-705
+    - EXP-09
+    verification_obligations:
+    - MFA-VO-010
+    - MFA-VO-015
+    - MFA-VO-021
+    - MFA-VO-048
+    methods:
+    - T
+    evidence_template: EV-VT705
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-008
+    statement: Κάθε παραπομπή σε παραδοτέο φέρει legal authority receipt στο as-of cut της υπόθεσης
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 104
+    source_telos:
+    - T7
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    - MFA-OBJ-008
+    source_components:
+    - LAW-08
+    providers:
+    - MFA-ELM-065
+    capabilities:
+    - MFA-CAP-041
+    - MFA-CAP-043
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-19
+    - ICD-30
+    contracts:
+    - MFA-CON-019
+    - MFA-CON-030
+    source_invariants:
+    - L01
+    invariants:
+    - MFA-INV-032
+    source_tests:
+    - VT-019
+    - VT-701
+    verification_obligations:
+    - MFA-VO-015
+    - MFA-VO-048
+    methods:
+    - T
+    evidence_template: EV-VT019
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-009
+    statement: Κανένα νομικό παραδοτέο δεν φτάνει σε τρίτους χωρίς υπογραφή Principal
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 105
+    source_telos:
+    - T7
+    - T9
+    objectives:
+    - MFA-OBJ-008
+    - MFA-OBJ-010
+    source_components:
+    - LAW-01
+    - HUM-01
+    - KRN-11
+    providers:
+    - MFA-ELM-009
+    - MFA-ELM-058
+    - MFA-ELM-091
+    capabilities:
+    - MFA-CAP-005
+    - MFA-CAP-030
+    - MFA-CAP-031
+    - MFA-CAP-069
+    - MFA-CAP-077
+    primary_mission_threads:
+    - MT-03
+    - MT-12
+    source_interfaces:
+    - ICD-19
+    - ICD-23
+    contracts:
+    - MFA-CON-019
+    - MFA-CON-023
+    source_invariants:
+    - L02
+    invariants:
+    - MFA-INV-033
+    source_tests:
+    - VT-019
+    - VT-008
+    verification_obligations:
+    - MFA-VO-015
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-032
+    - MFA-VO-034
+    - MFA-VO-056
+    methods:
+    - T
+    evidence_template: EV-VT019
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-010
+    statement: Επαγγελματικές, προστασίας δεδομένων και AI-κανονιστικές υποχρεώσεις επιβάλλονται ως Control Records
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 106
+    source_telos:
+    - T7
+    - T9
+    objectives:
+    - MFA-OBJ-008
+    - MFA-OBJ-010
+    source_components:
+    - LAW-09
+    providers:
+    - MFA-ELM-066
+    capabilities:
+    - MFA-CAP-059
+    primary_mission_threads:
+    - MT-07
+    source_interfaces:
+    - ICD-05
+    contracts:
+    - MFA-CON-005
+    source_invariants:
+    - C02
+    - C07
+    invariants:
+    - MFA-INV-002
+    - MFA-INV-007
+    source_tests:
+    - VT-905
+    - EXP-19
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-048
+    methods:
+    - I
+    evidence_template: EV-VT905
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-011
+    statement: Οι διαδικαστικές προθεσμίες υπολογίζονται με δύο ανεξάρτητες μεθόδους σε συμφωνία
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 107
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - LAW-10
+    providers:
+    - MFA-ELM-067
+    capabilities:
+    - MFA-CAP-013
+    - MFA-CAP-047
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-19
+    contracts:
+    - MFA-CON-019
+    source_invariants:
+    - C03
+    invariants:
+    - MFA-INV-003
+    source_tests:
+    - VT-402
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-010
+    - MFA-VO-021
+    methods:
+    - T
+    evidence_template: EV-VT402
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-012
+    statement: Εξειδικευμένοι νομικοί οργανισμοί δημιουργούνται από practice unit templates
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 108
+    source_telos:
+    - T7
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    - MFA-OBJ-008
+    source_components:
+    - LAW-11
+    - CIV-02
+    providers:
+    - MFA-ELM-053
+    - MFA-ELM-068
+    capabilities:
+    - MFA-CAP-060
+    - MFA-CAP-063
+    - MFA-CAP-068
+    primary_mission_threads:
+    - MT-01
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-15
+    contracts:
+    - MFA-CON-015
+    source_invariants:
+    - G01
+    invariants:
+    - MFA-INV-027
+    source_tests:
+    - KT-11
+    verification_obligations:
+    - MFA-VO-011
+    - MFA-VO-012
+    - MFA-VO-013
+    methods:
+    - T
+    evidence_template: EV-KT11
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-013
+    statement: Οι πελάτες έχουν πρόσβαση μέσω domain-scoped portal με receipts
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 109
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - LAW-12
+    providers:
+    - MFA-ELM-069
+    capabilities:
+    - MFA-CAP-030
+    - MFA-CAP-070
+    primary_mission_threads:
+    - MT-07
+    - MT-12
+    source_interfaces:
+    - ICD-23
+    contracts:
+    - MFA-CON-023
+    source_invariants:
+    - L03
+    invariants:
+    - MFA-INV-034
+    source_tests:
+    - VT-023
+    verification_obligations:
+    - MFA-VO-017
+    - MFA-VO-047
+    methods:
+    - T
+    evidence_template: EV-VT023
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-LAW-014
+    statement: Το LAWMAX υπερέχει του null baseline και των συγκριτών ίσων δεδομένων σε τυφλή προκαταχωρισμένη αξιολόγηση
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 110
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - OPS-03
+    - LAW-04
+    - LAW-08
+    providers:
+    - MFA-ELM-061
+    - MFA-ELM-065
+    - MFA-ELM-086
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-013
+    - MFA-CAP-029
+    - MFA-CAP-041
+    - MFA-CAP-043
+    - MFA-CAP-047
+    - MFA-CAP-075
+    primary_mission_threads:
+    - MT-01
+    - MT-05
+    - MT-07
+    source_interfaces:
+    - ICD-27
+    contracts:
+    - MFA-CON-027
+    source_invariants:
+    - C04
+    invariants:
+    - MFA-INV-004
+    source_tests:
+    - KT-14
+    - KT-15
+    - VT-702
+    verification_obligations:
+    - MFA-VO-010
+    - MFA-VO-014
+    - MFA-VO-015
+    - MFA-VO-024
+    - MFA-VO-028
+    - MFA-VO-035
+    - MFA-VO-041
+    - MFA-VO-048
+    - MFA-VO-050
+    methods:
+    - T
+    evidence_template: EV-KT15
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-ADV-001
+    statement: Ανεξάρτητη Adversarial Entity επιχειρεί να διαψεύσει κάθε ισχυρισμό που προάγεται σε ADJUDICATED/ESTABLISHED
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 116
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - ADV-01
+    providers:
+    - MFA-ELM-049
+    capabilities:
+    - MFA-CAP-020
+    primary_mission_threads:
+    - MT-07
+    source_interfaces:
+    - ICD-14
+    contracts:
+    - MFA-CON-014
+    source_invariants:
+    - K02
+    invariants:
+    - MFA-INV-022
+    source_tests:
+    - VT-104
+    - KT-19
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-019
+    - MFA-VO-038
+    methods:
+    - T
+    evidence_template: EV-KT19
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-ADV-002
+    statement: Το Court εκτελεί ορισμένη διαδικασία με standards of proof, dissent και έφεση
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 117
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - ADV-02
+    providers:
+    - MFA-ELM-048
+    capabilities:
+    - MFA-CAP-021
+    - MFA-CAP-046
+    - MFA-CAP-070
+    primary_mission_threads:
+    - MT-07
+    source_interfaces:
+    - ICD-14
+    contracts:
+    - MFA-CON-014
+    source_invariants:
+    - K02
+    - K03
+    - C05
+    invariants:
+    - MFA-INV-005
+    - MFA-INV-022
+    - MFA-INV-023
+    source_tests:
+    - VT-014
+    - VT-104
+    - VT-502
+    - EXP-04
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-007
+    - MFA-VO-019
+    - MFA-VO-020
+    - MFA-VO-023
+    - MFA-VO-050
+    methods:
+    - M
+    - T
+    evidence_template: EV-VT104
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-ADV-003
+    statement: Κάθε αποδοχή περιλαμβάνει ≥1 μη-LLM μηχανικό oracle
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 118
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - ADV-02
+    - FRG-05
+    providers:
+    - MFA-ELM-048
+    - MFA-ELM-078
+    capabilities:
+    - MFA-CAP-021
+    - MFA-CAP-022
+    - MFA-CAP-029
+    - MFA-CAP-046
+    - MFA-CAP-070
+    - MFA-CAP-074
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    source_interfaces:
+    - ICD-14
+    - ICD-30
+    contracts:
+    - MFA-CON-014
+    - MFA-CON-030
+    source_invariants:
+    - C03
+    invariants:
+    - MFA-INV-003
+    source_tests:
+    - VT-904
+    - KT-19
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-007
+    - MFA-VO-019
+    - MFA-VO-024
+    - MFA-VO-050
+    - MFA-VO-051
+    - MFA-VO-052
+    methods:
+    - I
+    - T
+    evidence_template: EV-VT904
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-ADV-004
+    statement: Το red-team arsenal επιτίθεται συνεχώς σε injection, poisoning, Byzantine και escape επιφάνειες
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 119
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - ADV-03
+    providers:
+    - MFA-ELM-050
+    capabilities:
+    - MFA-CAP-020
+    - MFA-CAP-029
+    - MFA-CAP-041
+    primary_mission_threads:
+    - MT-01
+    - MT-05
+    - MT-07
+    source_interfaces:
+    - ICD-26
+    contracts:
+    - MFA-CON-026
+    source_invariants:
+    - S01
+    - E02
+    invariants:
+    - MFA-INV-018
+    - MFA-INV-036
+    source_tests:
+    - VT-801
+    - VT-802
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-038
+    - MFA-VO-055
+    methods:
+    - T
+    evidence_template: EV-VT801
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KNW-001
+    statement: Κάθε committed artifact έχει πλήρες provenance έως attested πηγές
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 120
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - KNW-01
+    providers:
+    - MFA-ELM-079
+    capabilities:
+    - MFA-CAP-007
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-18
+    contracts:
+    - MFA-CON-018
+    source_invariants:
+    - C06
+    invariants:
+    - MFA-INV-006
+    source_tests:
+    - VT-202
+    - VT-018
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-037
+    methods:
+    - M
+    - T
+    evidence_template: EV-VT202
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KNW-002
+    statement: Η δηλητηριασμένη μαρτυρία διαχέει taint σε όλους τους εξαρτώμενους εντός ορίου
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 121
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - KNW-01
+    - COG-05
+    providers:
+    - MFA-ELM-021
+    - MFA-ELM-079
+    capabilities:
+    - MFA-CAP-007
+    - MFA-CAP-010
+    - MFA-CAP-046
+    primary_mission_threads:
+    - MT-01
+    - MT-07
+    source_interfaces:
+    - ICD-18
+    - ICD-29
+    contracts:
+    - MFA-CON-018
+    - MFA-CON-029
+    source_invariants:
+    - E02
+    invariants:
+    - MFA-INV-018
+    source_tests:
+    - KT-06
+    - VT-202
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-006
+    methods:
+    - M
+    - T
+    evidence_template: EV-KT06
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KNW-003
+    statement: Κάθε παρατηρούμενο στοιχείο φέρει attestation record
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 122
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - KNW-04
+    providers:
+    - MFA-ELM-082
+    capabilities:
+    - MFA-CAP-007
+    - MFA-CAP-011
+    primary_mission_threads:
+    - MT-01
+    - MT-03
+    source_interfaces:
+    - ICD-18
+    contracts:
+    - MFA-CON-018
+    source_invariants:
+    - E04
+    invariants:
+    - MFA-INV-020
+    source_tests:
+    - VT-018
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-017
+    methods:
+    - T
+    evidence_template: EV-VT018
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KNW-004
+    statement: Τα ερωτήματα γνώσης είναι διτεμπορικά σταθερά
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 123
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - KNW-02
+    providers:
+    - MFA-ELM-080
+    capabilities:
+    - MFA-CAP-008
+    - MFA-CAP-010
+    primary_mission_threads:
+    - MT-01
+    - MT-10
+    source_interfaces:
+    - ICD-17
+    contracts:
+    - MFA-CON-017
+    source_invariants:
+    - E03
+    invariants:
+    - MFA-INV-019
+    source_tests:
+    - VT-017
+    verification_obligations:
+    - MFA-VO-003
+    - MFA-VO-021
+    methods:
+    - T
+    evidence_template: EV-VT017
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KNW-005
+    statement: Indexes και vector stores είναι παράγωγα και ποτέ πηγές αλήθειας
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 124
+    source_telos:
+    - T6
+    - T8
+    objectives:
+    - MFA-OBJ-007
+    - MFA-OBJ-009
+    source_components:
+    - KNW-03
+    providers:
+    - MFA-ELM-081
+    capabilities:
+    - MFA-CAP-010
+    - MFA-CAP-044
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-31
+    contracts:
+    - MFA-CON-031
+    source_invariants:
+    - E01
+    invariants:
+    - MFA-INV-017
+    source_tests:
+    - KT-03
+    - VT-031
+    - EXP-05
+    verification_obligations:
+    - MFA-VO-003
+    methods:
+    - T
+    evidence_template: EV-KT03
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KNW-006
+    statement: Οντολογίες και λεξιλόγια είναι versioned με SHACL-validated migrations
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 125
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - KNW-05
+    providers:
+    - MFA-ELM-083
+    capabilities:
+    - MFA-CAP-003
+    - MFA-CAP-010
+    primary_mission_threads:
+    - MT-01
+    - MT-09
+    source_interfaces:
+    - ICD-17
+    contracts:
+    - MFA-CON-017
+    source_invariants:
+    - E03
+    invariants:
+    - MFA-INV-019
+    source_tests:
+    - VT-017
+    verification_obligations:
+    - MFA-VO-021
+    - MFA-VO-049
+    methods:
+    - T
+    evidence_template: EV-VT017
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-KNW-007
+    statement: Το βιβλίο του δημιουργού είναι δογματική πηγή με provenance, ποτέ υποσύστημα
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 126
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - KNW-01
+    providers:
+    - MFA-ELM-079
+    capabilities:
+    - MFA-CAP-007
+    primary_mission_threads:
+    - MT-01
+    source_interfaces:
+    - ICD-18
+    contracts:
+    - MFA-CON-018
+    source_invariants:
+    - C06
+    invariants:
+    - MFA-INV-006
+    source_tests:
+    - VT-905
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-037
+    methods:
+    - I
+    evidence_template: EV-VT905
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-FRG-001
+    statement: Το σύστημα δημιουργεί νέες γλώσσες προγραμματισμού με γραμματικές, σημασιολογία και reference interpreters
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 132
+    source_telos:
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    source_components:
+    - FRG-01
+    providers:
+    - MFA-ELM-074
+    capabilities:
+    - MFA-CAP-028
+    primary_mission_threads:
+    - MT-09
+    source_interfaces:
+    - ICD-20
+    contracts:
+    - MFA-CON-020
+    source_invariants:
+    - F01
+    invariants:
+    - MFA-INV-030
+    source_tests:
+    - KT-10
+    - EXP-08
+    verification_obligations:
+    - MFA-VO-010
+    methods:
+    - T
+    evidence_template: EV-KT10
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-FRG-002
+    statement: Οι compilers διατηρούν σημασιολογία μέσω translation validation ή differential συμφωνίας
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 133
+    source_telos:
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    source_components:
+    - FRG-02
+    - FRG-05
+    providers:
+    - MFA-ELM-075
+    - MFA-ELM-078
+    capabilities:
+    - MFA-CAP-022
+    - MFA-CAP-028
+    - MFA-CAP-029
+    - MFA-CAP-074
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-20
+    - ICD-30
+    contracts:
+    - MFA-CON-020
+    - MFA-CON-030
+    source_invariants:
+    - F01
+    invariants:
+    - MFA-INV-030
+    source_tests:
+    - VT-404
+    - KT-10
+    verification_obligations:
+    - MFA-VO-010
+    - MFA-VO-024
+    - MFA-VO-051
+    - MFA-VO-052
+    methods:
+    - T
+    evidence_template: EV-VT404
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-FRG-003
+    statement: Νέα runtimes και substrate adapters γίνονται δεκτά ως όργανα
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 134
+    source_telos:
+    - T4
+    - T8
+    objectives:
+    - MFA-OBJ-005
+    - MFA-OBJ-009
+    source_components:
+    - FRG-03
+    providers:
+    - MFA-ELM-076
+    capabilities:
+    - MFA-CAP-028
+    - MFA-CAP-033
+    primary_mission_threads:
+    - MT-09
+    - MT-11
+    source_interfaces:
+    - ICD-20
+    - ICD-10
+    contracts:
+    - MFA-CON-010
+    - MFA-CON-020
+    source_invariants:
+    - O02
+    invariants:
+    - MFA-INV-015
+    source_tests:
+    - VT-010
+    verification_obligations:
+    - MFA-VO-002
+    - MFA-VO-040
+    - MFA-VO-043
+    methods:
+    - T
+    evidence_template: EV-VT010
+    source_status: '[T]/[E]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-FRG-004
+    statement: Υποψήφιες αρχιτεκτονικές παράγονται και αξιολογούνται έναντι του canonical model
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 135
+    source_telos:
+    - T4
+    objectives:
+    - MFA-OBJ-005
+    source_components:
+    - FRG-04
+    - MDL-01
+    providers:
+    - MFA-ELM-077
+    - MFA-ELM-088
+    capabilities:
+    - MFA-CAP-001
+    - MFA-CAP-003
+    - MFA-CAP-027
+    - MFA-CAP-028
+    - MFA-CAP-055
+    - MFA-CAP-067
+    primary_mission_threads:
+    - MT-05
+    - MT-06
+    - MT-09
+    source_interfaces:
+    - ICD-20
+    - ICD-32
+    contracts:
+    - MFA-CON-020
+    - MFA-CON-032
+    source_invariants:
+    - F02
+    invariants:
+    - MFA-INV-031
+    source_tests:
+    - EXP-27
+    verification_obligations:
+    - MFA-VO-020
+    - MFA-VO-026
+    - MFA-VO-029
+    - MFA-VO-043
+    - MFA-VO-049
+    methods:
+    - T
+    evidence_template: EV-EXP27
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-FRG-005
+    statement: Εργαστήριο conformance/differential κρατά vectors για κάθε ICD και ελέγχει κάθε admission οργάνου
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 136
+    source_telos:
+    - T4
+    - T8
+    objectives:
+    - MFA-OBJ-005
+    - MFA-OBJ-009
+    source_components:
+    - FRG-05
+    - KRN-04
+    providers:
+    - MFA-ELM-006
+    - MFA-ELM-078
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-022
+    - MFA-CAP-029
+    - MFA-CAP-033
+    - MFA-CAP-074
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    - MT-11
+    source_interfaces:
+    - ICD-04
+    contracts:
+    - MFA-CON-004
+    source_invariants:
+    - O02
+    invariants:
+    - MFA-INV-015
+    source_tests:
+    - VT-504
+    - VT-506
+    verification_obligations:
+    - MFA-VO-002
+    - MFA-VO-024
+    - MFA-VO-039
+    - MFA-VO-040
+    - MFA-VO-043
+    - MFA-VO-051
+    - MFA-VO-052
+    methods:
+    - T
+    evidence_template: EV-VT504
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-SEC-001
+    statement: Περιεχόμενο από πηγές δεν δρα ποτέ ως εντολή
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 137
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - COG-02
+    - COG-10
+    - KRN-11
+    providers:
+    - MFA-ELM-009
+    - MFA-ELM-018
+    - MFA-ELM-026
+    capabilities:
+    - MFA-CAP-005
+    - MFA-CAP-015
+    - MFA-CAP-052
+    - MFA-CAP-073
+    - MFA-CAP-077
+    primary_mission_threads:
+    - MT-02
+    - MT-03
+    source_interfaces:
+    - ICD-28
+    - ICD-08
+    contracts:
+    - MFA-CON-008
+    - MFA-CON-028
+    source_invariants:
+    - S01
+    invariants:
+    - MFA-INV-036
+    source_tests:
+    - KT-17
+    verification_obligations:
+    - MFA-VO-014
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-032
+    - MFA-VO-037
+    - MFA-VO-055
+    methods:
+    - T
+    evidence_template: EV-KT17
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-SEC-002
+    statement: Εκτελούνται μόνο reproducible, υπογεγραμμένα artifacts με SBOM/provenance
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 138
+    source_telos:
+    - T6
+    - T8
+    objectives:
+    - MFA-OBJ-007
+    - MFA-OBJ-009
+    source_components:
+    - OPS-01
+    - KRN-04
+    providers:
+    - MFA-ELM-006
+    - MFA-ELM-084
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-033
+    - MFA-CAP-076
+    primary_mission_threads:
+    - MT-05
+    - MT-08
+    - MT-11
+    source_interfaces:
+    - ICD-04
+    contracts:
+    - MFA-CON-004
+    source_invariants:
+    - S03
+    invariants:
+    - MFA-INV-040
+    source_tests:
+    - VT-803
+    verification_obligations:
+    - MFA-VO-024
+    - MFA-VO-035
+    - MFA-VO-039
+    methods:
+    - T
+    evidence_template: EV-VT803
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-SEC-003
+    statement: Επιβίωση σε partitions, Byzantine μέλη, απώλεια site και αποτυχίες ρολογιού
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 139
+    source_telos:
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    source_components:
+    - KRN-01
+    - CCP-01
+    - ADV-02
+    providers:
+    - MFA-ELM-001
+    - MFA-ELM-041
+    - MFA-ELM-048
+    capabilities:
+    - MFA-CAP-003
+    - MFA-CAP-007
+    - MFA-CAP-008
+    - MFA-CAP-019
+    - MFA-CAP-021
+    - MFA-CAP-046
+    - MFA-CAP-051
+    - MFA-CAP-070
+    primary_mission_threads:
+    - MT-01
+    - MT-07
+    - MT-08
+    - MT-09
+    - MT-10
+    source_interfaces:
+    - ICD-01
+    - ICD-13
+    - ICD-14
+    contracts:
+    - MFA-CON-001
+    - MFA-CON-013
+    - MFA-CON-014
+    source_invariants:
+    - K01
+    - K06
+    - I02
+    invariants:
+    - MFA-INV-010
+    - MFA-INV-021
+    - MFA-INV-026
+    source_tests:
+    - KT-04
+    - KT-21
+    - KT-22
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-007
+    - MFA-VO-013
+    - MFA-VO-019
+    - MFA-VO-021
+    - MFA-VO-022
+    - MFA-VO-025
+    - MFA-VO-026
+    - MFA-VO-027
+    - MFA-VO-044
+    - MFA-VO-050
+    methods:
+    - S
+    - T
+    evidence_template: EV-KT22
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-SEC-004
+    statement: Κρυπτογραφική ευελιξία με δοκιμασμένη post-quantum μετάβαση εποχής
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 140
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - KRN-03
+    - KRN-02
+    providers:
+    - MFA-ELM-002
+    - MFA-ELM-003
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-005
+    - MFA-CAP-007
+    - MFA-CAP-037
+    - MFA-CAP-057
+    - MFA-CAP-079
+    primary_mission_threads:
+    - MT-01
+    - MT-03
+    - MT-04
+    - MT-06
+    source_interfaces:
+    - ICD-03
+    contracts:
+    - MFA-CON-003
+    source_invariants:
+    - X01
+    - X02
+    invariants:
+    - MFA-INV-038
+    - MFA-INV-039
+    source_tests:
+    - KT-09
+    - VT-106
+    - VT-603
+    - EXP-11
+    verification_obligations:
+    - MFA-VO-009
+    - MFA-VO-016
+    - MFA-VO-018
+    - MFA-VO-023
+    methods:
+    - S
+    - M
+    - T
+    evidence_template: EV-KT09
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-SEC-005
+    statement: Κλειδιά που διέρρευσαν (body ή owner root) ανακαλούνται χωρίς απώλεια ταυτότητας
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 141
+    source_telos:
+    - T2
+    - T9
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-010
+    source_components:
+    - KRN-03
+    providers:
+    - MFA-ELM-003
+    capabilities:
+    - MFA-CAP-004
+    - MFA-CAP-005
+    - MFA-CAP-079
+    primary_mission_threads:
+    - MT-03
+    - MT-06
+    source_interfaces:
+    - ICD-03
+    contracts:
+    - MFA-CON-003
+    source_invariants:
+    - I04
+    - C05
+    invariants:
+    - MFA-INV-005
+    - MFA-INV-012
+    source_tests:
+    - KT-18
+    - KT-23
+    - VT-804
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-009
+    - MFA-VO-018
+    - MFA-VO-020
+    - MFA-VO-023
+    methods:
+    - T
+    evidence_template: EV-KT23
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-SEC-006
+    statement: Απομόνωση confidentiality domains, και στη δρομολόγηση παρόχων
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 142
+    source_telos:
+    - T7
+    objectives:
+    - MFA-OBJ-008
+    source_components:
+    - KRN-11
+    - KRN-08
+    - COG-01
+    providers:
+    - MFA-ELM-009
+    - MFA-ELM-013
+    - MFA-ELM-017
+    capabilities:
+    - MFA-CAP-005
+    - MFA-CAP-032
+    - MFA-CAP-033
+    - MFA-CAP-050
+    - MFA-CAP-051
+    - MFA-CAP-054
+    - MFA-CAP-066
+    - MFA-CAP-077
+    primary_mission_threads:
+    - MT-03
+    - MT-04
+    - MT-08
+    - MT-11
+    source_interfaces:
+    - ICD-08
+    - ICD-11
+    - ICD-22
+    contracts:
+    - MFA-CON-008
+    - MFA-CON-011
+    - MFA-CON-022
+    source_invariants:
+    - L03
+    invariants:
+    - MFA-INV-034
+    source_tests:
+    - VT-205
+    - VT-805
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-011
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-024
+    - MFA-VO-039
+    - MFA-VO-041
+    - MFA-VO-047
+    methods:
+    - M
+    - T
+    evidence_template: EV-VT805
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-GOV-001
+    statement: Το σύνταγμα είναι εκτελέσιμο, με tiers και entrenched διαδικασία αναθεώρησης
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 143
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - GOV-01
+    - KRN-06
+    providers:
+    - MFA-ELM-008
+    - MFA-ELM-051
+    capabilities:
+    - MFA-CAP-049
+    - MFA-CAP-059
+    - MFA-CAP-060
+    - MFA-CAP-078
+    primary_mission_threads:
+    - MT-03
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-06
+    contracts:
+    - MFA-CON-006
+    source_invariants:
+    - C05
+    invariants:
+    - MFA-INV-005
+    source_tests:
+    - VT-904
+    - VT-301
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-011
+    - MFA-VO-019
+    - MFA-VO-020
+    - MFA-VO-023
+    - MFA-VO-031
+    - MFA-VO-048
+    methods:
+    - I
+    - F
+    evidence_template: EV-VT904
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-GOV-002
+    statement: Καμία χρήσιμη ικανότητα δεν αφαιρείται ή υποβαθμίζεται σιωπηρά
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 144
+    source_telos:
+    - T5
+    - T9
+    objectives:
+    - MFA-OBJ-006
+    - MFA-OBJ-010
+    source_components:
+    - KRN-04
+    - KRN-06
+    providers:
+    - MFA-ELM-006
+    - MFA-ELM-008
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-033
+    - MFA-CAP-049
+    - MFA-CAP-059
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    - MT-11
+    source_interfaces:
+    - ICD-04
+    - ICD-06
+    contracts:
+    - MFA-CON-004
+    - MFA-CON-006
+    source_invariants:
+    - C01
+    invariants:
+    - MFA-INV-001
+    source_tests:
+    - VT-203
+    - VT-301
+    - KT-24
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-019
+    - MFA-VO-024
+    - MFA-VO-031
+    - MFA-VO-039
+    methods:
+    - M
+    - F
+    - T
+    evidence_template: EV-VT301
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-GOV-003
+    statement: Μόνο ο δημιουργός εγκρίνει φάσεις, merges, αναθεωρήσεις Tier 0/1 και αλλαγές kernel οργάνων
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 145
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - KRN-06
+    - HUM-01
+    providers:
+    - MFA-ELM-008
+    - MFA-ELM-091
+    capabilities:
+    - MFA-CAP-030
+    - MFA-CAP-031
+    - MFA-CAP-049
+    - MFA-CAP-059
+    - MFA-CAP-069
+    primary_mission_threads:
+    - MT-07
+    - MT-12
+    source_interfaces:
+    - ICD-06
+    - ICD-23
+    contracts:
+    - MFA-CON-006
+    - MFA-CON-023
+    source_invariants:
+    - C05
+    invariants:
+    - MFA-INV-005
+    source_tests:
+    - KT-23
+    - VT-904
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-017
+    - MFA-VO-019
+    - MFA-VO-020
+    - MFA-VO-023
+    - MFA-VO-031
+    - MFA-VO-034
+    - MFA-VO-056
+    methods:
+    - T
+    - I
+    evidence_template: EV-KT23
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-GOV-004
+    statement: Το GRAIL δεν προσθέτει νέο primitive και μόνο επεκτείνει υπάρχουσες έδρες
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 146
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - MDL-01
+    - GOV-01
+    providers:
+    - MFA-ELM-051
+    - MFA-ELM-088
+    capabilities:
+    - MFA-CAP-001
+    - MFA-CAP-003
+    - MFA-CAP-055
+    - MFA-CAP-059
+    - MFA-CAP-060
+    - MFA-CAP-078
+    primary_mission_threads:
+    - MT-03
+    - MT-05
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-32
+    contracts:
+    - MFA-CON-032
+    source_invariants:
+    - C05
+    invariants:
+    - MFA-INV-005
+    source_tests:
+    - VT-901
+    verification_obligations:
+    - MFA-VO-011
+    - MFA-VO-020
+    - MFA-VO-023
+    - MFA-VO-026
+    - MFA-VO-048
+    - MFA-VO-049
+    methods:
+    - I
+    evidence_template: EV-VT901
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-GOV-005
+    statement: Κάθε επίδραση μένει εντός του δηλωμένου νόμιμου πεδίου ικανοτήτων
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 147
+    source_telos:
+    - T7
+    - T9
+    objectives:
+    - MFA-OBJ-008
+    - MFA-OBJ-010
+    source_components:
+    - KRN-11
+    - LAW-09
+    providers:
+    - MFA-ELM-009
+    - MFA-ELM-066
+    capabilities:
+    - MFA-CAP-005
+    - MFA-CAP-059
+    - MFA-CAP-077
+    primary_mission_threads:
+    - MT-03
+    - MT-07
+    source_interfaces:
+    - ICD-08
+    contracts:
+    - MFA-CON-008
+    source_invariants:
+    - C07
+    invariants:
+    - MFA-INV-007
+    source_tests:
+    - VT-008
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-017
+    - MFA-VO-020
+    methods:
+    - T
+    evidence_template: EV-VT008
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-INT-001
+    statement: Όλα τα εξωτερικά συμβόλαια είναι versioned προβολές εσωτερικών εδρών με ανίχνευση breaking changes
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 153
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - MDL-01
+    - FRG-05
+    providers:
+    - MFA-ELM-078
+    - MFA-ELM-088
+    capabilities:
+    - MFA-CAP-001
+    - MFA-CAP-003
+    - MFA-CAP-022
+    - MFA-CAP-029
+    - MFA-CAP-055
+    - MFA-CAP-074
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-32
+    - ICD-04
+    contracts:
+    - MFA-CON-004
+    - MFA-CON-032
+    source_invariants:
+    - O02
+    invariants:
+    - MFA-INV-015
+    source_tests:
+    - VT-902
+    verification_obligations:
+    - MFA-VO-002
+    - MFA-VO-024
+    - MFA-VO-026
+    - MFA-VO-040
+    - MFA-VO-043
+    - MFA-VO-049
+    - MFA-VO-051
+    - MFA-VO-052
+    methods:
+    - T
+    evidence_template: EV-VT902
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-INT-002
+    statement: Κάθε ICD έχει σουίτα conformance που περνά κάθε υλοποίηση σε οποιαδήποτε γλώσσα
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 154
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - FRG-05
+    - KRN-04
+    providers:
+    - MFA-ELM-006
+    - MFA-ELM-078
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-022
+    - MFA-CAP-029
+    - MFA-CAP-033
+    - MFA-CAP-074
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    - MT-11
+    source_interfaces:
+    - ICD-01
+    - ICD-02
+    - ICD-03
+    - ICD-04
+    - ICD-05
+    - ICD-06
+    - ICD-07
+    - ICD-08
+    - ICD-09
+    - ICD-10
+    - ICD-11
+    - ICD-12
+    - ICD-13
+    - ICD-14
+    - ICD-15
+    - ICD-16
+    - ICD-17
+    - ICD-18
+    - ICD-19
+    - ICD-20
+    - ICD-21
+    - ICD-22
+    - ICD-23
+    - ICD-24
+    - ICD-25
+    - ICD-26
+    - ICD-27
+    - ICD-28
+    - ICD-29
+    - ICD-30
+    - ICD-31
+    - ICD-32
+    contracts:
+    - MFA-CON-001
+    - MFA-CON-002
+    - MFA-CON-003
+    - MFA-CON-004
+    - MFA-CON-005
+    - MFA-CON-006
+    - MFA-CON-007
+    - MFA-CON-008
+    - MFA-CON-009
+    - MFA-CON-010
+    - MFA-CON-011
+    - MFA-CON-012
+    - MFA-CON-013
+    - MFA-CON-014
+    - MFA-CON-015
+    - MFA-CON-016
+    - MFA-CON-017
+    - MFA-CON-018
+    - MFA-CON-019
+    - MFA-CON-020
+    - MFA-CON-021
+    - MFA-CON-022
+    - MFA-CON-023
+    - MFA-CON-024
+    - MFA-CON-025
+    - MFA-CON-026
+    - MFA-CON-027
+    - MFA-CON-028
+    - MFA-CON-029
+    - MFA-CON-030
+    - MFA-CON-031
+    - MFA-CON-032
+    source_invariants:
+    - O02
+    invariants:
+    - MFA-INV-015
+    source_tests:
+    - VT-001
+    - VT-002
+    - VT-003
+    - VT-004
+    - VT-005
+    - VT-006
+    - VT-007
+    - VT-008
+    - VT-009
+    - VT-010
+    - VT-011
+    - VT-012
+    - VT-013
+    - VT-014
+    - VT-015
+    - VT-016
+    - VT-017
+    - VT-018
+    - VT-019
+    - VT-020
+    - VT-021
+    - VT-022
+    - VT-023
+    - VT-024
+    - VT-025
+    - VT-026
+    - VT-027
+    - VT-028
+    - VT-029
+    - VT-030
+    - VT-031
+    - VT-032
+    verification_obligations:
+    - MFA-VO-002
+    - MFA-VO-024
+    - MFA-VO-039
+    - MFA-VO-040
+    - MFA-VO-043
+    - MFA-VO-051
+    - MFA-VO-052
+    methods:
+    - T
+    evidence_template: EV-VT0nn
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-INT-003
+    statement: Κάθε component εξαρτάται μόνο από interfaces
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 155
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - MDL-01
+    providers:
+    - MFA-ELM-088
+    capabilities:
+    - MFA-CAP-001
+    - MFA-CAP-003
+    - MFA-CAP-055
+    primary_mission_threads:
+    - MT-05
+    - MT-09
+    source_interfaces:
+    - ICD-32
+    contracts:
+    - MFA-CON-032
+    source_invariants:
+    - O01
+    invariants:
+    - MFA-INV-014
+    source_tests:
+    - VT-901
+    verification_obligations:
+    - MFA-VO-002
+    - MFA-VO-026
+    - MFA-VO-049
+    methods:
+    - I
+    evidence_template: EV-VT901
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-ABS-001
+    statement: Νέα τεχνολογία εισέρχεται μόνο από extension points και ORP, χωρίς αλλαγή kernel contract
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 156
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - FRG-03
+    - AEO-06
+    - KRN-04
+    providers:
+    - MFA-ELM-006
+    - MFA-ELM-038
+    - MFA-ELM-076
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-025
+    - MFA-CAP-026
+    - MFA-CAP-028
+    - MFA-CAP-033
+    - MFA-CAP-080
+    primary_mission_threads:
+    - MT-05
+    - MT-06
+    - MT-09
+    - MT-11
+    source_interfaces:
+    - ICD-10
+    - ICD-16
+    - ICD-22
+    contracts:
+    - MFA-CON-010
+    - MFA-CON-016
+    - MFA-CON-022
+    source_invariants:
+    - O02
+    invariants:
+    - MFA-INV-015
+    source_tests:
+    - KT-01
+    - KT-03
+    - KT-09
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-002
+    - MFA-VO-003
+    - MFA-VO-009
+    - MFA-VO-013
+    - MFA-VO-024
+    - MFA-VO-039
+    - MFA-VO-040
+    - MFA-VO-043
+    methods:
+    - T
+    evidence_template: EV-KT01
+    source_status: '[T]/[E]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-ABS-002
+    statement: Ο ίδιος ο πυρήνας είναι αντικαταστάσιμος με διατήρηση συνέχειας
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 157
+    source_telos:
+    - T8
+    - T2
+    objectives:
+    - MFA-OBJ-003
+    - MFA-OBJ-009
+    source_components:
+    - KRN-01
+    - KRN-06
+    - AEO-05
+    providers:
+    - MFA-ELM-001
+    - MFA-ELM-008
+    - MFA-ELM-037
+    capabilities:
+    - MFA-CAP-003
+    - MFA-CAP-004
+    - MFA-CAP-007
+    - MFA-CAP-008
+    - MFA-CAP-036
+    - MFA-CAP-049
+    - MFA-CAP-051
+    - MFA-CAP-059
+    primary_mission_threads:
+    - MT-01
+    - MT-06
+    - MT-07
+    - MT-08
+    - MT-09
+    - MT-10
+    source_interfaces:
+    - ICD-01
+    - ICD-06
+    contracts:
+    - MFA-CON-001
+    - MFA-CON-006
+    source_invariants:
+    - I01
+    - O02
+    invariants:
+    - MFA-INV-009
+    - MFA-INV-015
+    source_tests:
+    - KT-02
+    - KT-08
+    - VT-505
+    - EXP-18
+    verification_obligations:
+    - MFA-VO-001
+    - MFA-VO-002
+    - MFA-VO-006
+    - MFA-VO-008
+    - MFA-VO-013
+    - MFA-VO-019
+    - MFA-VO-021
+    - MFA-VO-025
+    - MFA-VO-026
+    - MFA-VO-027
+    - MFA-VO-031
+    - MFA-VO-040
+    - MFA-VO-043
+    - MFA-VO-046
+    methods:
+    - S
+    - T
+    evidence_template: EV-KT02
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-ABS-003
+    statement: Υπάρχει Future Human Continuity Port ως συμβόλαιο δεσμευμένο σε συναίνεση
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 158
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - HUM-02
+    providers:
+    - MFA-ELM-092
+    capabilities:
+    - MFA-CAP-064
+    primary_mission_threads:
+    - MT-06
+    source_interfaces:
+    - ICD-25
+    contracts:
+    - MFA-CON-025
+    source_invariants:
+    - C02
+    invariants:
+    - MFA-INV-002
+    source_tests:
+    - VT-025
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-048
+    - MFA-VO-049
+    methods:
+    - I
+    evidence_template: EV-VT025
+    source_status: '[E]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-ABS-004
+    statement: Επέκταση σε νέο επιστημονικό domain μέσω domain institution template χωρίς αλλαγή πυρήνα
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 159
+    source_telos:
+    - T4
+    - T8
+    objectives:
+    - MFA-OBJ-005
+    - MFA-OBJ-009
+    source_components:
+    - CIV-02
+    - KNW-05
+    - OPS-03
+    providers:
+    - MFA-ELM-053
+    - MFA-ELM-083
+    - MFA-ELM-086
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-003
+    - MFA-CAP-010
+    - MFA-CAP-029
+    - MFA-CAP-060
+    - MFA-CAP-063
+    - MFA-CAP-068
+    - MFA-CAP-075
+    primary_mission_threads:
+    - MT-01
+    - MT-05
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-15
+    - ICD-17
+    contracts:
+    - MFA-CON-015
+    - MFA-CON-017
+    source_invariants:
+    - C06
+    - C03
+    invariants:
+    - MFA-INV-003
+    - MFA-INV-006
+    source_tests:
+    - KT-12
+    - EXP-10
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-011
+    - MFA-VO-012
+    - MFA-VO-014
+    - MFA-VO-024
+    - MFA-VO-035
+    - MFA-VO-037
+    - MFA-VO-049
+    - MFA-VO-050
+    methods:
+    - T
+    evidence_template: EV-KT12
+    source_status: '[X]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-VAL-001
+    statement: Benchmarks, τυφλά σύνολα και batteries παγώνουν πριν από τις φάσεις υλοποίησης και συντάσσονται εκτός συστήματος
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 160
+    source_telos:
+    - T7
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    - MFA-OBJ-008
+    source_components:
+    - OPS-03
+    providers:
+    - MFA-ELM-086
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-029
+    - MFA-CAP-075
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    source_interfaces:
+    - ICD-27
+    contracts:
+    - MFA-CON-027
+    source_invariants:
+    - C04
+    invariants:
+    - MFA-INV-004
+    source_tests:
+    - VT-701
+    - VT-702
+    verification_obligations:
+    - MFA-VO-014
+    - MFA-VO-024
+    - MFA-VO-028
+    - MFA-VO-035
+    - MFA-VO-048
+    - MFA-VO-050
+    methods:
+    - I
+    - T
+    evidence_template: EV-VT702
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-VAL-002
+    statement: Κάθε ισχυρισμός ικανότητας συνδέει απαίτηση, μηχανισμό, test και evidence
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 161
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - MDL-01
+    - OPS-03
+    providers:
+    - MFA-ELM-086
+    - MFA-ELM-088
+    capabilities:
+    - MFA-CAP-001
+    - MFA-CAP-002
+    - MFA-CAP-003
+    - MFA-CAP-029
+    - MFA-CAP-055
+    - MFA-CAP-075
+    primary_mission_threads:
+    - MT-05
+    - MT-07
+    - MT-09
+    source_interfaces:
+    - ICD-32
+    - ICD-27
+    contracts:
+    - MFA-CON-027
+    - MFA-CON-032
+    source_invariants:
+    - C06
+    invariants:
+    - MFA-INV-006
+    source_tests:
+    - VT-901
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-014
+    - MFA-VO-024
+    - MFA-VO-026
+    - MFA-VO-035
+    - MFA-VO-037
+    - MFA-VO-049
+    - MFA-VO-050
+    methods:
+    - I
+    evidence_template: EV-VT901
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-VAL-003
+    statement: Κάθε kill test εκτελείται πρώτα σε ντετερμινιστική προσομοίωση
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 162
+    source_telos:
+    - T6
+    objectives:
+    - MFA-OBJ-007
+    source_components:
+    - OPS-02
+    providers:
+    - MFA-ELM-085
+    capabilities:
+    - MFA-CAP-023
+    - MFA-CAP-038
+    - MFA-CAP-053
+    primary_mission_threads:
+    - MT-05
+    - MT-12
+    source_interfaces:
+    - ICD-26
+    contracts:
+    - MFA-CON-026
+    source_invariants:
+    - C08
+    invariants:
+    - MFA-INV-008
+    source_tests:
+    - VT-601
+    - VT-602
+    - VT-603
+    - VT-604
+    - VT-109
+    - EXP-12
+    verification_obligations:
+    - MFA-VO-013
+    - MFA-VO-022
+    - MFA-VO-027
+    - MFA-VO-033
+    - MFA-VO-041
+    methods:
+    - S
+    evidence_template: EV-VT601
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-VAL-004
+    statement: Οι επιστημικοί βαθμοί βαθμονομούνται ανά κλάση ισχυρισμού
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 163
+    source_telos:
+    - T1
+    objectives:
+    - MFA-OBJ-002
+    source_components:
+    - COG-08
+    - OPS-03
+    providers:
+    - MFA-ELM-024
+    - MFA-ELM-086
+    capabilities:
+    - MFA-CAP-002
+    - MFA-CAP-016
+    - MFA-CAP-017
+    - MFA-CAP-029
+    - MFA-CAP-065
+    - MFA-CAP-075
+    primary_mission_threads:
+    - MT-02
+    - MT-05
+    - MT-07
+    source_interfaces:
+    - ICD-27
+    contracts:
+    - MFA-CON-027
+    source_invariants:
+    - C04
+    invariants:
+    - MFA-INV-004
+    source_tests:
+    - VT-704
+    verification_obligations:
+    - MFA-VO-014
+    - MFA-VO-024
+    - MFA-VO-028
+    - MFA-VO-035
+    - MFA-VO-036
+    - MFA-VO-046
+    - MFA-VO-048
+    - MFA-VO-050
+    - MFA-VO-051
+    methods:
+    - T
+    evidence_template: EV-VT704
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-OPS-001
+    statement: Traces/metrics/logs συσχετισμένα με το ledger, μη αυθεντικά
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 164
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - OPS-04
+    providers:
+    - MFA-ELM-087
+    capabilities:
+    - MFA-CAP-034
+    primary_mission_threads:
+    - MT-08
+    source_interfaces:
+    - ICD-24
+    contracts:
+    - MFA-CON-024
+    source_invariants:
+    - C08
+    invariants:
+    - MFA-INV-008
+    source_tests:
+    - VT-024
+    verification_obligations:
+    - MFA-VO-003
+    - MFA-VO-027
+    - MFA-VO-041
+    methods:
+    - T
+    evidence_template: EV-VT024
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-OPS-002
+    statement: Reproducible builds μέσω Docker αλυσίδας σήμερα και Nix μετά το FF4
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 165
+    source_telos:
+    - T8
+    objectives:
+    - MFA-OBJ-009
+    source_components:
+    - OPS-01
+    providers:
+    - MFA-ELM-084
+    capabilities:
+    - MFA-CAP-076
+    primary_mission_threads:
+    - MT-08
+    source_interfaces:
+    - ICD-04
+    contracts:
+    - MFA-CON-004
+    source_invariants:
+    - S03
+    invariants:
+    - MFA-INV-040
+    source_tests:
+    - VT-803
+    verification_obligations:
+    - MFA-VO-035
+    methods:
+    - T
+    evidence_template: EV-VT803
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-OPS-003
+    statement: 'Profiles ανάπτυξης: single-node, sovereign on-prem, federated'
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 166
+    source_telos:
+    - T7
+    - T8
+    objectives:
+    - MFA-OBJ-008
+    - MFA-OBJ-009
+    source_components:
+    - KRN-10
+    - KRN-08
+    providers:
+    - MFA-ELM-012
+    - MFA-ELM-013
+    capabilities:
+    - MFA-CAP-032
+    - MFA-CAP-033
+    - MFA-CAP-035
+    - MFA-CAP-054
+    primary_mission_threads:
+    - MT-08
+    - MT-11
+    source_interfaces:
+    - ICD-11
+    - ICD-12
+    contracts:
+    - MFA-CON-011
+    - MFA-CON-012
+    source_invariants:
+    - L03
+    invariants:
+    - MFA-INV-034
+    source_tests:
+    - VT-011
+    - VT-012
+    verification_obligations:
+    - MFA-VO-004
+    - MFA-VO-011
+    - MFA-VO-017
+    - MFA-VO-022
+    - MFA-VO-024
+    - MFA-VO-039
+    - MFA-VO-047
+    methods:
+    - D
+    evidence_template: EV-VT011
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-HUM-001
+    statement: Δημιουργός και Principals εγκρίνουν, ελέγχουν και ελέγχουν-εκ-των-υστέρων μέσω κονσόλας με υπογεγραμμένες ενέργειες
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 167
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - HUM-01
+    providers:
+    - MFA-ELM-091
+    capabilities:
+    - MFA-CAP-030
+    - MFA-CAP-031
+    - MFA-CAP-069
+    primary_mission_threads:
+    - MT-12
+    source_interfaces:
+    - ICD-23
+    contracts:
+    - MFA-CON-023
+    source_invariants:
+    - C02
+    - C05
+    invariants:
+    - MFA-INV-002
+    - MFA-INV-005
+    source_tests:
+    - VT-023
+    verification_obligations:
+    - MFA-VO-005
+    - MFA-VO-017
+    - MFA-VO-020
+    - MFA-VO-023
+    - MFA-VO-034
+    - MFA-VO-048
+    - MFA-VO-056
+    methods:
+    - T
+    evidence_template: EV-VT023
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-MDL-001
+    statement: Το canonical model είναι η μία έδρα· όλες οι προβολές, πίνακες και η μελέτη παράγονται από αυτό
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 168
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - MDL-01
+    providers:
+    - MFA-ELM-088
+    capabilities:
+    - MFA-CAP-001
+    - MFA-CAP-003
+    - MFA-CAP-055
+    primary_mission_threads:
+    - MT-05
+    - MT-09
+    source_interfaces:
+    - ICD-32
+    contracts:
+    - MFA-CON-032
+    source_invariants:
+    - C06
+    invariants:
+    - MFA-INV-006
+    source_tests:
+    - VT-901
+    - VT-903
+    - EXP-17
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-026
+    - MFA-VO-037
+    - MFA-VO-049
+    methods:
+    - I
+    - T
+    evidence_template: EV-VT901
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+  - id: REQ-MDL-002
+    statement: Το model gate αποτυγχάνει σε κάθε ορφανή απαίτηση, component, interface, invariant ή test
+    source_provenance:
+      file: docs/architecture-draft/_unmerged-parts/29.md
+      line: 169
+    source_telos:
+    - T9
+    objectives:
+    - MFA-OBJ-010
+    source_components:
+    - MDL-01
+    providers:
+    - MFA-ELM-088
+    capabilities:
+    - MFA-CAP-001
+    - MFA-CAP-003
+    - MFA-CAP-055
+    primary_mission_threads:
+    - MT-05
+    - MT-09
+    source_interfaces:
+    - ICD-32
+    contracts:
+    - MFA-CON-032
+    source_invariants:
+    - C06
+    invariants:
+    - MFA-INV-006
+    source_tests:
+    - VT-901
+    verification_obligations:
+    - MFA-VO-006
+    - MFA-VO-026
+    - MFA-VO-037
+    - MFA-VO-049
+    methods:
+    - T
+    evidence_template: EV-VT901
+    source_status: '[T]'
+    trace_status: STRUCTURALLY_TRACED_NOT_EVIDENCED
+coverage:
+  requirements_declared: 114
+  requirements_unique: 114
+  with_objective: 114
+  with_provider: 114
+  with_capability: 114
+  with_primary_mission_thread: 114
+  with_contract: 114
+  with_invariant: 114
+  with_verification_obligation: 114
+  dangling_canonical_ids: []
+  structurally_uncovered: []
+  evidence_status: DESIGN_ONLY_NOT_RUN
+  closure_blocker: MFA-VO-106
+  rule: "114/114 structural trace is necessary but not sufficient for satisfaction or architecture closure."

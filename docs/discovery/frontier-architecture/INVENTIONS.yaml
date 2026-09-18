@@ -351,9 +351,15 @@ mechanisms:
      dependencies: [MFA-MECH-001], authority: "LPA + AUT-00 πάνω από τον κύκλο· Effect μόνο μέσω RET στη φάση ACT· L2 schedule μέσω RVSI+CGM· L3 contracts/FP· Emergency-stop k-of-n (MFA-DEC-012).", alternatives: ["κατάλογος μηχανισμών χωρίς κύκλο (0.3.0)", "SOAR/LIDA χωρίς VERIFY"],
      conflicts: [MFA-CFL-046], unknowns: [MFA-UNK-133], affected_by: [MFA-TEL-08],
      epistemic_status: "NOVEL SYNTHESIS", version: 1, change_history: [{patch: MFA-PATCH-0029, op: ADD, date: "2026-09-16", summary: "Μηχανισμοί MFA-MECH-026…044 στο ευρετήριο INVENTIONS με INVENTION DOSSIER 29 πεδίων (inventions/) και δοσιέ 22 πεδίων (mechanisms/)"}]}
+  - {<<: *d, id: MFA-MECH-045, name: "Evidence-Carrying Mission Weave (ECMW) — τυπική σύνθεση αποστολής, closure και scope-honest verdict", maturity: X, dossier: mechanisms/MFA-MECH-045.md,
+     statement: "Ο ECMW μετατρέπει κάθε end-to-end αποστολή σε τυπωμένο temporal graph. Κάθε phase δηλώνει input/output, provider, contract, authority, budget, timeout, obligations, effect class, evidence και failure transition. Η κρίση Γ;A;B ⊢ s:I→O !Ω ▷R συνθέτει μόνο όταν οι τύποι, η εξουσία, οι πόροι και οι υποχρεώσεις συμφωνούν. Closure απαιτεί provenance όλων των trusted inputs, κατανάλωση/τερματισμό όλων των outputs, mediation κάθε Effect, τερματισμό κάθε obligation, semantics κάθε fork/join/loop, compensation ή degraded terminal για κάθε failure και scoped EvidenceReceipt. Πάνω στον ίδιο ιστό ορίζονται structural/semantic/simulation closure και απαγορεύεται global PASS από subset εκτέλεση.", purpose: "Να μετατρέψει τα 127 στοιχεία και τους 44 μηχανισμούς από πλήρη κατάλογο σε μία συνθέσιμη, ελέγξιμη αρχιτεκτονική που εκτελεί ολόκληρες αποστολές και αποδεικνύει ακριβώς ποιο scope έκλεισε.", capabilities: [MFA-CAP-109],
+     source_provenance: ["session types and effect systems", "workflow nets and event sourcing", "assume-guarantee reasoning", "evidence-carrying code/proof-carrying data", "Architecture Closure 0.4.2", "inventions/MFA-MECH-045.yaml (29 πεδία)"], contribution: "NEW FORMALISM", assumptions: ["οι κρίσιμες διεπαφές μπορούν να τυποποιηθούν ως contracts και obligations"],
+     dependencies: [MFA-MECH-001, MFA-MECH-015, MFA-MECH-025, MFA-MECH-039, MFA-MECH-043, MFA-MECH-044], authority: "Genesis-only compilation/analysis· καμία Effect authority· οι authority transitions ελέγχονται από τα υπάρχοντα gates και τον δημιουργό όπου απαιτείται.", alternatives: ["κατάλογος στοιχείων χωρίς end-to-end witness", "global PASS από επιλεγμένα tests"],
+     conflicts: [], unknowns: [MFA-UNK-139, MFA-UNK-141], affected_by: [MFA-TEL-08],
+     epistemic_status: "NEW FORMALISM", version: 1, change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Evidence-Carrying Mission Weave, canonical mission threads and architecture closure"}]}
 
 contribution_summary:
-  NEW FORMALISM: [MFA-MECH-001, MFA-MECH-014]
+  NEW FORMALISM: [MFA-MECH-001, MFA-MECH-014, MFA-MECH-045]
   NEW ARCHITECTURAL INVENTION: [MFA-MECH-002, MFA-MECH-004, MFA-MECH-010, MFA-MECH-019, MFA-MECH-022, MFA-MECH-024]
   NEW PROTOCOL: [MFA-MECH-003, MFA-MECH-006, MFA-MECH-007, MFA-MECH-020, MFA-MECH-025]
   NEW ALGORITHM: [MFA-MECH-005, MFA-MECH-009, MFA-MECH-011, MFA-MECH-012, MFA-MECH-013, MFA-MECH-017, MFA-MECH-021]

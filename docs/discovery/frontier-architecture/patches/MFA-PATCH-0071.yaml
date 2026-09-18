@@ -1,0 +1,22 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0071
+title: "Canonical traceability of all 114 source requirements"
+operation: ADD_AND_MODIFY
+targets: [REQUIREMENT-TRACEABILITY.yaml, ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, CONTRACTS.yaml, INVARIANTS.yaml, VERIFICATION-OBLIGATIONS.yaml, CAPABILITY-CONSERVATION.md, TECHNICAL-ARCHITECTURE.md, README.md, CHANGELOG.md, diagrams/MFA-DIA-00.mmd]
+base: {package_version: 0.4.1, source_commit: 7d80ff67da88c2ff5f612eeb0cc9188b67fb1dbd}
+preconditions: ["Source traceability matrix contains exactly 114 unique REQ rows", "All source statements remain unmodified", "No target or capability is removed"]
+change:
+  add: [REQUIREMENT-TRACEABILITY.yaml, MFA-CON-088, MFA-INV-135, MFA-VO-106, requirement_traceability_schema]
+  strengthen: ["architecture closure covers source requirements as well as objectives/capabilities", "each requirement reaches a primary MissionThread", "structural trace is explicitly separated from satisfaction/evidence"]
+rationale: "The package could not be called structurally complete while its 114 source requirements remained only in an external prose table and were not joined to the canonical seats."
+evidence: ["REQUIREMENT-TRACEABILITY.yaml#coverage", MFA-VO-106]
+affected_dependencies: [MFA-ELM-088, MFA-ELM-122, MFA-ELM-126]
+capability_impact: {gained: ["requirement-to-mission closure witness"], at_risk: [], ledger_entry: "114 requirements preserved; 0 removed; structural trace does not overclaim satisfaction"}
+migration: "Use REQUIREMENT-TRACEABILITY.yaml as the canonical requirement join; retain the source table as provenance, not as a competing seat."
+verification: "YAML/referential/114-row deterministic recomputation now; executable negative fixtures under MFA-VO-106 after F1 authorization"
+rollback: MFA-PATCH-0071-R
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED
+mechanical_state: PARTIALLY_APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

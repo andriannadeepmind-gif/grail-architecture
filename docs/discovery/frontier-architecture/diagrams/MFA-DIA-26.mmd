@@ -1,0 +1,34 @@
+%% id: MFA-DIA-26 · Evidence-carrying mission weave and operational-consciousness dual loop
+%% scope: 0.4.2 synthesis of MFA-MECH-045, MFA-CON-079/080/081/086/087, MFA-INV-125/126/129/132/133
+flowchart TB
+  INPUT["Signed mission input and model cut"] --> ECMW["MFA-MECH-045: compile Evidence-Carrying Mission Thread"]
+
+  subgraph INNER["Inner loop — operational consciousness"]
+    direction TB
+    MEMORY["Memory and continuity"] --> SELF["MFA-ELM-120 self-model"]
+    SELF --> ATTEND["MFA-ELM-107 attention and metacognition"]
+    ATTEND --> OCS["MFA-CON-080: 12-domain functional state"]
+    OCS --> MEMORY
+  end
+
+  subgraph OUTER["Outer loop — perception to evidence"]
+    direction TB
+    WORLD["Attested world observation"] --> MODEL["World model and deliberation"]
+    MODEL --> GATE["MFA-ELM-008/010 mediated action"]
+    GATE --> OUTCOME["Outcome and counterevidence"]
+    OUTCOME --> WORLD
+  end
+
+  ECMW --> INNER
+  ECMW --> OUTER
+  INNER <-->|"signed cuts and receipts only"| OUTER
+
+  INNER --> OBL["MFA-ELM-122 obligations"]
+  OUTER --> OBL
+  OBL --> TWIN["MFA-ELM-126: diagnostic / enforcing / shadow"]
+  TWIN --> SCOPED["MFA-CON-081 scoped verdict"]
+  SCOPED --> CLOSE["MFA-CON-087 closure rung or OPEN counterexample"]
+  CLOSE --> COCKPIT["MFA-ELM-091 Creator Cockpit"]
+
+  UNKNOWN["Unknowns, conflicts and falsified variants remain attached"] -.-> CLOSE
+  PROFILE["Laptop / workstation changes fidelity and concurrency, not target capability"] -.-> TWIN

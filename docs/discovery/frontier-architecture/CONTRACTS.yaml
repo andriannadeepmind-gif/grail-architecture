@@ -284,3 +284,231 @@ contracts:
     exec_type: D1
     conformance: [MFA-VO-094, MFA-VO-095, MFA-VO-096]
     change_history: [{patch: MFA-PATCH-0065, op: ADD, date: "2026-09-17", summary: "Open-ended measurement, learning and autonomy corrections"}]
+  - <<: *d
+    id: MFA-CON-079
+    corresponds_to: null
+    name: "Evidence-Carrying Mission Thread"
+    provider: MFA-ELM-126
+    consumers: "Ω-Loop, Obligation Checker, LAWMAX, Cockpit, Effect Transaction Engine, architecture closure"
+    delta: NEW
+    statement: "compile(thread,cut)→MissionIR|Counterexamples / close(thread,capsule)→MissionClosureCertificate|OPEN / inspect(thread)→phase/authority/obligation/resource/evidence graph."
+    state_semantics: "A thread advances only across type-compatible phase edges with a current authority/resource lease; every obligation is linear; every output is consumed or terminal; closure binds cut, scope, fidelity and mode."
+    failure_semantics: "Orphan input/output, missing provider/contract/timeout/failure edge, unmediated Effect, dropped obligation, unresolved join or unbounded loop ⇒ OPEN with a minimal counterexample; never implicit success."
+    exec_type: D1
+    conformance: [MFA-VO-097]
+    change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Evidence-Carrying Mission Weave"}]
+  - <<: *d
+    id: MFA-CON-080
+    corresponds_to: null
+    name: "Operational Consciousness State and Examination"
+    provider: MFA-ELM-121
+    consumers: "ASRW, MSM, Ω-Loop, Creator Cockpit, Court, health/impairment monitor"
+    delta: NEW
+    statement: "examine(entity,cut,battery)→OperationalConsciousnessRecord / domain(entity,domain,cut)→State+confidence+evidence / compare(cuts)→ImpairmentOrRecoveryTrajectory."
+    state_semantics: "Twelve mandatory functional domains are scored independently as INTACT/IMPAIRED/DISORGANIZED/UNMEASURABLE/NOT_APPLICABLE at one signed cut; FULLY_FUNCTIONAL requires every applicable mandatory threshold. SubjectiveStateRecord remains a separate epistemic object."
+    failure_semantics: "Missing domain, mixed cuts, self-report as sole evidence, anthropomorphic human-test transfer without construct validation, or phenomenal/subjective inference from the functional vector ⇒ INDETERMINATE and MFA-UNK-138 remains open."
+    exec_type: D2
+    conformance: [MFA-VO-098]
+    change_history: [{patch: MFA-PATCH-0069, op: ADD, date: "2026-09-17", summary: "Binding operational-consciousness definition and dual loops"}]
+  - <<: *d
+    id: MFA-CON-081
+    corresponds_to: null
+    name: "Scope-Honest Twin Verdict"
+    provider: MFA-ELM-126
+    consumers: "Cockpit, Court, release process, ArchitectureClosureCertificate"
+    delta: NEW
+    statement: "aggregate(receipts,declared_scope)→ScopedVerdict(tested_scope_result,architecture_result,exclusions,limitations)."
+    state_semantics: "PASS can describe only completed obligations inside the exact tested scope; architecture_result is a separate monotone lower bound and cannot exceed the weakest mandatory obligation/fidelity."
+    failure_semantics: "Zero-run, subset PASS, UNMEASURED/INDETERMINATE mandatory obligation, mixed cut/mode/fidelity or missing exclusion presented as global PASS ⇒ ERR_INTEGRITY and verdict INVALID."
+    exec_type: D1
+    conformance: [MFA-VO-099]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Scope-honest simulation verdicts"}]
+  - <<: *d
+    id: MFA-CON-082
+    corresponds_to: null
+    name: "External Release Attestation"
+    provider: MFA-ELM-003
+    consumers: "Canonical Design Platform, release verifier, Creator Cockpit, external auditors"
+    delta: NEW
+    statement: "attest(commit_or_tree,manifest,checks,authority)→ReleaseAttestation / verify(attestation,epoch)→VALID|INVALID|UNKNOWN."
+    state_semantics: "The in-tree MANIFEST binds package files and build basis; only a post-commit signed attestation/tag/log entry binds the final commit/tree. Attestations form an append-only supersession chain across crypto epochs."
+    failure_semantics: "Self-referential final-commit claim inside the same commit, stale epoch, missing signer authority, digest mismatch or broken attestation lineage ⇒ INVALID/UNKNOWN; never silently committed=true."
+    exec_type: D1
+    conformance: [MFA-VO-100]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Honest external release attestation"}]
+  - <<: *d
+    id: MFA-CON-083
+    corresponds_to: null
+    name: "Twin Execution-Mode Separation"
+    provider: MFA-ELM-126
+    consumers: "Scenario runner, World Twin, Effect Transaction Engine, Cockpit"
+    delta: NEW
+    statement: "run(capsule,DIAGNOSTIC|ENFORCING|SHADOW)→ModeBoundReceipt / request_bounded_real(receipt,envelope)→RET proceeding."
+    state_semantics: "DIAGNOSTIC records and may continue; ENFORCING speculates then commits/rejects atomically; SHADOW consumes real inputs with zero writes; BOUNDED_REAL belongs to RET, not to the Twin."
+    failure_semantics: "Receipt reused across modes, diagnostic state treated as committed, shadow output causing a real effect, or Twin granting itself BOUNDED_REAL ⇒ ERR_UNAUTHORIZED_CAPABILITY."
+    exec_type: D1
+    conformance: [MFA-VO-101]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Diagnostic/enforcing/shadow separation"}]
+  - <<: *d
+    id: MFA-CON-084
+    corresponds_to: null
+    name: "Simulation Capsule and Co-Simulation Boundary"
+    provider: MFA-ELM-126
+    consumers: "F2 component adapters, scenario library, held-out evaluators, Cockpit"
+    delta: NEW
+    statement: "seal(model_cut,scenario,fidelity,clocks,seeds,scheduler,faults,resources,oracles,termination)→SimulationCapsule / replay(capsule)→RunReceipt."
+    state_semantics: "Every heterogeneous boundary names state/event types, clock owner, early return, rollback support, tolerance and model-discrepancy bound; capsule contents are content-addressed."
+    failure_semantics: "Undeclared nondeterminism, clock ownership conflict, missing termination/oracle, unavailable rollback assumed as available, or discrepancy outside bound ⇒ INDETERMINATE/FAIL at the named scope."
+    exec_type: D1
+    conformance: [MFA-VO-102]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Reproducible F2 simulation capsules"}]
+  - <<: *d
+    id: MFA-CON-085
+    corresponds_to: null
+    name: "Deployment Fidelity Envelope"
+    provider: MFA-ELM-097
+    consumers: "Laptop, workstation, cluster profiles, scheduler, Twin, Ω-Loop"
+    delta: NEW
+    statement: "plan(mission,profile,deadline)→Local|Queued|Offloaded|Deferred plan / report(plan)→CapabilityAndFidelityReceipt."
+    state_semantics: "Profiles vary concurrency, latency, local model size and active fidelity while preserving REQUIRED target capabilities; heavy work is queued/offloaded/deferred explicitly."
+    failure_semantics: "Silent capability deletion, co-located replicas counted as independent, undeclared external disclosure, or resource projection presented as measured capacity ⇒ ERR_INTEGRITY."
+    exec_type: D1
+    conformance: [MFA-VO-103]
+    change_history: [{patch: MFA-PATCH-0070, op: ADD, date: "2026-09-17", summary: "Laptop/workstation capability conservation"}]
+  - <<: *d
+    id: MFA-CON-086
+    corresponds_to: null
+    name: "End-to-End Legal Quest"
+    provider: MFA-ELM-127
+    consumers: "Matter intake, evidence/corpus, research, reasoning, World Twin, drafting, citation, Emission Barrier, Effect and learning"
+    delta: NEW
+    statement: "quest(matter_cut,objective,envelope)→LegalQuestThread / deliver(thread)→Verified|Unknown|Contested output + receipts + alternatives + open obligations."
+    state_semantics: "Intake→evidence→temporal legal corpus→research→issue/argument graph→adversarial worlds→strategy frontier→draft/citation five-leg validation→Emission Barrier→Creator/Envelope→Effect→outcome/evidence/learning."
+    failure_semantics: "Missing provenance/cut, unresolved applicable-law conflict, unsupported citation, hidden alternative, unclosed obligation or failed emission/effect gate ⇒ no unqualified delivery; return typed partial/UNKNOWN/CONTESTED with plan."
+    exec_type: D2
+    conformance: [MFA-VO-097, MFA-VO-105]
+    change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Canonical legal mission spine"}]
+  - <<: *d
+    id: MFA-CON-087
+    corresponds_to: null
+    name: "Architecture Closure Certificate"
+    provider: MFA-ELM-088
+    consumers: "Creator, implementation roadmap, Twin, release process, independent reviewers"
+    delta: NEW
+    statement: "assess(model_cut,mission_certificates,required_set)→ArchitectureClosureCertificate|OPEN(counterexamples)."
+    state_semantics: "Closure advances OPEN→STRUCTURALLY_CLOSED→SEMANTICALLY_CLOSED→SIMULATION_READY→EVIDENCED_AT_Fn only by satisfying the exact metamodel predicates; unresolved Unknowns/Conflicts remain attached."
+    failure_semantics: "REQUIRED target/capability absent or uncovered, dangling semantic edge, mandatory scenario without capsule/oracle, or evidence fidelity overstated ⇒ remain at the last valid lower state."
+    exec_type: D1
+    conformance: [MFA-VO-105]
+    change_history: [{patch: MFA-PATCH-0068, op: ADD, date: "2026-09-17", summary: "Machine-auditable architecture closure"}]
+  - <<: *d
+    id: MFA-CON-088
+    corresponds_to: null
+    name: "Requirement Traceability Join"
+    provider: MFA-ELM-088
+    consumers: "Architecture closure, Mission Weave, implementation roadmap, independent review"
+    delta: NEW
+    statement: "trace(source_requirement,model_cut)→RequirementTrace(objective,provider,capability,mission,contract,invariant,verification)|OPEN(counterexample)."
+    state_semantics: "The 114 source requirements remain stable identities; each trace is a typed join over canonical seats and distinguishes structural trace, discharged evidence and supersession."
+    failure_semantics: "Missing or ambiguous provider/contract/invariant/VO, orphan capability, silent requirement deletion, or STRUCTURALLY_TRACED presented as SATISFIED ⇒ OPEN and no closure promotion."
+    exec_type: D1
+    conformance: [MFA-VO-106]
+    change_history: [{patch: MFA-PATCH-0071, op: ADD, date: "2026-09-17", summary: "Canonical trace of all 114 source requirements"}]
+
+# Machine-readable operation allowlists. These do not replace each contract's normative
+# signatures, state semantics or failure semantics; they prevent a compiler from guessing
+# callable operations from prose. Added by MFA-PATCH-0072.
+contract_operation_catalog:
+  schema: ARCHITECTURE-METAMODEL.yaml#contract_operation_schema
+  status: DESIGN_WITNESS_COMPLETE_EVIDENCE_OPEN
+  entries:
+    MFA-CON-001: [Append, Read, ProveInclusion, ProveConsistency, Checkpoint, Subscribe, Apply]
+    MFA-CON-002: [Put, Get, Has, Pin, Replicate, ShredEnvelope]
+    MFA-CON-003: [CreateCharter, Delegate, Rotate, Revoke, Sign, Verify, ContinuityProof, Epoch]
+    MFA-CON-004: [RegisterContract, SubmitConformance, Resolve, Lattice, AdmitArtifact]
+    MFA-CON-005: [Create, List, Explain, Revoke, Decide, AutonomyThreshold, Crossing, Reach]
+    MFA-CON-006: [Evaluate, EvaluateAdvisory, EvaluateEffective, ProposeAmendment, Ratify]
+    MFA-CON-007: [HlcNow, Cut, TimestampAttest, DeterministicClock]
+    MFA-CON-008: [InvokeEffect]
+    MFA-CON-009: [Publish, Subscribe]
+    MFA-CON-010: [Describe, Health, Invoke, ExportState, ImportState]
+    MFA-CON-011: [Namespace, Place, Quota, Budget, Account]
+    MFA-CON-012: [Spawn, Heartbeat, Suspend, Migrate, Terminate]
+    MFA-CON-013: [SpeechAct, EvidenceSync, ClaimQuery, StancePublish, TaskAnnounce, Bid, Award]
+    MFA-CON-014: [FileCase, Challenge, SubmitEvidence, Examine, Deliberate, Verdict, Dissent, Appeal]
+    MFA-CON-015: [Conceive, Birth, Fork, Merge, Retire, Lineage, InstantiateOrganization, Govern, Inherit]
+    MFA-CON-016: [Propose, ShadowReport, DifferentialReport, NdCertify, Cutover, Rollback, RetirePredecessor]
+    MFA-CON-017: [AsOf, ResolveEli, ValidateShacl]
+    MFA-CON-018: [Ingest, Attest, Lineage, Taint, Quarantine]
+    MFA-CON-019: [Matter, Conflict, Fact, Issue, Argument, Strategy, Draft, Deadline, Deliverable, RequestSignOff]
+    MFA-CON-020: [DefineLanguage, BuildCompiler, Validate, RegisterSubstrate, ProposeArchitecture]
+    MFA-CON-021: [SubmitSearch, RegisterEvaluator, ArchiveQuery, PromoteCandidate]
+    MFA-CON-022: [Generate, Embed, Score, Route, Agree, Disclose]
+    MFA-CON-023: [Approve, SignOff, Control, Notify, ProjectClientView, Explain, Zoom, Contest]
+    MFA-CON-024: [EmitOTLP]
+    MFA-CON-025: [BindHumanIdentity, ImportConsentedCorpus, RevokeConsent]
+    MFA-CON-026: [Scenario, InjectFault, GhostWorld, Campaign, TraceValidate, ImplMap, Promote, IdentityTest, Actors, ActorFidelity, Step]
+    MFA-CON-027: [RunBenchmark, BlindPanel, Battery, Ablate, Scorecard, Independence, StatisticalAcceptance]
+    MFA-CON-028: [Broadcast, SubmitProposal, Salience, CycleTrace]
+    MFA-CON-029: [RecordEpisode, Recall, Consolidate, Autobiographical, Assume, Retract, Nogood, EraseByControl, Prospective]
+    MFA-CON-030: [Verify]
+    MFA-CON-031: [Search, GraphWalk, Rerank]
+    MFA-CON-032: [ReadSubstrate, ApplyPatch, Project, Check, ImportSysML]
+    MFA-CON-033: [Apply, Read, Subscribe, Prove, Replay]
+    MFA-CON-034: [Propose, Shadow, Gate, Commit, Rollback, Settle, Disclose, SignEnvelope, RevokeEnvelope]
+    MFA-CON-035: [Open, Plan, Resolve, Split, Top, Taint]
+    MFA-CON-036: [Sense, Candidates, Admit, RequestGrant, Review, RequestEnvelope]
+    MFA-CON-037: [Decide, DecideAdvisory, DecideEffective, Register, Explain]
+    MFA-CON-038: [Predict, Resolve, Fidelity, Alarms]
+    MFA-CON-039: [Scene, Pick, Replay, Compare, Command, Zoom]
+    MFA-CON-040: [Propose, Compile, AnchorCheck, Shadow, RequestVerdict, Adopt, Rollback]
+    MFA-CON-041: [Measure, Gate, RegisterLineage]
+    MFA-CON-042: [Order, Evaluate, Import, RotateHeldOut, Independence]
+    MFA-CON-043: [Plan, Explain, Compare]
+    MFA-CON-044: [Compile, Errors, DifferentialStats]
+    MFA-CON-045: [Propagate, Spectral, SetKernels]
+    MFA-CON-046: [Map, Promote, IdentityTest, Rollback, What]
+    MFA-CON-047: [Cut, Admit, Train, Eval, Promote, Unlearn, Lineage]
+    MFA-CON-048: [Collect, Verify, Update, RewardLedger]
+    MFA-CON-049: [Propose, Cycle, Growth, Plateau, Halt]
+    MFA-CON-050: [TrainWorldModel, Plan, Predict, GenerateCurriculum, AdmitTask]
+    MFA-CON-051: [Cycle, Schema, Attend, Introspect, Integration, Affect]
+    MFA-CON-052: [Verify, Candidate, Admit, Retire, Corpus, CoreMeasure]
+    MFA-CON-053: [AcquireCompute, AcquireData, EnergyBudget, Inventory]
+    MFA-CON-054: [Observe, Propose, Birth, Merge, Split, Recover, Lineage, Schema]
+    MFA-CON-055: [Discover, Edges, Propose, Counterfactual, Explain]
+    MFA-CON-056: [Submit, Hypotheses, Test, Promote, Schemas, GeneratorCalibration]
+    MFA-CON-057: [Submit, Solve, Verify, Library, Stats, Compress]
+    MFA-CON-058: [Cycle, Archive, Frontier, Lineage, Operators, FixedPoint]
+    MFA-CON-059: [Epoch, Independence, Exclusions, Challenges, Goodhart, HeldOutRotation]
+    MFA-CON-060: [Derive, Instantiate, Extend, Productions, Lineage, FixedPoint]
+    MFA-CON-061: [Index, Stage, Gates, Advance, Regress, Dependency, Reactivation]
+    MFA-CON-062: [Plan, Migrate, Status, Rollback, Certificate, Escrow]
+    MFA-CON-063: [Sleep, TransferMatrix, Protected, GateReport, Schedule]
+    MFA-CON-064: [Measure, Bank, Calibrate, Law, Contamination, Record]
+    MFA-CON-065: [Sync, Curriculum, Batch, Violations, Consistency]
+    MFA-CON-066: [Step, Stage, Candidates, Envelope, Ladder, Regressions]
+    MFA-CON-067: [Propose, Certificates, Verdict, Escrow, History, Rate]
+    MFA-CON-068: [Cycle, Schedule, Phase, Interrupt, Budgets, OpenObligations]
+    MFA-CON-069: [Model, Hypotheses, SelfTest, FeatureAbsent, Drift, Ground]
+    MFA-CON-070: [Theories, Indicators, Evaluate, NextExperiment, Separation, Claim, TransitionClaim, AdmitTheory]
+    MFA-CON-071: [Infer, Check, Discharge, Defer, Ledger, Schedule]
+    MFA-CON-072: [Load, World, Apply, Fork, Replay, Substitute, Inject, Risk, Pareto, Project, Violations]
+    MFA-CON-073: [Classify, Propose, Admit]
+    MFA-CON-074: [Issue, Validate]
+    MFA-CON-075: [Set, Project]
+    MFA-CON-076: [Declare, Bootstrap, AdmitScc]
+    MFA-CON-077: [Record, Close]
+    MFA-CON-078: [Explore, Evaluate, Promote]
+    MFA-CON-079: [Compile, Close, Inspect]
+    MFA-CON-080: [Examine, Domain, Compare]
+    MFA-CON-081: [Aggregate]
+    MFA-CON-082: [Attest, Verify]
+    MFA-CON-083: [Run, RequestBoundedReal]
+    MFA-CON-084: [Seal, Replay]
+    MFA-CON-085: [Plan, Report]
+    MFA-CON-086: [Quest, Deliver]
+    MFA-CON-087: [Assess]
+    MFA-CON-088: [Trace]
+  completeness: {contracts: 88, allowlists: 88, empty: [], orphan_allowlists: []}
+  rule: "Dispatch uses these exact identifiers; aliases require an explicit projection map and unknown operations fail closed."

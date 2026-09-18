@@ -55,3 +55,24 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 ## 5. HELD_OUT συσκευή (MFA-DEC-014)
 
 Το 0.4.0 φορτώνει τη HELD_OUT συσκευή με: escrow απαντήσεων CGM, βαθμονόμηση items, H πληθυσμό (symbolic + human sample + lineage-disjoint μοντέλα), witnesses των ECE challenges, certificates SMP/VSC. Σε DEP-1 phone-class επαρκεί για scoring/escrow· η H με μοντέλα απαιτεί DEP-2 δεύτερη συσκευή με GPU.
+
+## 6. Δεσμευτικά προφίλ 0.4.2: capability conservation, όχι capability deletion
+
+Η τιμή αγοράς δεν είναι τεχνική προδιαγραφή. Τα «ισχυρό laptop περίπου €2.000» και «workstation περίπου €10.000» είναι deployment classes που παγώνουν μόνο όταν υπάρχει ονομασμένο bill of materials. Μέχρι τότε οι παρακάτω είναι envelopes σχεδιασμού και οι αριθμοί απόδοσης παραμένουν MFA-UNK-140.
+
+| Ιδιότητα | Laptop class | Workstation class |
+|---|---|---|
+| Ρόλος | interactive legal copilot, F1, λίγοι F2 κόσμοι, local private inference όπου χωρά | κύριος local GRAIL node, model ensembles, πολλοί F2 κόσμοι, training/evaluation batches |
+| Active worlds | 1–λίγοι, structural sharing και queue | δεκάδες κατά workload, bounded από RAM/VRAM/energy |
+| Models | μικρά/quantized local· μεγάλα explicitly offloaded ή deferred | μεγαλύτερα local/ensemble· frontier-scale training μπορεί ακόμη να απαιτεί attested cluster |
+| Ω-loop | κύκλος ημέρας/νύχτας· low-latency MT-01 path ξεχωριστά | κύκλος ωρών ή παράλληλες φάσεις, χωρίς starvation του legal path |
+| Verification | F1 + επιλεγμένα F2· δεύτερη φυσική συσκευή για HELD_OUT | περισσότερα F2/held-out runs, αλλά processes/GPUs στο ίδιο chassis δεν είναι ανεξάρτητα trust domains |
+| Failure under insufficient resources | QUEUED / DEFERRED / DEGRADED_FIDELITY / EXTERNAL_PROVIDER_REQUIRED με receipt | ίδιος κανόνας· ποτέ silent capability removal |
+
+### 6.1 Planning rule
+
+`plan(mission, profile, deadline) → Local | Queued | Offloaded | Deferred`, με `CapabilityAndFidelityReceipt`. Το target capability lattice παραμένει ίδιο. Αυτό που αλλάζει είναι locality, concurrency, latency και active fidelity. Η εξωτερική εκτέλεση απαιτεί DisclosureGrant/attestation και δεν μετατρέπεται σε «κυριαρχία» χωρίς MFA-ELM-116 evidence.
+
+### 6.2 Τι θα μετρήσει το MFA-VO-103
+
+Το ίδιο catalogue MT-01…12 και SCN-01…18 εκτελείται στα δύο named hardware cuts. Καταγράφονται latency distributions, throughput, peak/steady RAM/VRAM, energy/Wh, queue depth, completion/defer/offload ratio, capability-family coverage και failure recovery. Μόνο τότε παράγεται δεσμευτικό sizing· όχι από τιμή αγοράς ή θεωρητικά FLOPS.

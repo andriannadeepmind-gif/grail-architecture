@@ -1,0 +1,27 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0070
+title: "Simulation truth, resource profiles, external attestation and projection independence"
+operation: ADD_AND_MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, CONTRACTS.yaml, INVARIANTS.yaml, VERIFICATION-OBLIGATIONS.yaml, UNKNOWNS.yaml, ASI-DIGITAL-TWIN-EXECUTION-SEMANTICS.md, ASI-RESOURCE-ENVELOPES.md, TECHNICAL-ARCHITECTURE.md, IMPLEMENTATION-ROADMAP.md, diagrams/MFA-DIA-00.mmd, diagrams/MFA-DIA-26.mmd, tools/twin/README.md, README.md, CHANGELOG.md]
+base: {package_version: 0.4.1, source_commit: 7d80ff67da88c2ff5f612eeb0cc9188b67fb1dbd}
+preconditions: ["Current F1 tests are evidence only for their exact selected scope", "No production implementation in this patch"]
+change:
+  add: ["Scope-Honest Twin Verdict", "DIAGNOSTIC/ENFORCING/SHADOW separation", "eight-axis non-scalar fidelity vector", "14-field SimulationCapsule", "five named capsule profiles", "18 materializable mandatory scenarios with world fixtures and fault schedules", "External ReleaseAttestation", "Deployment Fidelity Envelope", "cross-formalism loss ledger"]
+  correct: ["global-looking F1 PASS language", "manifest self-reference", "resource-profile capability loss", "simulation/model discrepancy overclaim"]
+  ARCHITECTURE-METAMODEL.yaml: "fidelity, capsule, scoped-verdict, release and deployment schemas"
+  ASI-DIGITAL-TWIN-EXECUTION-SEMANTICS.md: "current-seat counts, eight-axis fidelity and frozen-F1 limitations"
+  ASI-RESOURCE-ENVELOPES.md: "profile semantics without target-capability deletion"
+  diagrams/MFA-DIA-00.mmd: "whole-system Twin fidelity projection"
+  tools/twin/README.md: "honest distinction between frozen F1 behavior and 0.4.2 design seats"
+rationale: "The 0.4.1 executable-spec report could be mistaken for full architecture evidence; resource and release claims also needed non-self-referential semantics."
+evidence: [MFA-VO-099, MFA-VO-100, MFA-VO-101, MFA-VO-102, MFA-VO-103, MFA-VO-104, "ARCHITECTURE-ELEMENTS.yaml#simulation_scenarios.defaults", "ARCHITECTURE-ELEMENTS.yaml#simulation_scenarios.profiles", "ARCHITECTURE-ELEMENTS.yaml#simulation_scenarios.scenarios"]
+affected_dependencies: [MFA-ELM-003, MFA-ELM-005, MFA-ELM-088, MFA-ELM-097, MFA-ELM-108, MFA-ELM-126]
+capability_impact: {gained: ["honest F2 readiness and deployment/release semantics"], at_risk: [], ledger_entry: "No capability removed; evidence and profile claims become narrower and testable"}
+migration: "All future runs use SimulationCapsules and ScopedVerdicts; future releases add a post-commit attestation."
+verification: "Design schema/referential checks now; F2 obligations remain NOT_RUN until implementation"
+rollback: MFA-PATCH-0070-R
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED
+mechanical_state: PARTIALLY_APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

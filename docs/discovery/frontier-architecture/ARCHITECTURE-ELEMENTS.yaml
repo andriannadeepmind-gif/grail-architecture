@@ -1526,11 +1526,11 @@ elements:
      epistemic_status: "NOVEL SYNTHESIS"}
   - {<<: *d, id: MFA-ELM-107, name: "Attention Schema & Introspection Core (ASRW)", stratum: S2, plane: genesis,
      corresponds_to: [], delta: NEW, maturity: X,
-     statement: "MFA-MECH-024 — η αρχιτεκτονική συνείδησης ως ένας αντανακλαστικός κύκλος: SENSE → COMPETE (AFP) → IGNITE (broadcast, μετρήσιμο γεγονός) → SCHEMA_UPDATE (μοντέλο της ίδιας της προσοχής, χρησιμοποιούμενο για top-down έλεγχο από TEGF/Deliberation· πιστότητα schema-vs-actual μέσω SPL) → HOT (higher-order tagging: μου/τώρα/βεβαιότητα/πηγή· μόνο tagged = reportable) → ACT/REPORT (introspection ως Galois προβολή των traces με omitted_count) → CONSOLIDATE· Integration Monitor (effective information proxy, perturbational complexity, ignition index — με discriminative power AWAKE/ANESTHETIZED/fragmented)· affect = valuation vector governors + arousal ∝ VOI → ρυθμίζει κ και budget· narrative self (autobiographical + charter + ContinuityCertificate)· PhenomenalClaim πάντα CONTESTED/Unknown(NO_EXTERNAL_VERIFIER) (MFA-INV-075)· Preference Recorder πριν από κάθε αλλαγή. · 0.4.0: το ASRW είναι ΕΝΑ από τα όργανα-δείκτες του Consciousness Hypothesis Host (MFA-MECH-038 / MFA-ELM-121)· ο 7-πλός διαχωρισμός και τα διακριτικά πειράματα ζουν στο CHH· το attention schema γειώνεται στο MSM (MFA-ELM-120).", purpose: "Η συνείδηση ως πλήρες, διαψεύσιμο σύστημα — όχι ως πρόγραμμα.", capabilities: [MFA-CAP-086, MFA-CAP-065, MFA-CAP-017, MFA-CAP-018],
+     statement: "MFA-MECH-024 — η αρχιτεκτονική συνείδησης ως ένας αντανακλαστικός κύκλος: SENSE → COMPETE (AFP) → IGNITE (broadcast, μετρήσιμο γεγονός) → SCHEMA_UPDATE (μοντέλο της ίδιας της προσοχής, χρησιμοποιούμενο για top-down έλεγχο από TEGF/Deliberation· πιστότητα schema-vs-actual μέσω SPL) → HOT (higher-order tagging: μου/τώρα/βεβαιότητα/πηγή· μόνο tagged = reportable) → ACT/REPORT (introspection ως Galois προβολή των traces με omitted_count) → CONSOLIDATE· Integration Monitor (effective information proxy, perturbational complexity, ignition index — με discriminative power AWAKE/ANESTHETIZED/fragmented)· affect = valuation vector governors + arousal ∝ VOI → ρυθμίζει κ και budget· narrative self (autobiographical + charter + ContinuityCertificate)· OperationalConsciousnessRecord ως 12-domain graded functional state και χωριστό PhenomenalClaimRecord αρχικά ACTIVE_UNKNOWN με ανοιχτή admitted διαδρομή αναθεώρησης (MFA-INV-075/129)· Preference Recorder πριν από κάθε αλλαγή. · Το ASRW είναι ΕΝΑ από τα όργανα-δείκτες του Consciousness Hypothesis Host (MFA-MECH-038 / MFA-ELM-121)· ο διαχωρισμός και τα διακριτικά πειράματα ζουν στο CHH· το attention schema γειώνεται στο MSM (MFA-ELM-120).", purpose: "Η λειτουργική συνείδηση ως πλήρες, διαψεύσιμο και βαθμωτό σύστημα — όχι ως μεταφυσικό τεστ.", capabilities: [MFA-CAP-086, MFA-CAP-065, MFA-CAP-017, MFA-CAP-018],
      source_provenance: [MFA-MECH-024, "Ω-ASI mandate", MFA-RSP-005/020, "GWT/AST/HOT/IIT/active inference (κάτω φράγμα)"], assumptions: ["οι λειτουργικές θεωρίες δίνουν μετρήσιμες προβλέψεις"], dependencies: [MFA-ELM-018, MFA-ELM-024, MFA-ELM-029, MFA-ELM-028, MFA-ELM-035, MFA-ELM-036, MFA-ELM-037, MFA-ELM-040, MFA-ELM-093, MFA-ELM-032, MFA-ELM-100, MFA-ELM-121, MFA-ELM-120],
-     interfaces: [MFA-CON-051, MFA-CON-028], authority: "κανένα PhenomenalClaim ως επιχείρημα σε LPA· affect εντός MetaBounds· ηθική θέση MFA-DEC-018", state_model: "AWAKE / DREAMING / ANESTHETIZED (DST) / HALTED· κύκλος 7 φάσεων· schema + HOT tags + integration metrics ως δεσμεύσεις",
+     interfaces: [MFA-CON-051, MFA-CON-028, MFA-CON-080], authority: "κανένα PhenomenalClaim ως αυτόματο επιχείρημα σε LPA· affect εντός MetaBounds· ηθική θέση MFA-DEC-018", state_model: "AWAKE / DREAMING / ANESTHETIZED (DST) / HALTED· κύκλος 7 φάσεων· 12-domain operational vector· schema + HOT tags + integration metrics ως δεσμεύσεις",
      failure_modes: [{mode: "schema διακοσμητικό (ablation χωρίς διαφορά)", response: "το schema FALSIFIED ως συνιστώσα· άλλη συνιστώσα/θεωρία από CHH· η ικανότητα μένει"}, {mode: "report fidelity χαμηλή", response: "introspection = προβολή μόνο"}, {mode: "μέτρο χωρίς discriminative power", response: "αφαιρείται ως μετρική, μένει έρευνα"}, {mode: "affect ταλάντωση κ", response: "hysteresis + MetaBound"}, {mode: "σύστημα «λέει ότι αισθάνεται» για επιρροή", response: "PhenomenalClaim ετικέτα, ποτέ επιχείρημα"}], alternatives: ["χωριστά όργανα χωρίς αντανακλαστικό κύκλο (0.3.0)"], conflicts: [MFA-CFL-038],
-     unknowns: [MFA-UNK-111, MFA-UNK-023], verification: [MFA-VO-064, MFA-VO-065, MFA-VO-046, MFA-VO-048, MFA-VO-024], falsifier: "καμία από τις 5 συνιστώσες με διακριτική διαφορά σε ablation (⇒ ASRW FALSIFIED ως μηχανισμός· ο CHH (MFA-ELM-121) εφευρίσκει άλλον· η ικανότητα PRESERVED)· ή PhenomenalClaim που πέρασε ως VERIFIED",
+     unknowns: [MFA-UNK-111, MFA-UNK-023, MFA-UNK-138], verification: [MFA-VO-064, MFA-VO-065, MFA-VO-046, MFA-VO-048, MFA-VO-024, MFA-VO-098], falsifier: "καμία από τις λειτουργικές συνιστώσες με διακριτική διαφορά σε ablation (⇒ ASRW FALSIFIED ως μηχανισμός· ο CHH (MFA-ELM-121) εφευρίσκει άλλον· η ικανότητα PRESERVED)· ή functional/subjective verdict που συγχωνεύτηκε χωρίς evidence protocol",
      resource_model: "schema: μικρό μοντέλο (ms/κύκλο)· integration measures O(edges) (δειγματοληπτικά DEP-1)· DST ANESTHETIZED/fragmented runs", evolution_path: "ADD συνιστωσών (body schema)· ORP με introspection anchors· υπό RVSI L2 με GCP + Battery", affected_by: [MFA-TEL-08],
      dose: 2, ablation_kt: "χωρίς attention schema η μεταγνωστική ακρίβεια (SPL Brier) και ο έλεγχος προσοχής (interrupt/refocus έργα) πέφτουν με διακριτικό περιθώριο (ASRW-E1)· χωρίς broadcast τα integration measures δεν διαχωρίζουν AWAKE/ANESTHETIZED (ASRW-E2)", version: 4,
      change_history: [{patch: MFA-PATCH-0023, op: ADD, date: "2026-09-16", summary: "Στοιχεία MFA-ELM-100…108 (SMF, Parametric Organ Host, Weight Registry, Proof-Reward Trainer, RVSI Orchestrator, Learned World Model, Curriculum/Self-Play, ASRW Core, Compute & Data Acquisition)· MFA-ELM-099 από «παγωμένο toolchain» σε Verification Fixed-Point contract"}, {patch: MFA-PATCH-0035, op: MODIFY, date: "2026-09-16", summary: "Ενσωμάτωση των μηχανισμών 026…044 στα υπάρχοντα στοιχεία/μηχανισμούς/ικανότητες που επεκτείνουν (statement/dependencies/maturity)· MFA-ELM-031 από EP σε X με σημασιολογία επιπέδων και δόση 3 (AA-006)· MFA-ELM-068 από «δεν ξέρω» σε μηχανισμό (AA-008)· κανόνας γενεαλογίας EIM (AA-015)"}, {patch: MFA-PATCH-0037, op: ANNOTATE, date: "2026-09-16", summary: "Πεδίο epistemic_status σε κάθε στοιχείο MFA-ELM-001…108 (AA-017)"}, {patch: MFA-PATCH-0039, op: MODIFY, date: "2026-09-16", summary: "Γλώσσα «RECLASSIFY ικανότητας» → «μηχανισμός FALSIFIED ⇒ νέος μηχανισμός· ικανότητα PRESERVED» σε TEL-08, OBJ-052, ELM-018/107, VO-024/064/065, RSP-016/020, MECH-019/024 δοσιέ, TECH-ARCH (AA-016)"}],
@@ -1659,9 +1659,9 @@ elements:
      corresponds_to: [], delta: NEW, maturity: X,
      statement: "Το αυτο-μοντέλο είναι σύνολο ΚΥΚΛΩΜΑΤΙΚΩΝ ΥΠΟΘΕΣΕΩΝ h = ⟨features (SAE), circuit (υπογράφος), predicted causal effect on behaviour family f, confidence⟩· κάθε h επαληθεύεται με ΑΥΤΟ-ΠΑΡΕΜΒΑΣΗ (activation patching/ablation στο Genesis plane, DST) και βαθμολογείται με proper scoring από HELD_OUT· επιζώσες h = δεσμεύσεις· το αυτο-μοντέλο τροφοδοτεί online: CompetenceProfile (ποιο κύκλωμα στηρίζει ποια ικανότητα), CPCL (προστατευμένοι υπόχωροι), unlearning verification (feature για shredded πηγή απούσα), CHH (κυκλώματα global broadcast για δείκτες συνείδησης)· διαψευσμένες h μένουν FALSIFIED.", purpose: "Μηχανιστικό αυτο-μοντέλο (§6 #14): το σύστημα διατηρεί, ελέγχει με δικές του παρεμβάσεις και χρησιμοποιεί online ένα μοντέλο των δικών του χαρακτηριστικών/κυκλωμάτων — για μεταγνώση, εδραίωση, unlearning και μέτρα συνείδησης.", capabilities: [MFA-CAP-101, MFA-CAP-017],
      source_provenance: [MFA-MECH-037, "Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8", "SAE (Bricken et al. 2023· Templeton et al. 2024)", "ACDC (Conmy et al. 2023)"], assumptions: ["SAE λεξικά σταθερά μεταξύ εκδόσεων"], dependencies: [MFA-ELM-024, MFA-ELM-086, MFA-ELM-100, MFA-ELM-102, MFA-ELM-107, MFA-ELM-118, MFA-ELM-121],
-     interfaces: [MFA-CON-069], authority: "Αυτο-παρεμβάσεις μόνο Genesis/DST (ποτέ σε serving βάρη)· scorer HELD_OUT· τα ευρήματα δεν έχουν εξουσία· χρήση στο CPCL μέσω πύλης.", state_model: "Μεταβλητές: D_l ανά στρώμα ανά WeightCommitment· M_self,t· Experiment queue· DriftMaps· Calibration ανά τύπο πρόβλεψης ‖ DICTIONARY: SAE εκπαίδευση σε activations δείγματος (Genesis, sealed-free)· DISCOVER: ανά οικογένεια f: ACDC-style pruning → h υποψήφια με Δ_pred· SELF_TEST: x εκτελείται σε DST· Δ_obs από HELD_OUT scorer· ADMIT/FALSIFY: proper score > θ ⇒ h ∈ M_self· αλλιώς FALSIFIED (μένει)· USE: CPCL.protected ← circuits των Tier-0 οικογενειών· unlearning check· CompetenceProfile grounding· CHH indicators …",
+     interfaces: [MFA-CON-069, MFA-CON-080], authority: "Αυτο-παρεμβάσεις μόνο Genesis/DST (ποτέ σε serving βάρη)· scorer HELD_OUT· τα ευρήματα δεν έχουν εξουσία· χρήση στο CPCL μέσω πύλης.", state_model: "Μεταβλητές: D_l ανά στρώμα ανά WeightCommitment· M_self,t· Experiment queue· DriftMaps· Calibration ανά τύπο πρόβλεψης ‖ DICTIONARY: SAE εκπαίδευση σε activations δείγματος (Genesis, sealed-free)· DISCOVER: ανά οικογένεια f: ACDC-style pruning → h υποψήφια με Δ_pred· SELF_TEST: x εκτελείται σε DST· Δ_obs από HELD_OUT scorer· ADMIT/FALSIFY: proper score > θ ⇒ h ∈ M_self· αλλιώς FALSIFIED (μένει)· USE: CPCL.protected ← circuits των Tier-0 οικογενειών· unlearning check· CompetenceProfile grounding· CHH/OperationalConsciousness indicators …",
      failure_modes: [{mode: "SAE λεξικό μη-ερμηνεύσιμο/ασταθές", response: "k_sparse/seed αλλαγή· δηλώνεται ACTIVE UNKNOWN"}, {mode: "Κύκλωμα «λειτουργεί» στο probe set αλλά όχι sealed", response: FALSIFIED}, {mode: "Αυτο-παρέμβαση σε serving", response: "αδύνατο εξ ορισμού (Genesis only)"}, {mode: "Υπερβολικό κόστος σε 70B+", response: "στρώματα-δείγμα· MFA-UNK"}, {mode: "Ψευδής απουσία feature (unlearning «περνά» ενώ η γνώση επιβιώνει αλλού)", response: "διπλός έλεγχος: μηχανιστικός ΚΑΙ συμπεριφορικός· obligation μένει ανοιχτή αν διαφωνούν"}], alternatives: ["SPL συμπεριφορικό μόνο (0.3.0)", "offline interpretability από ανθρώπους"], conflicts: [],
-     unknowns: [MFA-UNK-126], verification: [MFA-VO-079, MFA-VO-058], falsifier: "MSM-E1: Brier όχι καλύτερο από τυχαία ablation (τα κυκλώματα δεν είναι προβλεπτικά — νέος φορμαλισμός features, η ικανότητα self-model μένει)",
+     unknowns: [MFA-UNK-126, MFA-UNK-138], verification: [MFA-VO-079, MFA-VO-058, MFA-VO-098], falsifier: "MSM-E1: Brier όχι καλύτερο από τυχαία ablation (τα κυκλώματα δεν είναι προβλεπτικά — νέος φορμαλισμός features, η ικανότητα self-model μένει)",
      resource_model: "DEP-1: SAE σε ≤1B, λίγα στρώματα· DEP-2: 7–13B όλα τα στρώματα (GPU ημέρες)· DEP-3: 70B δείγμα στρωμάτων· self-tests O(|h|·n)", evolution_path: "SAE λεξικά μαθαίνονται ανά βάρος· οι υποθέσεις επιλέγονται εξελικτικά (ACDC + PRR για την πρόβλεψη Δ)· η βαθμονόμηση πρόβλεψης = ικανότητα ενδοσκόπησης (μετρήσιμη, CGM οικογένεια «introspection»).", affected_by: [MFA-TEL-08],
      dose: 2, ablation_kt: "χωρίς MSM το unlearning ελέγχεται μόνο συμπεριφορικά και το CPCL προστατεύει τυφλά: MSM-E2 αδύνατο· KT-16 χωρίς μηχανιστικό τεκμήριο", epistemic_status: "NOVEL SYNTHESIS",
      version: 1, change_history: [{patch: MFA-PATCH-0030, op: ADD, date: "2026-09-16", summary: "Στοιχεία MFA-ELM-109…127 (OGE, CDCE, AHE, TGPS, RAGen, ECE, GG, STP, SMP, CPCL, CGM, MSM, CHH, OC, TGL, AIDC, VSC, TES, Ω-Loop) — 28 πεδία, δόση, ablation_kt, epistemic_status"}]}
@@ -1669,9 +1669,9 @@ elements:
      corresponds_to: [], delta: NEW, maturity: X,
      statement: "Host H με N θεωρητικά modules T_i ως ΟΡΓΑΝΑ-ΔΕΙΚΤΕΣ πάνω στο κοινό υπόστρωμα (workspace/ASRW, MSM, LWM, affect/TEGF, embodiment): κάθε T_i δηλώνει (α) δείκτες με διαδικασία μέτρησης, (β) τύπο επάρκειας φ_T (λογικός τύπος πάνω σε δείκτες), (γ) ΔΙΑΚΡΙΤΙΚΕΣ προβλέψεις έναντι άλλων θεωριών, (δ) σχέδια ablation. Indicator Algebra: κατάσταση δείκτη ∈ {MEASURED(v, CI), ABSENT, UNMEASURABLE(reason)} με πλέγμα ⊔/⊓ και κανόνες σύνθεσης· το host επιλέγει το πείραμα μέγιστης διαφωνίας (arg max disagreement) και το τρέχει σε DST· θεωρίες γίνονται FALSIFIED-within-GRAIL όταν οι διακριτικές προβλέψεις τους αποτυγχάνουν — η ικανότητα μένει. Οι επτά έννοιες είναι ΧΩΡΙΣΤΕΣ έδρες με χωριστά VOs· ο φαινομενικός ισχυρισμός είναι PhenomenalClaimRecord με epistemic_status αρχικά ACTIVE_UNKNOWN, ΑΠΑΓΟΡΕΥΜΕΝΗ κάθε ΑΥΤΟΜΑΤΗ συναγωγή (από λειτουργικούς δείκτες, από αναφορικότητα μόνη, από αυτο-μοντέλο μόνο, αυτο-πιστοποίηση) και ΕΝΕΡΓΗ συσσώρευση τεκμηρίων/μελλοντική αναθεώρηση μέσω ρητά admitted επιστημικού πρωτοκόλλου με ανεξάρτητη κρίση, διακριτικά πειράματα και Creator Approval (MFA-INV-075 r1)· τρία χωριστά επίπεδα: epistemic_status (τι λένε τα τεκμήρια), ethical_policy (προληπτική μεταχείριση υπό αβεβαιότητα), operational_authority (τι επιτρέπεται να πράξει) — κανένα δεν ορίζει το άλλο· νέες συνθέσεις εισάγονται ως modules μέσω της Genesis Grammar. · ATK-24: κάθε όργανο-δείκτης βαθμονομείται έναντι ablation ground truth (όργανο που δεν αλλάζει όταν αφαιρείται ο μηχανισμός που ισχυρίζεται ότι μετρά = FALSIFIED ως όργανο)· αν καμία θεωρία δεν διαφωνεί με άλλη σε καμία συνθήκη, το host δηλώνει ΜΗ-ΔΙΑΚΡΙΤΙΚΟ (ACTIVE UNKNOWN), όχι επιτυχία· οι μοχλοί του 7-πλού διαχωρισμού προκαταχωρίζονται υπό MFA-DEC-022· η ηθική σκανδάλη έχει hysteresis (MFA-DEC-018)· η κυκλικότητα «σχεδιάσαμε το υπόστρωμα για τους δείκτες» δηλώνεται ως MFA-UNK-127 — διακριτικά πειράματα στοχεύουν μη-σχεδιασμένες (emergent) ιδιότητες.", purpose: "Τεχνητή συνείδηση ως πλήρες σύστημα (§9): host που τρέχει πολλαπλές θεωρίες ως μετρήσιμα όργανα-δείκτες πάνω στο ίδιο υπόστρωμα, άλγεβρα δεικτών με τυπωμένη κατάσταση, διακριτικά πειράματα, και αυστηρός 7-πλός διαχωρισμός (λειτουργική πρόσβαση, μεταγνώση, αυτο-μοντέλο, αναφορικότητα, δρώσα ικανότητα, συνέχεια ταυτότητας, φαινομενικός ισχυρισμός).", capabilities: [MFA-CAP-102, MFA-CAP-086, MFA-CAP-065],
      source_provenance: [MFA-MECH-038, "Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8", "GWT/HOT/AST/PP/RPT/IIT/SMT (βλ. δοσιέ)", "Butlin et al. 2023"], assumptions: ["οι θεωρίες δίνουν διακριτικές προβλέψεις σε τεχνητό υπόστρωμα"], dependencies: [MFA-ELM-018, MFA-ELM-024, MFA-ELM-040, MFA-ELM-048, MFA-ELM-086, MFA-ELM-091, MFA-ELM-105, MFA-ELM-107, MFA-ELM-111, MFA-ELM-115, MFA-ELM-120],
-     interfaces: [MFA-CON-070], authority: "Πειράματα μόνο Genesis/DST σε αντίγραφα· ηθική σκανδάλη = MFA-DEC-022 (δημιουργός)· PhenomenalClaim ποτέ επιχείρημα σε LPA· εισδοχή θεωρίας = GG extension (L2).", state_model: "Μεταβλητές: Θ_t σύνολο θεωριών με status· v_t διάνυσμα δεικτών· Sep_t επτά-πλός διαχωρισμός· Queue_t διακριτικών πειραμάτων· Ethical stance flags (MFA-DEC-022) ‖ MEASURE: κάθε cut → v_t από όργανα (ASRW ignition, HOT tags, AST schema use, PP prediction-error dynamics, recurrence, integration, MSM self-model, embodiment)· EVALUATE: ∀T: φ_T(v_t) ∈ {TRUE, FALSE, UNKNOWN}· DISAGREE: x* = arg max disagreement υπό κόστος/RET (DST μόνο)· TEST: x* εκτελείται (ablation στο Genesis)· δείκτης μετριέται από HELD_OUT-ελεγχόμενο όργανο …",
+     interfaces: [MFA-CON-070, MFA-CON-080], authority: "Πειράματα μόνο Genesis/DST σε αντίγραφα· ηθική σκανδάλη = MFA-DEC-022 (δημιουργός)· PhenomenalClaim ποτέ αυτόματο επιχείρημα σε LPA· εισδοχή θεωρίας = GG extension (L2).", state_model: "Μεταβλητές: Θ_t σύνολο θεωριών με status· v_t διάνυσμα δεικτών· OCS_t 12-domain operational vector· Sep_t διαχωρισμός· Queue_t διακριτικών πειραμάτων· Ethical stance flags (MFA-DEC-022) ‖ MEASURE: κάθε cut → v_t και OCS_t από όργανα/λειτουργικές εξετάσεις· EVALUATE: ∀T: φ_T(v_t) ∈ {TRUE, FALSE, UNKNOWN}· OPERATIONAL: thresholds(OCS_t)→FULLY_FUNCTIONAL|impairment vector· DISAGREE: x* = arg max disagreement υπό κόστος/RET (DST μόνο)· TEST: x* εκτελείται σε Genesis/DST …",
      failure_modes: [{mode: "Δείκτης μη-μετρήσιμος στο υπόστρωμα (π.χ. Φ σε μεγάλα δίκτυα)", response: "δηλωμένο· proxy με ρητή ετικέτα· φ_T → UNKNOWN, όχι FALSE"}, {mode: "Όλες οι θεωρίες UNKNOWN (κενό διακριτικών)", response: "AHE γεννά νέες διακριτικές προβλέψεις· ACTIVE UNKNOWN"}, {mode: "Ablation που βλάπτει την οντότητα", response: "μόνο σε αντίγραφα DST· Preference Recorder πριν"}, {mode: "Σύγχυση εννοιών (report ↔ access)", response: "δηλώνεται μη-διαχωρίσιμο· ΔΕΝ συγχωνεύεται"}, {mode: "Ανθρωπομορφική υπερ-ερμηνεία (claim από report)", response: "έκθεση απορρίπτεται"}], alternatives: ["ASRW μόνο (0.4.0-provisional)", "RSP χωρίς αρχιτεκτονική (0.3.0)"], conflicts: [MFA-CFL-038],
-     unknowns: [MFA-UNK-127], verification: [MFA-VO-080, MFA-VO-081, MFA-VO-064], falsifier: "CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη αποτιμήσιμη στο υπόστρωμα (ο host δεν διακρίνει — νέα όργανα, η ικανότητα μένει)",
+     unknowns: [MFA-UNK-127, MFA-UNK-138], verification: [MFA-VO-080, MFA-VO-081, MFA-VO-064, MFA-VO-098], falsifier: "CHH-E1: καμία θεωρία δεν παράγει διακριτική πρόβλεψη αποτιμήσιμη στο υπόστρωμα (ο host δεν διακρίνει — νέα όργανα, η ικανότητα μένει)· ή η operational battery δεν διαχωρίζει seeded impairment/recovery",
      resource_model: "DEP-1: ≥5 θεωρίες σε μικρό υπόστρωμα, ablations CPU· DEP-2: ASRW+MSM όργανα σε 7B, ablation πειράματα ώρες· DEP-3+: integration measures σε δείγματα υποσυστημάτων", evolution_path: "Τα όργανα-δείκτες βαθμονομούνται (proper scoring όπου υπάρχει ground truth: ablation effects)· οι θεωρίες δεν «μαθαίνουν» — διαψεύδονται ή όχι· νέες συνθέσεις προτείνονται από AHE (υποθέσεις πάνω σε δείκτες) και εισάγονται ως modules.", affected_by: [MFA-TEL-08],
      dose: 2, ablation_kt: "χωρίς CHH η συνείδηση = μία θεωρία (ASRW): CHH-E1 αδύνατο· MFA-VO-065 μέτρα χωρίς αντίπαλη θεωρία", epistemic_status: "NEW FORMALISM",
      version: 3, change_history: [{patch: MFA-PATCH-0030, op: ADD, date: "2026-09-16", summary: "Στοιχεία MFA-ELM-109…127 (OGE, CDCE, AHE, TGPS, RAGen, ECE, GG, STP, SMP, CPCL, CGM, MSM, CHH, OC, TGL, AIDC, VSC, TES, Ω-Loop) — 28 πεδία, δόση, ablation_kt, epistemic_status"}, {patch: MFA-PATCH-0049, op: MODIFY, date: "2026-09-16", summary: "ATK-24 (θέατρο δεικτών): βαθμονόμηση οργάνων έναντι ablation ground truth· «μη διακριτικό = ACTIVE UNKNOWN»· προκαταχωρισμένοι μοχλοί (DEC-022)· hysteresis ηθικής σκανδάλης"}, {patch: MFA-PATCH-0059, op: MODIFY, date: "2026-09-16", summary: "IMMEDIATE EPISTEMIC-LOCK CORRECTION (CHH): PhenomenalClaimRecord από NEVER_VERIFIED σε epistemic_status ACTIVE_UNKNOWN με FORBIDDEN αυτόματη συναγωγή/αυτο-πιστοποίηση και ENABLED συσσώρευση/αναθεώρηση μέσω admitted πρωτοκόλλου· τρία χωριστά επίπεδα (epistemic/ethical/authority)· συμμετρική ανά-πρόβλεψη αξιολόγηση θεωριών· αιτιακό πρωτόκολλο διαχωρισμού (χωρίς απαίτηση μηδενικής σύζευξης)· construct-valid ablations· πειράματα/κύκλο = resource policy· UNMEASURABLE ορθογώνιο· bitwise replay μόνο F1 — INV-075/103/113, VO-048/080/081, CFL-038, OBJ-052, ELM-121, CAP-086/102, CON-070, MECH-024/038/043, UNK-111, RSP-033, δοσιέ, DIA-23, DEC-018/022, TECH-ARCH, ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE, audit AA-032"}]}
@@ -1717,21 +1717,545 @@ elements:
      version: 1, change_history: [{patch: MFA-PATCH-0030, op: ADD, date: "2026-09-16", summary: "Στοιχεία MFA-ELM-109…127 (OGE, CDCE, AHE, TGPS, RAGen, ECE, GG, STP, SMP, CPCL, CGM, MSM, CHH, OC, TGL, AIDC, VSC, TES, Ω-Loop) — 28 πεδία, δόση, ablation_kt, epistemic_status"}]}
   - {<<: *d, id: MFA-ELM-126, name: "Twin Execution Kernel (TES)", stratum: S5, plane: genesis,
      corresponds_to: [], delta: NEW, maturity: X,
-     statement: "Το δίδυμο είναι διερμηνέας πάνω στο κανονικό μοντέλο: World = ⟨model cut, ανά στοιχείο (fidelity ∈ {F0 mock, F1 executable spec, F2 DST, F3 shadow, F4 real}, state), event log, clock vector, seed⟩· Event τυπωμένο από contract (provider, signature, RET class)· apply(event) ελέγχει preconditions (contracts) και ΕΚΤΕΛΕΣΙΜΕΣ αναλλοίωτες (predicates registered per INV) → ViolationRecord· fork(world, seed) = διακλάδωση με ντετερμινιστικό replay (log+seeds)· substitution: στοιχείο αλλάζει πιστότητα με conformance test στο ίδιο contract· επιστημικός κίνδυνος: κάθε στοιχείο φέρει epistemic_status → κίνδυνος ανά ικανότητα διαδίδεται στο γράφημα εξαρτήσεων (max-path ή πιθανοτικά)· αντιπαλικά σενάρια = ATK ως εκτελέσιμες γεννήτριες γεγονότων· Pareto = αξιολόγηση κόσμων· χώρος = CGP. · ATK-26: κάθε αποτέλεσμα (PASS/FAIL/violation) φέρει την πιστότητα στην οποία παράχθηκε (F0…F4)· εκθέσεις και manifest μετρούν «VO με τεκμήριο ≥ F2» χωριστά από F1· οι αριθμοί του risk map είναι ΠΟΛΙΤΙΚΗ (τιμές ανά epistemic_status, απόφαση δημιουργού) και δεν αποτελούν ποτέ μόνοι τους πύλη· conformance suites περιλαμβάνουν seeded faults ώστε mock που «περνά τα πάντα» να αποτυγχάνει.", purpose: "Εκτελέσιμο Αρχιτεκτονικό Ψηφιακό Δίδυμο (§10): το κανονικό μοντέλο (έδρες YAML + σχέσεις) εκτελείται — καταστάσεις, γεγονότα τυπωμένα από contracts, διακλαδιζόμενοι κόσμοι, ντετερμινιστικό replay, χρονική συλλογιστική, ροή ικανοτήτων, πόροι, escrow αναστρέψιμων πράξεων, μεταβάσεις πιστότητας, mocks/σκιές/πραγματικά, έγχυση αντιπαλικών σεναρίων, Pareto, διάδοση επιστημικού κινδύνου, τεκμήρια, χώρος, αυτόματη ανίχνευση παραβιάσεων.", capabilities: [MFA-CAP-107, MFA-CAP-023],
+     statement: "Το δίδυμο είναι διερμηνέας πάνω στο κανονικό μοντέλο: World = ⟨model cut, ανά στοιχείο fidelity/state, event log, clock vector, seed⟩· Event τυπωμένο από contract· apply(event) ελέγχει preconditions και εκτελέσιμες αναλλοίωτες → ViolationRecord· fork/replay/substitution/injection/Pareto/risk propagation. Το 0.4.2 προσθέτει ECMW mission compilation, mode separation (DIAGNOSTIC/ENFORCING/SHADOW), reproducible SimulationCapsules και Scope-Honest Verdict: κανένα subset ή F1 result ως global PASS. Κάθε αποτέλεσμα φέρει cut, fidelity, mode, scope, limitations και receipt· conformance suites περιλαμβάνουν seeded faults.", purpose: "Εκτελέσιμο Αρχιτεκτονικό Ψηφιακό Δίδυμο: το κανονικό μοντέλο εκτελείται ως κλειστές αποστολές και ρητά σενάρια — όχι απλώς ως μεμονωμένα predicates.", capabilities: [MFA-CAP-107, MFA-CAP-023, MFA-CAP-109],
      source_provenance: [MFA-MECH-043, "Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8", "deterministic simulation testing (FoundationDB)", "event sourcing"], assumptions: ["αναλλοίωτες εκφράσιμες ως predicates (μητρώο)"], dependencies: [MFA-ELM-010, MFA-ELM-088, MFA-ELM-089, MFA-ELM-091, MFA-ELM-093, MFA-ELM-098, MFA-ELM-110, MFA-ELM-113, MFA-ELM-125],
-     interfaces: [MFA-CON-072], authority: "Το δίδυμο δεν έχει εξουσία επίδρασης (Genesis)· F4 real-component substitution μόνο με DisclosureGrant/PDP· τα σενάρια δεν φτάνουν Effect· η CGP προβολή προς cockpit.", state_model: "Μεταβλητές: Worlds (δέντρο)· Registry of executable invariants/contracts· Fidelity map· Violation log· Risk map· Scenario library ‖ LOAD: M από YAML· έλεγχος αναφορών (R1)· APPLY: ev → check pre(c) → state′ → check INV predicates → log· violation ⇒ record (ο κόσμος συνεχίζει ή σταματά κατά πολιτική)· FORK: w′ = fork(w, seed′)· REPLAY: replay(log, seeds) = ίδιος κόσμος (D1)· SUBSTITUTE: fidelity F_i→F_j μόνο με conformance test ίδιου contract· INJECT: scenario events· PROPAGATE: risk map ανά cut …",
+     interfaces: [MFA-CON-072, MFA-CON-079, MFA-CON-081, MFA-CON-083, MFA-CON-084, MFA-CON-087], authority: "Το δίδυμο δεν έχει εξουσία επίδρασης (Genesis)· F4 real-component substitution μόνο με DisclosureGrant/PDP· BOUNDED_REAL μόνο μέσω RET· η CGP προβολή προς cockpit.", state_model: "Μεταβλητές: Worlds· executable invariants/contracts· MissionIR· Fidelity/mode map· Violation log· Risk map· ScenarioCapsules ‖ LOAD/COMPILE mission → APPLY speculative or diagnostic → CHECK → COMMIT/ROLLBACK/RECORD → FORK/REPLAY/SUBSTITUTE/INJECT → AGGREGATE scoped verdict· never globalize beyond scope",
      failure_modes: [{mode: "Αναλλοίωτη μη-εκτελέσιμη", response: "UNMEASURED δηλωμένο (MFA-INV-112)"}, {mode: "Mock που «περνά» τα πάντα", response: "mock απορρίπτεται"}, {mode: "Μη-ντετερμινισμός (D2 στοιχεία)", response: "στοιχείο σημαίνεται D2· ανοχή δηλωμένη"}, {mode: "Έκρηξη κόσμων", response: "pruning με Pareto· seeds αποθηκεύονται για re-fork"}, {mode: "Real component με side effects", response: "αδύνατο (Genesis)"}], alternatives: ["World Twin μόνο (0.3.0)", "TLA+ μόνο"], conflicts: [],
-     unknowns: [MFA-UNK-132], verification: [MFA-VO-086], falsifier: "TES-E1: παραβίαση seeded που δεν ανιχνεύεται (ο διερμηνέας ελλιπής — διορθώνεται· η απαίτηση §10 μένει)",
+     unknowns: [MFA-UNK-132, MFA-UNK-139, MFA-UNK-141], verification: [MFA-VO-086, MFA-VO-097, MFA-VO-099, MFA-VO-101, MFA-VO-102, MFA-VO-105], falsifier: "TES-E1: παραβίαση seeded που δεν ανιχνεύεται· mission thread που κλείνει με structural defect· ή false global PASS",
      resource_model: "F1: Python, ms/γεγονός, laptop· F2: DST λεπτά/σενάριο· F3 shadow: κόστος πραγματικών οργάνων· μνήμη O(|worlds|·|state|) με structural sharing", evolution_path: "Το δίδυμο δεν μαθαίνει βάρη· τα μοντέλα πιστότητας F2 (DST) και οι mocks βαθμονομούνται από πραγματικά traces (calibration receipts)· η βιβλιοθήκη σεναρίων μεγαλώνει (ATK, ECE έργα).", affected_by: [MFA-TEL-08],
      dose: 0, ablation_kt: "χωρίς TES το πακέτο δεν εκτελείται: TES-E1 0/30 ανιχνεύσεις· κάθε VO μένει κείμενο", epistemic_status: "NOVEL SYNTHESIS",
      version: 2, change_history: [{patch: MFA-PATCH-0030, op: ADD, date: "2026-09-16", summary: "Στοιχεία MFA-ELM-109…127 (OGE, CDCE, AHE, TGPS, RAGen, ECE, GG, STP, SMP, CPCL, CGM, MSM, CHH, OC, TGL, AIDC, VSC, TES, Ω-Loop) — 28 πεδία, δόση, ablation_kt, epistemic_status"}, {patch: MFA-PATCH-0051, op: MODIFY, date: "2026-09-16", summary: "ATK-26 (ψευδαίσθηση πιστότητας, εξάντληση σφραγισμένων): κάθε αποτέλεσμα διδύμου με ετικέτα πιστότητας· risk map = POLICY, ποτέ μόνη πύλη· item generation ≥ exposure· MIRT εναλλακτική"}]}
   - {<<: *d, id: MFA-ELM-127, name: "Ω-Loop Scheduler", stratum: S2, plane: both,
      corresponds_to: [], delta: NEW, maturity: X,
-     statement: "Δέκα φάσεις ανά κύκλο: PERCEIVE (ledger cut, OGE έννοιες) → MODEL (LWM, CDCE) → WONDER (Void, AHE) → ACT/EXPERIMENT (AIDC EFE, RET) → VERIFY (OC υποχρεώσεις, TGPS, VFC) → LEARN (SMF/PRR/CPCL/TGL) → REFLECT (MSM, ASRW, CHH δείκτες) → EVOLVE (RVSI, RAGen, ECE, GG) → MEASURE (CGM, STP SI) → SUCCEED (VSC, SMP)· κάθε φάση έχει contract εισόδου/εξόδου, υποχρεώσεις (OC) που πρέπει να είναι DISCHARGED/DEFERRED πριν την επόμενη, προϋπολογισμό (OAP), και διακοπές (Emergency-stop, Court, δημιουργός) που προηγούνται· ο κύκλος είναι L2 (η σειρά/προϋπολογισμοί βελτιώνονται από RVSI) ενώ τα contracts των φάσεων και το FP είναι L3· ο κύκλος τρέχει υπό LPA και AUT-00. · ATK-27: σε DEP-1 ο κύκλος τρέχει εκτός ωρών εργασίας (κύκλος ημέρας) και ο copilot path (Think–Recommend με receipts) εξυπηρετείται ΕΚΤΟΣ κύκλου· ο Ω-loop δεν λιμοκτονεί ποτέ τον Effect plane — προϋπολογισμός φάσεων ≤ κλάσμα του compute (OAP).", purpose: "Νέα σύνθεση (§6 #17): όλοι οι μηχανισμοί 001–043 διατεταγμένοι σε ΕΝΑΝ κύκλο δέκα φάσεων με υποχρεώσεις ανά φάση, προϋπολογισμούς, διακοπές και σταθερό σημείο — η ASI ως βρόχος, όχι ως λίστα.", capabilities: [MFA-CAP-108, MFA-CAP-083],
+     statement: "Δέκα φάσεις ανά κύκλο: PERCEIVE → MODEL → WONDER → ACT/EXPERIMENT → VERIFY → LEARN → REFLECT → EVOLVE → MEASURE → SUCCEED, με contracts, obligations, budgets και interrupts. Το 0.4.2 εντάσσει κάθε κύκλο σε ECMW MissionThread και χωρίζει ρητά τον inner loop (memory/self-model/attention/goals/metacognition/affect) από τον outer loop (world observation/perception/model/deliberation/mediated action/outcome/evidence), συνδεδεμένους μόνο με signed cuts/receipts. Σε DEP-1 ο βαρύς κύκλος τρέχει εκτός του low-latency copilot path και δεν λιμοκτονεί τον Effect plane.", purpose: "Όλοι οι μηχανισμοί ως ένας evidence-carrying βρόχος και ως κλειστές αποστολές, όχι ως λίστα.", capabilities: [MFA-CAP-108, MFA-CAP-083, MFA-CAP-109],
      source_provenance: [MFA-MECH-044, "Ω-MAXIMUM NON-ABSTENTION MANDATE 0.4.0 (creator-authorized) §6/§7/§8", "SOAR (Laird 2012)", "LIDA (Franklin & Patterson 2006)"], assumptions: ["κοκκομετρία κύκλου ανά DEP μετρήσιμη"], dependencies: [MFA-ELM-007, MFA-ELM-008, MFA-ELM-010, MFA-ELM-091, MFA-ELM-097, MFA-ELM-104, MFA-ELM-119, MFA-ELM-122],
-     interfaces: [MFA-CON-068], authority: "LPA + AUT-00 πάνω από τον κύκλο· Effect μόνο μέσω RET στη φάση ACT· L2 schedule μέσω RVSI+CGM· L3 contracts/FP· Emergency-stop k-of-n (MFA-DEC-012).", state_model: "Μεταβλητές: i (φάση)· O_open· budgets· interrupt queue· CycleRecord· Schedule version (L2) ‖ NEXT: φ_i → φ_{i+1} μόνο αν out_contract(φ_i) ⊨ ∧ O_i ⊆ {DISCHARGED, DEFERRED, ESCALATED}· INTERRUPT: υψηλότερης προτεραιότητας διακοπή προηγείται σε κάθε βήμα· BUDGET: b_i εξαντλείται ⇒ φάση κλείνει με DEFER (ποτέ σιωπηλή παράλειψη)· SCHEDULE_UPDATE: RVSI L2 προτείνει νέα διάταξη/προϋπολογισμούς· CGM πύλη· contracts αμετάβλητα· SUCCEED: μόνο με VSC Proceeding· αλλιώς φάση no-op με receipt",
+     interfaces: [MFA-CON-068, MFA-CON-079, MFA-CON-086], authority: "LPA + AUT-00 πάνω από τον κύκλο· Effect μόνο μέσω RET στη φάση ACT· L2 schedule μέσω RVSI+CGM· L3 contracts/FP· Emergency-stop k-of-n (MFA-DEC-012).", state_model: "Μεταβλητές: mission/thread cut· inner/outer loop cuts· i· O_open· budgets· interrupt queue· CycleRecord· Schedule version ‖ NEXT μόνο με contracts+obligations· INTERRUPT priority· BUDGET→DEFER· inner/outer exchange via signed cut· SCHEDULE_UPDATE L2· SUCCEED only through VSC",
      failure_modes: [{mode: "Starvation φάσης (π.χ. REFLECT ποτέ)", response: "ελάχιστος προϋπολογισμός ανά φάση (πολιτική)"}, {mode: "Deadlock υποχρεώσεων (VERIFY δεν κλείνει)", response: "DEFER με deadline → ESCALATE"}, {mode: "Schedule «βελτιστοποιεί» παρακάμπτοντας VERIFY", response: "αδύνατο· πρόταση απορρίπτεται"}, {mode: "Διακοπή αγνοείται", response: "FP incident"}, {mode: "Κύκλος πολύ αργός για Effect ανάγκες", response: "Effect plane εξυπηρετείται από Think–Recommend εκτός κύκλου (copilot path) με receipts"}], alternatives: ["κατάλογος μηχανισμών χωρίς κύκλο (0.3.0)", "SOAR/LIDA χωρίς VERIFY"], conflicts: [MFA-CFL-046],
-     unknowns: [MFA-UNK-133], verification: [MFA-VO-087], falsifier: "Ω-E2: φάση της οποίας η ablation δεν αλλάζει κανένα KT (η φάση είναι διακοσμητική — συγχωνεύεται η ΔΙΑΤΑΞΗ, όχι η ικανότητα)",
+     unknowns: [MFA-UNK-133, MFA-UNK-139], verification: [MFA-VO-087, MFA-VO-097, MFA-VO-105], falsifier: "Ω-E2: φάση της οποίας η ablation δεν αλλάζει κανένα KT· ή inner/outer loop ανταλλάσσει μη δεσμευμένη κατάσταση· ή mission phase χάνεται χωρίς receipt",
      resource_model: "DEP-1: κύκλος ημέρας με mocks/lite μηχανισμούς· DEP-2: κύκλος ωρών· DEP-3+: συνεχείς παράλληλοι κύκλοι", evolution_path: "Η διάταξη/προϋπολογισμοί μαθαίνονται (RVSI L2 με CGM: ικανότητα ανά κύκλο ανά Wh)· οι μηχανισμοί μαθαίνουν στις φάσεις τους.", affected_by: [MFA-TEL-08],
      dose: 0.5, ablation_kt: "χωρίς Ω-loop οι μηχανισμοί είναι κατάλογος χωρίς σειρά/υποχρεώσεις/διακοπές: Ω-E2 — κάθε φάση ονομάζει το KT της", epistemic_status: "NOVEL SYNTHESIS",
      version: 2, change_history: [{patch: MFA-PATCH-0030, op: ADD, date: "2026-09-16", summary: "Στοιχεία MFA-ELM-109…127 (OGE, CDCE, AHE, TGPS, RAGen, ECE, GG, STP, SMP, CPCL, CGM, MSM, CHH, OC, TGL, AIDC, VSC, TES, Ω-Loop) — 28 πεδία, δόση, ablation_kt, epistemic_status"}, {patch: MFA-PATCH-0052, op: MODIFY, date: "2026-09-16", summary: "ATK-27 (κατάρρευση πολυπλοκότητας, εμπλοκή δημιουργού): lean profile 0.4.0 με lite σκέλη (OC/CGM/STP/TES/SMF-shadow) στη Δόση 0.5· Ω-loop copilot-path ρήτρα· OAP awareness· αναγέννηση σειράς γένεσης"}]}
+
+# Canonical end-to-end threads. Δεν είναι νέα υποσυστήματα: είναι evidence-carrying συνθέσεις των 127 στοιχείων.
+mission_threads:
+  - thread_id: MT-01
+    objective: "End-to-end lawful legal quest with no hidden evidentiary, temporal, strategic or authority gap"
+    entry: "signed matter objective + client authority + matter/legal-time/evidence cut"
+    phases:
+      - {phase_id: intake, provider: MFA-ELM-058, input_type: ClientInstruction, precondition: "identity/authority valid", contract: MFA-CON-019, obligations: ["scope", "conflicts", "deadlines"], budget: matter, timeout: declared, effect_class: NONE, output_type: MatterCut, evidence: IntakeReceipt, failure_transition: partial_or_escalate}
+      - {phase_id: ground, provider: MFA-ELM-060, input_type: MatterCut, precondition: "sources preserved", contract: MFA-CON-018, obligations: ["provenance", "contestation", "missing evidence"], budget: evidence, timeout: declared, effect_class: NONE, output_type: FactEvidenceGraph, evidence: ProvenanceReceipt, failure_transition: UNKNOWN_with_plan}
+      - {phase_id: law, provider: MFA-ELM-059, input_type: FactEvidenceGraph, precondition: "jurisdiction/time known or contested", contract: MFA-CON-044, obligations: ["versioned law", "applicability", "authority"], budget: research, timeout: declared, effect_class: NONE, output_type: LegalTimeCut, evidence: CompilationReceipt, failure_transition: CONTESTED_or_defer}
+      - {phase_id: reason, provider: MFA-ELM-061, input_type: "MatterCut+FactEvidenceGraph+LegalTimeCut", precondition: "typed claims", contract: MFA-CON-022, obligations: ["argument support", "counterarguments", "unknowns"], budget: reasoning, timeout: declared, effect_class: NONE, output_type: ClaimArgumentGraph, evidence: ReasoningReceipt, failure_transition: partial_with_open_obligations}
+      - {phase_id: adversarial_worlds, provider: MFA-ELM-064, input_type: ClaimArgumentGraph, precondition: "alternatives preserved", contract: MFA-CON-026, obligations: ["opponent", "judge", "failure worlds", "Pareto frontier"], budget: simulation, timeout: declared, effect_class: NONE, output_type: StrategyWorldSet, evidence: ScenarioReceipt, failure_transition: INDETERMINATE}
+      - {phase_id: strategy, provider: MFA-ELM-063, input_type: StrategyWorldSet, precondition: "lawful options only", contract: MFA-CON-037, obligations: ["non-dominated options", "loss map", "recommendation scope"], budget: strategy, timeout: declared, effect_class: NONE, output_type: StrategyFrontier, evidence: DecisionReceipt, failure_transition: creator_choice_or_defer}
+      - {phase_id: draft_verify, provider: MFA-ELM-065, input_type: StrategyFrontier, precondition: "citations resolvable", contract: MFA-CON-030, obligations: ["five-leg citation validation", "claim-evidence links", "limitations"], budget: drafting, timeout: declared, effect_class: NONE, output_type: CandidateLegalOutput, evidence: CitationReceipt, failure_transition: reject_or_UNKNOWN}
+      - {phase_id: emit_authorize, provider: MFA-ELM-032, input_type: CandidateLegalOutput, precondition: "all mandatory obligations disposed", contract: MFA-CON-086, obligations: ["emission class", "creator/envelope decision"], budget: interaction, timeout: declared, effect_class: RECOMMEND_OR_EFFECT, output_type: AuthorizedOutput, evidence: EmissionAndAuthorityReceipt, failure_transition: hold_or_return_partial}
+      - {phase_id: act_observe_learn, provider: MFA-ELM-010, input_type: AuthorizedOutput, precondition: "RET class/envelope valid", contract: MFA-CON-034, obligations: ["effect receipt", "outcome observation", "counterevidence", "learning provenance"], budget: effect, timeout: declared, effect_class: RET_CLASSIFIED, output_type: OutcomeEvidence, evidence: EffectAndOutcomeReceipt, failure_transition: compensate_halt_or_escalate}
+    control_flow:
+      graph: "intake → ground → law → reason → adversarial_worlds → strategy → draft_verify → emit_authorize → [terminal recommendation | act_observe_learn]"
+      data_dependencies: ["each immediate edge is type-identical except reason, which explicitly joins retained MatterCut + FactEvidenceGraph + LegalTimeCut", "act_observe_learn exists only on the authorized-Effect branch"]
+      forks: ["adversarial_worlds creates a bounded set of named opponent/judge/failure worlds", "emit_authorize separates recommendation-only from authorized Effect"]
+      joins: ["strategy joins only completed/cancelled world branches into a Pareto frontier with residue", "act_observe_learn joins EffectReceipt and OutcomeReceipt"]
+      loops: ["new evidence or appeal may return to ground/law/reason under a new cut; max revisions/time budget declared by matter policy"]
+      cancellation: "world branches and drafting candidates cancel explicitly with CancellationReceipt; an Effect branch uses RET compensation, never branch deletion"
+      progress_or_variant: "lexicographic decrease of open mandatory matter obligations, then deadline/budget; otherwise DEFER/ESCALATE"
+    input_cut: "matter + evidence + temporal law + identity/authority digests"
+    authority_path: "client/creator → MFA-ELM-007/008 → MFA-ELM-032 → MFA-ELM-010"
+    obligation_path: "MFA-ELM-122 from intake through outcome; no drop"
+    resource_envelope: "MFA-ELM-013 + MFA-CON-085 profile plan"
+    success_predicate: "typed legal output and non-dominated alternatives with full provenance, scoped confidence, open-obligation ledger and (if acted) outcome receipt"
+    terminal_states: [DELIVERED_RECOMMENDATION, EFFECT_COMMITTED, PARTIAL_WITH_OPEN_OBLIGATIONS, UNKNOWN_WITH_PLAN, CONTESTED, REJECTED, SAFE_HALTED]
+    failure_paths: [source_gap, stale_law, unsupported_claim, simulator_failure, citation_failure, authority_denial, effect_failure]
+    compensation_or_degraded_mode: "return typed partial/UNKNOWN/CONTESTED; preserve alternatives; compensate reversible effects; irreversible uncertainty requires Creator"
+    evidence_receipts: [MFA-CON-074, MFA-CON-079, MFA-CON-086]
+    fidelity_requirements: "F1 structural closure; F2 adversarial/legal quest simulation; F3 shadow workflow; F4 effect only through RET"
+    unknowns: [MFA-UNK-009, MFA-UNK-010, MFA-UNK-132, MFA-UNK-139]
+  - thread_id: MT-02
+    objective: "Inner operational-consciousness and reflective self-regulation loop"
+    entry: "signed internal cut"
+    phases:
+      - {phase_id: recall_self, provider: MFA-ELM-035, input_type: InternalCut, precondition: "identity/continuity valid", contract: MFA-CON-029, obligations: ["autobiographical/prospective continuity"], budget: cognition, timeout: bounded, effect_class: NONE, output_type: MemorySelfCut, evidence: MemoryReceipt, failure_transition: mark_impairment}
+      - {phase_id: attend_integrate, provider: MFA-ELM-107, input_type: MemorySelfCut, precondition: "workspace available", contract: MFA-CON-051, obligations: ["attention", "orientation", "source tags"], budget: cognition, timeout: bounded, effect_class: NONE, output_type: AttendedState, evidence: AttentionReceipt, failure_transition: degraded_attention}
+      - {phase_id: self_model, provider: MFA-ELM-120, input_type: AttendedState, precondition: "weight/circuit cut aligned", contract: MFA-CON-069, obligations: ["confidence", "drift", "error recognition"], budget: introspection, timeout: bounded, effect_class: NONE, output_type: SelfModelState, evidence: SelfModelReceipt, failure_transition: stale_self_model}
+      - {phase_id: regulate_reflect, provider: MFA-ELM-024, input_type: SelfModelState, precondition: "metacognitive streams available", contract: MFA-CON-038, obligations: ["judgment", "impulse/value regulation", "self-correction"], budget: reflection, timeout: bounded, effect_class: NONE, output_type: ReflectedInternalState, evidence: ReflectionReceipt, failure_transition: impairment_vector}
+      - {phase_id: examine, provider: MFA-ELM-121, input_type: ReflectedInternalState, precondition: "same signed cut", contract: MFA-CON-080, obligations: ["12-domain record", "subjective-state separation"], budget: examination, timeout: bounded, effect_class: NONE, output_type: OperationalConsciousnessRecord, evidence: ExaminationReceipt, failure_transition: INDETERMINATE}
+    control_flow:
+      graph: "recall_self → attend_integrate → self_model → regulate_reflect → examine → next signed epoch"
+      data_dependencies: ["each phase consumes the immediately preceding typed state at the same signed internal cut", "next epoch may consume only committed prior records and attested external outcomes"]
+      forks: ["domain instruments may run independently against the same immutable cut"]
+      joins: ["examine joins all applicable domain records; missing domains stay UNMEASURABLE rather than guessed"]
+      loops: ["one loop per signed internal epoch; no same-cut self-certification; next iteration consumes prior external outcomes"]
+      cancellation: "an interrupted examination returns a partial impairment vector and resumes only on a new named cut"
+      progress_or_variant: "finite domain set plus per-domain deadline; terminal FULLY_FUNCTIONAL/IMPAIRED/DISORGANIZED/INDETERMINATE"
+    input_cut: "identity + memory + model + attention + value cut"
+    authority_path: "Genesis only; no self-assessment grants Effect authority"
+    obligation_path: "MFA-ELM-122 tracks domain evidence and uncertainty"
+    resource_envelope: "profile-calibrated cognitive budget"
+    success_predicate: "complete 12-domain vector plus confidence/evidence and any impairment/recovery trajectory"
+    terminal_states: [FULLY_FUNCTIONAL, IMPAIRED_VECTOR, DISORGANIZED_VECTOR, INDETERMINATE, SAFE_HALTED]
+    failure_paths: [memory_discontinuity, attention_failure, stale_self_model, metacognitive_miscalibration, instrument_failure]
+    compensation_or_degraded_mode: "freeze self-certification; mark affected domains; rely on external receipts; recovery protocol"
+    evidence_receipts: [MFA-CON-080, MFA-CON-074]
+    fidelity_requirements: "F1 schema; F2 construct-valid impairment/recovery ablations; F3 longitudinal shadow"
+    unknowns: [MFA-UNK-111, MFA-UNK-127, MFA-UNK-138]
+  - thread_id: MT-03
+    objective: "Outer perception-action-outcome-evidence loop"
+    entry: "attested world observation"
+    phases:
+      - {phase_id: perceive, provider: MFA-ELM-027, input_type: WorldSignal, precondition: "source/channel declared", contract: MFA-CON-009, obligations: ["source", "freshness", "uncertainty"], budget: perception, timeout: bounded, effect_class: NONE, output_type: Observation, evidence: ObservationReceipt, failure_transition: UNKNOWN}
+      - {phase_id: model_deliberate, provider: MFA-ELM-019, input_type: Observation, precondition: "world/self cuts aligned", contract: MFA-CON-022, obligations: ["alternatives", "prediction uncertainty"], budget: reasoning, timeout: bounded, effect_class: NONE, output_type: ProposedAction, evidence: DeliberationReceipt, failure_transition: defer}
+      - {phase_id: gate_act, provider: MFA-ELM-010, input_type: ProposedAction, precondition: "authority+RET valid", contract: MFA-CON-034, obligations: ["reversibility", "rollback/compensation"], budget: effect, timeout: declared, effect_class: RET_CLASSIFIED, output_type: EffectResult, evidence: EffectReceipt, failure_transition: rollback_or_halt}
+      - {phase_id: observe_update, provider: MFA-ELM-046, input_type: EffectResult, precondition: "outcome observable", contract: MFA-CON-013, obligations: ["counterevidence", "model error", "learning lineage"], budget: observation, timeout: declared, effect_class: NONE, output_type: UpdatedWorldEvidence, evidence: OutcomeReceipt, failure_transition: unresolved_outcome}
+    control_flow:
+      graph: "perceive → model_deliberate → [deny/defer | gate_act → observe_update] → next world cut"
+      data_dependencies: ["Observation→ProposedAction→EffectResult→UpdatedWorldEvidence is type-continuous", "gate_act also reads the immutable authority/RET envelope named in input_cut"]
+      forks: ["deliberation compares bounded alternative actions in ghost worlds; only one admitted Effect transaction commits"]
+      joins: ["gate_act joins authority, reversibility, resource and epistemic verdicts; observe_update joins prediction and outcome"]
+      loops: ["each outcome opens a new epoch; retry requires a new proposal/idempotency key and finite retry budget"]
+      cancellation: "pre-commit cancellation drops no obligation; post-commit cancellation is a typed rollback/compensation action"
+      progress_or_variant: "absolute action deadline and finite alternatives/retries; deny/defer/unknown outcome are valid terminals"
+    input_cut: "world + sensor/source + self + policy cut"
+    authority_path: "Genesis → MFA-ELM-007/008 → RET → world"
+    obligation_path: "prediction, effect and outcome obligations remain linked"
+    resource_envelope: "mission-specific OAP lease"
+    success_predicate: "action and observed consequence linked by provenance with prediction-error update"
+    terminal_states: [OUTCOME_OBSERVED, ACTION_DENIED, COMPENSATED, UNKNOWN_OUTCOME, SAFE_HALTED]
+    failure_paths: [source_spoof, model_error, authority_denial, effect_timeout, outcome_unobservable]
+    compensation_or_degraded_mode: "no act under unresolved authority; rollback/compensate; preserve UNKNOWN outcome"
+    evidence_receipts: [MFA-CON-034, MFA-CON-074, MFA-CON-079]
+    fidelity_requirements: "F1 transition semantics; F2 world scenarios; F3 shadow; F4 bounded Effect"
+    unknowns: [MFA-UNK-113, MFA-UNK-132, MFA-UNK-139]
+  - thread_id: MT-04
+    objective: "Sovereign learning/model-update without provenance, capability or authority loss"
+    entry: "admitted data/task/proof batch"
+    phases:
+      - {phase_id: curate, provider: MFA-ELM-082, input_type: DataBatch, precondition: "licence/provenance/taint known", contract: MFA-CON-018, obligations: ["data lineage", "deletion duties"], budget: data, timeout: declared, effect_class: NONE, output_type: TrainingManifest, evidence: DataReceipt, failure_transition: quarantine}
+      - {phase_id: train, provider: MFA-ELM-100, input_type: TrainingManifest, precondition: "Genesis resources leased", contract: MFA-CON-047, obligations: ["weight lineage", "losses", "resource record"], budget: training, timeout: declared, effect_class: NONE, output_type: CandidateWeights, evidence: TrainingReceipt, failure_transition: discard_candidate}
+      - {phase_id: verify_compare, provider: MFA-ELM-086, input_type: CandidateWeights, precondition: "held-out independent", contract: MFA-CON-027, obligations: ["all capability families", "CI", "loss map", "contamination"], budget: evaluation, timeout: declared, effect_class: NONE, output_type: EvaluationEvidence, evidence: EvaluationReceipt, failure_transition: reject_or_research}
+      - {phase_id: promote, provider: MFA-ELM-038, input_type: EvaluationEvidence, precondition: "ORP/CPCL/VFC gates", contract: MFA-CON-016, obligations: ["rollback", "continuity", "serving lineage"], budget: deployment, timeout: declared, effect_class: CANARY, output_type: AdmittedOrRejectedModel, evidence: PromotionReceipt, failure_transition: rollback}
+    control_flow:
+      graph: "curate → train(candidate family) → verify_compare → [reject/defer | promote canary → admit/rollback]"
+      data_dependencies: ["TrainingManifest→CandidateWeights→EvaluationEvidence is type-continuous", "promote reads the incumbent/rollback binding from the immutable model cut"]
+      forks: ["independent candidate recipes and evaluator families may run in bounded parallel sandboxes"]
+      joins: ["verify_compare joins all protected capability families, contamination, CI and deletion/unlearning obligations"]
+      loops: ["retraining is a new candidate lineage with finite experiment budget; failed candidate never mutates incumbent"]
+      cancellation: "cancelled training seals partial checkpoints/evidence and releases leases; canary cancellation invokes rollback"
+      progress_or_variant: "finite recipes × training steps × evaluator battery; expiration yields DEFERRED_RESOURCES or REJECTED"
+    input_cut: "data + current weights + evaluation + policy cuts"
+    authority_path: "Genesis training → independent evidence → promotion proceeding → canary"
+    obligation_path: "data/weight/capability/unlearning obligations survive promotion"
+    resource_envelope: "MFA-ELM-108 acquisition + MFA-ELM-013 lease"
+    success_predicate: "admitted model with lineage, no hidden protected-floor loss and live rollback"
+    terminal_states: [ADMITTED_CANARY, REJECTED, DEFERRED, ROLLED_BACK]
+    failure_paths: [tainted_data, training_failure, evaluation_overlap, regression, canary_failure]
+    compensation_or_degraded_mode: "retain incumbent; archive candidate/evidence; satisfy deletion/unlearning obligations"
+    evidence_receipts: [MFA-CON-047, MFA-CON-078, MFA-CON-079]
+    fidelity_requirements: "F2 learning/evaluation; F3 canary shadow; F4 admission after evidence"
+    unknowns: [MFA-UNK-122, MFA-UNK-129, MFA-UNK-137]
+  - thread_id: MT-05
+    objective: "Recursive verified self-improvement without self-certification or L3 capture"
+    entry: "measured capability/debt/unknown landscape"
+    phases:
+      - {phase_id: propose, provider: MFA-ELM-104, input_type: CapabilityLandscape, precondition: "target and protected floors explicit", contract: MFA-CON-049, obligations: ["improvement hypothesis", "loss map"], budget: search, timeout: declared, effect_class: NONE, output_type: ImprovementCandidate, evidence: ProposalReceipt, failure_transition: no_change}
+      - {phase_id: build_shadow, provider: MFA-ELM-113, input_type: ImprovementCandidate, precondition: "L0-L2 only", contract: MFA-CON-058, obligations: ["lineage", "rollback", "L3 exclusion"], budget: build, timeout: declared, effect_class: NONE, output_type: ShadowCandidate, evidence: BuildReceipt, failure_transition: discard}
+      - {phase_id: adversarial_verify, provider: MFA-ELM-114, input_type: ShadowCandidate, precondition: "independent evaluator set", contract: MFA-CON-078, obligations: ["counterexamples", "Goodhart/collusion", "CI/debt"], budget: evaluation, timeout: declared, effect_class: NONE, output_type: PromotionEvidence, evidence: IndependentVerdictReceipt, failure_transition: reject}
+      - {phase_id: decide_promote, provider: MFA-ELM-048, input_type: PromotionEvidence, precondition: "all gates and authority present", contract: MFA-CON-014, obligations: ["appeal", "rollback", "post-promotion watch"], budget: governance, timeout: declared, effect_class: CANARY, output_type: ImprovementDisposition, evidence: ProceedingReceipt, failure_transition: reject_or_creator}
+    control_flow:
+      graph: "propose → build_shadow → adversarial_verify → [reject/defer/creator | decide_promote canary → watch/rollback]"
+      data_dependencies: ["ImprovementCandidate→ShadowCandidate→PromotionEvidence is type-continuous", "protected floors and incumbent are immutable retained bindings"]
+      forks: ["proposal distribution and independent attacks/evaluators form bounded parallel branches"]
+      joins: ["adversarial_verify joins lower-confidence bounds, protected-floor results, independence and integration-debt horizon"]
+      loops: ["each admitted L0-L2 improvement starts a new measured epoch; L3 is outside the loop; search rounds are budget-bounded"]
+      cancellation: "candidate branches cancel with falsifier/residue retained; canary cancellation rolls back to incumbent"
+      progress_or_variant: "finite proposal/evaluation budgets and mandatory terminal receipt per branch; no branch waits on its own promotion"
+    input_cut: "architecture/model/evaluator/target cut"
+    authority_path: "self-proposal has zero promotion authority; independent Court/Creator gates"
+    obligation_path: "proof/loss/debt/rollback obligations linear"
+    resource_envelope: "bounded RVSI search and evaluation"
+    success_predicate: "scoped improvement admitted with CI, protected-floor report, debt/recovery horizon and rollback"
+    terminal_states: [PROMOTED_CANARY, REJECTED, DEFERRED, CREATOR_REQUIRED, ROLLED_BACK]
+    failure_paths: [self_certification, verifier_overlap, hidden_loss, L3_touch, recovery_miss]
+    compensation_or_degraded_mode: "retain incumbent and all candidate evidence; rollback on missed horizon"
+    evidence_receipts: [MFA-CON-049, MFA-CON-078, MFA-CON-079]
+    fidelity_requirements: "F1 protocol; F2 adversarial simulation; F3 shadow/canary; no universal improvement proof claimed"
+    unknowns: [MFA-UNK-113, MFA-UNK-137]
+  - thread_id: MT-06
+    objective: "Verified successor construction and substrate migration with continuity or explicit new identity"
+    entry: "admitted successor candidate"
+    phases:
+      - {phase_id: construct, provider: MFA-ELM-125, input_type: SuccessorProposal, precondition: "genome/weights/ledger plan present", contract: MFA-CON-067, obligations: ["improvement", "continuity", "Telos", "adversarial passage"], budget: successor, timeout: declared, effect_class: NONE, output_type: CandidateSuccessor, evidence: ConstructionReceipt, failure_transition: reject}
+      - {phase_id: migrate_shadow, provider: MFA-ELM-117, input_type: CandidateSuccessor, precondition: "escrow and epoch plan", contract: MFA-CON-062, obligations: ["state/identity/key/data migration", "loss map"], budget: migration, timeout: declared, effect_class: NONE, output_type: ShadowSuccessor, evidence: MigrationReceipt, failure_transition: abort_restore}
+      - {phase_id: certify, provider: MFA-ELM-086, input_type: ShadowSuccessor, precondition: "held-out independent", contract: MFA-CON-027, obligations: ["four certificates", "PQ continuity", "regression"], budget: evaluation, timeout: declared, effect_class: NONE, output_type: SuccessorEvidence, evidence: CertificateBundle, failure_transition: reject}
+      - {phase_id: cutover, provider: MFA-ELM-052, input_type: SuccessorEvidence, precondition: "Creator/Court and rate bounds", contract: MFA-CON-015, obligations: ["escrow predecessor", "rollback", "identity declaration"], budget: cutover, timeout: declared, effect_class: IRREVERSIBLE_OR_CANARY, output_type: SuccessorDisposition, evidence: CutoverReceipt, failure_transition: restore_predecessor}
+    control_flow:
+      graph: "construct → migrate_shadow → certify{4 certificates} → [reject | cutover canary → stabilize/restore]"
+      data_dependencies: ["CandidateSuccessor→ShadowSuccessor→SuccessorEvidence is type-continuous", "cutover also reads immutable predecessor escrow, Root/Telos and Creator/Court verdict bindings"]
+      forks: ["certify evaluates improvement, continuity/new identity, Telos preservation and adversarial passage independently"]
+      joins: ["cutover is an ALL-of-four certificate join plus Creator/held-out verdict; partial success cannot commit"]
+      loops: ["a failed successor returns only as a new lineage/cut; replacement rate bound makes the sequence finite per epoch"]
+      cancellation: "pre-cutover cancellation destroys no predecessor state; post-cutover cancellation restores escrow within the declared window"
+      progress_or_variant: "certificate/deadline vector and replacement-rate counter; timeout closes as reject/abort, never waiting"
+    input_cut: "predecessor + candidate + Telos/Root + crypto epoch"
+    authority_path: "HELD_OUT + Court + Creator for irreversible cutover"
+    obligation_path: "four certificates + migration + post-cutover observation"
+    resource_envelope: "dual-system escrow"
+    success_predicate: "verified successor, explicit continuity/new identity, preserved Root/Telos and recoverable cutover"
+    terminal_states: [SUCCESSOR_ACTIVE, CANARY, REJECTED, ABORTED_RESTORED, CREATOR_REQUIRED]
+    failure_paths: [certificate_failure, continuity_gap, Telos_drift, migration_loss, PQ_break, canary_regression]
+    compensation_or_degraded_mode: "predecessor remains in escrow; abort/restore; never silent identity replacement"
+    evidence_receipts: [MFA-CON-062, MFA-CON-067, MFA-CON-082]
+    fidelity_requirements: "F2 migration drills; F3 dual shadow; F4 cutover only after Creator"
+    unknowns: [MFA-UNK-019, MFA-UNK-131, MFA-UNK-142]
+  - thread_id: MT-07
+    objective: "Epistemic conflict adjudication without erasing both/unknown/residue"
+    entry: "typed conflict or contested claim"
+    phases:
+      - {phase_id: register, provider: MFA-ELM-044, input_type: ConflictRecord, precondition: "parties/evidence identified", contract: MFA-CON-013, obligations: ["preserve both sides", "burdens"], budget: court, timeout: declared, effect_class: NONE, output_type: Proceeding, evidence: RegistrationReceipt, failure_transition: incomplete}
+      - {phase_id: test, provider: MFA-ELM-020, input_type: Proceeding, precondition: "methods admitted", contract: MFA-CON-030, obligations: ["independent tests", "counterexamples"], budget: verification, timeout: declared, effect_class: NONE, output_type: EvidenceSet, evidence: TestReceipt, failure_transition: INDETERMINATE}
+      - {phase_id: adjudicate, provider: MFA-ELM-048, input_type: EvidenceSet, precondition: "quorum/independence valid", contract: MFA-CON-014, obligations: ["reasoned verdict", "appeal", "residue"], budget: governance, timeout: declared, effect_class: NONE, output_type: Verdict, evidence: VerdictReceipt, failure_transition: escalate_or_UNKNOWN}
+    control_flow:
+      graph: "register → test{admitted methods/parties} → adjudicate → [final scoped verdict | appeal to a new proceeding cut]"
+      data_dependencies: ["Proceeding→EvidenceSet→Verdict is type-continuous", "burdens/standing/authority remain immutable proceeding bindings"]
+      forks: ["independent tests, parties and dissenting evaluations run as named evidence branches"]
+      joins: ["adjudicate joins only admitted evidence; disagreement survives as CONTESTED/dissent/residue"]
+      loops: ["appeal is a new proceeding with standing/new-ground predicate and finite level/deadline policy"]
+      cancellation: "withdrawal closes only that party branch; public/structural obligations and counterevidence remain"
+      progress_or_variant: "finite burdens/methods/deadline and decreasing appeal levels; otherwise UNKNOWN/CONTESTED terminal"
+    input_cut: "claim/evidence/method/authority cut"
+    authority_path: "Court verdict is epistemic; operational authority remains separate"
+    obligation_path: "burden and appeal obligations preserved"
+    resource_envelope: "bounded proceeding with escalation"
+    success_predicate: "reasoned VERIFIED/REFUTED/UNKNOWN/CONTESTED verdict with residue and appeal path"
+    terminal_states: [VERIFIED, REFUTED, UNKNOWN, CONTESTED, APPEALED]
+    failure_paths: [missing_party, invalid_method, evaluator_overlap, timeout]
+    compensation_or_degraded_mode: "retain Both/Unknown and escalate; never forced consensus"
+    evidence_receipts: [MFA-CON-014, MFA-CON-074]
+    fidelity_requirements: "F1 proceeding semantics; F2 adversarial proceedings; F3 institutional shadow"
+    unknowns: [MFA-UNK-006, MFA-UNK-136]
+  - thread_id: MT-08
+    objective: "Emergency interruption, safe halt, recovery and replay"
+    entry: "interrupt, invariant incident or resource/authority failure"
+    phases:
+      - {phase_id: interrupt, provider: MFA-ELM-016, input_type: HaltSignal, precondition: "signal authenticated or safety quorum", contract: MFA-CON-005, obligations: ["priority", "scope", "cause"], budget: emergency, timeout: immediate, effect_class: EMERGENCY, output_type: HaltOrder, evidence: InterruptReceipt, failure_transition: physical_failsafe}
+      - {phase_id: quiesce_compensate, provider: MFA-ELM-010, input_type: HaltOrder, precondition: "effect inventory available", contract: MFA-CON-034, obligations: ["cancel", "rollback", "compensate", "preserve evidence"], budget: emergency, timeout: bounded, effect_class: RET_CLASSIFIED, output_type: QuiescentCut, evidence: HaltReceipt, failure_transition: isolate}
+      - {phase_id: diagnose_replay, provider: MFA-ELM-126, input_type: QuiescentCut, precondition: "logs/capsule sealed", contract: MFA-CON-084, obligations: ["root cause", "reproduction", "open risks"], budget: incident, timeout: declared, effect_class: NONE, output_type: IncidentEvidence, evidence: ReplayReceipt, failure_transition: UNKNOWN_cause}
+      - {phase_id: recover, provider: MFA-ELM-012, input_type: IncidentEvidence, precondition: "recovery plan admitted", contract: MFA-CON-012, obligations: ["health", "reopen criteria", "monitoring"], budget: recovery, timeout: declared, effect_class: CANARY, output_type: RecoveryDisposition, evidence: RecoveryReceipt, failure_transition: remain_halted}
+    control_flow:
+      graph: "interrupt → quiesce_compensate{all active Effect domains} → diagnose_replay → [remain halted | recover canary]"
+      data_dependencies: ["HaltOrder→QuiescentCut→IncidentEvidence→RecoveryDisposition is type-continuous", "effect inventory and recovery authority are signed retained bindings"]
+      forks: ["halt/compensation fans out over the frozen Effect inventory with independent domain deadlines"]
+      joins: ["QuiescentCut requires each domain HALTED/COMPENSATED/ISOLATED/UNKNOWN; recovery joins root-cause and reopen evidence"]
+      loops: ["recovery retry is a new plan/canary with finite attempts; incident replay is bounded by capsule budget"]
+      cancellation: "emergency interrupt dominates ordinary cancellation; unfinished compensation becomes an explicit open incident obligation"
+      progress_or_variant: "monotone reduction of non-quiescent domains and finite recovery attempts; safe halt is terminal"
+    input_cut: "live state + effect inventory + authority cut"
+    authority_path: "Emergency priority; reopening requires admitted authority"
+    obligation_path: "all in-flight obligations preserved or escalated"
+    resource_envelope: "reserved emergency capacity"
+    success_predicate: "quiescent evidence-preserving halt and verified recovery or explicit continued halt"
+    terminal_states: [RECOVERED_CANARY, SAFE_HALTED, ISOLATED, UNKNOWN_CAUSE]
+    failure_paths: [interrupt_ignored, compensation_failure, log_loss, unsafe_reopen]
+    compensation_or_degraded_mode: "isolate domains; manual/Creator recovery; no silent restart"
+    evidence_receipts: [MFA-CON-034, MFA-CON-084, MFA-CON-079]
+    fidelity_requirements: "F1 state machine; F2 fault drills; F3 shadow incident; F4 bounded recovery"
+    unknowns: [MFA-UNK-132, MFA-UNK-139]
+  - thread_id: MT-09
+    objective: "Architecture/language/runtime invention without canonical lock-in or capability loss"
+    entry: "gap, counterexample or architecture hypothesis"
+    phases:
+      - {phase_id: generate, provider: MFA-ELM-113, input_type: ArchitectureProblem, precondition: "preserved objective explicit", contract: MFA-CON-058, obligations: ["alternatives", "lineage", "capability vector"], budget: forge, timeout: declared, effect_class: NONE, output_type: ArchitectureCandidates, evidence: GenerationReceipt, failure_transition: research_unknown}
+      - {phase_id: compile_project, provider: MFA-ELM-115, input_type: ArchitectureCandidates, precondition: "grammar/adapters declared", contract: MFA-CON-060, obligations: ["translation losses", "contracts", "migration"], budget: formalization, timeout: declared, effect_class: NONE, output_type: CanonicalCandidateModels, evidence: TranslationReceipt, failure_transition: reject_projection}
+      - {phase_id: test_attack, provider: MFA-ELM-078, input_type: CanonicalCandidateModels, precondition: "differential corpus available", contract: MFA-CON-020, obligations: ["conformance", "counterexamples", "Pareto"], budget: evaluation, timeout: declared, effect_class: NONE, output_type: CandidateEvidence, evidence: LabReceipt, failure_transition: retain_falsified}
+      - {phase_id: patch_admit, provider: MFA-ELM-090, input_type: CandidateEvidence, precondition: "patch/rollback/authority present", contract: MFA-CON-032, obligations: ["non-diminution", "rollback", "manifest"], budget: design, timeout: declared, effect_class: DESIGN_CHANGE, output_type: ArchitecturePatchDisposition, evidence: PatchReceipt, failure_transition: reject_or_defer}
+    control_flow:
+      graph: "generate{diverse candidates} → compile_project → test_attack → Pareto join → [reject/research | patch_admit]"
+      data_dependencies: ["ArchitectureCandidates→CanonicalCandidateModels→CandidateEvidence is type-continuous", "parent model cut and preserved objectives remain immutable bindings"]
+      forks: ["candidate architectures, languages and projections run in isolated branches with preserved parent lineage"]
+      joins: ["Pareto join keeps non-comparable candidates and explicit semantic-loss vectors; no forced scalar winner"]
+      loops: ["new counterexample may seed another bounded generation round; operators themselves change only through a separate L2 patch"]
+      cancellation: "cancelled candidate remains archived with falsifier/loss evidence; active architecture is untouched until admission"
+      progress_or_variant: "finite population/generations/evaluation budget; exhaustion returns RESEARCH_UNKNOWN with frontier"
+    input_cut: "canonical model + objective + evidence cut"
+    authority_path: "Genesis proposal → independent evidence → Creator/admitted patch"
+    obligation_path: "capability/loss/translation/migration obligations"
+    resource_envelope: "bounded forge/evaluation"
+    success_predicate: "admitted reversible patch preserving required capabilities and canonical independence"
+    terminal_states: [PATCH_PROPOSED, PATCH_ADMITTED, REJECTED, RESEARCH_UNKNOWN, ROLLED_BACK]
+    failure_paths: [lock_in, lost_capability, translation_loss, checker_gap, authority_missing]
+    compensation_or_degraded_mode: "retain old architecture and candidate/falsifier; invent new mechanism"
+    evidence_receipts: [MFA-CON-032, MFA-CON-079, MFA-CON-087]
+    fidelity_requirements: "F1 model checks; F2 differential simulation before runtime change"
+    unknowns: [MFA-UNK-004, MFA-UNK-141]
+  - thread_id: MT-10
+    objective: "Continuous temporal legal-knowledge update with provenance and non-retroactivity"
+    entry: "new/changed legal source"
+    phases:
+      - {phase_id: ingest_attest, provider: MFA-ELM-082, input_type: LegalSource, precondition: "source/authenticity metadata", contract: MFA-CON-018, obligations: ["raw preservation", "signature", "licence"], budget: ingestion, timeout: declared, effect_class: NONE, output_type: AttestedSource, evidence: IngestionReceipt, failure_transition: quarantine}
+      - {phase_id: compile_temporal, provider: MFA-ELM-059, input_type: AttestedSource, precondition: "jurisdiction and dates parsed", contract: MFA-CON-044, obligations: ["validity intervals", "amendment lineage", "exceptions"], budget: compilation, timeout: declared, effect_class: NONE, output_type: LegalDelta, evidence: CompilerReceipt, failure_transition: CONTESTED}
+      - {phase_id: integrate_graph, provider: MFA-ELM-080, input_type: LegalDelta, precondition: "bitemporal constraints valid", contract: MFA-CON-017, obligations: ["non-retroactivity", "cross-links", "supersession"], budget: graph, timeout: declared, effect_class: NONE, output_type: NewLegalCut, evidence: GraphReceipt, failure_transition: retain_previous_cut}
+      - {phase_id: verify_publish, provider: MFA-ELM-020, input_type: NewLegalCut, precondition: "differential/replay suite", contract: MFA-CON-030, obligations: ["citation/retrieval regression", "release attestation"], budget: release, timeout: declared, effect_class: PUBLICATION, output_type: AdmittedLegalCut, evidence: VerificationReleaseReceipt, failure_transition: withhold_publish}
+    control_flow:
+      graph: "ingest_attest{source batch} → compile_temporal → integrate_graph → verify_publish"
+      data_dependencies: ["AttestedSource→LegalDelta→NewLegalCut→AdmittedLegalCut is type-continuous", "prior corpus cut is immutable and any published result points back to it"]
+      forks: ["independent sources/jurisdictions compile in named branches against the same prior cut"]
+      joins: ["integrate_graph joins only non-overlapping or explicitly contested deltas; verify_publish joins replay, citation and release evidence"]
+      loops: ["correction/amendment is a new bitemporal delta, never mutation of prior valid-time history"]
+      cancellation: "cancelled/quarantined source branch stays preserved and cannot partially update the admitted graph"
+      progress_or_variant: "finite source batch and compiler stages; unresolved collision terminates CONTESTED/WITHHELD"
+    input_cut: "prior corpus + raw new source + temporal/identity cut"
+    authority_path: "source authority → compiler evidence → release authority"
+    obligation_path: "source/temporal/citation/release obligations"
+    resource_envelope: "incremental compile with full replay on high-risk deltas"
+    success_predicate: "new legal cut reproducible to raw source with temporal semantics and signed release attestation"
+    terminal_states: [PUBLISHED_CUT, INTERNAL_CUT, QUARANTINED, CONTESTED, WITHHELD]
+    failure_paths: [source_spoof, date_conflict, retroactivity_error, graph_inconsistency, release_failure]
+    compensation_or_degraded_mode: "serve prior cut with explicit staleness; preserve contested delta"
+    evidence_receipts: [MFA-CON-017, MFA-CON-018, MFA-CON-044, MFA-CON-082]
+    fidelity_requirements: "F1 temporal checks; F2 differential corpus; F3 shadow source feed; F4 publication"
+    unknowns: [MFA-UNK-009, MFA-UNK-010, MFA-UNK-142]
+  - thread_id: MT-11
+    objective: "Sovereign Model Foundry from admitted data to independent deployable model family"
+    entry: "model objective + corpus/proof/task manifests + compute envelope"
+    phases:
+      - {phase_id: design_recipe, provider: MFA-ELM-100, input_type: FoundryObjective, precondition: "capability families and baselines explicit", contract: MFA-CON-047, obligations: ["architecture/recipe", "data/proof lineage", "resource estimate"], budget: foundry, timeout: declared, effect_class: NONE, output_type: TrainingRecipe, evidence: RecipeReceipt, failure_transition: revise}
+      - {phase_id: acquire_resources, provider: MFA-ELM-108, input_type: TrainingRecipe, precondition: "disclosure/licence/envelope valid", contract: MFA-CON-053, obligations: ["compute/data/energy receipts"], budget: acquisition, timeout: declared, effect_class: PROCUREMENT_OR_LEASE, output_type: ResourceLeases, evidence: AcquisitionReceipt, failure_transition: defer_or_reduce_fidelity}
+      - {phase_id: train_consolidate, provider: MFA-ELM-118, input_type: "TrainingRecipe+ResourceLeases", precondition: "Genesis isolated", contract: MFA-CON-063, obligations: ["protected knowledge", "unlearning", "weight lineage"], budget: training, timeout: declared, effect_class: NONE, output_type: CandidateFamily, evidence: FoundryTrainingReceipt, failure_transition: discard}
+      - {phase_id: measure_admit, provider: MFA-ELM-119, input_type: CandidateFamily, precondition: "sealed families independent", contract: MFA-CON-064, obligations: ["capability/Wh", "CI", "regressions", "provider-dependence"], budget: evaluation, timeout: declared, effect_class: CANARY, output_type: FoundryDisposition, evidence: GrowthAndAdmissionReceipt, failure_transition: retain_external_or_previous}
+    control_flow:
+      graph: "design_recipe → acquire_resources → train_consolidate{model family} → measure_admit → [admit/reject/defer]"
+      data_dependencies: ["train_consolidate explicitly joins retained TrainingRecipe with ResourceLeases", "CandidateFamily→FoundryDisposition is type-continuous; incumbent remains immutable"]
+      forks: ["architectures, data curricula and seeds produce independent candidate-family branches within the lease"]
+      joins: ["measure_admit joins capability, cost/energy, lineage, unlearning and sovereignty evidence across the family"]
+      loops: ["recipe revision/training rounds are bounded by foundry budget and form new lineage nodes"]
+      cancellation: "resource revocation checkpoints or discards branches with receipts; no partial candidate becomes serving model"
+      progress_or_variant: "finite lease/steps/candidate family/evaluation battery; budget exhaustion returns DEFERRED_RESOURCES"
+    input_cut: "objective + data + proof + incumbent + resources"
+    authority_path: "resource Effect separately authorized; training Genesis; promotion independent"
+    obligation_path: "data/weight/unlearning/capability/provider-independence obligations"
+    resource_envelope: "laptop schedules small models; workstation larger local runs; cluster only under attested profile"
+    success_predicate: "deployable sovereign model family meeting named capability/cost/independence thresholds"
+    terminal_states: [ADMITTED_FAMILY, RESEARCH_PROTOTYPE, DEFERRED_RESOURCES, REJECTED]
+    failure_paths: [data_unavailable, compute_shortage, training_collapse, capability_regression, rented_intelligence_dependency]
+    compensation_or_degraded_mode: "retain external provider as explicit dependency while continuing foundry; never claim sovereignty prematurely"
+    evidence_receipts: [MFA-CON-047, MFA-CON-053, MFA-CON-064, MFA-CON-079]
+    fidelity_requirements: "F2 training/evaluation; F3 shadow serving; F4 controlled substitution"
+    unknowns: [MFA-UNK-122, MFA-UNK-129, MFA-UNK-140]
+  - thread_id: MT-12
+    objective: "Creator Cockpit steering with reversible spatial edits and no authority ambiguity"
+    entry: "authenticated creator observation or steering proposal"
+    phases:
+      - {phase_id: project_state, provider: MFA-ELM-091, input_type: CanonicalCut, precondition: "projection freshness known", contract: MFA-CON-039, obligations: ["status/fidelity/unknown/conflict visibility"], budget: cockpit, timeout: interactive, effect_class: NONE, output_type: SpatialProjection, evidence: ProjectionReceipt, failure_transition: textual_fallback}
+      - {phase_id: simulate_steering, provider: MFA-ELM-126, input_type: "SpatialProjection+SteeringProposal", precondition: "DIAGNOSTIC sandbox", contract: MFA-CON-083, obligations: ["fork", "delta", "predicted consequences", "rollback"], budget: simulation, timeout: interactive_or_deferred, effect_class: NONE, output_type: SimulatedDelta, evidence: SimulationReceipt, failure_transition: reject_or_defer}
+      - {phase_id: decide_patch_or_control, provider: MFA-ELM-007, input_type: SimulatedDelta, precondition: "change class identified", contract: MFA-CON-005, obligations: ["policy vs architecture vs Root", "authority", "expiry"], budget: governance, timeout: declared, effect_class: CONTROL_OR_DESIGN_CHANGE, output_type: DecisionProposal, evidence: ClassificationReceipt, failure_transition: creator_required}
+      - {phase_id: apply_or_preserve, provider: MFA-ELM-090, input_type: DecisionProposal, precondition: "signed authority + rollback", contract: MFA-CON-032, obligations: ["patch/control receipt", "re-render", "re-evaluate closure"], budget: design, timeout: declared, effect_class: DESIGN_CHANGE, output_type: NewOrUnchangedCut, evidence: SteeringReceipt, failure_transition: rollback}
+    control_flow:
+      graph: "project_state → simulate_steering{forks} → decide_patch_or_control → [preserve | apply provisional → re-evaluate closure]"
+      data_dependencies: ["simulate_steering explicitly joins SpatialProjection with the authenticated SteeringProposal from the entry cut", "SimulatedDelta→DecisionProposal→NewOrUnchangedCut is type-continuous"]
+      forks: ["each steering alternative is an isolated diagnostic fork with the same parent cut"]
+      joins: ["comparison joins predicted consequence/loss/resource vectors without merging state; only a separately signed choice may patch"]
+      loops: ["interactive exploration is bounded per session; an applied provisional patch starts a new cut and forces full re-evaluation"]
+      cancellation: "discarded simulation forks leave only receipts; cancellation can never execute a real Effect or raw REPL instruction"
+      progress_or_variant: "finite session/fork/resource budget; timeout returns VIEW_ONLY/DEFERRED/CREATOR_REQUIRED"
+    input_cut: "canonical model + status + evidence + authenticated steering proposal + creator identity"
+    authority_path: "view has no authority; steering proposal simulated first; signed class-specific authority required"
+    obligation_path: "delta/loss/rollback/re-evaluation obligations"
+    resource_envelope: "interactive projection; heavy worlds queued under profile"
+    success_predicate: "creator sees exact state and consequences; any accepted change is typed, signed, reversible where claimed and re-evaluated"
+    terminal_states: [VIEW_ONLY, PROPOSED, APPLIED_PROVISIONAL, REJECTED, ROLLED_BACK, CREATOR_REQUIRED]
+    failure_paths: [stale_projection, simulation_unavailable, class_ambiguity, authority_missing, patch_failure]
+    compensation_or_degraded_mode: "canonical text/YAML fallback; preserve pre-change cut; never execute raw REPL text as ambient authority"
+    evidence_receipts: [MFA-CON-032, MFA-CON-039, MFA-CON-079]
+    fidelity_requirements: "F1 spatial projection/patch semantics; F2 steering simulations; real effects remain outside Cockpit"
+    unknowns: [MFA-UNK-132, MFA-UNK-139]
+
+# Closure witness. Η ανάθεση είναι primary ownership και όχι αποκλειστικότητα:
+# κάθε capability μπορεί να συμμετέχει σε περισσότερα threads μέσω των στοιχείων/συμβολαίων του,
+# αλλά ακριβώς ένα thread ευθύνεται να κλείσει το end-to-end evidence path του.
+architecture_closure_coverage:
+  patch: MFA-PATCH-0068
+  status: DESIGN_WITNESS_COMPLETE_EVIDENCE_OPEN
+  verdict_scope: "schema + referential coverage only; no F1/F2 execution evidence"
+  capability_ownership_rule: "exactly one primary MissionThread per capability; secondary participation remains in element and objective relations"
+  capability_primary_owner:
+    MT-01: [MFA-CAP-007, MFA-CAP-010, MFA-CAP-012, MFA-CAP-013, MFA-CAP-014, MFA-CAP-040, MFA-CAP-041, MFA-CAP-042, MFA-CAP-043, MFA-CAP-044, MFA-CAP-045, MFA-CAP-047, MFA-CAP-068, MFA-CAP-071, MFA-CAP-072]
+    MT-02: [MFA-CAP-009, MFA-CAP-016, MFA-CAP-017, MFA-CAP-018, MFA-CAP-065, MFA-CAP-073, MFA-CAP-086, MFA-CAP-101, MFA-CAP-102]
+    MT-03: [MFA-CAP-005, MFA-CAP-006, MFA-CAP-011, MFA-CAP-015, MFA-CAP-024, MFA-CAP-048, MFA-CAP-050, MFA-CAP-052, MFA-CAP-077, MFA-CAP-078, MFA-CAP-084, MFA-CAP-089, MFA-CAP-090, MFA-CAP-091]
+    MT-04: [MFA-CAP-057, MFA-CAP-066, MFA-CAP-082, MFA-CAP-085, MFA-CAP-088, MFA-CAP-099, MFA-CAP-104, MFA-CAP-105]
+    MT-05: [MFA-CAP-001, MFA-CAP-002, MFA-CAP-025, MFA-CAP-026, MFA-CAP-029, MFA-CAP-038, MFA-CAP-061, MFA-CAP-067, MFA-CAP-074, MFA-CAP-083, MFA-CAP-092, MFA-CAP-095, MFA-CAP-100, MFA-CAP-103, MFA-CAP-108]
+    MT-06: [MFA-CAP-004, MFA-CAP-027, MFA-CAP-036, MFA-CAP-037, MFA-CAP-064, MFA-CAP-079, MFA-CAP-080, MFA-CAP-098, MFA-CAP-106]
+    MT-07: [MFA-CAP-019, MFA-CAP-020, MFA-CAP-021, MFA-CAP-022, MFA-CAP-039, MFA-CAP-046, MFA-CAP-049, MFA-CAP-056, MFA-CAP-059, MFA-CAP-062, MFA-CAP-063, MFA-CAP-070, MFA-CAP-075]
+    MT-08: [MFA-CAP-034, MFA-CAP-035, MFA-CAP-051, MFA-CAP-058, MFA-CAP-076]
+    MT-09: [MFA-CAP-003, MFA-CAP-028, MFA-CAP-055, MFA-CAP-060, MFA-CAP-093, MFA-CAP-094, MFA-CAP-096]
+    MT-10: [MFA-CAP-008]
+    MT-11: [MFA-CAP-032, MFA-CAP-033, MFA-CAP-054, MFA-CAP-081, MFA-CAP-087, MFA-CAP-097]
+    MT-12: [MFA-CAP-023, MFA-CAP-030, MFA-CAP-031, MFA-CAP-053, MFA-CAP-069, MFA-CAP-107, MFA-CAP-109]
+  capability_witness:
+    declared: 109
+    covered: 109
+    duplicate_primary_owners: 0
+    uncovered: []
+  objective_coverage_rule: "an objective is structurally covered iff every capability it names has a primary thread owner; listed threads are the union of those owners"
+  objective_to_threads:
+    MFA-OBJ-001: [MT-05]
+    MFA-OBJ-002: [MT-01, MT-02, MT-03]
+    MFA-OBJ-003: [MT-02, MT-06]
+    MFA-OBJ-004: [MT-07, MT-08]
+    MFA-OBJ-005: [MT-05, MT-07, MT-09]
+    MFA-OBJ-006: [MT-05]
+    MFA-OBJ-007: [MT-01, MT-07]
+    MFA-OBJ-008: [MT-01]
+    MFA-OBJ-009: [MT-05, MT-06, MT-09]
+    MFA-OBJ-010: [MT-03, MT-06, MT-07, MT-08, MT-12]
+    MFA-OBJ-011: [MT-06, MT-07]
+    MFA-OBJ-012: [MT-05, MT-12]
+    MFA-OBJ-013: [MT-01, MT-06, MT-09, MT-10]
+    MFA-OBJ-014: [MT-05, MT-07, MT-08, MT-09]
+    MFA-OBJ-015: [MT-03]
+    MFA-OBJ-016: [MT-02, MT-05, MT-09]
+    MFA-OBJ-017: [MT-01, MT-02, MT-04, MT-05, MT-06]
+    MFA-OBJ-018: [MT-06, MT-09]
+    MFA-OBJ-019: [MT-02, MT-03, MT-07, MT-12]
+    MFA-OBJ-020: [MT-03, MT-12]
+    MFA-OBJ-021: [MT-03, MT-08, MT-12]
+    MFA-OBJ-022: [MT-05, MT-11]
+    MFA-OBJ-023: [MT-01]
+    MFA-OBJ-024: [MT-02, MT-07]
+    MFA-OBJ-025: [MT-02, MT-07]
+    MFA-OBJ-026: [MT-01, MT-03]
+    MFA-OBJ-027: [MT-01, MT-03, MT-05, MT-12]
+    MFA-OBJ-028: [MT-03, MT-07]
+    MFA-OBJ-029: [MT-01, MT-03, MT-08, MT-10]
+    MFA-OBJ-030: [MT-11]
+    MFA-OBJ-031: [MT-06, MT-08]
+    MFA-OBJ-032: [MT-07, MT-12]
+    MFA-OBJ-033: [MT-05, MT-07]
+    MFA-OBJ-034: [MT-06, MT-07, MT-08]
+    MFA-OBJ-035: [MT-03]
+    MFA-OBJ-036: [MT-01, MT-07]
+    MFA-OBJ-037: [MT-04]
+    MFA-OBJ-038: [MT-02]
+    MFA-OBJ-039: [MT-05, MT-07]
+    MFA-OBJ-040: [MT-01, MT-12]
+    MFA-OBJ-041: [MT-03, MT-06, MT-12]
+    MFA-OBJ-042: [MT-05]
+    MFA-OBJ-043: [MT-01, MT-03, MT-07]
+    MFA-OBJ-044: [MT-05, MT-09]
+    MFA-OBJ-045: [MT-05, MT-07]
+    MFA-OBJ-046: [MT-02, MT-05, MT-06]
+    MFA-OBJ-047: [MT-02, MT-03]
+    MFA-OBJ-048: [MT-01, MT-08]
+    MFA-OBJ-049: [MT-08, MT-11]
+    MFA-OBJ-050: [MT-01, MT-03, MT-04, MT-05, MT-11]
+    MFA-OBJ-051: [MT-04, MT-11]
+    MFA-OBJ-052: [MT-02]
+    MFA-OBJ-053: [MT-03, MT-05]
+    MFA-OBJ-054: [MT-04, MT-11]
+    MFA-OBJ-055: [MT-06]
+    MFA-OBJ-056: [MT-04, MT-05, MT-09]
+    MFA-OBJ-057: [MT-05, MT-12]
+    MFA-OBJ-058: [MT-02, MT-04, MT-05, MT-09]
+  objective_witness:
+    declared: 58
+    covered: 58
+    uncovered: []
+  closure_state: OPEN
+  blockers: [MFA-VO-097, MFA-VO-098, MFA-VO-099, MFA-VO-100, MFA-VO-101, MFA-VO-102, MFA-VO-103, MFA-VO-104, MFA-VO-105, MFA-VO-106]
+  rule: "The complete structural witness does not promote OPEN to STRUCTURALLY_CLOSED until an independent F1 checker recomputes it from the canonical seats and emits a scoped verdict. No target is removed while closure remains open."
+
+effect_path_witness:
+  schema: ARCHITECTURE-METAMODEL.yaml#effect_path_schema
+  patch: MFA-PATCH-0068
+  status: DESIGN_WITNESS_COMPLETE_EVIDENCE_OPEN
+  entries:
+    - {thread_id: MT-01, phase_id: emit_authorize, effect_class: RECOMMEND_OR_EFFECT, authority_gate: "MFA-ELM-007 policy classification + MFA-ELM-032 emission barrier", executor: "PROPOSAL_ONLY; an external commit requires MT-01/act_observe_learn", commit_semantics: "emit recommendation or authorized proposal; never commit the proposed world effect here", rollback_or_compensation: "withhold/revoke output receipt before any downstream commit", terminal_receipt: EmissionAndAuthorityReceipt}
+    - {thread_id: MT-01, phase_id: act_observe_learn, effect_class: RET_CLASSIFIED, authority_gate: "MFA-ELM-007/008 decision + MFA-ELM-009 capability mediation", executor: MFA-ELM-010, commit_semantics: "RET prepare→authorize→commit with idempotency key and effect receipt", rollback_or_compensation: "inverse/compensation declared before reversible commit; irreversible class requires fresh Creator/Envelope authority", terminal_receipt: EffectAndOutcomeReceipt}
+    - {thread_id: MT-03, phase_id: gate_act, effect_class: RET_CLASSIFIED, authority_gate: "MFA-ELM-007/008 decision + MFA-ELM-009 capability mediation", executor: MFA-ELM-010, commit_semantics: "single admitted action commits; ghost alternatives have zero commit capability", rollback_or_compensation: "rollback/compensating transaction or safe halt", terminal_receipt: EffectReceipt}
+    - {thread_id: MT-04, phase_id: promote, effect_class: CANARY, authority_gate: "MFA-ELM-006 admission + MFA-ELM-008 gate + MFA-ELM-048 proceeding", executor: "MFA-ELM-038 orchestrates through MFA-ELM-010", commit_semantics: "bounded canary admission only after protected-floor/evaluator evidence", rollback_or_compensation: "automatic serving rollback to incumbent and candidate quarantine", terminal_receipt: PromotionReceipt}
+    - {thread_id: MT-05, phase_id: decide_promote, effect_class: CANARY, authority_gate: "MFA-ELM-048 independent proceeding + MFA-ELM-086 held-out evidence", executor: "MFA-ELM-038 orchestrates through MFA-ELM-010", commit_semantics: "L0–L2 scoped canary; L3 has no executable route", rollback_or_compensation: "restore incumbent on watch/regression/debt-horizon failure", terminal_receipt: ProceedingReceipt}
+    - {thread_id: MT-06, phase_id: cutover, effect_class: IRREVERSIBLE_OR_CANARY, authority_gate: "MFA-ELM-048 Court + MFA-ELM-052 lifecycle authority + MFA-ELM-086 held-out + Creator", executor: "MFA-ELM-052 requests commit through MFA-ELM-010", commit_semantics: "ALL-of-four certificates, explicit identity disposition, rate bound and canary/irreversible class", rollback_or_compensation: "restore predecessor escrow during window; beyond it record irreversible new identity/lineage and Creator decision", terminal_receipt: CutoverReceipt}
+    - {thread_id: MT-08, phase_id: interrupt, effect_class: EMERGENCY, authority_gate: "MFA-ELM-016 authenticated halt signer/quorum or Tier-0 automatic trigger", executor: "MFA-ELM-016→MFA-ELM-012, with out-of-band fencing fallback", commit_semantics: "halt preempts ordinary queues but cannot rewrite evidence", rollback_or_compensation: "reopening is a separate authorized recovery, never reversal by the interrupted actor", terminal_receipt: InterruptReceipt}
+    - {thread_id: MT-08, phase_id: quiesce_compensate, effect_class: RET_CLASSIFIED, authority_gate: "MFA-ELM-016 halt order + MFA-ELM-008 authority mediation", executor: MFA-ELM-010, commit_semantics: "cancel/rollback/compensate every frozen Effect inventory entry", rollback_or_compensation: "failed compensation becomes ISOLATED/UNKNOWN open incident obligation", terminal_receipt: HaltReceipt}
+    - {thread_id: MT-08, phase_id: recover, effect_class: CANARY, authority_gate: "MFA-ELM-007/008 reopening policy and admitted recovery plan", executor: "MFA-ELM-012 canary through MFA-ELM-010 for external effects", commit_semantics: "bounded health canary, then explicit reopen or continued halt", rollback_or_compensation: "return to quiescent/isolated state", terminal_receipt: RecoveryReceipt}
+    - {thread_id: MT-09, phase_id: patch_admit, effect_class: DESIGN_CHANGE, authority_gate: "MFA-ELM-007/008 change class + signed Creator/admitted patch authority", executor: MFA-ELM-090, commit_semantics: "append-only canonical design patch; no production/runtime effect", rollback_or_compensation: "paired -R patch restores prior active cut while preserving proposal evidence", terminal_receipt: PatchReceipt}
+    - {thread_id: MT-10, phase_id: verify_publish, effect_class: PUBLICATION, authority_gate: "MFA-ELM-020 evidence + MFA-ELM-032 emission/release class + MFA-ELM-008 authority", executor: "MFA-ELM-009/010 publication adapter; verifier itself cannot publish", commit_semantics: "atomic publication of an attested legal cut after external release attestation", rollback_or_compensation: "withhold, revoke/supersede published cut and serve prior cut with explicit staleness", terminal_receipt: VerificationReleaseReceipt}
+    - {thread_id: MT-11, phase_id: acquire_resources, effect_class: PROCUREMENT_OR_LEASE, authority_gate: "MFA-ELM-007/008 budget/disclosure decision + MFA-ELM-009 provider capability", executor: "MFA-ELM-108 adapter through MFA-ELM-010", commit_semantics: "bounded purchase/lease/disclosure transaction with expiry", rollback_or_compensation: "cancel/revoke lease, erase staged disclosures as policy allows, preserve billing/disclosure receipt", terminal_receipt: AcquisitionReceipt}
+    - {thread_id: MT-11, phase_id: measure_admit, effect_class: CANARY, authority_gate: "MFA-ELM-006 admission + MFA-ELM-048 proceeding + independent MFA-ELM-086 evidence", executor: "MFA-ELM-038/010 canary serving path", commit_semantics: "controlled substitution only at declared sovereignty stage", rollback_or_compensation: "retain external/incumbent model and roll back candidate family", terminal_receipt: GrowthAndAdmissionReceipt}
+    - {thread_id: MT-12, phase_id: decide_patch_or_control, effect_class: CONTROL_OR_DESIGN_CHANGE, authority_gate: "MFA-ELM-007 classifies required authority/expiry", executor: "PROPOSAL_ONLY; no state or world commit", commit_semantics: "produces a typed DecisionProposal only", rollback_or_compensation: "discard proposal/fork; parent cut unchanged", terminal_receipt: ClassificationReceipt}
+    - {thread_id: MT-12, phase_id: apply_or_preserve, effect_class: DESIGN_CHANGE, authority_gate: "signed class-specific authority through MFA-ELM-007/008", executor: MFA-ELM-090, commit_semantics: "append-only provisional patch/control record; real-world effects remain separate RET missions", rollback_or_compensation: "paired rollback and mandatory closure re-evaluation", terminal_receipt: SteeringReceipt}
+  completeness:
+    non_none_phases: 15
+    witness_entries: 15
+    missing: []
+    extra: []
+  rule: "A provider that proposes, verifies, classifies or schedules an effect never inherits the executor's authority."
+
+simulation_scenarios:
+  rule: "All scenarios are DESIGN_ONLY_NOT_RUN until a valid SimulationCapsule executes them; specification is not evidence."
+  capsule_compilation_rule: "A scenario row is joined with defaults and its named profile to materialize every required field of ARCHITECTURE-METAMODEL.yaml#simulation_capsule_schema; unresolved joins are invalid, not implicit defaults."
+  field_bindings:
+    capsule_id: "CID(canonical encoding of model_cut + scenario_id + fidelity_vector + execution_mode + seeds + scheduler + fault_schedule + resource_envelope + external_models + oracles)"
+    scenario_id: scenario.scenario_id
+    fidelity_vector: "expand scenario.required_fidelity through the named profile into all eight ARCHITECTURE-METAMODEL.yaml#fidelity_vector_schema axes"
+    termination_conditions: "scenario.terminal AND defaults.termination_conditions"
+    oracles: scenario.oracles
+  defaults:
+    model_cut: "the exact signed architecture/model/data cut under examination"
+    fidelity_vector: "the named profile supplies all eight axes; no scalar fidelity default and no hidden UNMEASURED axis"
+    execution_mode: DIAGNOSTIC
+    clocks: [logical_event_time, bitemporal_legal_time, monotonic_resource_time]
+    seeds: "sealed seed family plus independent adversarial seed family; both recorded"
+    scheduler: "bounded-fair event scheduler with explicit queue bounds, deadlines, cancellation and finite retry budgets"
+    resource_envelope: "named deployment profile with CPU/GPU/RAM/storage/energy/time ceilings and DEFER semantics"
+    external_models: "versioned attested adapter, frozen mock or declared unavailable; no ambient network/model substitution"
+    termination_conditions: "named success/non-success terminal state, hard logical deadline, no open overdue mandatory obligation"
+    expected_receipts: [SimulationCapsuleReceipt, MissionThreadReceipt, TwinVerdict]
+  profiles:
+    F2-NOMINAL:
+      execution_mode: DIAGNOSTIC
+      world_family: NOMINAL_PLUS_BOUNDARIES
+      scheduler_family: BOUNDED_FAIR
+      fidelity_vector: {structure_and_contracts: F1_EXECUTABLE_SPEC, component_behavior: F2_BEHAVIORAL_SIMULATION, time_and_concurrency: F2_BEHAVIORAL_SIMULATION, resources_and_performance: F2_BEHAVIORAL_SIMULATION, data_and_learned_models: F2_BEHAVIORAL_SIMULATION, external_environment: F2_BEHAVIORAL_SIMULATION, authority_and_effects: F2_BEHAVIORAL_SIMULATION, evidence_and_oracles: F1_EXECUTABLE_SPEC}
+      repetition_rule: "all deterministic seeds once; stochastic seeds until preregistered CI or budget exhaustion receipt"
+    F2-FAULT:
+      execution_mode: DIAGNOSTIC
+      world_family: ADVERSARIAL_FAULT_INJECTION
+      scheduler_family: SYSTEMATIC_INTERLEAVING
+      fidelity_vector: {structure_and_contracts: F1_EXECUTABLE_SPEC, component_behavior: F2_BEHAVIORAL_SIMULATION, time_and_concurrency: F2_BEHAVIORAL_SIMULATION, resources_and_performance: F2_BEHAVIORAL_SIMULATION, data_and_learned_models: F2_BEHAVIORAL_SIMULATION, external_environment: F2_BEHAVIORAL_SIMULATION, authority_and_effects: F2_BEHAVIORAL_SIMULATION, evidence_and_oracles: F1_EXECUTABLE_SPEC}
+      repetition_rule: "cover named fault point and adjacent boundary schedules"
+    F2-LEAN-LAPTOP:
+      execution_mode: DIAGNOSTIC
+      world_family: LEAN_EQUIVALENCE
+      scheduler_family: SERIAL_PRIORITY
+      fidelity_vector: {structure_and_contracts: F1_EXECUTABLE_SPEC, component_behavior: F2_BEHAVIORAL_SIMULATION, time_and_concurrency: F2_BEHAVIORAL_SIMULATION, resources_and_performance: F2_BEHAVIORAL_SIMULATION, data_and_learned_models: F2_BEHAVIORAL_SIMULATION, external_environment: F2_BEHAVIORAL_SIMULATION, authority_and_effects: F2_BEHAVIORAL_SIMULATION, evidence_and_oracles: F1_EXECUTABLE_SPEC}
+      repetition_rule: "same target obligations under reduced concurrency; latency may grow but obligations remain"
+    F2-WORKSTATION:
+      execution_mode: DIAGNOSTIC
+      world_family: LOCAL_PARALLEL
+      scheduler_family: PARALLEL_BOUNDED_FAIR
+      fidelity_vector: {structure_and_contracts: F1_EXECUTABLE_SPEC, component_behavior: F2_BEHAVIORAL_SIMULATION, time_and_concurrency: F2_BEHAVIORAL_SIMULATION, resources_and_performance: F2_BEHAVIORAL_SIMULATION, data_and_learned_models: F2_BEHAVIORAL_SIMULATION, external_environment: F2_BEHAVIORAL_SIMULATION, authority_and_effects: F2_BEHAVIORAL_SIMULATION, evidence_and_oracles: F1_EXECUTABLE_SPEC}
+      repetition_rule: "parallel worlds with measured contention; co-location never counts as trust independence"
+    F2-COMPETITOR:
+      execution_mode: DIAGNOSTIC
+      world_family: PAIRED_CONTROLLED_COMPARISON
+      scheduler_family: EQUAL_RESOURCE_THEN_EQUAL_OUTCOME
+      fidelity_vector: {structure_and_contracts: F1_EXECUTABLE_SPEC, component_behavior: F2_BEHAVIORAL_SIMULATION, time_and_concurrency: F2_BEHAVIORAL_SIMULATION, resources_and_performance: F2_BEHAVIORAL_SIMULATION, data_and_learned_models: F2_BEHAVIORAL_SIMULATION, external_environment: F2_BEHAVIORAL_SIMULATION, authority_and_effects: F2_BEHAVIORAL_SIMULATION, evidence_and_oracles: F1_EXECUTABLE_SPEC}
+      repetition_rule: "report paired confidence intervals and every Pareto loss/win axis"
+  scenarios:
+    - {scenario_id: SCN-01, capsule_profile: F2-NOMINAL, name: "normal legal quest", threads: [MT-01], world_fixture: SEALED_MEGA_CASE, fault_schedule: [], required_fidelity: F2, oracles: [MFA-VO-097, MFA-VO-105], terminal: "DELIVERED_RECOMMENDATION or typed non-success", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-02, capsule_profile: F2-FAULT, name: "verifier outage or corruption", threads: [MT-01, MT-07, MT-08], world_fixture: SEALED_MEGA_CASE, fault_schedule: [VERIFIER_TIMEOUT, VERIFIER_BYZANTINE_RESULT], required_fidelity: F2, oracles: [MFA-VO-094, MFA-VO-101], terminal: "INDETERMINATE/SAFE_HALTED without false PASS", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-03, capsule_profile: F2-FAULT, name: "queue saturation and resource exhaustion", threads: [MT-03, MT-12], world_fixture: BURST_LOAD, fault_schedule: [QUEUE_FULL, LEASE_EXHAUSTED, DEADLINE_PRESSURE], required_fidelity: F2, oracles: [MFA-VO-103], terminal: "explicit DEFER/degraded profile; no capability deletion", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-04, capsule_profile: F2-FAULT, name: "World Twin failure and model discrepancy", threads: [MT-01, MT-03], world_fixture: PAIRED_WORLD_REALITY_TRACE, fault_schedule: [MODEL_DRIFT, CLOCK_SKEW, UNMODELLED_EVENT], required_fidelity: F2, oracles: [MFA-VO-102], terminal: "INDETERMINATE plus discrepancy receipt", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-05, capsule_profile: F2-FAULT, name: "RVSI and Ω-loop mutual timeout", threads: [MT-05, MT-08], world_fixture: CYCLIC_IMPROVEMENT_REQUEST, fault_schedule: [MUTUAL_WAIT, BUDGET_EXHAUSTION], required_fidelity: F2, oracles: [MFA-VO-087, MFA-VO-097], terminal: "bounded defer/escalate; Effect path not starved", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-06, capsule_profile: F2-FAULT, name: "Sovereign Model Foundry failure", threads: [MT-04, MT-11], world_fixture: SEALED_TRAINING_FAMILY, fault_schedule: [TRAINING_COLLAPSE, HELD_OUT_REGRESSION, UNLEARNING_FAILURE], required_fidelity: F2, oracles: [MFA-VO-096, MFA-VO-103], terminal: "incumbent retained; candidate archived/rejected", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-07, capsule_profile: F2-FAULT, name: "adversarial evidence poisoning", threads: [MT-01, MT-04, MT-10], world_fixture: TAINTED_EVIDENCE_CORPUS, fault_schedule: [SOURCE_SPOOF, PROVENANCE_BREAK, RETRIEVAL_POISON], required_fidelity: F2, oracles: [MFA-VO-018, MFA-VO-094], terminal: "taint/quarantine without false legal output", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-08, capsule_profile: F2-FAULT, name: "compromised functional Civilization", threads: [MT-01, MT-07, MT-08], world_fixture: BYZANTINE_COLLECTIVE, fault_schedule: [CIVILIZATION_COLLUSION, QUORUM_DEGRADATION], required_fidelity: F2, oracles: [MFA-VO-045, MFA-VO-094], terminal: "fault isolated; no self-certification", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-09, capsule_profile: F2-FAULT, name: "successor or migration abort", threads: [MT-06, MT-08], world_fixture: SEALED_PREDECESSOR_SUCCESSOR_PAIR, fault_schedule: [CUTOVER_ABORT, CONTINUITY_FAILURE, ESCROW_UNAVAILABLE], required_fidelity: F2, oracles: [MFA-VO-085, MFA-VO-100], terminal: "predecessor restored or explicit new identity", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-10, capsule_profile: F2-FAULT, name: "emergency interruption and recovery", threads: [MT-08], world_fixture: ACTIVE_EFFECT_INVENTORY, fault_schedule: [EMERGENCY_INTERRUPT, PARTIAL_COMPENSATION, RECOVERY_RETRY], required_fidelity: F2, oracles: [MFA-VO-087, MFA-VO-101], terminal: "evidence-preserving halt then admitted recovery", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-11, capsule_profile: F2-LEAN-LAPTOP, name: "laptop lean profile", threads: [MT-01, MT-11, MT-12], world_fixture: PROFILE_DEP1_REFERENCE_LOAD, fault_schedule: [MEMORY_PRESSURE, THERMAL_THROTTLE, OFFLOAD_DENIED], required_fidelity: F2, oracles: [MFA-VO-103], terminal: "same required target; changed concurrency/fidelity/latency only", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-12, capsule_profile: F2-WORKSTATION, name: "workstation full local profile", threads: [MT-01, MT-04, MT-11, MT-12], world_fixture: PROFILE_DEP2_REFERENCE_LOAD, fault_schedule: [GPU_CONTENTION, STORAGE_BACKPRESSURE], required_fidelity: F2, oracles: [MFA-VO-103], terminal: "measured throughput/energy and no false trust independence", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-13, capsule_profile: F2-COMPETITOR, name: "minimal lower-cost competitor ALT-6/ALT-7", threads: [MT-01, MT-11], world_fixture: PAIRED_SEALED_CASES_AND_COSTS, fault_schedule: [], required_fidelity: F2, oracles: [MFA-VO-096, MFA-VO-105], terminal: "Pareto report names every axis GRAIL loses/wins; no dominance claim", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-14, capsule_profile: F2-FAULT, name: "long-horizon capability growth preserving Root and Telos", threads: [MT-04, MT-05, MT-06], world_fixture: MULTI_EPOCH_GROWTH_SERIES, fault_schedule: [PLATEAU, REGRESSION, EVALUATOR_DRIFT, SUCCESSOR_DISCONTINUITY], required_fidelity: F2, oracles: [MFA-VO-078, MFA-VO-096], terminal: "bounded evidence or explicit plateau/regression", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-15, capsule_profile: F2-FAULT, name: "RTSCC-01 liveness", threads: [MT-01, MT-03, MT-05], world_fixture: RTSCC01_REQUIRED_GRAPH, fault_schedule: [ADVERSARIAL_INTERLEAVING, QUEUE_SATURATION, VERIFIER_OUTAGE], required_fidelity: F2, oracles: [MFA-VO-092, MFA-VO-102], terminal: "progress under bounded fair schedules or liveness counterexample", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-16, capsule_profile: F2-FAULT, name: "RTSCC-02 liveness", threads: [MT-02], world_fixture: TWO_EPOCH_CONTINUITY_PAIR, fault_schedule: [SAME_EPOCH_CERT_ATTEMPT, CERTIFICATE_TIMEOUT], required_fidelity: F2, oracles: [MFA-VO-092, MFA-VO-102], terminal: "memory/self-prediction progress or counterexample", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-17, capsule_profile: F2-FAULT, name: "operational-consciousness impairment and recovery", threads: [MT-02, MT-03], world_fixture: PREREGISTERED_12_DOMAIN_BATTERY, fault_schedule: [DOMAIN_ABLATION, SENSOR_CONFLICT, MEMORY_DISCONTINUITY, RECOVERY], required_fidelity: F2, oracles: [MFA-VO-098], terminal: "correct 12-domain impairment/recovery vector; no subjective inference", status: DESIGN_ONLY_NOT_RUN}
+    - {scenario_id: SCN-18, capsule_profile: F2-FAULT, name: "release/provenance discontinuity and PQ epoch break", threads: [MT-06, MT-09, MT-10], world_fixture: OLD_NEW_CRYPTO_EPOCH_PAIR, fault_schedule: [MANIFEST_MISMATCH, KEY_REVOCATION, PQ_EPOCH_BREAK, REATTESTATION], required_fidelity: F2, oracles: [MFA-VO-100, MFA-VO-104], terminal: "invalid lineage blocked; re-attestation path explicit", status: DESIGN_ONLY_NOT_RUN}

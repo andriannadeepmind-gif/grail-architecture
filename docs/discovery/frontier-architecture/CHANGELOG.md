@@ -71,6 +71,11 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | MFA-PATCH-0065 | MODIFY | Open-ended measurement/learning/risk, promotion separation και non-diminution του ASI target | 14 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0065-R |
 | MFA-PATCH-0066 | ADD | First-class ClaimDisposition seat για και τους 113 claims· κανένα FAILS/UNPROVEN residue δεν χάνεται | 3 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0066-R |
 | MFA-PATCH-0067 | MODIFY | Whole-system master map, calibrated ceiling language, canonical projections και 0.4.1 registry | 5 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0067-R |
+| MFA-PATCH-0068 | ADD+MODIFY | Evidence-Carrying Mission Weave, MFA-CAP-109, 12 canonical mission threads/control flows, 109/109 CAP owners, 58/58 OBJ witness, 15/15 effect paths και ArchitectureClosureCertificate | 16 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0068-R |
+| MFA-PATCH-0069 | MODIFY | Δεσμευτικός 12-domain operational-consciousness ορισμός, inner/outer loop και graded impairment/recovery | 12 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0069-R |
+| MFA-PATCH-0070 | ADD+MODIFY | Scope-honest Twin verdicts, execution modes, πλήρη 14-field SimulationCapsules/18 scenarios, resource profiles, external release attestation και projection independence | 15 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0070-R |
+| MFA-PATCH-0071 | ADD+MODIFY | Κανονική traceability 114/114 source requirements προς objectives/providers/capabilities/mission threads/contracts/invariants/VOs, με αυστηρό διαχωρισμό structural trace από satisfaction | 11 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0071-R |
+| MFA-PATCH-0072 | ADD+MODIFY | MFA-ATK-30 Structural Closure Laundering: δέκα προεγγεγραμμένες mutations, 88/88 explicit operation allowlists, οκταξονική fidelity, typed verdicts και falsifier | 7 | PARTIALLY_APPLIED / PROVISIONAL / IN_REVIEW (2026-09-17) | MFA-PATCH-0072-R |
 
 ## Εκδόσεις
 
@@ -81,3 +86,4 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | 0.3.0 | MFA-PATCH-0018…0019 | Pass I σταθερό σημείο, ledgers, 17 διαγράμματα | committed 8176ddf (preservation snapshot) |
 | 0.4.0 | MFA-PATCH-0020…0060 | Ω-ASI: έδρες, μηχανισμοί, adversarial passes, F1 executable specification και epistemic-lock correction r1 | committed 6768c6c (preservation snapshot)· PROPOSED / UNREVIEWED |
 | 0.4.1 | MFA-PATCH-0061…0067 | Metamodel/Root/Telos/status/evidence correction· typed dependency graph· claim dispositions· whole-system master map | preservation snapshot· PROPOSED / UNREVIEWED / subject to correction |
+| 0.4.2 | MFA-PATCH-0068…0072 | Evidence-Carrying Mission Weave· 12 mission threads· 18 F2 scenarios· 114/114 requirement traceability· operational consciousness dual loop· honest simulation/resource/release semantics· adversarial closure-laundering matrix | working tree· PROPOSED / UNREVIEWED / OPEN pending MFA-VO-097/099/102/105/106 |

@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0071-R
+reverses: MFA-PATCH-0071
+operation: MODIFY
+targets: [REQUIREMENT-TRACEABILITY.yaml, ARCHITECTURE-METAMODEL.yaml, CONTRACTS.yaml, INVARIANTS.yaml, VERIFICATION-OBLIGATIONS.yaml, CAPABILITY-CONSERVATION.md, TECHNICAL-ARCHITECTURE.md, README.md, CHANGELOG.md, diagrams/MFA-DIA-00.mmd]
+change: {restore: "0.4.2 pre-requirement-trace projection", archive: [REQUIREMENT-TRACEABILITY.yaml], preserve: "all 114 source REQ rows in their original source table and patch evidence"}
+capability_impact: {gained: [], at_risk: ["mechanical requirement-to-mission closure witness"], ledger_entry: "Rollback never deletes the source requirements; it only removes the active canonical join"}
+verification: "Exact semantic diff against the pre-0071 working-tree cut plus source-row count 114"
+rollback: MFA-PATCH-0071
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED

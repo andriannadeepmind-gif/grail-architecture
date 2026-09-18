@@ -1,0 +1,24 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0072
+title: "Adversarial closure-laundering audit and negative-fixture matrix"
+operation: ADD_AND_MODIFY
+targets: [adversarial/MFA-ATK-30.md, ARCHITECTURE-METAMODEL.yaml, CONTRACTS.yaml, TECHNICAL-ARCHITECTURE.md, IMPLEMENTATION-ROADMAP.md, ASI-THREAT-AND-FAILURE-MODEL.md, CHANGELOG.md]
+base: {package_version: 0.4.1, source_commit: 7d80ff67da88c2ff5f612eeb0cc9188b67fb1dbd}
+preconditions: ["Patches 0068…0071 design witnesses present", "No F1 execution or production implementation is claimed"]
+change:
+  add: [MFA-ATK-30, "CE-01…10 closure-laundering mutation matrix", "typed expected verdicts", "defense falsifier", "88/88 explicit contract-operation allowlists", "eight-axis fidelity vectors"]
+  strengthen: ["adversarial closure pass is canonical", "design self-consistency remains distinct from independent evidence", "next step is exact negative-fixture adjudication"]
+  ARCHITECTURE-METAMODEL.yaml: "explicit operation-catalog schema and fidelity anti-collapse rules"
+  ASI-THREAT-AND-FAILURE-MODEL.md: "CE-01…10 adversarial closure round"
+rationale: "A structurally rich package can still launder an intermediate witness into a global closure claim; the attack and its falsifier must be first-class before adjudication."
+evidence: ["adversarial/MFA-ATK-30.md", "ARCHITECTURE-ELEMENTS.yaml#architecture_closure_coverage", "ARCHITECTURE-ELEMENTS.yaml#effect_path_witness", "REQUIREMENT-TRACEABILITY.yaml#coverage", "CONTRACTS.yaml#contract_operation_catalog"]
+affected_dependencies: [MFA-ELM-008, MFA-ELM-010, MFA-ELM-088, MFA-ELM-097, MFA-ELM-122, MFA-ELM-126, MFA-ELM-127]
+capability_impact: {gained: ["canonical adversarial closure witness"], at_risk: [], ledger_entry: "No target capability removed; every mutation must fail closed without capability deletion"}
+migration: "Translate CE-01…10 into F1 negative fixtures only after Creator Approval; preserve this record as the pre-registration."
+verification: "Design/referential checks now; executable mutation detection remains MFA-VO-097/099/102/105/106"
+rollback: MFA-PATCH-0072-R
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED
+mechanical_state: PARTIALLY_APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW

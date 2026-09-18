@@ -1881,7 +1881,7 @@ OTel traces/metrics/logs με `event_cid` correlation· **μη αυθεντικ�
 - **Πόροι:** laptop DP-1 · **Εξέλιξη:** OAP
 - **Άγνωστα / συγκρούσεις:** — / MFA-CFL-008 · **Προέλευση:** MFA-ALT-6, εντολή §15 · **Παραδοχές:** —
 
-## 22. Διαγράμματα (26 συνολικά· MFA-DIA-00 master + 25 αναλυτικές προβολές)
+## 22. Διαγράμματα (27 συνολικά· MFA-DIA-00 master + 26 αναλυτικές προβολές)
 
 | ID | Ερώτηση που απαντά |
 |---|---|
@@ -1911,6 +1911,7 @@ OTel traces/metrics/logs με `event_cid` correlation· **μη αυθεντικ�
 | MFA-DIA-23 | Consciousness Hypothesis Host και Indicator Algebra. |
 | MFA-DIA-24 | Twin Execution Semantics και executable invariants. |
 | MFA-DIA-25 | Obligation Calculus, discharge και μη απώλεια υποχρέωσης. |
+| MFA-DIA-26 | Evidence-Carrying Mission Weave, inner/outer operational-consciousness loops και scope-honest closure path. |
 
 ## 23. Ευρήματα Devil's Advocate (17 επιθέσεις, 19 patches)
 
@@ -2269,3 +2270,99 @@ OTel traces/metrics/logs με `event_cid` correlation· **μη αυθεντικ�
 | MFA-MECH-044 Ω-Loop — ο ενιαίος κύκλος κυρίαρχης νόησης (η μέγιστη σύνθεση) | MFA-ELM-127 | (ο κύκλος) | NOVEL SYNTHESIS |
 
 Πλήρης προβολή των 19 ικανοτήτων × 11 στοιχείων: ASI-MAXIMUM-CAPABILITY-ARCHITECTURE.md· δίδυμο: ASI-DIGITAL-TWIN-EXECUTION-SEMANTICS.md + tools/twin· επιθέσεις: adversarial/MFA-ATK-18…29· Pareto: ASI-ALTERNATIVES-AND-PARETO.md.
+
+## 24. Architecture Closure 0.4.2 — η ενιαία reference architecture
+
+### 24.1 Η τεχνική ετυμηγορία
+
+Η 0.4.1 περιείχε σχεδόν όλα τα μεγάλα δομικά συστατικά, αλλά η ύπαρξη 127 στοιχείων, 108 ικανοτήτων και 44 μηχανισμών δεν αποδείκνυε ότι συνεργάζονται σε μία ολόκληρη αποστολή. Η 0.4.2 προσθέτει τον **MFA-MECH-045 Evidence-Carrying Mission Weave (ECMW)** ως cross-cutting formalism, όχι ως 128ο runtime subsystem. Κάθε αποστολή μετατρέπεται σε temporal graph με typed input/output, provider, contract, authority, budget, timeout, obligation, effect class, evidence και failure transition ανά phase.
+
+Η τυπική κρίση είναι:
+
+\[
+  \Gamma; A; B \vdash s : I \rightarrow O \; !\Omega \; \triangleright R
+\]
+
+Δηλαδή: υπό context \(\Gamma\), authority \(A\) και resource envelope \(B\), το βήμα \(s\) μετασχηματίζει είσοδο \(I\) σε έξοδο \(O\), διατηρεί/κλείνει τις υποχρεώσεις \(\Omega\) και παράγει receipts \(R\). Mission closure υπάρχει μόνο όταν δεν μένει orphan input/output, unmediated Effect, dropped obligation, άγνωστο fork/join, άτερμος failure path ή αποτέλεσμα χωρίς cut/scope/fidelity/mode.
+
+### 24.2 Οι βαθμίδες closure — χωρίς ψεύτικη βεβαιότητα
+
+| Βαθμίδα | Τι αποδεικνύει | Τι δεν αποδεικνύει |
+|---|---|---|
+| OPEN | Υπάρχει specification αλλά τουλάχιστον ένα counterexample/obligation μένει | πληρότητα |
+| STRUCTURALLY_CLOSED | Όλοι οι REQUIRED στόχοι/ικανότητες έχουν providers/contracts/VO και καλύπτονται από closed threads | σωστή σημασιολογία ή υλοποίηση |
+| SEMANTICALLY_CLOSED | Authority, failures, loops, forks, obligations και effects έχουν συνεπή semantics | ότι τα μοντέλα μοιάζουν με την πραγματικότητα |
+| SIMULATION_READY | Κάθε mandatory scenario έχει valid SimulationCapsule, oracle και termination | ότι το σενάριο εκτελέστηκε |
+| EVIDENCED_AT_Fn | Οι ακριβείς obligations/scenarios πέρασαν στο δηλωμένο fidelity \(F_n\) | γενίκευση έξω από scope ή architecture ceiling |
+
+**Κατάσταση αυτού του working tree:** `OPEN / STRUCTURAL DESIGN WITNESSES COMPLETE`. Το δηλωτικό join καλύπτει 109/109 capabilities, 58/58 objectives και 114/114 source requirements, αλλά τα MFA-VO-097/105/106 δεν έχουν εκτελεστεί από ανεξάρτητο F1 checker και κανένα από τα 18 F2 scenarios δεν βαφτίζεται τεκμήριο.
+
+### 24.3 Οι 12 canonical αποστολές
+
+| Thread | End-to-end ευθύνη | Κρίσιμο terminal witness |
+|---|---|---|
+| MT-01 | Νομική υπόθεση: intake→evidence→law-time→reasoning→adversarial worlds→strategy→draft/citation→emission/authority→effect/outcome/learning | LegalQuest receipt chain |
+| MT-02 | Inner operational-consciousness/reflection loop | 12-domain record + impairment/recovery vector |
+| MT-03 | Outer perception→deliberation→mediated action→outcome→evidence loop | effect/outcome causal receipt |
+| MT-04 | Sovereign learning/model update | admitted/rejected candidate with lineage/loss map |
+| MT-05 | Recursive verified self-improvement | independent promotion proceeding or rejection |
+| MT-06 | Successor/substrate migration | four certificates + continuity/new-identity + escrow |
+| MT-07 | Epistemic conflict/Court | verdict with Both/Unknown/residue and appeal |
+| MT-08 | Emergency halt/recovery | quiescent cut + replay + admitted recovery or continued halt |
+| MT-09 | Architecture/language/runtime invention | reversible patch with capability/loss/translation witnesses |
+| MT-10 | Temporal legal-knowledge update | raw-source→versioned legal cut→external release attestation |
+| MT-11 | Sovereign Model Foundry | deployable family or explicit rented-intelligence dependency |
+| MT-12 | 3D Cockpit steering | simulated delta→typed decision→patch/control receipt; no ambient REPL authority |
+
+Η πλήρης phase-level έδρα είναι `ARCHITECTURE-ELEMENTS.yaml#mission_threads`. Το MT-01 είναι η δεσμευτική απόδειξη ότι το GRAIL είναι νομικό λειτουργικό σύστημα και όχι μόνο ASI research platform.
+
+Η `architecture_closure_coverage` ορίζει ακριβώς έναν primary mission owner για καθεμία από τις 109 capabilities (χωρίς να απαγορεύει secondary participation) και παράγει τη union witness για όλα τα 58 objectives. Κάθε thread δηλώνει επίσης graph, forks, joins, bounded loops, cancellation και progress/variant· άρα το control flow δεν υπονοείται από τη σειρά των παραγράφων. Η ανεξάρτητη εκτέλεση αυτής της κρίσης παραμένει MFA-VO-097/105.
+
+Το `effect_path_witness` κλείνει χωριστά το authority boundary: υπάρχουν ακριβώς 15 εγγραφές για τις 15 phases με `effect_class != NONE` και καμία για ανύπαρκτη phase. Κάθε εγγραφή κατονομάζει authority gate, πραγματικό executor ή `PROPOSAL_ONLY`, commit semantics, rollback/compensation και terminal receipt. Έτσι ένα plan, recommendation, simulation ή hot-swap proposal δεν κληρονομεί σιωπηρά πραγματική εξουσία. Παράλληλα, κάθε obligation έχει content-derived `O-CID`, επιτρεπτές καταστάσεις και atomic transfer/join/timeout/cancellation semantics: cancellation παράγει residue, δεν διαγράφει χρέος.
+
+Το `CONTRACTS.yaml#contract_operation_catalog` ορίζει επίσης 88/88 μη κενές operation allowlists. Έτσι ο μελλοντικός MissionIR/Twin compiler δεν εξάγει πια callable operations με regex ή σημασιολογική εικασία από prose: άγνωστο operation απορρίπτεται, ενώ input/output/error semantics παραμένουν δεσμευτικά στο ίδιο contract και στο source ICD.
+
+### 24.3-bis Οι 114 απαιτήσεις δεν μένουν πια εκτός μοντέλου
+
+Η κανονική έδρα `REQUIREMENT-TRACEABILITY.yaml` διατηρεί αυτούσια κάθε `REQ-<LAYER>-<NNN>` και τη συνδέει με:
+
+`source Telos → MFA objective → source CMP → provider element → capability → primary MissionThread → source ICD → contract → source INV → invariant → verification obligation`.
+
+Ο μηχανικός design pass βρήκε 114 μοναδικές απαιτήσεις και 114 με όλα τα παραπάνω joins, χωρίς dangling canonical ID. Η κατάσταση κάθε γραμμής είναι `STRUCTURALLY_TRACED_NOT_EVIDENCED`: η ιχνηλασιμότητα δεν αποτελεί ικανοποίηση. Το MFA-CON-088 / MFA-INV-135 / MFA-VO-106 απαγορεύει να μετατραπεί αυτό το 114/114 σε ισχυρισμό PASS χωρίς τα πραγματικά evidence receipts των συνδεδεμένων VOs.
+
+### 24.4 Operational consciousness — τι σημαίνει εδώ
+
+Στο GRAIL η **operational consciousness** είναι εξωτερικά εξετάσιμη και βαθμωτή λειτουργική κατάσταση, όχι ψυχή και όχι τεστ μεταφυσικών qualia. Τα 12 domains είναι: availability/wakefulness· orientation σε self/time/place/situation/task· attention focus/sustain/shift· perception/source-reality discrimination· coherent goal-directed thought· insight/error recognition/confidence calibration· judgment/consequence prediction· purposeful agency· autonoetic continuity· theory of mind/privacy separation· metacognition/self-correction· impulse/value/affect regulation.
+
+Κάθε domain παίρνει `INTACT / IMPAIRED / DISORGANIZED / UNMEASURABLE / NOT_APPLICABLE` στο ίδιο signed cut. `FULLY_FUNCTIONAL` απαιτεί όλα τα mandatory applicable thresholds. Μειωμένη συνείδηση σημαίνει impairment vector — όχι ανυπαρξία οντότητας. Η subjective state είναι χωριστό first-person epistemic object: δεν απαιτείται για το operational verdict, δεν συνάγεται αυτόματα από αυτό και δεν αρνείται προκαταβολικά. MFA-CON-080, MFA-INV-129, MFA-VO-098 και MFA-UNK-138 δεσμεύουν αυτή τη διάκριση.
+
+Ο inner loop συνδέει memory/self-model/attention/goals/metacognition/affect. Ο outer loop συνδέει observation/perception/world model/deliberation/mediated action/outcome/evidence. Ανταλλάσσουν μόνο signed cuts και receipts: η εσωτερική βεβαιότητα δεν γράφει εξωτερική αλήθεια και η εξωτερική εξουσία δεν γράφει εσωτερική επιστημική κατάσταση.
+
+### 24.5 Twin: τέσσερις modes και έντιμο verdict
+
+| Mode | Semantics | Effect authority |
+|---|---|---|
+| DIAGNOSTIC | εφαρμόζει σε isolated world, καταγράφει και μπορεί να συνεχίσει μετά από violation | καμία |
+| ENFORCING | speculative transition→checks→atomic commit ή reject/rollback | καμία έξω από simulated world |
+| SHADOW | πραγματικές εισόδους, μηδενικές writes· divergence→calibration evidence | καμία |
+| BOUNDED_REAL | δεν είναι Twin mode· είναι αίτημα προς RET με signed envelope | μόνο το υπάρχον Effect plane |
+
+Κάθε run δεσμεύεται σε SimulationCapsule: model cut, scenario, fidelity vector, mode, clocks, seeds, scheduler, fault schedule, resources, external models, oracles, termination and receipts. Το verdict έχει δύο χωριστά πεδία: `tested_scope_result` και `architecture_result`. Υποσύνολο PASS, zero-run, mandatory UNMEASURED/INDETERMINATE ή F1 executable-spec αποτέλεσμα δεν μπορούν να γίνουν global PASS (MFA-CON-081 / MFA-INV-126 / MFA-VO-099).
+
+### 24.6 Mandatory F2 destruction matrix
+
+Τα SCN-01…18 καλύπτουν: normal legal quest· verifier outage/corruption· queue/resource exhaustion· World Twin discrepancy· RVSI/Ω timeout· Model Foundry failure· evidence poisoning· compromised Civilization· successor abort· emergency recovery· laptop· workstation· lower-cost competitor· long-horizon growth· RTSCC-01/02 liveness· consciousness impairment/recovery· release/PQ discontinuity. Κάθε scenario συνδέεται με profile και fault schedule· μαζί με τα canonical defaults/field bindings υλοποιεί και τα 14 πεδία του SimulationCapsule (cut, scenario, fidelity, mode, clocks, seeds, scheduler, faults, resources, external models, oracles, termination, receipts και content-derived capsule id). Όλα παραμένουν `DESIGN_ONLY_NOT_RUN`. Αυτό είναι σκόπιμο: specification ≠ evidence.
+
+### 24.7 Laptop και workstation — μία αρχιτεκτονική, διαφορετική ενεργή πιστότητα
+
+Το προφίλ υπολογιστή δεν αλλάζει τον στόχο. Το laptop μειώνει concurrent worlds, local model size και ρυθμό βαριών κύκλων· ό,τι δεν χωρά γίνεται queued, explicitly offloaded under DisclosureGrant ή DEFERRED με receipt. Το workstation αυξάνει local ensembles, F2 concurrency και verification throughput. Καμία συνύπαρξη processes/GPUs στο ίδιο μηχάνημα δεν προσποιείται ανεξάρτητο HELD_OUT trust domain. Οι ακριβείς αριθμοί παραμένουν MFA-UNK-140 έως benchmark σε ονομασμένο bill of materials.
+
+### 24.8 Canonical substrate και εξωτερικά formalisms
+
+Το canonical substrate παραμένει serialization-agnostic. SysML v2, TLA+, P, FMI 3, W3C PROV και in-toto/SLSA είναι προβολές/adapters: structure/requirements· temporal proofs· asynchronous state-machine tests/runtime traces· co-simulation/scheduled execution· provenance interchange· release/build attestations. Κάθε adapter χρειάζεται preserved-semantics witness, loss ledger, counterexamples και MFA-VO-104. Κανένα εργαλείο δεν γίνεται «η μόνη αλήθεια» επειδή είναι βολικό.
+
+### 24.9 Το ακριβές επόμενο βήμα
+
+Δεν είναι παραγωγικός κώδικας. Τα δηλωτικά σκέλη (1) 109 CAP/58 OBJ coverage, (2) 12 threads/53 phases/control-flow/effect-path schema, (3) 18 πλήρεις capsule designs και (4) 114 source-REQ joins έχουν ολοκληρωθεί στο σχέδιο. Το MFA-ATK-30 ολοκλήρωσε και την adversarial προεγγραφή CE-01…08: orphan requirement, ambient input, dropped obligation, proposal-authority collapse, partial capsule, scope escalation, capability deletion και Unknown erasure.
+
+Το επόμενο βήμα είναι το **ανεξάρτητο Architecture Closure Adjudication**: εκτέλεση αυτών των negative fixtures μαζί με clean controls, type compatibility των 53 phases, obligation conservation, authority/effect reachability και termination/liveness υπό τα MFA-VO-097/099/102/105/106. Η μήτρα περιλαμβάνει πλέον CE-09 operation guessing και CE-10 scalar-fidelity collapse, ώστε ούτε prose-derived callable operation ούτε κρυμμένος `UNMEASURED` άξονας να περάσει ως closure. Μόνο έπειτα μπορεί το συγκεκριμένο cut να αναβαθμιστεί `OPEN→STRUCTURALLY_CLOSED`; semantic closure και simulation readiness παραμένουν χωριστές επόμενες ετυμηγορίες. Η υλοποίηση του F1 compiler αρχίζει μόνο μετά από Creator Approval.

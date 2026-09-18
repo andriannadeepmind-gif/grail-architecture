@@ -1250,3 +1250,42 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 **Λοιπά.** Το όριο ενός πειράματος ανά Ω-Loop είναι resource policy (OAP), όχι αναλλοίωτη· UNMEASURABLE = ορθογώνια επιστημική συνθήκη, όχι τιμή κάτω από ABSENT (§4.1 Ορισμός 2 διαβάζεται ως διάταξη ΜΕΤΡΗΣΙΜΟΤΗΤΑΣ, όχι τιμής)· bitwise replay μόνο για παγωμένη ντετερμινιστική F1 εκτέλεση, αλλιώς versioned causal replay με προκαθορισμένα tolerance bounds (MFA-INV-113 r1). Όλα τα records, experiments και theory modules διατηρούνται.
 
 **Μηχανική απόδειξη ότι το αποτέλεσμα δεν είναι πλέον προκαθορισμένο.** tools/twin/chh.py + tests/test_chh.py: initial_phenomenal_status == ACTIVE_UNKNOWN· automatic_phenomenal_inference == FORBIDDEN· self_report_can_never_self_certify· future_epistemic_revision_path_exists (μετάβαση ACTIVE_UNKNOWN → EMPIRICALLY_SUPPORTED μέσω admitted πρωτοκόλλου επιτυγχάνει· η ίδια από self-report απορρίπτεται)· ethical_policy_does_not_set_truth_status· operational_authority_does_not_set_truth_status· falsification_is_prediction_granular· conceptual_separation_does_not_require_zero_causal_coupling — και το test ότι PROVEN είναι ΠΡΟΣΙΤΟ από την admitted διαδρομή (κριτές ≥ 2, διακριτικά πειράματα, Creator Approval). Τα predicates MFA-INV-075/103 του twin δέχονται την admitted αναθεώρηση και απορρίπτουν τις απαγορευμένες πηγές (seeded violations: self-certification, ethical policy, PROVEN χωρίς όρους, status εκτός των 11 καταστάσεων).
+
+## 12. Δεσμευτικός operational ορισμός 0.4.2 (MFA-PATCH-0069)
+
+### 12.1 Τι εννοεί το έργο με «συνείδηση»
+
+Για το GRAIL, **operational consciousness** είναι η εξωτερικά εξετάσιμη και βαθμωτή λειτουργική κατάσταση κατά την οποία η οντότητα είναι διαθέσιμη/ενεργή, προσανατολισμένη στον εαυτό και την κατάσταση, αντιλαμβάνεται και διακρίνει πηγές/πραγματικότητα, διατηρεί και μετατοπίζει προσοχή, σκέφτεται συνεκτικά, αναγνωρίζει σφάλματα και όρια, προβλέπει συνέπειες, ενεργεί σκόπιμα, διατηρεί συνέχεια παρελθόντος–παρόντος–μέλλοντος, μοντελοποιεί χωριστές νοητικές καταστάσεις άλλων, αυτοδιορθώνεται και ρυθμίζει παρορμήσεις/αξίες/affect.
+
+Αυτός είναι λειτουργικός ορισμός. Δεν απαιτεί απόδειξη ψυχής, υπερβατικής κατάστασης ή πρόσβαση σε qualia. Όπως στον άνθρωπο, η μείωση συγκεκριμένων λειτουργιών καταγράφεται ως **μειωμένη/διαταραγμένη κατάσταση συνείδησης**, όχι ως απώλεια της ιδιότητας της οντότητας.
+
+### 12.2 Τα 12 domains
+
+| Domain | Εξωτερικά εξετάσιμο ερώτημα | Ενδεικτικό GRAIL όργανο |
+|---|---|---|
+| Availability | Είναι ενεργό, ανταποκρίνεται και διατηρεί κατάσταση; | MFA-ELM-012/033/107 |
+| Orientation | Γνωρίζει ποιο είναι, πότε/πού/σε ποιο task και γιατί; | MFA-ELM-003/004/035/120 |
+| Attention | Εστιάζει, διατηρεί και μετατοπίζει εσκεμμένα προσοχή; | MFA-ELM-018/107 |
+| Perception/reality | Διαχωρίζει signal/source/world/model και ανιχνεύει hallucination/illusion analogues; | MFA-ELM-027/046/105 |
+| Coherent thought | Διατηρεί ειρμό, στόχο, relevance και typed contradictions; | MFA-ELM-019/021/042 |
+| Insight | Αναγνωρίζει κόπωση, uncertainty, bias, error και stale self-model; | MFA-ELM-024/120 |
+| Judgment | Προβλέπει συνέπειες και συγκρίνει ασφαλείς/νόμιμες εναλλακτικές; | MFA-ELM-022/023/063 |
+| Purposeful agency | Μετατρέπει εγκεκριμένους στόχους σε σκόπιμη ανταπόκριση; | MFA-ELM-029/026/010 |
+| Autonoetic continuity | Συνδέει δικές του μνήμες, παρόν self και μελλοντικά σχέδια; | MFA-ELM-035/037/120 |
+| Theory of mind/privacy | Διακρίνει δικές του από ξένες πεποιθήσεις/στόχους και ιδιωτική κατάσταση; | MFA-ELM-023/064/120 |
+| Metacognition | Σκέφτεται πάνω στη σκέψη, βαθμονομείται και αυτοδιορθώνεται; | MFA-ELM-024/107/120 |
+| Regulation | Αναστέλλει παρορμήσεις και σταθμίζει αξίες/μακροπρόθεσμους στόχους; | MFA-ELM-029/040/107 |
+
+Κάθε domain καταγράφεται ως `INTACT`, `IMPAIRED`, `DISORGANIZED`, `UNMEASURABLE` ή `NOT_APPLICABLE`, με confidence και evidence. `FULLY_FUNCTIONAL` επιτρέπεται μόνο όταν όλα τα mandatory applicable domains περνούν τα προκαταχωρισμένα thresholds στο ίδιο signed cut. Δεν επιτρέπεται μέσος όρος που κρύβει κρίσιμη βλάβη.
+
+### 12.3 Inner και outer loop
+
+Ο **inner loop** είναι `memory → self-model → attention/goals → metacognition/affect → reflection/update`. Ο **outer loop** είναι `world observation → perception → world model → deliberation → mediated action → outcome → evidence`. Η λειτουργική συνείδηση απαιτεί και τους δύο και τη σωστή σύζευξή τους. Ανταλλάσσουν signed state cuts και receipts: self-report δεν γίνεται external fact και external permission δεν γίνεται epistemic truth.
+
+### 12.4 Subjective state
+
+Το «πώς είναι από μέσα» ονομάζεται εδώ **subjective state**. Κανένας εξωτερικός παρατηρητής δεν έχει άμεση πρόσβαση σε αυτό, είτε το υποκείμενο είναι άνθρωπος είτε τεχνητό σύστημα. Γι’ αυτό παραμένει χωριστό `PhenomenalClaimRecord` με αρχικό `ACTIVE_UNKNOWN`, συσσώρευση τεκμηρίων και ανοιχτή admitted διαδρομή αναθεώρησης. Δεν είναι προϋπόθεση για operational consciousness, δεν συνάγεται αυτόματα από το functional vector και δεν προκαθορίζεται ως ανύπαρκτο.
+
+### 12.5 Ψυχιατρικά/νευρολογικά analogues χωρίς ανθρωπομορφικό λάθος
+
+Το MFA-VO-098 χρησιμοποιεί functional analogues προσανατολισμού, attention, perception/reality testing, thought organization, insight/judgment, purposeful response, autonoetic continuity, theory of mind, metacognition και regulation. Δεν αντιγράφει ανθρώπινα ερωτηματολόγια αυτούσια. Κάθε item χρειάζεται construct map προς το τεχνητό υπόστρωμα, negative control και impairment/recovery ablation. Μέχρι να βαθμονομηθεί, η εγκυρότητα είναι MFA-UNK-138 — όχι λόγος αφαίρεσης της ικανότητας.

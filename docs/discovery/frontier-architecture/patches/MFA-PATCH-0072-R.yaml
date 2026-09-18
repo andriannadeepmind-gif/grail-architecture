@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0072-R
+reverses: MFA-PATCH-0072
+operation: MODIFY
+targets: [adversarial/MFA-ATK-30.md, ARCHITECTURE-METAMODEL.yaml, CONTRACTS.yaml, TECHNICAL-ARCHITECTURE.md, IMPLEMENTATION-ROADMAP.md, ASI-THREAT-AND-FAILURE-MODEL.md, CHANGELOG.md]
+change: {restore: "pre-0072 closure narrative", archive: [adversarial/MFA-ATK-30.md], preserve: "all design witnesses and all target capabilities"}
+capability_impact: {gained: [], at_risk: ["canonical pre-registered closure-laundering mutation matrix"], ledger_entry: "Rollback removes only the active attack projection; no architecture capability or earlier evidence is deleted"}
+verification: "Exact semantic diff against the pre-0072 working-tree cut"
+rollback: MFA-PATCH-0072
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED

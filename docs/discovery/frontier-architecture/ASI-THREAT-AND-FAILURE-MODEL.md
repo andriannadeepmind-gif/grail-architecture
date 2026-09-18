@@ -167,3 +167,9 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 5. ATK-19 πυκνότητα φυσικών πειραμάτων — MFA-UNK-116.
 
 Κανένας από αυτούς δεν αφαιρεί ικανότητα· καθένας έχει VO, σχέδιο και απόφαση δημιουργού που τον ρυθμίζει.
+
+## 6. Νέος γύρος 0.4.2 — MFA-ATK-30 Closure Laundering
+
+Η ενοποίηση του μοντέλου άνοιξε διαφορετική κατηγορία επίθεσης: ένα package μπορεί να είναι συντακτικά και referentially καθαρό αλλά να βαφτίζει structural trace ως satisfaction, proposal ως εξουσία, selected-scope PASS ως global PASS, resource degradation ως διαγραφή capability, prose token ως επιτρεπτή operation ή scalar fidelity ως κάλυψη όλων των αξόνων. Το MFA-ATK-30 προεγγράφει δέκα mutations CE-01…10 και το ακριβές typed non-success αποτέλεσμα καθεμίας.
+
+Οι design countermeasures υπάρχουν, αλλά δεν έχουν executable evidence. Επομένως η επίθεση έχει κατάσταση `DESIGN COUNTERMEASURES PRESENT / EXECUTABLE ADVERSARIAL EVIDENCE NOT RUN` και το closure cut μένει `OPEN` μέχρι ανεξάρτητη F1 εκτέλεση.

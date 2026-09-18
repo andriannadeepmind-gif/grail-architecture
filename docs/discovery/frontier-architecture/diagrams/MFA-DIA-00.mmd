@@ -1,9 +1,12 @@
 %% id: MFA-DIA-00 · Whole-system master map · question: πώς συνδέονται Root, Telos, Πολιτισμοί, strata, planes, twin, trust domains, cockpit και πραγματικός κόσμος;
-%% scope: πλήρης μακροσκοπική όψη· τα MFA-DIA-01…25 είναι οι αναλυτικές προβολές
+%% scope: πλήρης μακροσκοπική όψη· τα MFA-DIA-01…26 είναι οι αναλυτικές προβολές
 flowchart TB
   CREATOR["Creator and scoped delegates"] --> ROOT["Minimal Root properties"]
   ROOT --> TELOS["Signed Telos version and flexible policy"]
-  TELOS --> MODEL["Canonical model: 127 ELM, 78 CON, 124 INV, 108 CAP"]
+  TELOS --> MODEL["Canonical model: 114 REQ, 127 ELM, 88 CON / 439 OPS, 135 INV, 109 CAP"]
+  MODEL --> WEAVE["MFA-MECH-045 mission weave: 12 threads, 18 scenarios"]
+  REQ["114 requirements: traced, not presumed satisfied"] --> MODEL
+  REQ --> WEAVE
 
   subgraph CIV["Five functional civilizations — roles, not replicas"]
     direction LR
@@ -13,7 +16,7 @@ flowchart TB
     ADV["Adversarial"]
     INST["Institutional"]
   end
-  MODEL --> CIV
+  WEAVE --> CIV
 
   subgraph STRATA["Canonical architecture strata"]
     direction TB
@@ -36,7 +39,7 @@ flowchart TB
   end
   STRATA --> GEN
 
-  subgraph FIDELITY["Executable Twin fidelity"]
+  subgraph FIDELITY["Executable Twin: 8-axis fidelity vector"]
     direction LR
     F01["F0–F1: model and executable spec"]
     F2["F2: simulation"]
@@ -45,6 +48,7 @@ flowchart TB
     F01 --> F2 --> F3 --> F4
   end
   STRATA --> F01
+  WEAVE --> F01
   F2 --> GATE
   F3 --> GATE
 
@@ -56,4 +60,7 @@ flowchart TB
 
   COCKPIT["3D Cognitive Twin Cockpit"] <--> MODEL
   STATUS["Six orthogonal status axes"] -.-> MODEL
+  CLOSURE["Closure: structural → semantic → simulation-ready → evidenced at Fn"] -.-> WEAVE
+  ATTACK["MFA-ATK-30: CE-01…10 closure mutations"] -.-> CLOSURE
+  VERDICT["Scoped verdict: never globalize beyond tested scope"] -.-> FIDELITY
   ROOT --> GATE

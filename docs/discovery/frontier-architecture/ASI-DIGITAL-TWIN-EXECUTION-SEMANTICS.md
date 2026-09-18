@@ -101,14 +101,14 @@ procedure TES_Substitute(w, elm, F_to):
 
 | Μέτρηση | Αποτέλεσμα |
 |---|---|
-| Έδρες φορτωμένες | {'elements': 127, 'contracts': 72, 'invariants': 115, 'capabilities': 108, 'objectives': 58, 'telos': 8, 'obligations': 87, 'unknowns': 57, 'conflicts': 46, 'programs': 40, 'mechanisms': 44} |
+| Έδρες φορτωμένες | {'elements': 127, 'contracts': 88, 'invariants': 135, 'capabilities': 109, 'objectives': 58, 'telos': 8, 'obligations': 106, 'unknowns': 66, 'conflicts': 50, 'programs': 42, 'mechanisms': 45} |
 | Dangling αναφορές στις έδρες | [] |
-| Εκτελέσιμες αναλλοίωτες | 35 / 115 (30.4%) — 80 δηλωμένες UNMEASURED (MFA-UNK-132) |
+| Εκτελέσιμες αναλλοίωτες | 35 / 135 (25.93%) — 100 δηλωμένες UNMEASURED (MFA-UNK-132) |
 | TES-E1 seeded παραβιάσεις | 64/64 με σωστό id· 0 ψευδώς θετικά σε 100 έγκυρα |
 | TES-E2 replay | 1000 τυχαία γεγονότα, forks 10, replay hash ίσο 10/10· substitution F0→F1 {'MFA-ELM-001 F0->F1 conformant': 'OK', 'MFA-ELM-001 F0->F1 non-conformant impl': 'FAIL'} |
 | OC-E1 | 25/25 σωστές ροές δεκτές· 25/25 λανθασμένες απορριφθείσες με λόγο (DROPPED_OBLIGATIONS, INSUFFICIENT_EVIDENCE, INVALID_DEFER, NO_SUCH_OBLIGATION, UNVERIFIED_EFFECT) |
 | Ω-E1 | 10 κύκλοι, 10 πλήρη CycleRecords, 0 σιωπηλές παραλείψεις, διακοπές 28/28 πριν από φάση |
-| Risk map | 108/108 ικανότητες με τιμή· SCCs 38, μέγιστο SCC 89 στοιχεία· εύρος 0.3–0.6 |
+| Risk map | 109/109 ικανότητες με τιμή· SCCs 38, μέγιστο SCC 89 στοιχεία· εύρος 0.3–0.6 |
 | unittest | 51 tests, 0 failures |
 | Συνολικά | PASS (F1) |
 
@@ -116,8 +116,8 @@ procedure TES_Substitute(w, elm, F_to):
 
 ## 4. Ευρήματα του διδύμου για τις έδρες
 
-- Ένα SCC 89 στοιχείων στο γράφημα εξαρτήσεων (τα 109…127 και ο πυρήνας αναφέρονται αμοιβαία): η διάδοση κινδύνου συμπτύσσει το μεγαλύτερο μέρος σε 0.6 (max μελών). Αυτό είναι ΑΚΡΙΒΕΣ για runtime αμοιβαίες εξαρτήσεις (MFA-DEC-104: λύνονται με σειρά γένεσης, §16-bis) και ΑΔΡΟ για κίνδυνο· η F2 βελτίωση = διάδοση κατά σειρά γένεσης (build order) αντί για runtime γράφημα. Δηλωμένο ως όριο του F1.
-- Τα λεξιλόγια πράξεων των contracts εξάγονται ευρετικά από την πρόζα των `statement` — μερικώς υπερ-επιτρεπτικό· η F2 διόρθωση είναι ρητό πεδίο `operations` στα contracts (νέο patch, όχι στο F1).
+- Ένα SCC 89 στοιχείων στο παλαιό F1 γράφημα εξαρτήσεων (τα 109…127 και ο πυρήνας αναφέρονται αμοιβαία): η διάδοση κινδύνου συμπτύσσει το μεγαλύτερο μέρος σε 0.6 (max μελών). Η 0.4.2 canonical έδρα έχει ήδη χωρίσει 617/617 ακμές σε `PREREQUISITE / RUNTIME / EVIDENCE / AUTHORITY / RESOURCE`, βρήκε μηδέν prerequisite cycles και κατονομάζει δύο runtime SCCs. Το παλαιό F1 report όμως δεν καταναλώνει ακόμη αυτή την έδρα· άρα δεν αποτελεί evidence του νέου κανόνα πριν από ανεξάρτητη επανεκτέλεση MFA-VO-092.
+- Το παλαιό F1 Twin εξάγει λεξιλόγια πράξεων ευρετικά από prose `statement`. Η 0.4.2 design έδρα `CONTRACTS.yaml#contract_operation_catalog` το αντικαθιστά με 88/88 ρητές, μη κενές allowlists (439 ονομασμένες operations) και fail-closed άγνωστη πράξη. Επειδή ο παλαιός διερμηνέας δεν καταναλώνει ακόμη τον κατάλογο, αυτό είναι ολοκληρωμένο design contract και όχι εκτελεσμένο evidence.
 - Το OC `Act` έγινε αυστηρότερο από το pseudocode του δοσιέ (μόνο Verified ή Claimed με RET-εγκεκριμένο DEFER για αναστρέψιμη/αντισταθμίσιμη επίδραση) ώστε να απορρίπτεται ροή που η κυριολεκτική συνθήκη άφηνε — το δοσιέ MFA-MECH-039 ενημερώνεται σε επόμενο patch.
 - Predicates που επιστρέφουν UNKNOWN(reason) καταγράφονται χωριστά (INV-078 χωρίς γέννηση στο log, INV-089 χωρίς γενεαλογία, INV-093 χωρίς αναφορά ποιότητας) — ποτέ PASS.
 
@@ -144,3 +144,31 @@ procedure TES_Substitute(w, elm, F_to):
 - Το F1 δίδυμο προβλέπει παραβιάσεις της παραγωγής → **RESEARCH HYPOTHESIS**
 
 Οι επτά χαρακτηριστικά της §10 που είναι UNMEASURED στο F1 (πόροι, σκιώδη/πραγματικά στοιχεία, Pareto, χώρος, μέρος της χρονικής συλλογιστικής) έχουν σημασιολογία ορισμένη εδώ και υλοποίηση στη Δόση 1–4 (ASI-IMPLEMENTATION-LADDER)· η απουσία τους στο F1 δεν είναι αποχή — είναι πιστότητα με ετικέτα.
+
+## 7. Διόρθωση 0.4.2 — από selected F1 checks σε πλήρη mission/scenario semantics
+
+Το υφιστάμενο `tools/twin/run-report.py` είναι χρήσιμο F1 evidence, αλλά το πεδίο `overall: PASS` αφορά μόνο τους ελέγχους που πράγματι συνθέτει. Δεν αποτελεί full-architecture verdict. Στο frozen 0.4.1 run μετρήθηκαν 35/124 executable invariants και 89/124 `UNMEASURED`· επομένως η έντιμη αρχιτεκτονική ετυμηγορία ήταν `NOT_ASSESSED/OPEN`, παρότι το tested subset πέρασε.
+
+Η 0.4.2 εισάγει:
+
+1. MFA-CON-079: κάθε run αφορά κλειστό MissionThread και όχι ασύνδετα events.
+2. MFA-CON-083: DIAGNOSTIC, ENFORCING και SHADOW έχουν διαφορετική commit/write σημασιολογία.
+3. MFA-CON-084: κάθε F2 run έχει content-addressed SimulationCapsule.
+4. MFA-CON-081: `tested_scope_result` και `architecture_result` είναι χωριστά.
+5. MFA-CON-087: architecture closure ανεβαίνει μόνο με coverage/semantics/scenario/evidence witnesses.
+
+### 7.1 SimulationCapsule
+
+`⟨model_cut, scenario_id, fidelity_vector, execution_mode, clocks, seeds, scheduler, fault_schedule, resource_envelope, external_models, oracles, termination_conditions, expected_receipts⟩`.
+
+Το `fidelity_vector` δεν είναι scalar ετικέτα. Έχει υποχρεωτικά οκτώ άξονες: `structure_and_contracts`, `component_behavior`, `time_and_concurrency`, `resources_and_performance`, `data_and_learned_models`, `external_environment`, `authority_and_effects`, `evidence_and_oracles`. Κάθε άξονας παίρνει `UNMEASURED` ή F0…F4 στο δικό του νόημα. Μικτή πιστότητα επιτρέπεται αλλά δεν μένει κρυφή: ο ισχυρισμός ενός run δεν υπερβαίνει τον ελάχιστο mandatory άξονα από τον οποίο εξαρτάται το oracle του.
+
+Το deterministic frozen F1 απαιτεί bitwise replay. Stochastic/hybrid F2 απαιτεί δηλωμένη semantic/distributional tolerance και repeated-run protocol. Heterogeneous co-simulation δηλώνει clock ownership, event/state boundaries, early return, rollback support και discrepancy bound. FMI 3 Scheduled Execution/Co-Simulation μπορεί να χρησιμοποιηθεί ως adapter floor, ποτέ ως canonical ontology.
+
+### 7.2 Mandatory scenarios
+
+Η canonical λίστα SCN-01…18 βρίσκεται στο `ARCHITECTURE-ELEMENTS.yaml#simulation_scenarios`. Κάθε εγγραφή είναι `DESIGN_ONLY_NOT_RUN`. Η παρουσία capsule specification δεν μετατρέπεται σε PASS μέχρι `execution_state=COMPLETED` και έγκυρα receipts στο απαιτούμενο fidelity.
+
+### 7.3 Acceptance rule
+
+`tested_scope_result=PASS` μόνο όταν όλα τα mandatory obligations του exact scope ολοκληρώθηκαν. `architecture_result` δεν υπερβαίνει ποτέ το ελάχιστο ανάμεσα σε coverage, semantic closure, scenario readiness και evidence fidelity. Οποιοδήποτε mandatory `UNMEASURED`, `INDETERMINATE`, mixed cut, mixed mode ή missing exclusion ακυρώνει global aggregation.

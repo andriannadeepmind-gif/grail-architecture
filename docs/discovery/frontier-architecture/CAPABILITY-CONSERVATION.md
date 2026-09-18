@@ -439,7 +439,7 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 ## 11. Ό,τι ΔΕΝ καλύπτει αυτό το ledger (τίμια άγνοια)
 
 - Οι 455 μηχανισμοί / 194 εγγυήσεις / 221 απαγορεύσεις της ύλης (MATERIAL §Σύνοψη): καλύπτονται μόνο μέσω των 35 γραμμών του §2 και των §3–§5 της MATERIAL· το πακέτο **δεν ισχυρίζεται** ότι κάθε μία από τις 455 έχει τύχη. Αυτό είναι όριο του παρόντος, δηλωμένο (ΝΟΜΟΣ §6), όχι ισχυρισμός πληρότητας. Ο επόμενος έλεγχος (Δόση 1) περνά την ύλη γραμμή-γραμμή.
-- Τα 114 REQ του spine: δεν αντιστοιχίζονται 1:1 εδώ (COUNT-PROVENANCE L1)· καλύπτονται μέσω των CMP/INV/KT που τα υλοποιούν. Αντιστοίχιση REQ→MFA είναι εργασία της Φάσης Β (Δόση 1 Telos + απαιτήσεις).
+- Τα 114 REQ του spine δεν αντιστοιχίζονται 1:1 **σε αυτό το capability ledger**, διότι πλέον έχουν ξεχωριστή κανονική έδρα: `REQUIREMENT-TRACEABILITY.yaml`. Το MFA-PATCH-0071 τα διατηρεί 114/114 και τα ενώνει με objective/provider/capability/primary MissionThread/contract/invariant/VO. Η structural trace δεν ισοδυναμεί με satisfaction· αυτό παραμένει MFA-VO-106.
 
 
 ## 12. Ω-ASI 0.4.0 — τύχες (MFA-PATCH-0057)
@@ -460,3 +460,14 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | «πορεία ASI» (TEL-05 ρήτρα, ATK-10, README, TECH-ARCH §7, AI-LEDGER) | RETAINED AS RESEARCH FRONTIER → SUPERSEDED ως διατύπωση από MFA-OBJ-050 (στόχος) + επιστημική κατάσταση χωριστά | MFA-PATCH-0020/0041 | AA-001 |
 
 Σύνολο 0.4.0: 20 ικανότητες NEW, 0 REMOVED· 12 ικανότητες STRENGTHENED· 30 στοιχεία STRENGTHENED· 1 αναλλοίωτη SUPERSEDED (με διάδοχο).
+
+## 13. Architecture Closure 0.4.2 — conservation verdict
+
+| Αντικείμενο | Τύχη | Patch | Σημείωση |
+|---|---|---|---|
+| MFA-CAP-001…108 | PRESERVED + PRIMARY MISSION OWNER | MFA-PATCH-0068 | Καμία ικανότητα δεν αφαιρέθηκε· καθεμία ανήκει σε ακριβώς ένα primary MT-01…12 για closure, με secondary relations άθικτες. |
+| MFA-CAP-109 | NEW | MFA-PATCH-0068 | Evidence-carrying end-to-end mission execution and architecture closure. |
+| REQ-KRN/COG/IDN/MEM/CCP/LIF/EVO/LAW/ADV/KNW/FRG/SEC/GOV/INT/ABS/VAL/OPS/HUM/MDL (114) | PRESERVED + STRUCTURALLY_TRACED | MFA-PATCH-0071 | 114/114, 0 orphan joins· όχι ακόμη SATISFIED/EVIDENCED. |
+| Laptop/workstation profiles | SAME TARGET, VARIABLE FIDELITY/CONCURRENCY | MFA-PATCH-0070 | Resource shortage γίνεται queue/offload/defer/degraded fidelity με receipt, όχι capability deletion. |
+
+**Σύνολο 0.4.2:** 109/109 capabilities preserved and mission-owned· 114/114 source requirements preserved and structurally traced· **0 REMOVED / 0 DROPPED FOR CONVENIENCE**. Η evidence κατάσταση μένει OPEN μέχρι MFA-VO-097/105/106.

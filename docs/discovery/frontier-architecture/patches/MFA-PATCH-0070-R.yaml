@@ -1,0 +1,11 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0070-R
+reverses: MFA-PATCH-0070
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, CONTRACTS.yaml, INVARIANTS.yaml, VERIFICATION-OBLIGATIONS.yaml, UNKNOWNS.yaml, ASI-DIGITAL-TWIN-EXECUTION-SEMANTICS.md, ASI-RESOURCE-ENVELOPES.md, TECHNICAL-ARCHITECTURE.md, IMPLEMENTATION-ROADMAP.md, diagrams/MFA-DIA-00.mmd, diagrams/MFA-DIA-26.mmd, tools/twin/README.md, README.md, CHANGELOG.md]
+change: {restore: "0.4.1 Twin/resource/release wording", archive: "0.4.2 scenario and attestation semantics as superseded proposal"}
+capability_impact: {gained: [], at_risk: ["scope-honest verdicts", "reproducible F2 capsules", "post-commit attestation"], ledger_entry: "Rollback affects evidence semantics only; target capabilities remain"}
+verification: "Exact semantic diff against frozen source commit 7d80ff67"
+rollback: MFA-PATCH-0070
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED

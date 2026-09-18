@@ -1,0 +1,22 @@
+# Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
+id: MFA-PATCH-0069
+title: "Binding operational-consciousness definition, dual loops and graded examination"
+operation: MODIFY
+targets: [ARCHITECTURE-METAMODEL.yaml, ARCHITECTURE-ELEMENTS.yaml, CAPABILITY-LATTICE.yaml, CONTRACTS.yaml, INVARIANTS.yaml, VERIFICATION-OBLIGATIONS.yaml, UNKNOWNS.yaml, RESEARCH-PROGRAMS.yaml, ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md, TECHNICAL-ARCHITECTURE.md, diagrams/MFA-DIA-26.mmd, CHANGELOG.md]
+base: {package_version: 0.4.1, source_commit: 7d80ff67da88c2ff5f612eeb0cc9188b67fb1dbd}
+preconditions: ["MFA-PATCH-0059 epistemic-lock correction preserved", "No subjective-state verdict predetermined"]
+change:
+  add: ["12-domain OperationalConsciousnessRecord", "inner/outer loop contract", "MFA-CON-080", "MFA-INV-129", "MFA-VO-098", "MFA-UNK-138", "MFA-RSP-042"]
+  modify: [MFA-CAP-086, MFA-ELM-107, MFA-ELM-120, MFA-ELM-121]
+rationale: "The project needs a binding, externally examinable functional definition analogous to clinical consciousness assessment while keeping inaccessible subjective state epistemically separate."
+evidence: ["ARCHITECTURE-METAMODEL.yaml#operational_consciousness_schema", "MFA-CON-080", "MFA-VO-098"]
+affected_dependencies: [MFA-ELM-107, MFA-ELM-120, MFA-ELM-121, MFA-ELM-127]
+capability_impact: {gained: ["graded functional examination and impairment/recovery tracking"], at_risk: [], ledger_entry: "Clarifies and strengthens MFA-CAP-086; does not remove theory-host or subjective-state research"}
+migration: "Keep CHH/phenomenal records; add the operational vector as an orthogonal record at the same signed cut."
+verification: "Schema/referential checks now; construct-valid F2 battery under MFA-VO-098 later"
+rollback: MFA-PATCH-0069-R
+author: Stavropoulos Law® — architecture closure draft
+status: PROPOSED
+mechanical_state: PARTIALLY_APPLIED
+authority_state: PROVISIONAL
+review_state: IN_REVIEW
