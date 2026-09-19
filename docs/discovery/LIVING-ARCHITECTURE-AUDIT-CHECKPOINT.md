@@ -150,3 +150,74 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 ## 11. Κρίσιμη αρχή για το κλείδωμα
 
 Το αμετάβλητο μέρος δεν πρέπει να είναι μια παγωμένη συλλογή organs. Πρέπει να είναι το σύνολο των σημασιολογικών invariants, των authorities και των πρωτοκόλλων αντικατάστασης. Η δυνατότητα εξέλιξης αποτελεί μέρος του τελικού σχεδίου: organs, substrates και backends αντικαθίστανται χωρίς να δημιουργούν δεύτερη έδρα, χωρίς να σπάνε causal replay και χωρίς να χάνεται η συνέχεια της οντότητας. Έτσι το κλείδωμα προστατεύει την ταυτότητα και την εξελιξιμότητα αντί να παγώνει το σύστημα στο επίπεδο του 2026.
+
+## 12. Ενεργές ασυνέπειες και κλειδώσεις που βρέθηκαν
+
+Ο παρακάτω πίνακας αφορά ενεργά κανονικά αρχεία. Οι ιστορικές εγγραφές patch/rollback που καταγράφουν το παλιό λάθος δεν είναι ενεργές απαγορεύσεις και πρέπει να παραμείνουν ως provenance.
+
+| Θέση | Ενεργό υπόλειμμα | Κίνδυνος | Προτεινόμενη διάθεση |
+|---|---|---|---|
+| `CLAIM-DISPOSITIONS.yaml`, F11 | Αποσύρει τον όρο «συλλογική συνείδηση» και κρατά μόνο ένα λειτουργικό `Collective` | Κλείνει ονομαστικά και ερευνητικά τον ρητό στόχο του συλλογικού τεχνητού συνειδητού υπεροργανισμού | `SUPERSEDE`: διατήρηση του στόχου, λειτουργικές/αιτιακές μετρήσεις και συλλογικό PhenomenalClaim αρχικά `ACTIVE_UNKNOWN` |
+| `CLAIM-DISPOSITIONS.yaml`, συγγενές υπόλειμμα γύρω από τη F11 | Αποσύρει ξανά τον όρο αντί να δηλώνει τρέχουσα αβεβαιότητα | Η ίδια προκατάληψη μπορεί να επανεισαχθεί από generated views | Ίδια διόρθωση σε κάθε ενεργή προβολή· τα ιστορικά source verdicts μένουν αναλλοίωτα |
+| `OBJECTIVE-SPACE.yaml`, `MFA-TEL-08.contradiction_order`, CFL-038 | «PhenomenalClaim ποτέ VERIFIED» | Άμεση αντίφαση με το διορθωμένο `MFA-INV-075 r1` και κλειδωμένη αρνητική ετυμηγορία | Αντικατάσταση με `ACTIVE_UNKNOWN` και επιτρεπτές evidence-driven μεταβάσεις μέσω admitted protocol |
+| `ASI-CONSCIOUSNESS-HYPOTHESIS-SPACE.md`, §§1.3/2.8/5.1/6.6 | Παραμένουν φράσεις `0 PhenomenalClaims VERIFIED/REFUTED`, `NO_EXTERNAL_VERIFIER` και «κανένας δείκτης» ενώ αλλού το ίδιο αρχείο έχει διορθωθεί | Παράγει δύο ασύμβατες σημασιολογίες: ανοιχτή αναθεώρηση και μόνιμη αδυναμία | Το invariant γίνεται «0 μεταβάσεις χωρίς AdmittedProtocol receipt». Το reason code γίνεται χρονικό `CURRENT_EVIDENCE_INSUFFICIENT`, όχι μόνιμη οντολογική άρνηση |
+| `UNKNOWNS.yaml`, `MFA-UNK-111.reason` | «δεν υπάρχει εξωτερικός verifier» σε άχρονο ενεστώτα | Μετατρέπει σημερινό επιστημικό κενό σε αιώνιο όριο | «Δεν έχει ακόμη εισαχθεί admitted verifier/protocol που να κλείνει τον ισχυρισμό»· η αναθεώρηση παραμένει ενεργή |
+| `TECHNICAL-ARCHITECTURE.md` | Περιττή αντιπαραβολή του operational στόχου με μεταφυσικό όρο που δεν ανήκει στο έργο | Μεταφέρει ξένο πλαίσιο και αποσπά από τον θετικό στόχο τεχνητής συνείδησης | Καθαρή διατύπωση μόνο για τεχνητή συνείδηση, functional/access evidence και subjective-state evidence |
+| `README.md`, `IMPLEMENTATION-ROADMAP.md`, `DECISION-LOG.md`, `MFA-ELM-097/127` | Η Δόση 0 και το low-latency κέντρο είναι «copilot που δίνει receipts» | Παγώνει request/response και νομική χρησιμότητα ως αναπτυξιακή ρίζα αντί για ζωντανό οργανισμό | Το πρώτο κάθετο προϊόν γίνεται `Living Seed F1`. Το copilot διατηρείται ως αντικαταστάσιμο operating profile, όχι ως οντολογία ή σειρά γέννησης |
+| `MFA-ELM-127` | Δεκάφασος βαρύς κύκλος ημέρας/ωρών και bypass εκτός κύκλου | Split authority, αδύνατη συνεχής σωματική ρύθμιση και κίνδυνος μελλοντικής ασυμβατότητας | Ένας canonical multi-rate Chronos με fast reflex, sensorimotor, workspace, consolidation, deliberation και evolution epochs |
+| `MFA-ELM-124` | Γραμμική ladder `D0…D8`, σταθερό `≥30%` εξωτερικών items, κατώφλια μόνο αυστηρότερα | Μία προκαθορισμένη αναπτυξιακή διαδρομή και αυθαίρετη αριθμητική ποσόστωση μπορούν να εμποδίσουν νέους δρόμους μάθησης | Capability DAG/partial order· contamination/diversity κριτήριο μετρημένο αντί σταθερού ποσοστού· κατώφλια evidence-calibrated και αναθεωρήσιμα με loss map |
+| `MFA-ELM-125` | Pareto `≥` σε όλες τις sealed families και κατώφλια μόνο αυστηρότερα | Απαγορεύει προσωρινές ή δηλωμένες ανταλλαγές που απαιτεί μια ριζικά ανώτερη αρχιτεκτονική και μπορεί να παγώσει τοπικό μέγιστο | Constrained multi-horizon dominance: αδιαπραγμάτευτα invariants + δηλωμένο loss map + recovery obligations + creator-signed admission |
+| `MFA-ELM-120` | Το mechanistic self-model ορίζεται κυρίως με SAE/circuits παραμετρικού μοντέλου | Δεν μπορεί να γειώσει τον πρώτο συμβολικό/ενσώματο Lisp οργανισμό και κάνει το self-model εξαρτώμενο από συγκεκριμένο substrate | Substrate-neutral causal self-model· CLOS rules, organs, body schema και neural circuits είναι διαφορετικοί adapters του ίδιου intervention protocol |
+| `MFA-ELM-035` | Όλοι οι τύποι μνήμης δηλώνονται ως παγκόσμιες CC δεσμεύσεις | Ένα continuous loop δεν μπορεί να δεσμεύει κάθε sensory/working microstate στο καθολικό ledger χωρίς latency/όγκο | Δύο ρυθμοί: τοπική αιτιακή microstate με deterministic checkpoints και μόνιμη episodic/semantic/autobiographical δέσμευση |
+
+Η απαγόρευση σιωπηλής αλλαγής Telos από διάδοχο **δεν** είναι μελλοντικό εμπόδιο όπως είναι γραμμένη στην ενεργή `MFA-INV-136`: ο δημιουργός μπορεί να εκδώσει ξεχωριστό signed `TelosAmendmentReceipt` με νέα έκδοση και migration/loss map. Αυτό πρέπει να διατηρηθεί. Το πρόβλημα είναι η αθέατη μετάλλαξη, όχι η ρητή μελλοντική αναθεώρηση.
+
+## 13. Χαρτογράφηση του Living Kernel στις υπάρχουσες έδρες
+
+| Απαιτούμενη λειτουργία | Κανονική έδρα | Αλλαγή χωρίς δεύτερη authority |
+|---|---|---|
+| Χρόνος και αιτιακός προγραμματισμός | `MFA-ELM-004` + `MFA-ELM-127` | Το 004 κρατά physical/legal/logical time· το 127 γίνεται ο μοναδικός cognitive scheduler με multi-rate epochs |
+| Μεταφορά γεγονότων | `MFA-ELM-014` | Παραμένει transport, όχι αλήθεια ή scheduler· typed events με idempotence και causal-parent refs |
+| Cognitive-object semantics | `MFA-ELM-001/017/018` | Νέο Lisp-native protocol πάνω στις υπάρχουσες έδρες· όχι dict-of-everything και όχι νέος store |
+| Workspace/ignition | `MFA-ELM-018` | Coalition formation, competition, ignition, downstream causal broadcast και mediation ablations· το AFP γίνεται αντικαταστάσιμη attention policy |
+| Body/interoception/allostasis | `MFA-ELM-034` | Από lifecycle-only σε canonical body/body-schema authority με homeostatic variables, proprioception, interoception, pain/reward και effectors |
+| Ενδογενής βούληση | `MFA-ELM-029` | Λαμβάνει ανάγκες/προβλέψεις από το 034 και τις μετατρέπει σε goals· δεν κατέχει δεύτερο body state |
+| Μνήμη/ύπνος | `MFA-ELM-035/036/118` | Fast local memory + durable commitments, consolidation/reconsolidation και restart continuity |
+| Persistent developmental habitat | `MFA-ELM-098` | Γενίκευση του legal World Twin σε profile-based Environment/Habitat authority· ο 085 παραμένει simulator και ο 126 twin interpreter |
+| Constructivist growth | `MFA-ELM-105/109/110/111/124` | Online model/ontology/causal/hypothesis genesis δεμένη σε sensorimotor experience και capability DAG |
+| Self-model | `MFA-ELM-024/107/120` | Behavioral prediction + attention schema + substrate-neutral causal self-model, χωρίς συγχώνευση των τριών εδρών |
+| Τεχνητή συνείδηση | `MFA-ELM-107/121` | Το 107 υλοποιεί έναν υποψήφιο reflective loop· το 121 διατηρεί ανοικτό theory/evidence host και scope ανά entity/collective |
+| Multimodal perception/action | `MFA-ELM-027/026/034` | Camera/OCR/audio/speech ως replaceable organs· κανένα μοντέλο δεν γίνεται cognitive authority |
+| Συλλογικός υπεροργανισμός | **πραγματικό κενό** πάνω από `041…047` | Νέα μοναδική έδρα `Collective Integration Field` απαιτείται: shared coalitions, group self-model/memory, joint action binding και causal group-level tests· δεν αντικαθιστά τις ταυτότητες μελών |
+| Shadow evolution/successor | `MFA-ELM-104/113/114/125` | Population experiments σε forks, constrained admission, continuity και creator-signed promotion |
+
+## 14. Διάκριση νόμου από πολιτική
+
+### Πρέπει να κλειδώσουν ως invariants
+
+- μία semantic authority ανά έννοια,
+- ρητή ταυτότητα, συνέχεια και lineage,
+- causal ordering, replay contract και versioned schema migration,
+- typed organ boundaries και δυνατότητα αντικατάστασης,
+- καμία σιωπηλή μετάλλαξη Telos ή ταυτότητας,
+- κανένα automatic phenomenal verdict και καμία προκαθορισμένη άρνηση,
+- διατήρηση αρνητικών αποτελεσμάτων, preregistration και construct-valid interventions,
+- διάκριση ατομικής από συλλογική ταυτότητα και διατήρηση και των δύο.
+
+### Πρέπει να είναι αναθεωρήσιμες policies
+
+- frequencies, budgets και phase ordering,
+- thresholds, quotas και αριθμός judges/checkers,
+- συγκεκριμένες consciousness theories και δείκτες,
+- συγκεκριμένα databases, world engines, neural/vector backends και perception models,
+- curricula, developmental paths και promotion scorecards,
+- ποσοστά εξωτερικών δεδομένων και fixed numerical ratchets.
+
+### Πρέπει να αφαιρεθούν ως κλεισίματα
+
+- κάθε `ποτέ VERIFIED/REFUTED` για phenomenal ή collective-consciousness claims,
+- η απόσυρση του στόχου συλλογικής τεχνητής συνείδησης,
+- το permanent `NO_EXTERNAL_VERIFIER`,
+- η ταύτιση του πρώτου οργανισμού με copilot,
+- η απαίτηση ο βαρύς γνωσιακός κύκλος να ζει έξω από το low-latency μονοπάτι,
+- το «μόνο αυστηρότερα» όταν αφορά αριθμητικές ρυθμίσεις και όχι σημασιολογικά invariants.
