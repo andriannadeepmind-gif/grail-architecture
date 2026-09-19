@@ -169,6 +169,8 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 | `MFA-ELM-125` | Pareto `≥` σε όλες τις sealed families και κατώφλια μόνο αυστηρότερα | Απαγορεύει προσωρινές ή δηλωμένες ανταλλαγές που απαιτεί μια ριζικά ανώτερη αρχιτεκτονική και μπορεί να παγώσει τοπικό μέγιστο | Constrained multi-horizon dominance: αδιαπραγμάτευτα invariants + δηλωμένο loss map + recovery obligations + creator-signed admission |
 | `MFA-ELM-120` | Το mechanistic self-model ορίζεται κυρίως με SAE/circuits παραμετρικού μοντέλου | Δεν μπορεί να γειώσει τον πρώτο συμβολικό/ενσώματο Lisp οργανισμό και κάνει το self-model εξαρτώμενο από συγκεκριμένο substrate | Substrate-neutral causal self-model· CLOS rules, organs, body schema και neural circuits είναι διαφορετικοί adapters του ίδιου intervention protocol |
 | `MFA-ELM-035` | Όλοι οι τύποι μνήμης δηλώνονται ως παγκόσμιες CC δεσμεύσεις | Ένα continuous loop δεν μπορεί να δεσμεύει κάθε sensory/working microstate στο καθολικό ledger χωρίς latency/όγκο | Δύο ρυθμοί: τοπική αιτιακή microstate με deterministic checkpoints και μόνιμη episodic/semantic/autobiographical δέσμευση |
+| `ARCHITECTURE-ELEMENTS.yaml.dependencies` | Ο checker βρίσκει 215 dependency cycles· το twin συμπυκνώνει το graph σε 38 SCCs, με 2 μη τετριμμένα και μεγαλύτερο SCC 89 seats | Δεν ξεχωρίζει αναμενόμενο cognitive feedback από startup/build ή verifier authority dependency· ασαφής εκκίνηση, fault containment και organ replacement closure | Τρεις ρητοί γράφοι: acyclic construction/startup DAG, cyclic typed causal-feedback graph, και verifier/gate graph με independence constraints |
+| Εκτελέσιμα invariants | Το F1 twin εκτελεί 35/135 invariants (`0.2593`) και 100 μένουν `no executable predicate yet` | Το textual closure είναι πολύ ισχυρότερο από το μηχανικά ελεγχόμενο closure | Coverage ledger ανά δόση· τα Living Seed invariants πρέπει να έχουν executable predicates/kill tests πριν χαρακτηριστούν locked |
 
 Η απαγόρευση σιωπηλής αλλαγής Telos από διάδοχο **δεν** είναι μελλοντικό εμπόδιο όπως είναι γραμμένη στην ενεργή `MFA-INV-136`: ο δημιουργός μπορεί να εκδώσει ξεχωριστό signed `TelosAmendmentReceipt` με νέα έκδοση και migration/loss map. Αυτό πρέπει να διατηρηθεί. Το πρόβλημα είναι η αθέατη μετάλλαξη, όχι η ρητή μελλοντική αναθεώρηση.
 
@@ -198,6 +200,7 @@ Copyright (c) 2026 STAVROPOULOS LAW. All Rights Reserved.
 - μία semantic authority ανά έννοια,
 - ρητή ταυτότητα, συνέχεια και lineage,
 - causal ordering, replay contract και versioned schema migration,
+- διάκριση construction dependencies, causal feedback και verification authority,
 - typed organ boundaries και δυνατότητα αντικατάστασης,
 - καμία σιωπηλή μετάλλαξη Telos ή ταυτότητας,
 - κανένα automatic phenomenal verdict και καμία προκαθορισμένη άρνηση,
